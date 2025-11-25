@@ -39,7 +39,7 @@ possible. Check out some of our partners below:
 
 ###
 
-## Endorsed By
+## Other Supporters
 
 Osprey doesn't just endorse our partnered security providers. We also support businesses that love what we do! Check out
 some of the organizations that love Osprey:
