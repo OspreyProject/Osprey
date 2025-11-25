@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "Irũ tee"
-  },
-  "adGuardLogoAlt": {
-    "message": "AdGuard ra’ãnga’i"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "alphaMountain ra’ãnga’i"
-  },
-  "controlDLogoAlt": {
-    "message": "Control D ra’ãnga’i"
-  },
-  "precisionSecLogoAlt": {
-    "message": "PrecisionSec ra’ãnga’i"
-  },
-  "certEELogoAlt": {
-    "message": "CERT-EE ra’ãnga’i"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "CleanBrowsing ra’ãnga’i"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Cloudflare ra’ãnga’i"
-  },
-  "dns4EULogoAlt": {
-    "message": "DNS4EU ra’ãnga’i"
-  },
-  "quad9LogoAlt": {
-    "message": "Quad9 ra’ãnga’i"
   }
 }

@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "Kamachisqa Yanapakuy"
-  },
-  "adGuardLogoAlt": {
-    "message": "AdGuard Unanchan"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "alphaMountain Unanchan"
-  },
-  "controlDLogoAlt": {
-    "message": "Control D Unanchan"
-  },
-  "precisionSecLogoAlt": {
-    "message": "PrecisionSec Unanchan"
-  },
-  "certEELogoAlt": {
-    "message": "CERT-EE Unanchan"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "CleanBrowsing Unanchan"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Cloudflare Unanchan"
-  },
-  "dns4EULogoAlt": {
-    "message": "DNS4EU Unanchan"
-  },
-  "quad9LogoAlt": {
-    "message": "Quad9 Unanchan"
   }
 }

@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "Virallinen kumppani"
-  },
-  "adGuardLogoAlt": {
-    "message": "AdGuard-logo"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "alphaMountain-logo"
-  },
-  "controlDLogoAlt": {
-    "message": "Control D -logo"
-  },
-  "precisionSecLogoAlt": {
-    "message": "PrecisionSec-logo"
-  },
-  "certEELogoAlt": {
-    "message": "CERT-EE-logo"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "CleanBrowsing-logo"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Cloudflare-logo"
-  },
-  "dns4EULogoAlt": {
-    "message": "DNS4EU-logo"
-  },
-  "quad9LogoAlt": {
-    "message": "Quad9-logo"
   }
 }

@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "Partner Zyrtar"
-  },
-  "adGuardLogoAlt": {
-    "message": "Logoja e AdGuard"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "Logoja e alphaMountain"
-  },
-  "controlDLogoAlt": {
-    "message": "Logoja e Control D"
-  },
-  "precisionSecLogoAlt": {
-    "message": "Logoja e PrecisionSec"
-  },
-  "certEELogoAlt": {
-    "message": "Logoja e CERT-EE"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "Logoja e CleanBrowsing"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Logoja e Cloudflare"
-  },
-  "dns4EULogoAlt": {
-    "message": "Logoja e DNS4EU"
-  },
-  "quad9LogoAlt": {
-    "message": "Logoja e Quad9"
   }
 }

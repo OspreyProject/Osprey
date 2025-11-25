@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "ኦፊሴላዊ አጋር"
-  },
-  "adGuardLogoAlt": {
-    "message": "AdGuard ሎጎ"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "alphaMountain ሎጎ"
-  },
-  "controlDLogoAlt": {
-    "message": "Control D ሎጎ"
-  },
-  "precisionSecLogoAlt": {
-    "message": "PrecisionSec ሎጎ"
-  },
-  "certEELogoAlt": {
-    "message": "CERT-EE ሎጎ"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "CleanBrowsing ሎጎ"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Cloudflare ሎጎ"
-  },
-  "dns4EULogoAlt": {
-    "message": "DNS4EU ሎጎ"
-  },
-  "quad9LogoAlt": {
-    "message": "Quad9 ሎጎ"
   }
 }

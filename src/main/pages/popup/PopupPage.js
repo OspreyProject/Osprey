@@ -322,69 +322,6 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
                 element.setAttribute('aria-label', LangUtil.OFFICIAL_PARTNER_TITLE);
             }
 
-            // Sets the alt text for the AdGuard logo
-            for (const element of document.querySelectorAll('.adGuardLogo')) {
-                element.alt = LangUtil.ADGUARD_LOGO_ALT;
-                element.setAttribute('title', LangUtil.ADGUARD_LOGO_ALT);
-                element.setAttribute('aria-label', LangUtil.ADGUARD_LOGO_ALT);
-            }
-
-            // Sets the alt text for the alphaMountain logo
-            for (const element of document.querySelectorAll('.alphaMountainLogo')) {
-                element.alt = LangUtil.ALPHA_MOUNTAIN_LOGO_ALT;
-                element.setAttribute('title', LangUtil.ALPHA_MOUNTAIN_LOGO_ALT);
-                element.setAttribute('aria-label', LangUtil.ALPHA_MOUNTAIN_LOGO_ALT);
-            }
-
-            // Sets the alt text for the PrecisionSec logo
-            for (const element of document.querySelectorAll('.precisionSecLogo')) {
-                element.alt = LangUtil.PRECISION_SEC_LOGO_ALT;
-                element.setAttribute('title', LangUtil.PRECISION_SEC_LOGO_ALT);
-                element.setAttribute('aria-label', LangUtil.PRECISION_SEC_LOGO_ALT);
-            }
-
-            // Sets the alt text for the CERT-EE logo
-            for (const element of document.querySelectorAll('.certEELogo')) {
-                element.alt = LangUtil.CERT_EE_LOGO_ALT;
-                element.setAttribute('title', LangUtil.CERT_EE_LOGO_ALT);
-                element.setAttribute('aria-label', LangUtil.CERT_EE_LOGO_ALT);
-            }
-
-            // Sets the alt text for the CleanBrowsing logo
-            for (const element of document.querySelectorAll('.cleanBrowsingLogo')) {
-                element.alt = LangUtil.CLEAN_BROWSING_LOGO_ALT;
-                element.setAttribute('title', LangUtil.CLEAN_BROWSING_LOGO_ALT);
-                element.setAttribute('aria-label', LangUtil.CLEAN_BROWSING_LOGO_ALT);
-            }
-
-            // Sets the alt text for the Cloudflare logo
-            for (const element of document.querySelectorAll('.cloudflareLogo')) {
-                element.alt = LangUtil.CLOUDFLARE_LOGO_ALT;
-                element.setAttribute('title', LangUtil.CLOUDFLARE_LOGO_ALT);
-                element.setAttribute('aria-label', LangUtil.CLOUDFLARE_LOGO_ALT);
-            }
-
-            // Sets the alt text for the Control D logo
-            for (const element of document.querySelectorAll('.controlDLogo')) {
-                element.alt = LangUtil.CONTROL_D_LOGO_ALT;
-                element.setAttribute('title', LangUtil.CONTROL_D_LOGO_ALT);
-                element.setAttribute('aria-label', LangUtil.CONTROL_D_LOGO_ALT);
-            }
-
-            // Sets the alt text for the DNS4EU logo
-            for (const element of document.querySelectorAll('.dns4EULogo')) {
-                element.alt = LangUtil.DNS4EU_LOGO_ALT;
-                element.setAttribute('title', LangUtil.DNS4EU_LOGO_ALT);
-                element.setAttribute('aria-label', LangUtil.DNS4EU_LOGO_ALT);
-            }
-
-            // Sets the alt text for the Quad9 logo
-            for (const element of document.querySelectorAll('.quad9Logo')) {
-                element.alt = LangUtil.QUAD9_LOGO_ALT;
-                element.setAttribute('title', LangUtil.QUAD9_LOGO_ALT);
-                element.setAttribute('aria-label', LangUtil.QUAD9_LOGO_ALT);
-            }
-
             // Sets the alt text for the Osprey logo
             if (domElements.logo) {
                 domElements.logo.alt = LangUtil.LOGO_ALT;

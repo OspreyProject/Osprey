@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "שותף רשמי"
-  },
-  "adGuardLogoAlt": {
-    "message": "לוגו AdGuard"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "לוגו alphaMountain"
-  },
-  "controlDLogoAlt": {
-    "message": "לוגו Control D"
-  },
-  "precisionSecLogoAlt": {
-    "message": "לוגו PrecisionSec"
-  },
-  "certEELogoAlt": {
-    "message": "לוגו CERT-EE"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "לוגו CleanBrowsing"
-  },
-  "cloudflareLogoAlt": {
-    "message": "לוגו Cloudflare"
-  },
-  "dns4EULogoAlt": {
-    "message": "לוגו DNS4EU"
-  },
-  "quad9LogoAlt": {
-    "message": "לוגו Quad9"
   }
 }

@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "官方合作伙伴"
-  },
-  "adGuardLogoAlt": {
-    "message": "AdGuard 标志"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "alphaMountain 标志"
-  },
-  "controlDLogoAlt": {
-    "message": "Control D 标志"
-  },
-  "precisionSecLogoAlt": {
-    "message": "PrecisionSec 标志"
-  },
-  "certEELogoAlt": {
-    "message": "CERT-EE 标志"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "CleanBrowsing 标志"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Cloudflare 标志"
-  },
-  "dns4EULogoAlt": {
-    "message": "DNS4EU 标志"
-  },
-  "quad9LogoAlt": {
-    "message": "Quad9 标志"
   }
 }

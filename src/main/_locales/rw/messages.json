@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "Umufatanyabikorwa wemewe"
-  },
-  "adGuardLogoAlt": {
-    "message": "Ikirango cya AdGuard"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "Ikirango cya alphaMountain"
-  },
-  "controlDLogoAlt": {
-    "message": "Ikirango cya Control D"
-  },
-  "precisionSecLogoAlt": {
-    "message": "Ikirango cya PrecisionSec"
-  },
-  "certEELogoAlt": {
-    "message": "Ikirango cya CERT-EE"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "Ikirango cya CleanBrowsing"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Ikirango cya Cloudflare"
-  },
-  "dns4EULogoAlt": {
-    "message": "Ikirango cya DNS4EU"
-  },
-  "quad9LogoAlt": {
-    "message": "Ikirango cya Quad9"
   }
 }

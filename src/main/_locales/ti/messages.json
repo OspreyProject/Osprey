@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "ኣባል ዝተወሰነ"
-  },
-  "adGuardLogoAlt": {
-    "message": "ሎጎ AdGuard"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "ሎጎ alphaMountain"
-  },
-  "controlDLogoAlt": {
-    "message": "ሎጎ Control D"
-  },
-  "precisionSecLogoAlt": {
-    "message": "ሎጎ PrecisionSec"
-  },
-  "certEELogoAlt": {
-    "message": "ሎጎ CERT-EE"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "ሎጎ CleanBrowsing"
-  },
-  "cloudflareLogoAlt": {
-    "message": "ሎጎ Cloudflare"
-  },
-  "dns4EULogoAlt": {
-    "message": "ሎጎ DNS4EU"
-  },
-  "quad9LogoAlt": {
-    "message": "ሎጎ Quad9"
   }
 }

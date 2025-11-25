@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "Iqabane Elisemthethweni"
-  },
-  "adGuardLogoAlt": {
-    "message": "Ilogo ye-AdGuard"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "Ilogo ye-alphaMountain"
-  },
-  "controlDLogoAlt": {
-    "message": "Ilogo ye-Control D"
-  },
-  "precisionSecLogoAlt": {
-    "message": "Ilogo ye-PrecisionSec"
-  },
-  "certEELogoAlt": {
-    "message": "Ilogo ye-CERT-EE"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "Ilogo ye-CleanBrowsing"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Ilogo ye-Cloudflare"
-  },
-  "dns4EULogoAlt": {
-    "message": "Ilogo ye-DNS4EU"
-  },
-  "quad9LogoAlt": {
-    "message": "Ilogo ye-Quad9"
   }
 }

@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "Parceiro Oficial"
-  },
-  "adGuardLogoAlt": {
-    "message": "Logótipo AdGuard"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "Logótipo alphaMountain"
-  },
-  "controlDLogoAlt": {
-    "message": "Logótipo Control D"
-  },
-  "precisionSecLogoAlt": {
-    "message": "Logótipo PrecisionSec"
-  },
-  "certEELogoAlt": {
-    "message": "Logótipo CERT-EE"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "Logótipo CleanBrowsing"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Logótipo Cloudflare"
-  },
-  "dns4EULogoAlt": {
-    "message": "Logótipo DNS4EU"
-  },
-  "quad9LogoAlt": {
-    "message": "Logótipo Quad9"
   }
 }

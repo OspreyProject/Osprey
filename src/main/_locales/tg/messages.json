@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "Шарики Расмӣ"
-  },
-  "adGuardLogoAlt": {
-    "message": "Логотипи AdGuard"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "Логотипи alphaMountain"
-  },
-  "controlDLogoAlt": {
-    "message": "Логотипи Control D"
-  },
-  "precisionSecLogoAlt": {
-    "message": "Логотипи PrecisionSec"
-  },
-  "certEELogoAlt": {
-    "message": "Логотипи CERT-EE"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "Логотипи CleanBrowsing"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Логотипи Cloudflare"
-  },
-  "dns4EULogoAlt": {
-    "message": "Логотипи DNS4EU"
-  },
-  "quad9LogoAlt": {
-    "message": "Логотипи Quad9"
   }
 }

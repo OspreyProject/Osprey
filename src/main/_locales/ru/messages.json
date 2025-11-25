@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "Официальный партнёр"
-  },
-  "adGuardLogoAlt": {
-    "message": "Логотип AdGuard"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "Логотип alphaMountain"
-  },
-  "controlDLogoAlt": {
-    "message": "Логотип Control D"
-  },
-  "precisionSecLogoAlt": {
-    "message": "Логотип PrecisionSec"
-  },
-  "certEELogoAlt": {
-    "message": "Логотип CERT-EE"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "Логотип CleanBrowsing"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Логотип Cloudflare"
-  },
-  "dns4EULogoAlt": {
-    "message": "Логотип DNS4EU"
-  },
-  "quad9LogoAlt": {
-    "message": "Логотип Quad9"
   }
 }

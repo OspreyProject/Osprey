@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "නිල අනුග්‍රාහකයා"
-  },
-  "adGuardLogoAlt": {
-    "message": "AdGuard ලාංඡනය"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "alphaMountain ලාංඡනය"
-  },
-  "controlDLogoAlt": {
-    "message": "Control D ලාංඡනය"
-  },
-  "precisionSecLogoAlt": {
-    "message": "PrecisionSec ලාංඡනය"
-  },
-  "certEELogoAlt": {
-    "message": "CERT-EE ලාංඡනය"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "CleanBrowsing ලාංඡනය"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Cloudflare ලාංඡනය"
-  },
-  "dns4EULogoAlt": {
-    "message": "DNS4EU ලාංඡනය"
-  },
-  "quad9LogoAlt": {
-    "message": "Quad9 ලාංඡනය"
   }
 }

@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "공식 파트너"
-  },
-  "adGuardLogoAlt": {
-    "message": "AdGuard 로고"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "alphaMountain 로고"
-  },
-  "controlDLogoAlt": {
-    "message": "Control D 로고"
-  },
-  "precisionSecLogoAlt": {
-    "message": "PrecisionSec 로고"
-  },
-  "certEELogoAlt": {
-    "message": "CERT-EE 로고"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "CleanBrowsing 로고"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Cloudflare 로고"
-  },
-  "dns4EULogoAlt": {
-    "message": "DNS4EU 로고"
-  },
-  "quad9LogoAlt": {
-    "message": "Quad9 로고"
   }
 }

@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "అధికారిక భాగస్వామి"
-  },
-  "adGuardLogoAlt": {
-    "message": "AdGuard లోగో"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "alphaMountain లోగో"
-  },
-  "controlDLogoAlt": {
-    "message": "Control D లోగో"
-  },
-  "precisionSecLogoAlt": {
-    "message": "PrecisionSec లోగో"
-  },
-  "certEELogoAlt": {
-    "message": "CERT-EE లోగో"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "CleanBrowsing లోగో"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Cloudflare లోగో"
-  },
-  "dns4EULogoAlt": {
-    "message": "DNS4EU లోగో"
-  },
-  "quad9LogoAlt": {
-    "message": "Quad9 లోగో"
   }
 }

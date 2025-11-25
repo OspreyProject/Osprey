@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "સત્તાવાર ભાગીદાર"
-  },
-  "adGuardLogoAlt": {
-    "message": "AdGuard લોગો"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "alphaMountain લોગો"
-  },
-  "controlDLogoAlt": {
-    "message": "Control D લોગો"
-  },
-  "precisionSecLogoAlt": {
-    "message": "PrecisionSec લોગો"
-  },
-  "certEELogoAlt": {
-    "message": "CERT-EE લોગો"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "CleanBrowsing લોગો"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Cloudflare લોગો"
-  },
-  "dns4EULogoAlt": {
-    "message": "DNS4EU લોગો"
-  },
-  "quad9LogoAlt": {
-    "message": "Quad9 લોગો"
   }
 }

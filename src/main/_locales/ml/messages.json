@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "ഔദ്യോഗിക പങ്കാളി"
-  },
-  "adGuardLogoAlt": {
-    "message": "AdGuard ലോഗോ"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "alphaMountain ലോഗോ"
-  },
-  "controlDLogoAlt": {
-    "message": "Control D ലോഗോ"
-  },
-  "precisionSecLogoAlt": {
-    "message": "PrecisionSec ലോഗോ"
-  },
-  "certEELogoAlt": {
-    "message": "CERT-EE ലോഗോ"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "CleanBrowsing ലോഗോ"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Cloudflare ലോഗോ"
-  },
-  "dns4EULogoAlt": {
-    "message": "DNS4EU ലോഗോ"
-  },
-  "quad9LogoAlt": {
-    "message": "Quad9 ലോഗോ"
   }
 }

@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "Resmi Hyzmatdaş"
-  },
-  "adGuardLogoAlt": {
-    "message": "AdGuard Logotipi"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "alphaMountain Logotipi"
-  },
-  "controlDLogoAlt": {
-    "message": "Control D Logotipi"
-  },
-  "precisionSecLogoAlt": {
-    "message": "PrecisionSec Logotipi"
-  },
-  "certEELogoAlt": {
-    "message": "CERT-EE Logotipi"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "CleanBrowsing Logotipi"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Cloudflare Logotipi"
-  },
-  "dns4EULogoAlt": {
-    "message": "DNS4EU Logotipi"
-  },
-  "quad9LogoAlt": {
-    "message": "Quad9 Logotipi"
   }
 }

@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "Расмий Өнөктөш"
-  },
-  "adGuardLogoAlt": {
-    "message": "AdGuard Логотиби"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "alphaMountain Логотиби"
-  },
-  "controlDLogoAlt": {
-    "message": "Control D Логотиби"
-  },
-  "precisionSecLogoAlt": {
-    "message": "PrecisionSec Логотиби"
-  },
-  "certEELogoAlt": {
-    "message": "CERT-EE Логотиби"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "CleanBrowsing Логотиби"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Cloudflare Логотиби"
-  },
-  "dns4EULogoAlt": {
-    "message": "DNS4EU Логотиби"
-  },
-  "quad9LogoAlt": {
-    "message": "Quad9 Логотиби"
   }
 }

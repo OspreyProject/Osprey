@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "Resmî Ortak"
-  },
-  "adGuardLogoAlt": {
-    "message": "AdGuard Logosu"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "alphaMountain Logosu"
-  },
-  "controlDLogoAlt": {
-    "message": "Control D Logosu"
-  },
-  "precisionSecLogoAlt": {
-    "message": "PrecisionSec Logosu"
-  },
-  "certEELogoAlt": {
-    "message": "CERT-EE Logosu"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "CleanBrowsing Logosu"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Cloudflare Logosu"
-  },
-  "dns4EULogoAlt": {
-    "message": "DNS4EU Logosu"
-  },
-  "quad9LogoAlt": {
-    "message": "Quad9 Logosu"
   }
 }

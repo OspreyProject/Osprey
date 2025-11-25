@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "Rəsmi Tərəfdaş"
-  },
-  "adGuardLogoAlt": {
-    "message": "AdGuard Loqosu"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "alphaMountain Loqosu"
-  },
-  "controlDLogoAlt": {
-    "message": "Control D Loqosu"
-  },
-  "precisionSecLogoAlt": {
-    "message": "PrecisionSec Loqosu"
-  },
-  "certEELogoAlt": {
-    "message": "CERT-EE Loqosu"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "CleanBrowsing Loqosu"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Cloudflare Loqosu"
-  },
-  "dns4EULogoAlt": {
-    "message": "DNS4EU Loqosu"
-  },
-  "quad9LogoAlt": {
-    "message": "Quad9 Loqosu"
   }
 }

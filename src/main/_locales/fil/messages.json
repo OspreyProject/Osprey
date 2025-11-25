@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "Opisyal na Kasosyo"
-  },
-  "adGuardLogoAlt": {
-    "message": "Logo ng AdGuard"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "Logo ng alphaMountain"
-  },
-  "controlDLogoAlt": {
-    "message": "Logo ng Control D"
-  },
-  "precisionSecLogoAlt": {
-    "message": "Logo ng PrecisionSec"
-  },
-  "certEELogoAlt": {
-    "message": "Logo ng CERT-EE"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "Logo ng CleanBrowsing"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Logo ng Cloudflare"
-  },
-  "dns4EULogoAlt": {
-    "message": "Logo ng DNS4EU"
-  },
-  "quad9LogoAlt": {
-    "message": "Logo ng Quad9"
   }
 }

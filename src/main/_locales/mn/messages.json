@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "Албан ёсны түнш"
-  },
-  "adGuardLogoAlt": {
-    "message": "AdGuard лого"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "alphaMountain лого"
-  },
-  "controlDLogoAlt": {
-    "message": "Control D лого"
-  },
-  "precisionSecLogoAlt": {
-    "message": "PrecisionSec лого"
-  },
-  "certEELogoAlt": {
-    "message": "CERT-EE лого"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "CleanBrowsing лого"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Cloudflare лого"
-  },
-  "dns4EULogoAlt": {
-    "message": "DNS4EU лого"
-  },
-  "quad9LogoAlt": {
-    "message": "Quad9 лого"
   }
 }

@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "ოფიციალური პარტნიორი"
-  },
-  "adGuardLogoAlt": {
-    "message": "AdGuard ლოგო"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "alphaMountain ლოგო"
-  },
-  "controlDLogoAlt": {
-    "message": "Control D ლოგო"
-  },
-  "precisionSecLogoAlt": {
-    "message": "PrecisionSec ლოგო"
-  },
-  "certEELogoAlt": {
-    "message": "CERT-EE ლოგო"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "CleanBrowsing ლოგო"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Cloudflare ლოგო"
-  },
-  "dns4EULogoAlt": {
-    "message": "DNS4EU ლოგო"
-  },
-  "quad9LogoAlt": {
-    "message": "Quad9 ლოგო"
   }
 }

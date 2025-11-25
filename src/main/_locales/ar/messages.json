@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "الشريك الرسمي"
-  },
-  "adGuardLogoAlt": {
-    "message": "شعار AdGuard"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "شعار alphaMountain"
-  },
-  "controlDLogoAlt": {
-    "message": "شعار Control D"
-  },
-  "precisionSecLogoAlt": {
-    "message": "شعار PrecisionSec"
-  },
-  "certEELogoAlt": {
-    "message": "شعار CERT-EE"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "شعار CleanBrowsing"
-  },
-  "cloudflareLogoAlt": {
-    "message": "شعار Cloudflare"
-  },
-  "dns4EULogoAlt": {
-    "message": "شعار DNS4EU"
-  },
-  "quad9LogoAlt": {
-    "message": "شعار Quad9"
   }
 }

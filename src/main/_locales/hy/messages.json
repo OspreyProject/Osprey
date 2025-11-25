@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "Պաշտոնական Գործընկեր"
-  },
-  "adGuardLogoAlt": {
-    "message": "AdGuard Լոգո"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "alphaMountain Լոգո"
-  },
-  "controlDLogoAlt": {
-    "message": "Control D Լոգո"
-  },
-  "precisionSecLogoAlt": {
-    "message": "PrecisionSec Լոգո"
-  },
-  "certEELogoAlt": {
-    "message": "CERT-EE Լոգո"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "CleanBrowsing Լոգո"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Cloudflare Լոգո"
-  },
-  "dns4EULogoAlt": {
-    "message": "DNS4EU Լոգո"
-  },
-  "quad9LogoAlt": {
-    "message": "Quad9 Լոգո"
   }
 }

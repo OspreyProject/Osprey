@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "Uradni partner"
-  },
-  "adGuardLogoAlt": {
-    "message": "Logotip AdGuard"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "Logotip alphaMountain"
-  },
-  "controlDLogoAlt": {
-    "message": "Logotip Control D"
-  },
-  "precisionSecLogoAlt": {
-    "message": "Logotip PrecisionSec"
-  },
-  "certEELogoAlt": {
-    "message": "Logotip CERT-EE"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "Logotip CleanBrowsing"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Logotip Cloudflare"
-  },
-  "dns4EULogoAlt": {
-    "message": "Logotip DNS4EU"
-  },
-  "quad9LogoAlt": {
-    "message": "Logotip Quad9"
   }
 }

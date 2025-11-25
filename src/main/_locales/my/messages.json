@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "တရားဝင် ပူးပေါင်းဖက်"
-  },
-  "adGuardLogoAlt": {
-    "message": "AdGuard လိုဂို"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "alphaMountain လိုဂို"
-  },
-  "controlDLogoAlt": {
-    "message": "Control D လိုဂို"
-  },
-  "precisionSecLogoAlt": {
-    "message": "PrecisionSec လိုဂို"
-  },
-  "certEELogoAlt": {
-    "message": "CERT-EE လိုဂို"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "CleanBrowsing လိုဂို"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Cloudflare လိုဂို"
-  },
-  "dns4EULogoAlt": {
-    "message": "DNS4EU လိုဂို"
-  },
-  "quad9LogoAlt": {
-    "message": "Quad9 လိုဂို"
   }
 }

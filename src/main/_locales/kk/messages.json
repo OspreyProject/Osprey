@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "Ресми серіктес"
-  },
-  "adGuardLogoAlt": {
-    "message": "AdGuard логотипі"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "alphaMountain логотипі"
-  },
-  "controlDLogoAlt": {
-    "message": "Control D логотипі"
-  },
-  "precisionSecLogoAlt": {
-    "message": "PrecisionSec логотипі"
-  },
-  "certEELogoAlt": {
-    "message": "CERT-EE логотипі"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "CleanBrowsing логотипі"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Cloudflare логотипі"
-  },
-  "dns4EULogoAlt": {
-    "message": "DNS4EU логотипі"
-  },
-  "quad9LogoAlt": {
-    "message": "Quad9 логотипі"
   }
 }

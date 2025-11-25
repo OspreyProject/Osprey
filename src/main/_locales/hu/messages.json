@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "Hivatalos partner"
-  },
-  "adGuardLogoAlt": {
-    "message": "AdGuard logó"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "alphaMountain logó"
-  },
-  "controlDLogoAlt": {
-    "message": "Control D logó"
-  },
-  "precisionSecLogoAlt": {
-    "message": "PrecisionSec logó"
-  },
-  "certEELogoAlt": {
-    "message": "CERT-EE logó"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "CleanBrowsing logó"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Cloudflare logó"
-  },
-  "dns4EULogoAlt": {
-    "message": "DNS4EU logó"
-  },
-  "quad9LogoAlt": {
-    "message": "Quad9 logó"
   }
 }

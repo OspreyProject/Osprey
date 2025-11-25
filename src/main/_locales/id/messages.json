@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "Mitra Resmi"
-  },
-  "adGuardLogoAlt": {
-    "message": "Logo AdGuard"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "Logo alphaMountain"
-  },
-  "controlDLogoAlt": {
-    "message": "Logo Control D"
-  },
-  "precisionSecLogoAlt": {
-    "message": "Logo PrecisionSec"
-  },
-  "certEELogoAlt": {
-    "message": "Logo CERT-EE"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "Logo CleanBrowsing"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Logo Cloudflare"
-  },
-  "dns4EULogoAlt": {
-    "message": "Logo DNS4EU"
-  },
-  "quad9LogoAlt": {
-    "message": "Logo Quad9"
   }
 }

@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "Mpamatsy ofisialy"
-  },
-  "adGuardLogoAlt": {
-    "message": "Sary famantarana AdGuard"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "Sary famantarana alphaMountain"
-  },
-  "controlDLogoAlt": {
-    "message": "Sary famantarana Control D"
-  },
-  "precisionSecLogoAlt": {
-    "message": "Sary famantarana PrecisionSec"
-  },
-  "certEELogoAlt": {
-    "message": "Sary famantarana CERT-EE"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "Sary famantarana CleanBrowsing"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Sary famantarana Cloudflare"
-  },
-  "dns4EULogoAlt": {
-    "message": "Sary famantarana DNS4EU"
-  },
-  "quad9LogoAlt": {
-    "message": "Sary famantarana Quad9"
   }
 }

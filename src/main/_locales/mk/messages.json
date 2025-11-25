@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "Официјален партнер"
-  },
-  "adGuardLogoAlt": {
-    "message": "Лого на AdGuard"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "Лого на alphaMountain"
-  },
-  "controlDLogoAlt": {
-    "message": "Лого на Control D"
-  },
-  "precisionSecLogoAlt": {
-    "message": "Лого на PrecisionSec"
-  },
-  "certEELogoAlt": {
-    "message": "Лого на CERT-EE"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "Лого на CleanBrowsing"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Лого на Cloudflare"
-  },
-  "dns4EULogoAlt": {
-    "message": "Лого на DNS4EU"
-  },
-  "quad9LogoAlt": {
-    "message": "Лого на Quad9"
   }
 }

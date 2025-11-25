@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "Επίσημος συνεργάτης"
-  },
-  "adGuardLogoAlt": {
-    "message": "Λογότυπο AdGuard"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "Λογότυπο alphaMountain"
-  },
-  "controlDLogoAlt": {
-    "message": "Λογότυπο Control D"
-  },
-  "precisionSecLogoAlt": {
-    "message": "Λογότυπο PrecisionSec"
-  },
-  "certEELogoAlt": {
-    "message": "Λογότυπο CERT-EE"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "Λογότυπο CleanBrowsing"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Λογότυπο Cloudflare"
-  },
-  "dns4EULogoAlt": {
-    "message": "Λογότυπο DNS4EU"
-  },
-  "quad9LogoAlt": {
-    "message": "Λογότυπο Quad9"
   }
 }

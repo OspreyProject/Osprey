@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "அதிகாரப்பூர்வ கூட்டாளர்"
-  },
-  "adGuardLogoAlt": {
-    "message": "AdGuard லோகோ"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "alphaMountain லோகோ"
-  },
-  "controlDLogoAlt": {
-    "message": "Control D லோகோ"
-  },
-  "precisionSecLogoAlt": {
-    "message": "PrecisionSec லோகோ"
-  },
-  "certEELogoAlt": {
-    "message": "CERT-EE லோகோ"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "CleanBrowsing லோகோ"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Cloudflare லோகோ"
-  },
-  "dns4EULogoAlt": {
-    "message": "DNS4EU லோகோ"
-  },
-  "quad9LogoAlt": {
-    "message": "Quad9 லோகோ"
   }
 }

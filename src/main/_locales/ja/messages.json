@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "公式パートナー"
-  },
-  "adGuardLogoAlt": {
-    "message": "AdGuard ロゴ"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "alphaMountain ロゴ"
-  },
-  "controlDLogoAlt": {
-    "message": "Control D ロゴ"
-  },
-  "precisionSecLogoAlt": {
-    "message": "PrecisionSec ロゴ"
-  },
-  "certEELogoAlt": {
-    "message": "CERT-EE ロゴ"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "CleanBrowsing ロゴ"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Cloudflare ロゴ"
-  },
-  "dns4EULogoAlt": {
-    "message": "DNS4EU ロゴ"
-  },
-  "quad9LogoAlt": {
-    "message": "Quad9 ロゴ"
   }
 }

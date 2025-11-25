@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "ಅಧಿಕೃತ ಪಾಲುದಾರ"
-  },
-  "adGuardLogoAlt": {
-    "message": "AdGuard ಲೋಗೋ"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "alphaMountain ಲೋಗೋ"
-  },
-  "controlDLogoAlt": {
-    "message": "Control D ಲೋಗೋ"
-  },
-  "precisionSecLogoAlt": {
-    "message": "PrecisionSec ಲೋಗೋ"
-  },
-  "certEELogoAlt": {
-    "message": "CERT-EE ಲೋಗೋ"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "CleanBrowsing ಲೋಗೋ"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Cloudflare ಲೋಗೋ"
-  },
-  "dns4EULogoAlt": {
-    "message": "DNS4EU ಲೋಗೋ"
-  },
-  "quad9LogoAlt": {
-    "message": "Quad9 ಲೋಗೋ"
   }
 }

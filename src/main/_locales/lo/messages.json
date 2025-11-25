@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "ພັນທະມິດທາງການ"
-  },
-  "adGuardLogoAlt": {
-    "message": "ໂລໂກ AdGuard"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "ໂລໂກ alphaMountain"
-  },
-  "controlDLogoAlt": {
-    "message": "ໂລໂກ Control D"
-  },
-  "precisionSecLogoAlt": {
-    "message": "ໂລໂກ PrecisionSec"
-  },
-  "certEELogoAlt": {
-    "message": "ໂລໂກ CERT-EE"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "ໂລໂກ CleanBrowsing"
-  },
-  "cloudflareLogoAlt": {
-    "message": "ໂລໂກ Cloudflare"
-  },
-  "dns4EULogoAlt": {
-    "message": "ໂລໂກ DNS4EU"
-  },
-  "quad9LogoAlt": {
-    "message": "ໂລໂກ Quad9"
   }
 }

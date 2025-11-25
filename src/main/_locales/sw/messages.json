@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "Mshirika Rasmi"
-  },
-  "adGuardLogoAlt": {
-    "message": "Nembo ya AdGuard"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "Nembo ya alphaMountain"
-  },
-  "controlDLogoAlt": {
-    "message": "Nembo ya Control D"
-  },
-  "precisionSecLogoAlt": {
-    "message": "Nembo ya PrecisionSec"
-  },
-  "certEELogoAlt": {
-    "message": "Nembo ya CERT-EE"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "Nembo ya CleanBrowsing"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Nembo ya Cloudflare"
-  },
-  "dns4EULogoAlt": {
-    "message": "Nembo ya DNS4EU"
-  },
-  "quad9LogoAlt": {
-    "message": "Nembo ya Quad9"
   }
 }

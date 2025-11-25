@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "Molekane oa Semmuso"
-  },
-  "adGuardLogoAlt": {
-    "message": "Letšoao la AdGuard"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "Letšoao la alphaMountain"
-  },
-  "controlDLogoAlt": {
-    "message": "Letšoao la Control D"
-  },
-  "precisionSecLogoAlt": {
-    "message": "Letšoao la PrecisionSec"
-  },
-  "certEELogoAlt": {
-    "message": "Letšoao la CERT-EE"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "Letšoao la CleanBrowsing"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Letšoao la Cloudflare"
-  },
-  "dns4EULogoAlt": {
-    "message": "Letšoao la DNS4EU"
-  },
-  "quad9LogoAlt": {
-    "message": "Letšoao la Quad9"
   }
 }

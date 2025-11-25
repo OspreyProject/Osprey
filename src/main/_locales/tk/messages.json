@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "سرکاری پارٹنر"
-  },
-  "adGuardLogoAlt": {
-    "message": "AdGuard لوگو"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "alphaMountain لوگو"
-  },
-  "controlDLogoAlt": {
-    "message": "Control D لوگو"
-  },
-  "precisionSecLogoAlt": {
-    "message": "PrecisionSec لوگو"
-  },
-  "certEELogoAlt": {
-    "message": "CERT-EE لوگو"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "CleanBrowsing لوگو"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Cloudflare لوگو"
-  },
-  "dns4EULogoAlt": {
-    "message": "DNS4EU لوگو"
-  },
-  "quad9LogoAlt": {
-    "message": "Quad9 لوگو"
   }
 }

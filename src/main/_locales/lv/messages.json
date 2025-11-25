@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "Oficiālais partneris"
-  },
-  "adGuardLogoAlt": {
-    "message": "AdGuard logotips"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "alphaMountain logotips"
-  },
-  "controlDLogoAlt": {
-    "message": "Control D logotips"
-  },
-  "precisionSecLogoAlt": {
-    "message": "PrecisionSec logotips"
-  },
-  "certEELogoAlt": {
-    "message": "CERT-EE logotips"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "CleanBrowsing logotips"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Cloudflare logotips"
-  },
-  "dns4EULogoAlt": {
-    "message": "DNS4EU logotips"
-  },
-  "quad9LogoAlt": {
-    "message": "Quad9 logotips"
   }
 }

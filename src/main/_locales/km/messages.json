@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "ដៃគូផ្លូវការ"
-  },
-  "adGuardLogoAlt": {
-    "message": "រូបសញ្ញា AdGuard"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "រូបសញ្ញា alphaMountain"
-  },
-  "controlDLogoAlt": {
-    "message": "រូបសញ្ញា Control D"
-  },
-  "precisionSecLogoAlt": {
-    "message": "រូបសញ្ញា PrecisionSec"
-  },
-  "certEELogoAlt": {
-    "message": "រូបសញ្ញា CERT-EE"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "រូបសញ្ញា CleanBrowsing"
-  },
-  "cloudflareLogoAlt": {
-    "message": "រូបសញ្ញា Cloudflare"
-  },
-  "dns4EULogoAlt": {
-    "message": "រូបសញ្ញា DNS4EU"
-  },
-  "quad9LogoAlt": {
-    "message": "រូបសញ្ញា Quad9"
   }
 }

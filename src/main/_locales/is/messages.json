@@ -121,32 +121,5 @@
   },
   "officialPartnerTitle": {
     "message": "Opinber samstarfsaðili"
-  },
-  "adGuardLogoAlt": {
-    "message": "AdGuard merki"
-  },
-  "alphaMountainLogoAlt": {
-    "message": "alphaMountain merki"
-  },
-  "controlDLogoAlt": {
-    "message": "Control D merki"
-  },
-  "precisionSecLogoAlt": {
-    "message": "PrecisionSec merki"
-  },
-  "certEELogoAlt": {
-    "message": "CERT-EE merki"
-  },
-  "cleanBrowsingLogoAlt": {
-    "message": "CleanBrowsing merki"
-  },
-  "cloudflareLogoAlt": {
-    "message": "Cloudflare merki"
-  },
-  "dns4EULogoAlt": {
-    "message": "DNS4EU merki"
-  },
-  "quad9LogoAlt": {
-    "message": "Quad9 merki"
   }
 }
