@@ -28,7 +28,7 @@ const BrowserProtection = (() => {
 
     // API keys for various protection services
     // These aren't meant to be secret, but they are obfuscated to stop secret sniffers.
-    let alphaMountainKey = atob("YTRhNDVkYzMtNjFmMC00OGIzLTlmMjUtNjQxMzgxYjgwNWQ3");
+    let alphaMountainKey = atob("NjkyZDE1MzItZTRmYy00MjFmLWJkMzYtZGFmMGNjYzZlMTFi");
     let precisionSecKey = atob("MGI1Yjc2MjgtMzgyYi0xMWYwLWE1OWMtYjNiNTIyN2IxMDc2");
 
     // Map to store AbortControllers for each tab
@@ -354,12 +354,12 @@ const BrowserProtection = (() => {
             // Adds the URL to the processing cache to prevent duplicate requests
             CacheManager.addUrlToProcessingCache(urlObject, cacheName, tabId);
 
-            const apiUrl = `https://api.alphamountain.ai/filter/uri`;
+            const apiUrl = `https://api.alphamountain.ai/category/uri`;
             const body = {
                 uri: urlString,
                 license: alphaMountainKey,
-                type: "user.main",
-                version: 1
+                version: 1,
+                type: "partner.info"
             };
 
             try {
