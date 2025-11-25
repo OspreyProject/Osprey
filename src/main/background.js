@@ -451,11 +451,16 @@
                     return;
                 }
 
+                // Removes www. prefix from hostname
+                if (hostname.startsWith('www.')) {
+                    console.debug(`Removing www. prefix from hostname: ${hostname}`);
+                    hostname = hostname.slice(4);
+                }
+
                 // Removes trailing dots from hostname
                 if (hostname.endsWith('.')) {
                     console.debug(`Removing trailing dots from hostname: ${hostname}`);
                     hostname = hostname.replace(/\.+$/, '');
-                    urlObject.hostname = hostname;
                 }
 
                 // Excludes local/internal network addresses
@@ -469,6 +474,9 @@
                     console.debug(`URL is in the global allowed cache: ${urlString}; bailing out.`);
                     return;
                 }
+
+                // Sets the cleaned hostname back to the URL object
+                urlObject.hostname = hostname;
             }
 
             // Removes trailing slashes from pathname
