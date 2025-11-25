@@ -547,8 +547,8 @@
                             // Checks if the tab is at an extension page
                             if (!(urlString !== pendingUrl && frameId === 0) &&
                                 (pendingUrl.startsWith("chrome-extension:") ||
-                                pendingUrl.startsWith("moz-extension:") ||
-                                pendingUrl.startsWith("extension:"))) {
+                                    pendingUrl.startsWith("moz-extension:") ||
+                                    pendingUrl.startsWith("extension:"))) {
                                 console.debug(`[${shortName}] The tab is at an extension page; bailing out. ${pendingUrl} ${frameId}`);
                                 return;
                             }
@@ -862,18 +862,6 @@
                 console.debug("alphaMountain Web Protection is managed by system policy.");
             }
 
-            // Checks and sets the Control D Security settings using the policy
-            if (policies.ControlDSecurityEnabled !== undefined) {
-                settings.controlDSecurityEnabled = policies.ControlDSecurityEnabled;
-                console.debug("Control D Security is managed by system policy.");
-            }
-
-            // Checks and sets the Control D Family settings using the policy
-            if (policies.ControlDFamilyEnabled !== undefined) {
-                settings.controlDFamilyEnabled = policies.ControlDFamilyEnabled;
-                console.debug("Control D Family is managed by system policy.");
-            }
-
             // Checks and sets the PrecisionSec settings using the policy
             if (policies.PrecisionSecEnabled !== undefined) {
                 settings.precisionSecEnabled = policies.PrecisionSecEnabled;
@@ -908,6 +896,18 @@
             if (policies.CloudflareFamilyEnabled !== undefined) {
                 settings.cloudflareFamilyEnabled = policies.CloudflareFamilyEnabled;
                 console.debug("Cloudflare Family is managed by system policy.");
+            }
+
+            // Checks and sets the Control D Security settings using the policy
+            if (policies.ControlDSecurityEnabled !== undefined) {
+                settings.controlDSecurityEnabled = policies.ControlDSecurityEnabled;
+                console.debug("Control D Security is managed by system policy.");
+            }
+
+            // Checks and sets the Control D Family settings using the policy
+            if (policies.ControlDFamilyEnabled !== undefined) {
+                settings.controlDFamilyEnabled = policies.ControlDFamilyEnabled;
+                console.debug("Control D Family is managed by system policy.");
             }
 
             // Checks and sets the DNS4EU Security settings using the policy
