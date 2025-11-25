@@ -50,7 +50,7 @@ const Settings = (() => {
         hideReportButton: false,
         lockProtectionOptions: false,
         hideProtectionOptions: false,
-        cacheExpirationSeconds: 86400,
+        cacheExpirationSeconds: 604800, // 7 days in seconds
     };
 
     /**

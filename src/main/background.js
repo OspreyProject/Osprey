@@ -787,7 +787,7 @@
                 settings.contextMenuEnabled = true;
             }
 
-            const defaultCacheExpiration = 86400; // 24 hours in seconds
+            const defaultCacheExpiration = 604800; // 7 days in seconds
 
             // Checks and sets the cache expiration time using the policy
             if (policies.CacheExpirationSeconds === undefined) {
