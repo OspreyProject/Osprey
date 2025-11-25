@@ -30,7 +30,6 @@ const BrowserProtection = (() => {
     // These aren't meant to be secret, but they are obfuscated to stop secret sniffers.
     let alphaMountainKey = atob("YTRhNDVkYzMtNjFmMC00OGIzLTlmMjUtNjQxMzgxYjgwNWQ3");
     let precisionSecKey = atob("MGI1Yjc2MjgtMzgyYi0xMWYwLWE1OWMtYjNiNTIyN2IxMDc2");
-    // let monitorAppKey = atob("YzYzMGY3ODk4MmM2ZTEwNTZhNWM2ZTliYzIzMjhlOWE1MzQwZTIyM2NkYzFmY2IzNDBmODA4MWJiYjYxMTE0Ng==");
 
     // Map to store AbortControllers for each tab
     let tabAbortControllers = new Map();
@@ -526,149 +525,6 @@ const BrowserProtection = (() => {
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
             }
         };
-
-        // /**
-        //  * Checks the URL with MONITORAPP's API.
-        //  *
-        //  * @param {Object} settings - The settings object containing user preferences.
-        //  */
-        // async function checkUrlWithMONITORAPP(settings) {
-        //     // Checks if the provider is enabled
-        //     if (!settings.precisionSecEnabled) {
-        //         return;
-        //     }
-        //
-        //     const origin = ProtectionResult.Origin.PRECISIONSEC;
-        //     const shortName = ProtectionResult.ShortName[origin];
-        //     const cacheName = ProtectionResult.CacheName[origin];
-        //
-        //     // // Checks if the URL is in the allowed cache
-        //     // if (CacheManager.isUrlInAllowedCache(urlObject, cacheName)) {
-        //     //     console.debug(`[${shortName}] URL is already allowed: ${urlString}`);
-        //     //     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.KNOWN_SAFE, origin));
-        //     //     return;
-        //     // }
-        //     //
-        //     // // Checks if the URL is in the blocked cache
-        //     // if (CacheManager.isUrlInBlockedCache(urlObject, cacheName)) {
-        //     //     console.debug(`[${shortName}] URL is already blocked: ${urlString}`);
-        //     //     callback(new ProtectionResult(urlString, CacheManager.getBlockedResultType(urlString, cacheName), origin));
-        //     //     return;
-        //     // }
-        //     //
-        //     // // Checks if the URL is in the processing cache
-        //     // if (CacheManager.isUrlInProcessingCache(urlObject, cacheName)) {
-        //     //     console.debug(`[${shortName}] URL is already processing: ${urlString}`);
-        //     //     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.WAITING, origin));
-        //     //     return;
-        //     // }
-        //     //
-        //     // // Adds the URL to the processing cache to prevent duplicate requests
-        //     // CacheManager.addUrlToProcessingCache(urlObject, cacheName, tabId);
-        //
-        //     const apiUrl = `https://ailabs-api.monitorapp.com/v1/search/url/category`;
-        //
-        //     // [
-        //     //     {
-        //     //       "url": "https://www.monitorapp.com"
-        //     //     }
-        //     // ]
-        //
-        //     const body = [
-        //         {url: urlString}
-        //     ];
-        //
-        //     try {
-        //         const response = await fetch(apiUrl, {
-        //             method: "POST",
-        //             headers: {
-        //                 "Content-Type": "application/json",
-        //                 "Authorization": monitorAppKey,
-        //             },
-        //             body: JSON.stringify(body),
-        //             signal
-        //         });
-        //
-        //         // Return early if the response is not OK
-        //         if (!response.ok) {
-        //             console.warn(`[${shortName}] Returned early: ${response.status}`);
-        //             callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
-        //             return;
-        //         }
-        //
-        //         const data = await response.json();
-        //         const categories = data.msg?.category;
-        //
-        //         // Check if categories is undefined or an empty string ("")
-        //         if (!categories) {
-        //             console.info(`[${shortName}] No categories found for URL: ${urlString}`);
-        //             callback(new ProtectionResult(urlString, ProtectionResult.ResultType.ALLOWED, origin));
-        //             CacheManager.addUrlToAllowedCache(urlObject, cacheName);
-        //             return;
-        //         }
-        //
-        //         // Split the categories string into an array
-        //         // Example list: "65,14,20"
-        //         const categoriesArray = categories ? categories.split(",").map(cat => cat.trim()) : [];
-        //
-        //         // Untrusted Categories
-        //         const untrustedCategories = new Set([
-        //             "12", // Risky activity
-        //             "98", // (Google) Potentially Harmful Application
-        //             "97", // (Google) Unwanted Software
-        //             "94", // (Google) Unspecified
-        //             "78", // Child Abuse Images
-        //             "67", // Illegal Software
-        //             "40", // Spam Sites
-        //             "23", // Illegal Drug
-        //         ]);
-        //
-        //         // Malicious Categories
-        //         const maliciousCategories = new Set([
-        //             "10", // Abused site
-        //             "42", // Malware
-        //             "99", // Threat Intelligence - AILabs
-        //             "95", // (Google) Malware
-        //             "61", // Botnets
-        //         ]);
-        //
-        //         // Phishing Categories
-        //         const phishingCategories = new Set([
-        //             "31", // Phishing/Fraud
-        //         ]);
-        //
-        //         // Check if the URL falls into any of the untrusted categories
-        //         if (categories.some(category => untrustedCategories.has(category))) {
-        //             console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
-        //             CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.UNTRUSTED);
-        //             callback(new ProtectionResult(urlString, ProtectionResult.ResultType.UNTRUSTED, origin));
-        //             return;
-        //         }
-        //
-        //         // Check if the URL falls into any of the malicious categories
-        //         if (categories.some(category => maliciousCategories.has(category))) {
-        //             console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
-        //             CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
-        //             callback(new ProtectionResult(urlString, ProtectionResult.ResultType.MALICIOUS, origin));
-        //             return;
-        //         }
-        //
-        //         // Check if the URL falls into any of the phishing categories
-        //         if (categories.some(category => phishingCategories.has(category))) {
-        //             console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
-        //             CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.PHISHING);
-        //             callback(new ProtectionResult(urlString, ProtectionResult.ResultType.PHISHING, origin));
-        //             return;
-        //         }
-        //
-        //         // Unexpected result
-        //         console.warn(`[${shortName}] Returned an unexpected result for URL ${urlString}: ${data}`);
-        //         callback(new ProtectionResult(urlString, ProtectionResult.ResultType.ALLOWED, origin));
-        //     } catch (error) {
-        //         console.debug(`[${shortName}] Failed to check URL: ${error}`);
-        //         callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
-        //     }
-        // }
 
         /**
          * Checks the URL with CERT-EE's DNS API.
@@ -1661,8 +1517,6 @@ const BrowserProtection = (() => {
 
         // Call all the check functions asynchronously
         Settings.get(settings => {
-            // checkUrlWithMONITORAPP(settings);
-
             // Official Partners
             checkUrlWithAdGuardSecurity(settings);
             checkUrlWithAdGuardFamily(settings);

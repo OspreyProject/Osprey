@@ -202,7 +202,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
                 console.warn("'continueButton' element not found in the WarningPage DOM.");
             }
 
-            // Sets the alt text for the logo
+            // Sets the alt text for the Osprey logo
             if (domElements.logo) {
                 domElements.logo.alt = LangUtil.LOGO_ALT;
             } else {
