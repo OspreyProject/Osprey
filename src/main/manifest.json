@@ -2,7 +2,7 @@
   "short_name": "Osprey",
   "name": "Osprey: Browser Protection",
   "manifest_version": 3,
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "Protect against online threats in real-time using multiple browser protection engines.",
   "default_locale": "en",
   "background": {
