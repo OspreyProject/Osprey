@@ -1031,8 +1031,8 @@
     // Listens for onCommitted events
     browserAPI.webNavigation.onCommitted.addListener(callback => {
         if (callback.transitionQualifiers.includes("server_redirect") &&
-            callback.frameId !== 0 &&
-            callback.transitionType !== "start_page") {
+            (callback.frameId !== 0 && callback.transitionType !== "start_page") ||
+            (callback.frameId === 0 && callback.transitionType === "link")) {
             console.debug(`[server_redirect] ${callback.url} (frameId: ${callback.frameId}) (tabId: ${callback.tabId}) (type: ${callback.transitionType})`);
             handleNavigation(callback);
         } else if (callback.transitionQualifiers.includes("client_redirect")) {
