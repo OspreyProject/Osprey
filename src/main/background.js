@@ -537,7 +537,7 @@
                     if (!blocked) {
                         browserAPI.tabs.get(tabId, tab => {
                             // Checks if the tab or tab.url is undefined
-                            if (!tab || tab.url === undefined) {
+                            if (tab?.url === undefined) {
                                 console.debug(`tabs.get(${tabId}) failed '${browserAPI.runtime.lastError?.message}'; bailing out.`);
                                 return;
                             }
@@ -614,7 +614,7 @@
 
                             // If the page URL is the block page, send (count - 1)
                             browserAPI.tabs.get(tabId, tab => {
-                                if (!tab || tab.url === undefined) {
+                                if (tab?.url === undefined) {
                                     console.debug(`tabs.get(${tabId}) failed '${browserAPI.runtime.lastError?.message}'; bailing out.`);
                                     return;
                                 }
@@ -975,7 +975,7 @@
 
                 // If the page URL is the block page, sends (count - 1)
                 browserAPI.tabs.get(tabId, tab => {
-                    if (!tab || tab.url === undefined) {
+                    if (tab?.url === undefined) {
                         console.debug(`tabs.get(${tabId}) failed '${browserAPI.runtime.lastError?.message}'; bailing out.`);
 
                         // Broadcast PONG even if tabs.get fails, then respond.
