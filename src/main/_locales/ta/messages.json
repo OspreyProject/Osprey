@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "அனைத்து அனுமதிக்கப்பட்ட வலைத்தளங்களும் அழிக்கப்பட்டன."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "இணையதளத்தை தீங்கிழைக்கும் எனப் புகாரளிக்கவும்"
+  },
   "restoreDefaultsContext": {
     "message": "இயல்புநிலை அமைப்புகளை மீட்டமை"
   },

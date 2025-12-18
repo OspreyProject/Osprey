@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Όλοι οι επιτρεπόμενοι ιστότοποι έχουν διαγραφεί."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Αναφορά ιστότοπου ως κακόβουλου"
+  },
   "restoreDefaultsContext": {
     "message": "Επαναφορά προεπιλεγμένων ρυθμίσεων"
   },

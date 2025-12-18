@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Alle tilladte websteder er blevet ryddet."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Anmeld webstedet som ondsindet"
+  },
   "restoreDefaultsContext": {
     "message": "Gendan standardindstillinger"
   },

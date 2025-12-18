@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "تمام وب‌سایت‌های مجاز پاک شدند."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "گزارش دادن وب‌سایت به‌عنوان مخرب"
+  },
   "restoreDefaultsContext": {
     "message": "بازگرداندن تنظیمات پیش‌فرض"
   },

@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "所有允许的网站已被清除。"
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "举报网站为恶意网站"
+  },
   "restoreDefaultsContext": {
     "message": "恢复默认设置"
   },

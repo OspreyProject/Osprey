@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "ခွင့်ပြုထားသော ဝဘ်ဆိုဒ်အားလုံးကို ရှင်းပြီးပါပြီ။"
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "ဝက်ဘ်ဆိုဒ်ကို မကောင်းဆိုးဝါးသည်ဟု တင်ပြပါ။"
+  },
   "restoreDefaultsContext": {
     "message": "မူရင်း အပြင်အဆင်များ သို့ ပြန်သွားရန်"
   },

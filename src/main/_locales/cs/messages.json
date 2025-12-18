@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Všechny povolené weby byly vymazány."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Nahlásit webovou stránku jako škodlivou"
+  },
   "restoreDefaultsContext": {
     "message": "Obnovit výchozí nastavení"
   },

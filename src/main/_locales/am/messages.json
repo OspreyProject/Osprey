@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "ሁሉም የተፈቀዱ ድር ጣቢያዎች ጸድተዋል።"
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "ድህረ-ገፅን እንደ ጎጂ ሪፖርት ያድርጉ"
+  },
   "restoreDefaultsContext": {
     "message": "ነባሪ ቅንብሮችን ይመልሱ"
   },

@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "બધી પરવાનગી આપેલ વેબસાઇટો સાફ કરવામાં આવી છે."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "વેબસાઇટને દુષ્કૃત્યકારી તરીકે રિપોર્ટ કરો"
+  },
   "restoreDefaultsContext": {
     "message": "ડિફોલ્ટ સેટિંગ્સ પુનઃસ્થાપિત કરો"
   },

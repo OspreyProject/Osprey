@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "ټولې اجازه لرونکي ویب پاڼې پاکې شوې دي."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "ویبپاڼه د ناوړه په توګه راپور کړئ"
+  },
   "restoreDefaultsContext": {
     "message": "اصلي امستنې بېرته راولي"
   },

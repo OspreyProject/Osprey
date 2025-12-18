@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "כל האתרים המאושרים נוקו."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "דווח על אתר כזדוני"
+  },
   "restoreDefaultsContext": {
     "message": "שחזר הגדרות ברירת מחדל"
   },

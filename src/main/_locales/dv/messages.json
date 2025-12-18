@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "ދިމާވެއްޖެ ވެބްސައިޓް ހުރިހާ ފުހެލެއްޖެ."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "ވෙබ්ސයිޓް މެލޭޝަސް ކަމަށް ރިޕޯޓް ކުރައްވާ"
+  },
   "restoreDefaultsContext": {
     "message": "ޑިފޯލްޓް ސެޓިންގް ކުރޭ"
   },

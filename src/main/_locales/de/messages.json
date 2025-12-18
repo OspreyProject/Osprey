@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Alle erlaubten Websites wurden gelöscht."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Website als bösartig melden"
+  },
   "restoreDefaultsContext": {
     "message": "Standardeinstellungen wiederherstellen"
   },

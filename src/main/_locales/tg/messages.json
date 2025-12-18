@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Ҳамаи сомонаҳои иҷозатдодашуда пок карда шуданд."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Сомонаро ҳамчун зараровар гузориш диҳед"
+  },
   "restoreDefaultsContext": {
     "message": "Барқарор кардани танзимоти аслӣ"
   },

@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "ಎಲ್ಲಾ ಅನುಮತಿಸಲಾದ ವೆಬ್‌ಸೈಟ್‌ಗಳನ್ನು ತೆರವುಗೊಳಿಸಲಾಗಿದೆ."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "ವೆಬ್ಸೈಟ್ ಅನ್ನು ದುರುದ್ದೇಶಿತವೆಂದು ವರದಿ ಮಾಡಿ"
+  },
   "restoreDefaultsContext": {
     "message": "ಡೀಫಾಲ್ಟ್ ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ಮರುಸ್ಥಾಪಿಸಿ"
   },

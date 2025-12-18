@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Բոլոր թույլատրված կայքերը մաքրվեցին։"
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Հայտնել կայքը որպես վնասակար"
+  },
   "restoreDefaultsContext": {
     "message": "Վերականգնել նախնական կարգավորումները"
   },

@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Alle toegestane websites zijn gewist."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Website als schadelijk melden"
+  },
   "restoreDefaultsContext": {
     "message": "Standaardinstellingen herstellen"
   },

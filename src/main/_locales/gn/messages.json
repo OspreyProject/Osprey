@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Opavave ñanduti renda moneĩmbyre oñemopotĩma."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Emyesakã ko ñanduti renda iñañaha"
+  },
   "restoreDefaultsContext": {
     "message": "Emyengovia ñemoĩporã ijypykuéva"
   },

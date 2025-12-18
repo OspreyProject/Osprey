@@ -39,6 +39,7 @@ const LangUtil = {
     TOGGLE_NOTIFICATIONS_CONTEXT: browserAPI.i18n.getMessage('toggleNotificationsContext'),
     TOGGLE_FRAME_NAVIGATION_CONTEXT: browserAPI.i18n.getMessage('toggleFrameNavigationContext'),
     CLEAR_ALLOWED_WEBSITES_CONTEXT: browserAPI.i18n.getMessage('clearAllowedWebsitesContext'),
+    REPORT_WEBSITE_AS_MALICIOUS_CONTEXT: browserAPI.i18n.getMessage('reportWebsiteAsMaliciousContext'),
     RESTORE_DEFAULTS_CONTEXT: browserAPI.i18n.getMessage('restoreDefaultsContext'),
 
     // Popup Page

@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Imbuga zose zemerewe zasibwe."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Tanga raporo ko urubuga ari rubi cyangwa rwangiza"
+  },
   "restoreDefaultsContext": {
     "message": "Garura igenamiterere rya mbere"
   },

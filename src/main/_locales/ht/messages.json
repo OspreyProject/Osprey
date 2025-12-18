@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Tout sit entènèt ki pèmèt yo efase."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Siyale sitwèb la kòm malveyan"
+  },
   "restoreDefaultsContext": {
     "message": "Retabli paramèt default yo"
   },

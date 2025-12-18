@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Minden engedélyezett weboldal törölve lett."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Jelentse a webhelyet rosszindulatúnak"
+  },
   "restoreDefaultsContext": {
     "message": "Alapértelmezett beállítások visszaállítása"
   },

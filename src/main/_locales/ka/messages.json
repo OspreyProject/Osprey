@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "ყველა ნებადართული ვებგვერდი გასუფთავდა."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "განაცხადეთ ვებსაიტი, როგორც მავნე"
+  },
   "restoreDefaultsContext": {
     "message": "ნაგულისხმევ პარამეტრებზე დაბრუნება"
   },

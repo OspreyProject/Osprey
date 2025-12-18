@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "सभी अनुमत वेबसाइटें साफ़ कर दी गई हैं।"
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "वेबसाइट को दुर्भावनापूर्ण के रूप में रिपोर्ट करें"
+  },
   "restoreDefaultsContext": {
     "message": "डिफ़ॉल्ट सेटिंग्स पुनर्स्थापित करें"
   },

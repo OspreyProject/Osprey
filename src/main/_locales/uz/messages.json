@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Barcha ruxsat etilgan veb-saytlar tozalandi."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Veb-saytni zararli deb xabar bering"
+  },
   "restoreDefaultsContext": {
     "message": "Standart sozlamalarni tiklash"
   },

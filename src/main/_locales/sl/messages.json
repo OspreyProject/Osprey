@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Vse dovoljene spletne strani so bile počiščene."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Prijavi spletno mesto kot zlonamerno"
+  },
   "restoreDefaultsContext": {
     "message": "Obnovi privzete nastavitve"
   },

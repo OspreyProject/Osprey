@@ -675,6 +675,13 @@
                 contexts: ["action"],
             });
 
+            // Creates the report website as malicious menu item
+            contextMenuAPI.create({
+                id: "reportWebsiteAsMalicious",
+                title: LangUtil.REPORT_WEBSITE_AS_MALICIOUS_CONTEXT,
+                contexts: ["action"],
+            });
+
             // Creates the restore default settings menu item
             contextMenuAPI.create({
                 id: "restoreDefaultSettings",
@@ -691,6 +698,7 @@
             const policyKeys = [
                 "DisableNotifications",
                 "DisableClearAllowedWebsites",
+                "DisableReportWebsiteAsMalicious",
                 "IgnoreFrameNavigation",
                 "DisableRestoreDefaultSettings"
             ];
@@ -727,6 +735,15 @@
                     });
 
                     console.debug("Clear allowed websites button is managed by system policy.");
+                }
+
+                // Checks if the report website as malicious button should be disabled
+                if (policies.DisableReportWebsiteAsMalicious !== undefined && policies.DisableReportWebsiteAsMalicious) {
+                    contextMenuAPI.update("reportWebsiteAsMalicious", {
+                        enabled: false,
+                    });
+
+                    console.debug("Report website as malicious button is managed by system policy.");
                 }
 
                 // Checks if the restore default settings button should be disabled
@@ -1325,6 +1342,14 @@
                 Settings.set({ignoreFrameNavigation: info.checked});
                 console.debug(`Ignore frame navigation: ${info.checked}`);
                 break;
+
+            case "reportWebsiteAsMalicious": {
+                // Opens the report website page in a new tab
+                const reportUrl = "https://github.com/OspreyProject/Osprey/wiki/Report-Website-as-Malicious";
+                browserAPI.tabs.create({url: reportUrl});
+                console.debug("Opened the report website in a new tab.");
+                break;
+            }
 
             case "clearAllowedWebsites": {
                 CacheManager.clearAllowedCache();

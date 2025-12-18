@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Svi dozvoljeni sajtovi su obrisani."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Prijavi veb-sajt kao zlonameran"
+  },
   "restoreDefaultsContext": {
     "message": "Vrati podrazumevana podešavanja"
   },

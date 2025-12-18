@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Voafafa daholo ny tranonkala voaekena rehetra."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Tatitra ny tranonkala ho ratsy fanahy"
+  },
   "restoreDefaultsContext": {
     "message": "Avereno amin'ny fanahafana fototra"
   },

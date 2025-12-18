@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Wonke amawebhusayithi avunyelwe asuliwe."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Bika iwebhusayithi njengobungozi"
+  },
   "restoreDefaultsContext": {
     "message": "Buyisela izilungiselelo ezenzakalelayo"
   },

@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Na-clear ang lahat ng pinapayagang website."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "I-report ang website bilang malisyoso"
+  },
   "restoreDefaultsContext": {
     "message": "Ibalik ang default na mga setting"
   },

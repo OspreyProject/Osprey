@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "វេបសាយទាំងអស់ដែលបានអនុញ្ញាតត្រូវបានសម្អាត។"
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "រាយការណ៍គេហទំព័រថាជាអាក្រក់"
+  },
   "restoreDefaultsContext": {
     "message": "ស្ដារការកំណត់លំនាំដើម"
   },

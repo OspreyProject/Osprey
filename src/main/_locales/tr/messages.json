@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Tüm izin verilen web siteleri temizlendi."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Web sitesini kötü amaçlı olarak bildir"
+  },
   "restoreDefaultsContext": {
     "message": "Varsayılan ayarları geri yükle"
   },

@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "모든 허용된 웹사이트가 삭제되었습니다."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "웹사이트를 악성으로 신고하기"
+  },
   "restoreDefaultsContext": {
     "message": "기본 설정 복원"
   },

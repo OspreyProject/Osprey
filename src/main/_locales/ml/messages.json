@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "എല്ലാ അനുവദിച്ച വെബ്സൈറ്റുകളും മായ്ച്ചു."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "വെബ്സൈറ്റ് ദുരുപയോഗപരമാണെന്ന് റിപ്പോർട്ട് ചെയ്യുക"
+  },
   "restoreDefaultsContext": {
     "message": "സ്ഥിരസ്ഥിതി ക്രമീകരണങ്ങൾ പുനഃസ്ഥാപിക്കുക"
   },

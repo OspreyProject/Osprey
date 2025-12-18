@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "ເວັບໄຊທີ່ອະນຸຍາດທັງໝົດຖືກລົບແລ້ວ."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "ລາຍງານເວັບໄຊທ໌ວ່າເປັນອັນຕະລາຍ"
+  },
   "restoreDefaultsContext": {
     "message": "ກູ້ຄືນການຕັ້ງຄ່າເລີ່ມຕົ້ນ"
   },

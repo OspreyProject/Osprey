@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Toate site-urile permise au fost șterse."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Raportează site-ul web ca fiind rău intenționat"
+  },
   "restoreDefaultsContext": {
     "message": "Restaurați setările implicite"
   },

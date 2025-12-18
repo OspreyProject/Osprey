@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Llapan kamaqchisqa web wasikuna pichasqanku."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Kay web p'anqata mana allin kasqanmanta willay"
+  },
   "restoreDefaultsContext": {
     "message": "Chayqa ñawpaq kamachikuna kutichiy"
   },

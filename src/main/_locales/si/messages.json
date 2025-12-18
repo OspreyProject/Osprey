@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "අනුමත කළ සියලු වෙබ් අඩවි මකා දමන ලදී."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "වෙබ් අඩවිය දුෂ్ప്രවෘත්තිකර ලෙස වාර්තා කරන්න"
+  },
   "restoreDefaultsContext": {
     "message": "පෙරනිමි සැකසුම් ප්‍රතිස්ථාපනය කරන්න"
   },

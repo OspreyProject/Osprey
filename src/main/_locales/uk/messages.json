@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Усі дозволені вебсайти було очищено."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Повідомити про шкідливий веб-сайт"
+  },
   "restoreDefaultsContext": {
     "message": "Відновити стандартні налаштування"
   },

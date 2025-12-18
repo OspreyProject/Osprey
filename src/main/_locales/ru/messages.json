@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Все разрешённые сайты были удалены."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Сообщить о вредоносном веб-сайте"
+  },
   "restoreDefaultsContext": {
     "message": "Восстановить настройки по умолчанию"
   },

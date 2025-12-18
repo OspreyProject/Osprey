@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Tous les sites web autorisés ont été effacés."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Signaler un site web comme malveillant"
+  },
   "restoreDefaultsContext": {
     "message": "Restaurer les paramètres par défaut"
   },

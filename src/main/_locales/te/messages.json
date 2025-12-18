@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "అన్ని అనుమతించబడిన వెబ్‌సైట్‌లు క్లియర్ చేయబడ్డాయి."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "వెబ్సైట్ను హానికరమైనదిగా నివేదించండి"
+  },
   "restoreDefaultsContext": {
     "message": "డిఫాల్ట్ సెట్టింగ్‌లను పునరుద్ధరించండి"
   },

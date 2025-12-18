@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Alle tillatte nettsteder er tømt."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Rapporter nettstedet som skadelig"
+  },
   "restoreDefaultsContext": {
     "message": "Gjenopprett standardinnstillinger"
   },

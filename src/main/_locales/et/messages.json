@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Kõik lubatud veebisaidid on kustutatud."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Teata veebisaidist kui pahatahtlikust"
+  },
   "restoreDefaultsContext": {
     "message": "Taasta vaikeväärtused"
   },

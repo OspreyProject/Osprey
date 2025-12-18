@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "すべての許可されたウェブサイトがクリアされました。"
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "ウェブサイトを悪意のあるものとして報告する"
+  },
   "restoreDefaultsContext": {
     "message": "デフォルト設定を復元"
   },

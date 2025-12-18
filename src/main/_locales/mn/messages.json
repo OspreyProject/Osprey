@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Зөвшөөрөгдсөн бүх вэбсайтууд устгагдсан."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Вэбсайтыг хортой гэж мэдэгдэх"
+  },
   "restoreDefaultsContext": {
     "message": "Үндсэн тохиргоог сэргээх"
   },

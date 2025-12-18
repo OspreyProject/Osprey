@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "अनुमति दिइएका सबै वेबसाइटहरू खाली गरिएका छन्।"
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "वेबसाइटलाई दुर्भावनापूर्णको रूपमा रिपोर्ट गर्नुहोस्"
+  },
   "restoreDefaultsContext": {
     "message": "पूर्वनिर्धारित सेटिङहरू पुनर्स्थापना गर्नुहोस्"
   },

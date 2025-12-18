@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Visas atļautās vietnes ir notīrītas."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Ziņot par ļaunprātīgu tīmekļa vietni"
+  },
   "restoreDefaultsContext": {
     "message": "Atjaunot noklusējuma iestatījumus"
   },

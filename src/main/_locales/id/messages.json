@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Semua situs web yang diizinkan telah dihapus."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Laporkan situs web sebagai berbahaya"
+  },
   "restoreDefaultsContext": {
     "message": "Pulihkan pengaturan default"
   },

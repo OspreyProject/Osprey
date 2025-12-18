@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Сите дозволени веб-страници се исчистени."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Пријави ја веб-страницата како злонамерна"
+  },
   "restoreDefaultsContext": {
     "message": "Врати ги стандардните поставки"
   },

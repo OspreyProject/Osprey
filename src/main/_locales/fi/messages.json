@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Kaikki sallitut verkkosivustot on poistettu."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Ilmoita verkkosivusto haitalliseksi"
+  },
   "restoreDefaultsContext": {
     "message": "Palauta oletusasetukset"
   },

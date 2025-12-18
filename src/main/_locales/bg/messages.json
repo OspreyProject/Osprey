@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Всички разрешени уебсайтове са изчистени."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Докладвайте уебсайта като злонамерен"
+  },
   "restoreDefaultsContext": {
     "message": "Възстановяване на настройките по подразбиране"
   },

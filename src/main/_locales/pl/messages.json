@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Wszystkie dozwolone strony zostały wyczyszczone."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Zgłoś stronę internetową jako złośliwą"
+  },
   "restoreDefaultsContext": {
     "message": "Przywróć ustawienia domyślne"
   },

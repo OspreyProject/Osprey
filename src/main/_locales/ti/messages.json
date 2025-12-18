@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "ኩሉ ድሕሪት ዝተፈቐዱ ተጽዒዑ።"
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "ድሕረ-ገፅን እንዳይጥል ተመዝግበው"
+  },
   "restoreDefaultsContext": {
     "message": "ናይ መእተዊ ትእዛዝ ኣዳልዮም"
   },

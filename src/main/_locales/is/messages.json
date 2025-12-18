@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Allar leyfðar vefsíður hafa verið hreinsaðar."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Tilkynna vefsíðuna sem illgjörna"
+  },
   "restoreDefaultsContext": {
     "message": "Endurheimta sjálfgefnar stillingar"
   },

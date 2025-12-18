@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Liwebosaete tsohle tse lumelletsoeng li hlakotsoe."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Tlaleha sebaka sa marang-rang e le se kotsi"
+  },
   "restoreDefaultsContext": {
     "message": "Khutlisetsa litlhophiso tse sa fetoheng"
   },

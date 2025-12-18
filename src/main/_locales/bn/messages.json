@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "সমস্ত অনুমোদিত ওয়েবসাইট সাফ করা হয়েছে।"
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "ওয়েবসাইটটিকে ক্ষতিকর হিসেবে রিপোর্ট করুন"
+  },
   "restoreDefaultsContext": {
     "message": "ডিফল্ট সেটিংস পুনরুদ্ধার করুন"
   },

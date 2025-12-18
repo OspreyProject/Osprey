@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Bütün icazə verilmiş vebsaytlar təmizlənib."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Vebsaytı zərərli kimi hesabat edin"
+  },
   "restoreDefaultsContext": {
     "message": "Defolt ayarları bərpa et"
   },

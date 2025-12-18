@@ -1,125 +1,128 @@
 {
   "title": {
-    "message": "Osprey: Brauzer Goragy"
+    "message": "Osprey: براؤزر تحفظ"
   },
   "logoAlt": {
-    "message": "Osprey Logotipi"
+    "message": "Osprey لوگو"
   },
   "bannerText": {
-    "message": "Osprey: Brauzer Goragy"
+    "message": "Osprey: براؤزر تحفظ"
   },
   "warningTitle": {
-    "message": "Duýduryş: Bu web-saýt howply"
+    "message": "انتباہ: یہ ویب سائٹ غیر محفوظ ہے"
   },
   "recommendation": {
-    "message": "Osprey bu web-saýta girmegi togtatdy. Dowam etmek howply."
+    "message": "Osprey نے اس ویب سائٹ تک رسائی روک دی ہے۔ جاری رکھنا غیر محفوظ ہے۔"
   },
   "details": {
-    "message": "Eger-de siz bu web-saýtyň eýesi bolsaňyz, meseläni çözmek üçin howpsuzlyk üpjünçisine ýüz tutuň."
+    "message": "اگر آپ اس ویب سائٹ کے مالک ہیں تو براہ کرم مسئلہ حل کرنے کے لئے سیکیورٹی فراہم کنندہ سے رابطہ کریں۔"
   },
   "urlLabel": {
-    "message": "URL: "
+    "message": "یو آر ایل: "
   },
   "reportedByLabel": {
-    "message": "Hasabat beren: "
+    "message": "رپورٹ کرنے والا: "
   },
   "reportedByOthers": {
-    "message": "(we ___ beýlekiler)"
+    "message": "(اور ___ دیگر)"
   },
   "reportedByAlso": {
-    "message": "Şeýle hem hasabat beren: "
+    "message": "مزید رپورٹ کرنے والا: "
   },
   "reasonLabel": {
-    "message": "Sebäbi: "
+    "message": "وجہ: "
   },
   "reportWebsite": {
-    "message": "Bu web-saýty howpsuz diýip belläň"
+    "message": "اس ویب سائٹ کو محفوظ کے طور پر رپورٹ کریں"
   },
   "allowWebsite": {
-    "message": "Bu web-saýty hemişe äsgermezlik et"
+    "message": "ہمیشہ اس ویب سائٹ کو نظر انداز کریں"
   },
   "backButton": {
-    "message": "Howpsuz ýere dolan"
+    "message": "محفوظ جگہ پر واپس جائیں"
   },
   "continueButton": {
-    "message": "Şeýle-de bolsa dowam et"
+    "message": "پھر بھی جاری رکھیں"
   },
   "popupTitle": {
-    "message": "Gorag Saýlawlary"
+    "message": "تحفظ کے اختیارات"
   },
   "githubLink": {
-    "message": "GitHub-da Gör"
+    "message": "GitHub پر دیکھیں"
   },
   "version": {
-    "message": "Wersiýa: "
+    "message": "ورژن: "
   },
   "privacyPolicy": {
-    "message": "Gizlinlik Syýasaty"
+    "message": "پرائیویسی پالیسی"
   },
   "onText": {
-    "message": "Açyk"
+    "message": "چالو"
   },
   "offText": {
-    "message": "Ýapyk"
+    "message": "بند"
   },
   "onLockedText": {
-    "message": "Açyk (Gulply)"
+    "message": "چالو (لاک)"
   },
   "offLockedText": {
-    "message": "Ýapyk (Gulply)"
+    "message": "بند (لاک)"
   },
   "knownSafe": {
-    "message": "Howpsuz diýip bilinýän"
+    "message": "محفوظ کے طور پر جانا جاتا ہے"
   },
   "failed": {
-    "message": "Şowsuz boldy"
+    "message": "ناکام"
   },
   "waiting": {
-    "message": "Garaşylýar"
+    "message": "انتظار میں"
   },
   "allowed": {
-    "message": "Rugsat berildi"
+    "message": "اجازت دی گئی"
   },
   "malicious": {
-    "message": "Zyýanly"
+    "message": "خطرناک"
   },
   "phishing": {
-    "message": "Phishing"
+    "message": "فشنگ"
   },
   "untrusted": {
-    "message": "Ynamly däl"
+    "message": "غیر معتبر"
   },
   "adultContent": {
-    "message": "Ulularyň Mazmuny"
+    "message": "بالغ مواد"
   },
   "toggleNotificationsContext": {
-    "message": "Bildirişleri aç"
+    "message": "اطلاعات فعال کریں"
   },
   "toggleFrameNavigationContext": {
-    "message": "Çarçuwanyň ugruny äsgermezlik et"
+    "message": "فریم نیویگیشن کو نظر انداز کریں"
   },
   "clearAllowedWebsitesContext": {
-    "message": "Rugsat berilen web-saýtlaryň sanawyny arassala"
+    "message": "اجازت دی گئی ویب سائٹس کی فہرست صاف کریں"
   },
   "clearAllowedWebsitesTitle": {
-    "message": "Rugsat Berilen Web-Saýtlar Arassalandy"
+    "message": "اجازت دی گئی ویب سائٹس صاف کر دی گئیں"
   },
   "clearAllowedWebsitesMessage": {
-    "message": "Rugsat berilen ähli web-saýtlar arassalandy."
+    "message": "تمام اجازت دی گئی ویب سائٹس صاف کر دی گئی ہیں۔"
+  },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Report website as malicious"
   },
   "restoreDefaultsContext": {
-    "message": "Bellenen bahalary dikelt"
+    "message": "ڈیفالٹ سیٹنگز بحال کریں"
   },
   "restoreDefaultsTitle": {
-    "message": "Bellenen Bahalar Dikeltdi"
+    "message": "ڈیفالٹ سیٹنگز بحال کر دی گئیں"
   },
   "restoreDefaultsMessage": {
-    "message": "Bellenen bahalar dikeldildi."
+    "message": "ڈیفالٹ سیٹنگز بحال کر دی گئی ہیں۔"
   },
   "unsafeWebsiteTitle": {
-    "message": "Howply Web-Saýt Bloklandy"
+    "message": "غیر محفوظ ویب سائٹ بلاک کر دی گئی"
   },
   "officialPartnerTitle": {
-    "message": "Resmi Hyzmatdaş"
+    "message": "سرکاری پارٹنر"
   }
 }

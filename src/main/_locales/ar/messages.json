@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "لقد تم مسح جميع المواقع المسموح بها."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "الإبلاغ عن موقع ويب باعتباره ضارًا"
+  },
   "restoreDefaultsContext": {
     "message": "استعادة الإعدادات الافتراضية"
   },

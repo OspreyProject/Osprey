@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Alle toegelate webwerwe is skoongemaak."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Meld webwerf as kwaadwillig"
+  },
   "restoreDefaultsContext": {
     "message": "Herstel verstekinstellings"
   },

@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Všetky povolené stránky boli vymazané."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Nahlásiť webovú stránku ako škodlivú"
+  },
   "restoreDefaultsContext": {
     "message": "Obnoviť predvolené nastavenia"
   },

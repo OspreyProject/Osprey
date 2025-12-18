@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Tất cả các trang web được phép đã được xóa."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Báo cáo trang web là trang web độc hại"
+  },
   "restoreDefaultsContext": {
     "message": "Khôi phục cài đặt mặc định"
   },

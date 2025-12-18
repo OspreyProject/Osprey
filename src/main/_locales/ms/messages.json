@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Semua laman web yang dibenarkan telah dikosongkan."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Laporkan laman web ini sebagai berbahaya"
+  },
   "restoreDefaultsContext": {
     "message": "Pulihkan tetapan lalai"
   },

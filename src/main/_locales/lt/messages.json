@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Visos leistos svetainės buvo išvalytos."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Pranešti apie kenkėjišką svetainę"
+  },
   "restoreDefaultsContext": {
     "message": "Atkurti numatytuosius nustatymus"
   },

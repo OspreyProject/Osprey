@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Tots els llocs web permesos han estat eliminats."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Informa el lloc web com a maliciós"
+  },
   "restoreDefaultsContext": {
     "message": "Restaura la configuració predeterminada"
   },

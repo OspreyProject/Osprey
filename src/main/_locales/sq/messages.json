@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Të gjitha website-t e lejuara janë pastruar."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Raporto faqen e internetit si të dëmshme"
+  },
   "restoreDefaultsContext": {
     "message": "Rivendos cilësimet e parazgjedhura"
   },

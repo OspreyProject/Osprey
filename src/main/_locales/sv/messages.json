@@ -107,6 +107,9 @@
   "clearAllowedWebsitesMessage": {
     "message": "Alla tillåtna webbplatser har rensats."
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Anmäl webbplatsen som skadlig"
+  },
   "restoreDefaultsContext": {
     "message": "Återställ standardinställningar"
   },
