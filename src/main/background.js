@@ -68,7 +68,7 @@
     // Clears the processing cache
     CacheManager.clearProcessingCache();
 
-    const tabKey = (tabId) => `tab_${tabId}`;
+    const tabKey = tabId => `tab_${tabId}`;
 
     /**
      * Sends a message to open a new tab with the extension's new tab page.
@@ -77,7 +77,7 @@
      * @param callback - Callback function to execute after sending the message.
      */
     const getOrder = (key, callback) => {
-        StorageUtil.getFromSessionStore(key, (order) => callback(Array.isArray(order) ? order : []));
+        StorageUtil.getFromSessionStore(key, order => callback(Array.isArray(order) ? order : []));
     };
 
     /**
@@ -99,7 +99,7 @@
      * @param callback - Callback function to execute after appending.
      */
     const appendKeyToEnd = (orderKey, keyStr, callback) => {
-        getOrder(orderKey, (ord) => {
+        getOrder(orderKey, ord => {
             const next = ord.filter(k => k !== keyStr);
 
             // Append to the end
@@ -115,7 +115,7 @@
      * @param callback - Callback function to execute with the retrieved object.
      */
     const getAll = (mapKey, callback) => {
-        StorageUtil.getFromSessionStore(mapKey, (obj) => callback(obj && typeof obj === 'object' ? obj : {}));
+        StorageUtil.getFromSessionStore(mapKey, obj => callback(obj && typeof obj === 'object' ? obj : {}));
     };
 
     /**
@@ -140,7 +140,7 @@
     const appendResultOrigin = (tabId, origin, callback, attempt = 0) => {
         const k = tabKey(tabId);
 
-        getAll(STORAGE_KEYS.RESULT_ORIGINS, (obj) => {
+        getAll(STORAGE_KEYS.RESULT_ORIGINS, obj => {
             const next = obj && typeof obj === 'object' ? obj : {};
             const arr = Array.isArray(next[k]) ? next[k] : [];
 
@@ -152,7 +152,7 @@
 
             setAll(STORAGE_KEYS.RESULT_ORIGINS, next, () => {
                 // Verify after write; if we lost a race, merge and retry (bounded).
-                getAll(STORAGE_KEYS.RESULT_ORIGINS, (after) => {
+                getAll(STORAGE_KEYS.RESULT_ORIGINS, after => {
                     const finalArr = Array.isArray(after?.[k]) ? after[k] : [];
 
                     if (!finalArr.includes(origin) && attempt < 2) {
@@ -173,7 +173,7 @@
      */
     const getResultOrigins = (tabId, callback) => {
         const k = tabKey(tabId);
-        getAll(STORAGE_KEYS.RESULT_ORIGINS, (obj) => callback(obj[k] || []));
+        getAll(STORAGE_KEYS.RESULT_ORIGINS, obj => callback(obj[k] || []));
     };
 
     /**
@@ -186,7 +186,7 @@
     const setResultOrigins = (tabId, origins, callback) => {
         const k = tabKey(tabId);
 
-        getAll(STORAGE_KEYS.RESULT_ORIGINS, (obj) => {
+        getAll(STORAGE_KEYS.RESULT_ORIGINS, obj => {
             obj[k] = Array.isArray(origins) ? origins : [];
 
             setAll(STORAGE_KEYS.RESULT_ORIGINS, obj, () =>
@@ -204,13 +204,13 @@
     const deleteResultOrigins = (tabId, callback) => {
         const k = tabKey(tabId);
 
-        getAll(STORAGE_KEYS.RESULT_ORIGINS, (obj) => {
+        getAll(STORAGE_KEYS.RESULT_ORIGINS, obj => {
             if (Object.hasOwn(obj, k)) {
                 delete obj[k];
             }
 
             setAll(STORAGE_KEYS.RESULT_ORIGINS, obj, () => {
-                getOrder(STORAGE_KEYS.RESULT_ORIGINS_ORDER, (ord) =>
+                getOrder(STORAGE_KEYS.RESULT_ORIGINS_ORDER, ord =>
                     setOrder(STORAGE_KEYS.RESULT_ORIGINS_ORDER, ord.filter(x => x !== k), callback)
                 );
             });
@@ -225,7 +225,7 @@
      */
     const getFrameZeroUrl = (tabId, callback) => {
         const k = tabKey(tabId);
-        getAll(STORAGE_KEYS.FRAME_ZERO_URLS, (obj) => callback(obj[k]));
+        getAll(STORAGE_KEYS.FRAME_ZERO_URLS, obj => callback(obj[k]));
     };
 
     /**
@@ -238,7 +238,7 @@
     const setFrameZeroUrl = (tabId, url, callback) => {
         const k = tabKey(tabId);
 
-        getAll(STORAGE_KEYS.FRAME_ZERO_URLS, (obj) => {
+        getAll(STORAGE_KEYS.FRAME_ZERO_URLS, obj => {
             obj[k] = url;
 
             setAll(STORAGE_KEYS.FRAME_ZERO_URLS, obj, () =>
@@ -256,13 +256,13 @@
     const deleteFrameZeroUrl = (tabId, callback) => {
         const k = tabKey(tabId);
 
-        getAll(STORAGE_KEYS.FRAME_ZERO_URLS, (obj) => {
+        getAll(STORAGE_KEYS.FRAME_ZERO_URLS, obj => {
             if (Object.hasOwn(obj, k)) {
                 delete obj[k];
             }
 
             setAll(STORAGE_KEYS.FRAME_ZERO_URLS, obj, () => {
-                getOrder(STORAGE_KEYS.FRAME_ZERO_URLS_ORDER, (ord) =>
+                getOrder(STORAGE_KEYS.FRAME_ZERO_URLS_ORDER, ord =>
                     setOrder(STORAGE_KEYS.FRAME_ZERO_URLS_ORDER, ord.filter(x => x !== k), callback)
                 );
             });
@@ -274,14 +274,14 @@
 
     // Cleans up maps automatically
     setInterval(() => {
-        getOrder(STORAGE_KEYS.RESULT_ORIGINS_ORDER, (rOrder) => {
-            getOrder(STORAGE_KEYS.FRAME_ZERO_URLS_ORDER, (fOrder) => {
+        getOrder(STORAGE_KEYS.RESULT_ORIGINS_ORDER, rOrder => {
+            getOrder(STORAGE_KEYS.FRAME_ZERO_URLS_ORDER, fOrder => {
                 browserAPI.tabs.query({}, tabs => {
                     const activeTabIds = new Set(tabs.map(tab => tab.id));
                     const activeKeys = new Set([...activeTabIds].map(id => tabKey(id)));
 
-                    getAll(STORAGE_KEYS.RESULT_ORIGINS, (rMap) => {
-                        getAll(STORAGE_KEYS.FRAME_ZERO_URLS, (fMap) => {
+                    getAll(STORAGE_KEYS.RESULT_ORIGINS, rMap => {
+                        getAll(STORAGE_KEYS.FRAME_ZERO_URLS, fMap => {
                             for (const k of Object.keys(rMap)) {
                                 if (!activeKeys.has(k)) {
                                     delete rMap[k];
@@ -513,7 +513,7 @@
             console.info(`Checking URL: ${urlString}`);
 
             // Checks if the URL is malicious
-            BrowserProtection.checkIfUrlIsMalicious(tabId, urlString, (result) => {
+            BrowserProtection.checkIfUrlIsMalicious(tabId, urlString, result => {
                 const duration = Date.now() - startTime;
                 const cacheName = ProtectionResult.CacheName[result.origin];
                 const fullName = ProtectionResult.FullName[result.origin];
@@ -557,7 +557,7 @@
 
                             if (targetUrl) {
                                 // Obtains frame-zero URL from session, falls back to result.url if unavailable
-                                getFrameZeroUrl(tabId, (f0) => {
+                                getFrameZeroUrl(tabId, f0 => {
                                     const blockPageUrl = UrlHelpers.getBlockPageUrl(result, f0 === undefined ? result.url : f0);
 
                                     // Navigates to the block page
@@ -604,7 +604,7 @@
                     const blockedCounterDelay = 150;
 
                     setTimeout(() => {
-                        getResultOrigins(tabId, (originsArr) => {
+                        getResultOrigins(tabId, originsArr => {
                             const fullCount = (Array.isArray(originsArr) ? originsArr.length : 0) + 1;
 
                             // Sets the action text to the result count
@@ -963,7 +963,7 @@
             const tabId = sender.tab.id;
             const k = tabKey(tabId);
 
-            getAll(STORAGE_KEYS.RESULT_ORIGINS, (all) => {
+            getAll(STORAGE_KEYS.RESULT_ORIGINS, all => {
                 if (!Object.hasOwn(all, k)) {
                     console.debug(`Result origins is undefined for tab ID ${tabId}`);
 
@@ -1049,7 +1049,7 @@
     browserAPI.webNavigation.onCommitted.addListener(callback => {
         if (callback.transitionQualifiers.includes("server_redirect") &&
             (callback.frameId !== 0 && callback.transitionType !== "start_page") ||
-            (callback.frameId === 0 && callback.transitionType === "link")) {
+            callback.frameId === 0 && callback.transitionType === "link") {
             console.debug(`[server_redirect] ${callback.url} (frameId: ${callback.frameId}) (tabId: ${callback.tabId}) (type: ${callback.transitionType})`);
             handleNavigation(callback);
         } else if (callback.transitionQualifiers.includes("client_redirect")) {
