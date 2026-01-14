@@ -21,7 +21,7 @@
 (() => {
     // Browser API compatibility between Chrome and Firefox
     const browserAPI = globalThis.chrome ?? globalThis.browser;
-    const isFirefox = typeof globalThis.chrome === "undefined";
+    const isFirefox = globalThis.chrome === undefined;
     const contextMenuAPI = browserAPI?.contextMenus ?? browserAPI?.menus;
     let supportsManagedPolicies = true;
 
@@ -507,6 +507,7 @@
             let blocked = false;
             let firstOrigin = ProtectionResult.Origin.UNKNOWN;
 
+            console.warn("Clearing result origins for tab: " + tabId);
             setResultOrigins(tabId, []);
 
             const startTime = Date.now();
@@ -598,7 +599,8 @@
 
                     // Tracks additional origins (numbers), excluding the first origin
                     if (result.origin !== firstOrigin) {
-                        appendResultOrigin(tabId, result.origin);
+                        console.warn("Appending additional origin '" + result.origin + "' to tab: " + tabId);
+                        appendResultOrigin(tabId, result.origin); // POTENTIAL CULPRIT
                     }
 
                     const blockedCounterDelay = 150;
@@ -1197,12 +1199,10 @@
                     CacheManager.removeUrlFromBlockedCache(message.blockedUrl, cacheName);
                 }
 
-                setTimeout(() => {
-                    browserAPI.tabs.update(tabId, {url: message.continueUrl}).catch(error => {
-                        console.error(`Failed to update tab ${tabId}:`, error);
-                        sendToNewTabPage(tabId);
-                    });
-                }, redirectDelay);
+                browserAPI.tabs.update(tabId, {url: message.continueUrl}).catch(error => {
+                    console.error(`Failed to update tab ${tabId}:`, error);
+                    sendToNewTabPage(tabId);
+                });
                 break;
             }
 
