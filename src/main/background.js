@@ -196,6 +196,20 @@
     };
 
     /**
+     * Removes a specific result origin from the list for a specific tab.
+     *
+     * @param tabId - The ID of the tab.
+     * @param origin - The origin to remove.
+     * @param callback - Callback function to execute after removal.
+     */
+    const removeResultOrigin = (tabId, origin, callback) => {
+        getResultOrigins(tabId, arr => {
+            const next = (Array.isArray(arr) ? arr : []).filter(o => o !== origin);
+            setResultOrigins(tabId, next, callback);
+        });
+    };
+
+    /**
      * Deletes the result origins for a specific tab.
      *
      * @param tabId - The ID of the tab.
@@ -508,7 +522,7 @@
             let firstOrigin = ProtectionResult.Origin.UNKNOWN;
 
             console.warn("Clearing result origins for tab: " + tabId);
-            setResultOrigins(tabId, []);
+            deleteResultOrigins(tabId);
 
             const startTime = Date.now();
             console.info(`Checking URL: ${urlString}`);
@@ -597,11 +611,8 @@
                     blocked = true;
                     firstOrigin = firstOrigin === ProtectionResult.Origin.UNKNOWN ? result.origin : firstOrigin;
 
-                    // Tracks additional origins (numbers), excluding the first origin
-                    if (result.origin !== firstOrigin) {
-                        console.warn("Appending additional origin '" + result.origin + "' to tab: " + tabId);
-                        appendResultOrigin(tabId, result.origin); // POTENTIAL CULPRIT
-                    }
+                    // Track every blocking origin (deduped inside appendResultOrigin)
+                    appendResultOrigin(tabId, result.origin);
 
                     const blockedCounterDelay = 150;
 
@@ -1197,6 +1208,9 @@
 
                     console.debug(`Removed ${shortName} URL from blocked cache: ${message.blockedUrl}`);
                     CacheManager.removeUrlFromBlockedCache(message.blockedUrl, cacheName);
+
+                    // Remove this origin from the "remaining blockers" list for this tab
+                    removeResultOrigin(tabId, origin);
                 }
 
                 browserAPI.tabs.update(tabId, {url: message.continueUrl}).catch(error => {
