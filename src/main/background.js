@@ -611,8 +611,11 @@
                     blocked = true;
                     firstOrigin = firstOrigin === ProtectionResult.Origin.UNKNOWN ? result.origin : firstOrigin;
 
-                    // Track every blocking origin (deduped inside appendResultOrigin)
-                    appendResultOrigin(tabId, result.origin);
+                    // Tracks additional origins (numbers), excluding the first origin
+                    if (result.origin !== firstOrigin) {
+                        console.warn("Appending additional origin '" + result.origin + "' to tab: " + tabId);
+                        appendResultOrigin(tabId, result.origin);
+                    }
 
                     const blockedCounterDelay = 150;
 
