@@ -229,6 +229,9 @@
                     setOrder(STORAGE_KEYS.RESULT_ORIGINS_ORDER, ord.filter(x => x !== k), callback)
                 );
             });
+
+            // Print the new origins map for debugging
+            console.warn("Deleted result origins for tab " + tabId + ". New map: ", obj);
         });
     };
 
@@ -624,6 +627,9 @@
                         getResultOrigins(tabId, originsArr => {
                             const fullCount = (Array.isArray(originsArr) ? originsArr.length : 0) + 1;
                             const othersCount = Array.isArray(originsArr) ? originsArr.length : 0;
+
+                            // Print the whole list
+                            console.warn("Current origins for tab " + tabId + ": " + (originsArr || []).join(", "));
 
                             // Sets the action text to the result count
                             browserAPI.action.setBadgeText({text: `${fullCount}`, tabId});
