@@ -20,9 +20,9 @@
 // noinspection JSDeprecatedSymbols
 (() => {
     // Browser API compatibility between Chrome and Firefox
-    const browserAPI = typeof browser === 'undefined' ? chrome : browser;
-    const isFirefox = typeof browser !== 'undefined';
-    const contextMenuAPI = isFirefox ? browserAPI.menus : browserAPI.contextMenus;
+    const browserAPI = globalThis.chrome ?? globalThis.browser;
+    const isFirefox = typeof globalThis.chrome === "undefined";
+    const contextMenuAPI = browserAPI?.contextMenus ?? browserAPI?.menus;
     let supportsManagedPolicies = true;
 
     // Import necessary scripts for functionality

@@ -21,7 +21,7 @@
 globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
 
     // Browser API compatibility between Chrome and Firefox
-    const browserAPI = typeof browser === 'undefined' ? chrome : browser;
+    const browserAPI = globalThis.chrome ?? globalThis.browser;
 
     // Tracks initialization state
     let isInitialized = false;

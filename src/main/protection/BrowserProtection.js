@@ -21,7 +21,7 @@
 const BrowserProtection = (() => {
 
     // Browser API compatibility between Chrome and Firefox
-    const browserAPI = typeof browser === 'undefined' ? chrome : browser;
+    const browserAPI = globalThis.chrome ?? globalThis.browser;
 
     // Delay in milliseconds for non-partnered providers
     const nonPartnerDelay = 100;
