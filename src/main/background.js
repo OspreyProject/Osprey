@@ -327,7 +327,7 @@
             let blocked = false;
             let firstOrigin = ProtectionResult.Origin.UNKNOWN;
 
-            console.warn("Clearing result origins for tab: " + tabId);
+            // Clears result origins for the tab
             deleteResultOrigins(tabId);
 
             const startTime = Date.now();
@@ -415,9 +415,9 @@
                     blocked = true;
                     firstOrigin = firstOrigin === ProtectionResult.Origin.UNKNOWN ? result.origin : firstOrigin;
 
-                    // Tracks additional origins (numbers), excluding the first origin
+                    // Appends the result origin to the tab's result origins
+                    // Doesn't include the first origin in the list
                     if (result.origin !== firstOrigin) {
-                        console.warn("Appending additional origin '" + result.origin + "' to tab: " + tabId);
                         appendResultOrigin(tabId, result.origin);
                     }
 
@@ -427,9 +427,6 @@
                         const resultOrigins = getResultOrigins(tabId);
                         const fullCount = (Array.isArray(resultOrigins) ? resultOrigins.length : 0) + 1;
                         const othersCount = Array.isArray(resultOrigins) ? resultOrigins.length : 0;
-
-                        // Print the whole list
-                        console.warn("Current origins for tab " + tabId + ": " + (resultOrigins || []).join(", "));
 
                         // Sets the action text to the result count
                         browserAPI.action.setBadgeText({text: `${fullCount}`, tabId});
@@ -442,8 +439,6 @@
                                 console.debug(`tabs.get(${tabId}) failed '${browserAPI.runtime.lastError?.message}'; bailing out.`);
                                 return;
                             }
-
-                            console.warn("Sent PONG in correct location with count: " + othersCount);
 
                             // Sends a PONG message to the content script to update the blocked counter
                             browserAPI.tabs.sendMessage(tabId, {
@@ -787,9 +782,6 @@
             const fullCount = (Array.isArray(resultOrigins) ? resultOrigins.length : 0) + 1;
             const othersCount = Array.isArray(resultOrigins) ? resultOrigins.length : 0;
 
-            // Print the whole list
-            console.warn("Current origins for tab " + tabId + ": " + (resultOrigins || []).join(", "));
-
             // Sets the action text to the result count
             browserAPI.action.setBadgeText({text: `${fullCount}`, tabId});
             browserAPI.action.setBadgeBackgroundColor({color: "rgb(255,75,75)", tabId});
@@ -801,8 +793,6 @@
                     console.debug(`tabs.get(${tabId}) failed '${browserAPI.runtime.lastError?.message}'; bailing out.`);
                     return;
                 }
-
-                console.warn("Sent PONG in OTHER location with count: " + othersCount);
 
                 // Sends a PONG message to the content script to update the blocked counter
                 browserAPI.tabs.sendMessage(tabId, {
