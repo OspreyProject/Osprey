@@ -39,10 +39,10 @@ possible. Check out some of our partners below:
 
 ###
 
-## Other Supporters
+## Endorsements
 
-Osprey doesn't just endorse our partnered security providers. We also support businesses that love what we do! Check out
-some of the organizations that love Osprey:
+Osprey is **endorsed** by several well-known organizations that recommend the extension for improved browser protection.
+Check out some of our endorsers below:
 
 ###
 
