@@ -139,27 +139,57 @@
      */
     const appendResultOrigin = (tabId, origin, callback, attempt = 0) => {
         const k = tabKey(tabId);
+        const uniq = (list) => Array.from(new Set(list));
+
+        const finish = () => {
+            console.warn("Successfully appended '" + origin + "' origin to tab: " + tabId);
+            appendKeyToEnd(STORAGE_KEYS.RESULT_ORIGINS_ORDER, k, callback);
+        };
 
         getAll(STORAGE_KEYS.RESULT_ORIGINS, obj => {
-            const next = obj && typeof obj === 'object' ? obj : {};
-            const arr = Array.isArray(next[k]) ? next[k] : [];
+            const next = obj && typeof obj === "object" ? obj : {};
+            const existing = Array.isArray(next[k]) ? next[k] : [];
 
-            if (!arr.includes(origin)) {
-                arr.push(origin);
-            }
-
-            next[k] = arr;
+            // Always write unique (also cleans up historical duplicates)
+            next[k] = uniq([...existing, origin]);
 
             setAll(STORAGE_KEYS.RESULT_ORIGINS, next, () => {
-                // Verify after write; if we lost a race, merge and retry (bounded).
                 getAll(STORAGE_KEYS.RESULT_ORIGINS, after => {
-                    const finalArr = Array.isArray(after?.[k]) ? after[k] : [];
+                    const afterObj = after && typeof after === "object" ? after : {};
+                    const finalArrRaw = Array.isArray(afterObj[k]) ? afterObj[k] : [];
 
-                    if (!finalArr.includes(origin) && attempt < 2) {
-                        appendResultOrigin(tabId, origin, callback, attempt + 1);
-                    } else {
-                        appendKeyToEnd(STORAGE_KEYS.RESULT_ORIGINS_ORDER, k, callback);
+                    const finalArrUnique = uniq(finalArrRaw);
+                    const needsRetry = !finalArrUnique.includes(origin);
+                    const hadDuplicates = finalArrUnique.length !== finalArrRaw.length;
+
+                    let action = "finish";
+
+                    // Decide next action exactly once
+                    if ((needsRetry || hadDuplicates) && attempt < 2) {
+                        action = "retry";
+                    } else if (hadDuplicates) {
+                        action = "dedupe_then_finish";
                     }
+
+                    if (action === "retry") {
+                        console.warn(needsRetry ?
+                            "Race detected when appending '" + origin + "' origin; retrying. Attempt: " + (attempt + 1) :
+                            "Duplicates detected in storage; de-duping '" + origin + "' origin and retrying. Attempt: " + (attempt + 1)
+                        );
+
+                        appendResultOrigin(tabId, origin, callback, attempt + 1);
+                        return;
+                    }
+
+                    if (action === "dedupe_then_finish") {
+                        // Clean up duplicates even if we hit retry limit.
+                        afterObj[k] = finalArrUnique;
+                        setAll(STORAGE_KEYS.RESULT_ORIGINS, afterObj, finish);
+                        return;
+                    }
+
+                    // action === "finish"
+                    finish();
                 });
             });
         });
@@ -977,70 +1007,35 @@
     browserAPI.runtime.onMessage.addListener((message, sender, sendResponse) => {
         if (message.messageType === Messages.BLOCKED_COUNTER_PING && sender.tab && sender.tab.id !== null) {
             const tabId = sender.tab.id;
-            const k = tabKey(tabId);
 
-            getAll(STORAGE_KEYS.RESULT_ORIGINS, all => {
-                if (!Object.hasOwn(all, k)) {
-                    console.debug(`Result origins is undefined for tab ID ${tabId}`);
-
-                    // Clears the badge if we don't have state for this tab
-                    browserAPI.action.setBadgeText({text: "", tabId});
-
-                    console.warn("Sent PONG on reply with count: " + 0);
-
-                    // Replies and also broadcasts a PONG so the warning page updates itself
-                    browserAPI.tabs.sendMessage(tabId, {
-                        messageType: Messages.BLOCKED_COUNTER_PONG,
-                        count: 0,
-                        systems: []
-                    }).catch(() => {
-                    });
-
-                    sendResponse({count: 0, systems: []});
-                    return;
-                }
-
-                const arr = all[k] || [];
-                const fullCount = (arr.length || 0) + 1; // keep for badge
-                const othersCount = Array.isArray(arr) ? arr.length : 0;
+            getResultOrigins(tabId, originsArr => {
+                const fullCount = (Array.isArray(originsArr) ? originsArr.length : 0) + 1;
+                const othersCount = Array.isArray(originsArr) ? originsArr.length : 0;
 
                 // Sets the action text to the result count
                 browserAPI.action.setBadgeText({text: `${fullCount}`, tabId});
                 browserAPI.action.setBadgeBackgroundColor({color: "rgb(255,75,75)", tabId});
                 browserAPI.action.setBadgeTextColor({color: "white", tabId});
 
-                // If the page URL is the block page, sends (count - 1)
+                // If the page URL is the block page, send (count - 1)
                 browserAPI.tabs.get(tabId, tab => {
                     if (tab?.url === undefined) {
                         console.debug(`tabs.get(${tabId}) failed '${browserAPI.runtime.lastError?.message}'; bailing out.`);
-                        console.warn("Sent PONG in INCORRECT location with count: " + fullCount);
-
-                        // Broadcast PONG even if tabs.get fails, then respond.
-                        browserAPI.tabs.sendMessage(tabId, {
-                            messageType: Messages.BLOCKED_COUNTER_PONG,
-                            count: fullCount,
-                            systems: arr || []
-                        }).catch(() => {
-                        });
-
-                        sendResponse({count: fullCount, systems: arr || []});
                         return;
                     }
 
-                    const adjustedCount = othersCount;
+                    console.warn("Sent PONG in OTHER location with count: " + othersCount);
 
-                    console.warn("Sent PONG in NOT SURE location with count: " + adjustedCount);
-
-                    // Broadcasts PONG so the warning page updates after refresh
+                    // Sends a PONG message to the content script to update the blocked counter
                     browserAPI.tabs.sendMessage(tabId, {
                         messageType: Messages.BLOCKED_COUNTER_PONG,
-                        count: adjustedCount,
-                        systems: arr || []
+                        count: othersCount,
+                        systems: originsArr || []
                     }).catch(() => {
                     });
 
                     // And responds to the original PING as well
-                    sendResponse({count: adjustedCount, systems: arr || []});
+                    sendResponse({count: othersCount, systems: originsArr || []});
                 });
             });
             return true;
