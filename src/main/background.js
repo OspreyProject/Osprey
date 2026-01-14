@@ -423,7 +423,8 @@
 
                     const blockedCounterDelay = 150;
 
-                    setTimeout(() => { // TODO: Is this still needed?
+                    // This timeout is needed to prevent visual artifacts on page load
+                    setTimeout(() => {
                         const resultOrigins = getResultOrigins(tabId);
                         const fullCount = (Array.isArray(resultOrigins) ? resultOrigins.length : 0) + 1;
                         const othersCount = Array.isArray(resultOrigins) ? resultOrigins.length : 0;
