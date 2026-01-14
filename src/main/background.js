@@ -997,7 +997,6 @@
                 browserAPI.tabs.get(tabId, tab => {
                     if (tab?.url === undefined) {
                         console.debug(`tabs.get(${tabId}) failed '${browserAPI.runtime.lastError?.message}'; bailing out.`);
-
                         console.warn("Sent PONG in INCORRECT location with count: " + fullCount);
 
                         // Broadcast PONG even if tabs.get fails, then respond.
@@ -1198,10 +1197,12 @@
                     CacheManager.removeUrlFromBlockedCache(message.blockedUrl, cacheName);
                 }
 
-                browserAPI.tabs.update(tabId, {url: message.continueUrl}).catch(error => {
-                    console.error(`Failed to update tab ${tabId}:`, error);
-                    sendToNewTabPage(tabId);
-                });
+                setTimeout(() => {
+                    browserAPI.tabs.update(tabId, {url: message.continueUrl}).catch(error => {
+                        console.error(`Failed to update tab ${tabId}:`, error);
+                        sendToNewTabPage(tabId);
+                    });
+                }, redirectDelay);
                 break;
             }
 
