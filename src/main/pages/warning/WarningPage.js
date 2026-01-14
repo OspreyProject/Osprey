@@ -61,7 +61,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         let currentLine = '';
 
         // Handles the Firefox-specific line length discrepancy
-        const isFirefox = typeof globalThis.chrome === "undefined";
+        const isFirefox = globalThis.chrome === undefined;
         const firefoxLineLength = 110;
         const otherLineLength = 100;
         let maxLineLength = isFirefox ? firefoxLineLength : otherLineLength;
