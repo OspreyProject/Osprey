@@ -17,7 +17,7 @@
  */
 "use strict";
 
-// Manages user preferences and configurations.
+// Manages user preferences and configurations
 const Settings = (() => {
 
     // Key for storing settings in local storage

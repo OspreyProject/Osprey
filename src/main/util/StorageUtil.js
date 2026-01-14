@@ -17,7 +17,7 @@
  */
 "use strict";
 
-// Storage utility for interacting with the browser's local storage.
+// Storage utility for interacting with the browser's local storage
 const StorageUtil = (() => {
 
     // Browser API compatibility between Chrome and Firefox
@@ -54,10 +54,10 @@ const StorageUtil = (() => {
                 return;
             }
 
-            // Extracts the value associated with the key.
+            // Extracts the value associated with the key
             let value = result?.[key];
 
-            // Calls the callback function with the retrieved value.
+            // Calls the callback function with the retrieved value
             fixedCallback(value);
         });
     };

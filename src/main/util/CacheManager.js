@@ -17,7 +17,7 @@
  */
 "use strict";
 
-// Manages the cache for the allowed protection providers.
+// Manages the cache for the allowed protection providers
 const CacheManager = (() => {
 
     // Key names for the caches in local and session storage
@@ -220,7 +220,7 @@ const CacheManager = (() => {
      * Clears all allowed caches.
      */
     const clearAllowedCache = () => {
-        // Returns if the allowed cache is not defined.
+        // Returns if the allowed cache is not defined
         if (!allowedCaches || typeof allowedCaches !== 'object') {
             console.warn('allowedCache is not defined or not an object');
             return;
@@ -238,7 +238,7 @@ const CacheManager = (() => {
      * Clears all blocked caches.
      */
     const clearBlockedCache = () => {
-        // Returns if the blocked cache is not defined.
+        // Returns if the blocked cache is not defined
         if (!blockedCaches || typeof blockedCaches !== 'object') {
             console.warn('blockedCache is not defined or not an object');
             return;

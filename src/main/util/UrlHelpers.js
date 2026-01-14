@@ -17,7 +17,7 @@
  */
 "use strict";
 
-// Object containing helper functions for working with URLs.
+// Object containing helper functions for working with URLs
 const UrlHelpers = (() => {
 
     // Browser API compatibility between Chrome and Firefox
