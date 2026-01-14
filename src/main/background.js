@@ -47,203 +47,71 @@
         console.debug(`Error: ${error}`);
     }
 
-    // Keys for session storage maps
-    const STORAGE_KEYS = {
-        RESULT_ORIGINS: 'resultOrigins',
-        RESULT_ORIGINS_ORDER: 'resultOriginsOrder',
-        FRAME_ZERO_URLS: 'frameZeroUrls',
-        FRAME_ZERO_URLS_ORDER: 'frameZeroUrlsOrder',
-    };
-
-    // Clears all session storage elements
-    StorageUtil.setToSessionStore(STORAGE_KEYS.RESULT_ORIGINS, {}, () => {
-    });
-    StorageUtil.setToSessionStore(STORAGE_KEYS.RESULT_ORIGINS_ORDER, [], () => {
-    });
-    StorageUtil.setToSessionStore(STORAGE_KEYS.FRAME_ZERO_URLS, {}, () => {
-    });
-    StorageUtil.setToSessionStore(STORAGE_KEYS.FRAME_ZERO_URLS_ORDER, [], () => {
-    });
-
     // Clears the processing cache
     CacheManager.clearProcessingCache();
 
-    const tabKey = tabId => `tab_${tabId}`;
+    // Map<tabKey, Array<origin>> (Integer) of result origins per tab
+    const resultOriginsMap = new Map();
+
+    // Map<tabKey, urlString> of frame-zero URLs per tab
+    const frameZeroUrlsMap = new Map();
 
     /**
-     * Sends a message to open a new tab with the extension's new tab page.
+     * Retrieves the result origins for a specific tab.
      *
-     * @param key - The key to send in the message.
-     * @param callback - Callback function to execute after sending the message.
+     * @param tabId - The ID of the tab.
+     * @returns {any|*[]} - An array of result origins for the specified tab.
      */
-    const getOrder = (key, callback) => {
-        StorageUtil.getFromSessionStore(key, order => callback(Array.isArray(order) ? order : []));
+    const getResultOrigins = tabId => {
+        return resultOriginsMap.get(tabId) || [];
     };
 
     /**
-     * Sets the order of keys in session storage.
-     *
-     * @param key - The key for the ordered list in session storage.
-     * @param order - The array of keys representing the order.
-     * @param callback - Callback function to execute after setting.
-     */
-    const setOrder = (key, order, callback) => {
-        StorageUtil.setToSessionStore(key, order, () => typeof callback === 'function' ? callback() : undefined);
-    };
-
-    /**
-     * Appends a key to the end of an ordered list stored in session storage.
-     *
-     * @param orderKey - The key for the ordered list in session storage.
-     * @param keyStr - The key to append to the list.
-     * @param callback - Callback function to execute after appending.
-     */
-    const appendKeyToEnd = (orderKey, keyStr, callback) => {
-        getOrder(orderKey, ord => {
-            const next = ord.filter(k => k !== keyStr);
-
-            // Append to the end
-            next.push(keyStr);
-            setOrder(orderKey, next, callback);
-        });
-    };
-
-    /**
-     * Retrieves all key-value pairs from a map stored in session storage.
-     *
-     * @param mapKey - The key for the map in session storage.
-     * @param callback - Callback function to execute with the retrieved object.
-     */
-    const getAll = (mapKey, callback) => {
-        StorageUtil.getFromSessionStore(mapKey, obj => callback(obj && typeof obj === 'object' ? obj : {}));
-    };
-
-    /**
-     * Sets all key-value pairs in a map stored in session storage.
-     *
-     * @param mapKey - The key for the map in session storage.
-     * @param obj - The object containing key-value pairs to set.
-     * @param callback - Callback function to execute after setting.
-     */
-    const setAll = (mapKey, obj, callback) => {
-        StorageUtil.setToSessionStore(mapKey, obj, () => typeof callback === 'function' ? callback() : undefined);
-    };
-
-    /**
-     * Appends a result origin to the list for a specific tab.
+     * Appends a result origin to the result origins for a specific tab.
      *
      * @param tabId - The ID of the tab.
      * @param origin - The origin to append.
-     * @param callback - Callback function to execute after appending.
-     * @param attempt - Current attempt count for retrying in.
      */
-    const appendResultOrigin = (tabId, origin, callback, attempt = 0) => {
-        const k = tabKey(tabId);
+    const appendResultOrigin = (tabId, origin) => {
+        // Check if the origin is an Integer
+        if (typeof origin !== 'number' || !Number.isInteger(origin)) {
+            console.warn(`Invalid origin type: ${origin}; must be an integer.`);
+            return;
+        }
 
-        getAll(STORAGE_KEYS.RESULT_ORIGINS, obj => {
-            const next = obj && typeof obj === 'object' ? obj : {};
-            const arr = Array.isArray(next[k]) ? next[k] : [];
-
-            if (!arr.includes(origin)) {
-                arr.push(origin);
-            }
-
-            next[k] = arr;
-
-            setAll(STORAGE_KEYS.RESULT_ORIGINS, next, () => {
-                // Verify after write; if we lost a race, merge and retry (bounded).
-                getAll(STORAGE_KEYS.RESULT_ORIGINS, after => {
-                    const finalArr = Array.isArray(after?.[k]) ? after[k] : [];
-
-                    if (!finalArr.includes(origin) && attempt < 2) {
-                        console.warn("Race detected when appending result origin; retrying. Attempt: " + (attempt + 1));
-                        appendResultOrigin(tabId, origin, callback, attempt + 1);
-                    } else {
-                        appendKeyToEnd(STORAGE_KEYS.RESULT_ORIGINS_ORDER, k, callback);
-                    }
-                });
-            });
-        });
+        // Appends the origin if it doesn't already exist
+        const origins = resultOriginsMap.get(tabId) || [];
+        if (!origins.includes(origin)) {
+            resultOriginsMap.set(tabId, [...origins, origin]);
+        }
     };
 
     /**
-     * Retrieves the list of result origins for a specific tab.
-     *
-     * @param tabId - The ID of the tab.
-     * @param callback - Callback function to execute with the retrieved array.
-     */
-    const getResultOrigins = (tabId, callback) => {
-        const k = tabKey(tabId);
-        getAll(STORAGE_KEYS.RESULT_ORIGINS, obj => callback(obj[k] || []));
-    };
-
-    /**
-     * Sets the list of result origins for a specific tab.
-     *
-     * @param tabId - The ID of the tab.
-     * @param origins - The array of origins to set.
-     * @param callback - Callback function to execute after setting.
-     */
-    const setResultOrigins = (tabId, origins, callback) => {
-        const k = tabKey(tabId);
-
-        getAll(STORAGE_KEYS.RESULT_ORIGINS, obj => {
-            obj[k] = Array.isArray(origins) ? origins : [];
-
-            setAll(STORAGE_KEYS.RESULT_ORIGINS, obj, () =>
-                appendKeyToEnd(STORAGE_KEYS.RESULT_ORIGINS_ORDER, k, callback)
-            );
-        });
-    };
-
-    /**
-     * Removes a specific result origin from the list for a specific tab.
+     * Removes a specific origin from the result origins for a given tab.
      *
      * @param tabId - The ID of the tab.
      * @param origin - The origin to remove.
-     * @param callback - Callback function to execute after removal.
      */
-    const removeResultOrigin = (tabId, origin, callback) => {
-        getResultOrigins(tabId, arr => {
-            const next = (Array.isArray(arr) ? arr : []).filter(o => o !== origin);
-            setResultOrigins(tabId, next, callback);
-        });
+    const removeResultOrigin = (tabId, origin) => {
+        resultOriginsMap.set(tabId, (resultOriginsMap.get(tabId) || []).filter(o => o !== origin));
     };
 
     /**
      * Deletes the result origins for a specific tab.
      *
      * @param tabId - The ID of the tab.
-     * @param callback - Callback function to execute after deletion.
      */
-    const deleteResultOrigins = (tabId, callback) => {
-        const k = tabKey(tabId);
-
-        getAll(STORAGE_KEYS.RESULT_ORIGINS, obj => {
-            if (Object.hasOwn(obj, k)) {
-                delete obj[k];
-            }
-
-            setAll(STORAGE_KEYS.RESULT_ORIGINS, obj, () => {
-                getOrder(STORAGE_KEYS.RESULT_ORIGINS_ORDER, ord =>
-                    setOrder(STORAGE_KEYS.RESULT_ORIGINS_ORDER, ord.filter(x => x !== k), callback)
-                );
-            });
-
-            // Print the new origins map for debugging
-            console.warn("Deleted result origins for tab " + tabId + ". New map: ", obj);
-        });
+    const deleteResultOrigins = tabId => {
+        resultOriginsMap.delete(tabId);
     };
 
     /**
      * Retrieves the frame-zero URL for a specific tab.
      *
      * @param tabId - The ID of the tab.
-     * @param callback - Callback function to execute with the retrieved URL.
      */
-    const getFrameZeroUrl = (tabId, callback) => {
-        const k = tabKey(tabId);
-        getAll(STORAGE_KEYS.FRAME_ZERO_URLS, obj => callback(obj[k]));
+    const getFrameZeroUrl = tabId => {
+        return frameZeroUrlsMap.get(tabId) || "";
     };
 
     /**
@@ -251,84 +119,19 @@
      *
      * @param tabId - The ID of the tab.
      * @param url - The URL to set.
-     * @param callback - Callback function to execute after setting.
      */
-    const setFrameZeroUrl = (tabId, url, callback) => {
-        const k = tabKey(tabId);
-
-        getAll(STORAGE_KEYS.FRAME_ZERO_URLS, obj => {
-            obj[k] = url;
-
-            setAll(STORAGE_KEYS.FRAME_ZERO_URLS, obj, () =>
-                appendKeyToEnd(STORAGE_KEYS.FRAME_ZERO_URLS_ORDER, k, callback)
-            );
-        });
+    const setFrameZeroUrl = (tabId, url) => {
+        frameZeroUrlsMap.set(tabId, url);
     };
 
     /**
      * Deletes the frame-zero URL for a specific tab.
      *
      * @param tabId - The ID of the tab.
-     * @param callback - Callback function to execute after deletion.
      */
-    const deleteFrameZeroUrl = (tabId, callback) => {
-        const k = tabKey(tabId);
-
-        getAll(STORAGE_KEYS.FRAME_ZERO_URLS, obj => {
-            if (Object.hasOwn(obj, k)) {
-                delete obj[k];
-            }
-
-            setAll(STORAGE_KEYS.FRAME_ZERO_URLS, obj, () => {
-                getOrder(STORAGE_KEYS.FRAME_ZERO_URLS_ORDER, ord =>
-                    setOrder(STORAGE_KEYS.FRAME_ZERO_URLS_ORDER, ord.filter(x => x !== k), callback)
-                );
-            });
-        });
+    const deleteFrameZeroUrl = tabId => {
+        frameZeroUrlsMap.delete(tabId);
     };
-
-    // Interval for map cleanups
-    const CLEANUP_INTERVAL = 300000; // 5 minutes
-
-    // Cleans up maps automatically
-    setInterval(() => {
-        getOrder(STORAGE_KEYS.RESULT_ORIGINS_ORDER, rOrder => {
-            getOrder(STORAGE_KEYS.FRAME_ZERO_URLS_ORDER, fOrder => {
-                browserAPI.tabs.query({}, tabs => {
-                    const activeTabIds = new Set(tabs.map(tab => tab.id));
-                    const activeKeys = new Set([...activeTabIds].map(id => tabKey(id)));
-
-                    getAll(STORAGE_KEYS.RESULT_ORIGINS, rMap => {
-                        getAll(STORAGE_KEYS.FRAME_ZERO_URLS, fMap => {
-                            for (const k of Object.keys(rMap)) {
-                                if (!activeKeys.has(k)) {
-                                    delete rMap[k];
-                                }
-                            }
-
-                            for (const k of Object.keys(fMap)) {
-                                if (!activeKeys.has(k)) {
-                                    delete fMap[k];
-                                }
-                            }
-
-                            const newROrder = (rOrder || []).filter(k => Object.hasOwn(rMap, k));
-                            const newFOrder = (fOrder || []).filter(k => Object.hasOwn(fMap, k));
-
-                            setAll(STORAGE_KEYS.RESULT_ORIGINS, rMap, () => {
-                                setAll(STORAGE_KEYS.FRAME_ZERO_URLS, fMap, () => {
-                                    setOrder(STORAGE_KEYS.RESULT_ORIGINS_ORDER, newROrder, () => {
-                                        setOrder(STORAGE_KEYS.FRAME_ZERO_URLS_ORDER, newFOrder, () => {
-                                        });
-                                    });
-                                });
-                            });
-                        });
-                    });
-                });
-            });
-        });
-    }, CLEANUP_INTERVAL);
 
     /**
      * Sends the user to the new tab page.
@@ -517,8 +320,7 @@
                 // Removes all cached keys for the tab
                 CacheManager.removeKeysByTabId(tabId);
 
-                // Resets per-tab session data and push keys to the end (preserves addition order)
-                deleteResultOrigins(tabId);
+                // Sets the frame-zero URL for the tab
                 setFrameZeroUrl(tabId, urlString);
             }
 
@@ -575,16 +377,14 @@
                             const targetUrl = frameId === 0 ? urlString : pendingUrl;
 
                             if (targetUrl) {
-                                // Obtains frame-zero URL from session, falls back to result.url if unavailable
-                                getFrameZeroUrl(tabId, f0 => {
-                                    const blockPageUrl = UrlHelpers.getBlockPageUrl(result, f0 === undefined ? result.url : f0);
+                                const frameZeroUrl = getFrameZeroUrl(tabId);
+                                const blockPageUrl = UrlHelpers.getBlockPageUrl(result, frameZeroUrl === undefined ? result.url : frameZeroUrl);
 
-                                    // Navigates to the block page
-                                    console.debug(`[${shortName}] Navigating to block page: ${blockPageUrl}.`);
-                                    browserAPI.tabs.update(tab.id, {url: blockPageUrl}).catch(error => {
-                                        console.error(`Failed to update tab ${tabId}:`, error);
-                                        sendToNewTabPage(tabId);
-                                    });
+                                // Navigates to the block page
+                                console.debug(`[${shortName}] Navigating to block page: ${blockPageUrl}.`);
+                                browserAPI.tabs.update(tab.id, {url: blockPageUrl}).catch(error => {
+                                    console.error(`Failed to update tab ${tabId}:`, error);
+                                    sendToNewTabPage(tabId);
                                 });
 
                                 // Builds the warning notification options
@@ -623,35 +423,34 @@
 
                     const blockedCounterDelay = 150;
 
-                    setTimeout(() => {
-                        getResultOrigins(tabId, originsArr => {
-                            const fullCount = (Array.isArray(originsArr) ? originsArr.length : 0) + 1;
-                            const othersCount = Array.isArray(originsArr) ? originsArr.length : 0;
+                    setTimeout(() => { // TODO: Is this still needed?
+                        const resultOrigins = getResultOrigins(tabId);
+                        const fullCount = (Array.isArray(resultOrigins) ? resultOrigins.length : 0) + 1;
+                        const othersCount = Array.isArray(resultOrigins) ? resultOrigins.length : 0;
 
-                            // Print the whole list
-                            console.warn("Current origins for tab " + tabId + ": " + (originsArr || []).join(", "));
+                        // Print the whole list
+                        console.warn("Current origins for tab " + tabId + ": " + (resultOrigins || []).join(", "));
 
-                            // Sets the action text to the result count
-                            browserAPI.action.setBadgeText({text: `${fullCount}`, tabId});
-                            browserAPI.action.setBadgeBackgroundColor({color: "rgb(255,75,75)", tabId});
-                            browserAPI.action.setBadgeTextColor({color: "white", tabId});
+                        // Sets the action text to the result count
+                        browserAPI.action.setBadgeText({text: `${fullCount}`, tabId});
+                        browserAPI.action.setBadgeBackgroundColor({color: "rgb(255,75,75)", tabId});
+                        browserAPI.action.setBadgeTextColor({color: "white", tabId});
 
-                            // If the page URL is the block page, send (count - 1)
-                            browserAPI.tabs.get(tabId, tab => {
-                                if (tab?.url === undefined) {
-                                    console.debug(`tabs.get(${tabId}) failed '${browserAPI.runtime.lastError?.message}'; bailing out.`);
-                                    return;
-                                }
+                        // If the page URL is the block page, send (count - 1)
+                        browserAPI.tabs.get(tabId, tab => {
+                            if (tab?.url === undefined) {
+                                console.debug(`tabs.get(${tabId}) failed '${browserAPI.runtime.lastError?.message}'; bailing out.`);
+                                return;
+                            }
 
-                                console.warn("Sent PONG in correct location with count: " + othersCount);
+                            console.warn("Sent PONG in correct location with count: " + othersCount);
 
-                                // Sends a PONG message to the content script to update the blocked counter
-                                browserAPI.tabs.sendMessage(tabId, {
-                                    messageType: Messages.BLOCKED_COUNTER_PONG,
-                                    count: othersCount,
-                                    systems: originsArr || [] // array of origin numbers
-                                }).catch(() => {
-                                });
+                            // Sends a PONG message to the content script to update the blocked counter
+                            browserAPI.tabs.sendMessage(tabId, {
+                                messageType: Messages.BLOCKED_COUNTER_PONG,
+                                count: othersCount,
+                                systems: resultOrigins || []
+                            }).catch(() => {
                             });
                         });
                     }, blockedCounterDelay);
@@ -984,39 +783,37 @@
     browserAPI.runtime.onMessage.addListener((message, sender, sendResponse) => {
         if (message.messageType === Messages.BLOCKED_COUNTER_PING && sender.tab && sender.tab.id !== null) {
             const tabId = sender.tab.id;
+            const resultOrigins = getResultOrigins(tabId);
+            const fullCount = (Array.isArray(resultOrigins) ? resultOrigins.length : 0) + 1;
+            const othersCount = Array.isArray(resultOrigins) ? resultOrigins.length : 0;
 
-            getResultOrigins(tabId, originsArr => {
-                const fullCount = (Array.isArray(originsArr) ? originsArr.length : 0) + 1;
-                const othersCount = Array.isArray(originsArr) ? originsArr.length : 0;
+            // Print the whole list
+            console.warn("Current origins for tab " + tabId + ": " + (resultOrigins || []).join(", "));
 
-                // Print the whole list
-                console.warn("Current origins for tab " + tabId + ": " + (originsArr || []).join(", "));
+            // Sets the action text to the result count
+            browserAPI.action.setBadgeText({text: `${fullCount}`, tabId});
+            browserAPI.action.setBadgeBackgroundColor({color: "rgb(255,75,75)", tabId});
+            browserAPI.action.setBadgeTextColor({color: "white", tabId});
 
-                // Sets the action text to the result count
-                browserAPI.action.setBadgeText({text: `${fullCount}`, tabId});
-                browserAPI.action.setBadgeBackgroundColor({color: "rgb(255,75,75)", tabId});
-                browserAPI.action.setBadgeTextColor({color: "white", tabId});
+            // If the page URL is the block page, send (count - 1)
+            browserAPI.tabs.get(tabId, tab => {
+                if (tab?.url === undefined) {
+                    console.debug(`tabs.get(${tabId}) failed '${browserAPI.runtime.lastError?.message}'; bailing out.`);
+                    return;
+                }
 
-                // If the page URL is the block page, send (count - 1)
-                browserAPI.tabs.get(tabId, tab => {
-                    if (tab?.url === undefined) {
-                        console.debug(`tabs.get(${tabId}) failed '${browserAPI.runtime.lastError?.message}'; bailing out.`);
-                        return;
-                    }
+                console.warn("Sent PONG in OTHER location with count: " + othersCount);
 
-                    console.warn("Sent PONG in OTHER location with count: " + othersCount);
-
-                    // Sends a PONG message to the content script to update the blocked counter
-                    browserAPI.tabs.sendMessage(tabId, {
-                        messageType: Messages.BLOCKED_COUNTER_PONG,
-                        count: othersCount,
-                        systems: originsArr || []
-                    }).catch(() => {
-                    });
-
-                    // And responds to the original PING as well
-                    sendResponse({count: othersCount, systems: originsArr || []});
+                // Sends a PONG message to the content script to update the blocked counter
+                browserAPI.tabs.sendMessage(tabId, {
+                    messageType: Messages.BLOCKED_COUNTER_PONG,
+                    count: othersCount,
+                    systems: resultOrigins || []
+                }).catch(() => {
                 });
+
+                // And responds to the original PING as well
+                sendResponse({count: othersCount, systems: resultOrigins || []});
             });
             return true;
         }
