@@ -620,6 +620,8 @@
                                     return;
                                 }
 
+                                console.warn("Sent PONG in correct location with count: " + othersCount);
+
                                 // Sends a PONG message to the content script to update the blocked counter
                                 browserAPI.tabs.sendMessage(tabId, {
                                     messageType: Messages.BLOCKED_COUNTER_PONG,
@@ -968,6 +970,8 @@
                     // Clears the badge if we don't have state for this tab
                     browserAPI.action.setBadgeText({text: "", tabId});
 
+                    console.warn("Sent PONG on reply with count: " + 0);
+
                     // Replies and also broadcasts a PONG so the warning page updates itself
                     browserAPI.tabs.sendMessage(tabId, {
                         messageType: Messages.BLOCKED_COUNTER_PONG,
@@ -994,6 +998,8 @@
                     if (tab?.url === undefined) {
                         console.debug(`tabs.get(${tabId}) failed '${browserAPI.runtime.lastError?.message}'; bailing out.`);
 
+                        console.warn("Sent PONG in INCORRECT location with count: " + fullCount);
+
                         // Broadcast PONG even if tabs.get fails, then respond.
                         browserAPI.tabs.sendMessage(tabId, {
                             messageType: Messages.BLOCKED_COUNTER_PONG,
@@ -1007,6 +1013,8 @@
                     }
 
                     const adjustedCount = othersCount;
+
+                    console.warn("Sent PONG in NOT SURE location with count: " + adjustedCount);
 
                     // Broadcasts PONG so the warning page updates after refresh
                     browserAPI.tabs.sendMessage(tabId, {
