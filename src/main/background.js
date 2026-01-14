@@ -606,6 +606,7 @@
                     setTimeout(() => {
                         getResultOrigins(tabId, originsArr => {
                             const fullCount = (Array.isArray(originsArr) ? originsArr.length : 0) + 1;
+                            const othersCount = Array.isArray(originsArr) ? originsArr.length : 0;
 
                             // Sets the action text to the result count
                             browserAPI.action.setBadgeText({text: `${fullCount}`, tabId});
@@ -619,13 +620,10 @@
                                     return;
                                 }
 
-                                const isBlockPage = tab.url?.includes("/WarningPage.html");
-                                const adjustedCount = isBlockPage && fullCount > 0 ? fullCount - 1 : fullCount;
-
                                 // Sends a PONG message to the content script to update the blocked counter
                                 browserAPI.tabs.sendMessage(tabId, {
                                     messageType: Messages.BLOCKED_COUNTER_PONG,
-                                    count: adjustedCount,
+                                    count: othersCount,
                                     systems: originsArr || [] // array of origin numbers
                                 }).catch(() => {
                                 });
@@ -983,7 +981,8 @@
                 }
 
                 const arr = all[k] || [];
-                const fullCount = (arr.length || 0) + 1;
+                const fullCount = (arr.length || 0) + 1; // keep for badge
+                const othersCount = Array.isArray(arr) ? arr.length : 0;
 
                 // Sets the action text to the result count
                 browserAPI.action.setBadgeText({text: `${fullCount}`, tabId});
@@ -1007,8 +1006,7 @@
                         return;
                     }
 
-                    const isBlockPage = tab.url?.includes("/WarningPage.html");
-                    const adjustedCount = isBlockPage && fullCount > 0 ? fullCount - 1 : fullCount;
+                    const adjustedCount = othersCount;
 
                     // Broadcasts PONG so the warning page updates after refresh
                     browserAPI.tabs.sendMessage(tabId, {
