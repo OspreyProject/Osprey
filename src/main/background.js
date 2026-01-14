@@ -139,57 +139,28 @@
      */
     const appendResultOrigin = (tabId, origin, callback, attempt = 0) => {
         const k = tabKey(tabId);
-        const uniq = (list) => Array.from(new Set(list));
-
-        const finish = () => {
-            console.warn("Successfully appended '" + origin + "' origin to tab: " + tabId);
-            appendKeyToEnd(STORAGE_KEYS.RESULT_ORIGINS_ORDER, k, callback);
-        };
 
         getAll(STORAGE_KEYS.RESULT_ORIGINS, obj => {
-            const next = obj && typeof obj === "object" ? obj : {};
-            const existing = Array.isArray(next[k]) ? next[k] : [];
+            const next = obj && typeof obj === 'object' ? obj : {};
+            const arr = Array.isArray(next[k]) ? next[k] : [];
 
-            // Always write unique (also cleans up historical duplicates)
-            next[k] = uniq([...existing, origin]);
+            if (!arr.includes(origin)) {
+                arr.push(origin);
+            }
+
+            next[k] = arr;
 
             setAll(STORAGE_KEYS.RESULT_ORIGINS, next, () => {
+                // Verify after write; if we lost a race, merge and retry (bounded).
                 getAll(STORAGE_KEYS.RESULT_ORIGINS, after => {
-                    const afterObj = after && typeof after === "object" ? after : {};
-                    const finalArrRaw = Array.isArray(afterObj[k]) ? afterObj[k] : [];
+                    const finalArr = Array.isArray(after?.[k]) ? after[k] : [];
 
-                    const finalArrUnique = uniq(finalArrRaw);
-                    const needsRetry = !finalArrUnique.includes(origin);
-                    const hadDuplicates = finalArrUnique.length !== finalArrRaw.length;
-
-                    let action = "finish";
-
-                    // Decide next action exactly once
-                    if ((needsRetry || hadDuplicates) && attempt < 2) {
-                        action = "retry";
-                    } else if (hadDuplicates) {
-                        action = "dedupe_then_finish";
-                    }
-
-                    if (action === "retry") {
-                        console.warn(needsRetry ?
-                            "Race detected when appending '" + origin + "' origin; retrying. Attempt: " + (attempt + 1) :
-                            "Duplicates detected in storage; de-duping '" + origin + "' origin and retrying. Attempt: " + (attempt + 1)
-                        );
-
+                    if (!finalArr.includes(origin) && attempt < 2) {
+                        console.warn("Race detected when appending result origin; retrying. Attempt: " + (attempt + 1));
                         appendResultOrigin(tabId, origin, callback, attempt + 1);
-                        return;
+                    } else {
+                        appendKeyToEnd(STORAGE_KEYS.RESULT_ORIGINS_ORDER, k, callback);
                     }
-
-                    if (action === "dedupe_then_finish") {
-                        // Clean up duplicates even if we hit retry limit.
-                        afterObj[k] = finalArrUnique;
-                        setAll(STORAGE_KEYS.RESULT_ORIGINS, afterObj, finish);
-                        return;
-                    }
-
-                    // action === "finish"
-                    finish();
                 });
             });
         });
@@ -1011,6 +982,9 @@
             getResultOrigins(tabId, originsArr => {
                 const fullCount = (Array.isArray(originsArr) ? originsArr.length : 0) + 1;
                 const othersCount = Array.isArray(originsArr) ? originsArr.length : 0;
+
+                // Print the whole list
+                console.warn("Current origins for tab " + tabId + ": " + (originsArr || []).join(", "));
 
                 // Sets the action text to the result count
                 browserAPI.action.setBadgeText({text: `${fullCount}`, tabId});
