@@ -28,15 +28,15 @@ const Settings = (() => {
         adGuardSecurityEnabled: true,
         adGuardFamilyEnabled: false,
         alphaMountainEnabled: true,
-        precisionSecEnabled: true,
+        precisionSecEnabled: false,
 
         // Non-Partnered Providers
         certEEEnabled: false,
-        cleanBrowsingSecurityEnabled: true,
+        cleanBrowsingSecurityEnabled: false,
         cleanBrowsingFamilyEnabled: false,
         cloudflareSecurityEnabled: true,
         cloudflareFamilyEnabled: false,
-        controlDSecurityEnabled: false,
+        controlDSecurityEnabled: true,
         controlDFamilyEnabled: false,
         dns4EUSecurityEnabled: true,
         dns4EUFamilyEnabled: false,
