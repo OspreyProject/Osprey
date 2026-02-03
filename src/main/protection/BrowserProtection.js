@@ -608,7 +608,7 @@ const BrowserProtection = (() => {
                 }
 
                 // If the data matches this specific pattern, it's blocked
-                if (filteringDataString.endsWith("180,0,0,9,58,128")) {
+                if (filteringDataString.endsWith("0,0,0,60,0,0,0,60,0,0,7,8,0,0,0,60")) {
                     console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
                     CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.MALICIOUS, origin));
