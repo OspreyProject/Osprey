@@ -57,12 +57,6 @@ Check out some of our endorsers below:
 
 ###
 
-## Install & Setup Guide
-
-<p align="center">
-  <a href="https://youtu.be/CAVACABfZ0E" title="Watch on YouTube"><img src="https://i.imgur.com/5dqFscb.png" alt="Watch on YouTube"></a>
-</p>
-
 ## Our Mission
 
 Our mission is simple: become the most **trusted**, **transparent**, and **effective** browser protection extension for
@@ -83,7 +77,13 @@ The more protection providers join the project, the better the Osprey threat int
 interested in improving global threat intelligence and want to join the project, feel free to get in contact with us
 at **support@osprey.ac**.
 
-## Warning
+## Install & Setup Guide
+
+<p align="center">
+  <a href="https://youtu.be/CAVACABfZ0E" title="Watch on YouTube"><img src="https://i.imgur.com/5dqFscb.png" alt="Watch on YouTube"></a>
+</p>
+
+## Warning Page
 
 If the website is malicious, Osprey will block the page and display a warning:
 
