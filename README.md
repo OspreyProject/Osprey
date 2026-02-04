@@ -57,6 +57,12 @@ Check out some of our endorsers below:
 
 ###
 
+## Install & Setup Guide
+
+<p align="center">
+  <a href="https://youtu.be/CAVACABfZ0E" title="Watch on YouTube"><img src="https://i.imgur.com/5dqFscb.png" alt="Watch on YouTube"></a>
+</p>
+
 ## Our Mission
 
 Our mission is simple: become the most **trusted**, **transparent**, and **effective** browser protection extension for
