@@ -452,16 +452,14 @@ class DNSMessage {
         const lines = [];
 
         // ----- header -----
-        lines.push("=== DNSMessage ===");
-        lines.push(`ID: 0x${this.id.toString(16).padStart(4, "0")} (${this.id})`);
-        lines.push(`Flags: 0x${this.flags.toString(16).padStart(4, "0")}  ${DNSMessage.flagsToString(this.flags)}`);
-        lines.push(
-            `Counts: QD=${this.qdCount}  AN=${this.anCount}  NS=${this.nsCount}  AR=${this.arCount}`
+        lines.push("=== DNSMessage ===",
+            `ID: 0x${this.id.toString(16).padStart(4, "0")} (${this.id})`,
+            `Flags: 0x${this.flags.toString(16).padStart(4, "0")}  ${DNSMessage.flagsToString(this.flags)}`,
+            `Counts: QD=${this.qdCount}  AN=${this.anCount}  NS=${this.nsCount}  AR=${this.arCount}`,
+            ``,
+            `-- Questions (${this.questions.length}) --`
         );
 
-        // ----- questions -----
-        lines.push("");
-        lines.push(`-- Questions (${this.questions.length}) --`);
         if (this.questions.length === 0) {
             lines.push("(none)");
         } else {
@@ -474,8 +472,10 @@ class DNSMessage {
 
         // ----- sections -----
         const dumpSection = (title, arr) => {
-            lines.push("");
-            lines.push(`-- ${title} (${arr.length}) --`);
+            lines.push(``,
+                `-- ${title} (${arr.length}) --`
+            );
+
             if (arr.length === 0) {
                 lines.push("(none)");
                 return;
@@ -536,7 +536,6 @@ class DNSMessage {
             3: "NXDOMAIN",
             4: "NOTIMP",
             5: "REFUSED"
-            // (others exist; leave numeric if unknown)
         };
 
         const parts = [];
@@ -580,7 +579,7 @@ class DNSMessage {
         const header = `${rr.name}  ${rr.ttl}  ${c}  ${t}`;
 
         // Pretty RDATA
-        let rdataStr = "";
+        let rdataStr;
         const r = rr.rdata;
 
         if (r === null) {
