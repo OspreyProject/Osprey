@@ -40,7 +40,7 @@ const Settings = (() => {
         controlDFamilyEnabled: false,
         dns4EUSecurityEnabled: true,
         dns4EUFamilyEnabled: false,
-        switchCHEnabled: false,
+        switchCHEnabled: true,
         quad9Enabled: true,
 
         // General Settings
