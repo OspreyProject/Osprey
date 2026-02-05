@@ -139,9 +139,13 @@
      * @param {number} tabId - The ID of the tab to be updated.
      */
     const sendToNewTabPage = tabId => {
-        if (replaceNewTabs) {
-            browserAPI.tabs.remove(tabId);
-            browserAPI.tabs.create({});
+        if (replaceNewTabs) { // Firefox regression workaround
+            browserAPI.tabs.update(tabId, {url: "about:newtab"});
+            browserAPI.tabs.update(tabId, {url: "about:home"});
+            browserAPI.tabs.update(tabId, {url: "about:blank"});
+
+            // browserAPI.tabs.remove(tabId);
+            // browserAPI.tabs.create({});
         } else {
             browserAPI.tabs.update(tabId, {url: "about:newtab"});
         }
