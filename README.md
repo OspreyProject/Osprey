@@ -144,6 +144,7 @@ The following providers are **disabled** by default:
 
 Providers disabled by default are either due to:
 
+- Ineffective protection results in testing
 - Frequent reports of false positives
 - Failure to respond to false positive reports
 - Being an optional adult content filter
