@@ -38,7 +38,7 @@ const Settings = (() => {
         cloudflareFamilyEnabled: false,
         controlDSecurityEnabled: false,
         controlDFamilyEnabled: false,
-        dns4EUSecurityEnabled: true,
+        dns4EUSecurityEnabled: false,
         dns4EUFamilyEnabled: false,
         switchCHEnabled: true,
         quad9Enabled: true,

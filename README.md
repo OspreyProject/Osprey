@@ -121,16 +121,17 @@ The following providers are **enabled** by default:
 
 - [x] **[AdGuard Security DNS](https://adguard-dns.io/?utm_source=osprey)**
 - [x] **[alphaMountain Web Protection](https://alphamountain.ai/?utm_source=osprey)**
-- [x] **[PrecisionSec Web Protection](https://precisionsec.com/?utm_source=osprey)**
 - [x] [CleanBrowsing Security DNS](https://cleanbrowsing.org/filters/?utm_source=osprey)
 - [x] [Cloudflare Security DNS](https://blog.cloudflare.com/introducing-1-1-1-1-for-families/?utm_source=osprey)
-- [x] [DNS4EU Security DNS](https://joindns4.eu/for-public/?utm_source=osprey)
 - [x] [Quad9 Security DNS](https://quad9.net/?utm_source=osprey)
+- [x] [Switch.ch Security DNS](https://portal.switch.ch/pub/public-dns)
 
 The following providers are **disabled** by default:
 
 #### Security Filters
 
+- [ ] **[PrecisionSec Web Protection](https://precisionsec.com/?utm_source=osprey)**
+- [ ] [DNS4EU Security DNS](https://joindns4.eu/for-public/?utm_source=osprey)
 - [ ] [Control D Security DNS](https://controld.com/?utm_source=osprey)
 - [ ] [CERT-EE Security DNS](https://ria.ee/en/news/application-developed-cert-ee-protects-against-phishing-and-malware/?utm_source=osprey)
 
