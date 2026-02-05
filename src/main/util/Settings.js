@@ -32,15 +32,15 @@ const Settings = (() => {
 
         // Non-Partnered Providers
         certEEEnabled: false,
-        cleanBrowsingSecurityEnabled: false,
+        cleanBrowsingSecurityEnabled: true,
         cleanBrowsingFamilyEnabled: false,
         cloudflareSecurityEnabled: true,
         cloudflareFamilyEnabled: false,
-        controlDSecurityEnabled: true,
+        controlDSecurityEnabled: false,
         controlDFamilyEnabled: false,
         dns4EUSecurityEnabled: true,
         dns4EUFamilyEnabled: false,
-        switchCHEnabled: true,
+        switchCHEnabled: false,
         quad9Enabled: true,
 
         // General Settings
