@@ -191,8 +191,8 @@ const BrowserProtection = (() => {
                 }
 
                 const filteringData = new Uint8Array(await filteringResponse.arrayBuffer());
-                const filteringDataString = Array.from(filteringData).toString();
                 const nonFilteringData = await nonFilteringResponse.json();
+                const response = DNSMessage.parse(filteringData);
                 const {Status, Answer} = nonFilteringData;
 
                 // Returns early if the domain is offline
@@ -202,12 +202,15 @@ const BrowserProtection = (() => {
                     return;
                 }
 
-                // If the data matches this specific pattern, it's blocked
-                if (filteringDataString.includes("0,0,1,0,1,192,12,0,1,0,1,0,0,14,16,0,4,94,140,14,3")) {
-                    console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
-                    CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
-                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.MALICIOUS, origin));
-                    return;
+                // Checks if the domain is blocked
+                for (const answer of response.answers) {
+                    if (answer.type === DNSMessage.RRType.A && typeof answer.rdata === "string" &&
+                        DNSMessage.normalizeName(answer.rdata) === "94.140.14.33") {
+                        console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
+                        CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
+                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.MALICIOUS, origin));
+                        return;
+                    }
                 }
 
                 // Otherwise, the domain is either invalid or not blocked
@@ -286,8 +289,8 @@ const BrowserProtection = (() => {
                 }
 
                 const filteringData = new Uint8Array(await filteringResponse.arrayBuffer());
-                const filteringDataString = Array.from(filteringData).toString();
                 const nonFilteringData = await nonFilteringResponse.json();
+                const response = DNSMessage.parse(filteringData);
                 const {Status, Answer} = nonFilteringData;
 
                 // Returns early if the domain is offline
@@ -297,12 +300,23 @@ const BrowserProtection = (() => {
                     return;
                 }
 
-                // If the data matches this specific pattern, it's blocked
-                if (filteringDataString.includes("0,0,1,0,1,192,12,0,1,0,1,0,0,14,16,0,4,94,140,14,3")) {
-                    console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
-                    CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.ADULT_CONTENT);
-                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.ADULT_CONTENT, origin));
-                    return;
+                // Checks if the domain is blocked
+                for (const answer of response.answers) {
+                    if (answer.type === DNSMessage.RRType.A && typeof answer.rdata === "string" &&
+                        DNSMessage.normalizeName(answer.rdata) === "94.140.14.33") {
+                        console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
+                        CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
+                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.MALICIOUS, origin));
+                        return;
+                    }
+
+                    if (answer.type === DNSMessage.RRType.A && typeof answer.rdata === "string" &&
+                        DNSMessage.normalizeName(answer.rdata) === "94.140.14.35") {
+                        console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
+                        CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.ADULT_CONTENT);
+                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.ADULT_CONTENT, origin));
+                        return;
+                    }
                 }
 
                 // Otherwise, the domain is either invalid or not blocked
@@ -596,8 +610,8 @@ const BrowserProtection = (() => {
                 }
 
                 const filteringData = new Uint8Array(await filteringResponse.arrayBuffer());
-                const filteringDataString = Array.from(filteringData).toString();
                 const nonFilteringData = await nonFilteringResponse.json();
+                const response = DNSMessage.parse(filteringData);
                 const {Status, Answer} = nonFilteringData;
 
                 // Returns early if the domain is offline
@@ -607,12 +621,15 @@ const BrowserProtection = (() => {
                     return;
                 }
 
-                // If the data matches this specific pattern, it's blocked
-                if (filteringDataString.endsWith("0,0,0,60,0,0,0,60,0,0,7,8,0,0,0,60")) {
-                    console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
-                    CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
-                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.MALICIOUS, origin));
-                    return;
+                // Checks if the domain is blocked
+                for (const answer of response.answers) {
+                    if (answer.type === DNSMessage.RRType.A && typeof answer.rdata === "string" &&
+                        DNSMessage.normalizeName(answer.rdata) === "46.226.143.58") {
+                        console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
+                        CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
+                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.MALICIOUS, origin));
+                        return;
+                    }
                 }
 
                 // Otherwise, the domain is either invalid or not blocked
@@ -1091,8 +1108,8 @@ const BrowserProtection = (() => {
                 }
 
                 const filteringData = new Uint8Array(await filteringResponse.arrayBuffer());
-                const filteringDataString = Array.from(filteringData).toString();
                 const nonFilteringData = await nonFilteringResponse.json();
+                const response = DNSMessage.parse(filteringData);
                 const {Status, Answer} = nonFilteringData;
 
                 // Returns early if the domain is offline
@@ -1102,12 +1119,15 @@ const BrowserProtection = (() => {
                     return;
                 }
 
-                // If the data matches this specific pattern, it's blocked
-                if (filteringDataString.endsWith("0,4,0,0,0,0")) {
-                    console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
-                    CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
-                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.MALICIOUS, origin));
-                    return;
+                // Checks if the domain is blocked
+                for (const answer of response.answers) {
+                    if (answer.type === DNSMessage.RRType.A && typeof answer.rdata === "string" &&
+                        DNSMessage.normalizeName(answer.rdata) === "0.0.0.0") {
+                        console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
+                        CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
+                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.MALICIOUS, origin));
+                        return;
+                    }
                 }
 
                 // Otherwise, the domain is either invalid or not blocked
@@ -1186,8 +1206,8 @@ const BrowserProtection = (() => {
                 }
 
                 const filteringData = new Uint8Array(await filteringResponse.arrayBuffer());
-                const filteringDataString = Array.from(filteringData).toString();
                 const nonFilteringData = await nonFilteringResponse.json();
+                const response = DNSMessage.parse(filteringData);
                 const {Status, Answer} = nonFilteringData;
 
                 // Returns early if the domain is offline
@@ -1197,12 +1217,15 @@ const BrowserProtection = (() => {
                     return;
                 }
 
-                // If the data matches this specific pattern, it's blocked
-                if (filteringDataString.endsWith("0,4,0,0,0,0")) {
-                    console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
-                    CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
-                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.MALICIOUS, origin));
-                    return;
+                // Checks if the domain is blocked
+                for (const answer of response.answers) {
+                    if (answer.type === DNSMessage.RRType.A && typeof answer.rdata === "string" &&
+                        DNSMessage.normalizeName(answer.rdata) === "0.0.0.0") {
+                        console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
+                        CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.ADULT_CONTENT);
+                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.ADULT_CONTENT, origin));
+                        return;
+                    }
                 }
 
                 // Otherwise, the domain is either invalid or not blocked
@@ -1286,8 +1309,8 @@ const BrowserProtection = (() => {
                 }
 
                 const filteringData = new Uint8Array(await filteringResponse.arrayBuffer());
-                const filteringDataString = Array.from(filteringData).toString();
                 const nonFilteringData = await nonFilteringResponse.json();
+                const response = DNSMessage.parse(filteringData);
                 const {Status, Answer} = nonFilteringData;
 
                 // Returns early if the domain is offline
@@ -1297,12 +1320,15 @@ const BrowserProtection = (() => {
                     return;
                 }
 
-                // If the data matches this specific pattern, it's blocked
-                if (filteringDataString.endsWith("0,1,0,0,0,1,0,4,51,15,69,11")) {
-                    console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
-                    CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
-                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.MALICIOUS, origin));
-                    return;
+                // Checks if the domain is blocked
+                for (const answer of response.answers) {
+                    if (answer.type === DNSMessage.RRType.A && typeof answer.rdata === "string" &&
+                        DNSMessage.normalizeName(answer.rdata) === "51.15.69.11") {
+                        console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
+                        CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
+                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.MALICIOUS, origin));
+                        return;
+                    }
                 }
 
                 // Otherwise, the domain is either invalid or not blocked
@@ -1386,8 +1412,8 @@ const BrowserProtection = (() => {
                 }
 
                 const filteringData = new Uint8Array(await filteringResponse.arrayBuffer());
-                const filteringDataString = Array.from(filteringData).toString();
                 const nonFilteringData = await nonFilteringResponse.json();
+                const response = DNSMessage.parse(filteringData);
                 const {Status, Answer} = nonFilteringData;
 
                 // Returns early if the domain is offline
@@ -1397,11 +1423,26 @@ const BrowserProtection = (() => {
                     return;
                 }
 
-                // If the data matches this specific pattern, it's blocked
-                if (filteringDataString.endsWith("0,1,0,0,0,1,0,4,51,15,69,11")) {
-                    console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
-                    CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.ADULT_CONTENT);
-                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.ADULT_CONTENT, origin));
+                // Checks if the domain is blocked
+                for (const answer of response.answers) {
+                    if (answer.type === DNSMessage.RRType.A && typeof answer.rdata === "string" &&
+                        DNSMessage.normalizeName(answer.rdata) === "51.15.69.11") {
+                        console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
+                        CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.ADULT_CONTENT);
+                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.ADULT_CONTENT, origin));
+                        return;
+                    }
+                }
+
+                // Otherwise, the domain is either invalid or not blocked
+                console.debug(`[${shortName}] Added URL to allowed cache: ${urlString}`);
+                CacheManager.addUrlToAllowedCache(urlObject, cacheName);
+                callback(new ProtectionResult(urlString, ProtectionResult.ResultType.ALLOWED, origin));
+            } catch (error) {
+                console.debug(`[${shortName}] Failed to check URL ${urlString}: ${error}`);
+                callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
+            }
+        };
                     return;
                 }
 
@@ -1496,7 +1537,7 @@ const BrowserProtection = (() => {
                     return;
                 }
 
-                // If the data matches this specific pattern, it's blocked
+                // Checks if the domain is blocked
                 if (filteringData.length >= 4 && filteringData[3] === 3) {
                     console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
                     CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.MALICIOUS);

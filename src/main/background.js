@@ -34,6 +34,7 @@
             "util/CacheManager.js",
             "util/MessageType.js",
             "util/LangUtil.js",
+            "util/DNSMessage.js",
 
             // Protection
             "protection/ProtectionResult.js",
