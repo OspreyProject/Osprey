@@ -56,10 +56,11 @@ Check out some of our endorsers below:
 
 <p align="center">
   <a href="https://ria.ee/en?utm_source=osprey" title="CERT-EE"><img src="https://i.imgur.com/EiOmmHB.png" alt="CERT-EE"></a>
-  <a href="https://i.imgur.com/9dqoUX4.png" title="CleanBrowsing"><img src="https://i.imgur.com/8qgGCY8.png" alt="CleanBrowsing"></a>
+  <a href="https://cleanbrowsing.org/?utm_source=osprey" title="CleanBrowsing"><img src="https://i.imgur.com/8qgGCY8.png" alt="CleanBrowsing"></a>
   <a href="https://controld.com/?utm_source=osprey" title="Control D"><img src="https://i.imgur.com/xh7qTT8.png" alt="Control D"></a>
   <a href="https://joindns4.eu/?utm_source=osprey" title="DNS4EU"><img src="https://i.imgur.com/g6bTuVS.png" alt="DNS4EU"></a>
   <a href="https://quad9.net/?utm_source=osprey" title="Quad9"><img src="https://i.imgur.com/HUrIKS9.png" alt="Quad9"></a>
+  <a href="https://switch.ch/?utm_source=osprey" title="Switch.ch"><img src="https://i.imgur.com/sv2jQ6S.png" alt="Switch.ch"></a>
   <a href="https://concourse-cloud.com/?utm_source=osprey" title="Concourse Cloud"><img src="https://i.imgur.com/pfAZVvp.png" alt="Concourse Cloud"></a>
 </p>
 
