@@ -23,9 +23,6 @@ const BrowserProtection = (() => {
     // Global variable for browser API compatibility
     const browserAPI = globalThis.chrome ?? globalThis.browser;
 
-    // Delay in milliseconds for non-partnered providers
-    const nonPartnerDelay = 100;
-
     // API keys for various protection services
     // These aren't meant to be secret, but they are obfuscated to stop secret sniffers.
     let alphaMountainKey = atob("NjkyZDE1MzItZTRmYy00MjFmLWJkMzYtZGFmMGNjYzZlMTFi");
@@ -578,11 +575,6 @@ const BrowserProtection = (() => {
             // Adds the URL to the processing cache to prevent duplicate requests
             CacheManager.addUrlToProcessingCache(urlObject, cacheName, tabId);
 
-            // Adds a small delay for non-partnered providers
-            if (!Settings.allPartnersDisabled(settings)) {
-                await new Promise(resolve => setTimeout(resolve, nonPartnerDelay));
-            }
-
             const filteringURL = `https://dns.cert.ee/dns-query?dns=${encodedDNSQuery}`;
 
             try {
@@ -681,11 +673,6 @@ const BrowserProtection = (() => {
             // Adds the URL to the processing cache to prevent duplicate requests
             CacheManager.addUrlToProcessingCache(urlObject, cacheName, tabId);
 
-            // Adds a small delay for non-partnered providers
-            if (!Settings.allPartnersDisabled(settings)) {
-                await new Promise(resolve => setTimeout(resolve, nonPartnerDelay));
-            }
-
             const filteringURL = `https://doh.cleanbrowsing.org/doh/security-filter/dns-query?dns=${encodedDNSQuery}`;
 
             try {
@@ -780,11 +767,6 @@ const BrowserProtection = (() => {
             // Adds the URL to the processing cache to prevent duplicate requests
             CacheManager.addUrlToProcessingCache(urlObject, cacheName, tabId);
 
-            // Adds a small delay for non-partnered providers
-            if (!Settings.allPartnersDisabled(settings)) {
-                await new Promise(resolve => setTimeout(resolve, nonPartnerDelay));
-            }
-
             const filteringURL = `https://doh.cleanbrowsing.org/doh/adult-filter/dns-query?dns=${encodedDNSQuery}`;
 
             try {
@@ -878,11 +860,6 @@ const BrowserProtection = (() => {
 
             // Adds the URL to the processing cache to prevent duplicate requests
             CacheManager.addUrlToProcessingCache(urlObject, cacheName, tabId);
-
-            // Adds a small delay for non-partnered providers
-            if (!Settings.allPartnersDisabled(settings)) {
-                await new Promise(resolve => setTimeout(resolve, nonPartnerDelay));
-            }
 
             const filteringURL = `https://security.cloudflare-dns.com/dns-query?name=${encodedURLHostname}`;
 
@@ -979,11 +956,6 @@ const BrowserProtection = (() => {
 
             // Adds the URL to the processing cache to prevent duplicate requests
             CacheManager.addUrlToProcessingCache(urlObject, cacheName, tabId);
-
-            // Adds a small delay for non-partnered providers
-            if (!Settings.allPartnersDisabled(settings)) {
-                await new Promise(resolve => setTimeout(resolve, nonPartnerDelay));
-            }
 
             const filteringURL = `https://family.cloudflare-dns.com/dns-query?name=${encodedURLHostname}`;
 
@@ -1277,11 +1249,6 @@ const BrowserProtection = (() => {
             // Adds the URL to the processing cache to prevent duplicate requests
             CacheManager.addUrlToProcessingCache(urlObject, cacheName, tabId);
 
-            // Adds a small delay for non-partnered providers
-            if (!Settings.allPartnersDisabled(settings)) {
-                await new Promise(resolve => setTimeout(resolve, nonPartnerDelay));
-            }
-
             const filteringURL = `https://protective.joindns4.eu/dns-query?dns=${encodedDNSQuery}`;
 
             try {
@@ -1380,11 +1347,6 @@ const BrowserProtection = (() => {
             // Adds the URL to the processing cache to prevent duplicate requests
             CacheManager.addUrlToProcessingCache(urlObject, cacheName, tabId);
 
-            // Adds a small delay for non-partnered providers
-            if (!Settings.allPartnersDisabled(settings)) {
-                await new Promise(resolve => setTimeout(resolve, nonPartnerDelay));
-            }
-
             const filteringURL = `https://child.joindns4.eu/dns-query?dns=${encodedDNSQuery}`;
 
             try {
@@ -1443,7 +1405,93 @@ const BrowserProtection = (() => {
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
             }
         };
+
+        /**
+         * Checks the URL with Switch.ch's DNS API.
+         *
+         * @param {Object} settings - The settings object containing user preferences.
+         */
+        const checkUrlWithSwitchCH = async settings => {
+            // Checks if the provider is enabled
+            if (!settings.switchCHEnabled) {
+                return;
+            }
+
+            const origin = ProtectionResult.Origin.SWITCH_CH;
+            const shortName = ProtectionResult.ShortName[origin];
+            const cacheName = ProtectionResult.CacheName[origin];
+
+            // Checks if the URL is in the allowed cache
+            if (CacheManager.isUrlInAllowedCache(urlObject, cacheName)) {
+                console.debug(`[${shortName}] URL is already allowed: ${urlString}`);
+                callback(new ProtectionResult(urlString, ProtectionResult.ResultType.KNOWN_SAFE, origin));
+                return;
+            }
+
+            // Checks if the URL is in the blocked cache
+            if (CacheManager.isUrlInBlockedCache(urlObject, cacheName)) {
+                console.debug(`[${shortName}] URL is already blocked: ${urlString}`);
+                callback(new ProtectionResult(urlString, CacheManager.getBlockedResultType(urlString, cacheName), origin));
+                return;
+            }
+
+            // Checks if the URL is in the processing cache
+            if (CacheManager.isUrlInProcessingCache(urlObject, cacheName)) {
+                console.debug(`[${shortName}] URL is already processing: ${urlString}`);
+                callback(new ProtectionResult(urlString, ProtectionResult.ResultType.WAITING, origin));
+                return;
+            }
+
+            // Adds the URL to the processing cache to prevent duplicate requests
+            CacheManager.addUrlToProcessingCache(urlObject, cacheName, tabId);
+
+            const filteringURL = `https://dns.switch.ch/dns-query?dns=${encodedDNSQuery}`;
+
+            try {
+                const filteringResponse = await fetch(filteringURL, {
+                    method: "GET",
+                    headers: {
+                        "Accept": "application/dns-message"
+                    },
+                    signal
+                });
+
+                const nonFilteringResponse = await fetch(nonFilteringURL, {
+                    method: "GET",
+                    headers: {
+                        "Accept": "application/dns-json"
+                    },
+                    signal
+                });
+
+                // Returns early if one or more of the responses is not OK
+                if (!filteringResponse.ok || !nonFilteringResponse.ok) {
+                    console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
+                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
+                }
+
+                const filteringData = new Uint8Array(await filteringResponse.arrayBuffer());
+                const nonFilteringData = await nonFilteringResponse.json();
+                const response = DNSMessage.parse(filteringData);
+                const {Status, Answer} = nonFilteringData;
+
+                // Returns early if the domain is offline
+                if (!(Status === 0 && Answer && Answer.length > 0)) {
+                    console.warn(`[${shortName}] Returned early: domain offline`);
+                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
+                    return;
+                }
+
+                // Checks if the domain is blocked
+                for (const answer of response.answers) {
+                    if (answer.type === DNSMessage.RRType.CNAME && typeof answer.rdata === "string" &&
+                        DNSMessage.normalizeName(answer.rdata) === "landingpage.ph.rpz.switch.ch") {
+                        console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
+                        CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
+                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.MALICIOUS, origin));
+                        return;
+                    }
                 }
 
                 // Otherwise, the domain is either invalid or not blocked
@@ -1494,11 +1542,6 @@ const BrowserProtection = (() => {
 
             // Adds the URL to the processing cache to prevent duplicate requests
             CacheManager.addUrlToProcessingCache(urlObject, cacheName, tabId);
-
-            // Adds a small delay for non-partnered providers
-            if (!Settings.allPartnersDisabled(settings)) {
-                await new Promise(resolve => setTimeout(resolve, nonPartnerDelay));
-            }
 
             const filteringURL = `https://dns.quad9.net/dns-query?dns=${encodedDNSQuery}`;
 
@@ -1573,6 +1616,7 @@ const BrowserProtection = (() => {
             checkUrlWithControlDFamily(settings);
             checkUrlWithDNS4EUSecurity(settings);
             checkUrlWithDNS4EUFamily(settings);
+            checkUrlWithSwitchCH(settings);
             checkUrlWithQuad9(settings);
         });
 

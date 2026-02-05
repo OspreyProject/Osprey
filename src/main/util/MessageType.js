@@ -45,5 +45,6 @@ const Messages = {
     CONTROL_D_FAMILY_TOGGLED: "controlDFamilyToggled",
     DNS4EU_SECURITY_TOGGLED: "dns4EUSecurityToggled",
     DNS4EU_FAMILY_TOGGLED: "dns4EUFamilyToggled",
+    SWITCH_CH_TOGGLED: "switchCHToggled",
     QUAD9_TOGGLED: "quad9Toggled",
 };

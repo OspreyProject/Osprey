@@ -610,6 +610,7 @@
         'CloudflareFamilyEnabled',
         'DNS4EUSecurityEnabled',
         'DNS4EUFamilyEnabled',
+        'SwitchCHEnabled',
         'Quad9Enabled',
     ];
 
@@ -755,6 +756,12 @@
             if (policies.DNS4EUFamilyEnabled !== undefined) {
                 settings.dns4EUFamilyEnabled = policies.DNS4EUFamilyEnabled;
                 console.debug("DNS4EU Family is managed by system policy.");
+            }
+
+            // Checks and sets the Switch.ch settings using the policy
+            if (policies.SwitchCHEnabled !== undefined) {
+                settings.switchCHEnabled = policies.SwitchCHEnabled;
+                console.debug("Switch.ch is managed by system policy.");
             }
 
             // Checks and sets the Quad9 settings using the policy
@@ -1106,6 +1113,7 @@
             case Messages.DNS4EU_FAMILY_TOGGLED:
             case Messages.DNS4EU_SECURITY_TOGGLED:
             case Messages.PRECISIONSEC_TOGGLED:
+            case Messages.SWITCH_CH_TOGGLED:
             case Messages.QUAD9_TOGGLED:
                 console.info(`${message.title} has been ${message.toggleState ? "enabled" : "disabled"}.`);
                 break;

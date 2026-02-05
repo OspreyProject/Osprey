@@ -123,6 +123,11 @@
       "description": "If set to true, DNS4EU Family will be enabled.",
       "type": "boolean"
     },
+    "SwitchCHEnabled": {
+      "title": "Switch.ch Enabled",
+      "description": "If set to true, Switch.ch will be enabled.",
+      "type": "boolean"
+    },
     "Quad9Enabled": {
       "title": "Quad9 Enabled",
       "description": "If set to true, Quad9 will be enabled.",

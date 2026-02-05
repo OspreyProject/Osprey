@@ -139,6 +139,14 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
             messageType: Messages.DNS4EU_FAMILY_TOGGLED,
         },
         {
+            origin: ProtectionResult.Origin.SWITCH_CH,
+            name: "switchCHEnabled",
+            title: ProtectionResult.FullName[this.origin],
+            labelElementId: "switchCHStatus",
+            switchElementId: "switchCHSwitch",
+            messageType: Messages.SWITCH_CH_TOGGLED,
+        },
+        {
             origin: ProtectionResult.Origin.QUAD9,
             name: "quad9Enabled",
             title: ProtectionResult.FullName[this.origin],

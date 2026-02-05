@@ -377,6 +377,16 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
                 case ProtectionResult.Origin.DNS4EU_FAMILY:
                     return new URL("https://www.joindns4.eu/for-public#form");
 
+                case ProtectionResult.Origin.SWITCH_CH:
+                    return new URL("mailto:dnsfirewall@switch.ch?subject=False%20Positive&body=Hello%2C" +
+                        "%0A%0AI%20would%20like%20to%20report%20a%20false%20positive." +
+                        "%0A%0AProduct%3A%20Switch.ch%20D%20Public%20DNS" +
+                        "%0AURL%3A%20" + encodedBlockedUrl + "%20%28or%20the%20hostname%20itself%29" +
+                        "%0ADetected%20as%3A%20" + encodedResultTextEN +
+                        "%0A%0AI%20believe%20this%20website%20is%20legitimate." +
+                        "%0A%0ASent%20with%20Osprey:%20Browser%20Protection" +
+                        "%0AWebsite:%20https://osprey.ac");
+
                 case ProtectionResult.Origin.QUAD9:
                     return new URL("https://quad9.net/support/contact");
 

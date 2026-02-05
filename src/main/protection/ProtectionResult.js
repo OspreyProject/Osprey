@@ -85,7 +85,8 @@ ProtectionResult.Origin = {
     CONTROL_D_FAMILY: 11,
     DNS4EU_SECURITY: 12,
     DNS4EU_FAMILY: 13,
-    QUAD9: 14,
+    SWITCH_CH: 14,
+    QUAD9: 15,
 };
 
 ProtectionResult.FullName = {
@@ -107,7 +108,8 @@ ProtectionResult.FullName = {
     11: "Control D Family DNS",
     12: "DNS4EU Security DNS",
     13: "DNS4EU Family DNS",
-    14: "Quad9 Security DNS",
+    14: "Switch.ch Security DNS",
+    15: "Quad9 Security DNS",
 };
 
 ProtectionResult.ShortName = {
@@ -129,7 +131,8 @@ ProtectionResult.ShortName = {
     11: "Control D Family",
     12: "DNS4EU Security",
     13: "DNS4EU Family",
-    14: "Quad9",
+    14: "Switch.ch",
+    15: "Quad9",
 };
 
 ProtectionResult.CacheName = {
@@ -151,5 +154,6 @@ ProtectionResult.CacheName = {
     11: "controlDFamily",
     12: "dns4EUSecurity",
     13: "dns4EUFamily",
-    14: "quad9",
+    14: "switchCH",
+    15: "quad9",
 };
