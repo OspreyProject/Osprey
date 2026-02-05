@@ -42,7 +42,7 @@
             "protection/BrowserProtection.js"
         );
     } catch (error) {
-        // In Firefox, importScripts is not available, but scripts are loaded via background.html
+        // In Firefox-based browsers, importScripts is not available; scripts are loaded via background.html
         replaceNewTabs = true;
         console.debug("Running in Firefox or another environment without importScripts");
         console.debug(`Error: ${error}`);
