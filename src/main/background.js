@@ -21,7 +21,7 @@
 (() => {
     // Browser API compatibility between Chrome and Firefox
     const browserAPI = globalThis.chrome ?? globalThis.browser;
-    const isFirefox = globalThis.InstallTrigger !== undefined;
+    let replaceNewTabs = false;
     const contextMenuAPI = browserAPI?.contextMenus ?? browserAPI?.menus;
     let supportsManagedPolicies = true;
 
@@ -43,6 +43,7 @@
         );
     } catch (error) {
         // In Firefox, importScripts is not available, but scripts are loaded via background.html
+        replaceNewTabs = true;
         console.debug("Running in Firefox or another environment without importScripts");
         console.debug(`Error: ${error}`);
     }
@@ -136,10 +137,10 @@
     /**
      * Sends the user to the new tab page.
      *
-     * @param {number} tabId - The ID of the tab to be closed. (Firefox only)
+     * @param {number} tabId - The ID of the tab to be updated.
      */
     const sendToNewTabPage = tabId => {
-        if (isFirefox) {
+        if (replaceNewTabs) {
             browserAPI.tabs.remove(tabId);
             browserAPI.tabs.create({});
         } else {
