@@ -2,7 +2,7 @@
   "short_name": "Osprey",
   "name": "__MSG_extensionName__",
   "manifest_version": 3,
-  "version": "1.4.5",
+  "version": "1.4.6",
   "description": "__MSG_extensionDescription__",
   "default_locale": "en",
   "background": {
