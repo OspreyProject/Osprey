@@ -21,7 +21,7 @@
 (() => {
     // Browser API compatibility between Chrome and Firefox
     const browserAPI = globalThis.chrome ?? globalThis.browser;
-    const isFirefox = globalThis.chrome === undefined;
+    const isFirefox = globalThis.InstallTrigger !== undefined;
     const contextMenuAPI = browserAPI?.contextMenus ?? browserAPI?.menus;
     let supportsManagedPolicies = true;
 
