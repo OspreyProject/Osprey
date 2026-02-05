@@ -987,10 +987,15 @@
             }
 
             case Messages.CONTINUE_TO_SAFETY:
-                // Redirects to the new tab page
-                setTimeout(() => {
-                    sendToNewTabPage(tabId);
-                }, redirectDelay);
+                // Navigates to the browser's previous page in the tab
+                browserAPI.tabs.goBack(tabId).catch(error => {
+                    console.debug(`Failed to navigate back in tab ${tabId}:`, error);
+
+                    // Redirects to the new tab page
+                    setTimeout(() => {
+                        sendToNewTabPage(tabId);
+                    }, redirectDelay);
+                });
                 break;
 
             case Messages.REPORT_WEBSITE: {
