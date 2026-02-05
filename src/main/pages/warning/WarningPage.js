@@ -23,7 +23,7 @@ let reportedByText;
 // noinspection FunctionWithInconsistentReturnsJS
 globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
 
-    // Browser API compatibility between Chrome and Firefox
+    // Global variable for browser API compatibility
     const browserAPI = globalThis.chrome ?? globalThis.browser;
 
     // The current origin integer, initialized to UNKNOWN

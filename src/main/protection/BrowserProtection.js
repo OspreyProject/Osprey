@@ -20,7 +20,7 @@
 // Main object for managing browser protection functionality
 const BrowserProtection = (() => {
 
-    // Browser API compatibility between Chrome and Firefox
+    // Global variable for browser API compatibility
     const browserAPI = globalThis.chrome ?? globalThis.browser;
 
     // Delay in milliseconds for non-partnered providers

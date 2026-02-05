@@ -20,7 +20,7 @@
 // Storage utility for interacting with the browser's local storage
 const StorageUtil = (() => {
 
-    // Browser API compatibility between Chrome and Firefox
+    // Global variable for browser API compatibility
     const browserAPI = globalThis.chrome ?? globalThis.browser;
 
     /**

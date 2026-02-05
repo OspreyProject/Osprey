@@ -20,7 +20,7 @@
 // Use a global singleton pattern to ensure we don't duplicate resources
 globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
 
-    // Browser API compatibility between Chrome and Firefox
+    // Global variable for browser API compatibility
     const browserAPI = globalThis.chrome ?? globalThis.browser;
 
     // Tracks initialization state

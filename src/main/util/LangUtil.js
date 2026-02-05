@@ -17,7 +17,7 @@
  */
 "use strict";
 
-// Browser API compatibility between Chrome and Firefox
+// Global variable for browser API compatibility
 const browserAPI = globalThis.chrome ?? globalThis.browser;
 
 const LangUtil = {

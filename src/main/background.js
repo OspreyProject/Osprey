@@ -19,7 +19,6 @@
 
 // noinspection JSDeprecatedSymbols
 (() => {
-    // Browser API compatibility between Chrome and Firefox
     const browserAPI = globalThis.chrome ?? globalThis.browser;
     const contextMenuAPI = browserAPI?.contextMenus ?? browserAPI?.menus;
     let supportsManagedPolicies = true;
@@ -27,7 +26,6 @@
 
     // Import necessary scripts for functionality
     try {
-        // This will work in Chrome service workers but throw in Firefox
         importScripts(
             // Util
             "util/StorageUtil.js",

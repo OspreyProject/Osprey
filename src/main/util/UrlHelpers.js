@@ -20,7 +20,7 @@
 // Object containing helper functions for working with URLs
 const UrlHelpers = (() => {
 
-    // Browser API compatibility between Chrome and Firefox
+    // Global variable for browser API compatibility
     const browserAPI = globalThis.chrome ?? globalThis.browser;
 
     // Base URL for the block page
