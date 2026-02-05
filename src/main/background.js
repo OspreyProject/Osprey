@@ -21,9 +21,9 @@
 (() => {
     // Browser API compatibility between Chrome and Firefox
     const browserAPI = globalThis.chrome ?? globalThis.browser;
-    let replaceNewTabs = false;
     const contextMenuAPI = browserAPI?.contextMenus ?? browserAPI?.menus;
     let supportsManagedPolicies = true;
+    let replaceNewTabs = false;
 
     // Import necessary scripts for functionality
     try {
