@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Pārlūkprogrammas aizsardzība"
+  },
+  "extensionDescription": {
+    "message": "Aizsargājieties pret tiešsaistes draudiem reālajā laikā, izmantojot vairākus pārlūka aizsardzības pakalpojumu sniedzējus."
   },
   "logoAlt": {
     "message": "Osprey logotips"
-  },
-  "bannerText": {
-    "message": "Osprey: Pārlūkprogrammas aizsardzība"
   },
   "warningTitle": {
     "message": "Brīdinājums: Šī vietne nav droša"

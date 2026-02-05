@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey : Protection du navigateur"
+  },
+  "extensionDescription": {
+    "message": "Protégez-vous contre les menaces en ligne en temps réel à l'aide de plusieurs fournisseurs de protection de navigateur."
   },
   "logoAlt": {
     "message": "Logo Osprey"
-  },
-  "bannerText": {
-    "message": "Osprey : Protection du navigateur"
   },
   "warningTitle": {
     "message": "Avertissement : Ce site web n’est pas sécurisé"

@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey：瀏覽器保護"
+  },
+  "extensionDescription": {
+    "message": "透過多重瀏覽器防護供應商，即時抵禦線上威脅。"
   },
   "logoAlt": {
     "message": "Osprey 標誌"
-  },
-  "bannerText": {
-    "message": "Osprey：瀏覽器保護"
   },
   "warningTitle": {
     "message": "警告：此網站不安全"

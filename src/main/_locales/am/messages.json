@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: የአሳሽ ጥበቃ"
+  },
+  "extensionDescription": {
+    "message": "ብዙ የአሳሽ ጥበቃ አቅራቢዎችን በመጠቀም ከመስመር ላይ ስጋቶች በቅጽበት (ሪል-ታይም) ጠብቅ።"
   },
   "logoAlt": {
     "message": "Osprey ሎጎ"
-  },
-  "bannerText": {
-    "message": "Osprey: የአሳሽ ጥበቃ"
   },
   "warningTitle": {
     "message": "ማስጠንቀቂያ፡ ይህ ድር ጣቢያ አይታመንም"

@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Selaimen suojaus"
+  },
+  "extensionDescription": {
+    "message": "Suojaudu verkkouhilta reaaliajassa käyttämällä useita selaimen suojauspalveluita."
   },
   "logoAlt": {
     "message": "Osprey-logo"
-  },
-  "bannerText": {
-    "message": "Osprey: Selaimen suojaus"
   },
   "warningTitle": {
     "message": "Varoitus: Tämä verkkosivusto ei ole turvallinen"

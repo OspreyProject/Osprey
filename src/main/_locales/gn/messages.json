@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Ñangareko Kundahára rehe"
+  },
+  "extensionDescription": {
+    "message": "Eñeñangareko umi ñembohorýgui internet-pe oikoháichaite, eipurúvo heta ñangarekohára navegador-pe guarã."
   },
   "logoAlt": {
     "message": "Osprey ra’ãnga’i"
-  },
-  "bannerText": {
-    "message": "Osprey: Ñangareko Kundahára rehe"
   },
   "warningTitle": {
     "message": "Ñemomomarandu: Ko ñanduti renda ndaha’éi hekorosãva"

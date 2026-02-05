@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: ブラウザー保護"
+  },
+  "extensionDescription": {
+    "message": "複数のブラウザ保護プロバイダーを使用して、オンライン上の脅威からリアルタイムで保護します。"
   },
   "logoAlt": {
     "message": "Osprey ロゴ"
-  },
-  "bannerText": {
-    "message": "Osprey: ブラウザー保護"
   },
   "warningTitle": {
     "message": "警告: このウェブサイトは安全ではありません"

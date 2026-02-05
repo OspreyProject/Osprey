@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: ಬ್ರೌಸರ್ ರಕ್ಷಣೆ"
+  },
+  "extensionDescription": {
+    "message": "ಬಹು ಬ್ರೌಸರ್ ರಕ್ಷಣಾ ಪೂರೈಕೆದಾರರನ್ನು ಬಳಸಿ ನೈಜ ಸಮಯದಲ್ಲಿ ಆನ್ಲೈನ್ ಬೆದರಿಕೆಗಳಿಂದ ರಕ್ಷಿಸಿಕೊಳ್ಳಿ."
   },
   "logoAlt": {
     "message": "Osprey ಲೋಗೋ"
-  },
-  "bannerText": {
-    "message": "Osprey: ಬ್ರೌಸರ್ ರಕ್ಷಣೆ"
   },
   "warningTitle": {
     "message": "ಎಚ್ಚರಿಕೆ: ಈ ವೆಬ್‌ಸೈಟ್ ಸುರಕ್ಷಿತವಲ್ಲ"

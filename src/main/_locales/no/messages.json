@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Nettleserbeskyttelse"
+  },
+  "extensionDescription": {
+    "message": "Beskytt deg mot trusler på nettet i sanntid ved hjelp av flere leverandører av nettleserbeskyttelse."
   },
   "logoAlt": {
     "message": "Osprey-logo"
-  },
-  "bannerText": {
-    "message": "Osprey: Nettleserbeskyttelse"
   },
   "warningTitle": {
     "message": "Advarsel: Dette nettstedet er ikke sikkert"

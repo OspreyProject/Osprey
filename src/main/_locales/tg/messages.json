@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Ҳимояи Браузер"
+  },
+  "extensionDescription": {
+    "message": "Бо истифода аз якчанд провайдерҳои ҳифзи браузер дар вақти воқеӣ аз таҳдидҳои онлайнӣ муҳофизат кунед."
   },
   "logoAlt": {
     "message": "Логотипи Osprey"
-  },
-  "bannerText": {
-    "message": "Osprey: Ҳимояи Браузер"
   },
   "warningTitle": {
     "message": "Огоҳӣ: Ин сомона хатарнок аст"

@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Ukuvikelwa Kwebrawuza"
+  },
+  "extensionDescription": {
+    "message": "Vikela ezinsongweni eziku-inthanethi ngesikhathi sangempela usebenzisa abahlinzeki abaningi bokuvikela isiphequluli."
   },
   "logoAlt": {
     "message": "Ilogo ye-Osprey"
-  },
-  "bannerText": {
-    "message": "Osprey: Ukuvikelwa Kwebrawuza"
   },
   "warningTitle": {
     "message": "Isixwayiso: Le webhusayithi ayiphephile"

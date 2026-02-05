@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: බ්‍රව්සර් ආරක්ෂාව"
+  },
+  "extensionDescription": {
+    "message": "බහු බ්රවුසර ආරක්ෂණ සැපයුම්කරුවන් භාවිතා කරමින්, තත්ක්ෂණිකව (රියල්-ටයිම්) අන්තර්ජාල තර්ජනවලින් ආරක්ෂා වන්න."
   },
   "logoAlt": {
     "message": "Osprey ලාංඡනය"
-  },
-  "bannerText": {
-    "message": "Osprey: බ්‍රව්සර් ආරක්ෂාව"
   },
   "warningTitle": {
     "message": "අනතුරු ඇඟවීම: මෙම වෙබ් අඩවිය ආරක්ෂිත නොවේ"

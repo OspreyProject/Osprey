@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Заштита на прелистувач"
+  },
+  "extensionDescription": {
+    "message": "Заштитете се од онлајн закани во реално време со користење на повеќе добавувачи на заштита на прелистувачи."
   },
   "logoAlt": {
     "message": "Лого на Osprey"
-  },
-  "bannerText": {
-    "message": "Osprey: Заштита на прелистувач"
   },
   "warningTitle": {
     "message": "Предупредување: Оваа веб-страница не е безбедна"

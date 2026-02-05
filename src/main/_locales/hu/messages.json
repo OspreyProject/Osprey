@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Böngészővédelem"
+  },
+  "extensionDescription": {
+    "message": "Védje magát az online fenyegetések ellen valós időben több böngészővédelmi szolgáltató segítségével."
   },
   "logoAlt": {
     "message": "Osprey logó"
-  },
-  "bannerText": {
-    "message": "Osprey: Böngészővédelem"
   },
   "warningTitle": {
     "message": "Figyelmeztetés: Ez a weboldal nem biztonságos"

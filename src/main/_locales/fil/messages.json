@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Proteksyon sa Browser"
+  },
+  "extensionDescription": {
+    "message": "Protektahan laban sa mga online na banta nang real-time gamit ang maramihang tagapagbigay ng proteksyon sa browser."
   },
   "logoAlt": {
     "message": "Logo ng Osprey"
-  },
-  "bannerText": {
-    "message": "Osprey: Proteksyon sa Browser"
   },
   "warningTitle": {
     "message": "Babala: Hindi ligtas ang website na ito"

@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Браузерди Коргоо"
+  },
+  "extensionDescription": {
+    "message": "Бир нече браузер коргоо провайдерлерин колдонуп, онлайн коркунучтардан реалдуу убакыт режиминде коргоңуз."
   },
   "logoAlt": {
     "message": "Osprey Логотиби"
-  },
-  "bannerText": {
-    "message": "Osprey: Браузерди Коргоо"
   },
   "warningTitle": {
     "message": "Эскертүү: Бул веб-сайт коопсуз эмес"

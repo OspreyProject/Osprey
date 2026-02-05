@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey․ Բրաուզերի Պաշտպանություն"
+  },
+  "extensionDescription": {
+    "message": "Պաշտպանվեք առցանց սպառնալիքներից իրական ժամանակում՝ օգտագործելով բազմակի զննարկիչների պաշտպանության մատակարարներ։"
   },
   "logoAlt": {
     "message": "Osprey Լոգո"
-  },
-  "bannerText": {
-    "message": "Osprey․ Բրաուզերի Պաշտպանություն"
   },
   "warningTitle": {
     "message": "Զգուշացում․ Այս կայքը անվտանգ չէ"

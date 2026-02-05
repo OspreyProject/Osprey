@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Tarayıcı Koruması"
+  },
+  "extensionDescription": {
+    "message": "Birden fazla tarayıcı koruma sağlayıcısı kullanarak çevrimiçi tehditlere karşı gerçek zamanlı koruma sağlayın."
   },
   "logoAlt": {
     "message": "Osprey Logosu"
-  },
-  "bannerText": {
-    "message": "Osprey: Tarayıcı Koruması"
   },
   "warningTitle": {
     "message": "Uyarı: Bu web sitesi güvenli değil"

@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Brauseri kaitse"
+  },
+  "extensionDescription": {
+    "message": "Kaitse end reaalajas veebiohtude eest, kasutades mitut brauseri kaitset pakkuvat teenusepakkujat."
   },
   "logoAlt": {
     "message": "Osprey logo"
-  },
-  "bannerText": {
-    "message": "Osprey: Brauseri kaitse"
   },
   "warningTitle": {
     "message": "Hoiatus: See veebisait ei ole turvaline"

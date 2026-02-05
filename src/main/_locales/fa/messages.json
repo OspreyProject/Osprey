@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: محافظت مرورگر"
+  },
+  "extensionDescription": {
+    "message": "با استفاده از چندین ارائهدهندهٔ محافظت از مرورگرها، در زمان واقعی در برابر تهدیدات آنلاین محافظت کنید."
   },
   "logoAlt": {
     "message": "لوگوی Osprey"
-  },
-  "bannerText": {
-    "message": "Osprey: محافظت مرورگر"
   },
   "warningTitle": {
     "message": "هشدار: این وب‌سایت ناامن است"

@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Хөтөч хамгаалалт"
+  },
+  "extensionDescription": {
+    "message": "Олон хөтөчийн хамгаалалтын үйлчилгээ үзүүлэгчдийг ашиглан онлайн аюул заналхийллээс бодит цаг хугацаанд хамгаалаарай."
   },
   "logoAlt": {
     "message": "Osprey лого"
-  },
-  "bannerText": {
-    "message": "Osprey: Хөтөч хамгаалалт"
   },
   "warningTitle": {
     "message": "Анхааруулга: Энэ вэбсайт аюултай"

@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Tšireletso ea Sebatli"
+  },
+  "extensionDescription": {
+    "message": "Ithibele litšokelo tsa inthaneteng ka nako ea sebele u sebelisa bafani ba ts'ireletso ea libatli tse ngata."
   },
   "logoAlt": {
     "message": "Letšoao la Osprey"
-  },
-  "bannerText": {
-    "message": "Osprey: Tšireletso ea Sebatli"
   },
   "warningTitle": {
     "message": "Tlhokomeliso: Webosaete ena ha e bolokehe"

@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Brauzer Qorunması"
+  },
+  "extensionDescription": {
+    "message": "Birdən çox brauzer qoruma təminatçısından istifadə edərək onlayn təhdidlərdən real vaxt rejimində qorunun."
   },
   "logoAlt": {
     "message": "Osprey Loqosu"
-  },
-  "bannerText": {
-    "message": "Osprey: Brauzer Qorunması"
   },
   "warningTitle": {
     "message": "Xəbərdarlıq: Bu vebsayt təhlükəlidir"

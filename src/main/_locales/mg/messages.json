@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Fiarovana Mpitety"
+  },
+  "extensionDescription": {
+    "message": "Arovy amin'ny fandrahonana an-tserasera amin'ny fotoana tena izy amin'ny alalan'ny fampiasana mpanome fiarovana ho an'ny navigateur maromaro."
   },
   "logoAlt": {
     "message": "Sary famantarana Osprey"
-  },
-  "bannerText": {
-    "message": "Osprey: Fiarovana Mpitety"
   },
   "warningTitle": {
     "message": "Fampitandremana: Tsy azo antoka ity tranonkala ity"

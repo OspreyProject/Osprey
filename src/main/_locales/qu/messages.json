@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Ñawpaqman ama llullakuy"
+  },
+  "extensionDescription": {
+    "message": "Achka llik'a mask'aq amachaqkunawan, llik'api manchachikuykunamanta kunanpacha amachakuy."
   },
   "logoAlt": {
     "message": "Osprey Unanchan"
-  },
-  "bannerText": {
-    "message": "Osprey: Ñawpaqman ama llullakuy"
   },
   "warningTitle": {
     "message": "Willakuy: Kay web wasi mana seguridadniyuqmi"

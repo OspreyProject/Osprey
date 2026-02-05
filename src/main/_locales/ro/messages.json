@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Protecția browserului"
+  },
+  "extensionDescription": {
+    "message": "Protejați-vă împotriva amenințărilor online în timp real folosind mai mulți furnizori de protecție pentru browser."
   },
   "logoAlt": {
     "message": "Logo Osprey"
-  },
-  "bannerText": {
-    "message": "Osprey: Protecția browserului"
   },
   "warningTitle": {
     "message": "Avertizare: Acest site web nu este sigur"

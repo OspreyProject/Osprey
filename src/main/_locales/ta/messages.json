@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: உலாவி பாதுகாப்பு"
+  },
+  "extensionDescription": {
+    "message": "பல உலாவி பாதுகாப்பு வழங்குநர்களைப் பயன்படுத்தி, ஆன்லைன் அச்சுறுத்தல்களிலிருந்து நிகழ்நேரத்தில் பாதுகாத்துக் கொள்ளுங்கள்."
   },
   "logoAlt": {
     "message": "Osprey லோகோ"
-  },
-  "bannerText": {
-    "message": "Osprey: உலாவி பாதுகாப்பு"
   },
   "warningTitle": {
     "message": "எச்சரிக்கை: இந்த வலைத்தளம் பாதுகாப்பானதல்ல"

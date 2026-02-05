@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Защита на браузъра"
+  },
+  "extensionDescription": {
+    "message": "Защитавайте се от онлайн заплахи в реално време, като използвате няколко доставчици на защита за браузъри."
   },
   "logoAlt": {
     "message": "Лого на Osprey"
-  },
-  "bannerText": {
-    "message": "Osprey: Защита на браузъра"
   },
   "warningTitle": {
     "message": "Предупреждение: Този уебсайт е опасен"

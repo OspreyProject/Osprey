@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Brauzer Goragy"
+  },
+  "extensionDescription": {
+    "message": "Birnäçe brauzer gorag üpjün edijilerini ulanmak arkaly onlaýn howplardan real wagtda goranyň."
   },
   "logoAlt": {
     "message": "Osprey Logotipi"
-  },
-  "bannerText": {
-    "message": "Osprey: Brauzer Goragy"
   },
   "warningTitle": {
     "message": "Duýduryş: Bu web-saýt howply"

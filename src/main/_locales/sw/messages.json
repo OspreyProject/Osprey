@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Ulinzi wa Kivinjari"
+  },
+  "extensionDescription": {
+    "message": "Linda dhidi ya vitisho mtandaoni kwa wakati halisi kwa kutumia watoa huduma wengi wa ulinzi wa kivinjari."
   },
   "logoAlt": {
     "message": "Nembo ya Osprey"
-  },
-  "bannerText": {
-    "message": "Osprey: Ulinzi wa Kivinjari"
   },
   "warningTitle": {
     "message": "Onyo: Tovuti hii si salama"

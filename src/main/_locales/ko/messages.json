@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: 브라우저 보호"
+  },
+  "extensionDescription": {
+    "message": "여러 브라우저 보호 공급자를 사용하여 실시간으로 온라인 위협으로부터 보호하세요."
   },
   "logoAlt": {
     "message": "Osprey 로고"
-  },
-  "bannerText": {
-    "message": "Osprey: 브라우저 보호"
   },
   "warningTitle": {
     "message": "경고: 이 웹사이트는 안전하지 않습니다"

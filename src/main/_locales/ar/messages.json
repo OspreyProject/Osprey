@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "أوسبري: حماية المتصفح"
+  },
+  "extensionDescription": {
+    "message": "احمِ نفسك من التهديدات عبر الإنترنت في الوقت الفعلي باستخدام عدة مزودي حماية للمتصفح."
   },
   "logoAlt": {
     "message": "شعار أوسبري"
-  },
-  "bannerText": {
-    "message": "أوسبري: حماية المتصفح"
   },
   "warningTitle": {
     "message": "تحذير: هذا الموقع غير آمن"

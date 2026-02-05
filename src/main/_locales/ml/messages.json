@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: ബ്രൗസർ സംരക്ഷണം"
+  },
+  "extensionDescription": {
+    "message": "ഒന്നിലധികം ബ്രൗസർ സംരക്ഷണ ദാതാക്കളെ ഉപയോഗിച്ച് തത്സമയം ഓൺലൈൻ ഭീഷണികളിൽ നിന്ന് സംരക്ഷിക്കുക."
   },
   "logoAlt": {
     "message": "Osprey ലോഗോ"
-  },
-  "bannerText": {
-    "message": "Osprey: ബ്രൗസർ സംരക്ഷണം"
   },
   "warningTitle": {
     "message": "മുന്നറിയിപ്പ്: ഈ വെബ്സൈറ്റ് സുരക്ഷിതമല്ല"

@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Blaaierbeskerming"
+  },
+  "extensionDescription": {
+    "message": "Beskerm teen aanlynbedreigings in werklike tyd deur gebruik te maak van verskeie blaaierbeskermingsverskaffers."
   },
   "logoAlt": {
     "message": "Osprey Logo"
-  },
-  "bannerText": {
-    "message": "Osprey: Blaaierbeskerming"
   },
   "warningTitle": {
     "message": "Waarskuwing: Hierdie webwerf is onveilig"

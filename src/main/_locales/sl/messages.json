@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Zaščita brskalnika"
+  },
+  "extensionDescription": {
+    "message": "Zaščitite se pred spletnimi grožnjami v realnem času z uporabo več ponudnikov zaščite brskalnika."
   },
   "logoAlt": {
     "message": "Logotip Osprey"
-  },
-  "bannerText": {
-    "message": "Osprey: Zaščita brskalnika"
   },
   "warningTitle": {
     "message": "Opozorilo: Ta spletna stran ni varna"

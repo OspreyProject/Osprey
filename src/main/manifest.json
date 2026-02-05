@@ -1,9 +1,9 @@
 {
   "short_name": "Osprey",
-  "name": "Osprey: Browser Protection",
+  "name": "__MSG_extensionName__",
   "manifest_version": 3,
   "version": "1.4.5",
-  "description": "Protect against online threats in real-time using multiple browser protection engines.",
+  "description": "__MSG_extensionDescription__",
   "default_locale": "en",
   "background": {
     "service_worker": "background.js"

@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Zaštita preglednika"
+  },
+  "extensionDescription": {
+    "message": "Pwoteje kont menas sou entènèt an tan reyèl lè w itilize plizyè founisè pwoteksyon navigatè."
   },
   "logoAlt": {
     "message": "Osprey logo"
-  },
-  "bannerText": {
-    "message": "Osprey: Zaštita preglednika"
   },
   "warningTitle": {
     "message": "Upozorenje: Ova web stranica nije sigurna"

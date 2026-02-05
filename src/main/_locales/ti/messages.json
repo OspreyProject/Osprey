@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: መከላኸይ ናይ እታ ብራውዘር"
+  },
+  "extensionDescription": {
+    "message": "ብዙሕ ኣቕራቢ ናይ መከላኸል መተሓላለፊ መርበብ ብምጥቃም ካብ ዲጂታላዊ ስጋታት ብቀጥታ ኣብ ሓቂ ግዜ ተከላኸል።"
   },
   "logoAlt": {
     "message": "ሎጎ Osprey"
-  },
-  "bannerText": {
-    "message": "Osprey: መከላኸይ ናይ እታ ብራውዘር"
   },
   "warningTitle": {
     "message": "መጠንቀቒ: እዚ ድሕሪት ከምዘይተሓረሰ እዩ"

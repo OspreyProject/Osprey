@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: براؤزر تحفظ"
+  },
+  "extensionDescription": {
+    "message": "متعدد براؤزر حفاظتی فراہم کنندگان کے استعمال سے آن لائن خطرات سے حقیقی وقت میں تحفظ حاصل کریں۔"
   },
   "logoAlt": {
     "message": "Osprey لوگو"
-  },
-  "bannerText": {
-    "message": "Osprey: براؤزر تحفظ"
   },
   "warningTitle": {
     "message": "انتباہ: یہ ویب سائٹ غیر محفوظ ہے"

@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Mbrojtja e Shfletuesit"
+  },
+  "extensionDescription": {
+    "message": "Mbrohu nga kërcënimet online në kohë reale duke përdorur ofrues të shumtë të mbrojtjes së shfletuesit."
   },
   "logoAlt": {
     "message": "Logoja e Osprey"
-  },
-  "bannerText": {
-    "message": "Osprey: Mbrojtja e Shfletuesit"
   },
   "warningTitle": {
     "message": "Paralajmërim: Ky website është i pasigurt"

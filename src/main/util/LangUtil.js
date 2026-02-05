@@ -23,8 +23,7 @@ const browserAPI = globalThis.chrome ?? globalThis.browser;
 const LangUtil = {
 
     // Global
-    TITLE: browserAPI.i18n.getMessage('title'),
-    BANNER_TEXT: browserAPI.i18n.getMessage('bannerText'),
+    TITLE: browserAPI.i18n.getMessage('extensionName'),
     LOGO_ALT: browserAPI.i18n.getMessage('logoAlt'),
     URL_LABEL: browserAPI.i18n.getMessage('urlLabel'),
     REPORTED_BY_LABEL: browserAPI.i18n.getMessage('reportedByLabel'),

@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Ukhuseleko Lwebhrawuza"
+  },
+  "extensionDescription": {
+    "message": "Zikhusele kwizoyikiso ze-intanethi ngexesha lokwenene usebenzisa ababoneleli abaninzi bokhuselo lwebhrawuza."
   },
   "logoAlt": {
     "message": "Ilogo ye-Osprey"
-  },
-  "bannerText": {
-    "message": "Osprey: Ukhuseleko Lwebhrawuza"
   },
   "warningTitle": {
     "message": "Isilumkiso: Le webhusayithi ayikhuselekanga"

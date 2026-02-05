@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: ဘရောက်ဇာ ကာကွယ်မှု"
+  },
+  "extensionDescription": {
+    "message": "ဘရောက်ဇာကာကွယ်ရေးပံ့ပိုးပေးသူများစွာကို အသုံးပြုပြီး အွန်လိုင်းအန္တရာယ်များကို အချိန်နှင့်တပြေးညီ ကာကွယ်ပါ။"
   },
   "logoAlt": {
     "message": "Osprey လိုဂို"
-  },
-  "bannerText": {
-    "message": "Osprey: ဘရောက်ဇာ ကာကွယ်မှု"
   },
   "warningTitle": {
     "message": "သတိပေးချက် - ဤဝဘ်ဆိုဒ်သည် အန္တရာယ်ဖြစ်ပါသည်"

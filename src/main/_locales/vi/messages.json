@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Bảo vệ Trình duyệt"
+  },
+  "extensionDescription": {
+    "message": "Bảo vệ khỏi các mối đe dọa trực tuyến theo thời gian thực bằng cách sử dụng nhiều nhà cung cấp bảo vệ trình duyệt."
   },
   "logoAlt": {
     "message": "Logo Osprey"
-  },
-  "bannerText": {
-    "message": "Osprey: Bảo vệ Trình duyệt"
   },
   "warningTitle": {
     "message": "Cảnh báo: Trang web này không an toàn"

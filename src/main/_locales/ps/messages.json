@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: د براوزر ساتنه"
+  },
+  "extensionDescription": {
+    "message": "د ګڼو براوزر ساتنې چمتو کوونکو په کارولو سره په ریښتیني وخت کې د آنلاین ګواښونو په وړاندې ځان وساتئ."
   },
   "logoAlt": {
     "message": "Osprey لوګو"
-  },
-  "bannerText": {
-    "message": "Osprey: د براوزر ساتنه"
   },
   "warningTitle": {
     "message": "خبرداری: دا ویب پاڼه خوندي نه ده"

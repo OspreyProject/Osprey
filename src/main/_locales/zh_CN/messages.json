@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey：浏览器保护"
+  },
+  "extensionDescription": {
+    "message": "通过多个浏览器保护提供商，实时抵御网络威胁。"
   },
   "logoAlt": {
     "message": "Osprey 标志"
-  },
-  "bannerText": {
-    "message": "Osprey：浏览器保护"
   },
   "warningTitle": {
     "message": "警告：此网站不安全"

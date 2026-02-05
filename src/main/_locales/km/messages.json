@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: ការពាររុករក"
+  },
+  "extensionDescription": {
+    "message": "ការពារពីការគំរាមកំហែងលើអ៊ីនធឺណិតបែបពេលវេលាពិត ដោយប្រើអ្នកផ្តល់សេវាការពារកម្មវិធីរុករកច្រើនរូប។"
   },
   "logoAlt": {
     "message": "រូបសញ្ញា Osprey"
-  },
-  "bannerText": {
-    "message": "Osprey: ការពាររុករក"
   },
   "warningTitle": {
     "message": "ការព្រមាន៖ វេបសាយនេះមិនមានសុវត្ថិភាពទេ"

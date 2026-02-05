@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Webbläsarskydd"
+  },
+  "extensionDescription": {
+    "message": "Skydda dig mot onlinehot i realtid med hjälp av flera leverantörer av webbläsarskydd."
   },
   "logoAlt": {
     "message": "Osprey-logotyp"
-  },
-  "bannerText": {
-    "message": "Osprey: Webbläsarskydd"
   },
   "warningTitle": {
     "message": "Varning: Den här webbplatsen är osäker"

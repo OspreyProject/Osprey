@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: הגנת דפדפן"
+  },
+  "extensionDescription": {
+    "message": "הגנה מפני איומים מקוונים בזמן אמת באמצעות מספר ספקי הגנה לדפדפן."
   },
   "logoAlt": {
     "message": "לוגו Osprey"
-  },
-  "bannerText": {
-    "message": "Osprey: הגנת דפדפן"
   },
   "warningTitle": {
     "message": "אזהרה: אתר זה אינו בטוח"

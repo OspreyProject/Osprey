@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Vafravörn"
+  },
+  "extensionDescription": {
+    "message": "Verndaðu gegn netógnum í rauntíma með því að nota marga verndara fyrir vafra."
   },
   "logoAlt": {
     "message": "Osprey merki"
-  },
-  "bannerText": {
-    "message": "Osprey: Vafravörn"
   },
   "warningTitle": {
     "message": "Aðvörun: Þessi vefsíða er óörugg"

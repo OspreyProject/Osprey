@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Perlindungan Pelayar"
+  },
+  "extensionDescription": {
+    "message": "Melindungi daripada ancaman dalam talian secara masa nyata dengan menggunakan pelbagai penyedia perlindungan pelayar."
   },
   "logoAlt": {
     "message": "Logo Osprey"
-  },
-  "bannerText": {
-    "message": "Osprey: Perlindungan Pelayar"
   },
   "warningTitle": {
     "message": "Amaran: Laman web ini tidak selamat"

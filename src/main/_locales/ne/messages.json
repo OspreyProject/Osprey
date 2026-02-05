@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: ब्राउजर सुरक्षा"
+  },
+  "extensionDescription": {
+    "message": "धेरै ब्राउजर सुरक्षा प्रदायकहरू प्रयोग गरेर अनलाइन खतराहरूबाट वास्तविक समयमा सुरक्षा गर्नुहोस्।"
   },
   "logoAlt": {
     "message": "Osprey लोगो"
-  },
-  "bannerText": {
-    "message": "Osprey: ब्राउजर सुरक्षा"
   },
   "warningTitle": {
     "message": "चेतावनी: यो वेबसाइट असुरक्षित छ"

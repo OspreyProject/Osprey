@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: ބްރައުޒަރ ސަޕޯޓް"
+  },
+  "extensionDescription": {
+    "message": "އެކައުންޓްތަކުން މަލްޓިޕަލް ބްރައުޒަރ ޕްރޮޓެކްޝަން ޕްރޮވައިޑަރސް ބޭނުންކޮށް ރިއަލް-ޓައިމްގައި އޮންލައިން ތަހުދީދުތަކަށް ހިމާޔަތް ކުރޭށެވެ۔"
   },
   "logoAlt": {
     "message": "Osprey ލޮގޯ"
-  },
-  "bannerText": {
-    "message": "Osprey: ބްރައުޒަރ ސަޕޯޓް"
   },
   "warningTitle": {
     "message": "އަހަރެން: މި ވެބްސައިޓް އެންސޭފް ނޫން"

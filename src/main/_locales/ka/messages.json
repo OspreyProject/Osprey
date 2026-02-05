@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: ბრაუზერის დაცვა"
+  },
+  "extensionDescription": {
+    "message": "დაიცავით თავი ონლაინ საფრთხეებისგან რეალურ დროში ბრაუზერის დაცვის მრავალი პროვაიდერის გამოყენებით."
   },
   "logoAlt": {
     "message": "Osprey ლოგო"
-  },
-  "bannerText": {
-    "message": "Osprey: ბრაუზერის დაცვა"
   },
   "warningTitle": {
     "message": "გაფრთხილება: ეს ვებგვერდი არ არის უსაფრთხო"

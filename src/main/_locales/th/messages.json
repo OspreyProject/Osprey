@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: การป้องกันเบราว์เซอร์"
+  },
+  "extensionDescription": {
+    "message": "ป้องกันภัยคุกคามออนไลน์แบบเรียลไทม์ด้วยผู้ให้บริการการป้องกันเบราว์เซอร์หลายราย"
   },
   "logoAlt": {
     "message": "โลโก้ Osprey"
-  },
-  "bannerText": {
-    "message": "Osprey: การป้องกันเบราว์เซอร์"
   },
   "warningTitle": {
     "message": "คำเตือน: เว็บไซต์นี้ไม่ปลอดภัย"

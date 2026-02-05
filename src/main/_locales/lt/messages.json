@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Naršyklės apsauga"
+  },
+  "extensionDescription": {
+    "message": "Apsaugokite save nuo internetinių grėsmių realiuoju laiku naudodami kelis naršyklės apsaugos teikėjus."
   },
   "logoAlt": {
     "message": "Osprey logotipas"
-  },
-  "bannerText": {
-    "message": "Osprey: Naršyklės apsauga"
   },
   "warningTitle": {
     "message": "Įspėjimas: Ši svetainė yra nesaugi"

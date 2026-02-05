@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Zaštita pregledača"
+  },
+  "extensionDescription": {
+    "message": "Заштитите се од онлајн претњи у реалном времену користећи више провајдера заштите прегледача."
   },
   "logoAlt": {
     "message": "Osprey logo"
-  },
-  "bannerText": {
-    "message": "Osprey: Zaštita pregledača"
   },
   "warningTitle": {
     "message": "Upozorenje: Ovaj veb-sajt nije bezbedan"

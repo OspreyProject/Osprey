@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Browserbeveiliging"
+  },
+  "extensionDescription": {
+    "message": "Bescherm uzelf in realtime tegen online bedreigingen met behulp van meerdere browserbeveiligingsproviders."
   },
   "logoAlt": {
     "message": "Osprey-logo"
-  },
-  "bannerText": {
-    "message": "Osprey: Browserbeveiliging"
   },
   "warningTitle": {
     "message": "Waarschuwing: Deze website is onveilig"

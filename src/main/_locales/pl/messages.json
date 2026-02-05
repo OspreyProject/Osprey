@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Ochrona przeglądarki"
+  },
+  "extensionDescription": {
+    "message": "Chroń się przed zagrożeniami internetowymi w czasie rzeczywistym, korzystając z wielu dostawców zabezpieczeń przeglądarek."
   },
   "logoAlt": {
     "message": "Logo Osprey"
-  },
-  "bannerText": {
-    "message": "Osprey: Ochrona przeglądarki"
   },
   "warningTitle": {
     "message": "Ostrzeżenie: Ta strona internetowa jest niebezpieczna"

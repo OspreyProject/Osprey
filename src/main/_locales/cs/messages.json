@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Ochrana prohlížeče"
+  },
+  "extensionDescription": {
+    "message": "Chraňte se před online hrozbami v reálném čase pomocí několika poskytovatelů ochrany prohlížeče."
   },
   "logoAlt": {
     "message": "Logo Osprey"
-  },
-  "bannerText": {
-    "message": "Osprey: Ochrana prohlížeče"
   },
   "warningTitle": {
     "message": "Varování: Tento web je nebezpečný"

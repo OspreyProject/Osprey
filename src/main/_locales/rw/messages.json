@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Kurinda Mucukumbuzi"
+  },
+  "extensionDescription": {
+    "message": "Irinda iterabwoba ryo kuri interineti mu gihe nyacyo ukoresheje abatanga serivisi nyinshi zo kurinda mushakisha."
   },
   "logoAlt": {
     "message": "Ikirango cya Osprey"
-  },
-  "bannerText": {
-    "message": "Osprey: Kurinda Mucukumbuzi"
   },
   "warningTitle": {
     "message": "Iburira: Uru rubuga si rwizewe"

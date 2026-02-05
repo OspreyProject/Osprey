@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: ການປ້ອງກັນບຣາວເຊີ"
+  },
+  "extensionDescription": {
+    "message": "ປ້ອງກັນໄພຄຸກຄາມອອນລາຍແບບເວລາຈິງ ໂດຍໃຊ້ຜູ້ໃຫ້ບໍລິການປ້ອງກັນບຣາວເຊີຫຼາຍລາຍ."
   },
   "logoAlt": {
     "message": "ໂລໂກ Osprey"
-  },
-  "bannerText": {
-    "message": "Osprey: ການປ້ອງກັນບຣາວເຊີ"
   },
   "warningTitle": {
     "message": "ຄໍາເຕືອນ: ເວັບໄຊນີ້ບໍ່ປອດໄພ"

@@ -1,12 +1,12 @@
 {
-  "title": {
+  "extensionName": {
     "message": "Osprey: Browserschutz"
+  },
+  "extensionDescription": {
+    "message": "Schützen Sie sich in Echtzeit vor Online-Bedrohungen, indem Sie mehrere Browser-Schutzanbieter nutzen."
   },
   "logoAlt": {
     "message": "Osprey Logo"
-  },
-  "bannerText": {
-    "message": "Osprey: Browserschutz"
   },
   "warningTitle": {
     "message": "Warnung: Diese Website ist unsicher"
