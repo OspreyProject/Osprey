@@ -132,9 +132,9 @@ The following providers are **disabled** by default:
 #### Security Filters
 
 - [ ] **[PrecisionSec Web Protection](https://precisionsec.com/?utm_source=osprey)**
-- [ ] [DNS4EU Security DNS](https://joindns4.eu/for-public/?utm_source=osprey)
 - [ ] [Control D Security DNS](https://controld.com/?utm_source=osprey)
 - [ ] [CERT-EE Security DNS](https://ria.ee/en/news/application-developed-cert-ee-protects-against-phishing-and-malware/?utm_source=osprey)
+- [ ] [DNS4EU Security DNS](https://joindns4.eu/for-public/?utm_source=osprey)
 
 #### Adult Content Filters
 
@@ -169,4 +169,4 @@ contact us at **support@osprey.ac**.
 
 ## Getting Help
 
-For support or queries, please open an issue in the [Issues section](https://github.com/Foulest/Osprey/issues).
+For support or queries, please open an issue in the [Issues section](https://github.com/OspreyProject/Osprey/issues).
