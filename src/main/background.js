@@ -22,7 +22,7 @@
     const browserAPI = globalThis.chrome ?? globalThis.browser;
     const contextMenuAPI = browserAPI?.contextMenus ?? browserAPI?.menus;
     let supportsManagedPolicies = true;
-    let replaceNewTabs = false;
+    let redirectToGoogle = false;
 
     // Import necessary scripts for functionality
     try {
@@ -42,7 +42,7 @@
         );
     } catch (error) {
         // In Firefox-based browsers, importScripts is not available; scripts are loaded via background.html
-        replaceNewTabs = true;
+        redirectToGoogle = true;
         console.debug("Running in Firefox or another environment without importScripts");
         console.debug(`Error: ${error}`);
     }
@@ -139,13 +139,8 @@
      * @param {number} tabId - The ID of the tab to be updated.
      */
     const sendToNewTabPage = tabId => {
-        if (replaceNewTabs) { // Firefox regression workaround
-            browserAPI.tabs.update(tabId, {url: "about:newtab"});
-            browserAPI.tabs.update(tabId, {url: "about:home"});
-            browserAPI.tabs.update(tabId, {url: "about:blank"});
-
-            // browserAPI.tabs.remove(tabId);
-            // browserAPI.tabs.create({});
+        if (redirectToGoogle) {
+            browserAPI.tabs.update(tabId, {url: "https://www.google.com"});
         } else {
             browserAPI.tabs.update(tabId, {url: "about:newtab"});
         }
