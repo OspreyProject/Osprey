@@ -311,7 +311,7 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
 
             // Sets the banner text
             if (bannerText) {
-                bannerText.textContent = LangUtil.BANNER_TEXT;
+                bannerText.textContent = LangUtil.TITLE;
             } else {
                 console.warn("'bannerText' element not found in the PopupPage DOM.");
             }
