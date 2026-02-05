@@ -60,7 +60,7 @@ Check out some of our endorsers below:
   <a href="https://controld.com/?utm_source=osprey" title="Control D"><img src="https://i.imgur.com/xh7qTT8.png" alt="Control D"></a>
   <a href="https://joindns4.eu/?utm_source=osprey" title="DNS4EU"><img src="https://i.imgur.com/g6bTuVS.png" alt="DNS4EU"></a>
   <a href="https://quad9.net/?utm_source=osprey" title="Quad9"><img src="https://i.imgur.com/HUrIKS9.png" alt="Quad9"></a>
-  <a href="https://switch.ch/?utm_source=osprey" title="Switch.ch"><img src="https://i.imgur.com/sv2jQ6S.png" alt="Switch.ch"></a>
+  <a href="https://switch.ch/?utm_source=osprey" title="Switch.ch"><img src="https://i.imgur.com/tsoJSZu.png" alt="Switch.ch"></a>
   <a href="https://concourse-cloud.com/?utm_source=osprey" title="Concourse Cloud"><img src="https://i.imgur.com/pfAZVvp.png" alt="Concourse Cloud"></a>
 </p>
 
