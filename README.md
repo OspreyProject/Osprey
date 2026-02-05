@@ -24,6 +24,14 @@
 
 ![Osprey Banner](https://i.imgur.com/zzv8QYh.png)
 
+###
+
+## Install & Setup Guide
+
+<p align="center">
+  <a href="https://youtu.be/CAVACABfZ0E" title="Watch on YouTube"><img src="https://i.imgur.com/5dqFscb.png" alt="Watch on YouTube"></a>
+</p>
+
 ## Official Partners
 
 Osprey has **officially partnered** with industry-leading security companies to provide you with the best protection
@@ -55,8 +63,6 @@ Check out some of our endorsers below:
   <a href="https://concourse-cloud.com/?utm_source=osprey" title="Concourse Cloud"><img src="https://i.imgur.com/pfAZVvp.png" alt="Concourse Cloud"></a>
 </p>
 
-###
-
 ## Our Mission
 
 Our mission is simple: become the most **trusted**, **transparent**, and **effective** browser protection extension for
@@ -76,12 +82,6 @@ info.
 The more protection providers join the project, the better the Osprey threat intelligence platform becomes. If you're
 interested in improving global threat intelligence and want to join the project, feel free to get in contact with us
 at **support@osprey.ac**.
-
-## Install & Setup Guide
-
-<p align="center">
-  <a href="https://youtu.be/CAVACABfZ0E" title="Watch on YouTube"><img src="https://i.imgur.com/5dqFscb.png" alt="Watch on YouTube"></a>
-</p>
 
 ## Warning Page
 
