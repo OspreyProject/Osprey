@@ -27,6 +27,7 @@ const BrowserProtection = (() => {
     // These aren't meant to be secret, but they are obfuscated to stop secret sniffers.
     let alphaMountainKey = atob("NjkyZDE1MzItZTRmYy00MjFmLWJkMzYtZGFmMGNjYzZlMTFi");
     let precisionSecKey = atob("MGI1Yjc2MjgtMzgyYi0xMWYwLWE1OWMtYjNiNTIyN2IxMDc2");
+    let seclookupKey = atob("MGJkYTY0MTA4ZTJiMWE3MGVmNzBlYzExM2Q3MGY5Y2Y=");
 
     // Map to store AbortControllers for each tab
     let tabAbortControllers = new Map();
@@ -1407,6 +1408,91 @@ const BrowserProtection = (() => {
         };
 
         /**
+         * Checks the URL with Seclookup's API.
+         *
+         * @param {Object} settings - The settings object containing user preferences.
+         */
+        const checkUrlWithSeclookup = async settings => {
+            // Checks if the provider is enabled
+            if (!settings.seclookupEnabled) {
+                return;
+            }
+
+            const origin = ProtectionResult.Origin.SECLOOKUP;
+            const shortName = ProtectionResult.ShortName[origin];
+            const cacheName = ProtectionResult.CacheName[origin];
+
+            // Checks if the URL is in the allowed cache
+            if (CacheManager.isUrlInAllowedCache(urlObject, cacheName)) {
+                console.debug(`[${shortName}] URL is already allowed: ${urlString}`);
+                callback(new ProtectionResult(urlString, ProtectionResult.ResultType.KNOWN_SAFE, origin));
+                return;
+            }
+
+            // Checks if the URL is in the blocked cache
+            if (CacheManager.isUrlInBlockedCache(urlObject, cacheName)) {
+                console.debug(`[${shortName}] URL is already blocked: ${urlString}`);
+                callback(new ProtectionResult(urlString, CacheManager.getBlockedResultType(urlString, cacheName), origin));
+                return;
+            }
+
+            // Checks if the URL is in the processing cache
+            if (CacheManager.isUrlInProcessingCache(urlObject, cacheName)) {
+                console.debug(`[${shortName}] URL is already processing: ${urlString}`);
+                callback(new ProtectionResult(urlString, ProtectionResult.ResultType.WAITING, origin));
+                return;
+            }
+
+            // Adds the URL to the processing cache to prevent duplicate requests
+            CacheManager.addUrlToProcessingCache(urlObject, cacheName, tabId);
+
+            const apiUrl = `https://api.seclookup.com/api/v1/scan/api?api_key=${seclookupKey}&domain=${encodedURL}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    signal
+                });
+
+                // Return early if the response is not OK
+                if (!response.ok) {
+                    console.warn(`[${shortName}] Returned early: ${response.status}`);
+                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
+                    return;
+                }
+
+                const data = await response.json();
+                const malicious = data?.data?.is_malicious;
+
+                // Malicious
+                if (malicious) {
+                    console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
+                    CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
+                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.MALICIOUS, origin));
+                    return;
+                }
+
+                // Safe/Trusted
+                if (!malicious) {
+                    console.debug(`[${shortName}] Added URL to allowed cache: ${urlString}`);
+                    CacheManager.addUrlToAllowedCache(urlObject, cacheName);
+                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.ALLOWED, origin));
+                    return;
+                }
+
+                // Unexpected result
+                console.warn(`[${shortName}] Returned an unexpected result for URL ${urlString}: ${data}`);
+                callback(new ProtectionResult(urlString, ProtectionResult.ResultType.ALLOWED, origin));
+            } catch (error) {
+                console.debug(`[${shortName}] Failed to check URL: ${error}`);
+                callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
+            }
+        };
+
+        /**
          * Checks the URL with Switch.ch's DNS API.
          *
          * @param {Object} settings - The settings object containing user preferences.
@@ -1616,6 +1702,7 @@ const BrowserProtection = (() => {
             checkUrlWithControlDFamily(settings);
             checkUrlWithDNS4EUSecurity(settings);
             checkUrlWithDNS4EUFamily(settings);
+            checkUrlWithSeclookup(settings);
             checkUrlWithSwitchCH(settings);
             checkUrlWithQuad9(settings);
         });

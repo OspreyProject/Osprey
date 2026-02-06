@@ -123,6 +123,11 @@
       "description": "If set to true, DNS4EU Family will be enabled.",
       "type": "boolean"
     },
+    "SeclookupEnabled": {
+      "title": "Seclookup Enabled",
+      "description": "If set to true, Seclookup will be enabled.",
+      "type": "boolean"
+    },
     "SwitchCHEnabled": {
       "title": "Switch.ch Enabled",
       "description": "If set to true, Switch.ch will be enabled.",

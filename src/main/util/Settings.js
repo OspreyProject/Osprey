@@ -40,6 +40,7 @@ const Settings = (() => {
         controlDFamilyEnabled: false,
         dns4EUSecurityEnabled: false,
         dns4EUFamilyEnabled: false,
+        seclookupEnabled: true,
         switchCHEnabled: true,
         quad9Enabled: true,
 
@@ -174,6 +175,7 @@ const Settings = (() => {
         !settings.controlDFamilyEnabled &&
         !settings.dns4EUSecurityEnabled &&
         !settings.dns4EUFamilyEnabled &&
+        !settings.seclookupEnabled &&
         !settings.switchCHEnabled &&
         !settings.quad9Enabled;
 

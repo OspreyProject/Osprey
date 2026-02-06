@@ -63,6 +63,7 @@ const CacheManager = (() => {
         "cloudflareSecurity", "cloudflareFamily",
         "controlDSecurity", "controlDFamily",
         "dns4EUSecurity", "dns4EUFamily",
+        "seclookup",
         "switchCH",
         "quad9",
     ];
