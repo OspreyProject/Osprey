@@ -8,6 +8,7 @@
   "-W062": false,
   "-W083": false,
   "-W097": false,
+  "-W106": false,
   "-W117": false,
   "-W127": false,
   "-W140": false
