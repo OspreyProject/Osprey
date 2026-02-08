@@ -158,7 +158,7 @@ const UrlHelpers = (() => {
         // Minimal IPv6 acceptance (including IPv4-mapped tails)
         if (s.includes(":")) {
             // Allow hex, colons, and optional dotted tail; reject other chars
-            if (!/^[0-9a-f:.\s]+$/.test(s)) {
+            if (!/^[0-9a-f:.]+$/.test(s)) {
                 return null;
             }
 
