@@ -330,7 +330,7 @@
             deleteResultOrigins(tabId);
 
             const startTime = Date.now();
-            console.info(`Checking URL: ${urlString}`);
+            console.info("Checking URL:", urlString);
 
             // Checks if the URL is malicious
             BrowserProtection.checkIfUrlIsMalicious(tabId, urlString, result => {
