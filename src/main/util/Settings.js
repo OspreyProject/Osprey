@@ -23,7 +23,9 @@ const Settings = (() => {
     // Key for storing settings in local storage
     const settingsKey = "Settings";
 
-    let defaultSettings = {
+    // List of keys that are considered dangerous and should not be used for storage
+    const DANGEROUS_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
+
     let defaultSettings = Object.freeze({
         // Official Partners
         adGuardSecurityEnabled: true,
@@ -83,6 +85,11 @@ const Settings = (() => {
                 if (Object.hasOwn(source, key) && source[key] !== target[key]) {
                     target[key] = source[key];
                     hasChanges = true;
+                // Skips dangerous keys to prevent prototype pollution
+                if (DANGEROUS_KEYS.includes(key)) {
+                    continue;
+                }
+
                 }
             }
         } catch (error) {
