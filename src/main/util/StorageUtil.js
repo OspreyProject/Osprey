@@ -87,6 +87,11 @@ const StorageUtil = (() => {
             throw new Error('Value must be defined');
         }
 
+        // Prevents storing functions or symbols
+        if (typeof value === 'function' || typeof value === 'symbol') {
+            throw new TypeError('Cannot store functions or symbols');
+        }
+
         // Checks if local storage is supported
         if (!browserAPI?.storage?.local) {
             console.error('Local storage API not available');
@@ -170,6 +175,11 @@ const StorageUtil = (() => {
         // Checks if the value is undefined
         if (value === undefined) {
             throw new Error('Value must be defined');
+        }
+
+        // Prevents storing functions or symbols
+        if (typeof value === 'function' || typeof value === 'symbol') {
+            throw new TypeError('Cannot store functions or symbols');
         }
 
         // Checks if session storage is supported
