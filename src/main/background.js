@@ -907,8 +907,16 @@
         // Gate privileged actions to the Warning page
         if (privileged.has(message.messageType)) {
             const allowedPrefix = browserAPI.runtime.getURL("pages/warning/");
+            let normalizedSenderUrl;
 
-            if (sender.id !== browserAPI.runtime.id || !sender.url?.startsWith(allowedPrefix)) {
+            try {
+                normalizedSenderUrl = new URL(sender.url).href;
+            } catch {
+                console.warn(`Invalid sender URL: ${sender.url}`);
+                return;
+            }
+
+            if (sender.id !== browserAPI.runtime.id || !normalizedSenderUrl.startsWith(allowedPrefix)) {
                 console.warn(`Blocked privileged message from ${sender.url || 'unknown source'}`);
                 return;
             }
