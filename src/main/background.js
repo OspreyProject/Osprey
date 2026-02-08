@@ -1000,6 +1000,13 @@
                     removeResultOrigin(tabId, origin);
                 }
 
+                // Verify continueUrl matches blockedUrl origin
+                if (blockedUrlObject.origin !== continueUrlObject.origin) {
+                    console.warn(`Continue URL origin mismatch: ${continueUrlObject.origin} vs ${blockedUrlObject.origin}`);
+                    sendToNewTabPage(tabId);
+                    return;
+                }
+
                 browserAPI.tabs.update(tabId, {url: message.continueUrl}).catch(error => {
                     console.error(`Failed to update tab ${tabId}:`, error);
                     sendToNewTabPage(tabId);
