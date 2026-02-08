@@ -17,7 +17,7 @@
  */
 "use strict";
 
-const Messages = {
+const Messages = Object.freeze({
 
     // Blocked Counter Actions
     BLOCKED_COUNTER_PING: "blockedCounterPing",
@@ -48,4 +48,4 @@ const Messages = {
     SECLOOKUP_TOGGLED: "seclookupToggled",
     SWITCH_CH_TOGGLED: "switchCHToggled",
     QUAD9_TOGGLED: "quad9Toggled",
-};
+});
