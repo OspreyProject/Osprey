@@ -82,14 +82,20 @@ const Settings = (() => {
             // Iterates through the source object properties
             // If the values differ, update the target and mark changes
             for (const key in source) {
-                if (Object.hasOwn(source, key) && source[key] !== target[key]) {
-                    target[key] = source[key];
-                    hasChanges = true;
                 // Skips dangerous keys to prevent prototype pollution
                 if (DANGEROUS_KEYS.includes(key)) {
                     continue;
                 }
 
+                // Only update keys that exist in defaultSettings
+                if (Object.hasOwn(source, key) && Object.hasOwn(target, key)) {
+                    // Validate the value before comparing/assigning
+                    const validatedValue = validateSettingValue(key, source[key], defaultSettings[key]);
+
+                    if (validatedValue !== target[key]) {
+                        target[key] = validatedValue;
+                        hasChanges = true;
+                    }
                 }
             }
         } catch (error) {
@@ -149,6 +155,25 @@ const Settings = (() => {
         StorageUtil.getFromLocalStore(settingsKey, function () {
             StorageUtil.setToLocalStore(settingsKey, defaultSettings, callback);
         });
+    };
+
+    /**
+     * Validates a setting value against its default value to ensure it is of the expected type.
+     *
+     * @param key - The key of the setting being validated.
+     * @param value - The value of the setting to validate.
+     * @param defaultValue - The default value of the setting, used to determine the expected type.
+     * @returns {*} - Returns the validated value if it is of the expected type, or the default value if it is not.
+     */
+    const validateSettingValue = (key, value, defaultValue) => {
+        const expectedType = typeof defaultValue;
+
+        // Checks if the value is of the expected type, if not, logs a warning and returns the default value
+        if (typeof value !== expectedType) {
+            console.warn(`Invalid type for setting ${key}, using default value`);
+            return defaultValue;
+        }
+        return value;
     };
 
     /**
