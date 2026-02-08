@@ -35,14 +35,14 @@ const UrlHelpers = (() => {
     const extractBlockedUrl = url => {
         try {
             return new URL(url).searchParams.get("url");
-        } catch (error) {
-            console.warn(`Invalid URL format: ${error.message}`);
+        } catch {
+            console.warn(`Invalid blocked URL format: ${url}`);
             return null;
         }
     };
 
     /**
-     * Extracts the continue URL from the query parameters of a URL.
+     * Extracts the continue URL (typically the same as the blocked URL) from the query parameters of a URL.
      *
      * @param {string} url - The URL containing the continue URL parameter.
      * @returns {string|null} - The continue URL, or null if not found.
@@ -50,8 +50,8 @@ const UrlHelpers = (() => {
     const extractContinueUrl = url => {
         try {
             return new URL(url).searchParams.get("curl");
-        } catch (error) {
-            console.warn(`Invalid URL format: ${error.message}`);
+        } catch {
+            console.warn(`Invalid continue URL format: ${url}`);
             return null;
         }
     };
