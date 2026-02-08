@@ -23,6 +23,9 @@ const StorageUtil = (() => {
     // Global variable for browser API compatibility
     const browserAPI = globalThis.chrome ?? globalThis.browser;
 
+    // List of keys that are considered dangerous and should not be used for storage
+    const DANGEROUS_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
+
     /**
      * Retrieves data from the browser's local storage.
      *
@@ -34,9 +37,9 @@ const StorageUtil = (() => {
         const fixedCallback = typeof callback === 'function' ? callback : () => {
         };
 
-        // Ensures the key is a string
-        if (typeof key !== 'string') {
-            throw new TypeError('Key must be a string');
+        // Checks if the key is valid
+        if (!isValidKey(key)) {
+            throw new TypeError('Key must be a non-empty string and cannot be a dangerous key');
         }
 
         // Checks if local storage is supported
@@ -74,9 +77,9 @@ const StorageUtil = (() => {
         const fixedCallback = typeof callback === 'function' ? callback : () => {
         };
 
-        // Checks if the key is a string
-        if (typeof key !== 'string') {
-            throw new TypeError('Key must be a string');
+        // Checks if the key is valid
+        if (!isValidKey(key)) {
+            throw new TypeError('Key must be a non-empty string and cannot be a dangerous key');
         }
 
         // Checks if the value is undefined
@@ -119,9 +122,9 @@ const StorageUtil = (() => {
         const fixedCallback = typeof callback === 'function' ? callback : () => {
         };
 
-        // Checks if the key is a string
-        if (typeof key !== 'string') {
-            throw new TypeError('Key must be a string');
+        // Checks if the key is valid
+        if (!isValidKey(key)) {
+            throw new TypeError('Key must be a non-empty string and cannot be a dangerous key');
         }
 
         // Checks if session storage is supported
@@ -159,9 +162,9 @@ const StorageUtil = (() => {
         const fixedCallback = typeof callback === 'function' ? callback : () => {
         };
 
-        // Checks if the key is a string
-        if (typeof key !== 'string') {
-            throw new TypeError('Key must be a string');
+        // Checks if the key is valid
+        if (!isValidKey(key)) {
+            throw new TypeError('Key must be a non-empty string and cannot be a dangerous key');
         }
 
         // Checks if the value is undefined
@@ -191,6 +194,16 @@ const StorageUtil = (() => {
             // Completes the callback
             fixedCallback();
         });
+    };
+
+    /**
+     * Validates a storage key to ensure it is a non-empty string and does not contain dangerous keys.
+     *
+     * @param key - The key to validate.
+     * @returns {boolean} - Returns true if the key is valid, false otherwise.
+     */
+    const isValidKey = (key) => {
+        return typeof key === 'string' && key.length > 0 && !DANGEROUS_KEYS.has(key);
     };
 
     return {
