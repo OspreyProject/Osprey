@@ -385,6 +385,16 @@ const UrlHelpers = (() => {
         // Strip trailing dot; DNS wire format carries labels explicitly
         const stripped = domain.trim().replace(/\.$/, '');
 
+        // Reject domains with invalid characters
+        if (!/^[a-zA-Z0-9.-]+$/.test(stripped)) {
+            throw new Error('Domain contains invalid characters');
+        }
+
+        // Reject overly long domains (max 253 chars per RFC)
+        if (stripped.length > 253) {
+            throw new Error('Domain exceeds maximum length');
+        }
+
         const header = new Uint8Array([
             0x00, 0x00, // ID
             0x01, 0x00, // flags: standard query, recursion desired
