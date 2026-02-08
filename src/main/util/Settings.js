@@ -85,7 +85,7 @@ const Settings = (() => {
 
                 // Skips dangerous keys to prevent prototype pollution
                 // Only updates keys that exist in defaultSettings
-                if (!DANGEROUS_KEYS.includes(key) && Object.hasOwn(source, key) && Object.hasOwn(target, key)) {
+                if (!DANGEROUS_KEYS.has(key) && Object.hasOwn(source, key) && Object.hasOwn(target, key)) {
                     const validatedValue = validateSettingValue(key, source[key], defaultSettings[key]);
 
                     // Only update the target if the validated value differs from the current value
