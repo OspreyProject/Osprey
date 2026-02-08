@@ -378,6 +378,10 @@ const UrlHelpers = (() => {
             throw new TypeError('domain must be a string');
         }
 
+        if (!Number.isInteger(type) || type < 0 || type > 65535) {
+            throw new TypeError('type must be a valid DNS record type (0-65535)');
+        }
+
         // Strip trailing dot; DNS wire format carries labels explicitly
         const stripped = domain.trim().replace(/\.$/, '');
 
