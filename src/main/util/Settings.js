@@ -142,7 +142,7 @@ const Settings = (() => {
     };
 
     /**
-     * Restore the default settings.
+     * Restores the default settings.
      *
      * @param callback - Callback function that will be called after restoring the settings.
      */
