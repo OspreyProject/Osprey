@@ -982,6 +982,13 @@
                     return;
                 }
 
+                // Verify continueUrl matches blockedUrl origin
+                if (blockedUrlObject.origin !== continueUrlObject.origin) {
+                    console.warn(`Continue URL origin mismatch: ${continueUrlObject.origin} vs ${blockedUrlObject.origin}`);
+                    sendToNewTabPage(tabId);
+                    return;
+                }
+
                 const {origin} = message;
 
                 if (origin === 0) {
@@ -998,13 +1005,6 @@
 
                     // Remove this origin from the "remaining blockers" list for this tab
                     removeResultOrigin(tabId, origin);
-                }
-
-                // Verify continueUrl matches blockedUrl origin
-                if (blockedUrlObject.origin !== continueUrlObject.origin) {
-                    console.warn(`Continue URL origin mismatch: ${continueUrlObject.origin} vs ${blockedUrlObject.origin}`);
-                    sendToNewTabPage(tabId);
-                    return;
                 }
 
                 browserAPI.tabs.update(tabId, {url: message.continueUrl}).catch(error => {
