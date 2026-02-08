@@ -26,6 +26,9 @@ const StorageUtil = (() => {
     // List of keys that are considered dangerous and should not be used for storage
     const DANGEROUS_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
 
+    // Maximum size for values stored in local storage (5MB)
+    const MAX_VALUE_SIZE = 5 * 1024 * 1024;
+
     /**
      * Retrieves data from the browser's local storage.
      *
@@ -90,6 +93,13 @@ const StorageUtil = (() => {
         // Prevents storing functions or symbols
         if (typeof value === 'function' || typeof value === 'symbol') {
             throw new TypeError('Cannot store functions or symbols');
+        }
+
+        const serialized = JSON.stringify(value);
+
+        // Checks if the serialized value exceeds the maximum allowed size
+        if (serialized.length > MAX_VALUE_SIZE) {
+            throw new Error('Value exceeds maximum allowed size');
         }
 
         // Checks if local storage is supported
@@ -180,6 +190,13 @@ const StorageUtil = (() => {
         // Prevents storing functions or symbols
         if (typeof value === 'function' || typeof value === 'symbol') {
             throw new TypeError('Cannot store functions or symbols');
+        }
+
+        const serialized = JSON.stringify(value);
+
+        // Checks if the serialized value exceeds the maximum allowed size
+        if (serialized.length > MAX_VALUE_SIZE) {
+            throw new Error('Value exceeds maximum allowed size');
         }
 
         // Checks if session storage is supported
