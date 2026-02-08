@@ -24,6 +24,7 @@ const Settings = (() => {
     const settingsKey = "Settings";
 
     let defaultSettings = {
+    let defaultSettings = Object.freeze({
         // Official Partners
         adGuardSecurityEnabled: true,
         adGuardFamilyEnabled: false,
@@ -53,7 +54,7 @@ const Settings = (() => {
         lockProtectionOptions: false,
         hideProtectionOptions: false,
         cacheExpirationSeconds: 604800, // 7 days in seconds
-    };
+    });
 
     /**
      * Compares two objects and updates the target object with values from the source object if they differ.
