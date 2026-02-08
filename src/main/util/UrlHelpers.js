@@ -90,10 +90,10 @@ const UrlHelpers = (() => {
      * Constructs the URL for the browser's block page, which shows a warning when a website is blocked.
      *
      * @param {object} protectionResult - The result object containing details about the threat.
-     * @param {object} continueURL - The URL to continue to if the user clicks a continue button.
+     * @param {object} continueUrl - The URL to continue to if the user clicks a continue button.
      * @returns {string} - The full URL for the block page.
      */
-    const getBlockPageUrl = (protectionResult, continueURL) => {
+    const getBlockPageUrl = (protectionResult, continueUrl) => {
         // Checks if the protection result is valid
         if (!protectionResult || typeof protectionResult !== 'object') {
             throw new Error('Invalid protection result');
@@ -104,14 +104,32 @@ const UrlHelpers = (() => {
             throw new Error('Missing required protection result properties');
         }
 
+        let protectionResultUrl;
+
+        // Validate that protectionResult.url is a valid URL
+        try {
+            protectionResultUrl = new URL(protectionResult.url);
+        } catch {
+            throw new Error('Invalid URL in protection result');
+        }
+
+        // Validate the continue URL if it is provided
+        if (continueUrl) {
+            try {
+                continueUrl = new URL(continueUrl);
+            } catch {
+                throw new Error('Invalid continue URL');
+            }
+        }
+
         try {
             // Constructs a new URL object for the block page
             const blockPageUrl = new URL(blockPageBaseUrl);
 
             // Sets the search parameters for the block page URL
             blockPageUrl.search = new URLSearchParams([
-                ["url", protectionResult.url],       // The URL of the blocked website
-                ["curl", continueURL || ''],         // The continue URL
+                ["url", protectionResultUrl],       // The URL of the blocked website
+                ["curl", continueUrl || ''],         // The continue URL
                 ["or", protectionResult.origin],     // The origin of the protection result
                 ["rs", protectionResult.resultType]  // The result type
             ]).toString();
