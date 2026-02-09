@@ -265,7 +265,7 @@ const Validate = (() => {
      * Checks if a value is a function.
      *
      * @param {*} value - The value to check.
-     * @returns {boolean} - True if function, false otherwise.
+     * @returns {boolean} - True if a function, false otherwise.
      */
     const isFunction = value => {
         return typeof value === 'function';
@@ -405,6 +405,23 @@ const Validate = (() => {
     const requireObject = (value, message) => {
         if (!isPlainObject(value)) {
             const msg = message || `Value must be a plain object, got: ${value}`;
+            console.warn(msg);
+            throw new ValidationError(msg);
+        }
+        return value;
+    };
+
+    /**
+     * Requires value to be a function, throws ValidationError otherwise.
+     *
+     * @param {*} value - The value to check.
+     * @param {string} [message] - Custom error message.
+     * @returns {*} - The validated value.
+     * @throws {ValidationError} - If validation fails.
+     */
+    const requireFunction = (value, message) => {
+        if (!isFunction(value)) {
+            const msg = message || `Value must be a function, got: ${value}`;
             console.warn(msg);
             throw new ValidationError(msg);
         }
@@ -561,6 +578,7 @@ const Validate = (() => {
         requireValidUrl,
         requireProperty,
         requireObject,
+        requireFunction,
         requireString,
         requireArray,
         requireBoolean,

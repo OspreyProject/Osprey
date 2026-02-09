@@ -36,9 +36,12 @@ const StorageUtil = (() => {
      * @param {Function} callback - The function to call with the retrieved value.
      */
     const getFromLocalStore = (key, callback) => {
-        // Ensures the callback is a function
-        const fixedCallback = typeof callback === 'function' ? callback : () => {
-        };
+        try {
+            Validate.requireString(key);
+            Validate.requireFunction(callback);
+        } catch {
+            return;
+        }
 
         // Checks if the key is valid
         if (!isValidKey(key)) {
@@ -48,7 +51,7 @@ const StorageUtil = (() => {
         // Checks if local storage is supported
         if (!browserAPI?.storage?.local) {
             console.error('Local storage API not available');
-            fixedCallback(null);
+            callback(null);
             return;
         }
 
@@ -56,7 +59,7 @@ const StorageUtil = (() => {
             // Handles errors in the storage process
             if (browserAPI.runtime.lastError) {
                 console.error('StorageUtil error:', browserAPI.runtime.lastError);
-                fixedCallback(null);
+                callback(null);
                 return;
             }
 
@@ -64,7 +67,7 @@ const StorageUtil = (() => {
             let value = result?.[key];
 
             // Calls the callback function with the retrieved value
-            fixedCallback(value);
+            callback(value);
         });
     };
 
@@ -76,23 +79,22 @@ const StorageUtil = (() => {
      * @param {Function} [callback] - Optional callback to call after saving.
      */
     const setToLocalStore = (key, value, callback) => {
-        // Ensures the callback is a function
-        const fixedCallback = typeof callback === 'function' ? callback : () => {
-        };
-
-        // Checks if the key is valid
-        if (!isValidKey(key)) {
-            throw new TypeError('Key must be a non-empty string and cannot be a dangerous key');
-        }
-
-        // Checks if the value is undefined
-        if (value === undefined) {
-            throw new Error('Value must be defined');
+        try {
+            Validate.requireString(key);
+            Validate.requireNotNull(value);
+            Validate.requireFunction(callback);
+        } catch {
+            return;
         }
 
         // Prevents storing functions or symbols
         if (typeof value === 'function' || typeof value === 'symbol') {
             throw new TypeError('Cannot store functions or symbols');
+        }
+
+        // Checks if the key is valid
+        if (!isValidKey(key)) {
+            throw new TypeError('Key must be a non-empty string and cannot be a dangerous key');
         }
 
         const serialized = JSON.stringify(value);
@@ -105,7 +107,7 @@ const StorageUtil = (() => {
         // Checks if local storage is supported
         if (!browserAPI?.storage?.local) {
             console.error('Local storage API not available');
-            fixedCallback(null);
+            callback(null);
             return;
         }
 
@@ -117,12 +119,12 @@ const StorageUtil = (() => {
             // Handles errors in the storage process
             if (browserAPI.runtime.lastError) {
                 console.error('StorageUtil error:', browserAPI.runtime.lastError);
-                fixedCallback(null);
+                callback(null);
                 return;
             }
 
             // Completes the callback
-            fixedCallback();
+            callback();
         });
     };
 
@@ -133,9 +135,12 @@ const StorageUtil = (() => {
      * @param {Function} callback - The function to call with the retrieved value.
      */
     const getFromSessionStore = (key, callback) => {
-        // Ensures the callback is a function
-        const fixedCallback = typeof callback === 'function' ? callback : () => {
-        };
+        try {
+            Validate.requireString(key);
+            Validate.requireFunction(callback);
+        } catch {
+            return;
+        }
 
         // Checks if the key is valid
         if (!isValidKey(key)) {
@@ -145,7 +150,7 @@ const StorageUtil = (() => {
         // Checks if session storage is supported
         if (!browserAPI?.storage?.session) {
             console.error('Session storage API not available');
-            fixedCallback(null);
+            callback(null);
             return;
         }
 
@@ -153,7 +158,7 @@ const StorageUtil = (() => {
             // Handles errors in the storage process
             if (browserAPI.runtime.lastError) {
                 console.error('StorageUtil error:', browserAPI.runtime.lastError);
-                fixedCallback(null);
+                callback(null);
                 return;
             }
 
@@ -161,7 +166,7 @@ const StorageUtil = (() => {
             let value = result?.[key];
 
             // Calls the callback function with the retrieved value.
-            fixedCallback(value);
+            callback(value);
         });
     };
 
@@ -173,23 +178,22 @@ const StorageUtil = (() => {
      * @param {Function} [callback] - Optional callback to call after saving.
      */
     const setToSessionStore = (key, value, callback) => {
-        // Ensures the callback is a function
-        const fixedCallback = typeof callback === 'function' ? callback : () => {
-        };
-
-        // Checks if the key is valid
-        if (!isValidKey(key)) {
-            throw new TypeError('Key must be a non-empty string and cannot be a dangerous key');
-        }
-
-        // Checks if the value is undefined
-        if (value === undefined) {
-            throw new Error('Value must be defined');
+        try {
+            Validate.requireString(key);
+            Validate.requireNotNull(value);
+            Validate.requireFunction(callback);
+        } catch {
+            return;
         }
 
         // Prevents storing functions or symbols
         if (typeof value === 'function' || typeof value === 'symbol') {
             throw new TypeError('Cannot store functions or symbols');
+        }
+
+        // Checks if the key is valid
+        if (!isValidKey(key)) {
+            throw new TypeError('Key must be a non-empty string and cannot be a dangerous key');
         }
 
         const serialized = JSON.stringify(value);
@@ -202,7 +206,7 @@ const StorageUtil = (() => {
         // Checks if session storage is supported
         if (!browserAPI?.storage?.session) {
             console.error('Session storage API not available');
-            fixedCallback(null);
+            callback(null);
             return;
         }
 
@@ -214,12 +218,12 @@ const StorageUtil = (() => {
             // Handles errors in the storage process
             if (browserAPI.runtime.lastError) {
                 console.error('StorageUtil error:', browserAPI.runtime.lastError);
-                fixedCallback(null);
+                callback(null);
                 return;
             }
 
             // Completes the callback
-            fixedCallback();
+            callback();
         });
     };
 
@@ -230,7 +234,12 @@ const StorageUtil = (() => {
      * @returns {boolean} - Returns true if the key is valid, false otherwise.
      */
     const isValidKey = (key) => {
-        return typeof key === 'string' && key.length > 0 && !DANGEROUS_KEYS.has(key);
+        try {
+            Validate.requireString(key);
+        } catch {
+            return false;
+        }
+        return key.length > 0 && !DANGEROUS_KEYS.has(key);
     };
 
     return {
