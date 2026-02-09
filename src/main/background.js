@@ -1091,13 +1091,21 @@
                 }
 
                 if (validProtocols.has(reportUrlObject.protocol.toLowerCase())) {
-                    console.debug(`Navigating to report URL: ${message.reportUrl}`);
                     browserAPI.tabs.create({url: message.reportUrl});
                 } else if (reportUrlObject.protocol === "mailto:") {
-                    browserAPI.tabs.create({url: message.reportUrl});
+                    // Validate mailto format - only allow safe characters
+                    if (/^mailto:[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/.test(message.reportUrl)) {
+                        browserAPI.tabs.create({url: message.reportUrl});
+                    } else {
+                        console.warn(`Invalid mailto URL format: ${message.reportUrl}`);
+                        break;
+                    }
                 } else {
                     console.warn(`Invalid protocol in report URL: ${message.reportUrl}; doing nothing.`);
+                    break;
                 }
+
+                console.debug(`Navigating to report URL: ${message.reportUrl}`);
                 break;
             }
 
