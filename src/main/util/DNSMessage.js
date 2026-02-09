@@ -387,7 +387,7 @@ class DNSMessage {
             for (let i = 0; i < lengthAAAA; i += 2) {
                 parts.push((array[rdataStart + i] << 8 | array[rdataStart + i + 1]).toString(16));
             }
-            return parts.join(":").replace(/(^|:)0(:0)+(:|$)/, "::");
+            return parts.join(":");
         }
 
         // CNAME (5), NS (2), PTR (12): a domain name
