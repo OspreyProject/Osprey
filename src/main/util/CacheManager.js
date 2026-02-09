@@ -46,9 +46,10 @@ const CacheManager = (() => {
     // Sets the expiration time for cache entries based on user settings
     Settings.get(settings => {
         const expSeconds = Number(settings?.cacheExpirationSeconds);
-        const min = 60;
-        const def = 604800;
-        expirationTime = Number.isFinite(expSeconds) && expSeconds >= min ? expSeconds : def;
+        const min = 60; // 1 minute in seconds
+        const max = 31536000; // 1 year in seconds
+        const def = 604800; // 7 days in seconds
+        expirationTime = Number.isFinite(expSeconds) && expSeconds >= min && expSeconds <= max ? expSeconds : def;
     });
 
     const providers = Object.freeze([
