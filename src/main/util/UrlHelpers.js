@@ -142,6 +142,49 @@ const UrlHelpers = (() => {
     };
 
     /**
+     * Checks if a hostname is valid according to standard hostname rules.
+     *
+     * @param {string} hostname - The hostname to validate.
+     * @returns {boolean} - True if the hostname is valid, false otherwise.
+     */
+    const isValidHostname = hostname => {
+        if (!/^(?!-)[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(hostname)) {
+            return false;
+        }
+
+        if (hostname.includes('..')) {
+            return false;
+        }
+
+        if (hostname.startsWith('.')) {
+            return false;
+        }
+
+        if (hostname.endsWith('.')) {
+            return false;
+        }
+
+        if (hostname.length > 253) {
+            return false;
+        }
+
+        if (UrlHelpers.isInternalAddress(hostname)) {
+            return false;
+        }
+
+        const labels = hostname.split('.');
+
+        if (labels.some(label => label.length === 0 || label.length > 63)) {
+            return false;
+        }
+
+        if (labels.some(label => !/^[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?$/.test(label))) {
+            return false;
+        }
+        return true;
+    };
+
+    /**
      * Normalizes an IP address.
      *
      * @param {string} hostname - The IP/hostname to check.
@@ -460,6 +503,7 @@ const UrlHelpers = (() => {
         extractResult,
         normalizeUrl,
         getBlockPageUrl,
+        isValidHostname,
         isInternalAddress,
         encodeDNSQuery
     };

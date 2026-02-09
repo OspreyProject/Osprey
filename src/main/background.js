@@ -1195,12 +1195,8 @@
 
                 const hostname = blockedUrlObject.hostname;
 
-                // Validates the hostname pattern to prevent potential security issues with malformed hostnames
-                if (!/^(?!-)[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(hostname) ||
-                    hostname.includes('..') ||
-                    hostname.startsWith('.') ||
-                    hostname.endsWith('.') ||
-                    UrlHelpers.isInternalAddress(hostname)) {
+                // Validates the hostname to ensure it is a valid domain or IP address
+                if (!UrlHelpers.isValidHostname(hostname)) {
                     console.warn(`Invalid hostname pattern: ${hostname}`);
                     sendToNewTabPage(tabId);
                     return;
