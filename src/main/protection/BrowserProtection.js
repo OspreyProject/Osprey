@@ -82,9 +82,8 @@ const BrowserProtection = (() => {
             return;
         }
 
+        // Parses the URL object
         let urlObject;
-
-        // Validates the URL format
         try {
             urlObject = new URL(urlString);
         } catch (error) {

@@ -208,20 +208,22 @@
 
             // Unwraps blob: URLs safely
             if (urlObject.protocol === 'blob:') {
+                // Parses the blob URL object
+                let inner;
                 try {
-                    const inner = new URL(urlString.slice(5));
+                    inner = new URL(urlString.slice(5));
+                } catch (error) {
+                    console.warn(`Invalid blob URL: ${urlString}; bailing out: ${error}`);
+                    return;
+                }
 
-                    // Drops the "blob:" prefix and parses the inner URL
-                    if (inner.protocol === 'http:' || inner.protocol === 'https:') {
-                        urlObject = inner;
-                        urlString = inner.href;
-                        previouslyBlob = true;
-                    } else {
-                        console.debug(`Non-HTTP(S) blob origin: ${inner.protocol}; bailing out.`);
-                        return;
-                    }
-                } catch (e) {
-                    console.warn(`Invalid blob URL: ${urlString}; bailing out: ${e}`);
+                // Drops the "blob:" prefix and parses the inner URL
+                if (inner.protocol === 'http:' || inner.protocol === 'https:') {
+                    urlObject = inner;
+                    urlString = inner.href;
+                    previouslyBlob = true;
+                } else {
+                    console.debug(`Non-HTTP(S) blob origin: ${inner.protocol}; bailing out.`);
                     return;
                 }
             }
@@ -927,8 +929,9 @@
         // Gate privileged actions to the Warning page
         if (privileged.has(message.messageType)) {
             const allowedPrefix = browserAPI.runtime.getURL("pages/warning/");
-            let normalizedSenderUrl;
 
+            // Parses the normalized sender URL object
+            let normalizedSenderUrl;
             try {
                 normalizedSenderUrl = new URL(sender.url).href;
             } catch {
@@ -1054,7 +1057,14 @@
                     break;
                 }
 
-                let reportUrlObject = new URL(message.reportUrl);
+                // Parses the report URL object
+                let reportUrlObject;
+                try {
+                    reportUrlObject = new URL(message.reportUrl);
+                } catch {
+                    console.warn(`Invalid report URL: ${message.reportUrl}`);
+                    break;
+                }
 
                 if (validProtocols.has(reportUrlObject.protocol.toLowerCase())) {
                     console.debug(`Navigating to report URL: ${message.reportUrl}`);

@@ -104,16 +104,15 @@ const UrlHelpers = (() => {
             throw new Error('Missing required protection result properties');
         }
 
+        // Parses the protection result URL object
         let protectionResultUrl;
-
-        // Validate that protectionResult.url is a valid URL
         try {
             protectionResultUrl = new URL(protectionResult.url);
         } catch {
             throw new Error('Invalid URL in protection result');
         }
 
-        // Validate the continue URL if it is provided
+        // Parses the continue URL object if present
         if (continueUrl) {
             try {
                 continueUrl = new URL(continueUrl);
@@ -122,23 +121,24 @@ const UrlHelpers = (() => {
             }
         }
 
+        // Parses the block page URL object
+        let blockPageUrl;
         try {
-            // Constructs a new URL object for the block page
-            const blockPageUrl = new URL(blockPageBaseUrl);
-
-            // Sets the search parameters for the block page URL
-            blockPageUrl.search = new URLSearchParams([
-                ["url", protectionResultUrl],       // The URL of the blocked website
-                ["curl", continueUrl || ''],         // The continue URL
-                ["or", protectionResult.origin],     // The origin of the protection result
-                ["rs", protectionResult.resultType]  // The result type
-            ]).toString();
-
-            // Returns the constructed block page URL as a string
-            return blockPageUrl.toString();
-        } catch (error) {
-            throw new Error(`Failed to construct block page URL: ${error.message}`);
+            blockPageUrl = new URL(blockPageBaseUrl);
+        } catch {
+            throw new Error(`Invalid block page base URL`);
         }
+
+        // Sets the search parameters for the block page URL
+        blockPageUrl.search = new URLSearchParams([
+            ["url", protectionResultUrl],       // The URL of the blocked website
+            ["curl", continueUrl || ''],         // The continue URL
+            ["or", protectionResult.origin],     // The origin of the protection result
+            ["rs", protectionResult.resultType]  // The result type
+        ]).toString();
+
+        // Returns the constructed block page URL as a string
+        return blockPageUrl.toString();
     };
 
     /**
