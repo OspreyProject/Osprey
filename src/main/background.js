@@ -365,7 +365,7 @@
                 const fullName = ProtectionResult.FullName[result.origin];
                 const shortName = ProtectionResult.ShortName[result.origin];
                 const {resultType} = result;
-                const resultTypeNameEN = ProtectionResult.ResultTypeNameEN[resultType];
+                const resultTypeName = ProtectionResult.ResultTypeName[resultType];
 
                 // Removes the URL from the system's processing cache on every callback
                 // Doesn't remove it if the result is still waiting for a response
@@ -373,7 +373,7 @@
                     CacheManager.removeUrlFromProcessingCache(urlObject, cacheName);
                 }
 
-                console.info(`[${shortName}] Result for ${urlString}: ${resultTypeNameEN} (${duration}ms)`);
+                console.info(`[${shortName}] Result for ${urlString}: ${resultTypeName} (${duration}ms)`);
 
                 if (resultType !== ProtectionResult.ResultType.FAILED &&
                     resultType !== ProtectionResult.ResultType.WAITING &&
@@ -424,7 +424,7 @@
                                         type: "basic",
                                         iconUrl: "assets/icons/icon128.png",
                                         title: LangUtil.UNSAFE_WEBSITE_TITLE,
-                                        message: `${LangUtil.URL_LABEL}${urlString}\n${LangUtil.REPORTED_BY_LABEL}${fullName}\n${LangUtil.REASON_LABEL}${resultTypeNameEN}`,
+                                        message: `${LangUtil.URL_LABEL}${UrlHelpers.sanitizeForDisplay(urlString)}\n${LangUtil.REPORTED_BY_LABEL}${fullName}\n${LangUtil.REASON_LABEL}${resultTypeName}`,
                                         priority: 2,
                                     };
 
