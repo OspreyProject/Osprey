@@ -59,7 +59,7 @@
     /**
      * Retrieves the result origins for a specific tab.
      *
-     * @param tabId - The ID of the tab.
+     * @param {number} tabId - The ID of the tab.
      * @returns {any|*[]} - An array of result origins for the specified tab.
      */
     const getResultOrigins = tabId => {
@@ -69,8 +69,8 @@
     /**
      * Appends a result origin to the result origins for a specific tab.
      *
-     * @param tabId - The ID of the tab.
-     * @param origin - The origin to append.
+     * @param {number} tabId - The ID of the tab.
+     * @param {number} origin - The origin to append.
      */
     const appendResultOrigin = (tabId, origin) => {
         // Check if the origin is an Integer
@@ -89,8 +89,8 @@
     /**
      * Removes a specific origin from the result origins for a given tab.
      *
-     * @param tabId - The ID of the tab.
-     * @param origin - The origin to remove.
+     * @param {number} tabId - The ID of the tab.
+     * @param {number} origin - The origin to remove.
      */
     const removeResultOrigin = (tabId, origin) => {
         resultOriginsMap.set(tabId, (resultOriginsMap.get(tabId) || []).filter(o => o !== origin));
@@ -99,7 +99,7 @@
     /**
      * Deletes the result origins for a specific tab.
      *
-     * @param tabId - The ID of the tab.
+     * @param {number} tabId - The ID of the tab.
      */
     const deleteResultOrigins = tabId => {
         resultOriginsMap.delete(tabId);
@@ -108,7 +108,7 @@
     /**
      * Retrieves the frame-zero URL for a specific tab.
      *
-     * @param tabId - The ID of the tab.
+     * @param {number} tabId - The ID of the tab.
      */
     const getFrameZeroUrl = tabId => {
         return frameZeroUrlsMap.get(tabId) || "";
@@ -117,8 +117,8 @@
     /**
      * Sets the frame-zero URL for a specific tab.
      *
-     * @param tabId - The ID of the tab.
-     * @param url - The URL to set.
+     * @param {number} tabId - The ID of the tab.
+     * @param {string} url - The URL to set.
      */
     const setFrameZeroUrl = (tabId, url) => {
         frameZeroUrlsMap.set(tabId, url);
@@ -152,7 +152,7 @@
     /**
      * Function to handle navigation checks.
      *
-     * @param navigationDetails - The navigation details to handle.
+     * @param {object} navigationDetails - The navigation details to handle.
      */
     const handleNavigation = navigationDetails => {
         Settings.get(settings => {
