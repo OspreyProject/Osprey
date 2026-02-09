@@ -1099,10 +1099,6 @@
             Validate.requireProperty(callback, "url");
             Validate.requireValidUrl(callback.url);
 
-            // callback.frameId
-            Validate.requireProperty(callback, "frameId", `${JSON.stringify(callback)}`);
-            Validate.requireInteger(callback.frameId);
-
             // callback.tabId
             Validate.requireProperty(callback, "tabId");
             Validate.requireNonNegativeInteger(callback.tabId);

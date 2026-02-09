@@ -46,8 +46,9 @@ const Validate = (() => {
      * @returns {boolean} - True if valid integer, false otherwise.
      */
     const isInteger = value => {
-        return typeof value === 'number' && Number.isInteger(value) && !Number.isNaN(value) ||
-            typeof value === 'string' && value.trim() !== '' && Number.isInteger(Number(value)) && !Number.isNaN(Number(value));
+        return isNotNull(value) &&
+            (typeof value === 'number' && Number.isInteger(value) && !Number.isNaN(value) ||
+            typeof value === 'string' && value.trim() !== '' && Number.isInteger(Number(value)) && !Number.isNaN(Number(value)));
     };
 
     /**
@@ -77,7 +78,7 @@ const Validate = (() => {
      * @returns {boolean} - True if non-blank string, false otherwise.
      */
     const isNotBlank = value => {
-        return typeof value === 'string' && value.trim().length > 0;
+        return isNotNull(value) && typeof value === 'string' && value.trim().length > 0;
     };
 
     /**
@@ -87,7 +88,7 @@ const Validate = (() => {
      * @returns {boolean} - True if non-empty string, false otherwise.
      */
     const isNotEmpty = value => {
-        return typeof value === 'string' && value.length > 0;
+        return isNotNull(value) && typeof value === 'string' && value.length > 0;
     };
 
     /**
@@ -98,7 +99,7 @@ const Validate = (() => {
      * @returns {boolean} - True if property exists and is not null/undefined, false otherwise.
      */
     const hasProperty = (obj, key) => {
-        return obj !== null && Object.hasOwn(obj, key) && obj[key] !== null;
+        return isNotNull(obj) && Object.hasOwn(obj, key) && isNotNull(obj[key]);
     };
 
     /**
@@ -109,7 +110,7 @@ const Validate = (() => {
      * @returns {boolean} - True if property exists and is a non-blank string, false otherwise.
      */
     const hasStringProperty = (obj, key) => {
-        return hasProperty(obj, key) && isNotBlank(obj[key]);
+        return isNotNull(obj) && hasProperty(obj, key) && isNotNull(obj[key]) && isNotBlank(obj[key]);
     };
 
     /**
@@ -160,6 +161,10 @@ const Validate = (() => {
      * @returns {{valid: boolean, url: URL|null, error: string|null}} - Parse result object.
      */
     const parseUrl = urlString => {
+        if (!isNotNull(urlString)) {
+            return {valid: false, url: null, error: 'URL string is null or undefined'};
+        }
+
         if (!isNotBlank(urlString)) {
             return {valid: false, url: null, error: 'URL string is blank'};
         }
@@ -180,7 +185,7 @@ const Validate = (() => {
      * @returns {boolean} - True if protocol is valid, false otherwise.
      */
     const hasValidProtocol = (urlObject, validProtocols) => {
-        if (!urlObject || typeof urlObject.protocol !== 'string') {
+        if (!isNotNull(urlObject) || !isString(urlObject.protocol)) {
             return false;
         }
         return validProtocols.has(urlObject.protocol.toLowerCase());
@@ -218,6 +223,9 @@ const Validate = (() => {
      * @returns {boolean} - True if all properties exist and are non-blank strings, false otherwise.
      */
     const hasAllStringProperties = (obj, keys) => {
+        if (!isNotNull(obj) || !Array.isArray(keys)) {
+            return false;
+        }
         return keys.every(key => hasStringProperty(obj, key));
     };
 
@@ -228,7 +236,7 @@ const Validate = (() => {
      * @returns {boolean} - True if null or undefined, false otherwise.
      */
     const isNullish = value => {
-        return value === null || value === undefined || !value;
+        return value === null || value === undefined || !value && typeof value !== 'boolean' && typeof value !== 'number';
     };
 
     /**
@@ -248,7 +256,7 @@ const Validate = (() => {
      * @returns {boolean} - True if non-empty array, false otherwise.
      */
     const isNonEmptyArray = value => {
-        return Array.isArray(value) && value.length > 0;
+        return isNotNull(value) && Array.isArray(value) && value.length > 0;
     };
 
     /**
@@ -258,7 +266,17 @@ const Validate = (() => {
      * @returns {boolean} - True if boolean, false otherwise.
      */
     const isBoolean = value => {
-        return typeof value === 'boolean';
+        return isNotNull(value) && typeof value === 'boolean';
+    };
+
+    /**
+     * Checks if a value is a string.
+     *
+     * @param {*} value - The value to check.
+     * @returns {boolean} - True if boolean, false otherwise.
+     */
+    const isString = value => {
+        return isNotNull(value) && typeof value === 'string';
     };
 
     /**
@@ -268,7 +286,7 @@ const Validate = (() => {
      * @returns {boolean} - True if a function, false otherwise.
      */
     const isFunction = value => {
-        return typeof value === 'function';
+        return isNotNull(value) && typeof value === 'function';
     };
 
     /**
@@ -278,7 +296,7 @@ const Validate = (() => {
      * @returns {boolean} - True if plain object, false otherwise.
      */
     const isPlainObject = value => {
-        return typeof value === 'object' && value !== null && !Array.isArray(value);
+        return isNotNull(value) && typeof value === 'object' && !Array.isArray(value);
     };
 
     // ==================== ASSERTION METHODS (throw ValidationError on failure) ====================
@@ -326,7 +344,7 @@ const Validate = (() => {
      * @throws {ValidationError} - If validation fails.
      */
     const requireString = (value, message) => {
-        if (typeof value !== 'string') {
+        if (!isString(value)) {
             const msg = message || `Value must be a string, got: ${value}`;
             console.warn(msg);
             throw new ValidationError(msg);
@@ -567,6 +585,7 @@ const Validate = (() => {
         isNonEmptyArray,
         isBoolean,
         isFunction,
+        isString,
         isPlainObject,
 
         // Assertion methods (throw ValidationError)
