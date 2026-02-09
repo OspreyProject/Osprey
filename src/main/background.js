@@ -1030,7 +1030,7 @@
                 if (typeof originValue === 'string') {
                     originValue = Number(originValue);
 
-                    if (isNaN(originValue)) {
+                    if (Number.isNaN(originValue)) {
                         console.warn(`Origin value is not a valid number: ${message.origin}; sending to new tab page.`);
                         sendToNewTabPage(tabId);
                         return;
@@ -1149,7 +1149,7 @@
                 if (typeof originValue === 'string') {
                     originValue = Number(originValue);
 
-                    if (isNaN(originValue)) {
+                    if (Number.isNaN(originValue)) {
                         console.warn(`Origin value is not a valid number: ${message.origin}; sending to new tab page.`);
                         sendToNewTabPage(tabId);
                         return;
