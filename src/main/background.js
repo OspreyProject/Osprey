@@ -35,6 +35,7 @@
             "util/MessageType.js",
             "util/LangUtil.js",
             "util/DNSMessage.js",
+            "util/Validate.js",
 
             // Protection
             "protection/ProtectionResult.js",
@@ -56,6 +57,44 @@
     // Map<tabKey, urlString> of frame-zero URLs per tab
     const frameZeroUrlsMap = new Map();
 
+    // Set of valid protocols to check for
+    const validProtocols = new Set(['http:', 'https:']);
+
+    // Report URL for the "Report Website as Malicious" context menu item
+    const reportUrl = "https://github.com/OspreyProject/Osprey/wiki/Report-Website-as-Malicious";
+
+    // Set of all policy keys needed for managed policies
+    const policyKeys = Object.freeze([
+        'DisableContextMenu',
+        'DisableNotifications',
+        'HideContinueButtons',
+        'HideReportButton',
+        'IgnoreFrameNavigation',
+        'CacheExpirationSeconds',
+        'LockProtectionOptions',
+        'HideProtectionOptions',
+
+        // Official Partners
+        'AdGuardSecurityEnabled',
+        'AdGuardFamilyEnabled',
+        'AlphaMountainEnabled',
+        'ControlDSecurityEnabled',
+        'ControlDFamilyEnabled',
+        'PrecisionSecEnabled',
+
+        // Non-Partnered Providers
+        'CERTEEEnabled',
+        'CleanBrowsingSecurityEnabled',
+        'CleanBrowsingFamilyEnabled',
+        'CloudflareSecurityEnabled',
+        'CloudflareFamilyEnabled',
+        'DNS4EUSecurityEnabled',
+        'DNS4EUFamilyEnabled',
+        'SeclookupEnabled',
+        'SwitchCHEnabled',
+        'Quad9Enabled',
+    ]);
+
     /**
      * Retrieves the result origins for a specific tab.
      *
@@ -63,6 +102,12 @@
      * @returns {any|*[]} - An array of result origins for the specified tab.
      */
     const getResultOrigins = tabId => {
+        try {
+            // parameters
+            Validate.requireNonNegativeInteger(tabId);
+        } catch {
+            return [];
+        }
         return resultOriginsMap.get(tabId) || [];
     };
 
@@ -73,9 +118,11 @@
      * @param {number} origin - The origin to append.
      */
     const appendResultOrigin = (tabId, origin) => {
-        // Check if the origin is an Integer
-        if (typeof origin !== 'number' || !Number.isInteger(origin)) {
-            console.warn(`Invalid origin type: ${origin}; must be an integer.`);
+        try {
+            // parameters
+            Validate.requireNonNegativeInteger(tabId);
+            Validate.requireInteger(origin);
+        } catch {
             return;
         }
 
@@ -93,6 +140,14 @@
      * @param {number} origin - The origin to remove.
      */
     const removeResultOrigin = (tabId, origin) => {
+        try {
+            // parameters
+            Validate.requireNonNegativeInteger(tabId);
+            Validate.requireInteger(origin);
+        } catch {
+            return;
+        }
+
         resultOriginsMap.set(tabId, (resultOriginsMap.get(tabId) || []).filter(o => o !== origin));
     };
 
@@ -102,6 +157,13 @@
      * @param {number} tabId - The ID of the tab.
      */
     const deleteResultOrigins = tabId => {
+        try {
+            // parameters
+            Validate.requireNonNegativeInteger(tabId);
+        } catch {
+            return;
+        }
+
         resultOriginsMap.delete(tabId);
     };
 
@@ -111,6 +173,12 @@
      * @param {number} tabId - The ID of the tab.
      */
     const getFrameZeroUrl = tabId => {
+        try {
+            // parameters
+            Validate.requireNonNegativeInteger(tabId);
+        } catch {
+            return "";
+        }
         return frameZeroUrlsMap.get(tabId) || "";
     };
 
@@ -121,6 +189,14 @@
      * @param {string} url - The URL to set.
      */
     const setFrameZeroUrl = (tabId, url) => {
+        try {
+            // parameters
+            Validate.requireNonNegativeInteger(tabId);
+            Validate.requireValidUrl(url);
+        } catch {
+            return;
+        }
+
         frameZeroUrlsMap.set(tabId, url);
     };
 
@@ -130,6 +206,13 @@
      * @param {number} tabId - The ID of the tab.
      */
     const deleteFrameZeroUrl = tabId => {
+        try {
+            // parameters
+            Validate.requireNonNegativeInteger(tabId);
+        } catch {
+            return;
+        }
+
         frameZeroUrlsMap.delete(tabId);
     };
 
@@ -141,6 +224,14 @@
      * @returns {Promise<boolean>} - Returns true if the tab was successfully updated, false if the tab no longer exists or an error occurred.
      */
     const safeTabUpdate = async (tabId, updateProps) => {
+        try {
+            // parameters
+            Validate.requireNonNegativeInteger(tabId);
+            Validate.requireNotNull(updateProps);
+        } catch {
+            return false;
+        }
+
         try {
             await browserAPI.tabs.update(tabId, updateProps);
             return true;
@@ -156,6 +247,13 @@
      * @param {number} tabId - The ID of the tab to be updated.
      */
     const sendToNewTabPage = tabId => {
+        try {
+            // parameters
+            Validate.requireNonNegativeInteger(tabId);
+        } catch {
+            return;
+        }
+
         if (redirectToGoogle) {
             safeTabUpdate(tabId, {url: "https://www.google.com"});
         } else {
@@ -163,15 +261,31 @@
         }
     };
 
-    // List of valid protocols to check for
-    const validProtocols = new Set(['http:', 'https:']);
-
     /**
      * Function to handle navigation checks.
      *
      * @param {object} navigationDetails - The navigation details to handle.
      */
     const handleNavigation = navigationDetails => {
+        try {
+            // parameters
+            Validate.requireNotNull(navigationDetails);
+            Validate.requireProperty(navigationDetails, "tabId");
+            Validate.requireProperty(navigationDetails, "frameId");
+            Validate.requireProperty(navigationDetails, "url");
+
+            // navigationDetails.tabId
+            Validate.requireNonNegativeInteger(navigationDetails.tabId);
+
+            // navigationDetails.frameId
+            Validate.requireNonNegativeInteger(navigationDetails.frameId);
+
+            // navigationDetails.url
+            Validate.requireValidUrl(navigationDetails.url);
+        } catch {
+            return;
+        }
+
         Settings.get(settings => {
             // Retrieves settings to check if protection is enabled
             if (Settings.allProvidersDisabled(settings)) {
@@ -226,21 +340,21 @@
             // Unwraps blob: URLs safely
             if (urlObject.protocol === 'blob:') {
                 // Parses the blob URL object
-                let inner;
+                let innerUrl;
                 try {
-                    inner = new URL(urlString.slice(5));
+                    innerUrl = new URL(urlString.slice(5));
                 } catch (error) {
                     console.warn(`Invalid blob URL: ${urlString}; bailing out: ${error}`);
                     return;
                 }
 
                 // Drops the "blob:" prefix and parses the inner URL
-                if (inner.protocol === 'http:' || inner.protocol === 'https:') {
-                    urlObject = inner;
-                    urlString = inner.href;
+                if (innerUrl.protocol === 'http:' || innerUrl.protocol === 'https:') {
+                    urlObject = innerUrl;
+                    urlString = innerUrl.href;
                     previouslyBlob = true;
                 } else {
-                    console.debug(`Non-HTTP(S) blob origin: ${inner.protocol}; bailing out.`);
+                    console.debug(`Non-HTTP(S) blob origin: ${innerUrl.protocol}; bailing out.`);
                     return;
                 }
             }
@@ -625,38 +739,6 @@
         });
     };
 
-    // Sets all policy keys needed for managed policies
-    const policyKeys = [
-        'DisableContextMenu',
-        'DisableNotifications',
-        'HideContinueButtons',
-        'HideReportButton',
-        'IgnoreFrameNavigation',
-        'CacheExpirationSeconds',
-        'LockProtectionOptions',
-        'HideProtectionOptions',
-
-        // Official Partners
-        'AdGuardSecurityEnabled',
-        'AdGuardFamilyEnabled',
-        'AlphaMountainEnabled',
-        'ControlDSecurityEnabled',
-        'ControlDFamilyEnabled',
-        'PrecisionSecEnabled',
-
-        // Non-Partnered Providers
-        'CERTEEEnabled',
-        'CleanBrowsingSecurityEnabled',
-        'CleanBrowsingFamilyEnabled',
-        'CloudflareSecurityEnabled',
-        'CloudflareFamilyEnabled',
-        'DNS4EUSecurityEnabled',
-        'DNS4EUFamilyEnabled',
-        'SeclookupEnabled',
-        'SwitchCHEnabled',
-        'Quad9Enabled',
-    ];
-
     // Creates the context menu and sets managed policies
     browserAPI.storage.managed.get(policyKeys, policies => {
         if (policies === undefined) {
@@ -833,21 +915,38 @@
 
     // Listens for PING messages from content scripts to get the blocked counter
     browserAPI.runtime.onMessage.addListener((message, sender, sendResponse) => {
-        // Verify sender is from the same extension for all messages
-        if (sender.id !== browserAPI.runtime.id) {
-            console.warn(`Blocked message from external source: ${sender.id}`);
+        try {
+            // parameters
+            Validate.requireNotNull(message);
+            Validate.requireNotNull(sender);
+            Validate.requireNotNull(sendResponse);
+        } catch {
             return false;
         }
 
-        if (message.messageType === Messages.BLOCKED_COUNTER_PING && sender.tab && sender.tab.id !== null) {
-            const tabId = sender.tab?.id;
+        if (message.messageType === Messages.BLOCKED_COUNTER_PING) {
+            try {
+                // message.messageType
+                Validate.requireProperty(message, "messageType");
+                Validate.requireNotNull(message.messageType);
 
-            // Checks if the tab ID is valid
-            if (typeof tabId !== 'number' || !Number.isInteger(tabId) || tabId < 0) {
-                console.warn('Invalid or missing tab ID');
+                // sender.tab
+                Validate.requireProperty(sender, "tab");
+                Validate.requireNotNull(sender.tab);
+
+                // sender.id
+                Validate.requireProperty(sender, "id");
+                Validate.requireString(sender.id);
+
+                // sender.tab.id
+                Validate.requireProperty(sender.tab, "id");
+                Validate.requireNonNegativeInteger(sender.tab.id);
+                Validate.requireEquals(sender.id, browserAPI.runtime.id);
+            } catch {
                 return false;
             }
 
+            const tabId = sender.tab.id;
             const resultOrigins = getResultOrigins(tabId);
             const fullCount = (Array.isArray(resultOrigins) ? resultOrigins.length : 0) + 1;
             const othersCount = Array.isArray(resultOrigins) ? resultOrigins.length : 0;
@@ -859,15 +958,14 @@
 
             // If the page URL is the block page, send (count - 1)
             browserAPI.tabs.get(tabId, tab => {
-                // Checks if the tab still exists
-                if (browserAPI.runtime.lastError || !tab) {
-                    console.warn(`Tab ${tabId} no longer exists`);
-                    return false;
-                }
+                try {
+                    // tab
+                    Validate.requireNotNull(tab);
 
-                // Checks if the tab or tab.url is undefined
-                if (tab?.url === undefined) {
-                    console.debug(`tabs.get(${tabId}) failed '${browserAPI.runtime.lastError?.message}'; bailing out.`);
+                    // tab.url
+                    Validate.requireProperty(tab, "url");
+                    Validate.requireValidUrl(tab.url);
+                } catch {
                     return false;
                 }
 
@@ -881,6 +979,7 @@
 
                 // And responds to the original PING as well
                 sendResponse({count: othersCount, systems: resultOrigins || []});
+                return true;
             });
             return true;
         }
@@ -888,25 +987,87 @@
     });
 
     // Listens for onRemoved events
-    browserAPI.tabs.onRemoved.addListener((tabId, removeInfo) => {
-        console.debug(`Tab removed: ${tabId} (windowId: ${removeInfo.windowId}) (isWindowClosing: ${removeInfo.isWindowClosing})`);
+    browserAPI.tabs.onRemoved.addListener((event, removeInfo) => {
+        try {
+            // parameters
+            Validate.requireNotNull(event);
+            Validate.requireNotNull(removeInfo);
+
+            // removeInfo.windowId
+            Validate.requireProperty(removeInfo, "windowId");
+            Validate.requireInteger(removeInfo.windowId);
+
+            // removeInfo.isWindowClosing
+            Validate.requireProperty(removeInfo, "isWindowClosing");
+            Validate.requireBoolean(removeInfo.isWindowClosing);
+        } catch {
+            return;
+        }
+
+        console.debug(`Tab removed (windowId: ${removeInfo.windowId}) (isWindowClosing: ${removeInfo.isWindowClosing})`);
 
         // Removes all cached keys for the tab
-        CacheManager.removeKeysByTabId(tabId);
+        CacheManager.removeKeysByTabId(removeInfo.windowId);
 
         // Removes the tab from session-backed maps
-        deleteResultOrigins(tabId);
-        deleteFrameZeroUrl(tabId);
+        deleteResultOrigins(removeInfo.windowId);
+        deleteFrameZeroUrl(removeInfo.windowId);
     });
 
     // Listens for onBeforeNavigate events
     browserAPI.webNavigation.onBeforeNavigate.addListener(callback => {
+        try {
+            // parameters
+            Validate.requireNotNull(callback);
+
+            // callback.url
+            Validate.requireProperty(callback, "url");
+            Validate.requireValidUrl(callback.url);
+
+            // callback.frameId
+            Validate.requireProperty(callback, "frameId");
+            Validate.requireInteger(callback.frameId);
+
+            // callback.tabId
+            Validate.requireProperty(callback, "tabId");
+            Validate.requireNonNegativeInteger(callback.tabId);
+        } catch {
+            return;
+        }
+
         console.debug(`[onBeforeNavigate] ${callback.url} (frameId: ${callback.frameId}) (tabId: ${callback.tabId})`);
         handleNavigation(callback);
     });
 
     // Listens for onCommitted events
     browserAPI.webNavigation.onCommitted.addListener(callback => {
+        try {
+            // parameters
+            Validate.requireNotNull(callback);
+
+            // callback.url
+            Validate.requireProperty(callback, "url");
+            Validate.requireValidUrl(callback.url);
+
+            // callback.frameId
+            Validate.requireProperty(callback, "frameId");
+            Validate.requireInteger(callback.frameId);
+
+            // callback.tabId
+            Validate.requireProperty(callback, "tabId");
+            Validate.requireNonNegativeInteger(callback.tabId);
+
+            // callback.transitionQualifiers
+            Validate.requireProperty(callback, "transitionQualifiers");
+            Validate.requireArray(callback.transitionQualifiers);
+
+            // callback.transitionType
+            Validate.requireProperty(callback, "transitionType");
+            Validate.requireString(callback.transitionType);
+        } catch {
+            return;
+        }
+
         if (callback.transitionQualifiers.includes("server_redirect") &&
             (callback.frameId !== 0 && callback.transitionType !== "start_page") ||
             callback.frameId === 0 && callback.transitionType === "link") {
@@ -920,6 +1081,14 @@
 
     // Listens for onUpdated events
     browserAPI.tabs.onUpdated.addListener((tabId, changeInfo) => {
+        try {
+            // parameters
+            Validate.requireNonNegativeInteger(tabId);
+            Validate.requireNotNull(changeInfo);
+        } catch {
+            return;
+        }
+
         if (changeInfo.url?.startsWith("blob:")) {
             changeInfo.tabId = tabId;
             changeInfo.frameId = 0;
@@ -931,38 +1100,124 @@
 
     // Listens for onCreatedNavigationTarget events
     browserAPI.webNavigation.onCreatedNavigationTarget.addListener(callback => {
+        try {
+            // parameters
+            Validate.requireNotNull(callback);
+
+            // callback.url
+            Validate.requireProperty(callback, "url");
+            Validate.requireValidUrl(callback.url);
+
+            // callback.frameId
+            Validate.requireProperty(callback, "frameId", `${JSON.stringify(callback)}`);
+            Validate.requireInteger(callback.frameId);
+
+            // callback.tabId
+            Validate.requireProperty(callback, "tabId");
+            Validate.requireNonNegativeInteger(callback.tabId);
+        } catch {
+            return;
+        }
+
         console.debug(`[onCreatedNavigationTarget] ${callback.url} (frameId: ${callback.frameId}) (tabId: ${callback.tabId})`);
         handleNavigation(callback);
     });
 
     // Listens for onHistoryStateUpdated events
     browserAPI.webNavigation.onHistoryStateUpdated.addListener(callback => {
+        try {
+            // parameters
+            Validate.requireNotNull(callback);
+
+            // callback.url
+            Validate.requireProperty(callback, "url");
+            Validate.requireValidUrl(callback.url);
+
+            // callback.frameId
+            Validate.requireProperty(callback, "frameId");
+            Validate.requireInteger(callback.frameId);
+
+            // callback.tabId
+            Validate.requireProperty(callback, "tabId");
+            Validate.requireNonNegativeInteger(callback.tabId);
+        } catch {
+            return;
+        }
+
         console.debug(`[onHistoryStateUpdated] ${callback.url} (frameId: ${callback.frameId}) (tabId: ${callback.tabId})`);
         handleNavigation(callback);
     });
 
     // Listens for onReferenceFragmentUpdated events
     browserAPI.webNavigation.onReferenceFragmentUpdated.addListener(callback => {
+        try {
+            // parameters
+            Validate.requireNotNull(callback);
+
+            // callback.url
+            Validate.requireProperty(callback, "url");
+            Validate.requireValidUrl(callback.url);
+
+            // callback.frameId
+            Validate.requireProperty(callback, "frameId");
+            Validate.requireInteger(callback.frameId);
+
+            // callback.tabId
+            Validate.requireProperty(callback, "tabId");
+            Validate.requireNonNegativeInteger(callback.tabId);
+        } catch {
+            return;
+        }
+
         console.debug(`[onReferenceFragmentUpdated] ${callback.url} (frameId: ${callback.frameId}) (tabId: ${callback.tabId})`);
         handleNavigation(callback);
     });
 
     // Listens for onTabReplaced events
     browserAPI.webNavigation.onTabReplaced.addListener(callback => {
+        try {
+            // parameters
+            Validate.requireNotNull(callback);
+
+            // callback.url
+            Validate.requireProperty(callback, "url");
+            Validate.requireValidUrl(callback.url);
+
+            // callback.frameId
+            Validate.requireProperty(callback, "frameId");
+            Validate.requireInteger(callback.frameId);
+
+            // callback.tabId
+            Validate.requireProperty(callback, "tabId");
+            Validate.requireNonNegativeInteger(callback.tabId);
+        } catch {
+            return;
+        }
+
         console.debug(`[onTabReplaced] ${callback.url} (frameId: ${callback.frameId}) (tabId: ${callback.tabId})`);
         handleNavigation(callback);
     });
 
     // Listens for incoming messages
     browserAPI.runtime.onMessage.addListener((message, sender) => {
-        // Verify sender is from the same extension for all messages
-        if (sender.id !== browserAPI.runtime.id) {
-            console.warn(`Blocked message from external source: ${sender.id}`);
-            return;
-        }
+        try {
+            // parameters
+            Validate.requireNotNull(message);
+            Validate.requireNotNull(sender);
 
-        // Checks if the message exists and has a valid type
-        if (!message?.messageType) {
+            // message.messageType
+            Validate.requireProperty(message, "messageType");
+            Validate.requireNotNull(message.messageType);
+
+            // sender.id
+            Validate.requireProperty(sender, "id");
+            Validate.requireString(sender.id);
+            Validate.requireEquals(sender.id, browserAPI.runtime.id);
+
+            // sender.url
+            Validate.requireProperty(sender, "url");
+            Validate.requireValidUrl(sender.url);
+        } catch {
             return;
         }
 
@@ -986,119 +1241,81 @@
                 return;
             }
 
-            if (sender.id !== browserAPI.runtime.id || !normalizedSenderUrl.startsWith(allowedPrefix)) {
-                console.warn(`Blocked privileged message from ${sender.url || 'unknown source'}`);
+            if (!normalizedSenderUrl.startsWith(allowedPrefix)) {
+                console.warn(`Blocked privileged message from ${sender.url}`);
                 return;
             }
         }
 
         const tabId = sender.tab?.id;
-        const redirectDelay = 200;
 
+        // Handles validating the tabId for privileged messages
+        switch (message.messageType) {
+            case Messages.CONTINUE_TO_WEBSITE:
+            case Messages.CONTINUE_TO_SAFETY:
+            case Messages.REPORT_WEBSITE:
+            case Messages.ALLOW_WEBSITE:
+                try {
+                    Validate.requireNonNegativeInteger(tabId);
+                } catch {
+                    return;
+                }
+                break;
+
+            default:
+                break;
+        }
+
+        // Handles every message type
         switch (message.messageType) {
             case Messages.CONTINUE_TO_WEBSITE: {
-                // Checks if the tab ID is valid
-                if (typeof tabId !== 'number' || !Number.isInteger(tabId) || tabId < 0) {
-                    console.warn('Invalid or missing tab ID');
-                    return;
-                }
-
-                // Checks if the message has a blocked URL
-                if (!Object.hasOwn(message, 'blockedUrl') || !message.blockedUrl) {
-                    console.debug(`No blocked URL was found; sending to new tab page.`);
-                    sendToNewTabPage(tabId);
-                    return;
-                }
-
-                // Checks if the message has a continue URL
-                if (!Object.hasOwn(message, 'continueUrl') || !message.continueUrl) {
-                    console.debug(`No continue URL was found; sending to new tab page.`);
-                    sendToNewTabPage(tabId);
-                    return;
-                }
-
-                // Checks if the message has an origin
-                if (!Object.hasOwn(message, 'origin') || !message.origin) {
-                    console.debug(`No origin was found; sending to new tab page.`);
-                    sendToNewTabPage(tabId);
-                    return;
-                }
-
-                let originValue = message.origin;
-
-                // Converts the origin string to a number, catching errors if it isn't a number
-                if (typeof originValue === 'string') {
-                    originValue = Number(originValue);
-
-                    if (Number.isNaN(originValue)) {
-                        console.warn(`Origin value is not a valid number: ${message.origin}; sending to new tab page.`);
-                        sendToNewTabPage(tabId);
-                        return;
-                    }
-                }
-
-                // Checks if the message properties are of the expected types
-                if (typeof message.blockedUrl !== 'string' ||
-                    typeof message.continueUrl !== 'string' ||
-                    typeof originValue !== 'number') {
-                    console.warn(`Invalid message property types: ${JSON.stringify(message)}; sending to new tab page.`);
-                    sendToNewTabPage(tabId);
-                    return;
-                }
-
-                // Parses the blocked URL object
-                let blockedUrlObject;
                 try {
-                    blockedUrlObject = new URL(message.blockedUrl);
-                } catch (error) {
-                    console.warn(`Invalid blocked URL format: ${message.blockedUrl}; sending to new tab page: ${error}`);
+                    // messages.blockedUrl
+                    Validate.requireStringProperty(message, 'blockedUrl');
+                    Validate.requireValidUrl(message.blockedUrl);
+
+                    // messages.continueUrl
+                    Validate.requireStringProperty(message, 'continueUrl');
+                    Validate.requireValidUrl(message.continueUrl);
+
+                    // message.origin
+                    Validate.requireStringProperty(message, 'origin');
+                    Validate.requireValidOrigin(message.origin, ProtectionResult.Origin);
+                } catch {
                     sendToNewTabPage(tabId);
                     return;
                 }
 
-                // Redirects to the new tab page if the blocked URL is not a valid HTTP(S) URL
-                if (!validProtocols.has(blockedUrlObject.protocol.toLowerCase())) {
-                    console.debug(`Invalid protocol in blocked URL: ${message.blockedUrl}; sending to new tab page.`);
+                // Validates the blocked URL
+                const blockedUrlResult = Validate.validateHttpUrl(message.blockedUrl, validProtocols);
+                if (!blockedUrlResult.valid) {
+                    console.warn(`Invalid blocked URL: ${blockedUrlResult.error}; sending to new tab page.`);
                     sendToNewTabPage(tabId);
                     return;
                 }
+                const blockedUrlObject = blockedUrlResult.url;
 
-                // Parses the continue URL object
-                let continueUrlObject;
-                try {
-                    continueUrlObject = new URL(message.continueUrl);
-                } catch (error) {
-                    console.warn(`Invalid continue URL format: ${message.continueUrl}; sending to new tab page: ${error}`);
+                // Validates the continue URL
+                const continueUrlResult = Validate.validateHttpUrl(message.continueUrl, validProtocols);
+                if (!continueUrlResult.valid) {
+                    console.warn(`Invalid continue URL: ${continueUrlResult.error}; sending to new tab page.`);
                     sendToNewTabPage(tabId);
                     return;
                 }
+                const continueUrlObject = continueUrlResult.url;
 
-                // Verify continueUrl matches blockedUrl origin
+                // Verify the continueUrl.origin matches the blockedUrl.origin
                 if (blockedUrlObject.origin !== continueUrlObject.origin) {
                     console.warn(`Continue URL origin mismatch: ${continueUrlObject.origin} vs ${blockedUrlObject.origin}`);
                     sendToNewTabPage(tabId);
                     return;
                 }
 
-                // Redirects to the new tab page if the continue URL is not a valid HTTP(S) URL
-                if (!validProtocols.has(continueUrlObject.protocol.toLowerCase())) {
-                    console.debug(`Invalid protocol in continue URL: ${message.continueUrl}; sending to new tab page.`);
-                    sendToNewTabPage(tabId);
-                    return;
-                }
-
-                // Checks if the message origin is valid
-                if (!Object.values(ProtectionResult.Origin).includes(originValue)) {
-                    console.warn(`Invalid origin value: ${originValue}`);
-                    sendToNewTabPage(tabId);
-                    return;
-                }
-
-                if (originValue === 0) {
-                    console.warn(`Unknown origin: ${originValue}`);
+                if (message.origin === 0) {
+                    console.warn(`Unknown origin: ${message.origin}`);
                 } else {
-                    const shortName = ProtectionResult.ShortName[originValue];
-                    const cacheName = ProtectionResult.CacheName[originValue];
+                    const shortName = ProtectionResult.ShortName[message.origin];
+                    const cacheName = ProtectionResult.CacheName[message.origin];
 
                     console.debug(`Added ${shortName} URL to allowed cache: ${message.blockedUrl}`);
                     CacheManager.addUrlToAllowedCache(message.blockedUrl, cacheName);
@@ -1107,7 +1324,7 @@
                     CacheManager.removeUrlFromBlockedCache(message.blockedUrl, cacheName);
 
                     // Remove this origin from the "remaining blockers" list for this tab
-                    removeResultOrigin(tabId, originValue);
+                    removeResultOrigin(tabId, message.origin);
                 }
 
                 safeTabUpdate(tabId, {url: message.continueUrl}).catch(error => {
@@ -1118,130 +1335,90 @@
             }
 
             case Messages.CONTINUE_TO_SAFETY:
-                // Checks if the tab ID is valid
-                if (typeof tabId !== 'number' || !Number.isInteger(tabId) || tabId < 0) {
-                    console.warn('Invalid or missing tab ID');
-                    return;
-                }
-
-                // Redirects to the new tab page
-                setTimeout(() => {
-                    sendToNewTabPage(tabId);
-                }, redirectDelay);
+                sendToNewTabPage(tabId);
                 break;
 
             case Messages.REPORT_WEBSITE: {
-                // Ignores invalid report URLs
-                if (!Object.hasOwn(message, 'reportUrl') || !message.reportUrl || message.reportUrl === "") {
-                    console.debug(`Report URL is blank.`);
-                    break;
-                }
+                try {
+                    // message.reportUrl
+                    Validate.requireStringProperty(message, "reportUrl");
+                    Validate.requireValidUrl(message.reportUrl);
 
-                // Checks if the message has an origin
-                if (!Object.hasOwn(message, 'origin') || !message.origin) {
-                    console.debug(`No origin was found; doing nothing.`);
-                    break;
-                }
-
-                let originValue = message.origin;
-
-                // Converts the origin string to a number, catching errors if it isn't a number
-                if (typeof originValue === 'string') {
-                    originValue = Number(originValue);
-
-                    if (Number.isNaN(originValue)) {
-                        console.warn(`Origin value is not a valid number: ${message.origin}; sending to new tab page.`);
-                        sendToNewTabPage(tabId);
-                        return;
-                    }
-                }
-
-                // Checks if the message origin is valid
-                if (!Object.values(ProtectionResult.Origin).includes(originValue)) {
-                    console.warn(`Invalid origin value: ${originValue}`);
+                    // message.origin
+                    Validate.requireProperty(message, "origin");
+                    Validate.requireValidOrigin(message.origin, ProtectionResult.Origin);
+                } catch {
                     sendToNewTabPage(tabId);
                     return;
                 }
 
                 // Parses the report URL object
-                let reportUrlObject;
+                let reportUrl;
                 try {
-                    reportUrlObject = new URL(message.reportUrl);
+                    reportUrl = new URL(message.reportUrl);
                 } catch {
-                    console.warn(`Invalid report URL: ${message.reportUrl}`);
                     break;
                 }
 
-                if (validProtocols.has(reportUrlObject.protocol.toLowerCase())) {
+                // Checks if the report URL has a valid protocol
+                if (Validate.hasValidProtocol(reportUrl, validProtocols)) {
+                    console.debug(`Navigating to report URL: ${message.reportUrl}`);
                     browserAPI.tabs.create({url: message.reportUrl});
-                } else if (reportUrlObject.protocol === "mailto:") {
-                    // Validate mailto format - only allow safe characters
+                    break;
+                }
+
+                // Handles mailto links separately since they are valid URLs but require special handling
+                if (reportUrl.protocol === "mailto:") {
                     if (/^mailto:[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/.test(message.reportUrl)) {
+                        console.debug(`Navigating to report URL: ${message.reportUrl}`);
                         browserAPI.tabs.create({url: message.reportUrl});
                     } else {
                         console.warn(`Invalid mailto URL format: ${message.reportUrl}`);
-                        break;
+                        sendToNewTabPage(tabId);
                     }
-                } else {
-                    console.warn(`Invalid protocol in report URL: ${message.reportUrl}; doing nothing.`);
                     break;
                 }
 
-                console.debug(`Navigating to report URL: ${message.reportUrl}`);
+                // If the protocol is invalid, logs a warning and redirects to the new tab page
+                console.warn(`Invalid protocol in report URL: ${message.reportUrl}; sending to new tab page.`);
+                sendToNewTabPage(tabId);
                 break;
             }
 
             case Messages.ALLOW_WEBSITE: {
-                // Checks if the tab ID is valid
-                if (typeof tabId !== 'number' || !Number.isInteger(tabId) || tabId < 0) {
-                    console.warn('Invalid or missing tab ID');
-                    return;
-                }
-
-                // Ignores blank blocked URLs
-                if (!Object.hasOwn(message, 'blockedUrl') || !message.blockedUrl || message.blockedUrl === "") {
-                    console.debug(`Blocked URL is blank.`);
-                    break;
-                }
-
-                // Checks if the message has a continue URL
-                if (!Object.hasOwn(message, 'continueUrl') || !message.continueUrl) {
-                    console.debug(`No continue URL was found; sending to new tab page.`);
-                    sendToNewTabPage(tabId);
-                    return;
-                }
-
-                // Checks if the message has an origin
-                if (!Object.hasOwn(message, 'origin') || !message.origin) {
-                    console.debug(`No origin was found; sending to the new tab page.`);
-                    sendToNewTabPage(tabId);
-                    break;
-                }
-
-                // Parses the blocked URL object
-                let blockedUrlObject;
                 try {
-                    blockedUrlObject = new URL(message.blockedUrl);
-                } catch (error) {
-                    console.warn(`Invalid blocked URL format: ${message.blockedUrl}; sending to new tab page: ${error}`);
-                    sendToNewTabPage(tabId);
+                    // message.blockedUrl
+                    Validate.requireStringProperty(message, "blockedUrl");
+                    Validate.requireValidUrl(message.blockedUrl);
+
+                    // message.continueUrl
+                    Validate.requireStringProperty(message, "continueUrl");
+                    Validate.requireValidUrl(message.continueUrl);
+
+                    // message.origin
+                    Validate.requireStringProperty(message, "origin");
+                    Validate.requireValidOrigin(message.origin, ProtectionResult.Origin);
+                } catch {
                     return;
                 }
 
-                // Redirects to the new tab page if the blocked URL is not a valid HTTP(S) URL
-                if (!validProtocols.has(blockedUrlObject.protocol.toLowerCase())) {
-                    console.debug(`Invalid protocol in blocked URL: ${message.blockedUrl}; sending to new tab page.`);
+                // Validates the blocked URL
+                const blockedUrlResult = Validate.validateHttpUrl(message.blockedUrl, validProtocols);
+                if (!blockedUrlResult.valid) {
+                    console.warn(`Invalid blocked URL: ${blockedUrlResult.error}; sending to new tab page.`);
                     sendToNewTabPage(tabId);
-                    return;
+                    break;
                 }
+                const blockedUrlObject = blockedUrlResult.url;
 
+                // Extracts the hostname from the blocked URL
                 const hostname = blockedUrlObject.hostname;
 
                 // Validates the hostname to ensure it is a valid domain or IP address
                 if (!UrlHelpers.isValidHostname(hostname)) {
                     console.warn(`Invalid hostname pattern: ${hostname}`);
                     sendToNewTabPage(tabId);
-                    return;
+                    break;
                 }
 
                 const hostnameString = `*.${hostname}`;
@@ -1250,28 +1427,20 @@
                 console.debug(`Adding hostname to the global allowed cache: ${hostnameString}`);
                 CacheManager.addStringToAllowedCache(hostnameString, "global");
 
-                // Parses the continue URL object
-                let continueUrlObject;
-                try {
-                    continueUrlObject = new URL(message.continueUrl);
-                } catch (error) {
-                    console.warn(`Invalid continue URL format: ${message.continueUrl}; sending to new tab page: ${error}`);
+                // Validates the continue URL
+                const continueUrlResult = Validate.validateHttpUrl(message.continueUrl, validProtocols);
+                if (!continueUrlResult.valid) {
+                    console.warn(`Invalid continue URL: ${continueUrlResult.error}; sending to new tab page.`);
                     sendToNewTabPage(tabId);
-                    return;
+                    break;
                 }
+                const continueUrlObject = continueUrlResult.url;
 
                 // Verify continueUrl matches blockedUrl origin
                 if (blockedUrlObject.origin !== continueUrlObject.origin) {
                     console.warn(`Continue URL origin mismatch: ${continueUrlObject.origin} vs ${blockedUrlObject.origin}`);
                     sendToNewTabPage(tabId);
-                    return;
-                }
-
-                // Redirects to the new tab page if the continue URL is not a valid HTTP(S) URL
-                if (!validProtocols.has(continueUrlObject.protocol.toLowerCase())) {
-                    console.debug(`Invalid protocol in continue URL: ${message.continueUrl}; sending to new tab page.`);
-                    sendToNewTabPage(tabId);
-                    return;
+                    break;
                 }
 
                 // Sends the user to the continue URL, or the new tab page on error
@@ -1298,6 +1467,18 @@
             case Messages.SECLOOKUP_TOGGLED:
             case Messages.SWITCH_CH_TOGGLED:
             case Messages.QUAD9_TOGGLED:
+                try {
+                    // message.title
+                    Validate.requireProperty(message, "title");
+                    Validate.requireString(message.title);
+
+                    // message.toggleState
+                    Validate.requireProperty(message, "toggleState");
+                    Validate.requireBoolean(message.toggleState);
+                } catch {
+                    break;
+                }
+
                 console.info(`${message.title} has been ${message.toggleState ? "enabled" : "disabled"}.`);
                 break;
 
@@ -1315,26 +1496,38 @@
 
     // Listener for context menu creation.
     contextMenuAPI.onClicked.addListener(info => {
+        try {
+            // parameters
+            Validate.requireNotNull(info);
+
+            // info.menuItemId
+            Validate.requireProperty(info, "menuItemId");
+            Validate.requireString(info.menuItemId);
+        } catch {
+            return;
+        }
+
         switch (info.menuItemId) {
             case "toggleNotifications":
+                // Toggles notifications
                 Settings.set({notificationsEnabled: info.checked});
                 console.debug(`Enable notifications: ${info.checked}`);
                 break;
 
             case "toggleFrameNavigation":
+                // Toggles ignoring frame navigation
                 Settings.set({ignoreFrameNavigation: info.checked});
                 console.debug(`Ignore frame navigation: ${info.checked}`);
                 break;
 
-            case "reportWebsiteAsMalicious": {
-                // Opens the report website page in a new tab
-                const reportUrl = "https://github.com/OspreyProject/Osprey/wiki/Report-Website-as-Malicious";
+            case "reportWebsiteAsMalicious":
+                // Opens the report website in a new tab
                 browserAPI.tabs.create({url: reportUrl});
                 console.debug("Opened the report website in a new tab.");
                 break;
-            }
 
             case "clearAllowedWebsites": {
+                // Clears every internal cache
                 CacheManager.clearAllowedCache();
                 CacheManager.clearBlockedCache();
                 CacheManager.clearProcessingCache();
@@ -1349,12 +1542,8 @@
                     priority: 2,
                 };
 
-                // Yes - this isn't cryptographically secure, but it doesn't need to be
-                const randomNumber = Math.floor(Math.random() * 100000000);
-                const notificationId = `cache-cleared-${randomNumber}`;
-
                 // Creates and displays the browser notification
-                browserAPI.notifications.create(notificationId, notificationOptions, id => {
+                browserAPI.notifications.create(notificationOptions, id => {
                     console.debug(`Notification created with ID: ${id}`);
                 });
                 break;
@@ -1374,11 +1563,8 @@
                     priority: 2,
                 };
 
-                const randomNumber = Math.floor(Math.random() * 100000000);
-                const notificationId = `restore-defaults-${randomNumber}`;
-
                 // Creates and displays a browser notification
-                browserAPI.notifications.create(notificationId, notificationOptions, id => {
+                browserAPI.notifications.create(notificationOptions, id => {
                     console.debug(`Notification created with ID: ${id}`);
                 });
 
