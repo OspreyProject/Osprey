@@ -127,10 +127,34 @@
     /**
      * Deletes the frame-zero URL for a specific tab.
      *
-     * @param tabId - The ID of the tab.
+     * @param {number} tabId - The ID of the tab.
      */
     const deleteFrameZeroUrl = tabId => {
         frameZeroUrlsMap.delete(tabId);
+    };
+
+    /**
+     * Safely updates a tab's properties, checking if the tab still exists before attempting to update it.
+     *
+     * @param {number} tabId - The ID of the tab to be updated.
+     * @param {object} updateProps - The properties to update on the tab (e.g., {url: "https://www.google.com"}).
+     * @returns {Promise<boolean>} - Returns true if the tab was successfully updated, false if the tab no longer exists or an error occurred.
+     */
+    const safeTabUpdate = async (tabId, updateProps) => {
+        try {
+            const tab = await browserAPI.tabs.get(tabId);
+
+            if (!tab || browserAPI.runtime.lastError) {
+                console.warn(`Tab ${tabId} no longer exists`);
+                return false;
+            }
+
+            await browserAPI.tabs.update(tabId, updateProps);
+            return true;
+        } catch (error) {
+            console.error(`Failed to update tab ${tabId}:`, error);
+            return false;
+        }
     };
 
     /**
@@ -140,9 +164,9 @@
      */
     const sendToNewTabPage = tabId => {
         if (redirectToGoogle) {
-            browserAPI.tabs.update(tabId, {url: "https://www.google.com"});
+            safeTabUpdate(tabId, {url: "https://www.google.com"});
         } else {
-            browserAPI.tabs.update(tabId, {url: "about:newtab"});
+            safeTabUpdate(tabId, {url: "about:newtab"});
         }
     };
 
@@ -389,7 +413,7 @@
 
                                 // Navigates to the block page
                                 console.debug(`[${shortName}] Navigating to block page: ${blockPageUrl}.`);
-                                browserAPI.tabs.update(tab.id, {url: blockPageUrl}).catch(error => {
+                                safeTabUpdate(tab.id, {url: blockPageUrl}).catch(error => {
                                     console.error(`Failed to update tab ${tabId}:`, error);
                                     sendToNewTabPage(tabId);
                                 });
@@ -1030,7 +1054,7 @@
                     removeResultOrigin(tabId, origin);
                 }
 
-                browserAPI.tabs.update(tabId, {url: message.continueUrl}).catch(error => {
+                safeTabUpdate(tabId, {url: message.continueUrl}).catch(error => {
                     console.error(`Failed to update tab ${tabId}:`, error);
                     sendToNewTabPage(tabId);
                 });
@@ -1148,7 +1172,7 @@
                 }
 
                 // Sends the user to the continue URL, or the new tab page on error
-                browserAPI.tabs.update(tabId, {url: message.continueUrl}).catch(error => {
+                safeTabUpdate(tabId, {url: message.continueUrl}).catch(error => {
                     console.error(`Failed to update tab ${tabId}:`, error);
                     sendToNewTabPage(tabId);
                 });
