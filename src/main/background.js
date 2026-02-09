@@ -299,7 +299,10 @@
                 // Removes trailing dots from hostname
                 if (hostname.endsWith('.')) {
                     console.debug(`Removing trailing dots from hostname: ${hostname}`);
-                    hostname = hostname.replace(/\.+$/, '');
+
+                    while (hostname.endsWith('.')) {
+                        hostname = hostname.slice(0, -1);
+                    }
                 }
 
                 // Excludes local/internal network addresses
