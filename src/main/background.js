@@ -1024,6 +1024,28 @@
                     return;
                 }
 
+                let originValue = message.origin;
+
+                // Converts the origin string to a number, catching errors if it isn't a number
+                if (typeof originValue === 'string') {
+                    originValue = Number(originValue);
+
+                    if (isNaN(originValue)) {
+                        console.warn(`Origin value is not a valid number: ${message.origin}; sending to new tab page.`);
+                        sendToNewTabPage(tabId);
+                        return;
+                    }
+                }
+
+                // Checks if the message properties are of the expected types
+                if (typeof message.blockedUrl !== 'string' ||
+                    typeof message.continueUrl !== 'string' ||
+                    typeof originValue !== 'number') {
+                    console.warn(`Invalid message property types: ${JSON.stringify(message)}; sending to new tab page.`);
+                    sendToNewTabPage(tabId);
+                    return;
+                }
+
                 // Parses the blocked URL object
                 let blockedUrlObject;
                 try {
@@ -1066,19 +1088,17 @@
                 }
 
                 // Checks if the message origin is valid
-                if (!Object.values(ProtectionResult.Origin).includes(message.origin)) {
-                    console.warn(`Invalid origin value: ${message.origin}`);
+                if (!Object.values(ProtectionResult.Origin).includes(originValue)) {
+                    console.warn(`Invalid origin value: ${originValue}`);
                     sendToNewTabPage(tabId);
                     return;
                 }
 
-                const {origin} = message;
-
-                if (origin === 0) {
-                    console.warn(`Unknown origin: ${message.origin}`);
+                if (originValue === 0) {
+                    console.warn(`Unknown origin: ${originValue}`);
                 } else {
-                    const shortName = ProtectionResult.ShortName[origin];
-                    const cacheName = ProtectionResult.CacheName[origin];
+                    const shortName = ProtectionResult.ShortName[originValue];
+                    const cacheName = ProtectionResult.CacheName[originValue];
 
                     console.debug(`Added ${shortName} URL to allowed cache: ${message.blockedUrl}`);
                     CacheManager.addUrlToAllowedCache(message.blockedUrl, cacheName);
@@ -1087,7 +1107,7 @@
                     CacheManager.removeUrlFromBlockedCache(message.blockedUrl, cacheName);
 
                     // Remove this origin from the "remaining blockers" list for this tab
-                    removeResultOrigin(tabId, origin);
+                    removeResultOrigin(tabId, originValue);
                 }
 
                 safeTabUpdate(tabId, {url: message.continueUrl}).catch(error => {
@@ -1123,9 +1143,22 @@
                     break;
                 }
 
+                let originValue = message.origin;
+
+                // Converts the origin string to a number, catching errors if it isn't a number
+                if (typeof originValue === 'string') {
+                    originValue = Number(originValue);
+
+                    if (isNaN(originValue)) {
+                        console.warn(`Origin value is not a valid number: ${message.origin}; sending to new tab page.`);
+                        sendToNewTabPage(tabId);
+                        return;
+                    }
+                }
+
                 // Checks if the message origin is valid
-                if (!Object.values(ProtectionResult.Origin).includes(message.origin)) {
-                    console.warn(`Invalid origin value: ${message.origin}`);
+                if (!Object.values(ProtectionResult.Origin).includes(originValue)) {
+                    console.warn(`Invalid origin value: ${originValue}`);
                     sendToNewTabPage(tabId);
                     return;
                 }
