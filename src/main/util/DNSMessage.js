@@ -285,6 +285,17 @@ class DNSMessage {
         msg.nsCount = readU16();
         msg.arCount = readU16();
 
+        const maxRecords = 1000;
+
+        // Basic sanity check to prevent parsing extremely large or
+        // malformed messages that could cause performance issues
+        if (msg.qdCount > maxRecords ||
+            msg.anCount > maxRecords ||
+            msg.nsCount > maxRecords ||
+            msg.arCount > maxRecords) {
+            throw new Error("DNS message contains unreasonable record count.");
+        }
+
         // Questions
         for (let i = 0; i < msg.qdCount; i++) {
             const qname = DNSMessage.readName(u8, {off});
