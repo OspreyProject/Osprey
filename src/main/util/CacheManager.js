@@ -20,6 +20,9 @@
 // Manages the cache for the allowed protection providers
 const CacheManager = (() => {
 
+    // List of keys that are considered dangerous and should not be used for storage
+    const DANGEROUS_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
+
     // Key names for the caches in local and session storage
     let allowedKey = "allowedCache";
     let blockedKey = "blockedCache";
@@ -77,10 +80,11 @@ const CacheManager = (() => {
 
     // Load allowed caches (without tabId) from local storage
     StorageUtil.getFromLocalStore(allowedKey, storedAllowed => {
-        if (storedAllowed) {
+        if (storedAllowed && typeof storedAllowed === 'object') {
             for (const name of Object.keys(allowedCaches)) {
-                if (storedAllowed[name]) {
-                    allowedCaches[name] = new Map(Object.entries(storedAllowed[name]));
+                if (storedAllowed[name] && typeof storedAllowed[name] === 'object') {
+                    const entries = Object.entries(storedAllowed[name]).filter(([key]) => !DANGEROUS_KEYS.has(key));
+                    allowedCaches[name] = new Map(entries);
                 }
             }
         }
@@ -88,11 +92,13 @@ const CacheManager = (() => {
 
     // Load blocked caches (without tabId) from local storage
     StorageUtil.getFromLocalStore(blockedKey, storedBlocked => {
-        if (storedBlocked) {
+        if (storedBlocked && typeof storedBlocked === 'object') {
             for (const name of Object.keys(blockedCaches)) {
-                if (storedBlocked[name]) {
+                if (storedBlocked[name] && typeof storedBlocked[name] === 'object') {
+                    const entries = Object.entries(storedBlocked[name]).filter(([key]) => !DANGEROUS_KEYS.has(key));
+
                     blockedCaches[name] = new Map(
-                        Object.entries(storedBlocked[name]).map(([url, entry]) => [
+                        entries.map(([url, entry]) => [
                             url, {exp: entry.exp, resultType: entry.resultType}
                         ])
                     );
@@ -103,10 +109,11 @@ const CacheManager = (() => {
 
     // Load processing caches (with tabId) from session storage
     StorageUtil.getFromSessionStore(processingKey, storedProcessing => {
-        if (storedProcessing) {
+        if (storedProcessing && typeof storedProcessing === 'object') {
             for (const name of Object.keys(processingCaches)) {
-                if (storedProcessing[name]) {
-                    processingCaches[name] = new Map(Object.entries(storedProcessing[name]));
+                if (storedProcessing[name] && typeof storedProcessing[name] === 'object') {
+                    const entries = Object.entries(storedProcessing[name]).filter(([key]) => !DANGEROUS_KEYS.has(key));
+                    processingCaches[name] = new Map(entries);
                 }
             }
         }
