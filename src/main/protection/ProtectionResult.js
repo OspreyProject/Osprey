@@ -23,10 +23,22 @@ class ProtectionResult {
      * Constructor function for creating a browser protection result object.
      *
      * @param {string} urlChecked - The URL that was checked.
-     * @param {string} resultType - The result type of the protection check (e.g., "allowed", "malicious").
+     * @param {number} resultType - The result type of the protection check (see ResultType for more info).
      * @param {number} resultOrigin - The origin of the result (e.g., from endpoint or known top website).
      */
     constructor(urlChecked, resultType, resultOrigin) {
+        if (typeof urlChecked !== 'string' || !urlChecked) {
+            throw new TypeError('urlChecked must be a non-empty string');
+        }
+
+        if (typeof resultType !== 'number' || !Object.values(ProtectionResult.ResultType).includes(resultType)) {
+            throw new TypeError('resultType must be a valid ResultType');
+        }
+
+        if (typeof resultOrigin !== 'number' || !Object.values(ProtectionResult.Origin).includes(resultOrigin)) {
+            throw new TypeError('resultOrigin must be a valid Origin');
+        }
+
         this.url = urlChecked;
         this.resultType = resultType;
         this.origin = resultOrigin;
