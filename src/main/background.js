@@ -103,7 +103,6 @@
      */
     const getResultOrigins = tabId => {
         try {
-            // parameters
             Validate.requireNonNegativeInteger(tabId);
         } catch {
             return [];
@@ -119,7 +118,6 @@
      */
     const appendResultOrigin = (tabId, origin) => {
         try {
-            // parameters
             Validate.requireNonNegativeInteger(tabId);
             Validate.requireInteger(origin);
         } catch {
@@ -141,7 +139,6 @@
      */
     const removeResultOrigin = (tabId, origin) => {
         try {
-            // parameters
             Validate.requireNonNegativeInteger(tabId);
             Validate.requireInteger(origin);
         } catch {
@@ -158,7 +155,6 @@
      */
     const deleteResultOrigins = tabId => {
         try {
-            // parameters
             Validate.requireNonNegativeInteger(tabId);
         } catch {
             return;
@@ -174,7 +170,6 @@
      */
     const getFrameZeroUrl = tabId => {
         try {
-            // parameters
             Validate.requireNonNegativeInteger(tabId);
         } catch {
             return "";
@@ -190,7 +185,6 @@
      */
     const setFrameZeroUrl = (tabId, url) => {
         try {
-            // parameters
             Validate.requireNonNegativeInteger(tabId);
             Validate.requireValidUrl(url);
         } catch {
@@ -207,7 +201,6 @@
      */
     const deleteFrameZeroUrl = tabId => {
         try {
-            // parameters
             Validate.requireNonNegativeInteger(tabId);
         } catch {
             return;
@@ -225,7 +218,6 @@
      */
     const safeTabUpdate = async (tabId, updateProps) => {
         try {
-            // parameters
             Validate.requireNonNegativeInteger(tabId);
             Validate.requireNotNull(updateProps);
         } catch {
@@ -248,7 +240,6 @@
      */
     const sendToNewTabPage = tabId => {
         try {
-            // parameters
             Validate.requireNonNegativeInteger(tabId);
         } catch {
             return;
