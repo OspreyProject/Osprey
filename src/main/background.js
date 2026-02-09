@@ -1105,7 +1105,16 @@
                     return;
                 }
 
-                const hostnameString = `*.${blockedUrlObject.hostname}`;
+                const hostname = blockedUrlObject.hostname;
+
+                // Validates the hostname pattern to prevent potential security issues with malformed hostnames
+                if (!/^[a-zA-Z0-9.-]+$/.test(hostname) || hostname.includes('..')) {
+                    console.warn(`Invalid hostname pattern: ${hostname}`);
+                    sendToNewTabPage(tabId);
+                    return;
+                }
+
+                const hostnameString = `*.${hostname}`;
 
                 // Adds the hostname to the global allowed cache
                 console.debug(`Adding hostname to the global allowed cache: ${hostnameString}`);
