@@ -1179,7 +1179,8 @@
                 if (!/^(?!-)[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(hostname) ||
                     hostname.includes('..') ||
                     hostname.startsWith('.') ||
-                    hostname.endsWith('.')) {
+                    hostname.endsWith('.') ||
+                    UrlHelpers.isInternalAddress(hostname)) {
                     console.warn(`Invalid hostname pattern: ${hostname}`);
                     sendToNewTabPage(tabId);
                     return;
