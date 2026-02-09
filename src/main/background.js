@@ -1057,6 +1057,13 @@
                     return;
                 }
 
+                // Checks if the message origin is valid
+                if (!Object.values(ProtectionResult.Origin).includes(message.origin)) {
+                    console.warn(`Invalid origin value: ${message.origin}`);
+                    sendToNewTabPage(tabId);
+                    return;
+                }
+
                 const {origin} = message;
 
                 if (origin === 0) {
@@ -1106,6 +1113,13 @@
                 if (!Object.hasOwn(message, 'origin') || !message.origin) {
                     console.debug(`No origin was found; doing nothing.`);
                     break;
+                }
+
+                // Checks if the message origin is valid
+                if (!Object.values(ProtectionResult.Origin).includes(message.origin)) {
+                    console.warn(`Invalid origin value: ${message.origin}`);
+                    sendToNewTabPage(tabId);
+                    return;
                 }
 
                 // Parses the report URL object
