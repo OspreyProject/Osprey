@@ -1212,6 +1212,7 @@
                     priority: 2,
                 };
 
+                // Yes - this isn't cryptographically secure, but it doesn't need to be
                 const randomNumber = Math.floor(Math.random() * 100000000);
                 const notificationId = `cache-cleared-${randomNumber}`;
 
