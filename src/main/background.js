@@ -406,6 +406,14 @@
                             if (targetUrl) {
                                 const frameZeroUrl = getFrameZeroUrl(tabId);
                                 const blockPageUrl = UrlHelpers.getBlockPageUrl(result, frameZeroUrl === undefined ? result.url : frameZeroUrl);
+                                const expectedPrefix = browserAPI.runtime.getURL("pages/warning/");
+
+                                // Validates the generated block page URL to ensure it starts with the expected prefix
+                                if (!blockPageUrl.startsWith(expectedPrefix)) {
+                                    console.error("Invalid block page URL generated");
+                                    sendToNewTabPage(tabId);
+                                    return;
+                                }
 
                                 // Navigates to the block page
                                 console.debug(`[${shortName}] Navigating to block page: ${blockPageUrl}.`);
