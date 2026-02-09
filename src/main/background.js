@@ -1203,7 +1203,7 @@
 
                 // Verify continueUrl matches blockedUrl origin
                 if (blockedUrlObject.origin !== continueUrlObject.origin) {
-                    console.warn(`Allow URL origin mismatch`);
+                    console.warn(`Continue URL origin mismatch: ${continueUrlObject.origin} vs ${blockedUrlObject.origin}`);
                     sendToNewTabPage(tabId);
                     return;
                 }
