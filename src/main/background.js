@@ -356,6 +356,12 @@
 
                     if (!blocked) {
                         browserAPI.tabs.get(tabId, tab => {
+                            // Checks if the tab still exists
+                            if (browserAPI.runtime.lastError || !tab) {
+                                console.warn(`Tab ${tabId} no longer exists`);
+                                return;
+                            }
+
                             // Checks if the tab or tab.url is undefined
                             if (tab?.url === undefined) {
                                 console.debug(`tabs.get(${tabId}) failed '${browserAPI.runtime.lastError?.message}'; bailing out.`);
@@ -435,6 +441,13 @@
 
                         // If the page URL is the block page, send (count - 1)
                         browserAPI.tabs.get(tabId, tab => {
+                            // Checks if the tab still exists
+                            if (browserAPI.runtime.lastError || !tab) {
+                                console.warn(`Tab ${tabId} no longer exists`);
+                                return;
+                            }
+
+                            // Checks if the tab or tab.url is undefined
                             if (tab?.url === undefined) {
                                 console.debug(`tabs.get(${tabId}) failed '${browserAPI.runtime.lastError?.message}'; bailing out.`);
                                 return;
@@ -803,6 +816,13 @@
 
             // If the page URL is the block page, send (count - 1)
             browserAPI.tabs.get(tabId, tab => {
+                // Checks if the tab still exists
+                if (browserAPI.runtime.lastError || !tab) {
+                    console.warn(`Tab ${tabId} no longer exists`);
+                    return;
+                }
+
+                // Checks if the tab or tab.url is undefined
                 if (tab?.url === undefined) {
                     console.debug(`tabs.get(${tabId}) failed '${browserAPI.runtime.lastError?.message}'; bailing out.`);
                     return;
