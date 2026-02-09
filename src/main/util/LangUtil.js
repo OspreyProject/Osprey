@@ -20,7 +20,7 @@
 // Global variable for browser API compatibility
 const browserAPI = globalThis.chrome ?? globalThis.browser;
 
-const LangUtil = {
+const LangUtil = Object.freeze({
 
     // Global
     TITLE: browserAPI.i18n.getMessage('extensionName'),
@@ -72,4 +72,4 @@ const LangUtil = {
     PHISHING: browserAPI.i18n.getMessage('phishing'),
     UNTRUSTED: browserAPI.i18n.getMessage('untrusted'),
     ADULT_CONTENT: browserAPI.i18n.getMessage('adultContent'),
-};
+});
