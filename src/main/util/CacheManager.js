@@ -389,6 +389,11 @@ const CacheManager = (() => {
             return false;
         }
 
+        // Returns if the string is invalid
+        if (typeof str !== 'string' || str.length > 2048) {
+            return false;
+        }
+
         try {
             const map = allowedCaches[name];
 
