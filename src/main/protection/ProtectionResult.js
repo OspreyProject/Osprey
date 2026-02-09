@@ -33,7 +33,7 @@ class ProtectionResult {
     }
 }
 
-ProtectionResult.ResultType = {
+ProtectionResult.ResultType = Object.freeze({
     KNOWN_SAFE: 0,
     FAILED: 1,
     WAITING: 2,
@@ -42,9 +42,9 @@ ProtectionResult.ResultType = {
     PHISHING: 5,
     UNTRUSTED: 6,
     ADULT_CONTENT: 7,
-};
+});
 
-ProtectionResult.ResultTypeName = {
+ProtectionResult.ResultTypeName = Object.freeze({
     0: LangUtil.KNOWN_SAFE,
     1: LangUtil.FAILED,
     2: LangUtil.WAITING,
@@ -53,9 +53,9 @@ ProtectionResult.ResultTypeName = {
     5: LangUtil.PHISHING,
     6: LangUtil.UNTRUSTED,
     7: LangUtil.ADULT_CONTENT
-};
+});
 
-ProtectionResult.ResultTypeNameEN = {
+ProtectionResult.ResultTypeNameEN = Object.freeze({
     0: "Known Safe",
     1: "Failed",
     2: "Waiting",
@@ -64,9 +64,9 @@ ProtectionResult.ResultTypeNameEN = {
     5: "Phishing",
     6: "Untrusted",
     7: "Adult Content",
-};
+});
 
-ProtectionResult.Origin = {
+ProtectionResult.Origin = Object.freeze({
     UNKNOWN: 0,
 
     // Official Partners
@@ -88,9 +88,9 @@ ProtectionResult.Origin = {
     SECLOOKUP: 14,
     SWITCH_CH: 15,
     QUAD9: 16,
-};
+});
 
-ProtectionResult.FullName = {
+ProtectionResult.FullName = Object.freeze({
     0: "Unknown",
 
     // Official Partners
@@ -112,9 +112,9 @@ ProtectionResult.FullName = {
     14: "Seclookup Web Protection",
     15: "Switch.ch Security DNS",
     16: "Quad9 Security DNS",
-};
+});
 
-ProtectionResult.ShortName = {
+ProtectionResult.ShortName = Object.freeze({
     0: "Unknown",
 
     // Official Partners
@@ -136,9 +136,9 @@ ProtectionResult.ShortName = {
     14: "Seclookup",
     15: "Switch.ch",
     16: "Quad9",
-};
+});
 
-ProtectionResult.CacheName = {
+ProtectionResult.CacheName = Object.freeze({
     0: "unknown",
 
     // Official Partners
@@ -160,4 +160,4 @@ ProtectionResult.CacheName = {
     14: "seclookup",
     15: "switchCH",
     16: "quad9",
-};
+});
