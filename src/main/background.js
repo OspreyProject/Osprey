@@ -829,6 +829,12 @@
 
     // Listens for PING messages from content scripts to get the blocked counter
     browserAPI.runtime.onMessage.addListener((message, sender, sendResponse) => {
+        // Verify sender is from the same extension for all messages
+        if (sender.id !== browserAPI.runtime.id) {
+            console.warn(`Blocked message from external source: ${sender.id}`);
+            return false;
+        }
+
         if (message.messageType === Messages.BLOCKED_COUNTER_PING && sender.tab && sender.tab.id !== null) {
             const tabId = sender.tab.id;
             const resultOrigins = getResultOrigins(tabId);
@@ -938,6 +944,12 @@
 
     // Listens for incoming messages
     browserAPI.runtime.onMessage.addListener((message, sender) => {
+        // Verify sender is from the same extension for all messages
+        if (sender.id !== browserAPI.runtime.id) {
+            console.warn(`Blocked message from external source: ${sender.id}`);
+            return;
+        }
+
         // Checks if the message exists and has a valid type
         if (!message?.messageType) {
             return;
