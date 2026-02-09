@@ -1016,15 +1016,6 @@
                     return;
                 }
 
-                // Checks if the message properties are of the expected types
-                if (typeof message.blockedUrl !== 'string' ||
-                    typeof message.continueUrl !== 'string' ||
-                    typeof message.origin !== 'number') {
-                    console.warn('Invalid message property types');
-                    sendToNewTabPage(tabId);
-                    return;
-                }
-
                 // Parses the blocked URL object
                 let blockedUrlObject;
                 try {
