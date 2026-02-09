@@ -310,6 +310,12 @@ const CacheManager = (() => {
 
         try {
             const key = UrlHelpers.normalizeUrl(url);
+
+            if (!key || typeof key !== 'string' || key.length === 0) {
+                console.warn('URL normalization returned invalid result');
+                return false;
+            }
+
             const map = allowedCaches[name];
 
             if (!map) {
@@ -441,6 +447,12 @@ const CacheManager = (() => {
 
         try {
             const key = UrlHelpers.normalizeUrl(url);
+
+            if (!key || typeof key !== 'string' || key.length === 0) {
+                console.warn('URL normalization returned invalid result');
+                return;
+            }
+
             const expTime = Date.now() + expirationTime * 1000;
 
             if (name === "all") {
@@ -521,6 +533,12 @@ const CacheManager = (() => {
 
         try {
             const key = UrlHelpers.normalizeUrl(url);
+
+            if (!key || typeof key !== 'string' || key.length === 0) {
+                console.warn('URL normalization returned invalid result');
+                return false;
+            }
+
             const map = blockedCaches[name];
 
             if (!map?.has(key)) {
@@ -564,6 +582,12 @@ const CacheManager = (() => {
 
         try {
             const key = UrlHelpers.normalizeUrl(url);
+
+            if (!key || typeof key !== 'string' || key.length === 0) {
+                console.warn('URL normalization returned invalid result');
+                return;
+            }
+
             const expTime = Date.now() + expirationTime * 1000;
             const cache = blockedCaches[name];
 
@@ -606,6 +630,12 @@ const CacheManager = (() => {
 
         try {
             const key = UrlHelpers.normalizeUrl(url);
+
+            if (!key || typeof key !== 'string' || key.length === 0) {
+                console.warn('URL normalization returned invalid result');
+                return null;
+            }
+
             const cache = blockedCaches[name];
 
             if (!cache?.has(key)) {
@@ -649,6 +679,11 @@ const CacheManager = (() => {
         try {
             const key = UrlHelpers.normalizeUrl(url);
 
+            if (!key || typeof key !== 'string' || key.length === 0) {
+                console.warn('URL normalization returned invalid result');
+                return;
+            }
+
             if (name === "all") {
                 for (const cache of Object.values(blockedCaches)) {
                     cache.delete(key);
@@ -688,6 +723,12 @@ const CacheManager = (() => {
 
         try {
             const key = UrlHelpers.normalizeUrl(url);
+
+            if (!key || typeof key !== 'string' || key.length === 0) {
+                console.warn('URL normalization returned invalid result');
+                return false;
+            }
+
             const map = processingCaches[name];
 
             if (!map) {
@@ -739,6 +780,12 @@ const CacheManager = (() => {
 
         try {
             const key = UrlHelpers.normalizeUrl(url);
+
+            if (!key || typeof key !== 'string' || key.length === 0) {
+                console.warn('URL normalization returned invalid result');
+                return;
+            }
+
             const expTime = Date.now() + 60 * 1000; // Expiration for processing cache is 60 seconds
             const entry = {exp: expTime, tabId: tabId};
 
@@ -780,6 +827,11 @@ const CacheManager = (() => {
 
         try {
             const key = UrlHelpers.normalizeUrl(url);
+
+            if (!key || typeof key !== 'string' || key.length === 0) {
+                console.warn('URL normalization returned invalid result');
+                return;
+            }
 
             if (name === "all") {
                 for (const cache of Object.values(processingCaches)) {
