@@ -989,17 +989,16 @@
         }
 
         const tabId = sender.tab?.id;
-
-        // Checks if the tab ID is valid
-        if (typeof tabId !== 'number' || !Number.isInteger(tabId) || tabId < 0) {
-            console.warn('Invalid or missing tab ID');
-            return;
-        }
-
         const redirectDelay = 200;
 
         switch (message.messageType) {
             case Messages.CONTINUE_TO_WEBSITE: {
+                // Checks if the tab ID is valid
+                if (typeof tabId !== 'number' || !Number.isInteger(tabId) || tabId < 0) {
+                    console.warn('Invalid or missing tab ID');
+                    return;
+                }
+
                 // Checks if the message has a blocked URL
                 if (!message.blockedUrl) {
                     console.debug(`No blocked URL was found; sending to new tab page.`);
@@ -1097,6 +1096,12 @@
             }
 
             case Messages.CONTINUE_TO_SAFETY:
+                // Checks if the tab ID is valid
+                if (typeof tabId !== 'number' || !Number.isInteger(tabId) || tabId < 0) {
+                    console.warn('Invalid or missing tab ID');
+                    return;
+                }
+
                 // Redirects to the new tab page
                 setTimeout(() => {
                     sendToNewTabPage(tabId);
@@ -1145,6 +1150,12 @@
             }
 
             case Messages.ALLOW_WEBSITE: {
+                // Checks if the tab ID is valid
+                if (typeof tabId !== 'number' || !Number.isInteger(tabId) || tabId < 0) {
+                    console.warn('Invalid or missing tab ID');
+                    return;
+                }
+
                 // Ignores blank blocked URLs
                 if (message.blockedUrl === null || message.blockedUrl === "") {
                     console.debug(`Blocked URL is blank.`);
