@@ -44,7 +44,7 @@ const CacheManager = (() => {
     Settings.get(settings => {
         const expSeconds = Number(settings?.cacheExpirationSeconds);
         const min = 60;
-        const def = 86400;
+        const def = 604800;
         expirationTime = Number.isFinite(expSeconds) && expSeconds >= min ? expSeconds : def;
     });
 
