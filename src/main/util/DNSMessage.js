@@ -1,81 +1,187 @@
+/*
+ * Osprey - a browser extension that protects you from malicious websites.
+ * Copyright (C) 2026 Osprey Project (https://github.com/OspreyProject)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+"use strict";
+
 class DNSMessage {
 
+    /**
+     * Constructor function for creating a DNSMessage object.
+     */
     constructor() {
-        this.id = 0;
-        this.flags = 0;
-        this.qdCount = 0;
-        this.anCount = 0;
-        this.nsCount = 0;
-        this.arCount = 0;
+        this.id = 0;            // IDentification field (16 bits)
+        this.flags = 0;         // Flags (16 bits)
+        this.qdCount = 0;       // Number of entries in the question section
+        this.anCount = 0;       // Number of resource records in the answer section
+        this.nsCount = 0;       // Number of name server resource records in the authority records section
+        this.arCount = 0;       // Number of resource records in the additional records section
 
-        this.questions = [];   // { qname, qtype, qclass }
-        this.answers = [];     // RR[]
-        this.authorities = []; // RR[]
-        this.additionals = []; // RR[]
+        this.questions = [];    // Array of question objects, each with qname, qtype, and qclass
+        this.answers = [];      // Array of answer resource records (RRs), each with name, type, class, ttl, rdlength, rdataRaw, and rdata
+        this.authorities = [];  // Array of authority resource records (RRs), each with name, type, class, ttl, rdlength, rdataRaw, and rdata
+        this.additionals = [];  // Array of additional resource records (RRs), each with name, type, class, ttl, rdlength, rdataRaw, and rdata
     }
 
+    /**
+     * Extracts the QR (Query/Response) flag from the DNS message flags.
+     *
+     * @returns {number} - The QR flag value, which is the 15th bit of the flags field in the DNS message header.
+     */
     qr() {
         return this.flags >>> 15 & 0x1;
     }
 
+    /**
+     * Extracts the OPCODE from the DNS message flags.
+     *
+     * @returns {number} - The OPCODE value, which is the 4 bits from the 14th to the 11th bit of the flags field in the DNS message header.
+     */
     opcode() {
         return this.flags >>> 11 & 0xF;
     }
 
+    /**
+     * Extracts the AA (Authoritative Answer) flag from the DNS message flags.
+     *
+     * @returns {number} - The AA flag value, which is the 10th bit of the flags field in the DNS message header.
+     */
     aa() {
         return this.flags >>> 10 & 0x1;
     }
 
+    /**
+     * Extracts the TC (Truncated) flag from the DNS message flags.
+     *
+     * @returns {number} - The TC flag value, which is the 9th bit of the flags field in the DNS message header.
+     */
     tc() {
         return this.flags >>> 9 & 0x1;
     }
 
+    /**
+     * Extracts the RD (Recursion Desired) flag from the DNS message flags.
+     *
+     * @returns {number} - The RD flag value, which is the 8th bit of the flags field in the DNS message header.
+     */
     rd() {
         return this.flags >>> 8 & 0x1;
     }
 
+    /**
+     * Extracts the RA (Recursion Available) flag from the DNS message flags.
+     *
+     * @returns {number} - The RA flag value, which is the 7th bit of the flags field in the DNS message header.
+     */
     ra() {
         return this.flags >>> 7 & 0x1;
     }
 
+    /**
+     * Extracts the Z (Reserved) flag from the DNS message flags.
+     *
+     * @returns {number} - The Z flag value, which is the 6th bit of the flags field in the DNS message header.
+     */
     z() {
         return this.flags >>> 6 & 0x1;
     }
 
+    /**
+     * Extracts the AD (Authenticated Data) flag from the DNS message flags.
+     *
+     * @returns {number} - The AD flag value, which is the 5th bit of the flags field in the DNS message header.
+     */
     ad() {
         return this.flags >>> 5 & 0x1;
     }
 
+    /**
+     * Extracts the CD (Checking Disabled) flag from the DNS message flags.
+     *
+     * @returns {number} - The CD flag value, which is the 4th bit of the flags field in the DNS message header.
+     */
     cd() {
         return this.flags >>> 4 & 0x1;
     }
 
+    /**
+     * Extracts the RCODE (Response Code) from the DNS message flags.
+     *
+     * @returns {number} - The RCODE value, which is the lower 4 bits of the flags field in the DNS message header.
+     */
     rcode() {
         return this.flags & 0xF;
     }
 
+    /**
+     * Checks whether the DNS message contains any additional records in the additionals section.
+     *
+     * @returns {boolean} - Returns true if there are additional records in the additionals section, false otherwise.
+     */
     hasAdditional() {
         return this.additionals.length > 0;
     }
 
+    /**
+     * Checks whether the DNS message contains any answer records in the answers section.
+     *
+     * @returns {boolean} - Returns true if there are answer records in the answers section, false otherwise.
+     */
     hasAnswers() {
         return this.answers.length > 0;
     }
 
+    /**
+     * Checks whether the DNS message contains any authority records in the authorities section.
+     *
+     * @returns {boolean} - Returns true if there are authority records in the authorities section, false otherwise.
+     */
     hasAuthorities() {
         return this.authorities.length > 0;
     }
 
+    /**
+     * Checks whether any RR (in any section) has the specified type.
+     *
+     * @param {number} type - The DNS RR type to check for in any section of the DNS message.
+     * @returns {boolean} - Returns true if any RR in any section has the specified type, false otherwise.
+     */
     hasRRType(type) {
         return this.sectionHasType(this.answers, type) ||
             this.sectionHasType(this.authorities, type) ||
             this.sectionHasType(this.additionals, type);
     }
 
+    /**
+     * Checks whether any RR in the answers section has the specified type.
+     *
+     * @param {number} type - The DNS RR type to check for in the answers section.
+     * @returns {boolean} - Returns true if any RR in the answers section has the specified type, false otherwise.
+     */
     hasAdditionalRRType(type) {
         return this.sectionHasType(this.additionals, type);
     }
 
+    /**
+     * Checks whether any RR in the given section has the specified type.
+     *
+     * @param {Array} section - An array of Resource Records (RRs) to check for the specified type.
+     * @param {number} type - The DNS RR type to check for in the given section.
+     * @returns {boolean} - Returns true if any RR in the section has the specified type, false otherwise.
+     */
     sectionHasType(section, type) {
         return section.some(rr => rr.type === type);
     }
@@ -84,6 +190,9 @@ class DNSMessage {
      * Checks whether any RR (in any section) contains the provided domain name
      * either as the RR owner name OR inside the RDATA for name-bearing types
      * (CNAME/NS/PTR/MX/SOA and a few others).
+     *
+     * @param {string} domain - The domain name to search for in the RRs.
+     * @return {boolean} - Returns true if the domain name is found in any RR, false otherwise.
      */
     containsNameInAnyRR(domain) {
         const needle = DNSMessage.normalizeName(domain);
@@ -128,7 +237,7 @@ class DNSMessage {
     /**
      * Parses a DNS message from a byte array.
      *
-     * @param bytes - The byte array representing the DNS message.
+     * @param {Uint8Array|ArrayBuffer} bytes - The byte array containing the DNS message.
      * @returns {DNSMessage} - The parsed DNSMessage object.
      */
     static parse(bytes) {
@@ -232,10 +341,10 @@ class DNSMessage {
     /**
      * Parses RDATA based on the RR type.
      *
-     * @param array - The Uint8Array representing the DNS message.
-     * @param type - The RR type.
-     * @param rdataStart - The starting offset of the RDATA in the array.
-     * @param rdlength - The length of the RDATA.
+     * @param {Uint8Array} array - The byte array containing the DNS message.
+     * @param {number} type - The RR type to determine how to parse the RDATA.
+     * @param {number} rdataStart - The starting offset of the RDATA in the byte array.
+     * @param {number} rdlength - The length of the RDATA in bytes.
      */
     static parseRData(array, type, rdataStart, rdlength) {
         const view = new DataView(array.buffer, array.byteOffset, array.byteLength);
@@ -343,8 +452,9 @@ class DNSMessage {
     /**
      * Reads a domain name from the DNS message byte array, handling compression.
      *
-     * @param array - The Uint8Array representing the DNS message.
-     * @param state - An object with the current offset: { off: number }.
+     * @param {Uint8Array} array - The byte array containing the DNS message.
+     * @param {Object} state - An object containing the current offset in the byte array.
+     * @param {number} state.off - The current offset in the byte array to start reading from.
      * @returns {{name: string|string, off: number|*}} - The domain name and the new offset.
      */
     static readName(array, state) {
@@ -426,7 +536,7 @@ class DNSMessage {
     /**
      * Normalizes a domain name for comparison.
      *
-     * @param name - The domain name to normalize.
+     * @param {string} name - The domain name to normalize.
      * @returns {string} - The normalized domain name.
      */
     static normalizeName(name) {
@@ -442,6 +552,14 @@ class DNSMessage {
         return normalized.endsWith(".") ? normalized.slice(0, -1) : normalized;
     }
 
+    /**
+     * Prints a human-readable representation of the DNS message, including header information and resource records.
+     *
+     * @param {Object} opts - Optional settings for printing the DNS message.
+     * @param {boolean} opts.includeRawRdata - Whether to include the raw hex bytes of the RDATA for each RR (default: false).
+     * @param {number} opts.maxRawBytes - The maximum number of raw bytes to include per RR when includeRawRdata is true (default: 64).
+     * @param {function} opts.out - A custom output function to receive the formatted string (default: console.log).
+     */
     print(opts = {}) {
         const {
             includeRawRdata = false,   // include hex bytes for each RR
@@ -494,6 +612,12 @@ class DNSMessage {
         out(lines.join("\n"));
     }
 
+    /**
+     * Converts a DNS RR type code to a human-readable string.
+     *
+     * @param {number} type - The DNS RR type code to convert.
+     * @returns {*|string} - The human-readable string representation of the DNS RR type.
+     */
     static typeToString(type) {
         const map = DNSMessage.TypeName || (DNSMessage.TypeName = Object.fromEntries(
             Object.entries(DNSMessage.RRType).map(([k, v]) => [v, k])
@@ -501,6 +625,12 @@ class DNSMessage {
         return map[type] || `TYPE${type}`;
     }
 
+    /**
+     * Converts a DNS RR class code to a human-readable string.
+     *
+     * @param {number} rrclass - The DNS RR class code to convert.
+     * @returns {string} - The human-readable string representation of the DNS RR class.
+     */
     static classToString(rrclass) {
         if (rrclass === 1) {
             return "IN";
@@ -508,6 +638,12 @@ class DNSMessage {
         return `CLASS${rrclass}`;
     }
 
+    /**
+     * Converts DNS header flags to a human-readable string representation.
+     *
+     * @param {number} flags - The 16-bit DNS header flags to convert.
+     * @returns {string} - The human-readable string representation of the DNS header flags.
+     */
     static flagsToString(flags) {
         // DNS header flags: QR(15) OPCODE(14..11) AA(10) TC(9) RD(8) RA(7) Z(6) AD(5) CD(4) RCODE(3..0)
         const QR = flags >>> 15 & 0x1;
@@ -573,6 +709,15 @@ class DNSMessage {
         return parts.join(" ");
     }
 
+    /**
+     * Formats a DNS Resource Record (RR) into a human-readable string representation, including optional raw RDATA bytes.
+     *
+     * @param {Object} rr - The DNS Resource Record (RR) to format, containing fields such as name, type, class, ttl, rdlength, rdata, and optionally rdataRaw.
+     * @param {Object} opts - Optional settings for formatting the RR.
+     * @param {boolean} opts.includeRawRdata - Whether to include the raw hex bytes of the RDATA in the output.
+     * @param {number} opts.maxRawBytes - The maximum number of raw bytes to include in the output when includeRawRdata is true.
+     * @returns {string} - The formatted string representation of the DNS Resource Record (RR).
+     */
     static formatRR(rr, {includeRawRdata = false, maxRawBytes = 64} = {}) {
         const t = DNSMessage.typeToString(rr.type);
         const c = DNSMessage.classToString(rr.class);
