@@ -134,7 +134,7 @@
     };
 
     /**
-     * Safely updates a tab's properties, checking if the tab still exists before attempting to update it.
+     * Safely updates a tab's properties, handling potential errors such as the tab being closed during the update process.
      *
      * @param {number} tabId - The ID of the tab to be updated.
      * @param {object} updateProps - The properties to update on the tab (e.g., {url: "https://www.google.com"}).
@@ -142,17 +142,10 @@
      */
     const safeTabUpdate = async (tabId, updateProps) => {
         try {
-            const tab = await browserAPI.tabs.get(tabId);
-
-            if (!tab || browserAPI.runtime.lastError) {
-                console.warn(`Tab ${tabId} no longer exists`);
-                return false;
-            }
-
             await browserAPI.tabs.update(tabId, updateProps);
             return true;
         } catch (error) {
-            console.error(`Failed to update tab ${tabId}:`, error);
+            console.warn(`Failed to update tab ${tabId}:`, error.message);
             return false;
         }
     };
