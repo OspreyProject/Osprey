@@ -347,6 +347,11 @@ class DNSMessage {
      * @param {number} rdlength - The length of the RDATA in bytes.
      */
     static parseRData(array, type, rdataStart, rdlength) {
+        // Checks if the RDATA start and length are within the bounds of the array
+        if (rdataStart < 0 || rdataStart + rdlength > array.length) {
+            return null;
+        }
+
         const view = new DataView(array.buffer, array.byteOffset, array.byteLength);
         const end = rdataStart + rdlength;
 
