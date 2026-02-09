@@ -496,6 +496,19 @@ const UrlHelpers = (() => {
         return btoa(bin).replaceAll('+', '-').replaceAll('/', '_').replace(/=+$/, '');
     };
 
+    /**
+     * Sanitizes a string for safe display by removing control characters
+     * and truncating it to a specified maximum length.
+     *
+     * @param {string} str - The string to sanitize.
+     * @param {number} [maxLength=100] - The maximum length of the sanitized string before truncation.
+     * @returns {string|string} - The sanitized string, truncated with "..." if it exceeds the maximum length.
+     */
+    const sanitizeForDisplay = (str, maxLength = 100) => {
+        const sanitized = str.replaceAll(/[\u0000-\u001F\u007F-\u009F]/g, '');
+        return sanitized.length > maxLength ? sanitized.substring(0, maxLength) + '...' : sanitized;
+    };
+
     return {
         extractBlockedUrl,
         extractContinueUrl,
@@ -504,6 +517,7 @@ const UrlHelpers = (() => {
         normalizeUrl,
         getBlockPageUrl,
         isValidHostname,
+        sanitizeForDisplay,
         isInternalAddress,
         encodeDNSQuery
     };
