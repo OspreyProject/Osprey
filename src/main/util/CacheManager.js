@@ -51,7 +51,7 @@ const CacheManager = (() => {
         expirationTime = Number.isFinite(expSeconds) && expSeconds >= min ? expSeconds : def;
     });
 
-    const providers = [
+    const providers = Object.freeze([
         // Global
         "global",
 
@@ -69,7 +69,7 @@ const CacheManager = (() => {
         "seclookup",
         "switchCH",
         "quad9",
-    ];
+    ]);
 
     // Initialize caches for each provider
     for (const name of providers) {
