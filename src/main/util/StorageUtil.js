@@ -38,10 +38,12 @@ const StorageUtil = (() => {
     const getFromLocalStore = (key, callback) => {
         try {
             Validate.requireString(key);
-            Validate.requireFunction(callback);
         } catch {
             return;
         }
+
+        const fixedCallback = Validate.isFunction(callback) ? callback : () => {
+        };
 
         // Checks if the key is valid
         if (!isValidKey(key)) {
@@ -51,7 +53,7 @@ const StorageUtil = (() => {
         // Checks if local storage is supported
         if (!browserAPI?.storage?.local) {
             console.error('Local storage API not available');
-            callback(null);
+            fixedCallback(null);
             return;
         }
 
@@ -59,7 +61,7 @@ const StorageUtil = (() => {
             // Handles errors in the storage process
             if (browserAPI.runtime.lastError) {
                 console.error('StorageUtil error:', browserAPI.runtime.lastError);
-                callback(null);
+                fixedCallback(null);
                 return;
             }
 
@@ -67,7 +69,7 @@ const StorageUtil = (() => {
             let value = result?.[key];
 
             // Calls the callback function with the retrieved value
-            callback(value);
+            fixedCallback(value);
         });
     };
 
@@ -82,10 +84,12 @@ const StorageUtil = (() => {
         try {
             Validate.requireString(key);
             Validate.requireNotNull(value);
-            Validate.requireFunction(callback);
         } catch {
             return;
         }
+
+        const fixedCallback = Validate.isFunction(callback) ? callback : () => {
+        };
 
         // Prevents storing functions or symbols
         if (typeof value === 'function' || typeof value === 'symbol') {
@@ -107,7 +111,7 @@ const StorageUtil = (() => {
         // Checks if local storage is supported
         if (!browserAPI?.storage?.local) {
             console.error('Local storage API not available');
-            callback(null);
+            fixedCallback(null);
             return;
         }
 
@@ -119,12 +123,12 @@ const StorageUtil = (() => {
             // Handles errors in the storage process
             if (browserAPI.runtime.lastError) {
                 console.error('StorageUtil error:', browserAPI.runtime.lastError);
-                callback(null);
+                fixedCallback(null);
                 return;
             }
 
             // Completes the callback
-            callback();
+            fixedCallback();
         });
     };
 
@@ -137,10 +141,12 @@ const StorageUtil = (() => {
     const getFromSessionStore = (key, callback) => {
         try {
             Validate.requireString(key);
-            Validate.requireFunction(callback);
         } catch {
             return;
         }
+
+        const fixedCallback = Validate.isFunction(callback) ? callback : () => {
+        };
 
         // Checks if the key is valid
         if (!isValidKey(key)) {
@@ -158,7 +164,7 @@ const StorageUtil = (() => {
             // Handles errors in the storage process
             if (browserAPI.runtime.lastError) {
                 console.error('StorageUtil error:', browserAPI.runtime.lastError);
-                callback(null);
+                fixedCallback(null);
                 return;
             }
 
@@ -166,7 +172,7 @@ const StorageUtil = (() => {
             let value = result?.[key];
 
             // Calls the callback function with the retrieved value.
-            callback(value);
+            fixedCallback(value);
         });
     };
 
@@ -181,10 +187,12 @@ const StorageUtil = (() => {
         try {
             Validate.requireString(key);
             Validate.requireNotNull(value);
-            Validate.requireFunction(callback);
         } catch {
             return;
         }
+
+        const fixedCallback = Validate.isFunction(callback) ? callback : () => {
+        };
 
         // Prevents storing functions or symbols
         if (typeof value === 'function' || typeof value === 'symbol') {
@@ -206,7 +214,7 @@ const StorageUtil = (() => {
         // Checks if session storage is supported
         if (!browserAPI?.storage?.session) {
             console.error('Session storage API not available');
-            callback(null);
+            fixedCallback(null);
             return;
         }
 
@@ -218,12 +226,12 @@ const StorageUtil = (() => {
             // Handles errors in the storage process
             if (browserAPI.runtime.lastError) {
                 console.error('StorageUtil error:', browserAPI.runtime.lastError);
-                callback(null);
+                fixedCallback(null);
                 return;
             }
 
             // Completes the callback
-            callback();
+            fixedCallback();
         });
     };
 
