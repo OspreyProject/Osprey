@@ -79,6 +79,14 @@ const CacheManager = (() => {
         processingCaches[name] = new Map();
     }
 
+    /**
+     * Checks if the given provider name is valid (either "all" or one of the defined providers).
+     *
+     * @param name {string} - The name of the provider to check.
+     * @returns {boolean|boolean} - Returns true if the provider name is valid, false otherwise.
+     */
+    const isValidProvider = (name) => name === "all" || providers.includes(name);
+
     // Load allowed caches (without tabId) from local storage
     StorageUtil.getFromLocalStore(allowedKey, storedAllowed => {
         if (storedAllowed && typeof storedAllowed === 'object') {
@@ -294,6 +302,12 @@ const CacheManager = (() => {
             return false;
         }
 
+        // Returns if the provider name is invalid
+        if (!isValidProvider(name)) {
+            console.warn(`Invalid provider name: ${name}`);
+            return false;
+        }
+
         try {
             const key = UrlHelpers.normalizeUrl(url);
             const map = allowedCaches[name];
@@ -333,6 +347,12 @@ const CacheManager = (() => {
             return false;
         }
 
+        // Returns if the provider name is invalid
+        if (!isValidProvider(name)) {
+            console.warn(`Invalid provider name: ${name}`);
+            return false;
+        }
+
         try {
             const map = allowedCaches[name];
 
@@ -360,6 +380,12 @@ const CacheManager = (() => {
         // Returns if the allowed caches are invalid
         if (!allowedCaches || typeof allowedCaches !== 'object') {
             console.warn('allowedCache is not defined or not an object');
+            return false;
+        }
+
+        // Returns if the provider name is invalid
+        if (!isValidProvider(name)) {
+            console.warn(`Invalid provider name: ${name}`);
             return false;
         }
 
@@ -402,6 +428,12 @@ const CacheManager = (() => {
             return;
         }
 
+        // Returns if the provider name is invalid
+        if (!isValidProvider(name)) {
+            console.warn(`Invalid provider name: ${name}`);
+            return;
+        }
+
         try {
             const key = UrlHelpers.normalizeUrl(url);
             const expTime = Date.now() + expirationTime * 1000;
@@ -436,6 +468,12 @@ const CacheManager = (() => {
             return;
         }
 
+        // Returns if the provider name is invalid
+        if (!isValidProvider(name)) {
+            console.warn(`Invalid provider name: ${name}`);
+            return;
+        }
+
         try {
             const expTime = 0;
 
@@ -467,6 +505,12 @@ const CacheManager = (() => {
         // Returns if the blocked caches are invalid
         if (!blockedCaches || typeof blockedCaches !== 'object') {
             console.warn('blockedCache is not defined or not an object');
+            return false;
+        }
+
+        // Returns if the provider name is invalid
+        if (!isValidProvider(name)) {
+            console.warn(`Invalid provider name: ${name}`);
             return false;
         }
 
@@ -507,6 +551,12 @@ const CacheManager = (() => {
             return;
         }
 
+        // Returns if the provider name is invalid
+        if (!isValidProvider(name)) {
+            console.warn(`Invalid provider name: ${name}`);
+            return;
+        }
+
         try {
             const key = UrlHelpers.normalizeUrl(url);
             const expTime = Date.now() + expirationTime * 1000;
@@ -540,6 +590,12 @@ const CacheManager = (() => {
         // Returns if the blocked caches are invalid
         if (!blockedCaches || typeof blockedCaches !== 'object') {
             console.warn('blockedCache is not defined or not an object');
+            return null;
+        }
+
+        // Returns if the provider name is invalid
+        if (!isValidProvider(name)) {
+            console.warn(`Invalid provider name: ${name}`);
             return null;
         }
 
@@ -579,6 +635,12 @@ const CacheManager = (() => {
             return;
         }
 
+        // Returns if the provider name is invalid
+        if (!isValidProvider(name)) {
+            console.warn(`Invalid provider name: ${name}`);
+            return;
+        }
+
         try {
             const key = UrlHelpers.normalizeUrl(url);
 
@@ -610,6 +672,12 @@ const CacheManager = (() => {
         // Returns if the processing caches are invalid
         if (!processingCaches || typeof processingCaches !== 'object') {
             console.warn('processingCaches is not defined or not an object');
+            return false;
+        }
+
+        // Returns if the provider name is invalid
+        if (!isValidProvider(name)) {
+            console.warn(`Invalid provider name: ${name}`);
             return false;
         }
 
@@ -652,6 +720,12 @@ const CacheManager = (() => {
             return;
         }
 
+        // Returns if the provider name is invalid
+        if (!isValidProvider(name)) {
+            console.warn(`Invalid provider name: ${name}`);
+            return;
+        }
+
         try {
             const key = UrlHelpers.normalizeUrl(url);
             const expTime = Date.now() + 60 * 1000; // Expiration for processing cache is 60 seconds
@@ -687,6 +761,12 @@ const CacheManager = (() => {
             return;
         }
 
+        // Returns if the provider name is invalid
+        if (!isValidProvider(name)) {
+            console.warn(`Invalid provider name: ${name}`);
+            return;
+        }
+
         try {
             const key = UrlHelpers.normalizeUrl(url);
 
@@ -719,6 +799,12 @@ const CacheManager = (() => {
         // Returns if the processing caches are invalid
         if (!processingCaches || typeof processingCaches !== 'object') {
             console.warn('processingCaches is not defined or not an object');
+            return [];
+        }
+
+        // Returns if the provider name is invalid
+        if (!isValidProvider(name)) {
+            console.warn(`Invalid provider name: ${name}`);
             return [];
         }
 
