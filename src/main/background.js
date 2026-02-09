@@ -845,7 +845,7 @@
             // Checks if the tab ID is valid
             if (typeof tabId !== 'number' || !Number.isInteger(tabId) || tabId < 0) {
                 console.warn('Invalid or missing tab ID');
-                return;
+                return false;
             }
 
             const resultOrigins = getResultOrigins(tabId);
@@ -862,13 +862,13 @@
                 // Checks if the tab still exists
                 if (browserAPI.runtime.lastError || !tab) {
                     console.warn(`Tab ${tabId} no longer exists`);
-                    return;
+                    return false;
                 }
 
                 // Checks if the tab or tab.url is undefined
                 if (tab?.url === undefined) {
                     console.debug(`tabs.get(${tabId}) failed '${browserAPI.runtime.lastError?.message}'; bailing out.`);
-                    return;
+                    return false;
                 }
 
                 // Sends a PONG message to the content script to update the blocked counter
