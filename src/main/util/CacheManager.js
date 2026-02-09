@@ -726,6 +726,12 @@ const CacheManager = (() => {
             return;
         }
 
+        // Returns if the tabId is invalid
+        if (!Number.isInteger(tabId) || tabId < 0) {
+            console.warn('Invalid tabId provided: ', tabId);
+            return;
+        }
+
         try {
             const key = UrlHelpers.normalizeUrl(url);
             const expTime = Date.now() + 60 * 1000; // Expiration for processing cache is 60 seconds
@@ -808,6 +814,12 @@ const CacheManager = (() => {
             return [];
         }
 
+        // Returns if the tabId is invalid
+        if (!Number.isInteger(tabId) || tabId < 0) {
+            console.warn('Invalid tabId provided: ', tabId);
+            return [];
+        }
+
         const results = [];
         const map = processingCaches[name];
 
@@ -843,6 +855,12 @@ const CacheManager = (() => {
         // Returns if the processing caches are invalid
         if (!processingCaches || typeof processingCaches !== 'object') {
             console.warn('processingCaches is not defined or not an object');
+            return;
+        }
+
+        // Returns if the tabId is invalid
+        if (!Number.isInteger(tabId) || tabId < 0) {
+            console.warn('Invalid tabId provided: ', tabId);
             return;
         }
 
