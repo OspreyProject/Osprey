@@ -124,13 +124,13 @@ const CacheManager = (() => {
      * Update the caches that use localStorage (allowed and blocked caches).
      */
     const updateLocalStorage = () => {
-        // Checks if the allowed caches are valid
+        // Returns if the allowed caches are invalid
         if (!allowedCaches || typeof allowedCaches !== 'object') {
             console.warn('allowedCache is not defined or not an object');
             return;
         }
 
-        // Checks if the blocked caches are valid
+        // Returns if the blocked caches are invalid
         if (!blockedCaches || typeof blockedCaches !== 'object') {
             console.warn('blockedCache is not defined or not an object');
             return;
@@ -168,7 +168,7 @@ const CacheManager = (() => {
      * Update the caches that use sessionStorage (processing caches).
      */
     const updateSessionStorage = () => {
-        // Checks if the processing cache is valid
+        // Returns if the processing caches are invalid
         if (!processingCaches || typeof processingCaches !== 'object') {
             console.warn('processingCache is not defined or not an object');
             return;
@@ -230,7 +230,7 @@ const CacheManager = (() => {
      * Clears all allowed caches.
      */
     const clearAllowedCache = () => {
-        // Returns if the allowed cache is not defined
+        // Returns if the allowed caches are invalid
         if (!allowedCaches || typeof allowedCaches !== 'object') {
             console.warn('allowedCache is not defined or not an object');
             return;
@@ -248,7 +248,7 @@ const CacheManager = (() => {
      * Clears all blocked caches.
      */
     const clearBlockedCache = () => {
-        // Returns if the blocked cache is not defined
+        // Returns if the blocked cache is invalid
         if (!blockedCaches || typeof blockedCaches !== 'object') {
             console.warn('blockedCache is not defined or not an object');
             return;
@@ -266,7 +266,7 @@ const CacheManager = (() => {
      * Clears all processing caches.
      */
     const clearProcessingCache = () => {
-        // Checks if the processing cache is valid
+        // Returns if the processing caches are invalid
         if (!processingCaches || typeof processingCaches !== 'object') {
             console.warn('processingCache is not defined or not an object');
             return;
@@ -288,7 +288,7 @@ const CacheManager = (() => {
      * @returns {boolean} - Returns true if the URL is in the allowed cache and not expired, false otherwise.
      */
     const isUrlInAllowedCache = (url, name) => {
-        // Returns if the allowed cache is not defined.
+        // Returns if the allowed caches are invalid
         if (!allowedCaches || typeof allowedCaches !== 'object') {
             console.warn('allowedCache is not defined or not an object');
             return false;
@@ -327,7 +327,7 @@ const CacheManager = (() => {
      * @returns {boolean} - Returns true if the string is in the allowed cache and not expired, false otherwise.
      */
     const isStringInAllowedCache = (str, name) => {
-        // Returns if the allowed cache is not defined.
+        // Returns if the allowed caches are invalid
         if (!allowedCaches || typeof allowedCaches !== 'object') {
             console.warn('allowedCache is not defined or not an object');
             return false;
@@ -357,7 +357,7 @@ const CacheManager = (() => {
      * @returns {boolean} - Returns true if the string is in the allowed cache and not expired, false otherwise.
      */
     const isPatternInAllowedCache = (str, name) => {
-        // Returns if the allowed cache is not defined.
+        // Returns if the allowed caches are invalid
         if (!allowedCaches || typeof allowedCaches !== 'object') {
             console.warn('allowedCache is not defined or not an object');
             return false;
@@ -396,7 +396,7 @@ const CacheManager = (() => {
      * @param name {string} - The name of the provider (e.g., "precisionSec").
      */
     const addUrlToAllowedCache = (url, name) => {
-        // Returns if the allowed cache is not defined.
+        // Returns if the allowed caches are invalid
         if (!allowedCaches || typeof allowedCaches !== 'object') {
             console.warn('allowedCache is not defined or not an object');
             return;
@@ -430,7 +430,7 @@ const CacheManager = (() => {
      * @param name {string} - The name of the cache (e.g., "precisionSec", "global").
      */
     const addStringToAllowedCache = (str, name) => {
-        // Returns if the allowed cache is not defined.
+        // Returns if the allowed caches are invalid
         if (!allowedCaches || typeof allowedCaches !== 'object') {
             console.warn('allowedCache is not defined or not an object');
             return;
@@ -464,7 +464,7 @@ const CacheManager = (() => {
      * @returns {boolean} - Returns true if the URL is in the allowed cache and not expired, false otherwise.
      */
     const isUrlInBlockedCache = (url, name) => {
-        // Returns if the blocked cache is not defined.
+        // Returns if the blocked caches are invalid
         if (!blockedCaches || typeof blockedCaches !== 'object') {
             console.warn('blockedCache is not defined or not an object');
             return false;
@@ -501,7 +501,7 @@ const CacheManager = (() => {
      * @param resultType {string} - The resultType of the URL (e.g., "malicious", "phishing").
      */
     const addUrlToBlockedCache = (url, name, resultType) => {
-        // Returns if the blocked cache is not defined.
+        // Returns if the blocked caches are invalid
         if (!blockedCaches || typeof blockedCaches !== 'object') {
             console.warn('blockedCache is not defined or not an object');
             return;
@@ -537,7 +537,7 @@ const CacheManager = (() => {
      * @returns {*|null} - Returns the result type (e.g., "Malicious", "Phishing") if found and not expired, null otherwise.
      */
     const getBlockedResultType = (url, name) => {
-        // Returns if the blocked cache is not defined.
+        // Returns if the blocked caches are invalid
         if (!blockedCaches || typeof blockedCaches !== 'object') {
             console.warn('blockedCache is not defined or not an object');
             return null;
@@ -573,7 +573,7 @@ const CacheManager = (() => {
      * @param name {string} - The name of the provider (e.g., "precisionSec").
      */
     const removeUrlFromBlockedCache = (url, name) => {
-        // Returns if the blocked cache is not defined.
+        // Returns if the blocked caches are invalid
         if (!blockedCaches || typeof blockedCaches !== 'object') {
             console.warn('blockedCache is not defined or not an object');
             return;
@@ -607,7 +607,7 @@ const CacheManager = (() => {
      * @returns {boolean} - Returns true if the URL is in the processing cache and not expired, false otherwise.
      */
     const isUrlInProcessingCache = (url, name) => {
-        // Checks if the processing cache is valid
+        // Returns if the processing caches are invalid
         if (!processingCaches || typeof processingCaches !== 'object') {
             console.warn('processingCaches is not defined or not an object');
             return false;
@@ -646,7 +646,7 @@ const CacheManager = (() => {
      * @param {number} tabId - The ID of the tab associated with this URL.
      */
     const addUrlToProcessingCache = (url, name, tabId) => {
-        // Checks if the processing cache is valid
+        // Returns if the processing caches are invalid
         if (!processingCaches || typeof processingCaches !== 'object') {
             console.warn('processingCaches is not defined or not an object');
             return;
@@ -681,7 +681,7 @@ const CacheManager = (() => {
      * @param name {string} - The name of the provider (e.g., "precisionSec").
      */
     const removeUrlFromProcessingCache = (url, name) => {
-        // Checks if the processing cache is valid
+        // Returns if the processing caches are invalid
         if (!processingCaches || typeof processingCaches !== 'object') {
             console.warn('processingCaches is not defined or not an object');
             return;
@@ -716,7 +716,7 @@ const CacheManager = (() => {
      * @returns {string[]} - An array of keys (normalized URLs or strings) that match the criteria.
      */
     const getKeysByTabId = (name, tabId) => {
-        // Checks if the processing cache is valid
+        // Returns if the processing caches are invalid
         if (!processingCaches || typeof processingCaches !== 'object') {
             console.warn('processingCaches is not defined or not an object');
             return [];
@@ -754,7 +754,7 @@ const CacheManager = (() => {
      * @param tabId - The ID of the tab whose entries should be removed.
      */
     const removeKeysByTabId = tabId => {
-        // Checks if the processing cache is valid
+        // Returns if the processing caches are invalid
         if (!processingCaches || typeof processingCaches !== 'object') {
             console.warn('processingCaches is not defined or not an object');
             return;
