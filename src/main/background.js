@@ -1000,21 +1000,21 @@
                 }
 
                 // Checks if the message has a blocked URL
-                if (!message.blockedUrl) {
+                if (!Object.hasOwn(message, 'blockedUrl') || !message.blockedUrl) {
                     console.debug(`No blocked URL was found; sending to new tab page.`);
                     sendToNewTabPage(tabId);
                     return;
                 }
 
                 // Checks if the message has a continue URL
-                if (!message.continueUrl) {
+                if (!Object.hasOwn(message, 'continueUrl') || !message.continueUrl) {
                     console.debug(`No continue URL was found; sending to new tab page.`);
                     sendToNewTabPage(tabId);
                     return;
                 }
 
                 // Checks if the message has an origin
-                if (!message.origin) {
+                if (!Object.hasOwn(message, 'origin') || !message.origin) {
                     console.debug(`No origin was found; sending to new tab page.`);
                     sendToNewTabPage(tabId);
                     return;
@@ -1109,14 +1109,14 @@
                 break;
 
             case Messages.REPORT_WEBSITE: {
-                // Ignores blank report URLs
-                if (message.reportUrl === null || message.reportUrl === "") {
+                // Ignores invalid report URLs
+                if (!Object.hasOwn(message, 'reportUrl') || !message.reportUrl || message.reportUrl === "") {
                     console.debug(`Report URL is blank.`);
                     break;
                 }
 
                 // Checks if the message has an origin
-                if (!message.origin) {
+                if (!Object.hasOwn(message, 'origin') || !message.origin) {
                     console.debug(`No origin was found; doing nothing.`);
                     break;
                 }
@@ -1157,20 +1157,20 @@
                 }
 
                 // Ignores blank blocked URLs
-                if (message.blockedUrl === null || message.blockedUrl === "") {
+                if (!Object.hasOwn(message, 'blockedUrl') || !message.blockedUrl || message.blockedUrl === "") {
                     console.debug(`Blocked URL is blank.`);
                     break;
                 }
 
                 // Checks if the message has a continue URL
-                if (!message.continueUrl) {
+                if (!Object.hasOwn(message, 'continueUrl') || !message.continueUrl) {
                     console.debug(`No continue URL was found; sending to new tab page.`);
                     sendToNewTabPage(tabId);
                     return;
                 }
 
                 // Checks if the message has an origin
-                if (!message.origin) {
+                if (!Object.hasOwn(message, 'origin') || !message.origin) {
                     console.debug(`No origin was found; sending to the new tab page.`);
                     sendToNewTabPage(tabId);
                     break;
