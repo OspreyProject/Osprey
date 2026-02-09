@@ -1048,16 +1048,16 @@
                     return;
                 }
 
-                // Redirects to the new tab page if the continue URL is not a valid HTTP(S) URL
-                if (!validProtocols.has(continueUrlObject.protocol.toLowerCase())) {
-                    console.debug(`Invalid protocol in continue URL: ${message.continueUrl}; sending to new tab page.`);
+                // Verify continueUrl matches blockedUrl origin
+                if (blockedUrlObject.origin !== continueUrlObject.origin) {
+                    console.warn(`Continue URL origin mismatch: ${continueUrlObject.origin} vs ${blockedUrlObject.origin}`);
                     sendToNewTabPage(tabId);
                     return;
                 }
 
-                // Verify continueUrl matches blockedUrl origin
-                if (blockedUrlObject.origin !== continueUrlObject.origin) {
-                    console.warn(`Continue URL origin mismatch: ${continueUrlObject.origin} vs ${blockedUrlObject.origin}`);
+                // Redirects to the new tab page if the continue URL is not a valid HTTP(S) URL
+                if (!validProtocols.has(continueUrlObject.protocol.toLowerCase())) {
+                    console.debug(`Invalid protocol in continue URL: ${message.continueUrl}; sending to new tab page.`);
                     sendToNewTabPage(tabId);
                     return;
                 }
