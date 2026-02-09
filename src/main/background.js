@@ -836,7 +836,14 @@
         }
 
         if (message.messageType === Messages.BLOCKED_COUNTER_PING && sender.tab && sender.tab.id !== null) {
-            const tabId = sender.tab.id;
+            const tabId = sender.tab?.id;
+
+            // Checks if the tab ID is valid
+            if (typeof tabId !== 'number' || !Number.isInteger(tabId) || tabId < 0) {
+                console.warn('Invalid or missing tab ID');
+                return;
+            }
+
             const resultOrigins = getResultOrigins(tabId);
             const fullCount = (Array.isArray(resultOrigins) ? resultOrigins.length : 0) + 1;
             const othersCount = Array.isArray(resultOrigins) ? resultOrigins.length : 0;
@@ -981,7 +988,14 @@
             }
         }
 
-        const tabId = sender.tab ? sender.tab.id : null;
+        const tabId = sender.tab?.id;
+
+        // Checks if the tab ID is valid
+        if (typeof tabId !== 'number' || !Number.isInteger(tabId) || tabId < 0) {
+            console.warn('Invalid or missing tab ID');
+            return;
+        }
+
         const redirectDelay = 200;
 
         switch (message.messageType) {
