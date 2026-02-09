@@ -458,12 +458,16 @@ class DNSMessage {
      * @returns {{name: string|string, off: number|*}} - The domain name and the new offset.
      */
     static readName(array, state) {
+        const maxJumps = 50;
+        const maxLabels = 127;
+
         let off = state.off;
         const labels = [];
 
         let jumped = false;
         let jumpBack = -1;
-        let steps = 0;
+        let jumps = 0;
+        let labelCount = 0;
 
         while (true) {
             // Checks if the offset is within bounds
@@ -487,11 +491,10 @@ class DNSMessage {
                 }
 
                 off = ptr;
-                steps++;
+                jumps++;
 
-                // Prevent excessively many jumps
-                const maxSteps = 50;
-                if (steps > maxSteps) {
+                // Prevents infinite loops in case of malformed messages
+                if (jumps > maxJumps) {
                     throw new Error("DNS name compression loop suspected.");
                 }
                 continue;
@@ -503,6 +506,11 @@ class DNSMessage {
                 break;
             }
 
+            // DNS label length limit is 63
+            if (len > 63) {
+                throw new Error("Invalid DNS label length.");
+            }
+
             off += 1;
 
             // Checks if the label length exceeds the array bounds
@@ -510,25 +518,18 @@ class DNSMessage {
                 throw new Error("Truncated DNS label.");
             }
 
-            const labelBytes = array.subarray(off, off + len);
-            const label = String.fromCodePoint(...labelBytes);
-
-            labels.push(label);
-
+            labels.push(String.fromCodePoint(...array.subarray(off, off + len)));
             off += len;
-            steps++;
+            labelCount++;
 
-            // Prevents excessively long names
-            const maxSteps = 200;
-            if (steps > maxSteps) {
+            // Prevents excessive label counts in case of malformed messages
+            if (labelCount > maxLabels) {
                 throw new Error("DNS name too long / malformed.");
             }
         }
 
-        const name = labels.length ? labels.join(".") : ".";
-
         return {
-            name,
+            name: labels.length ? labels.join(".") : ".",
             off: jumped ? jumpBack : off
         };
     }
