@@ -395,6 +395,23 @@ const Validate = (() => {
     };
 
     /**
+     * Requires value to be an object, throws ValidationError otherwise.
+     *
+     * @param {*} value - The value to check.
+     * @param {string} [message] - Custom error message.
+     * @returns {*} - The validated value.
+     * @throws {ValidationError} - If validation fails.
+     */
+    const requireObject = (value, message) => {
+        if (!isPlainObject(value)) {
+            const msg = message || `Value must be a plain object, got: ${value}`;
+            console.warn(msg);
+            throw new ValidationError(msg);
+        }
+        return value;
+    };
+
+    /**
      * Requires URL string to be valid and have HTTP(S) protocol, throws ValidationError otherwise.
      *
      * @param {string} urlString - The URL string to check.
@@ -416,7 +433,7 @@ const Validate = (() => {
     /**
      * Requires URL string to be parseable, throws ValidationError otherwise.
      *
-     * @param {string} urlString - The URL string to check.
+     * @param {*} urlString - The URL string to check.
      * @param {string} [message] - Custom error message.
      * @returns {URL} - The parsed URL object.
      * @throws {ValidationError} - If validation fails.
@@ -543,6 +560,7 @@ const Validate = (() => {
         requireValidHttpUrl,
         requireValidUrl,
         requireProperty,
+        requireObject,
         requireString,
         requireArray,
         requireBoolean,

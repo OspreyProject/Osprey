@@ -94,14 +94,25 @@ const UrlHelpers = (() => {
      * @returns {string} - The full URL for the block page.
      */
     const getBlockPageUrl = (protectionResult, continueUrl) => {
-        // Checks if the protection result is valid
-        if (!protectionResult || typeof protectionResult !== 'object') {
-            throw new Error('Invalid protection result');
-        }
+        try {
+            // parameters
+            Validate.requireNotNull(protectionResult);
+            Validate.requireObject(protectionResult);
+            Validate.requireNotNull(continueUrl);
 
-        // Checks if the protection result's properties are valid
-        if (!protectionResult.url || !protectionResult.origin || !protectionResult.resultType) {
-            throw new Error('Missing required protection result properties');
+            // protectionResult.url
+            Validate.requireStringProperty(protectionResult, 'url');
+            Validate.requireValidUrl(protectionResult.url);
+
+            // protectionResult.origin
+            Validate.requireStringProperty(protectionResult, 'origin');
+            Validate.requireValidOrigin(protectionResult.origin, ProtectionResult.Origin);
+
+            // protectionResult.resultType
+            Validate.requireStringProperty(protectionResult, 'resultType');
+            Validate.requireString(protectionResult.resultType);
+        } catch {
+            return "";
         }
 
         // Parses the protection result URL object
@@ -148,6 +159,12 @@ const UrlHelpers = (() => {
      * @returns {boolean} - True if the hostname is valid, false otherwise.
      */
     const isValidHostname = hostname => {
+        try {
+            Validate.requireString(hostname);
+        } catch {
+            return false;
+        }
+
         if (!/^(?!-)[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(hostname)) {
             return false;
         }
@@ -177,11 +194,7 @@ const UrlHelpers = (() => {
         if (labels.some(label => label.length === 0 || label.length > 63)) {
             return false;
         }
-
-        if (labels.some(label => !/^[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?$/.test(label))) {
-            return false;
-        }
-        return true;
+        return !labels.some(label => !/^[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?$/.test(label));
     };
 
     /**
@@ -252,7 +265,7 @@ const UrlHelpers = (() => {
     /**
      * Checks if a hostname is locally hosted.
      *
-     * @param hostname - The hostname to check.
+     * @param {string} hostname - The hostname to check.
      * @returns {boolean|boolean} - If a hostname is locally hosted.
      */
     const isLocalHostname = hostname => {
@@ -291,7 +304,7 @@ const UrlHelpers = (() => {
     /**
      * Checks if an IP address is private/locally hosted.
      *
-     * @param ip - The IP address to check.
+     * @param {string} ip - The IP address to check.
      * @returns {boolean|boolean|boolean} - If the IP address is private/locally hosted.
      */
     const isPrivateIP = ip => {
@@ -417,6 +430,12 @@ const UrlHelpers = (() => {
      * @returns {string|string} - The normalized URL as a string.
      */
     const normalizeUrl = url => {
+        try {
+            Validate.requireNotNull(url);
+        } catch {
+            return "";
+        }
+
         const u = typeof url === "string" ? new URL(url) : url;
 
         // Removes trailing dots from the hostname
@@ -435,11 +454,14 @@ const UrlHelpers = (() => {
      * @return {string} - The base64url encoded DNS query.
      */
     const encodeDNSQuery = (domain, type = 1) => {
-        if (typeof domain !== 'string') {
-            throw new TypeError('domain must be a string');
+        try {
+            Validate.requireString(domain);
+            Validate.requireInteger(type);
+        } catch {
+            return '';
         }
 
-        if (!Number.isInteger(type) || type < 0 || type > 65535) {
+        if (type < 0 || type > 65535) {
             throw new TypeError('type must be a valid DNS record type (0-65535)');
         }
 
@@ -505,6 +527,13 @@ const UrlHelpers = (() => {
      * @returns {string|string} - The sanitized string, truncated with "..." if it exceeds the maximum length.
      */
     const sanitizeForDisplay = (str, maxLength = 100) => {
+        try {
+            Validate.requireString(str);
+            Validate.requireInteger(maxLength);
+        } catch {
+            return '';
+        }
+
         const sanitized = str.replaceAll(/[\u0000-\u001F\u007F-\u009F]/g, '');
         return sanitized.length > maxLength ? sanitized.substring(0, maxLength) + '...' : sanitized;
     };
