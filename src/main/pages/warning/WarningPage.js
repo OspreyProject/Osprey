@@ -269,13 +269,18 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
 
         // Listens for PONG messages to update the reported by count
         browserAPI.runtime.onMessage.addListener(message => {
-            if (!message || typeof message.messageType !== 'string' || typeof message.count !== 'number' || !Array.isArray(message.systems)) {
-                console.warn(`Received invalid message: ${JSON.stringify(message)}`);
+            // Early exit for messages we don't care about
+            if (!message || message.messageType !== Messages.BLOCKED_COUNTER_PONG) {
+                return;
+            }
+
+            // Validate required properties for PONG messages
+            if (typeof message.count !== 'number' || !Array.isArray(message.systems)) {
                 return;
             }
 
             if (domElements.reportedBy) {
-                if (message.messageType === Messages.BLOCKED_COUNTER_PONG && message.count > 0) {
+                if (message.count > 0) {
                     let othersText = LangUtil.REPORTED_BY_OTHERS.replace("___", message.count.toString());
 
                     // Sets the reported by text with the count of other systems
@@ -290,7 +295,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
                     const alsoReportedBy = LangUtil.REPORTED_BY_ALSO;
                     const wrappedTitle = wrapSystemNamesText(`${alsoReportedBy}${message.systems.join(', ')}`);
                     domElements.reportedBy.title = `${wrappedTitle}`;
-                } else if (message.messageType === Messages.BLOCKED_COUNTER_PONG) {
+                } else {
                     // If there are no "others", revert to base text & clear tooltip
                     domElements.reportedBy.textContent = reportedByText;
                     domElements.reportedBy.title = "";
