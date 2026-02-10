@@ -467,7 +467,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
 
                 // Converts URL objects to strings in additionalData
                 for (const key in message) {
-                    if (message[key] instanceof URL) {
+                    if (Object.hasOwn(message, key) && message[key] instanceof URL) {
                         message[key] = message[key].toString();
                     }
                 }

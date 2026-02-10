@@ -223,7 +223,6 @@ const CacheManager = (() => {
      * Clears all allowed caches.
      */
     const clearAllowedCache = () => {
-        // Clears all allowed caches
         for (const cache of Object.values(allowedCaches)) {
             cache.clear();
         }
@@ -235,7 +234,6 @@ const CacheManager = (() => {
      * Clears all blocked caches.
      */
     const clearBlockedCache = () => {
-        // Clears all blocked caches
         for (const cache of Object.values(blockedCaches)) {
             cache.clear();
         }
@@ -247,7 +245,6 @@ const CacheManager = (() => {
      * Clears all processing caches.
      */
     const clearProcessingCache = () => {
-        // Clears all processing caches
         for (const cache of Object.values(processingCaches)) {
             cache.clear();
         }
