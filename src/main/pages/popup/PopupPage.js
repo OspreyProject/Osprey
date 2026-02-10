@@ -212,9 +212,13 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
         }
 
         const updates = [];
-
-        // Gets cached DOM elements or fetches them if not cached
         const elements = getSystemElements(system);
+
+        try {
+            Validate.requireObject(elements);
+        } catch {
+            return;
+        }
 
         updates.push(() => {
             if (elements.label) {
@@ -283,28 +287,17 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
                 return;
             }
 
-            // Validates name before sending the message
-            if (!system.name) {
-                console.error(`No name defined for system with origin ${system.origin}; cannot send toggle message.`);
+            const currentState = settings[system.name];
+
+            try {
+                Validate.requireBoolean(currentState);
+            } catch {
                 return;
             }
 
-            const currentState = settings[system.name];
             const newState = !currentState;
 
             Settings.set({[system.name]: newState}, () => {
-                // Validates messageType before sending the message
-                if (!system.messageType) {
-                    console.error(`No messageType defined for ${system.name}; cannot send toggle message.`);
-                    return;
-                }
-
-                // Validates origin before sending the message
-                if (!system.origin) {
-                    console.error(`No origin defined for ${system.name}; cannot send toggle message.`);
-                    return;
-                }
-
                 updateProtectionStatusUI(system, newState);
 
                 browserAPI.runtime.sendMessage({
@@ -324,12 +317,6 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
     const reset = () => {
         // Removes click handlers from all switches
         for (const system of securitySystems) {
-            // Validates name before sending the message
-            if (!system.name) {
-                console.error(`No name defined for system with origin ${system.origin}; cannot remove click handler.`);
-                continue;
-            }
-
             const elements = systemElements[system.name];
 
             if (elements?.switchElement) {
@@ -428,6 +415,12 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
         for (const system of securitySystems) {
             const elements = getSystemElements(system);
 
+            try {
+                Validate.requireObject(elements);
+            } catch {
+                continue;
+            }
+
             if (elements.switchElement) {
                 elements.switchElement.onclick = () => {
                     Settings.get(settings => {
@@ -460,13 +453,14 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
             }
 
             for (const system of securitySystems) {
-                // Validates name before sending the message
-                if (!system.name) {
-                    console.error(`No name defined for system with origin ${system.origin}; cannot apply settings.`);
+                const isEnabled = settings[system.name];
+
+                try {
+                    Validate.requireBoolean(isEnabled);
+                } catch {
                     continue;
                 }
 
-                const isEnabled = settings[system.name];
                 updateProtectionStatusUI(system, isEnabled);
             }
         });
@@ -474,9 +468,13 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
         // Updates the version display
         if (domElements.version) {
             const {version} = manifest;
-            domElements.version.textContent += version;
-        } else {
-            console.warn("'version' element not found in the PopupPage DOM.");
+
+            try {
+                Validate.requireString(version);
+                domElements.version.textContent += version;
+            } catch {
+                return;
+            }
         }
 
         // Get all elements with the class 'page'
