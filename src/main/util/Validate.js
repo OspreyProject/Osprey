@@ -44,16 +44,6 @@ const Validate = (() => {
     };
 
     /**
-     * Checks if a value is a string.
-     *
-     * @param {*} value - The value to check.
-     * @returns {boolean} - True if string, false otherwise.
-     */
-    const isString = value => {
-        return isNotNull(value) && typeof value === 'string';
-    };
-
-    /**
      * Checks if the value is a non-blank string.
      *
      * @param {*} value - The value to check.
@@ -106,7 +96,7 @@ const Validate = (() => {
      * @returns {boolean} - True if protocol is valid, false otherwise.
      */
     const hasValidProtocol = (urlObject, validProtocols) => {
-        if (!isNotNull(urlObject) || !isString(urlObject.protocol)) {
+        if (!isNotNull(urlObject) || typeof urlObject.protocol !== 'string') {
             return false;
         }
         return validProtocols.has(urlObject.protocol.toLowerCase());
