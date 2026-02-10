@@ -27,16 +27,14 @@ class ProtectionResult {
      * @param {number} resultOrigin - The origin of the result (e.g., from endpoint or known top website).
      */
     constructor(urlChecked, resultType, resultOrigin) {
-        if (typeof urlChecked !== 'string' || !urlChecked) {
-            throw new TypeError('urlChecked must be a non-empty string');
-        }
-
-        if (typeof resultType !== 'number' || !Object.values(ProtectionResult.ResultType).includes(resultType)) {
-            throw new TypeError('resultType must be a valid ResultType');
-        }
-
-        if (typeof resultOrigin !== 'number' || !Object.values(ProtectionResult.Origin).includes(resultOrigin)) {
-            throw new TypeError('resultOrigin must be a valid Origin');
+        try {
+            Validate.requireString(urlChecked);
+            Validate.requireInteger(resultType);
+            Validate.requireInteger(resultOrigin);
+            Validate.requireValidOrigin(resultOrigin);
+            Validate.requireValidResultType(resultType);
+        } catch {
+            return;
         }
 
         this.url = urlChecked;

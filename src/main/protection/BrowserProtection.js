@@ -62,6 +62,13 @@ const BrowserProtection = (() => {
      * @param {string} reason - The reason for abandoning the requests.
      */
     const abandonPendingRequests = (tabId, reason) => {
+        try {
+            Validate.requireNonNegativeInteger(tabId);
+            Validate.requireString(reason);
+        } catch {
+            return;
+        }
+
         if (tabAbortControllers.has(tabId)) {
             tabAbortControllers.get(tabId).abort(reason); // Abort all pending requests for the tab
             tabAbortControllers.set(tabId, new AbortController()); // Create a new controller for future requests
@@ -76,9 +83,11 @@ const BrowserProtection = (() => {
      * @param {function} callback - The callback function to handle the result.
      */
     const checkIfUrlIsMalicious = (tabId, urlString, callback) => {
-        // Returns early if any of the parameters are missing
-        if (!tabId || !urlString || !callback) {
-            console.warn(`Missing parameters: tabId=${tabId}, url=${urlString}, callback=${callback}`);
+        try {
+            Validate.requireNonNegativeInteger(tabId);
+            Validate.requireString(urlString);
+            Validate.requireFunction(callback);
+        } catch {
             return;
         }
 
@@ -129,6 +138,14 @@ const BrowserProtection = (() => {
          * @param {Object} settings - The settings object containing user preferences.
          */
         const checkUrlWithAdGuardSecurity = async settings => {
+            try {
+                Validate.requireObject(settings);
+                Validate.requireProperty(settings, 'adGuardSecurityEnabled');
+                Validate.requireBoolean(settings.adGuardSecurityEnabled);
+            } catch {
+                return;
+            }
+
             // Checks if the provider is enabled
             if (!settings.adGuardSecurityEnabled) {
                 return;
@@ -227,6 +244,14 @@ const BrowserProtection = (() => {
          * @param {Object} settings - The settings object containing user preferences.
          */
         const checkUrlWithAdGuardFamily = async settings => {
+            try {
+                Validate.requireObject(settings);
+                Validate.requireProperty(settings, 'adGuardFamilyEnabled');
+                Validate.requireBoolean(settings.adGuardFamilyEnabled);
+            } catch {
+                return;
+            }
+
             // Checks if the provider is enabled
             if (!settings.adGuardFamilyEnabled) {
                 return;
@@ -333,6 +358,14 @@ const BrowserProtection = (() => {
          * @param {Object} settings - The settings object containing user preferences.
          */
         const checkUrlWithAlphaMountain = async settings => {
+            try {
+                Validate.requireObject(settings);
+                Validate.requireProperty(settings, 'alphaMountainEnabled');
+                Validate.requireBoolean(settings.alphaMountainEnabled);
+            } catch {
+                return;
+            }
+
             // Checks if the provider is enabled
             if (!settings.alphaMountainEnabled) {
                 return;
@@ -457,6 +490,14 @@ const BrowserProtection = (() => {
          * @param {Object} settings - The settings object containing user preferences.
          */
         const checkUrlWithPrecisionSec = async settings => {
+            try {
+                Validate.requireObject(settings);
+                Validate.requireProperty(settings, 'precisionSecEnabled');
+                Validate.requireBoolean(settings.precisionSecEnabled);
+            } catch {
+                return;
+            }
+
             // Checks if the provider is enabled
             if (!settings.precisionSecEnabled) {
                 return;
@@ -543,6 +584,14 @@ const BrowserProtection = (() => {
          * @param {Object} settings - The settings object containing user preferences.
          */
         const checkUrlWithCERTEE = async settings => {
+            try {
+                Validate.requireObject(settings);
+                Validate.requireProperty(settings, 'certEEEnabled');
+                Validate.requireBoolean(settings.certEEEnabled);
+            } catch {
+                return;
+            }
+
             // Checks if the provider is enabled
             if (!settings.certEEEnabled) {
                 return;
@@ -641,6 +690,14 @@ const BrowserProtection = (() => {
          * @param {Object} settings - The settings object containing user preferences.
          */
         const checkUrlWithCleanBrowsingSecurity = async settings => {
+            try {
+                Validate.requireObject(settings);
+                Validate.requireProperty(settings, 'cleanBrowsingSecurityEnabled');
+                Validate.requireBoolean(settings.cleanBrowsingSecurityEnabled);
+            } catch {
+                return;
+            }
+
             // Checks if the provider is enabled
             if (!settings.cleanBrowsingSecurityEnabled) {
                 return;
@@ -735,6 +792,14 @@ const BrowserProtection = (() => {
          * @param {Object} settings - The settings object containing user preferences.
          */
         const checkUrlWithCleanBrowsingFamily = async settings => {
+            try {
+                Validate.requireObject(settings);
+                Validate.requireProperty(settings, 'cleanBrowsingFamilyEnabled');
+                Validate.requireBoolean(settings.cleanBrowsingFamilyEnabled);
+            } catch {
+                return;
+            }
+
             // Checks if the provider is enabled
             if (!settings.cleanBrowsingFamilyEnabled) {
                 return;
@@ -829,6 +894,14 @@ const BrowserProtection = (() => {
          * @param {Object} settings - The settings object containing user preferences.
          */
         const checkUrlWithCloudflareSecurity = async settings => {
+            try {
+                Validate.requireObject(settings);
+                Validate.requireProperty(settings, 'cloudflareSecurityEnabled');
+                Validate.requireBoolean(settings.cloudflareSecurityEnabled);
+            } catch {
+                return;
+            }
+
             // Checks if the provider is enabled
             if (!settings.cloudflareSecurityEnabled) {
                 return;
@@ -925,6 +998,14 @@ const BrowserProtection = (() => {
          * @param {Object} settings - The settings object containing user preferences.
          */
         const checkUrlWithCloudflareFamily = async settings => {
+            try {
+                Validate.requireObject(settings);
+                Validate.requireProperty(settings, 'cloudflareFamilyEnabled');
+                Validate.requireBoolean(settings.cloudflareFamilyEnabled);
+            } catch {
+                return;
+            }
+
             // Checks if the provider is enabled
             if (!settings.cloudflareFamilyEnabled) {
                 return;
@@ -1021,6 +1102,14 @@ const BrowserProtection = (() => {
          * @param {Object} settings - The settings object containing user preferences.
          */
         const checkUrlWithControlDSecurity = async settings => {
+            try {
+                Validate.requireObject(settings);
+                Validate.requireProperty(settings, 'controlDSecurityEnabled');
+                Validate.requireBoolean(settings.controlDSecurityEnabled);
+            } catch {
+                return;
+            }
+
             // Checks if the provider is enabled
             if (!settings.controlDSecurityEnabled) {
                 return;
@@ -1119,6 +1208,14 @@ const BrowserProtection = (() => {
          * @param {Object} settings - The settings object containing user preferences.
          */
         const checkUrlWithControlDFamily = async settings => {
+            try {
+                Validate.requireObject(settings);
+                Validate.requireProperty(settings, 'controlDFamilyEnabled');
+                Validate.requireBoolean(settings.controlDFamilyEnabled);
+            } catch {
+                return;
+            }
+
             // Checks if the provider is enabled
             if (!settings.controlDFamilyEnabled) {
                 return;
@@ -1217,6 +1314,14 @@ const BrowserProtection = (() => {
          * @param {Object} settings - The settings object containing user preferences.
          */
         const checkUrlWithDNS4EUSecurity = async settings => {
+            try {
+                Validate.requireObject(settings);
+                Validate.requireProperty(settings, 'dns4EUSecurityEnabled');
+                Validate.requireBoolean(settings.dns4EUSecurityEnabled);
+            } catch {
+                return;
+            }
+
             // Checks if the provider is enabled
             if (!settings.dns4EUSecurityEnabled) {
                 return;
@@ -1315,6 +1420,14 @@ const BrowserProtection = (() => {
          * @param {Object} settings - The settings object containing user preferences.
          */
         const checkUrlWithDNS4EUFamily = async settings => {
+            try {
+                Validate.requireObject(settings);
+                Validate.requireProperty(settings, 'dns4EUFamilyEnabled');
+                Validate.requireBoolean(settings.dns4EUFamilyEnabled);
+            } catch {
+                return;
+            }
+
             // Checks if the provider is enabled
             if (!settings.dns4EUFamilyEnabled) {
                 return;
@@ -1413,6 +1526,14 @@ const BrowserProtection = (() => {
          * @param {Object} settings - The settings object containing user preferences.
          */
         const checkUrlWithSeclookup = async settings => {
+            try {
+                Validate.requireObject(settings);
+                Validate.requireProperty(settings, 'seclookupEnabled');
+                Validate.requireBoolean(settings.seclookupEnabled);
+            } catch {
+                return;
+            }
+
             // Checks if the provider is enabled
             if (!settings.seclookupEnabled) {
                 return;
@@ -1498,6 +1619,14 @@ const BrowserProtection = (() => {
          * @param {Object} settings - The settings object containing user preferences.
          */
         const checkUrlWithSwitchCH = async settings => {
+            try {
+                Validate.requireObject(settings);
+                Validate.requireProperty(settings, 'switchCHEnabled');
+                Validate.requireBoolean(settings.switchCHEnabled);
+            } catch {
+                return;
+            }
+
             // Checks if the provider is enabled
             if (!settings.switchCHEnabled) {
                 return;
@@ -1596,6 +1725,14 @@ const BrowserProtection = (() => {
          * @param {Object} settings - The settings object containing user preferences.
          */
         const checkUrlWithQuad9 = async settings => {
+            try {
+                Validate.requireObject(settings);
+                Validate.requireProperty(settings, 'quad9Enabled');
+                Validate.requireBoolean(settings.quad9Enabled);
+            } catch {
+                return;
+            }
+
             // Checks if the provider is enabled
             if (!settings.quad9Enabled) {
                 return;
@@ -1686,6 +1823,12 @@ const BrowserProtection = (() => {
 
         // Call all the check functions asynchronously
         Settings.get(settings => {
+            try {
+                Validate.requireObject(settings);
+            } catch {
+                return;
+            }
+
             // Official Partners
             checkUrlWithAdGuardSecurity(settings);
             checkUrlWithAdGuardFamily(settings);

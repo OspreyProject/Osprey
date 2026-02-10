@@ -30,14 +30,14 @@ const UrlHelpers = (() => {
      * Extracts the blocked URL (the website being reported as malicious) from the query parameters of a URL.
      *
      * @param {string} url - The URL containing the blocked website information.
-     * @returns {string|null} - The blocked URL, or null if not found.
+     * @returns {string} - The blocked URL.
      */
     const extractBlockedUrl = url => {
         try {
             return new URL(url).searchParams.get("url");
         } catch {
             console.warn(`Invalid blocked URL format: ${url}`);
-            return null;
+            return "https://unknown.com";
         }
     };
 
@@ -45,22 +45,22 @@ const UrlHelpers = (() => {
      * Extracts the continue URL (typically the same as the blocked URL) from the query parameters of a URL.
      *
      * @param {string} url - The URL containing the continue URL parameter.
-     * @returns {string|null} - The continue URL, or null if not found.
+     * @returns {string} - The continue URL.
      */
     const extractContinueUrl = url => {
         try {
             return new URL(url).searchParams.get("curl");
         } catch {
             console.warn(`Invalid continue URL format: ${url}`);
-            return null;
+            return "https://www.google.com";
         }
     };
 
     /**
      * Extracts the origin of the protection result from the query parameters of a URL.
      *
-     * @param url - The URL containing the origin information
-     * @returns {string} - The origin of the protection result
+     * @param {string} url - The URL containing the origin.
+     * @returns {string} - The origin from the URL.
      */
     const extractOrigin = url => {
         try {
@@ -89,28 +89,27 @@ const UrlHelpers = (() => {
     /**
      * Constructs the URL for the browser's block page, which shows a warning when a website is blocked.
      *
-     * @param {object} protectionResult - The result object containing details about the threat.
-     * @param {object} continueUrl - The URL to continue to if the user clicks a continue button.
+     * @param {Object} protectionResult - The result object containing details about the threat.
+     * @param {String|URL} continueUrl - The URL to continue to if the user clicks a continue button.
      * @returns {string} - The full URL for the block page.
      */
     const getBlockPageUrl = (protectionResult, continueUrl) => {
         try {
             // parameters
-            Validate.requireNotNull(protectionResult);
             Validate.requireObject(protectionResult);
-            Validate.requireNotNull(continueUrl);
+            Validate.requireValidUrl(continueUrl);
 
             // protectionResult.url
             Validate.requireStringProperty(protectionResult, 'url');
             Validate.requireValidUrl(protectionResult.url);
 
             // protectionResult.origin
-            Validate.requireStringProperty(protectionResult, 'origin');
-            Validate.requireValidOrigin(protectionResult.origin, ProtectionResult.Origin);
+            Validate.requireProperty(protectionResult, 'origin');
+            Validate.requireValidOrigin(protectionResult.origin);
 
             // protectionResult.resultType
-            Validate.requireStringProperty(protectionResult, 'resultType');
-            Validate.requireString(protectionResult.resultType);
+            Validate.requireProperty(protectionResult, 'resultType');
+            Validate.requireInteger(protectionResult.resultType);
         } catch {
             return "";
         }

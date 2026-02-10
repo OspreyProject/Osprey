@@ -35,9 +35,15 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
     /**
      * Applies visual elements based on the origin of the protection result.
      *
-     * @param originInt - The integer representing the origin of the protection result.
+     * @param {number} originInt - The integer representing the origin of the protection result.
      */
     const applyOriginVisuals = originInt => {
+        try {
+            Validate.requireValidOrigin(originInt);
+        } catch {
+            return;
+        }
+
         const systemName = ProtectionResult.FullName[originInt];
 
         // Update the visible "Reported by" label
@@ -52,10 +58,16 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
     /**
      * Wraps system names text to fit within a specified maximum line length.
      *
-     * @param text - The text to wrap, typically a comma-separated list of system names.
+     * @param {string} text - The text to wrap, typically a comma-separated list of system names.
      * @returns {string} - The wrapped text, with each line not exceeding the specified maximum length.
      */
     const wrapSystemNamesText = text => {
+        try {
+            Validate.requireString(text);
+        } catch {
+            return '';
+        }
+
         const parts = text.split(', ');
         const lines = [];
         let currentLine = '';
@@ -238,6 +250,18 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
 
         // Listens for PONG messages to update the reported by count
         browserAPI.runtime.onMessage.addListener(message => {
+            try {
+                Validate.requireObject(message);
+                Validate.requireProperty(message, 'messageType');
+                Validate.requireProperty(message, 'count');
+                Validate.requireProperty(message, 'systems');
+                Validate.requireValidMessageType(message.messageType);
+                Validate.requireInteger(message.count);
+                Validate.requireArray(message.systems);
+            } catch {
+                return;
+            }
+
             if (domElements.reportedBy) {
                 if (message.messageType === Messages.BLOCKED_COUNTER_PONG && message.count > 0) {
                     let othersText = LangUtil.REPORTED_BY_OTHERS;
@@ -408,11 +432,17 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         /**
          * Sends a message to the background script with the specified message type and additional data.
          *
-         * @param messageType - The type of message to send.
-         * @param additionalData - Additional data to include in the message.
+         * @param {string} messageType - The type of message to send, typically defined in the Messages object.
+         * @param {Object} [additionalData={}] - Optional additional data to include in the message.
          * @returns {Promise<void>} - A promise that resolves when the message is sent.
          */
         const sendMessage = async (messageType, additionalData = {}) => {
+            try {
+                Validate.requireValidMessageType(messageType);
+            } catch {
+                return;
+            }
+
             try {
                 // Creates the message object and converts URL objects to strings
                 const message = {
@@ -439,6 +469,16 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         const continueUrl = UrlHelpers.extractContinueUrl(pageUrl);
 
         Settings.get(settings => {
+            try {
+                Validate.requireObject(settings);
+                Validate.requireProperty(settings, "hideReportButton");
+                Validate.requireProperty(settings, "hideContinueButtons");
+                Validate.requireBoolean(settings.hideReportButton);
+                Validate.requireBoolean(settings.hideContinueButtons);
+            } catch {
+                return;
+            }
+
             // Adds event listener to "Report this website as safe" button
             if (domElements.reportWebsite) {
                 domElements.reportWebsite.addEventListener("click", async () => {

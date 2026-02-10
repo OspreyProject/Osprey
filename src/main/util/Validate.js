@@ -94,7 +94,7 @@ const Validate = (() => {
     /**
      * Checks if an object has a property with a non-nullish value.
      *
-     * @param {object} obj - The object to check.
+     * @param {Object} obj - The object to check.
      * @param {string} key - The property key to check.
      * @returns {boolean} - True if property exists and is not null/undefined, false otherwise.
      */
@@ -105,7 +105,7 @@ const Validate = (() => {
     /**
      * Checks if an object has a property with a non-blank string value.
      *
-     * @param {object} obj - The object to check.
+     * @param {Object} obj - The object to check.
      * @param {string} key - The property key to check.
      * @returns {boolean} - True if property exists and is a non-blank string, false otherwise.
      */
@@ -114,13 +114,12 @@ const Validate = (() => {
     };
 
     /**
-     * Attempts to parse a value as a valid origin number.
-     * Handles both string and number inputs.
+     * Parses a value that may be a string or number into an integer, if possible.
      *
      * @param {*} value - The value to parse.
      * @returns {{valid: boolean, value: number}} - Object with valid flag and parsed value.
      */
-    const parseOriginValue = value => {
+    const parseStringToInt = value => {
         if (isInteger(value)) {
             return {valid: true, value: value};
         }
@@ -140,10 +139,9 @@ const Validate = (() => {
      * Note: Requires ProtectionResult to be loaded.
      *
      * @param {number} originValue - The origin value to validate.
-     * @param {object} originEnum - The ProtectionResult.Origin enum object.
      * @returns {boolean} - True if valid origin, false otherwise.
      */
-    const isValidOrigin = (originValue, originEnum) => {
+    const isValidOrigin = (originValue) => {
         // Makes sure the originValue is a valid number and exists in the enum values
         if (!isInteger(originValue)) {
             return false;
@@ -151,7 +149,50 @@ const Validate = (() => {
 
         // Converts a potential string originValue to a number for comparison
         const parsedOrigin = Number(originValue);
-        return Object.values(originEnum).includes(parsedOrigin);
+        return Object.values(ProtectionResult.Origin).includes(parsedOrigin);
+    };
+
+    /**
+     * Checks if the result type value is valid according to ProtectionResult.ResultType.
+     * Note: Requires ProtectionResult to be loaded.
+     *
+     * @param {number} resultTypeValue - The result type value to validate.
+     * @returns {boolean} - True if valid result type, false otherwise.
+     */
+    const isValidResultType = (resultTypeValue) => {
+        // Makes sure the resultTypeValue is a valid number and exists in the enum values
+        if (!isInteger(resultTypeValue)) {
+            return false;
+        }
+
+        // Converts a potential string resultTypeValue to a number for comparison
+        const parsedResultType = Number(resultTypeValue);
+        return Object.values(ProtectionResult.ResultType).includes(parsedResultType);
+    };
+
+    /**
+     *
+     * @param messageType
+     * @returns {boolean}
+     */
+    const isValidMessageType = (messageType) => {
+        if (!isString(messageType)) {
+            return false;
+        }
+        return Object.values(Messages).includes(messageType);
+    };
+
+    /**
+     * Checks if the provider name is valid (either "all" or in the list of known providers).
+     * 
+     * @param name
+     * @returns {boolean|*}
+     */
+    const isValidProvider = (name) => {
+        if (!isString(name)) {
+            return false;
+        }
+        return name === "all" || CacheManager.providers.includes(name);
     };
 
     /**
@@ -218,7 +259,7 @@ const Validate = (() => {
     /**
      * Checks if all specified properties exist and are non-blank strings in an object.
      *
-     * @param {object} obj - The object to check.
+     * @param {Object} obj - The object to check.
      * @param {string[]} keys - Array of property keys to check.
      * @returns {boolean} - True if all properties exist and are non-blank strings, false otherwise.
      */
@@ -352,6 +393,14 @@ const Validate = (() => {
         return value;
     };
 
+    /**
+     * Requires value to be an array, throws ValidationError otherwise.
+     *
+     * @param {*} value - The value to check.
+     * @param {string} [message] - Custom error message.
+     * @returns {string} - The validated value.
+     * @throws {ValidationError} - If validation fails.
+     */
     const requireArray = (value, message) => {
         if (!Array.isArray(value)) {
             const msg = message || `Value must be an array, got: ${value}`;
@@ -486,7 +535,7 @@ const Validate = (() => {
     /**
      * Requires object to have a property with non-nullish value, throws ValidationError otherwise.
      *
-     * @param {object} obj - The object to check.
+     * @param {Object} obj - The object to check.
      * @param {string} key - The property key to check.
      * @param {string} [message] - Custom error message.
      * @returns {*} - The property value.
@@ -504,7 +553,7 @@ const Validate = (() => {
     /**
      * Requires object to have a property with non-blank string value, throws ValidationError otherwise.
      *
-     * @param {object} obj - The object to check.
+     * @param {Object} obj - The object to check.
      * @param {string} key - The property key to check.
      * @param {string} [message] - Custom error message.
      * @returns {string} - The property value.
@@ -524,13 +573,12 @@ const Validate = (() => {
      * Handles both string and number inputs.
      *
      * @param {*} value - The origin value to validate.
-     * @param {object} originEnum - The ProtectionResult.Origin enum object.
      * @param {string} [message] - Custom error message.
      * @returns {number} - The validated origin value.
      * @throws {ValidationError} - If validation fails.
      */
-    const requireValidOrigin = (value, originEnum, message) => {
-        const parsed = parseOriginValue(value);
+    const requireValidOrigin = (value, message) => {
+        const parsed = parseStringToInt(value);
 
         if (!parsed.valid) {
             const msg = message || `Origin value is not a valid number: ${value}`;
@@ -538,12 +586,71 @@ const Validate = (() => {
             throw new ValidationError(msg);
         }
 
-        if (!isValidOrigin(parsed.value, originEnum)) {
+        if (!isValidOrigin(parsed.value)) {
             const msg = message || `Invalid origin value: ${parsed.value}`;
             console.warn(msg);
             throw new ValidationError(msg);
         }
         return parsed.value;
+    };
+
+    /**
+     * Requires message type to be valid, throws ValidationError otherwise.
+     *
+     * @param {*} value - The message type value to validate.
+     * @param {string} [message] - Custom error message.
+     * @returns {number} - The validated message type value.
+     * @throws {ValidationError} - If validation fails.
+     */
+    const requireValidMessageType = (value, message) => {
+        if (!isValidMessageType(value)) {
+            const msg = message || `Invalid message type: ${value}`;
+            console.warn(msg);
+            throw new ValidationError(msg);
+        }
+        return value;
+    };
+
+    /**
+     * Requires result type value to be valid, throws ValidationError otherwise.
+     *
+     * @param {*} value - The result type value to validate.
+     * @param {string} [message] - Custom error message.
+     * @returns {number} - The validated result type value.
+     * @throws {ValidationError} - If validation fails.
+     */
+    const requireValidResultType = (value, message) => {
+        const parsed = parseStringToInt(value);
+
+        if (!parsed.valid) {
+            const msg = message || `Result type value is not a valid number: ${value}`;
+            console.warn(msg);
+            throw new ValidationError(msg);
+        }
+
+        if (!isValidResultType(parsed.value)) {
+            const msg = message || `Invalid result type value: ${parsed.value}`;
+            console.warn(msg);
+            throw new ValidationError(msg);
+        }
+        return parsed.value;
+    };
+
+    /**
+     * Requires provider name to be valid, throws ValidationError otherwise.
+     * 
+     * @param {string} name - The provider name to validate.
+     * @param {string} [message] - Custom error message.
+     * @returns {string} - The validated provider name.
+     * @throws {ValidationError} - If validation fails.
+     */
+    const requireValidProvider = (name, message) => {
+        if (!isValidProvider(name)) {
+            const msg = message || `Invalid provider name: ${name}`;
+            console.warn(msg);
+            throw new ValidationError(msg);
+        }
+        return name;
     };
 
     /**
@@ -575,8 +682,11 @@ const Validate = (() => {
         hasProperty,
         hasStringProperty,
         hasAllStringProperties,
-        parseOriginValue,
+        parseStringToInt,
         isValidOrigin,
+        isValidProvider,
+        isValidResultType,
+        isValidMessageType,
         parseUrl,
         hasValidProtocol,
         validateHttpUrl,
@@ -603,6 +713,9 @@ const Validate = (() => {
         requireBoolean,
         requireStringProperty,
         requireValidOrigin,
+        requireValidProvider,
+        requireValidResultType,
+        requireValidMessageType,
         requireEquals,
     });
 })();

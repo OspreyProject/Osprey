@@ -238,7 +238,7 @@ const StorageUtil = (() => {
     /**
      * Validates a storage key to ensure it is a non-empty string and does not contain dangerous keys.
      *
-     * @param key - The key to validate.
+     * @param {string} key - The key to validate.
      * @returns {boolean} - Returns true if the key is valid, false otherwise.
      */
     const isValidKey = (key) => {

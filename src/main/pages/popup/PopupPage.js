@@ -33,7 +33,7 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
     let domElements = {};
 
     // Security systems configuration - only defined once
-    const securitySystems = [
+    const securitySystems = Object.freeze([
         {
             origin: ProtectionResult.Origin.ADGUARD_SECURITY,
             name: "adGuardSecurityEnabled",
@@ -162,7 +162,7 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
             switchElementId: "quad9Switch",
             messageType: Messages.QUAD9_TOGGLED,
         }
-    ];
+    ]);
 
     // Cached manifest data
     const manifest = browserAPI.runtime.getManifest();
@@ -174,6 +174,18 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
      * @returns {Object} Object containing the label and switch elements
      */
     const getSystemElements = system => {
+        try {
+            Validate.requireObject(system);
+            Validate.requireProperty(system, "name");
+            Validate.requireProperty(system, "labelElementId");
+            Validate.requireProperty(system, "switchElementId");
+            Validate.requireString(system.name);
+            Validate.requireString(system.labelElementId);
+            Validate.requireString(system.switchElementId);
+        } catch {
+            return null;
+        }
+
         if (!systemElements[system.name]) {
             systemElements[system.name] = {
                 label: document.getElementById(system.labelElementId),
@@ -190,6 +202,15 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
      * @param {boolean} isOn - Whether the protection is enabled for the system.
      */
     const updateProtectionStatusUI = (system, isOn) => {
+        try {
+            Validate.requireObject(system);
+            Validate.requireBoolean(isOn);
+            Validate.requireProperty(system, "name");
+            Validate.requireString(system.name);
+        } catch {
+            return;
+        }
+
         const updates = [];
 
         // Gets cached DOM elements or fetches them if not cached
@@ -198,6 +219,14 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
         updates.push(() => {
             if (elements.label) {
                 Settings.get(settings => {
+                    try {
+                        Validate.requireObject(settings);
+                        Validate.requireProperty(settings, "lockProtectionOptions");
+                        Validate.requireBoolean(settings.lockProtectionOptions);
+                    } catch {
+                        return;
+                    }
+
                     if (settings.lockProtectionOptions) {
                         elements.label.textContent = isOn ? LangUtil.ON_LOCKED_TEXT : LangUtil.OFF_LOCKED_TEXT;
                     } else {
@@ -235,7 +264,25 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
      * @param {Object} system - The system object being toggled.
      */
     const toggleProtection = system => {
+        try {
+            Validate.requireObject(system);
+            Validate.requireProperty(system, "name");
+            Validate.requireProperty(system, "origin");
+            Validate.requireProperty(system, "messageType");
+            Validate.requireString(system.name);
+            Validate.requireInteger(system.origin);
+            Validate.requireString(system.messageType);
+        } catch {
+            return;
+        }
+
         Settings.get(settings => {
+            try {
+                Validate.requireObject(settings);
+            } catch {
+                return;
+            }
+
             // Validates name before sending the message
             if (!system.name) {
                 console.error(`No name defined for system with origin ${system.origin}; cannot send toggle message.`);
@@ -384,6 +431,14 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
             if (elements.switchElement) {
                 elements.switchElement.onclick = () => {
                     Settings.get(settings => {
+                        try {
+                            Validate.requireObject(settings);
+                            Validate.requireProperty(settings, "lockProtectionOptions");
+                            Validate.requireBoolean(settings.lockProtectionOptions);
+                        } catch {
+                            return;
+                        }
+
                         if (settings.lockProtectionOptions) {
                             console.debug("Protections are locked; cannot toggle.");
                         } else {
@@ -398,6 +453,12 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
 
         // Loads and applies settings
         Settings.get(settings => {
+            try {
+                Validate.requireObject(settings);
+            } catch {
+                return;
+            }
+
             for (const system of securitySystems) {
                 // Validates name before sending the message
                 if (!system.name) {
@@ -478,6 +539,14 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
 // Initializes when the DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
     Settings.get(settings => {
+        try {
+            Validate.requireObject(settings);
+            Validate.requireProperty(settings, "hideProtectionOptions");
+            Validate.requireBoolean(settings.hideProtectionOptions);
+        } catch {
+            return;
+        }
+
         if (settings.hideProtectionOptions) {
             globalThis.close();
         } else {

@@ -66,13 +66,10 @@ const Settings = (() => {
      * @returns {boolean} - Returns true if any values were updated, false otherwise.
      */
     const updateIfChanged = (target, source) => {
-        // Checks if the target is valid
-        if (!target || typeof target !== 'object') {
-            throw new Error('Target must be an object');
-        }
-
-        // Checks if the source is valid
-        if (!source || typeof source !== 'object') {
+        try {
+            Validate.requireObject(target);
+            Validate.requireObject(source);
+        } catch {
             return false;
         }
 
@@ -107,7 +104,7 @@ const Settings = (() => {
     /**
      * Retrieves settings from local storage and merges them with default settings.
      *
-     * @param {Function} callback - The function to call with the retrieved settings.
+     * @param {Function} [callback] - The function to call with the retrieved settings.
      */
     const get = callback => {
         StorageUtil.getFromLocalStore(settingsKey, function (storedSettings) {
@@ -129,6 +126,12 @@ const Settings = (() => {
      * @param {Function} [callback] - Optional callback to call after settings are saved.
      */
     const set = (newSettings, callback) => {
+        try {
+            Validate.requireObject(newSettings);
+        } catch {
+            return;
+        }
+
         StorageUtil.getFromLocalStore(settingsKey, function (storedSettings) {
             // Clones the default settings object
             let mergedSettings = structuredClone(defaultSettings);
@@ -145,10 +148,9 @@ const Settings = (() => {
     /**
      * Restores the default settings.
      *
-     * @param callback - Callback function that will be called after restoring the settings.
+     * @param {Function} [callback] - Optional callback to call after default settings are restored.
      */
     const restoreDefaultSettings = callback => {
-        // Saves the default settings back to local storage
         StorageUtil.getFromLocalStore(settingsKey, function () {
             StorageUtil.setToLocalStore(settingsKey, defaultSettings, callback);
         });
@@ -157,12 +159,20 @@ const Settings = (() => {
     /**
      * Validates a setting value against its default value to ensure it is of the expected type.
      *
-     * @param key - The key of the setting being validated.
-     * @param value - The value of the setting to validate.
-     * @param defaultValue - The default value of the setting, used to determine the expected type.
+     * @param {string} key - The key of the setting being validated.
+     * @param {*} value - The value of the setting to validate.
+     * @param {*} defaultValue - The default value of the setting, used to determine the expected type.
      * @returns {*} - Returns the validated value if it is of the expected type, or the default value if it is not.
      */
     const validateSettingValue = (key, value, defaultValue) => {
+        try {
+            Validate.requireString(key);
+            Validate.requireNotNull(value);
+            Validate.requireNotNull(defaultValue);
+        } catch {
+            return defaultValue;
+        }
+
         const expectedType = typeof defaultValue;
 
         // Checks if the value is of the expected type, if not, logs a warning and returns the default value
@@ -176,38 +186,52 @@ const Settings = (() => {
     /**
      * Checks if all partner settings are disabled.
      *
-     * @param settings - The settings object to check.
+     * @param {Object} settings - The settings object to check.
      * @returns {boolean} - Returns true if all partner settings are disabled, false otherwise.
      */
-    const allPartnersDisabled = settings =>
-        !settings.adGuardSecurityEnabled &&
-        !settings.adGuardFamilyEnabled &&
-        !settings.alphaMountainEnabled &&
-        !settings.precisionSecEnabled;
+    const allPartnersDisabled = settings => {
+        try {
+            Validate.requireObject(settings);
+        } catch {
+            return true;
+        }
+
+        return !settings.adGuardSecurityEnabled &&
+            !settings.adGuardFamilyEnabled &&
+            !settings.alphaMountainEnabled &&
+            !settings.precisionSecEnabled;
+    };
 
     /**
      * Checks if all security providers are disabled.
      *
-     * @param settings - The settings object to check.
+     * @param {Object} settings - The settings object to check.
      * @returns {boolean} - Returns true if all security providers are disabled, false otherwise.
      */
-    const allProvidersDisabled = settings =>
-        !settings.adGuardSecurityEnabled &&
-        !settings.adGuardFamilyEnabled &&
-        !settings.alphaMountainEnabled &&
-        !settings.precisionSecEnabled &&
-        !settings.certEEEnabled &&
-        !settings.cleanBrowsingSecurityEnabled &&
-        !settings.cleanBrowsingFamilyEnabled &&
-        !settings.cloudflareSecurityEnabled &&
-        !settings.cloudflareFamilyEnabled &&
-        !settings.controlDSecurityEnabled &&
-        !settings.controlDFamilyEnabled &&
-        !settings.dns4EUSecurityEnabled &&
-        !settings.dns4EUFamilyEnabled &&
-        !settings.seclookupEnabled &&
-        !settings.switchCHEnabled &&
-        !settings.quad9Enabled;
+    const allProvidersDisabled = settings => {
+        try {
+            Validate.requireObject(settings);
+        } catch {
+            return true;
+        }
+
+        return !settings.adGuardSecurityEnabled &&
+            !settings.adGuardFamilyEnabled &&
+            !settings.alphaMountainEnabled &&
+            !settings.precisionSecEnabled &&
+            !settings.certEEEnabled &&
+            !settings.cleanBrowsingSecurityEnabled &&
+            !settings.cleanBrowsingFamilyEnabled &&
+            !settings.cloudflareSecurityEnabled &&
+            !settings.cloudflareFamilyEnabled &&
+            !settings.controlDSecurityEnabled &&
+            !settings.controlDFamilyEnabled &&
+            !settings.dns4EUSecurityEnabled &&
+            !settings.dns4EUFamilyEnabled &&
+            !settings.seclookupEnabled &&
+            !settings.switchCHEnabled &&
+            !settings.quad9Enabled;
+    };
 
     return {
         get,

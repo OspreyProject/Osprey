@@ -28,6 +28,7 @@
     try {
         importScripts(
             // Util
+            "util/Validate.js",
             "util/StorageUtil.js",
             "util/Settings.js",
             "util/UrlHelpers.js",
@@ -35,7 +36,6 @@
             "util/MessageType.js",
             "util/LangUtil.js",
             "util/DNSMessage.js",
-            "util/Validate.js",
 
             // Protection
             "protection/ProtectionResult.js",
@@ -213,13 +213,13 @@
      * Safely updates a tab's properties, handling potential errors such as the tab being closed during the update process.
      *
      * @param {number} tabId - The ID of the tab to be updated.
-     * @param {object} updateProps - The properties to update on the tab (e.g., {url: "https://www.google.com"}).
+     * @param {Object} updateProps - The properties to update on the tab (e.g., {url: "https://www.google.com"}).
      * @returns {Promise<boolean>} - Returns true if the tab was successfully updated, false if the tab no longer exists or an error occurred.
      */
     const safeTabUpdate = async (tabId, updateProps) => {
         try {
             Validate.requireNonNegativeInteger(tabId);
-            Validate.requireNotNull(updateProps);
+            Validate.requireObject(updateProps);
         } catch {
             return false;
         }
@@ -255,21 +255,17 @@
     /**
      * Function to handle navigation checks.
      *
-     * @param {object} navigationDetails - The navigation details to handle.
+     * @param {Object} navigationDetails - The navigation details to handle.
      */
     const handleNavigation = navigationDetails => {
         try {
             // parameters
-            Validate.requireNotNull(navigationDetails);
+            Validate.requireObject(navigationDetails);
             Validate.requireProperty(navigationDetails, "tabId");
-            Validate.requireProperty(navigationDetails, "frameId");
             Validate.requireProperty(navigationDetails, "url");
 
             // navigationDetails.tabId
             Validate.requireNonNegativeInteger(navigationDetails.tabId);
-
-            // navigationDetails.frameId
-            Validate.requireNonNegativeInteger(navigationDetails.frameId);
 
             // navigationDetails.url
             Validate.requireValidUrl(navigationDetails.url);
@@ -278,6 +274,16 @@
         }
 
         Settings.get(settings => {
+            try {
+                Validate.requireObject(settings);
+                Validate.requireProperty(settings, "ignoreFrameNavigation");
+                Validate.requireProperty(settings, "notificationsEnabled");
+                Validate.requireBoolean(settings.ignoreFrameNavigation);
+                Validate.requireBoolean(settings.notificationsEnabled);
+            } catch {
+                return;
+            }
+
             // Retrieves settings to check if protection is enabled
             if (Settings.allProvidersDisabled(settings)) {
                 console.debug("Protection is disabled; bailing out early.");
@@ -607,6 +613,18 @@
      */
     const createContextMenu = () => {
         Settings.get(settings => {
+            try {
+                Validate.requireObject(settings);
+                Validate.requireProperty(settings, "contextMenuEnabled");
+                Validate.requireProperty(settings, "notificationsEnabled");
+                Validate.requireProperty(settings, "ignoreFrameNavigation");
+                Validate.requireBoolean(settings.contextMenuEnabled);
+                Validate.requireBoolean(settings.notificationsEnabled);
+                Validate.requireBoolean(settings.ignoreFrameNavigation);
+            } catch {
+                return;
+            }
+
             // Removes existing menu items to avoid duplicates
             contextMenuAPI.removeAll();
 
@@ -730,8 +748,19 @@
         });
     };
 
-    // Creates the context menu and sets managed policies
+    /**
+     * Checks for managed policies and updates the context menu and settings accordingly.
+     *
+     * @param {Array<string>} policyKeys - The keys of the policies to check for.
+     * @param {Object} policies - The policies retrieved from the browser's managed storage.
+     */
     browserAPI.storage.managed.get(policyKeys, policies => {
+        try {
+            Validate.requireArray(policyKeys);
+        } catch {
+            return;
+        }
+
         if (policies === undefined) {
             supportsManagedPolicies = false;
             console.debug("Managed policies are not supported or setup correctly in this browser.");
@@ -753,9 +782,12 @@
             if (policies.CacheExpirationSeconds === undefined) {
                 settings.cacheExpirationSeconds = defaultCacheExpiration;
             } else {
-                const minSeconds = 60;
+                const minSeconds = 60; // 1 minute in seconds
+                const maxSeconds = 31536000; // 1 year in seconds
 
-                if (typeof policies.CacheExpirationSeconds !== "number" || policies.CacheExpirationSeconds < minSeconds) {
+                if (typeof policies.CacheExpirationSeconds !== "number" ||
+                    policies.CacheExpirationSeconds < minSeconds ||
+                    policies.CacheExpirationSeconds > maxSeconds) {
                     settings.cacheExpirationSeconds = defaultCacheExpiration;
                     console.debug("Cache expiration time is invalid; using default value.");
                 } else {
@@ -904,13 +936,20 @@
         createContextMenu();
     });
 
-    // Listens for PING messages from content scripts to get the blocked counter
+
+    /**
+     * Listens for PING messages from content scripts to update the blocked counter on the block page.
+     *
+     * @param {Object} event - The message event sent from the content script.
+     * @param {Object} sender - The sender of the message.
+     * @param {function} sendResponse - The function to send a response back to the content script.
+     */
     browserAPI.runtime.onMessage.addListener((message, sender, sendResponse) => {
         try {
             // parameters
-            Validate.requireNotNull(message);
-            Validate.requireNotNull(sender);
-            Validate.requireNotNull(sendResponse);
+            Validate.requireObject(message);
+            Validate.requireObject(sender);
+            Validate.requireFunction(sendResponse);
         } catch {
             return false;
         }
@@ -919,11 +958,11 @@
             try {
                 // message.messageType
                 Validate.requireProperty(message, "messageType");
-                Validate.requireNotNull(message.messageType);
+                Validate.requireString(message.messageType);
 
                 // sender.tab
                 Validate.requireProperty(sender, "tab");
-                Validate.requireNotNull(sender.tab);
+                Validate.requireObject(sender.tab);
 
                 // sender.id
                 Validate.requireProperty(sender, "id");
@@ -951,7 +990,7 @@
             browserAPI.tabs.get(tabId, tab => {
                 try {
                     // tab
-                    Validate.requireNotNull(tab);
+                    Validate.requireObject(tab);
 
                     // tab.url
                     Validate.requireProperty(tab, "url");
@@ -977,12 +1016,17 @@
         return false;
     });
 
-    // Listens for onRemoved events
-    browserAPI.tabs.onRemoved.addListener((event, removeInfo) => {
+    /**
+     * Listens for onRemoved events to clear caches and session data when a tab is closed.
+     *
+     * @param {number} tabId - The ID of the removed tab.
+     * @param {Object} removeInfo - Additional information about the removed tab, including windowId and isWindowClosing.
+     */
+    browserAPI.tabs.onRemoved.addListener((tabIdObject, removeInfo) => {
         try {
             // parameters
-            Validate.requireNotNull(event);
-            Validate.requireNotNull(removeInfo);
+            Validate.requireNonNegativeInteger(tabIdObject);
+            Validate.requireObject(removeInfo);
 
             // removeInfo.windowId
             Validate.requireProperty(removeInfo, "windowId");
@@ -995,87 +1039,102 @@
             return;
         }
 
-        console.debug(`Tab removed (windowId: ${removeInfo.windowId}) (isWindowClosing: ${removeInfo.isWindowClosing})`);
+        let tabId = Number(tabIdObject);
+
+        console.debug(`Tab removed (tabId: ${tabId}, windowId: ${removeInfo.windowId}, isWindowClosing: ${removeInfo.isWindowClosing})`);
 
         // Removes all cached keys for the tab
-        CacheManager.removeKeysByTabId(removeInfo.windowId);
+        CacheManager.removeKeysByTabId(tabId);
 
         // Removes the tab from session-backed maps
-        deleteResultOrigins(removeInfo.windowId);
-        deleteFrameZeroUrl(removeInfo.windowId);
+        deleteResultOrigins(tabId);
+        deleteFrameZeroUrl(tabId);
     });
 
-    // Listens for onBeforeNavigate events
-    browserAPI.webNavigation.onBeforeNavigate.addListener(callback => {
+    /**
+     * Listens for onBeforeNavigate events to handle main frame navigations and apply protections.
+     *
+     * @param {Object} event - The navigation event, containing details such as url, frameId, and tabId.
+     */
+    browserAPI.webNavigation.onBeforeNavigate.addListener(details => {
         try {
             // parameters
-            Validate.requireNotNull(callback);
+            Validate.requireObject(details);
 
             // callback.url
-            Validate.requireProperty(callback, "url");
-            Validate.requireValidUrl(callback.url);
+            Validate.requireProperty(details, "url");
+            Validate.requireValidUrl(details.url);
 
             // callback.frameId
-            Validate.requireProperty(callback, "frameId");
-            Validate.requireInteger(callback.frameId);
+            Validate.requireProperty(details, "frameId");
+            Validate.requireNonNegativeInteger(details.frameId);
 
             // callback.tabId
-            Validate.requireProperty(callback, "tabId");
-            Validate.requireNonNegativeInteger(callback.tabId);
+            Validate.requireProperty(details, "tabId");
+            Validate.requireNonNegativeInteger(details.tabId);
         } catch {
             return;
         }
 
-        console.debug(`[onBeforeNavigate] ${callback.url} (frameId: ${callback.frameId}) (tabId: ${callback.tabId})`);
-        handleNavigation(callback);
+        console.debug(`[onBeforeNavigate] ${details.url} (frameId: ${details.frameId}) (tabId: ${details.tabId})`);
+        handleNavigation(details);
     });
 
-    // Listens for onCommitted events
-    browserAPI.webNavigation.onCommitted.addListener(callback => {
+    /**
+     * Listens for onCommitted events.
+     *
+     * @param {Object} details - The navigation event details.
+     */
+    browserAPI.webNavigation.onCommitted.addListener(details => {
         try {
             // parameters
-            Validate.requireNotNull(callback);
+            Validate.requireObject(details);
 
             // callback.url
-            Validate.requireProperty(callback, "url");
-            Validate.requireValidUrl(callback.url);
+            Validate.requireProperty(details, "url");
+            Validate.requireValidUrl(details.url);
 
             // callback.frameId
-            Validate.requireProperty(callback, "frameId");
-            Validate.requireInteger(callback.frameId);
+            Validate.requireProperty(details, "frameId");
+            Validate.requireNonNegativeInteger(details.frameId);
 
             // callback.tabId
-            Validate.requireProperty(callback, "tabId");
-            Validate.requireNonNegativeInteger(callback.tabId);
+            Validate.requireProperty(details, "tabId");
+            Validate.requireNonNegativeInteger(details.tabId);
 
             // callback.transitionQualifiers
-            Validate.requireProperty(callback, "transitionQualifiers");
-            Validate.requireArray(callback.transitionQualifiers);
+            Validate.requireProperty(details, "transitionQualifiers");
+            Validate.requireArray(details.transitionQualifiers);
 
             // callback.transitionType
-            Validate.requireProperty(callback, "transitionType");
-            Validate.requireString(callback.transitionType);
+            Validate.requireProperty(details, "transitionType");
+            Validate.requireString(details.transitionType);
         } catch {
             return;
         }
 
-        if (callback.transitionQualifiers.includes("server_redirect") &&
-            (callback.frameId !== 0 && callback.transitionType !== "start_page") ||
-            callback.frameId === 0 && callback.transitionType === "link") {
-            console.debug(`[server_redirect] ${callback.url} (frameId: ${callback.frameId}) (tabId: ${callback.tabId}) (type: ${callback.transitionType})`);
-            handleNavigation(callback);
-        } else if (callback.transitionQualifiers.includes("client_redirect")) {
-            console.debug(`[client_redirect] ${callback.url} (frameId: ${callback.frameId}) (tabId: ${callback.tabId}) (type: ${callback.transitionType})`);
-            handleNavigation(callback);
+        if (details.transitionQualifiers.includes("server_redirect") &&
+            (details.frameId !== 0 && details.transitionType !== "start_page") ||
+            details.frameId === 0 && details.transitionType === "link") {
+            console.debug(`[server_redirect] ${details.url} (frameId: ${details.frameId}) (tabId: ${details.tabId}) (type: ${details.transitionType})`);
+            handleNavigation(details);
+        } else if (details.transitionQualifiers.includes("client_redirect")) {
+            console.debug(`[client_redirect] ${details.url} (frameId: ${details.frameId}) (tabId: ${details.tabId}) (type: ${details.transitionType})`);
+            handleNavigation(details);
         }
     });
 
-    // Listens for onUpdated events
+    /**
+     * Listens for onUpdated events.
+     *
+     * @param {number} tabId - The ID of the updated tab.
+     * @param {Object} changeInfo - An object containing the properties that changed.
+     */
     browserAPI.tabs.onUpdated.addListener((tabId, changeInfo) => {
         try {
             // parameters
             Validate.requireNonNegativeInteger(tabId);
-            Validate.requireNotNull(changeInfo);
+            Validate.requireObject(changeInfo);
         } catch {
             return;
         }
@@ -1089,112 +1148,133 @@
         }
     });
 
-    // Listens for onCreatedNavigationTarget events
-    browserAPI.webNavigation.onCreatedNavigationTarget.addListener(callback => {
+    /**
+     * Listens for onCreatedNavigationTarget events.
+     *
+     * @param {Object} details - The navigation event details.
+     */
+    browserAPI.webNavigation.onCreatedNavigationTarget.addListener(details => {
         try {
             // parameters
-            Validate.requireNotNull(callback);
+            Validate.requireObject(details);
 
             // callback.url
-            Validate.requireProperty(callback, "url");
-            Validate.requireValidUrl(callback.url);
+            Validate.requireProperty(details, "url");
+            Validate.requireValidUrl(details.url);
 
             // callback.tabId
-            Validate.requireProperty(callback, "tabId");
-            Validate.requireNonNegativeInteger(callback.tabId);
+            Validate.requireProperty(details, "tabId");
+            Validate.requireNonNegativeInteger(details.tabId);
         } catch {
             return;
         }
 
-        console.debug(`[onCreatedNavigationTarget] ${callback.url} (frameId: ${callback.frameId}) (tabId: ${callback.tabId})`);
-        handleNavigation(callback);
+        console.debug(`[onCreatedNavigationTarget] ${details.url} (frameId: ${details.frameId}) (tabId: ${details.tabId})`);
+        handleNavigation(details);
     });
 
-    // Listens for onHistoryStateUpdated events
-    browserAPI.webNavigation.onHistoryStateUpdated.addListener(callback => {
+    /**
+     * Listens for onHistoryStateUpdated events.
+     *
+     * @param {Object} callback - The navigation event details.
+     */
+    browserAPI.webNavigation.onHistoryStateUpdated.addListener(details => {
         try {
             // parameters
-            Validate.requireNotNull(callback);
+            Validate.requireObject(details);
 
             // callback.url
-            Validate.requireProperty(callback, "url");
-            Validate.requireValidUrl(callback.url);
+            Validate.requireProperty(details, "url");
+            Validate.requireValidUrl(details.url);
 
             // callback.frameId
-            Validate.requireProperty(callback, "frameId");
-            Validate.requireInteger(callback.frameId);
+            Validate.requireProperty(details, "frameId");
+            Validate.requireNonNegativeInteger(details.frameId);
 
             // callback.tabId
-            Validate.requireProperty(callback, "tabId");
-            Validate.requireNonNegativeInteger(callback.tabId);
+            Validate.requireProperty(details, "tabId");
+            Validate.requireNonNegativeInteger(details.tabId);
         } catch {
             return;
         }
 
-        console.debug(`[onHistoryStateUpdated] ${callback.url} (frameId: ${callback.frameId}) (tabId: ${callback.tabId})`);
-        handleNavigation(callback);
+        console.debug(`[onHistoryStateUpdated] ${details.url} (frameId: ${details.frameId}) (tabId: ${details.tabId})`);
+        handleNavigation(details);
     });
 
-    // Listens for onReferenceFragmentUpdated events
-    browserAPI.webNavigation.onReferenceFragmentUpdated.addListener(callback => {
+    /**
+     * Listens for onReferenceFragmentUpdated events.
+     *
+     * @param {Object} callback - The navigation event details.
+     */
+    browserAPI.webNavigation.onReferenceFragmentUpdated.addListener(details => {
         try {
             // parameters
-            Validate.requireNotNull(callback);
+            Validate.requireObject(details);
 
             // callback.url
-            Validate.requireProperty(callback, "url");
-            Validate.requireValidUrl(callback.url);
+            Validate.requireProperty(details, "url");
+            Validate.requireValidUrl(details.url);
 
             // callback.frameId
-            Validate.requireProperty(callback, "frameId");
-            Validate.requireInteger(callback.frameId);
+            Validate.requireProperty(details, "frameId");
+            Validate.requireNonNegativeInteger(details.frameId);
 
             // callback.tabId
-            Validate.requireProperty(callback, "tabId");
-            Validate.requireNonNegativeInteger(callback.tabId);
+            Validate.requireProperty(details, "tabId");
+            Validate.requireNonNegativeInteger(details.tabId);
         } catch {
             return;
         }
 
-        console.debug(`[onReferenceFragmentUpdated] ${callback.url} (frameId: ${callback.frameId}) (tabId: ${callback.tabId})`);
-        handleNavigation(callback);
+        console.debug(`[onReferenceFragmentUpdated] ${details.url} (frameId: ${details.frameId}) (tabId: ${details.tabId})`);
+        handleNavigation(details);
     });
 
-    // Listens for onTabReplaced events
-    browserAPI.webNavigation.onTabReplaced.addListener(callback => {
+    /**
+     * Listens for onTabReplaced events.
+     *
+     * @param {Object} callback - The navigation event details.
+     */
+    browserAPI.webNavigation.onTabReplaced.addListener(details => {
         try {
             // parameters
-            Validate.requireNotNull(callback);
+            Validate.requireObject(details);
 
             // callback.url
-            Validate.requireProperty(callback, "url");
-            Validate.requireValidUrl(callback.url);
+            Validate.requireProperty(details, "url");
+            Validate.requireValidUrl(details.url);
 
             // callback.frameId
-            Validate.requireProperty(callback, "frameId");
-            Validate.requireInteger(callback.frameId);
+            Validate.requireProperty(details, "frameId");
+            Validate.requireNonNegativeInteger(details.frameId);
 
             // callback.tabId
-            Validate.requireProperty(callback, "tabId");
-            Validate.requireNonNegativeInteger(callback.tabId);
+            Validate.requireProperty(details, "tabId");
+            Validate.requireNonNegativeInteger(details.tabId);
         } catch {
             return;
         }
 
-        console.debug(`[onTabReplaced] ${callback.url} (frameId: ${callback.frameId}) (tabId: ${callback.tabId})`);
-        handleNavigation(callback);
+        console.debug(`[onTabReplaced] ${details.url} (frameId: ${details.frameId}) (tabId: ${details.tabId})`);
+        handleNavigation(details);
     });
 
-    // Listens for incoming messages
+    /**
+     * Listens for incoming messages from content scripts.
+     *
+     * @param {Object} event - The message event sent from the content script.
+     * @param {Object} sender - The sender of the message.
+     */
     browserAPI.runtime.onMessage.addListener((message, sender) => {
         try {
             // parameters
-            Validate.requireNotNull(message);
-            Validate.requireNotNull(sender);
+            Validate.requireObject(message);
+            Validate.requireObject(sender);
 
             // message.messageType
             Validate.requireProperty(message, "messageType");
-            Validate.requireNotNull(message.messageType);
+            Validate.requireString(message.messageType);
 
             // sender.id
             Validate.requireProperty(sender, "id");
@@ -1267,7 +1347,7 @@
 
                     // message.origin
                     Validate.requireStringProperty(message, 'origin');
-                    Validate.requireValidOrigin(message.origin, ProtectionResult.Origin);
+                    Validate.requireValidOrigin(message.origin);
                 } catch {
                     sendToNewTabPage(tabId);
                     return;
@@ -1333,7 +1413,7 @@
 
                     // message.origin
                     Validate.requireProperty(message, "origin");
-                    Validate.requireValidOrigin(message.origin, ProtectionResult.Origin);
+                    Validate.requireValidOrigin(message.origin);
                 } catch {
                     sendToNewTabPage(tabId);
                     return;
@@ -1384,7 +1464,7 @@
 
                     // message.origin
                     Validate.requireStringProperty(message, "origin");
-                    Validate.requireValidOrigin(message.origin, ProtectionResult.Origin);
+                    Validate.requireValidOrigin(message.origin);
                 } catch {
                     return;
                 }
@@ -1481,11 +1561,15 @@
         }
     });
 
-    // Listener for context menu creation.
+    /**
+     * Listens for context menu item clicks.
+     *
+     * @param {Object} info - Information sent when a context menu item is clicked.
+     */
     contextMenuAPI.onClicked.addListener(info => {
         try {
             // parameters
-            Validate.requireNotNull(info);
+            Validate.requireObject(info);
 
             // info.menuItemId
             Validate.requireProperty(info, "menuItemId");

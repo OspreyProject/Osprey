@@ -45,7 +45,15 @@ const CacheManager = (() => {
 
     // Sets the expiration time for cache entries based on user settings
     Settings.get(settings => {
-        const expSeconds = Number(settings?.cacheExpirationSeconds);
+        try {
+            Validate.requireObject(settings);
+            Validate.requireProperty(settings, "cacheExpirationSeconds");
+            Validate.requireInteger(settings.cacheExpirationSeconds);
+        } catch {
+            return;
+        }
+
+        const expSeconds = Number(settings.cacheExpirationSeconds);
         const min = 60; // 1 minute in seconds
         const max = 31536000; // 1 year in seconds
         const def = 604800; // 7 days in seconds
@@ -80,48 +88,71 @@ const CacheManager = (() => {
     }
 
     /**
-     * Checks if the given provider name is valid (either "all" or one of the defined providers).
+     * Loads allowed caches (without tabId) from local storage.
      *
-     * @param name {string} - The name of the provider to check.
-     * @returns {boolean|boolean} - Returns true if the provider name is valid, false otherwise.
+     * @param {string} allowedKey - The key used to retrieve the allowed caches from local storage.
+     * @param {Object} callback - The callback function to execute after loading the allowed caches.
      */
-    const isValidProvider = (name) => name === "all" || providers.includes(name);
+    StorageUtil.getFromLocalStore(allowedKey, callback => {
+        try {
+            Validate.requireString(allowedKey);
+            Validate.requireObject(callback);
+        } catch {
+            return;
+        }
 
-    // Load allowed caches (without tabId) from local storage
-    StorageUtil.getFromLocalStore(allowedKey, storedAllowed => {
-        if (storedAllowed && typeof storedAllowed === 'object') {
-            for (const name of Object.keys(allowedCaches)) {
-                if (storedAllowed[name] && typeof storedAllowed[name] === 'object') {
-                    const entries = Object.entries(storedAllowed[name]).filter(([key]) => !DANGEROUS_KEYS.has(key));
-                    allowedCaches[name] = new Map(entries);
-                }
+        for (const name of Object.keys(allowedCaches)) {
+            if (callback[name] && typeof callback[name] === 'object') {
+                const entries = Object.entries(callback[name]).filter(([key]) => !DANGEROUS_KEYS.has(key));
+                allowedCaches[name] = new Map(entries);
             }
         }
     });
 
-    // Load blocked caches (without tabId) from local storage
-    StorageUtil.getFromLocalStore(blockedKey, storedBlocked => {
-        if (storedBlocked && typeof storedBlocked === 'object') {
-            for (const name of Object.keys(blockedCaches)) {
-                if (storedBlocked[name] && typeof storedBlocked[name] === 'object') {
-                    const entries = Object.entries(storedBlocked[name]).filter(([key]) => !DANGEROUS_KEYS.has(key));
+    /**
+     * Loads blocked caches (without tabId) from local storage.
+     *
+     * @param {string} blockedKey - The key used to retrieve the blocked caches from local storage.
+     * @param {Object} callback - The callback function to execute after loading the blocked caches.
+     */
+    StorageUtil.getFromLocalStore(blockedKey, callback => {
+        try {
+            Validate.requireString(blockedKey);
+            Validate.requireObject(callback);
+        } catch {
+            return;
+        }
 
-                    blockedCaches[name] = new Map(
-                        entries.map(([url, entry]) => [
-                            url, {exp: entry.exp, resultType: entry.resultType}
-                        ])
-                    );
-                }
+        for (const name of Object.keys(blockedCaches)) {
+            if (callback[name] && typeof callback[name] === 'object') {
+                const entries = Object.entries(callback[name]).filter(([key]) => !DANGEROUS_KEYS.has(key));
+
+                blockedCaches[name] = new Map(
+                    entries.map(([url, entry]) => [
+                        url, {exp: entry.exp, resultType: entry.resultType}
+                    ])
+                );
             }
         }
     });
 
-    // Load processing caches (with tabId) from session storage
-    StorageUtil.getFromSessionStore(processingKey, storedProcessing => {
-        if (storedProcessing && typeof storedProcessing === 'object') {
-            for (const name of Object.keys(processingCaches)) {
-                if (storedProcessing[name] && typeof storedProcessing[name] === 'object') {
-                    const entries = Object.entries(storedProcessing[name]).filter(([key]) => !DANGEROUS_KEYS.has(key));
+    /**
+     * Loads processing caches (without tabId) from local storage.
+     *
+     * @param {string} processingKey - The key used to retrieve the processing caches from local storage.
+     * @param {Object} [callback] - The callback function to execute after loading the processing caches.
+     */
+    StorageUtil.getFromSessionStore(processingKey, callback => {
+        try {
+            Validate.requireString(processingKey);
+        } catch {
+            return;
+        }
+
+        for (const name of Object.keys(processingCaches)) {
+            if (callback && typeof callback === 'object') {
+                if (callback[name] && typeof callback[name] === 'object') {
+                    const entries = Object.entries(callback[name]).filter(([key]) => !DANGEROUS_KEYS.has(key));
                     processingCaches[name] = new Map(entries);
                 }
             }
@@ -132,15 +163,10 @@ const CacheManager = (() => {
      * Update the caches that use localStorage (allowed and blocked caches).
      */
     const updateLocalStorage = () => {
-        // Returns if the allowed caches are invalid
-        if (!allowedCaches || typeof allowedCaches !== 'object') {
-            console.warn('allowedCache is not defined or not an object');
-            return;
-        }
-
-        // Returns if the blocked caches are invalid
-        if (!blockedCaches || typeof blockedCaches !== 'object') {
-            console.warn('blockedCache is not defined or not an object');
+        try {
+            Validate.requireObject(allowedCaches);
+            Validate.requireObject(blockedCaches);
+        } catch {
             return;
         }
 
@@ -176,9 +202,9 @@ const CacheManager = (() => {
      * Update the caches that use sessionStorage (processing caches).
      */
     const updateSessionStorage = () => {
-        // Returns if the processing caches are invalid
-        if (!processingCaches || typeof processingCaches !== 'object') {
-            console.warn('processingCache is not defined or not an object');
+        try {
+            Validate.requireObject(processingCaches);
+        } catch {
             return;
         }
 
@@ -238,9 +264,9 @@ const CacheManager = (() => {
      * Clears all allowed caches.
      */
     const clearAllowedCache = () => {
-        // Returns if the allowed caches are invalid
-        if (!allowedCaches || typeof allowedCaches !== 'object') {
-            console.warn('allowedCache is not defined or not an object');
+        try {
+            Validate.requireObject(allowedCaches);
+        } catch {
             return;
         }
 
@@ -256,9 +282,9 @@ const CacheManager = (() => {
      * Clears all blocked caches.
      */
     const clearBlockedCache = () => {
-        // Returns if the blocked cache is invalid
-        if (!blockedCaches || typeof blockedCaches !== 'object') {
-            console.warn('blockedCache is not defined or not an object');
+        try {
+            Validate.requireObject(blockedCaches);
+        } catch {
             return;
         }
 
@@ -274,9 +300,9 @@ const CacheManager = (() => {
      * Clears all processing caches.
      */
     const clearProcessingCache = () => {
-        // Returns if the processing caches are invalid
-        if (!processingCaches || typeof processingCaches !== 'object') {
-            console.warn('processingCache is not defined or not an object');
+        try {
+            Validate.requireObject(processingCaches);
+        } catch {
             return;
         }
 
@@ -291,27 +317,24 @@ const CacheManager = (() => {
     /**
      * Checks if a URL is in the allowed cache for a specific provider.
      *
-     * @param url {string|URL} - The URL to check, can be a string or a URL object.
-     * @param name {string} - The name of the provider (e.g., "precisionSec").
+     * @param {string|URL} url - The URL to check, can be a string or a URL object.
+     * @param {string} name - The name of the provider (e.g., "precisionSec").
      * @returns {boolean} - Returns true if the URL is in the allowed cache and not expired, false otherwise.
      */
     const isUrlInAllowedCache = (url, name) => {
-        // Returns if the allowed caches are invalid
-        if (!allowedCaches || typeof allowedCaches !== 'object') {
-            console.warn('allowedCache is not defined or not an object');
-            return false;
-        }
-
-        // Returns if the provider name is invalid
-        if (!isValidProvider(name)) {
-            console.warn(`Invalid provider name: ${name}`);
+        try {
+            Validate.requireNotNull(url);
+            Validate.requireString(name);
+            Validate.requireValidProvider(name);
+            Validate.requireObject(allowedCaches);
+        } catch {
             return false;
         }
 
         try {
             const key = UrlHelpers.normalizeUrl(url);
 
-            if (!key || typeof key !== 'string' || key.length === 0) {
+            if (!Validate.isString(key) || key.length === 0) {
                 console.warn('URL normalization returned invalid result');
                 return false;
             }
@@ -342,20 +365,17 @@ const CacheManager = (() => {
     /**
      * Checks if a string is in the allowed cache for a specific provider.
      *
-     * @param str {string} - The string to check.
-     * @param name {string} - The name of the provider (e.g., "precisionSec").
+     * @param {string} str - The string to check.
+     * @param {string} name - The name of the provider (e.g., "precisionSec").
      * @returns {boolean} - Returns true if the string is in the allowed cache and not expired, false otherwise.
      */
     const isStringInAllowedCache = (str, name) => {
-        // Returns if the allowed caches are invalid
-        if (!allowedCaches || typeof allowedCaches !== 'object') {
-            console.warn('allowedCache is not defined or not an object');
-            return false;
-        }
-
-        // Returns if the provider name is invalid
-        if (!isValidProvider(name)) {
-            console.warn(`Invalid provider name: ${name}`);
+        try {
+            Validate.requireString(str);
+            Validate.requireString(name);
+            Validate.requireValidProvider(name);
+            Validate.requireObject(allowedCaches);
+        } catch {
             return false;
         }
 
@@ -378,25 +398,22 @@ const CacheManager = (() => {
     /**
      * Checks if a string is in the allowed cache for a specific provider.
      *
-     * @param str {string} - The string to check against the map's patterns.
-     * @param name {string} - The name of the provider (e.g., "precisionSec").
+     * @param {string} str - The string to check against the map's patterns.
+     * @param {string} name - The name of the provider (e.g., "precisionSec").
      * @returns {boolean} - Returns true if the string is in the allowed cache and not expired, false otherwise.
      */
     const isPatternInAllowedCache = (str, name) => {
-        // Returns if the allowed caches are invalid
-        if (!allowedCaches || typeof allowedCaches !== 'object') {
-            console.warn('allowedCache is not defined or not an object');
+        try {
+            Validate.requireString(str);
+            Validate.requireString(name);
+            Validate.requireValidProvider(name);
+            Validate.requireObject(allowedCaches);
+        } catch {
             return false;
         }
 
-        // Returns if the provider name is invalid
-        if (!isValidProvider(name)) {
-            console.warn(`Invalid provider name: ${name}`);
-            return false;
-        }
-
-        // Returns if the string is invalid
-        if (typeof str !== 'string' || str.length > 2048) {
+        // Returns if the string is too long
+        if (str.length > 2048) {
             return false;
         }
 
@@ -429,26 +446,23 @@ const CacheManager = (() => {
     /**
      * Add a URL to the allowed cache for a specific provider.
      *
-     * @param url {string|URL} - The URL to add, can be a string or a URL object.
-     * @param name {string} - The name of the provider (e.g., "precisionSec").
+     * @param {string|URL} url - The URL to add, can be a string or a URL object.
+     * @param {string} name - The name of the provider (e.g., "precisionSec").
      */
     const addUrlToAllowedCache = (url, name) => {
-        // Returns if the allowed caches are invalid
-        if (!allowedCaches || typeof allowedCaches !== 'object') {
-            console.warn('allowedCache is not defined or not an object');
-            return;
-        }
-
-        // Returns if the provider name is invalid
-        if (!isValidProvider(name)) {
-            console.warn(`Invalid provider name: ${name}`);
+        try {
+            Validate.requireNotNull(url);
+            Validate.requireString(name);
+            Validate.requireValidProvider(name);
+            Validate.requireObject(allowedCaches);
+        } catch {
             return;
         }
 
         try {
             const key = UrlHelpers.normalizeUrl(url);
 
-            if (!key || typeof key !== 'string' || key.length === 0) {
+            if (!Validate.isString(key) || key.length === 0) {
                 console.warn('URL normalization returned invalid result');
                 return;
             }
@@ -475,19 +489,16 @@ const CacheManager = (() => {
     /**
      * Add a string key to the allowed cache for a specific provider.
      *
-     * @param str {string} - The string to add.
-     * @param name {string} - The name of the cache (e.g., "precisionSec", "global").
+     * @param {string} str - The string to add.
+     * @param {string} name - The name of the cache (e.g., "precisionSec", "global").
      */
     const addStringToAllowedCache = (str, name) => {
-        // Returns if the allowed caches are invalid
-        if (!allowedCaches || typeof allowedCaches !== 'object') {
-            console.warn('allowedCache is not defined or not an object');
-            return;
-        }
-
-        // Returns if the provider name is invalid
-        if (!isValidProvider(name)) {
-            console.warn(`Invalid provider name: ${name}`);
+        try {
+            Validate.requireString(str);
+            Validate.requireString(name);
+            Validate.requireValidProvider(name);
+            Validate.requireObject(allowedCaches);
+        } catch {
             return;
         }
 
@@ -514,27 +525,24 @@ const CacheManager = (() => {
     /**
      * Checks if a URL is in the blocked cache for a specific provider.
      *
-     * @param url {string|URL} - The URL to check, can be a string or a URL object.
-     * @param name {string} - The name of the provider (e.g., "precisionSec").
+     * @param {string|URL} url - The URL to check, can be a string or a URL object.
+     * @param {string} name - The name of the provider (e.g., "precisionSec").
      * @returns {boolean} - Returns true if the URL is in the allowed cache and not expired, false otherwise.
      */
     const isUrlInBlockedCache = (url, name) => {
-        // Returns if the blocked caches are invalid
-        if (!blockedCaches || typeof blockedCaches !== 'object') {
-            console.warn('blockedCache is not defined or not an object');
-            return false;
-        }
-
-        // Returns if the provider name is invalid
-        if (!isValidProvider(name)) {
-            console.warn(`Invalid provider name: ${name}`);
+        try {
+            Validate.requireNotNull(url);
+            Validate.requireString(name);
+            Validate.requireValidProvider(name);
+            Validate.requireObject(blockedCaches);
+        } catch {
             return false;
         }
 
         try {
             const key = UrlHelpers.normalizeUrl(url);
 
-            if (!key || typeof key !== 'string' || key.length === 0) {
+            if (!Validate.isString(key) || key.length === 0) {
                 console.warn('URL normalization returned invalid result');
                 return false;
             }
@@ -563,27 +571,24 @@ const CacheManager = (() => {
     /**
      * Add a URL to the blocked cache for a specific provider.
      *
-     * @param url {string|URL} - The URL to add, can be a string or a URL object.
-     * @param name {string} - The name of the provider (e.g., "precisionSec").
-     * @param resultType {string} - The resultType of the URL (e.g., "malicious", "phishing").
+     * @param {string|URL} url - The URL to add, can be a string or a URL object.
+     * @param {string} name - The name of the provider (e.g., "precisionSec").
+     * @param {string} resultType - The resultType of the URL (e.g., "malicious", "phishing").
      */
     const addUrlToBlockedCache = (url, name, resultType) => {
-        // Returns if the blocked caches are invalid
-        if (!blockedCaches || typeof blockedCaches !== 'object') {
-            console.warn('blockedCache is not defined or not an object');
-            return;
-        }
-
-        // Returns if the provider name is invalid
-        if (!isValidProvider(name)) {
-            console.warn(`Invalid provider name: ${name}`);
+        try {
+            Validate.requireNotNull(url);
+            Validate.requireString(name);
+            Validate.requireValidProvider(name);
+            Validate.requireObject(blockedCaches);
+        } catch {
             return;
         }
 
         try {
             const key = UrlHelpers.normalizeUrl(url);
 
-            if (!key || typeof key !== 'string' || key.length === 0) {
+            if (!Validate.isString(key) || key.length === 0) {
                 console.warn('URL normalization returned invalid result');
                 return;
             }
@@ -611,27 +616,24 @@ const CacheManager = (() => {
     /**
      * Get the result type of a blocked URL from the cache for a specific provider.
      *
-     * @param url {string|URL} - The URL to check, can be a string or a URL object.
-     * @param name {string} - The name of the provider (e.g., "precisionSec").
+     * @param {string|URL} url - The URL to check, can be a string or a URL object.
+     * @param {string} name - The name of the provider (e.g., "precisionSec").
      * @returns {*|null} - Returns the result type (e.g., "Malicious", "Phishing") if found and not expired, null otherwise.
      */
     const getBlockedResultType = (url, name) => {
-        // Returns if the blocked caches are invalid
-        if (!blockedCaches || typeof blockedCaches !== 'object') {
-            console.warn('blockedCache is not defined or not an object');
-            return null;
-        }
-
-        // Returns if the provider name is invalid
-        if (!isValidProvider(name)) {
-            console.warn(`Invalid provider name: ${name}`);
+        try {
+            Validate.requireNotNull(url);
+            Validate.requireString(name);
+            Validate.requireValidProvider(name);
+            Validate.requireObject(blockedCaches);
+        } catch {
             return null;
         }
 
         try {
             const key = UrlHelpers.normalizeUrl(url);
 
-            if (!key || typeof key !== 'string' || key.length === 0) {
+            if (!Validate.isString(key) || key.length === 0) {
                 console.warn('URL normalization returned invalid result');
                 return null;
             }
@@ -660,26 +662,23 @@ const CacheManager = (() => {
     /**
      * Remove a URL from the blocked cache for a specific provider.
      *
-     * @param url {string|URL} - The URL to remove, can be a string or a URL object.
-     * @param name {string} - The name of the provider (e.g., "precisionSec").
+     * @param {string|URL} url - The URL to remove, can be a string or a URL object.
+     * @param {string} name - The name of the provider (e.g., "precisionSec").
      */
     const removeUrlFromBlockedCache = (url, name) => {
-        // Returns if the blocked caches are invalid
-        if (!blockedCaches || typeof blockedCaches !== 'object') {
-            console.warn('blockedCache is not defined or not an object');
-            return;
-        }
-
-        // Returns if the provider name is invalid
-        if (!isValidProvider(name)) {
-            console.warn(`Invalid provider name: ${name}`);
+        try {
+            Validate.requireNotNull(url);
+            Validate.requireString(name);
+            Validate.requireValidProvider(name);
+            Validate.requireObject(blockedCaches);
+        } catch {
             return;
         }
 
         try {
             const key = UrlHelpers.normalizeUrl(url);
 
-            if (!key || typeof key !== 'string' || key.length === 0) {
+            if (!Validate.isString(key) || key.length === 0) {
                 console.warn('URL normalization returned invalid result');
                 return;
             }
@@ -704,20 +703,17 @@ const CacheManager = (() => {
     /**
      * Checks if a URL is in the processing cache for a specific provider.
      *
-     * @param url {string|URL} - The URL to check, can be a string or a URL object.
-     * @param name {string} - The name of the provider (e.g., "precisionSec").
+     * @param {string|URL} url - The URL to check, can be a string or a URL object.
+     * @param {string} name - The name of the provider (e.g., "precisionSec").
      * @returns {boolean} - Returns true if the URL is in the processing cache and not expired, false otherwise.
      */
     const isUrlInProcessingCache = (url, name) => {
-        // Returns if the processing caches are invalid
-        if (!processingCaches || typeof processingCaches !== 'object') {
-            console.warn('processingCaches is not defined or not an object');
-            return false;
-        }
-
-        // Returns if the provider name is invalid
-        if (!isValidProvider(name)) {
-            console.warn(`Invalid provider name: ${name}`);
+        try {
+            Validate.requireNotNull(url);
+            Validate.requireString(name);
+            Validate.requireValidProvider(name);
+            Validate.requireObject(processingCaches);
+        } catch {
             return false;
         }
 
@@ -760,28 +756,20 @@ const CacheManager = (() => {
      * @param {number} tabId - The ID of the tab associated with this URL.
      */
     const addUrlToProcessingCache = (url, name, tabId) => {
-        // Returns if the processing caches are invalid
-        if (!processingCaches || typeof processingCaches !== 'object') {
-            console.warn('processingCaches is not defined or not an object');
-            return;
-        }
-
-        // Returns if the provider name is invalid
-        if (!isValidProvider(name)) {
-            console.warn(`Invalid provider name: ${name}`);
-            return;
-        }
-
-        // Returns if the tabId is invalid
-        if (!Number.isInteger(tabId) || tabId < 0) {
-            console.warn('Invalid tabId provided: ', tabId);
+        try {
+            Validate.requireNotNull(url);
+            Validate.requireString(name);
+            Validate.requireValidProvider(name);
+            Validate.requireObject(processingCaches);
+            Validate.requireNonNegativeInteger(tabId);
+        } catch {
             return;
         }
 
         try {
             const key = UrlHelpers.normalizeUrl(url);
 
-            if (!key || typeof key !== 'string' || key.length === 0) {
+            if (!Validate.isString(key) || key.length === 0) {
                 console.warn('URL normalization returned invalid result');
                 return;
             }
@@ -809,26 +797,23 @@ const CacheManager = (() => {
     /**
      * Remove a URL from the processing cache for a specific provider.
      *
-     * @param url {string|URL} - The URL to remove, can be a string or a URL object.
-     * @param name {string} - The name of the provider (e.g., "precisionSec").
+     * @param {string|URL} url - The URL to remove, can be a string or a URL object.
+     * @param {string} name - The name of the provider (e.g., "precisionSec").
      */
     const removeUrlFromProcessingCache = (url, name) => {
-        // Returns if the processing caches are invalid
-        if (!processingCaches || typeof processingCaches !== 'object') {
-            console.warn('processingCaches is not defined or not an object');
-            return;
-        }
-
-        // Returns if the provider name is invalid
-        if (!isValidProvider(name)) {
-            console.warn(`Invalid provider name: ${name}`);
+        try {
+            Validate.requireNotNull(url);
+            Validate.requireString(name);
+            Validate.requireValidProvider(name);
+            Validate.requireObject(processingCaches);
+        } catch {
             return;
         }
 
         try {
             const key = UrlHelpers.normalizeUrl(url);
 
-            if (!key || typeof key !== 'string' || key.length === 0) {
+            if (!Validate.isString(key) || key.length === 0) {
                 console.warn('URL normalization returned invalid result');
                 return;
             }
@@ -859,21 +844,12 @@ const CacheManager = (() => {
      * @returns {string[]} - An array of keys (normalized URLs or strings) that match the criteria.
      */
     const getKeysByTabId = (name, tabId) => {
-        // Returns if the processing caches are invalid
-        if (!processingCaches || typeof processingCaches !== 'object') {
-            console.warn('processingCaches is not defined or not an object');
-            return [];
-        }
-
-        // Returns if the provider name is invalid
-        if (!isValidProvider(name)) {
-            console.warn(`Invalid provider name: ${name}`);
-            return [];
-        }
-
-        // Returns if the tabId is invalid
-        if (!Number.isInteger(tabId) || tabId < 0) {
-            console.warn('Invalid tabId provided: ', tabId);
+        try {
+            Validate.requireString(name);
+            Validate.requireValidProvider(name);
+            Validate.requireObject(processingCaches);
+            Validate.requireNonNegativeInteger(tabId);
+        } catch {
             return [];
         }
 
@@ -906,18 +882,13 @@ const CacheManager = (() => {
     /**
      * Remove all entries in the processing cache for all keys associated with a specific tabId.
      *
-     * @param tabId - The ID of the tab whose entries should be removed.
+     * @param {number} tabId - The ID of the tab whose entries should be removed.
      */
     const removeKeysByTabId = tabId => {
-        // Returns if the processing caches are invalid
-        if (!processingCaches || typeof processingCaches !== 'object') {
-            console.warn('processingCaches is not defined or not an object');
-            return;
-        }
-
-        // Returns if the tabId is invalid
-        if (!Number.isInteger(tabId) || tabId < 0) {
-            console.warn('Invalid tabId provided: ', tabId);
+        try {
+            Validate.requireObject(processingCaches);
+            Validate.requireNonNegativeInteger(tabId);
+        } catch {
             return;
         }
 
@@ -964,5 +935,6 @@ const CacheManager = (() => {
         removeUrlFromProcessingCache,
         getKeysByTabId,
         removeKeysByTabId,
+        providers
     };
 })();
