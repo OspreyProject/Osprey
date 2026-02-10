@@ -519,7 +519,7 @@ const UrlHelpers = (() => {
         return sanitized.length > maxLength ? sanitized.substring(0, maxLength) + '...' : sanitized;
     };
 
-    return {
+    return Object.freeze({
         extractBlockedUrl,
         extractContinueUrl,
         extractOrigin,
@@ -530,5 +530,5 @@ const UrlHelpers = (() => {
         sanitizeForDisplay,
         isInternalAddress,
         encodeDNSQuery
-    };
+    });
 })();

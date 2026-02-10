@@ -1869,8 +1869,8 @@ const BrowserProtection = (() => {
         cleanupTabControllers();
     };
 
-    return {
+    return Object.freeze({
         abandonPendingRequests,
         checkIfUrlIsMalicious
-    };
+    });
 })();

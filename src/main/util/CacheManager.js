@@ -742,7 +742,7 @@ const CacheManager = (() => {
         }
     };
 
-    return {
+    return Object.freeze({
         clearAllowedCache,
         clearBlockedCache,
         clearProcessingCache,
@@ -761,5 +761,5 @@ const CacheManager = (() => {
         getKeysByTabId,
         removeKeysByTabId,
         providers
-    };
+    });
 })();

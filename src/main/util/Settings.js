@@ -215,11 +215,11 @@ const Settings = (() => {
             !settings.quad9Enabled;
     };
 
-    return {
+    return Object.freeze({
         get,
         set,
         restoreDefaultSettings,
         allPartnersDisabled,
         allProvidersDisabled,
-    };
+    });
 })();

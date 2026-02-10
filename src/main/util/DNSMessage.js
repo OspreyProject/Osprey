@@ -776,7 +776,7 @@ class DNSMessage {
     }
 }
 
-DNSMessage.RRType = {
+DNSMessage.RRType = Object.freeze({
     A: 1,
     NS: 2,
     CNAME: 5,
@@ -785,21 +785,21 @@ DNSMessage.RRType = {
     MX: 15,
     AAAA: 28,
     SRV: 33
-};
+});
 
-DNSMessage.OPCODE = {
+DNSMessage.OPCODE = Object.freeze({
     QUERY: 0,
     IQUERY: 1,
     STATUS: 2,
     NOTIFY: 4,
     UPDATE: 5
-};
+});
 
-DNSMessage.RCODE = {
+DNSMessage.RCODE = Object.freeze({
     NOERROR: 0,
     FORMERR: 1,
     SERVFAIL: 2,
     NXDOMAIN: 3,
     NOTIMP: 4,
     REFUSED: 5
-};
+});

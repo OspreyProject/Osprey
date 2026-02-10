@@ -451,9 +451,9 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
         updatePageDisplay();
     };
 
-    return {
+    return Object.freeze({
         initialize
-    };
+    });
 })();
 
 // Initializes when the DOM is ready

@@ -574,9 +574,9 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         });
     };
 
-    return {
+    return Object.freeze({
         initialize
-    };
+    });
 })();
 
 // Initializes when the DOM is ready

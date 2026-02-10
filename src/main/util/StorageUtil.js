@@ -219,10 +219,10 @@ const StorageUtil = (() => {
         return typeof key === 'string' && key.length > 0 && !DANGEROUS_KEYS.has(key);
     };
 
-    return {
+    return Object.freeze({
         getFromLocalStore,
         setToLocalStore,
         getFromSessionStore,
         setToSessionStore
-    };
+    });
 })();
