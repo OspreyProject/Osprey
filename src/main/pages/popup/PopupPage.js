@@ -175,6 +175,7 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
      */
     const getSystemElements = system => {
         if (!system) {
+            console.warn(`Invalid system object provided to getSystemElements:`, system);
             return null;
         }
 
@@ -197,6 +198,7 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
         const elements = getSystemElements(system);
 
         if (!elements) {
+            console.warn(`Could not retrieve elements for ${system.name}; skipping UI update.`);
             return;
         }
 

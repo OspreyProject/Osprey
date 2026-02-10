@@ -204,6 +204,7 @@ const UrlHelpers = (() => {
 
             // Each number must be between 0 and 255
             if (nums.some(n => n < 0 || n > 255)) {
+                console.warn(`Invalid IPv4 address: ${hostname}`);
                 return null;
             }
             return nums.join('.');
@@ -213,6 +214,7 @@ const UrlHelpers = (() => {
         if (s.includes(":")) {
             // Allow hex, colons, and optional dotted tail; reject other chars
             if (!/^[0-9a-f:.]+$/.test(s)) {
+                console.warn(`Invalid IPv6 address: ${hostname}`);
                 return null;
             }
 
@@ -224,6 +226,7 @@ const UrlHelpers = (() => {
 
                 // Basic dotted-decimal check
                 if (!/^\d{1,3}(\.\d{1,3}){3}$/.test(tail)) {
+                    console.warn(`Invalid IPv4 tail in IPv6 address: ${hostname}`);
                     return null;
                 }
 

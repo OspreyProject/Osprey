@@ -57,6 +57,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
      */
     const wrapSystemNamesText = text => {
         if (typeof text !== 'string') {
+            console.warn(`Expected a string for wrapSystemNamesText, but received ${typeof text}`);
             return '';
         }
 
@@ -264,6 +265,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         // Listens for PONG messages to update the reported by count
         browserAPI.runtime.onMessage.addListener(message => {
             if (!message || typeof message.messageType !== 'string' || typeof message.count !== 'number' || !Array.isArray(message.systems)) {
+                console.warn(`Received invalid message: ${JSON.stringify(message)}`);
                 return;
             }
 
@@ -431,6 +433,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
                     return new URL("https://quad9.net/support/contact");
 
                 default:
+                    console.warn(`No report URL defined for origin integer: ${originInt}`);
                     return null;
             }
         };

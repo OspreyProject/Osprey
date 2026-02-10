@@ -267,12 +267,14 @@ const CacheManager = (() => {
             const key = UrlHelpers.normalizeUrl(url);
 
             if (!key) {
+                console.warn(`Invalid URL provided for allowed cache check: ${url}`);
                 return false;
             }
 
             const map = allowedCaches[name];
 
             if (!map) {
+                console.warn(`Allowed cache "${name}" not found`);
                 return false;
             }
 
@@ -305,6 +307,7 @@ const CacheManager = (() => {
             const map = allowedCaches[name];
 
             if (!map) {
+                console.warn(`Allowed cache "${name}" not found`);
                 return false;
             }
 
@@ -327,6 +330,7 @@ const CacheManager = (() => {
     const isPatternInAllowedCache = (str, name) => {
         // Returns if the string is too long
         if (typeof str !== 'string' || str.length > 2048) {
+            console.warn(`Invalid string provided for allowed cache pattern check: "${str}"`);
             return false;
         }
 
@@ -334,6 +338,7 @@ const CacheManager = (() => {
             const map = allowedCaches[name];
 
             if (!map) {
+                console.warn(`Allowed cache "${name}" not found`);
                 return false;
             }
 
@@ -367,6 +372,7 @@ const CacheManager = (() => {
             const key = UrlHelpers.normalizeUrl(url);
 
             if (!key) {
+                console.warn(`Invalid URL provided for allowed cache addition: ${url}`);
                 return;
             }
 
@@ -428,6 +434,7 @@ const CacheManager = (() => {
             const key = UrlHelpers.normalizeUrl(url);
 
             if (!key) {
+                console.warn(`Invalid URL provided for blocked cache check: ${url}`);
                 return false;
             }
 
@@ -464,6 +471,7 @@ const CacheManager = (() => {
             const key = UrlHelpers.normalizeUrl(url);
 
             if (!key) {
+                console.warn(`Invalid URL provided for blocked cache addition: ${url}`);
                 return;
             }
 
@@ -534,6 +542,7 @@ const CacheManager = (() => {
             const key = UrlHelpers.normalizeUrl(url);
 
             if (!key) {
+                console.warn(`Invalid URL provided for blocked cache removal: ${url}`);
                 return;
             }
 
@@ -566,12 +575,14 @@ const CacheManager = (() => {
             const key = UrlHelpers.normalizeUrl(url);
 
             if (!key) {
+                console.warn(`Invalid URL provided for processing cache check: ${url}`);
                 return false;
             }
 
             const map = processingCaches[name];
 
             if (!map) {
+                console.warn(`Processing cache "${name}" not found`);
                 return false;
             }
 
@@ -604,6 +615,7 @@ const CacheManager = (() => {
             const key = UrlHelpers.normalizeUrl(url);
 
             if (!key) {
+                console.warn(`Invalid URL provided for processing cache addition: ${url}`);
                 return;
             }
 
@@ -638,6 +650,7 @@ const CacheManager = (() => {
             const key = UrlHelpers.normalizeUrl(url);
 
             if (!key) {
+                console.warn(`Invalid URL provided for processing cache removal: ${url}`);
                 return;
             }
 
@@ -672,6 +685,7 @@ const CacheManager = (() => {
 
         // Checks if the map is valid
         if (!map) {
+            console.warn(`Processing cache "${name}" not found`);
             return results;
         }
 
@@ -706,6 +720,7 @@ const CacheManager = (() => {
 
             // Checks if the cache is valid
             if (!map) {
+                console.warn(`Processing cache "${name}" not found`);
                 continue;
             }
 

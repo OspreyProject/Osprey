@@ -207,6 +207,7 @@
     const handleNavigation = navigationDetails => {
         // Basic property checks - navigationDetails comes from browser API
         if (!navigationDetails || typeof navigationDetails.tabId !== 'number' || !navigationDetails.url) {
+            console.warn(`Invalid navigation details: ${JSON.stringify(navigationDetails)}`);
             return;
         }
 
@@ -851,12 +852,14 @@
      */
     browserAPI.runtime.onMessage.addListener((message, sender, sendResponse) => {
         if (!message || !sender || typeof sendResponse !== 'function') {
+            console.warn(`Invalid message event: ${JSON.stringify({message, sender})}`);
             return false;
         }
 
         if (message.messageType === Messages.BLOCKED_COUNTER_PING) {
             // Validate sender is from this extension
             if (!sender.tab?.id || sender.id !== browserAPI.runtime.id) {
+                console.warn(`Invalid message sender: ${JSON.stringify(sender)}`);
                 return false;
             }
 
@@ -873,6 +876,7 @@
             // If the page URL is the block page, send (count - 1)
             browserAPI.tabs.get(tabId, tab => {
                 if (!tab?.url) {
+                    console.warn(`tabs.get(${tabId}) failed '${browserAPI.runtime.lastError?.message}'; bailing out.`);
                     return false;
                 }
 
@@ -903,6 +907,7 @@
         let tabId = Number(tabIdObject);
 
         if (!Number.isInteger(tabId) || tabId < 0) {
+            console.warn(`Invalid tabId in onRemoved event: ${tabIdObject}`);
             return;
         }
 
@@ -923,6 +928,7 @@
      */
     browserAPI.webNavigation.onBeforeNavigate.addListener(details => {
         if (!details?.url || typeof details.tabId !== 'number') {
+            console.warn(`Invalid onBeforeNavigate event details: ${JSON.stringify(details)}`);
             return;
         }
 
@@ -937,6 +943,7 @@
      */
     browserAPI.webNavigation.onCommitted.addListener(details => {
         if (!details?.url || typeof details.tabId !== 'number' || !Array.isArray(details.transitionQualifiers)) {
+            console.warn(`Invalid onCommitted event details: ${JSON.stringify(details)}`);
             return;
         }
 
@@ -959,6 +966,7 @@
      */
     browserAPI.tabs.onUpdated.addListener((tabId, changeInfo) => {
         if (typeof tabId !== 'number' || !changeInfo) {
+            console.warn(`Invalid onUpdated event: tabId=${tabId}, changeInfo=${JSON.stringify(changeInfo)}`);
             return;
         }
 
@@ -978,6 +986,7 @@
      */
     browserAPI.webNavigation.onCreatedNavigationTarget.addListener(details => {
         if (!details?.url || typeof details.tabId !== 'number') {
+            console.warn(`Invalid onCreatedNavigationTarget event details: ${JSON.stringify(details)}`);
             return;
         }
 
@@ -992,6 +1001,7 @@
      */
     browserAPI.webNavigation.onHistoryStateUpdated.addListener(details => {
         if (!details?.url || typeof details.tabId !== 'number') {
+            console.warn(`Invalid onHistoryStateUpdated event details: ${JSON.stringify(details)}`);
             return;
         }
 
@@ -1006,6 +1016,7 @@
      */
     browserAPI.webNavigation.onReferenceFragmentUpdated.addListener(details => {
         if (!details?.url || typeof details.tabId !== 'number') {
+            console.warn(`Invalid onReferenceFragmentUpdated event details: ${JSON.stringify(details)}`);
             return;
         }
 
@@ -1020,6 +1031,7 @@
      */
     browserAPI.webNavigation.onTabReplaced.addListener(details => {
         if (!details?.url || typeof details.tabId !== 'number') {
+            console.warn(`Invalid onTabReplaced event details: ${JSON.stringify(details)}`);
             return;
         }
 
@@ -1035,10 +1047,12 @@
      */
     browserAPI.runtime.onMessage.addListener((message, sender) => {
         if (!message?.messageType || typeof message.messageType !== 'string') {
+            console.warn(`Invalid message received: ${JSON.stringify(message)}`);
             return;
         }
 
         if (!sender?.id || sender.id !== browserAPI.runtime.id || !sender.url) {
+            console.warn(`Invalid message sender: ${JSON.stringify(sender)}`);
             return;
         }
 
@@ -1077,6 +1091,7 @@
             case Messages.REPORT_WEBSITE:
             case Messages.ALLOW_WEBSITE:
                 if (typeof tabId !== 'number' || tabId < 0) {
+                    console.warn(`Invalid tabId in message sender: ${tabId}`);
                     return;
                 }
                 break;
@@ -1090,6 +1105,7 @@
             case Messages.CONTINUE_TO_WEBSITE: {
                 // Basic property checks
                 if (!message.blockedUrl || !message.continueUrl || message.origin === undefined) {
+                    console.warn(`Missing required properties in CONTINUE_TO_WEBSITE message: ${JSON.stringify(message)}`);
                     sendToNewTabPage(tabId);
                     return;
                 }
@@ -1157,6 +1173,7 @@
             case Messages.REPORT_WEBSITE: {
                 // Basic property checks
                 if (!message.reportUrl || message.origin === undefined) {
+                    console.warn(`Missing required properties in REPORT_WEBSITE message: ${JSON.stringify(message)}`);
                     sendToNewTabPage(tabId);
                     return;
                 }
@@ -1205,6 +1222,7 @@
             case Messages.ALLOW_WEBSITE: {
                 // Basic property checks
                 if (!message.blockedUrl || !message.continueUrl || message.origin === undefined) {
+                    console.warn(`Missing required properties in ALLOW_WEBSITE message: ${JSON.stringify(message)}`);
                     return;
                 }
 
@@ -1221,7 +1239,7 @@
                 if (!blockedUrlResult.valid) {
                     console.warn(`Invalid blocked URL: ${blockedUrlResult.error}; sending to new tab page.`);
                     sendToNewTabPage(tabId);
-                    break;
+                    return;
                 }
                 const blockedUrlObject = blockedUrlResult.url;
 
@@ -1232,7 +1250,7 @@
                 if (!UrlHelpers.isValidHostname(hostname)) {
                     console.warn(`Invalid hostname pattern: ${hostname}`);
                     sendToNewTabPage(tabId);
-                    break;
+                    return;
                 }
 
                 const hostnameString = `*.${hostname}`;
@@ -1246,7 +1264,7 @@
                 if (!continueUrlResult.valid) {
                     console.warn(`Invalid continue URL: ${continueUrlResult.error}; sending to new tab page.`);
                     sendToNewTabPage(tabId);
-                    break;
+                    return;
                 }
                 const continueUrlObject = continueUrlResult.url;
 
@@ -1254,7 +1272,7 @@
                 if (blockedUrlObject.origin !== continueUrlObject.origin) {
                     console.warn(`Continue URL origin mismatch: ${continueUrlObject.origin} vs ${blockedUrlObject.origin}`);
                     sendToNewTabPage(tabId);
-                    break;
+                    return;
                 }
 
                 // Sends the user to the continue URL, or the new tab page on error
@@ -1307,6 +1325,7 @@
      */
     contextMenuAPI.onClicked.addListener(info => {
         if (!info?.menuItemId || typeof info.menuItemId !== 'string') {
+            console.warn(`Invalid context menu click info: ${JSON.stringify(info)}`);
             return;
         }
 

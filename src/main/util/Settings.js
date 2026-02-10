@@ -67,6 +67,7 @@ const Settings = (() => {
      */
     const updateIfChanged = (target, source) => {
         if (!source || typeof source !== 'object') {
+            console.warn(`Invalid source object for settings update, expected an object but got ${typeof source}`);
             return false;
         }
 
@@ -124,6 +125,7 @@ const Settings = (() => {
      */
     const set = (newSettings, callback) => {
         if (!newSettings || typeof newSettings !== 'object') {
+            console.warn(`Invalid new settings object, expected an object but got ${typeof newSettings}`);
             return;
         }
 
@@ -161,6 +163,7 @@ const Settings = (() => {
      */
     const validateSettingValue = (key, value, defaultValue) => {
         if (value === null || value === undefined || defaultValue === null || defaultValue === undefined) {
+            console.warn(`Invalid value for setting ${key}, using default value`);
             return defaultValue;
         }
 

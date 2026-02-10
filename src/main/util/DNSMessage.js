@@ -360,6 +360,7 @@ class DNSMessage {
     static parseRData(array, type, rdataStart, rdlength) {
         // Checks if the RDATA start and length are within the bounds of the array
         if (rdataStart < 0 || rdataStart + rdlength > array.length) {
+            console.warn(`RDATA bounds are out of array limits (start: ${rdataStart}, length: ${rdlength}, array length: ${array.length}).`);
             return "(Invalid RDATA bounds)";
         }
 
