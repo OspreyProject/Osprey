@@ -244,10 +244,10 @@ const BrowserProtection = (() => {
                     return;
                 }
 
-                // Return early if the Accept found in the responses is not what we expect
-                if (!Validate.hasValidAcceptHeader(filteringResponse, 'application/dns-message') ||
-                    !Validate.hasValidAcceptHeader(nonFilteringResponse, 'application/dns-json')) {
-                    console.warn(`[${shortName}] Unexpected Accept: ${filteringResponse.headers.get('Accept')}, ${nonFilteringResponse.headers.get('Accept')}`);
+                // Return early if the Content-Type is not what we expect
+                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message') ||
+                    !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
+                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -358,10 +358,10 @@ const BrowserProtection = (() => {
                     return;
                 }
 
-                // Return early if the Accept found in the responses is not what we expect
-                if (!Validate.hasValidAcceptHeader(filteringResponse, 'application/dns-message') ||
-                    !Validate.hasValidAcceptHeader(nonFilteringResponse, 'application/dns-json')) {
-                    console.warn(`[${shortName}] Unexpected Accept: ${filteringResponse.headers.get('Accept')}, ${nonFilteringResponse.headers.get('Accept')}`);
+                // Return early if the Content-Type is not what we expect
+                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message') ||
+                    !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
+                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -480,7 +480,7 @@ const BrowserProtection = (() => {
                 }
 
                 // Return early if the Content-Type is not what we expect
-                if (!Validate.hasValidContentType(response, 'application/json')) {
+                if (!Validate.hasValidContentType(response, 'text/html; charset=utf-8')) {
                     console.warn(`[${shortName}] Unexpected Content-Type: ${response.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
@@ -720,10 +720,10 @@ const BrowserProtection = (() => {
                     return;
                 }
 
-                // Return early if the Accept found in the responses is not what we expect
-                if (!Validate.hasValidAcceptHeader(filteringResponse, 'application/dns-message') ||
-                    !Validate.hasValidAcceptHeader(nonFilteringResponse, 'application/dns-json')) {
-                    console.warn(`[${shortName}] Unexpected Accept: ${filteringResponse.headers.get('Accept')}, ${nonFilteringResponse.headers.get('Accept')}`);
+                // Return early if the Content-Type is not what we expect
+                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message') ||
+                    !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
+                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -834,10 +834,10 @@ const BrowserProtection = (() => {
                     return;
                 }
 
-                // Return early if the Accept found in the responses is not what we expect
-                if (!Validate.hasValidAcceptHeader(filteringResponse, 'application/dns-message') ||
-                    !Validate.hasValidAcceptHeader(nonFilteringResponse, 'application/dns-json')) {
-                    console.warn(`[${shortName}] Unexpected Accept: ${filteringResponse.headers.get('Accept')}, ${nonFilteringResponse.headers.get('Accept')}`);
+                // Return early if the Content-Type is not what we expect
+                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message') ||
+                    !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
+                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -944,10 +944,10 @@ const BrowserProtection = (() => {
                     return;
                 }
 
-                // Return early if the Accept found in the responses is not what we expect
-                if (!Validate.hasValidAcceptHeader(filteringResponse, 'application/dns-message') ||
-                    !Validate.hasValidAcceptHeader(nonFilteringResponse, 'application/dns-json')) {
-                    console.warn(`[${shortName}] Unexpected Accept: ${filteringResponse.headers.get('Accept')}, ${nonFilteringResponse.headers.get('Accept')}`);
+                // Return early if the Content-Type is not what we expect
+                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message') ||
+                    !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
+                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -1054,10 +1054,10 @@ const BrowserProtection = (() => {
                     return;
                 }
 
-                // Return early if the Accept found in the responses is not what we expect
-                if (!Validate.hasValidAcceptHeader(filteringResponse, 'application/dns-message') ||
-                    !Validate.hasValidAcceptHeader(nonFilteringResponse, 'application/dns-json')) {
-                    console.warn(`[${shortName}] Unexpected Accept: ${filteringResponse.headers.get('Accept')}, ${nonFilteringResponse.headers.get('Accept')}`);
+                // Return early if the Content-Type is not what we expect
+                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-json') ||
+                    !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
+                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -1166,10 +1166,10 @@ const BrowserProtection = (() => {
                     return;
                 }
 
-                // Return early if the Accept found in the responses is not what we expect
-                if (!Validate.hasValidAcceptHeader(filteringResponse, 'application/dns-message') ||
-                    !Validate.hasValidAcceptHeader(nonFilteringResponse, 'application/dns-json')) {
-                    console.warn(`[${shortName}] Unexpected Accept: ${filteringResponse.headers.get('Accept')}, ${nonFilteringResponse.headers.get('Accept')}`);
+                // Return early if the Content-Type is not what we expect
+                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message') ||
+                    !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
+                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -1278,10 +1278,10 @@ const BrowserProtection = (() => {
                     return;
                 }
 
-                // Return early if the Accept found in the responses is not what we expect
-                if (!Validate.hasValidAcceptHeader(filteringResponse, 'application/dns-message') ||
-                    !Validate.hasValidAcceptHeader(nonFilteringResponse, 'application/dns-json')) {
-                    console.warn(`[${shortName}] Unexpected Accept: ${filteringResponse.headers.get('Accept')}, ${nonFilteringResponse.headers.get('Accept')}`);
+                // Return early if the Content-Type is not what we expect
+                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message') ||
+                    !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
+                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -1392,10 +1392,10 @@ const BrowserProtection = (() => {
                     return;
                 }
 
-                // Return early if the Accept found in the responses is not what we expect
-                if (!Validate.hasValidAcceptHeader(filteringResponse, 'application/dns-message') ||
-                    !Validate.hasValidAcceptHeader(nonFilteringResponse, 'application/dns-json')) {
-                    console.warn(`[${shortName}] Unexpected Accept: ${filteringResponse.headers.get('Accept')}, ${nonFilteringResponse.headers.get('Accept')}`);
+                // Return early if the Content-Type is not what we expect
+                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message') ||
+                    !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
+                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -1506,10 +1506,10 @@ const BrowserProtection = (() => {
                     return;
                 }
 
-                // Return early if the Accept found in the responses is not what we expect
-                if (!Validate.hasValidAcceptHeader(filteringResponse, 'application/dns-message') ||
-                    !Validate.hasValidAcceptHeader(nonFilteringResponse, 'application/dns-json')) {
-                    console.warn(`[${shortName}] Unexpected Accept: ${filteringResponse.headers.get('Accept')}, ${nonFilteringResponse.headers.get('Accept')}`);
+                // Return early if the Content-Type is not what we expect
+                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message') ||
+                    !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
+                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -1620,10 +1620,10 @@ const BrowserProtection = (() => {
                     return;
                 }
 
-                // Return early if the Accept found in the responses is not what we expect
-                if (!Validate.hasValidAcceptHeader(filteringResponse, 'application/dns-message') ||
-                    !Validate.hasValidAcceptHeader(nonFilteringResponse, 'application/dns-json')) {
-                    console.warn(`[${shortName}] Unexpected Accept: ${filteringResponse.headers.get('Accept')}, ${nonFilteringResponse.headers.get('Accept')}`);
+                // Return early if the Content-Type is not what we expect
+                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message') ||
+                    !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
+                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -1834,10 +1834,10 @@ const BrowserProtection = (() => {
                     return;
                 }
 
-                // Return early if the Accept found in the responses is not what we expect
-                if (!Validate.hasValidAcceptHeader(filteringResponse, 'application/dns-message') ||
-                    !Validate.hasValidAcceptHeader(nonFilteringResponse, 'application/dns-json')) {
-                    console.warn(`[${shortName}] Unexpected Accept: ${filteringResponse.headers.get('Accept')}, ${nonFilteringResponse.headers.get('Accept')}`);
+                // Return early if the Content-Type is not what we expect
+                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message') ||
+                    !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
+                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -1948,10 +1948,10 @@ const BrowserProtection = (() => {
                     return;
                 }
 
-                // Return early if the Accept found in the responses is not what we expect
-                if (!Validate.hasValidAcceptHeader(filteringResponse, 'application/dns-message') ||
-                    !Validate.hasValidAcceptHeader(nonFilteringResponse, 'application/dns-json')) {
-                    console.warn(`[${shortName}] Unexpected Accept: ${filteringResponse.headers.get('Accept')}, ${nonFilteringResponse.headers.get('Accept')}`);
+                // Return early if the Content-Type is not what we expect
+                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message') ||
+                    !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
+                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
