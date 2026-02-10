@@ -26,9 +26,9 @@ const BrowserProtection = (() => {
     // API keys for various protection services
     // These aren't meant to be secret, but they are obfuscated to stop secret sniffers.
     // They will be exposed in the network requests anyway, so this is just to prevent casual snooping.
-    let alphaMountainKey = atob("NjkyZDE1MzItZTRmYy00MjFmLWJkMzYtZGFmMGNjYzZlMTFi");
-    let precisionSecKey = atob("MGI1Yjc2MjgtMzgyYi0xMWYwLWE1OWMtYjNiNTIyN2IxMDc2");
-    let seclookupKey = atob("MGJkYTY0MTA4ZTJiMWE3MGVmNzBlYzExM2Q3MGY5Y2Y=");
+    const alphaMountainKey = atob("NjkyZDE1MzItZTRmYy00MjFmLWJkMzYtZGFmMGNjYzZlMTFi");
+    const precisionSecKey = atob("MGI1Yjc2MjgtMzgyYi0xMWYwLWE1OWMtYjNiNTIyN2IxMDc2");
+    const seclookupKey = atob("MGJkYTY0MTA4ZTJiMWE3MGVmNzBlYzExM2Q3MGY5Y2Y=");
 
     // Map to store AbortControllers for each tab
     let tabAbortControllers = new Map();

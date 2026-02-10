@@ -26,7 +26,7 @@ const Settings = (() => {
     // List of keys that are considered dangerous and should not be used for storage
     const DANGEROUS_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
 
-    let defaultSettings = Object.freeze({
+    const defaultSettings = Object.freeze({
         // Official Partners
         adGuardSecurityEnabled: true,
         adGuardFamilyEnabled: false,

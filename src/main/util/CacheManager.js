@@ -24,9 +24,9 @@ const CacheManager = (() => {
     const DANGEROUS_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
 
     // Key names for the caches in local and session storage
-    let allowedKey = "allowedCache";
-    let blockedKey = "blockedCache";
-    let processingKey = "processingCache";
+    const allowedKey = "allowedCache";
+    const blockedKey = "blockedCache";
+    const processingKey = "processingCache";
 
     // Caches for allowed, blocked, and processing entries
     let allowedCaches = {};
