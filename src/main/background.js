@@ -543,12 +543,8 @@
                                         priority: 2,
                                     };
 
-                                    // Creates a unique notification ID based on a random number
-                                    const randomNumber = Math.floor(Math.random() * 100000000);
-                                    const notificationId = `warning-${randomNumber}`;
-
                                     // Displays the warning notification
-                                    browserAPI.notifications.create(notificationId, notificationOptions, notificationId => {
+                                    browserAPI.notifications.create(notificationOptions, notificationId => {
                                         console.debug(`Notification created with ID: ${notificationId}`);
                                     });
                                 }
