@@ -114,6 +114,30 @@ const Validate = (() => {
     };
 
     /**
+     * Validates that the response Content-Type matches the expected type.
+     *
+     * @param {Response} response - The fetch response to validate.
+     * @param {string} expected - The expected Content-Type (e.g., 'application/json').
+     * @returns {boolean} - True if Content-Type matches, false otherwise.
+     */
+    const hasValidContentType = (response, expected) => {
+        const contentType = response.headers.get('Content-Type') || '';
+        return contentType.toLowerCase().includes(expected.toLowerCase());
+    };
+
+    /**
+     * Validates that the request Accept header includes the expected type.
+     *
+     * @param {Response} response - The fetch response to validate.
+     * @param {string} expected - The expected Accept (e.g., 'application/dns-message').
+     * @returns {boolean} - True if Accept matches, false otherwise.
+     */
+    const hasValidAcceptHeader = (response, expected) => {
+        const contentType = response.headers.get('Accept') || '';
+        return contentType.toLowerCase().includes(expected.toLowerCase());
+    };
+
+    /**
      * Parses a value that may be a string or number into an integer, if possible.
      *
      * @param {*} value - The value to parse.
@@ -681,6 +705,8 @@ const Validate = (() => {
         isNotEmpty,
         hasProperty,
         hasStringProperty,
+        hasValidContentType,
+        hasValidAcceptHeader,
         hasAllStringProperties,
         parseStringToInt,
         isValidOrigin,

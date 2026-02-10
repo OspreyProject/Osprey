@@ -33,6 +33,45 @@ const BrowserProtection = (() => {
     // Map to store AbortControllers for each tab
     let tabAbortControllers = new Map();
 
+    // Default request timeout in milliseconds (15 seconds)
+    const REQUEST_TIMEOUT_MS = 15000;
+
+    /**
+     * Creates an AbortSignal that times out after the specified duration.
+     * Combines with an existing signal if provided.
+     *
+     * @param {AbortSignal} existingSignal - An existing abort signal to combine with.
+     * @param {number} timeoutMs - Timeout in milliseconds.
+     * @returns {AbortSignal} - The combined abort signal.
+     */
+    const createTimeoutSignal = (existingSignal, timeoutMs = REQUEST_TIMEOUT_MS) => {
+        const timeoutController = new AbortController();
+        const timeoutId = setTimeout(() => timeoutController.abort('Request timeout'), timeoutMs);
+
+        // If the existing signal aborts, clear the timeout
+        if (existingSignal) {
+            existingSignal.addEventListener('abort', () => {
+                clearTimeout(timeoutId);
+            });
+        }
+
+        // Return a signal that aborts if either the timeout or existing signal aborts
+        if (existingSignal) {
+            const combinedController = new AbortController();
+
+            existingSignal.addEventListener('abort', () => {
+                clearTimeout(timeoutId);
+                combinedController.abort(existingSignal.reason);
+            });
+
+            timeoutController.signal.addEventListener('abort', () => {
+                combinedController.abort('Request timeout');
+            });
+            return combinedController.signal;
+        }
+        return timeoutController.signal;
+    };
+
     /**
      * Cleans up controllers for tabs that no longer exist.
      */
@@ -205,6 +244,14 @@ const BrowserProtection = (() => {
                     return;
                 }
 
+                // Return early if the Accept found in the responses is not what we expect
+                if (!Validate.hasValidAcceptHeader(filteringResponse, 'application/dns-message') ||
+                    !Validate.hasValidAcceptHeader(nonFilteringResponse, 'application/dns-json')) {
+                    console.warn(`[${shortName}] Unexpected Accept: ${filteringResponse.headers.get('Accept')}, ${nonFilteringResponse.headers.get('Accept')}`);
+                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
+                    return;
+                }
+
                 const filteringData = new Uint8Array(await filteringResponse.arrayBuffer());
                 const nonFilteringData = await nonFilteringResponse.json();
                 const response = DNSMessage.parse(filteringData);
@@ -293,7 +340,7 @@ const BrowserProtection = (() => {
                     headers: {
                         "Accept": "application/dns-message"
                     },
-                    signal
+                    signal: createTimeoutSignal(signal)
                 });
 
                 const nonFilteringResponse = await fetch(nonFilteringURL, {
@@ -301,12 +348,20 @@ const BrowserProtection = (() => {
                     headers: {
                         "Accept": "application/dns-json"
                     },
-                    signal
+                    signal: createTimeoutSignal(signal)
                 });
 
                 // Returns early if one or more of the responses is not OK
                 if (!filteringResponse.ok || !nonFilteringResponse.ok) {
                     console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
+                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
+                    return;
+                }
+
+                // Return early if the Accept found in the responses is not what we expect
+                if (!Validate.hasValidAcceptHeader(filteringResponse, 'application/dns-message') ||
+                    !Validate.hasValidAcceptHeader(nonFilteringResponse, 'application/dns-json')) {
+                    console.warn(`[${shortName}] Unexpected Accept: ${filteringResponse.headers.get('Accept')}, ${nonFilteringResponse.headers.get('Accept')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -414,12 +469,19 @@ const BrowserProtection = (() => {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify(body),
-                    signal
+                    signal: createTimeoutSignal(signal)
                 });
 
                 // Return early if the response is not OK
                 if (!response.ok) {
                     console.warn(`[${shortName}] Returned early: ${response.status}`);
+                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
+                    return;
+                }
+
+                // Return early if the Content-Type is not what we expect
+                if (!Validate.hasValidContentType(response, 'application/json')) {
+                    console.warn(`[${shortName}] Unexpected Content-Type: ${response.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -540,12 +602,19 @@ const BrowserProtection = (() => {
                         "Content-Type": "application/json",
                         "API-Key": precisionSecKey,
                     },
-                    signal
+                    signal: createTimeoutSignal(signal)
                 });
 
                 // Return early if the response is not OK
                 if (!response.ok) {
                     console.warn(`[${shortName}] Returned early: ${response.status}`);
+                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
+                    return;
+                }
+
+                // Return early if the Content-Type is not what we expect
+                if (!Validate.hasValidContentType(response, 'application/json')) {
+                    console.warn(`[${shortName}] Unexpected Content-Type: ${response.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -633,7 +702,7 @@ const BrowserProtection = (() => {
                     headers: {
                         "Accept": "application/dns-message"
                     },
-                    signal
+                    signal: createTimeoutSignal(signal)
                 });
 
                 const nonFilteringResponse = await fetch(nonFilteringURL, {
@@ -641,12 +710,20 @@ const BrowserProtection = (() => {
                     headers: {
                         "Accept": "application/dns-json"
                     },
-                    signal
+                    signal: createTimeoutSignal(signal)
                 });
 
                 // Returns early if one or more of the responses is not OK
                 if (!filteringResponse.ok || !nonFilteringResponse.ok) {
                     console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
+                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
+                    return;
+                }
+
+                // Return early if the Accept found in the responses is not what we expect
+                if (!Validate.hasValidAcceptHeader(filteringResponse, 'application/dns-message') ||
+                    !Validate.hasValidAcceptHeader(nonFilteringResponse, 'application/dns-json')) {
+                    console.warn(`[${shortName}] Unexpected Accept: ${filteringResponse.headers.get('Accept')}, ${nonFilteringResponse.headers.get('Accept')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -739,7 +816,7 @@ const BrowserProtection = (() => {
                     headers: {
                         "Accept": "application/dns-message"
                     },
-                    signal
+                    signal: createTimeoutSignal(signal)
                 });
 
                 const nonFilteringResponse = await fetch(nonFilteringURL, {
@@ -747,12 +824,20 @@ const BrowserProtection = (() => {
                     headers: {
                         "Accept": "application/dns-json"
                     },
-                    signal
+                    signal: createTimeoutSignal(signal)
                 });
 
                 // Returns early if one or more of the responses is not OK
                 if (!filteringResponse.ok || !nonFilteringResponse.ok) {
                     console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
+                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
+                    return;
+                }
+
+                // Return early if the Accept found in the responses is not what we expect
+                if (!Validate.hasValidAcceptHeader(filteringResponse, 'application/dns-message') ||
+                    !Validate.hasValidAcceptHeader(nonFilteringResponse, 'application/dns-json')) {
+                    console.warn(`[${shortName}] Unexpected Accept: ${filteringResponse.headers.get('Accept')}, ${nonFilteringResponse.headers.get('Accept')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -841,7 +926,7 @@ const BrowserProtection = (() => {
                     headers: {
                         "Accept": "application/dns-message"
                     },
-                    signal
+                    signal: createTimeoutSignal(signal)
                 });
 
                 const nonFilteringResponse = await fetch(nonFilteringURL, {
@@ -849,12 +934,20 @@ const BrowserProtection = (() => {
                     headers: {
                         "Accept": "application/dns-json"
                     },
-                    signal
+                    signal: createTimeoutSignal(signal)
                 });
 
                 // Returns early if one or more of the responses is not OK
                 if (!filteringResponse.ok || !nonFilteringResponse.ok) {
                     console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
+                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
+                    return;
+                }
+
+                // Return early if the Accept found in the responses is not what we expect
+                if (!Validate.hasValidAcceptHeader(filteringResponse, 'application/dns-message') ||
+                    !Validate.hasValidAcceptHeader(nonFilteringResponse, 'application/dns-json')) {
+                    console.warn(`[${shortName}] Unexpected Accept: ${filteringResponse.headers.get('Accept')}, ${nonFilteringResponse.headers.get('Accept')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -943,7 +1036,7 @@ const BrowserProtection = (() => {
                     headers: {
                         "Accept": "application/dns-json"
                     },
-                    signal
+                    signal: createTimeoutSignal(signal)
                 });
 
                 const nonFilteringResponse = await fetch(nonFilteringURL, {
@@ -951,12 +1044,20 @@ const BrowserProtection = (() => {
                     headers: {
                         "Accept": "application/dns-json"
                     },
-                    signal
+                    signal: createTimeoutSignal(signal)
                 });
 
                 // Returns early if one or more of the responses is not OK
                 if (!filteringResponse.ok || !nonFilteringResponse.ok) {
                     console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
+                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
+                    return;
+                }
+
+                // Return early if the Accept found in the responses is not what we expect
+                if (!Validate.hasValidAcceptHeader(filteringResponse, 'application/dns-message') ||
+                    !Validate.hasValidAcceptHeader(nonFilteringResponse, 'application/dns-json')) {
+                    console.warn(`[${shortName}] Unexpected Accept: ${filteringResponse.headers.get('Accept')}, ${nonFilteringResponse.headers.get('Accept')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -1047,7 +1148,7 @@ const BrowserProtection = (() => {
                     headers: {
                         "Accept": "application/dns-json"
                     },
-                    signal
+                    signal: createTimeoutSignal(signal)
                 });
 
                 const nonFilteringResponse = await fetch(nonFilteringURL, {
@@ -1055,12 +1156,20 @@ const BrowserProtection = (() => {
                     headers: {
                         "Accept": "application/dns-json"
                     },
-                    signal
+                    signal: createTimeoutSignal(signal)
                 });
 
                 // Returns early if one or more of the responses is not OK
                 if (!filteringResponse.ok || !nonFilteringResponse.ok) {
                     console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
+                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
+                    return;
+                }
+
+                // Return early if the Accept found in the responses is not what we expect
+                if (!Validate.hasValidAcceptHeader(filteringResponse, 'application/dns-message') ||
+                    !Validate.hasValidAcceptHeader(nonFilteringResponse, 'application/dns-json')) {
+                    console.warn(`[${shortName}] Unexpected Accept: ${filteringResponse.headers.get('Accept')}, ${nonFilteringResponse.headers.get('Accept')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -1151,7 +1260,7 @@ const BrowserProtection = (() => {
                     headers: {
                         "Accept": "application/dns-message"
                     },
-                    signal
+                    signal: createTimeoutSignal(signal)
                 });
 
                 const nonFilteringResponse = await fetch(nonFilteringURL, {
@@ -1159,12 +1268,20 @@ const BrowserProtection = (() => {
                     headers: {
                         "Accept": "application/dns-json"
                     },
-                    signal
+                    signal: createTimeoutSignal(signal)
                 });
 
                 // Returns early if one or more of the responses is not OK
                 if (!filteringResponse.ok || !nonFilteringResponse.ok) {
                     console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
+                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
+                    return;
+                }
+
+                // Return early if the Accept found in the responses is not what we expect
+                if (!Validate.hasValidAcceptHeader(filteringResponse, 'application/dns-message') ||
+                    !Validate.hasValidAcceptHeader(nonFilteringResponse, 'application/dns-json')) {
+                    console.warn(`[${shortName}] Unexpected Accept: ${filteringResponse.headers.get('Accept')}, ${nonFilteringResponse.headers.get('Accept')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -1257,7 +1374,7 @@ const BrowserProtection = (() => {
                     headers: {
                         "Accept": "application/dns-message"
                     },
-                    signal
+                    signal: createTimeoutSignal(signal)
                 });
 
                 const nonFilteringResponse = await fetch(nonFilteringURL, {
@@ -1265,12 +1382,20 @@ const BrowserProtection = (() => {
                     headers: {
                         "Accept": "application/dns-json"
                     },
-                    signal
+                    signal: createTimeoutSignal(signal)
                 });
 
                 // Returns early if one or more of the responses is not OK
                 if (!filteringResponse.ok || !nonFilteringResponse.ok) {
                     console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
+                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
+                    return;
+                }
+
+                // Return early if the Accept found in the responses is not what we expect
+                if (!Validate.hasValidAcceptHeader(filteringResponse, 'application/dns-message') ||
+                    !Validate.hasValidAcceptHeader(nonFilteringResponse, 'application/dns-json')) {
+                    console.warn(`[${shortName}] Unexpected Accept: ${filteringResponse.headers.get('Accept')}, ${nonFilteringResponse.headers.get('Accept')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -1363,7 +1488,7 @@ const BrowserProtection = (() => {
                     headers: {
                         "Accept": "application/dns-message"
                     },
-                    signal
+                    signal: createTimeoutSignal(signal)
                 });
 
                 const nonFilteringResponse = await fetch(nonFilteringURL, {
@@ -1371,12 +1496,20 @@ const BrowserProtection = (() => {
                     headers: {
                         "Accept": "application/dns-json"
                     },
-                    signal
+                    signal: createTimeoutSignal(signal)
                 });
 
                 // Returns early if one or more of the responses is not OK
                 if (!filteringResponse.ok || !nonFilteringResponse.ok) {
                     console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
+                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
+                    return;
+                }
+
+                // Return early if the Accept found in the responses is not what we expect
+                if (!Validate.hasValidAcceptHeader(filteringResponse, 'application/dns-message') ||
+                    !Validate.hasValidAcceptHeader(nonFilteringResponse, 'application/dns-json')) {
+                    console.warn(`[${shortName}] Unexpected Accept: ${filteringResponse.headers.get('Accept')}, ${nonFilteringResponse.headers.get('Accept')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -1469,7 +1602,7 @@ const BrowserProtection = (() => {
                     headers: {
                         "Accept": "application/dns-message"
                     },
-                    signal
+                    signal: createTimeoutSignal(signal)
                 });
 
                 const nonFilteringResponse = await fetch(nonFilteringURL, {
@@ -1477,12 +1610,20 @@ const BrowserProtection = (() => {
                     headers: {
                         "Accept": "application/dns-json"
                     },
-                    signal
+                    signal: createTimeoutSignal(signal)
                 });
 
                 // Returns early if one or more of the responses is not OK
                 if (!filteringResponse.ok || !nonFilteringResponse.ok) {
                     console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
+                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
+                    return;
+                }
+
+                // Return early if the Accept found in the responses is not what we expect
+                if (!Validate.hasValidAcceptHeader(filteringResponse, 'application/dns-message') ||
+                    !Validate.hasValidAcceptHeader(nonFilteringResponse, 'application/dns-json')) {
+                    console.warn(`[${shortName}] Unexpected Accept: ${filteringResponse.headers.get('Accept')}, ${nonFilteringResponse.headers.get('Accept')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -1575,12 +1716,19 @@ const BrowserProtection = (() => {
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    signal
+                    signal: createTimeoutSignal(signal)
                 });
 
                 // Return early if the response is not OK
                 if (!response.ok) {
                     console.warn(`[${shortName}] Returned early: ${response.status}`);
+                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
+                    return;
+                }
+
+                // Return early if the Content-Type is not what we expect
+                if (!Validate.hasValidContentType(response, 'application/json')) {
+                    console.warn(`[${shortName}] Unexpected Content-Type: ${response.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -1668,7 +1816,7 @@ const BrowserProtection = (() => {
                     headers: {
                         "Accept": "application/dns-message"
                     },
-                    signal
+                    signal: createTimeoutSignal(signal)
                 });
 
                 const nonFilteringResponse = await fetch(nonFilteringURL, {
@@ -1676,12 +1824,20 @@ const BrowserProtection = (() => {
                     headers: {
                         "Accept": "application/dns-json"
                     },
-                    signal
+                    signal: createTimeoutSignal(signal)
                 });
 
                 // Returns early if one or more of the responses is not OK
                 if (!filteringResponse.ok || !nonFilteringResponse.ok) {
                     console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
+                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
+                    return;
+                }
+
+                // Return early if the Accept found in the responses is not what we expect
+                if (!Validate.hasValidAcceptHeader(filteringResponse, 'application/dns-message') ||
+                    !Validate.hasValidAcceptHeader(nonFilteringResponse, 'application/dns-json')) {
+                    console.warn(`[${shortName}] Unexpected Accept: ${filteringResponse.headers.get('Accept')}, ${nonFilteringResponse.headers.get('Accept')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -1774,7 +1930,7 @@ const BrowserProtection = (() => {
                     headers: {
                         "Accept": "application/dns-message"
                     },
-                    signal
+                    signal: createTimeoutSignal(signal)
                 });
 
                 const nonFilteringResponse = await fetch(nonFilteringURL, {
@@ -1782,12 +1938,20 @@ const BrowserProtection = (() => {
                     headers: {
                         "Accept": "application/dns-json"
                     },
-                    signal
+                    signal: createTimeoutSignal(signal)
                 });
 
                 // Returns early if one or more of the responses is not OK
                 if (!filteringResponse.ok || !nonFilteringResponse.ok) {
                     console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
+                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
+                    return;
+                }
+
+                // Return early if the Accept found in the responses is not what we expect
+                if (!Validate.hasValidAcceptHeader(filteringResponse, 'application/dns-message') ||
+                    !Validate.hasValidAcceptHeader(nonFilteringResponse, 'application/dns-json')) {
+                    console.warn(`[${shortName}] Unexpected Accept: ${filteringResponse.headers.get('Accept')}, ${nonFilteringResponse.headers.get('Accept')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
