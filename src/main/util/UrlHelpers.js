@@ -234,6 +234,7 @@ const UrlHelpers = (() => {
 
                 // Each number must be between 0 and 255
                 if (nums.some(n => n < 0 || n > 255)) {
+                    console.warn(`Invalid IPv4 tail in IPv6 address: ${hostname}`);
                     return null;
                 }
             }
@@ -331,6 +332,7 @@ const UrlHelpers = (() => {
                 const v4n = normalizeIP(v4);
 
                 if (!v4n) {
+                    console.warn(`Invalid IPv4 tail in IPv6 address: ${ip}`);
                     return false;
                 }
 
@@ -341,6 +343,7 @@ const UrlHelpers = (() => {
                     v4n.startsWith("169.254.") ||           // link-local
                     v4n === "0.0.0.0";                      // unspecified
             }
+            console.warn(`Invalid IPv6 address: ${ip}`);
             return false;
         }
 
@@ -398,6 +401,7 @@ const UrlHelpers = (() => {
                 const v4n = normalizeIP(v4);
                 return v4n ? isPrivateIP(v4n) : false;
             }
+            console.warn(`Invalid IPv6 address: ${hostname}`);
             return false;
         }
 
@@ -415,7 +419,7 @@ const UrlHelpers = (() => {
     const normalizeUrl = url => {
         if (url === null || url === undefined) {
             console.warn(`URL is null or undefined: ${url}`);
-            return "";
+            return '';
         }
 
         const u = typeof url === "string" ? new URL(url) : url;
@@ -507,6 +511,7 @@ const UrlHelpers = (() => {
      */
     const sanitizeForDisplay = (str, maxLength = 100) => {
         if (typeof str !== 'string') {
+            console.warn(`Expected a string for sanitization but got ${typeof str}`);
             return '';
         }
 
