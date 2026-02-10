@@ -38,7 +38,10 @@ const CacheManager = (() => {
     let sessionStorageTimeoutID = null;
 
     // Debounce delay for local and session storage updates
-    let debounceDelay = 100;
+    const debounceDelay = 100;
+
+    // Cleanup interval for expired entries (5 minutes)
+    const cleanupInterval = 5 * 60 * 1000;
 
     // Expiration time for cache entries in milliseconds
     let expirationTime;
@@ -191,9 +194,11 @@ const CacheManager = (() => {
      */
     const cleanExpiredEntries = () => {
         const now = Date.now();
-        let removed = 0;
+        let totalRemoved = 0;
 
         const cleanGroup = (group, onDirty) => {
+            let groupRemoved = 0;
+
             for (const map of Object.values(group)) {
                 for (const [key, value] of map.entries()) {
                     const expTime = value && typeof value === 'object' && 'exp' in value ? value.exp : value;
@@ -202,22 +207,27 @@ const CacheManager = (() => {
                     // Ignores keys with expiration time of 0 (indicating no expiration)
                     if (expTime !== 0 && expTime < now) {
                         map.delete(key);
-                        removed++;
+                        groupRemoved++;
                     }
                 }
             }
 
-            // Sets the dirty flag if keys were removed
-            if (removed > 0) {
-                onDirty(true);
+            // Only trigger storage update if this group had removals
+            if (groupRemoved > 0) {
+                totalRemoved += groupRemoved;
+                onDirty();
             }
         };
 
         cleanGroup(allowedCaches, () => updateLocalStorage());
         cleanGroup(blockedCaches, () => updateLocalStorage());
         cleanGroup(processingCaches, () => updateSessionStorage());
-        return removed;
+        return totalRemoved;
     };
+
+    // Run initial cleanup and schedule periodic cleanup
+    cleanExpiredEntries();
+    setInterval(cleanExpiredEntries, cleanupInterval);
 
     /**
      * Clears all allowed caches.
@@ -282,8 +292,8 @@ const CacheManager = (() => {
                     return true;
                 }
 
+                // Entry expired, remove it
                 map.delete(key);
-                cleanExpiredEntries();
                 updateLocalStorage();
             }
         } catch (error) {
@@ -385,7 +395,6 @@ const CacheManager = (() => {
                 console.warn(`Cache "${name}" not found`);
             }
 
-            cleanExpiredEntries();
             updateLocalStorage();
         } catch (error) {
             console.error(`Error adding URL to allowed cache for ${url}:`, error);
@@ -412,7 +421,6 @@ const CacheManager = (() => {
                 console.warn(`Cache "${name}" not found`);
             }
 
-            cleanExpiredEntries();
             updateLocalStorage();
         } catch (error) {
             console.error(`Error adding string to allowed cache for "${str}":`, error);
@@ -447,8 +455,8 @@ const CacheManager = (() => {
                 return true;
             }
 
+            // Entry expired, remove it
             map.delete(key);
-            cleanExpiredEntries();
             updateLocalStorage();
         } catch (error) {
             console.error(`Error checking blocked cache for ${url}:`, error);
@@ -485,7 +493,6 @@ const CacheManager = (() => {
                 console.warn(`Cache "${name}" not found`);
             }
 
-            cleanExpiredEntries();
             updateLocalStorage();
         } catch (error) {
             console.error(`Error adding URL to blocked cache for ${url}:`, error);
@@ -519,8 +526,8 @@ const CacheManager = (() => {
             if (entry.exp > Date.now()) {
                 return entry.resultType;
             } else {
+                // Entry expired, remove it
                 cache.delete(key);
-                cleanExpiredEntries();
                 updateLocalStorage();
             }
         } catch (error) {
@@ -556,7 +563,6 @@ const CacheManager = (() => {
                 console.warn(`Cache "${name}" not found`);
             }
 
-            cleanExpiredEntries();
             updateLocalStorage();
         } catch (error) {
             console.error(`Error removing URL from blocked cache for ${url}:`, error);
@@ -593,8 +599,8 @@ const CacheManager = (() => {
                     return true;
                 }
 
+                // Entry expired, remove it
                 map.delete(key);
-                cleanExpiredEntries();
                 updateSessionStorage();
             }
         } catch (error) {
@@ -632,7 +638,6 @@ const CacheManager = (() => {
                 console.warn(`Processing cache "${name}" not found`);
             }
 
-            cleanExpiredEntries();
             updateSessionStorage();
         } catch (error) {
             console.error(`Error adding URL to processing cache for ${url}:`, error);
@@ -664,7 +669,6 @@ const CacheManager = (() => {
                 console.warn(`Processing cache "${name}" not found`);
             }
 
-            cleanExpiredEntries();
             updateSessionStorage();
         } catch (error) {
             console.error(`Error removing URL from processing cache for ${url}:`, error);
@@ -702,7 +706,6 @@ const CacheManager = (() => {
             }
         }
 
-        cleanExpiredEntries();
         updateSessionStorage();
         return results;
     };
