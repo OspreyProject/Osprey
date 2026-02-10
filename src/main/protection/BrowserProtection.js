@@ -984,7 +984,6 @@ const BrowserProtection = (() => {
                 }
 
                 const filteringData = await filteringResponse.json();
-                const filteringDataString = JSON.stringify(filteringData);
                 const nonFilteringData = await nonFilteringResponse.json();
                 const {Status, Answer} = nonFilteringData;
 
@@ -995,9 +994,8 @@ const BrowserProtection = (() => {
                     return;
                 }
 
-                // If the data matches this specific pattern, it's blocked
-                if (filteringDataString.includes("EDE(16): Censored") ||
-                    filteringDataString.includes("\"TTL\":60,\"data\":\"0.0.0.0\"")) {
+                // If the data matches blocking patterns, it's blocked
+                if (filteringData?.Comment && typeof filteringData.Comment === 'string' && filteringData.Comment.includes('EDE(16): Censored')) {
                     console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
                     CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.MALICIOUS, origin));
@@ -1088,7 +1086,6 @@ const BrowserProtection = (() => {
                 }
 
                 const filteringData = await filteringResponse.json();
-                const filteringDataString = JSON.stringify(filteringData);
                 const nonFilteringData = await nonFilteringResponse.json();
                 const {Status, Answer} = nonFilteringData;
 
@@ -1099,9 +1096,8 @@ const BrowserProtection = (() => {
                     return;
                 }
 
-                // If the data matches this specific pattern, it's blocked
-                if (filteringDataString.includes("EDE(16): Censored") ||
-                    filteringDataString.includes("\"TTL\":60,\"data\":\"0.0.0.0\"")) {
+                // If the data matches blocking patterns, it's blocked
+                if (filteringData?.Comment && typeof filteringData.Comment === 'string' && filteringData.Comment.includes('EDE(16): Censored')) {
                     console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
                     CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.ADULT_CONTENT);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.ADULT_CONTENT, origin));
