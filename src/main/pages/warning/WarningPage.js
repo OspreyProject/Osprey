@@ -48,7 +48,12 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
 
         // Update the visible "Reported by" label
         if (domElements.reportedBy) {
-            domElements.reportedBy.textContent = systemName || "Unknown";
+            try {
+                Validate.requireString(systemName);
+                domElements.reportedBy.textContent = systemName;
+            } catch {
+                domElements.reportedBy.textContent = "Unknown";
+            }
             reportedByText = domElements.reportedBy.textContent;
         } else {
             console.warn("'reportedBy' element not found in the WarningPage DOM.");
@@ -118,6 +123,14 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         // Converts the result code to a human-readable string
         const resultText = ProtectionResult.ResultTypeName[result];
         const resultTextEN = ProtectionResult.ResultTypeNameEN[result];
+
+        // Validates the result text values
+        try {
+            Validate.requireString(resultText);
+            Validate.requireString(resultTextEN);
+        } catch {
+            return;
+        }
 
         /**
          * Localizes the page by replacing text content with localized messages.
@@ -230,6 +243,13 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         // Extracts the blocked URL from the current page URL
         const blockedUrl = UrlHelpers.extractBlockedUrl(pageUrl);
 
+        // Validates the blocked URL
+        try {
+            Validate.requireString(blockedUrl);
+        } catch {
+            return;
+        }
+
         // Encodes the URLs for safe use in other contexts
         const encodedBlockedUrl = encodeURIComponent(blockedUrl);
         const encodedResultTextEN = encodeURIComponent(resultTextEN);
@@ -243,9 +263,24 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
 
         // Gets the origin information
         const origin = UrlHelpers.extractOrigin(pageUrl);
+
+        // Validates the origin before parsing
+        try {
+            Validate.requireString(origin);
+        } catch {
+            return;
+        }
+
         const originInt = Number.parseInt(origin);
 
-        currentOriginInt = Number.isNaN(originInt) ? ProtectionResult.Origin.UNKNOWN : originInt;
+        // Validates originInt is a valid integer
+        try {
+            Validate.requireInteger(originInt);
+        } catch {
+            return;
+        }
+
+        currentOriginInt = originInt;
         applyOriginVisuals(currentOriginInt);
 
         // Listens for PONG messages to update the reported by count
@@ -265,16 +300,32 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
             if (domElements.reportedBy) {
                 if (message.messageType === Messages.BLOCKED_COUNTER_PONG && message.count > 0) {
                     let othersText = LangUtil.REPORTED_BY_OTHERS;
+
+                    try {
+                        Validate.requireString(othersText);
+                    } catch {
+                        return;
+                    }
+
                     othersText = othersText.replace("___", message.count.toString());
 
                     // Sets the reported by text with the count of other systems
                     domElements.reportedBy.textContent = `${reportedByText} ${othersText}`;
 
-                    // Replace each system with its short name
-                    message.systems = message.systems.map(system => ProtectionResult.ShortName[system] || system);
+                    // Replace each system with its short name, filtering out invalid entries
+                    message.systems = message.systems
+                        .filter(system => Validate.isInteger(system))
+                        .map(system => ProtectionResult.ShortName[system] || String(system));
 
                     // Make the innerText hoverable and set the hover text
                     const alsoReportedBy = LangUtil.REPORTED_BY_ALSO;
+
+                    try {
+                        Validate.requireString(alsoReportedBy);
+                    } catch {
+                        return;
+                    }
+
                     const wrappedTitle = wrapSystemNamesText(`${alsoReportedBy}${message.systems.join(', ')}`);
                     domElements.reportedBy.title = `${wrappedTitle}`;
                 } else if (message.messageType === Messages.BLOCKED_COUNTER_PONG) {
@@ -439,6 +490,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         const sendMessage = async (messageType, additionalData = {}) => {
             try {
                 Validate.requireValidMessageType(messageType);
+                Validate.requireObject(additionalData);
             } catch {
                 return;
             }
@@ -467,6 +519,13 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
 
         // Extracts the blocked URL from the current page URL
         const continueUrl = UrlHelpers.extractContinueUrl(pageUrl);
+
+        // Validates the continue URL
+        try {
+            Validate.requireString(continueUrl);
+        } catch {
+            return;
+        }
 
         Settings.get(settings => {
             try {
