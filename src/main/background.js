@@ -60,6 +60,14 @@
     // Set of valid protocols to check for
     const validProtocols = new Set(['http:', 'https:']);
 
+    // Set of privileged message types that require sender verification
+    const privilegedMessageTypes = Object.freeze(new Set([
+        Messages.CONTINUE_TO_WEBSITE,
+        Messages.CONTINUE_TO_SAFETY,
+        Messages.REPORT_WEBSITE,
+        Messages.ALLOW_WEBSITE
+    ]));
+
     // Maximum valid origin value (derived from ProtectionResult.Origin)
     const maxOriginValue = Math.max(...Object.values(ProtectionResult.Origin));
 
@@ -1056,15 +1064,8 @@
             return;
         }
 
-        const privileged = new Set([
-            Messages.CONTINUE_TO_WEBSITE,
-            Messages.CONTINUE_TO_SAFETY,
-            Messages.REPORT_WEBSITE,
-            Messages.ALLOW_WEBSITE
-        ]);
-
         // Gate privileged actions to the Warning page
-        if (privileged.has(message.messageType)) {
+        if (privilegedMessageTypes.has(message.messageType)) {
             const allowedPrefix = browserAPI.runtime.getURL("pages/warning/");
 
             // Parses the normalized sender URL object
