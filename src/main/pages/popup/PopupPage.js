@@ -174,15 +174,7 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
      * @returns {Object} Object containing the label and switch elements
      */
     const getSystemElements = system => {
-        try {
-            Validate.requireObject(system);
-            Validate.requireProperty(system, "name");
-            Validate.requireProperty(system, "labelElementId");
-            Validate.requireProperty(system, "switchElementId");
-            Validate.requireString(system.name);
-            Validate.requireString(system.labelElementId);
-            Validate.requireString(system.switchElementId);
-        } catch {
+        if (!system) {
             return null;
         }
 
@@ -202,35 +194,17 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
      * @param {boolean} isOn - Whether the protection is enabled for the system.
      */
     const updateProtectionStatusUI = (system, isOn) => {
-        try {
-            Validate.requireObject(system);
-            Validate.requireBoolean(isOn);
-            Validate.requireProperty(system, "name");
-            Validate.requireString(system.name);
-        } catch {
+        const elements = getSystemElements(system);
+
+        if (!elements) {
             return;
         }
 
         const updates = [];
-        const elements = getSystemElements(system);
-
-        try {
-            Validate.requireObject(elements);
-        } catch {
-            return;
-        }
 
         updates.push(() => {
             if (elements.label) {
                 Settings.get(settings => {
-                    try {
-                        Validate.requireObject(settings);
-                        Validate.requireProperty(settings, "lockProtectionOptions");
-                        Validate.requireBoolean(settings.lockProtectionOptions);
-                    } catch {
-                        return;
-                    }
-
                     if (settings.lockProtectionOptions) {
                         elements.label.textContent = isOn ? LangUtil.ON_LOCKED_TEXT : LangUtil.OFF_LOCKED_TEXT;
                     } else {
@@ -268,33 +242,8 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
      * @param {Object} system - The system object being toggled.
      */
     const toggleProtection = system => {
-        try {
-            Validate.requireObject(system);
-            Validate.requireProperty(system, "name");
-            Validate.requireProperty(system, "origin");
-            Validate.requireProperty(system, "messageType");
-            Validate.requireString(system.name);
-            Validate.requireInteger(system.origin);
-            Validate.requireString(system.messageType);
-        } catch {
-            return;
-        }
-
         Settings.get(settings => {
-            try {
-                Validate.requireObject(settings);
-            } catch {
-                return;
-            }
-
             const currentState = settings[system.name];
-
-            try {
-                Validate.requireBoolean(currentState);
-            } catch {
-                return;
-            }
-
             const newState = !currentState;
 
             Settings.set({[system.name]: newState}, () => {
@@ -415,23 +364,13 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
         for (const system of securitySystems) {
             const elements = getSystemElements(system);
 
-            try {
-                Validate.requireObject(elements);
-            } catch {
+            if (!elements) {
                 continue;
             }
 
             if (elements.switchElement) {
                 elements.switchElement.onclick = () => {
                     Settings.get(settings => {
-                        try {
-                            Validate.requireObject(settings);
-                            Validate.requireProperty(settings, "lockProtectionOptions");
-                            Validate.requireBoolean(settings.lockProtectionOptions);
-                        } catch {
-                            return;
-                        }
-
                         if (settings.lockProtectionOptions) {
                             console.debug("Protections are locked; cannot toggle.");
                         } else {
@@ -446,21 +385,8 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
 
         // Loads and applies settings
         Settings.get(settings => {
-            try {
-                Validate.requireObject(settings);
-            } catch {
-                return;
-            }
-
             for (const system of securitySystems) {
                 const isEnabled = settings[system.name];
-
-                try {
-                    Validate.requireBoolean(isEnabled);
-                } catch {
-                    continue;
-                }
-
                 updateProtectionStatusUI(system, isEnabled);
             }
         });
@@ -468,13 +394,7 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
         // Updates the version display
         if (domElements.version) {
             const {version} = manifest;
-
-            try {
-                Validate.requireString(version);
-                domElements.version.textContent += version;
-            } catch {
-                return;
-            }
+            domElements.version.textContent += version;
         }
 
         // Get all elements with the class 'page'
@@ -537,14 +457,6 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
 // Initializes when the DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
     Settings.get(settings => {
-        try {
-            Validate.requireObject(settings);
-            Validate.requireProperty(settings, "hideProtectionOptions");
-            Validate.requireBoolean(settings.hideProtectionOptions);
-        } catch {
-            return;
-        }
-
         if (settings.hideProtectionOptions) {
             globalThis.close();
         } else {

@@ -36,13 +36,7 @@ const StorageUtil = (() => {
      * @param {Function} callback - The function to call with the retrieved value.
      */
     const getFromLocalStore = (key, callback) => {
-        try {
-            Validate.requireString(key);
-        } catch {
-            return;
-        }
-
-        const fixedCallback = Validate.isFunction(callback) ? callback : () => {
+        const fixedCallback = typeof callback === 'function' ? callback : () => {
         };
 
         // Checks if the key is valid
@@ -81,14 +75,7 @@ const StorageUtil = (() => {
      * @param {Function} [callback] - Optional callback to call after saving.
      */
     const setToLocalStore = (key, value, callback) => {
-        try {
-            Validate.requireString(key);
-            Validate.requireNotNull(value);
-        } catch {
-            return;
-        }
-
-        const fixedCallback = Validate.isFunction(callback) ? callback : () => {
+        const fixedCallback = typeof callback === 'function' ? callback : () => {
         };
 
         // Prevents storing functions or symbols
@@ -139,13 +126,7 @@ const StorageUtil = (() => {
      * @param {Function} callback - The function to call with the retrieved value.
      */
     const getFromSessionStore = (key, callback) => {
-        try {
-            Validate.requireString(key);
-        } catch {
-            return;
-        }
-
-        const fixedCallback = Validate.isFunction(callback) ? callback : () => {
+        const fixedCallback = typeof callback === 'function' ? callback : () => {
         };
 
         // Checks if the key is valid
@@ -184,14 +165,7 @@ const StorageUtil = (() => {
      * @param {Function} [callback] - Optional callback to call after saving.
      */
     const setToSessionStore = (key, value, callback) => {
-        try {
-            Validate.requireString(key);
-            Validate.requireNotNull(value);
-        } catch {
-            return;
-        }
-
-        const fixedCallback = Validate.isFunction(callback) ? callback : () => {
+        const fixedCallback = typeof callback === 'function' ? callback : () => {
         };
 
         // Prevents storing functions or symbols
@@ -242,12 +216,7 @@ const StorageUtil = (() => {
      * @returns {boolean} - Returns true if the key is valid, false otherwise.
      */
     const isValidKey = (key) => {
-        try {
-            Validate.requireString(key);
-        } catch {
-            return false;
-        }
-        return key.length > 0 && !DANGEROUS_KEYS.has(key);
+        return typeof key === 'string' && key.length > 0 && !DANGEROUS_KEYS.has(key);
     };
 
     return {

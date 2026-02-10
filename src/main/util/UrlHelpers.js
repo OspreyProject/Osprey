@@ -94,32 +94,13 @@ const UrlHelpers = (() => {
      * @returns {string} - The full URL for the block page.
      */
     const getBlockPageUrl = (protectionResult, continueUrl) => {
-        try {
-            // parameters
-            Validate.requireObject(protectionResult);
-            Validate.requireValidUrl(continueUrl);
-
-            // protectionResult.url
-            Validate.requireStringProperty(protectionResult, 'url');
-            Validate.requireValidUrl(protectionResult.url);
-
-            // protectionResult.origin
-            Validate.requireProperty(protectionResult, 'origin');
-            Validate.requireValidOrigin(protectionResult.origin);
-
-            // protectionResult.resultType
-            Validate.requireProperty(protectionResult, 'resultType');
-            Validate.requireInteger(protectionResult.resultType);
-        } catch {
-            return "";
-        }
-
         // Parses the protection result URL object
         let protectionResultUrl;
         try {
             protectionResultUrl = new URL(protectionResult.url);
         } catch {
-            throw new Error('Invalid URL in protection result');
+            console.warn(`Invalid protection result URL format: ${protectionResult.url}`);
+            return "";
         }
 
         // Parses the continue URL object if present
@@ -127,7 +108,8 @@ const UrlHelpers = (() => {
             try {
                 continueUrl = new URL(continueUrl);
             } catch {
-                throw new Error('Invalid continue URL');
+                console.warn(`Invalid continue URL format: ${continueUrl}`);
+                return "";
             }
         }
 
@@ -136,7 +118,8 @@ const UrlHelpers = (() => {
         try {
             blockPageUrl = new URL(blockPageBaseUrl);
         } catch {
-            throw new Error(`Invalid block page base URL`);
+            console.warn(`Invalid block page base URL format: ${blockPageBaseUrl}`);
+            return "";
         }
 
         // Sets the search parameters for the block page URL
@@ -158,9 +141,7 @@ const UrlHelpers = (() => {
      * @returns {boolean} - True if the hostname is valid, false otherwise.
      */
     const isValidHostname = hostname => {
-        try {
-            Validate.requireString(hostname);
-        } catch {
+        if (typeof hostname !== 'string') {
             return false;
         }
 
@@ -429,9 +410,8 @@ const UrlHelpers = (() => {
      * @returns {string|string} - The normalized URL as a string.
      */
     const normalizeUrl = url => {
-        try {
-            Validate.requireNotNull(url);
-        } catch {
+        if (url === null || url === undefined) {
+            console.warn(`URL is null or undefined: ${url}`);
             return "";
         }
 
@@ -453,10 +433,7 @@ const UrlHelpers = (() => {
      * @return {string} - The base64url encoded DNS query.
      */
     const encodeDNSQuery = (domain, type = 1) => {
-        try {
-            Validate.requireString(domain);
-            Validate.requireInteger(type);
-        } catch {
+        if (typeof domain !== 'string' || !Number.isInteger(type)) {
             return '';
         }
 
@@ -526,10 +503,7 @@ const UrlHelpers = (() => {
      * @returns {string|string} - The sanitized string, truncated with "..." if it exceeds the maximum length.
      */
     const sanitizeForDisplay = (str, maxLength = 100) => {
-        try {
-            Validate.requireString(str);
-            Validate.requireInteger(maxLength);
-        } catch {
+        if (typeof str !== 'string') {
             return '';
         }
 

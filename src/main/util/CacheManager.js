@@ -45,14 +45,6 @@ const CacheManager = (() => {
 
     // Sets the expiration time for cache entries based on user settings
     Settings.get(settings => {
-        try {
-            Validate.requireObject(settings);
-            Validate.requireProperty(settings, "cacheExpirationSeconds");
-            Validate.requireInteger(settings.cacheExpirationSeconds);
-        } catch {
-            return;
-        }
-
         const expSeconds = Number(settings.cacheExpirationSeconds);
         const min = 60; // 1 minute in seconds
         const max = 31536000; // 1 year in seconds
@@ -94,13 +86,6 @@ const CacheManager = (() => {
      * @param {Object} callback - The callback function to execute after loading the allowed caches.
      */
     StorageUtil.getFromLocalStore(allowedKey, callback => {
-        try {
-            Validate.requireString(allowedKey);
-            Validate.requireObject(callback);
-        } catch {
-            return;
-        }
-
         for (const name of Object.keys(allowedCaches)) {
             if (callback[name] && typeof callback[name] === 'object') {
                 const entries = Object.entries(callback[name]).filter(([key]) => !DANGEROUS_KEYS.has(key));
@@ -116,13 +101,6 @@ const CacheManager = (() => {
      * @param {Object} callback - The callback function to execute after loading the blocked caches.
      */
     StorageUtil.getFromLocalStore(blockedKey, callback => {
-        try {
-            Validate.requireString(blockedKey);
-            Validate.requireObject(callback);
-        } catch {
-            return;
-        }
-
         for (const name of Object.keys(blockedCaches)) {
             if (callback[name] && typeof callback[name] === 'object') {
                 const entries = Object.entries(callback[name]).filter(([key]) => !DANGEROUS_KEYS.has(key));
@@ -143,12 +121,6 @@ const CacheManager = (() => {
      * @param {Object} [callback] - The callback function to execute after loading the processing caches.
      */
     StorageUtil.getFromSessionStore(processingKey, callback => {
-        try {
-            Validate.requireString(processingKey);
-        } catch {
-            return;
-        }
-
         for (const name of Object.keys(processingCaches)) {
             if (callback && typeof callback === 'object') {
                 if (callback[name] && typeof callback[name] === 'object') {
@@ -163,13 +135,6 @@ const CacheManager = (() => {
      * Update the caches that use localStorage (allowed and blocked caches).
      */
     const updateLocalStorage = () => {
-        try {
-            Validate.requireObject(allowedCaches);
-            Validate.requireObject(blockedCaches);
-        } catch {
-            return;
-        }
-
         const write = () => {
             const allowedOut = {};
             const blockedOut = {};
@@ -202,12 +167,6 @@ const CacheManager = (() => {
      * Update the caches that use sessionStorage (processing caches).
      */
     const updateSessionStorage = () => {
-        try {
-            Validate.requireObject(processingCaches);
-        } catch {
-            return;
-        }
-
         const write = () => {
             const out = {};
 
@@ -264,12 +223,6 @@ const CacheManager = (() => {
      * Clears all allowed caches.
      */
     const clearAllowedCache = () => {
-        try {
-            Validate.requireObject(allowedCaches);
-        } catch {
-            return;
-        }
-
         // Clears all allowed caches
         for (const cache of Object.values(allowedCaches)) {
             cache.clear();
@@ -282,12 +235,6 @@ const CacheManager = (() => {
      * Clears all blocked caches.
      */
     const clearBlockedCache = () => {
-        try {
-            Validate.requireObject(blockedCaches);
-        } catch {
-            return;
-        }
-
         // Clears all blocked caches
         for (const cache of Object.values(blockedCaches)) {
             cache.clear();
@@ -300,12 +247,6 @@ const CacheManager = (() => {
      * Clears all processing caches.
      */
     const clearProcessingCache = () => {
-        try {
-            Validate.requireObject(processingCaches);
-        } catch {
-            return;
-        }
-
         // Clears all processing caches
         for (const cache of Object.values(processingCaches)) {
             cache.clear();
@@ -323,19 +264,9 @@ const CacheManager = (() => {
      */
     const isUrlInAllowedCache = (url, name) => {
         try {
-            Validate.requireNotNull(url);
-            Validate.requireString(name);
-            Validate.requireValidProvider(name);
-            Validate.requireObject(allowedCaches);
-        } catch {
-            return false;
-        }
-
-        try {
             const key = UrlHelpers.normalizeUrl(url);
 
-            if (!Validate.isString(key) || key.length === 0) {
-                console.warn('URL normalization returned invalid result');
+            if (!key) {
                 return false;
             }
 
@@ -371,15 +302,6 @@ const CacheManager = (() => {
      */
     const isStringInAllowedCache = (str, name) => {
         try {
-            Validate.requireString(str);
-            Validate.requireString(name);
-            Validate.requireValidProvider(name);
-            Validate.requireObject(allowedCaches);
-        } catch {
-            return false;
-        }
-
-        try {
             const map = allowedCaches[name];
 
             if (!map) {
@@ -403,17 +325,8 @@ const CacheManager = (() => {
      * @returns {boolean} - Returns true if the string is in the allowed cache and not expired, false otherwise.
      */
     const isPatternInAllowedCache = (str, name) => {
-        try {
-            Validate.requireString(str);
-            Validate.requireString(name);
-            Validate.requireValidProvider(name);
-            Validate.requireObject(allowedCaches);
-        } catch {
-            return false;
-        }
-
         // Returns if the string is too long
-        if (str.length > 2048) {
+        if (typeof str !== 'string' || str.length > 2048) {
             return false;
         }
 
@@ -451,19 +364,9 @@ const CacheManager = (() => {
      */
     const addUrlToAllowedCache = (url, name) => {
         try {
-            Validate.requireNotNull(url);
-            Validate.requireString(name);
-            Validate.requireValidProvider(name);
-            Validate.requireObject(allowedCaches);
-        } catch {
-            return;
-        }
-
-        try {
             const key = UrlHelpers.normalizeUrl(url);
 
-            if (!Validate.isString(key) || key.length === 0) {
-                console.warn('URL normalization returned invalid result');
+            if (!key) {
                 return;
             }
 
@@ -494,15 +397,6 @@ const CacheManager = (() => {
      */
     const addStringToAllowedCache = (str, name) => {
         try {
-            Validate.requireString(str);
-            Validate.requireString(name);
-            Validate.requireValidProvider(name);
-            Validate.requireObject(allowedCaches);
-        } catch {
-            return;
-        }
-
-        try {
             const expTime = 0;
 
             if (name === "all") {
@@ -531,19 +425,9 @@ const CacheManager = (() => {
      */
     const isUrlInBlockedCache = (url, name) => {
         try {
-            Validate.requireNotNull(url);
-            Validate.requireString(name);
-            Validate.requireValidProvider(name);
-            Validate.requireObject(blockedCaches);
-        } catch {
-            return false;
-        }
-
-        try {
             const key = UrlHelpers.normalizeUrl(url);
 
-            if (!Validate.isString(key) || key.length === 0) {
-                console.warn('URL normalization returned invalid result');
+            if (!key) {
                 return false;
             }
 
@@ -577,19 +461,9 @@ const CacheManager = (() => {
      */
     const addUrlToBlockedCache = (url, name, resultType) => {
         try {
-            Validate.requireNotNull(url);
-            Validate.requireString(name);
-            Validate.requireValidProvider(name);
-            Validate.requireObject(blockedCaches);
-        } catch {
-            return;
-        }
-
-        try {
             const key = UrlHelpers.normalizeUrl(url);
 
-            if (!Validate.isString(key) || key.length === 0) {
-                console.warn('URL normalization returned invalid result');
+            if (!key) {
                 return;
             }
 
@@ -622,19 +496,9 @@ const CacheManager = (() => {
      */
     const getBlockedResultType = (url, name) => {
         try {
-            Validate.requireNotNull(url);
-            Validate.requireString(name);
-            Validate.requireValidProvider(name);
-            Validate.requireObject(blockedCaches);
-        } catch {
-            return null;
-        }
-
-        try {
             const key = UrlHelpers.normalizeUrl(url);
 
-            if (!Validate.isString(key) || key.length === 0) {
-                console.warn('URL normalization returned invalid result');
+            if (!key) {
                 return null;
             }
 
@@ -667,19 +531,9 @@ const CacheManager = (() => {
      */
     const removeUrlFromBlockedCache = (url, name) => {
         try {
-            Validate.requireNotNull(url);
-            Validate.requireString(name);
-            Validate.requireValidProvider(name);
-            Validate.requireObject(blockedCaches);
-        } catch {
-            return;
-        }
-
-        try {
             const key = UrlHelpers.normalizeUrl(url);
 
-            if (!Validate.isString(key) || key.length === 0) {
-                console.warn('URL normalization returned invalid result');
+            if (!key) {
                 return;
             }
 
@@ -709,19 +563,9 @@ const CacheManager = (() => {
      */
     const isUrlInProcessingCache = (url, name) => {
         try {
-            Validate.requireNotNull(url);
-            Validate.requireString(name);
-            Validate.requireValidProvider(name);
-            Validate.requireObject(processingCaches);
-        } catch {
-            return false;
-        }
-
-        try {
             const key = UrlHelpers.normalizeUrl(url);
 
-            if (!key || typeof key !== 'string' || key.length === 0) {
-                console.warn('URL normalization returned invalid result');
+            if (!key) {
                 return false;
             }
 
@@ -757,20 +601,9 @@ const CacheManager = (() => {
      */
     const addUrlToProcessingCache = (url, name, tabId) => {
         try {
-            Validate.requireNotNull(url);
-            Validate.requireString(name);
-            Validate.requireValidProvider(name);
-            Validate.requireObject(processingCaches);
-            Validate.requireNonNegativeInteger(tabId);
-        } catch {
-            return;
-        }
-
-        try {
             const key = UrlHelpers.normalizeUrl(url);
 
-            if (!Validate.isString(key) || key.length === 0) {
-                console.warn('URL normalization returned invalid result');
+            if (!key) {
                 return;
             }
 
@@ -802,19 +635,9 @@ const CacheManager = (() => {
      */
     const removeUrlFromProcessingCache = (url, name) => {
         try {
-            Validate.requireNotNull(url);
-            Validate.requireString(name);
-            Validate.requireValidProvider(name);
-            Validate.requireObject(processingCaches);
-        } catch {
-            return;
-        }
-
-        try {
             const key = UrlHelpers.normalizeUrl(url);
 
-            if (!Validate.isString(key) || key.length === 0) {
-                console.warn('URL normalization returned invalid result');
+            if (!key) {
                 return;
             }
 
@@ -844,15 +667,6 @@ const CacheManager = (() => {
      * @returns {string[]} - An array of keys (normalized URLs or strings) that match the criteria.
      */
     const getKeysByTabId = (name, tabId) => {
-        try {
-            Validate.requireString(name);
-            Validate.requireValidProvider(name);
-            Validate.requireObject(processingCaches);
-            Validate.requireNonNegativeInteger(tabId);
-        } catch {
-            return [];
-        }
-
         const results = [];
         const map = processingCaches[name];
 
@@ -885,13 +699,6 @@ const CacheManager = (() => {
      * @param {number} tabId - The ID of the tab whose entries should be removed.
      */
     const removeKeysByTabId = tabId => {
-        try {
-            Validate.requireObject(processingCaches);
-            Validate.requireNonNegativeInteger(tabId);
-        } catch {
-            return;
-        }
-
         let removedCount = 0;
 
         for (const name of Object.keys(processingCaches)) {

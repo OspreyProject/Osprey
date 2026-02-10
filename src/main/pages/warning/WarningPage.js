@@ -38,22 +38,11 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
      * @param {number} originInt - The integer representing the origin of the protection result.
      */
     const applyOriginVisuals = originInt => {
-        try {
-            Validate.requireValidOrigin(originInt);
-        } catch {
-            return;
-        }
-
         const systemName = ProtectionResult.FullName[originInt];
 
         // Update the visible "Reported by" label
         if (domElements.reportedBy) {
-            try {
-                Validate.requireString(systemName);
-                domElements.reportedBy.textContent = systemName;
-            } catch {
-                domElements.reportedBy.textContent = "Unknown";
-            }
+            domElements.reportedBy.textContent = systemName ?? "Unknown";
             reportedByText = domElements.reportedBy.textContent;
         } else {
             console.warn("'reportedBy' element not found in the WarningPage DOM.");
@@ -67,9 +56,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
      * @returns {string} - The wrapped text, with each line not exceeding the specified maximum length.
      */
     const wrapSystemNamesText = text => {
-        try {
-            Validate.requireString(text);
-        } catch {
+        if (typeof text !== 'string') {
             return '';
         }
 
@@ -125,10 +112,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         const resultTextEN = ProtectionResult.ResultTypeNameEN[result];
 
         // Validates the result text values
-        try {
-            Validate.requireString(resultText);
-            Validate.requireString(resultTextEN);
-        } catch {
+        if (!resultText || !resultTextEN) {
             return;
         }
 
@@ -244,9 +228,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         const blockedUrl = UrlHelpers.extractBlockedUrl(pageUrl);
 
         // Validates the blocked URL
-        try {
-            Validate.requireString(blockedUrl);
-        } catch {
+        if (!blockedUrl) {
             return;
         }
 
@@ -265,18 +247,14 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         const origin = UrlHelpers.extractOrigin(pageUrl);
 
         // Validates the origin before parsing
-        try {
-            Validate.requireString(origin);
-        } catch {
+        if (!origin) {
             return;
         }
 
         const originInt = Number.parseInt(origin);
 
         // Validates originInt is a valid integer
-        try {
-            Validate.requireInteger(originInt);
-        } catch {
+        if (!Number.isInteger(originInt)) {
             return;
         }
 
@@ -285,47 +263,24 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
 
         // Listens for PONG messages to update the reported by count
         browserAPI.runtime.onMessage.addListener(message => {
-            try {
-                Validate.requireObject(message);
-                Validate.requireProperty(message, 'messageType');
-                Validate.requireProperty(message, 'count');
-                Validate.requireProperty(message, 'systems');
-                Validate.requireValidMessageType(message.messageType);
-                Validate.requireInteger(message.count);
-                Validate.requireArray(message.systems);
-            } catch {
+            if (!message || typeof message.messageType !== 'string' || typeof message.count !== 'number' || !Array.isArray(message.systems)) {
                 return;
             }
 
             if (domElements.reportedBy) {
                 if (message.messageType === Messages.BLOCKED_COUNTER_PONG && message.count > 0) {
-                    let othersText = LangUtil.REPORTED_BY_OTHERS;
-
-                    try {
-                        Validate.requireString(othersText);
-                    } catch {
-                        return;
-                    }
-
-                    othersText = othersText.replace("___", message.count.toString());
+                    let othersText = LangUtil.REPORTED_BY_OTHERS.replace("___", message.count.toString());
 
                     // Sets the reported by text with the count of other systems
                     domElements.reportedBy.textContent = `${reportedByText} ${othersText}`;
 
                     // Replace each system with its short name, filtering out invalid entries
                     message.systems = message.systems
-                        .filter(system => Validate.isInteger(system))
+                        .filter(system => Number.isInteger(system))
                         .map(system => ProtectionResult.ShortName[system] || String(system));
 
                     // Make the innerText hoverable and set the hover text
                     const alsoReportedBy = LangUtil.REPORTED_BY_ALSO;
-
-                    try {
-                        Validate.requireString(alsoReportedBy);
-                    } catch {
-                        return;
-                    }
-
                     const wrappedTitle = wrapSystemNamesText(`${alsoReportedBy}${message.systems.join(', ')}`);
                     domElements.reportedBy.title = `${wrappedTitle}`;
                 } else if (message.messageType === Messages.BLOCKED_COUNTER_PONG) {
@@ -489,13 +444,6 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
          */
         const sendMessage = async (messageType, additionalData = {}) => {
             try {
-                Validate.requireValidMessageType(messageType);
-                Validate.requireObject(additionalData);
-            } catch {
-                return;
-            }
-
-            try {
                 // Creates the message object and converts URL objects to strings
                 const message = {
                     messageType,
@@ -521,23 +469,11 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         const continueUrl = UrlHelpers.extractContinueUrl(pageUrl);
 
         // Validates the continue URL
-        try {
-            Validate.requireString(continueUrl);
-        } catch {
+        if (!continueUrl) {
             return;
         }
 
         Settings.get(settings => {
-            try {
-                Validate.requireObject(settings);
-                Validate.requireProperty(settings, "hideReportButton");
-                Validate.requireProperty(settings, "hideContinueButtons");
-                Validate.requireBoolean(settings.hideReportButton);
-                Validate.requireBoolean(settings.hideContinueButtons);
-            } catch {
-                return;
-            }
-
             // Adds event listener to "Report this website as safe" button
             if (domElements.reportWebsite) {
                 domElements.reportWebsite.addEventListener("click", async () => {

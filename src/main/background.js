@@ -60,6 +60,9 @@
     // Set of valid protocols to check for
     const validProtocols = new Set(['http:', 'https:']);
 
+    // Maximum valid origin value (derived from ProtectionResult.Origin)
+    const maxOriginValue = Math.max(...Object.values(ProtectionResult.Origin));
+
     // Report URL for the "Report Website as Malicious" context menu item
     const reportUrl = "https://github.com/OspreyProject/Osprey/wiki/Report-Website-as-Malicious";
 
@@ -102,11 +105,6 @@
      * @returns {any|*[]} - An array of result origins for the specified tab.
      */
     const getResultOrigins = tabId => {
-        try {
-            Validate.requireNonNegativeInteger(tabId);
-        } catch {
-            return [];
-        }
         return resultOriginsMap.get(tabId) || [];
     };
 
@@ -117,13 +115,6 @@
      * @param {number} origin - The origin to append.
      */
     const appendResultOrigin = (tabId, origin) => {
-        try {
-            Validate.requireNonNegativeInteger(tabId);
-            Validate.requireInteger(origin);
-        } catch {
-            return;
-        }
-
         // Appends the origin if it doesn't already exist
         const origins = resultOriginsMap.get(tabId) || [];
         if (!origins.includes(origin)) {
@@ -138,13 +129,6 @@
      * @param {number} origin - The origin to remove.
      */
     const removeResultOrigin = (tabId, origin) => {
-        try {
-            Validate.requireNonNegativeInteger(tabId);
-            Validate.requireInteger(origin);
-        } catch {
-            return;
-        }
-
         resultOriginsMap.set(tabId, (resultOriginsMap.get(tabId) || []).filter(o => o !== origin));
     };
 
@@ -154,12 +138,6 @@
      * @param {number} tabId - The ID of the tab.
      */
     const deleteResultOrigins = tabId => {
-        try {
-            Validate.requireNonNegativeInteger(tabId);
-        } catch {
-            return;
-        }
-
         resultOriginsMap.delete(tabId);
     };
 
@@ -169,11 +147,6 @@
      * @param {number} tabId - The ID of the tab.
      */
     const getFrameZeroUrl = tabId => {
-        try {
-            Validate.requireNonNegativeInteger(tabId);
-        } catch {
-            return "";
-        }
         return frameZeroUrlsMap.get(tabId) || "";
     };
 
@@ -184,13 +157,6 @@
      * @param {string} url - The URL to set.
      */
     const setFrameZeroUrl = (tabId, url) => {
-        try {
-            Validate.requireNonNegativeInteger(tabId);
-            Validate.requireValidUrl(url);
-        } catch {
-            return;
-        }
-
         frameZeroUrlsMap.set(tabId, url);
     };
 
@@ -200,12 +166,6 @@
      * @param {number} tabId - The ID of the tab.
      */
     const deleteFrameZeroUrl = tabId => {
-        try {
-            Validate.requireNonNegativeInteger(tabId);
-        } catch {
-            return;
-        }
-
         frameZeroUrlsMap.delete(tabId);
     };
 
@@ -217,13 +177,6 @@
      * @returns {Promise<boolean>} - Returns true if the tab was successfully updated, false if the tab no longer exists or an error occurred.
      */
     const safeTabUpdate = async (tabId, updateProps) => {
-        try {
-            Validate.requireNonNegativeInteger(tabId);
-            Validate.requireObject(updateProps);
-        } catch {
-            return false;
-        }
-
         try {
             await browserAPI.tabs.update(tabId, updateProps);
             return true;
@@ -239,12 +192,6 @@
      * @param {number} tabId - The ID of the tab to be updated.
      */
     const sendToNewTabPage = tabId => {
-        try {
-            Validate.requireNonNegativeInteger(tabId);
-        } catch {
-            return;
-        }
-
         if (redirectToGoogle) {
             safeTabUpdate(tabId, {url: "https://www.google.com"});
         } else {
@@ -258,32 +205,12 @@
      * @param {Object} navigationDetails - The navigation details to handle.
      */
     const handleNavigation = navigationDetails => {
-        try {
-            // parameters
-            Validate.requireObject(navigationDetails);
-            Validate.requireProperty(navigationDetails, "tabId");
-            Validate.requireProperty(navigationDetails, "url");
-
-            // navigationDetails.tabId
-            Validate.requireNonNegativeInteger(navigationDetails.tabId);
-
-            // navigationDetails.url
-            Validate.requireValidUrl(navigationDetails.url);
-        } catch {
+        // Basic property checks - navigationDetails comes from browser API
+        if (!navigationDetails || typeof navigationDetails.tabId !== 'number' || !navigationDetails.url) {
             return;
         }
 
         Settings.get(settings => {
-            try {
-                Validate.requireObject(settings);
-                Validate.requireProperty(settings, "ignoreFrameNavigation");
-                Validate.requireProperty(settings, "notificationsEnabled");
-                Validate.requireBoolean(settings.ignoreFrameNavigation);
-                Validate.requireBoolean(settings.notificationsEnabled);
-            } catch {
-                return;
-            }
-
             // Retrieves settings to check if protection is enabled
             if (Settings.allProvidersDisabled(settings)) {
                 console.debug("Protection is disabled; bailing out early.");
@@ -609,18 +536,6 @@
      */
     const createContextMenu = () => {
         Settings.get(settings => {
-            try {
-                Validate.requireObject(settings);
-                Validate.requireProperty(settings, "contextMenuEnabled");
-                Validate.requireProperty(settings, "notificationsEnabled");
-                Validate.requireProperty(settings, "ignoreFrameNavigation");
-                Validate.requireBoolean(settings.contextMenuEnabled);
-                Validate.requireBoolean(settings.notificationsEnabled);
-                Validate.requireBoolean(settings.ignoreFrameNavigation);
-            } catch {
-                return;
-            }
-
             // Removes existing menu items to avoid duplicates
             contextMenuAPI.removeAll();
 
@@ -751,12 +666,6 @@
      * @param {Object} policies - The policies retrieved from the browser's managed storage.
      */
     browserAPI.storage.managed.get(policyKeys, policies => {
-        try {
-            Validate.requireArray(policyKeys);
-        } catch {
-            return;
-        }
-
         if (policies === undefined) {
             supportsManagedPolicies = false;
             console.debug("Managed policies are not supported or setup correctly in this browser.");
@@ -941,34 +850,13 @@
      * @param {function} sendResponse - The function to send a response back to the content script.
      */
     browserAPI.runtime.onMessage.addListener((message, sender, sendResponse) => {
-        try {
-            // parameters
-            Validate.requireObject(message);
-            Validate.requireObject(sender);
-            Validate.requireFunction(sendResponse);
-        } catch {
+        if (!message || !sender || typeof sendResponse !== 'function') {
             return false;
         }
 
         if (message.messageType === Messages.BLOCKED_COUNTER_PING) {
-            try {
-                // message.messageType
-                Validate.requireProperty(message, "messageType");
-                Validate.requireString(message.messageType);
-
-                // sender.tab
-                Validate.requireProperty(sender, "tab");
-                Validate.requireObject(sender.tab);
-
-                // sender.id
-                Validate.requireProperty(sender, "id");
-                Validate.requireString(sender.id);
-
-                // sender.tab.id
-                Validate.requireProperty(sender.tab, "id");
-                Validate.requireNonNegativeInteger(sender.tab.id);
-                Validate.requireEquals(sender.id, browserAPI.runtime.id);
-            } catch {
+            // Validate sender is from this extension
+            if (!sender.tab?.id || sender.id !== browserAPI.runtime.id) {
                 return false;
             }
 
@@ -984,14 +872,7 @@
 
             // If the page URL is the block page, send (count - 1)
             browserAPI.tabs.get(tabId, tab => {
-                try {
-                    // tab
-                    Validate.requireObject(tab);
-
-                    // tab.url
-                    Validate.requireProperty(tab, "url");
-                    Validate.requireValidUrl(tab.url);
-                } catch {
+                if (!tab?.url) {
                     return false;
                 }
 
@@ -1019,25 +900,13 @@
      * @param {Object} removeInfo - Additional information about the removed tab, including windowId and isWindowClosing.
      */
     browserAPI.tabs.onRemoved.addListener((tabIdObject, removeInfo) => {
-        try {
-            // parameters
-            Validate.requireNonNegativeInteger(tabIdObject);
-            Validate.requireObject(removeInfo);
+        let tabId = Number(tabIdObject);
 
-            // removeInfo.windowId
-            Validate.requireProperty(removeInfo, "windowId");
-            Validate.requireInteger(removeInfo.windowId);
-
-            // removeInfo.isWindowClosing
-            Validate.requireProperty(removeInfo, "isWindowClosing");
-            Validate.requireBoolean(removeInfo.isWindowClosing);
-        } catch {
+        if (!Number.isInteger(tabId) || tabId < 0) {
             return;
         }
 
-        let tabId = Number(tabIdObject);
-
-        console.debug(`Tab removed (tabId: ${tabId}, windowId: ${removeInfo.windowId}, isWindowClosing: ${removeInfo.isWindowClosing})`);
+        console.debug(`Tab removed (tabId: ${tabId}, windowId: ${removeInfo?.windowId}, isWindowClosing: ${removeInfo?.isWindowClosing})`);
 
         // Removes all cached keys for the tab
         CacheManager.removeKeysByTabId(tabId);
@@ -1053,22 +922,7 @@
      * @param {Object} event - The navigation event, containing details such as url, frameId, and tabId.
      */
     browserAPI.webNavigation.onBeforeNavigate.addListener(details => {
-        try {
-            // parameters
-            Validate.requireObject(details);
-
-            // callback.url
-            Validate.requireProperty(details, "url");
-            Validate.requireValidUrl(details.url);
-
-            // callback.frameId
-            Validate.requireProperty(details, "frameId");
-            Validate.requireNonNegativeInteger(details.frameId);
-
-            // callback.tabId
-            Validate.requireProperty(details, "tabId");
-            Validate.requireNonNegativeInteger(details.tabId);
-        } catch {
+        if (!details?.url || typeof details.tabId !== 'number') {
             return;
         }
 
@@ -1082,30 +936,7 @@
      * @param {Object} details - The navigation event details.
      */
     browserAPI.webNavigation.onCommitted.addListener(details => {
-        try {
-            // parameters
-            Validate.requireObject(details);
-
-            // callback.url
-            Validate.requireProperty(details, "url");
-            Validate.requireValidUrl(details.url);
-
-            // callback.frameId
-            Validate.requireProperty(details, "frameId");
-            Validate.requireNonNegativeInteger(details.frameId);
-
-            // callback.tabId
-            Validate.requireProperty(details, "tabId");
-            Validate.requireNonNegativeInteger(details.tabId);
-
-            // callback.transitionQualifiers
-            Validate.requireProperty(details, "transitionQualifiers");
-            Validate.requireArray(details.transitionQualifiers);
-
-            // callback.transitionType
-            Validate.requireProperty(details, "transitionType");
-            Validate.requireString(details.transitionType);
-        } catch {
+        if (!details?.url || typeof details.tabId !== 'number' || !Array.isArray(details.transitionQualifiers)) {
             return;
         }
 
@@ -1127,11 +958,7 @@
      * @param {Object} changeInfo - An object containing the properties that changed.
      */
     browserAPI.tabs.onUpdated.addListener((tabId, changeInfo) => {
-        try {
-            // parameters
-            Validate.requireNonNegativeInteger(tabId);
-            Validate.requireObject(changeInfo);
-        } catch {
+        if (typeof tabId !== 'number' || !changeInfo) {
             return;
         }
 
@@ -1150,18 +977,7 @@
      * @param {Object} details - The navigation event details.
      */
     browserAPI.webNavigation.onCreatedNavigationTarget.addListener(details => {
-        try {
-            // parameters
-            Validate.requireObject(details);
-
-            // callback.url
-            Validate.requireProperty(details, "url");
-            Validate.requireValidUrl(details.url);
-
-            // callback.tabId
-            Validate.requireProperty(details, "tabId");
-            Validate.requireNonNegativeInteger(details.tabId);
-        } catch {
+        if (!details?.url || typeof details.tabId !== 'number') {
             return;
         }
 
@@ -1175,22 +991,7 @@
      * @param {Object} callback - The navigation event details.
      */
     browserAPI.webNavigation.onHistoryStateUpdated.addListener(details => {
-        try {
-            // parameters
-            Validate.requireObject(details);
-
-            // callback.url
-            Validate.requireProperty(details, "url");
-            Validate.requireValidUrl(details.url);
-
-            // callback.frameId
-            Validate.requireProperty(details, "frameId");
-            Validate.requireNonNegativeInteger(details.frameId);
-
-            // callback.tabId
-            Validate.requireProperty(details, "tabId");
-            Validate.requireNonNegativeInteger(details.tabId);
-        } catch {
+        if (!details?.url || typeof details.tabId !== 'number') {
             return;
         }
 
@@ -1204,22 +1005,7 @@
      * @param {Object} callback - The navigation event details.
      */
     browserAPI.webNavigation.onReferenceFragmentUpdated.addListener(details => {
-        try {
-            // parameters
-            Validate.requireObject(details);
-
-            // callback.url
-            Validate.requireProperty(details, "url");
-            Validate.requireValidUrl(details.url);
-
-            // callback.frameId
-            Validate.requireProperty(details, "frameId");
-            Validate.requireNonNegativeInteger(details.frameId);
-
-            // callback.tabId
-            Validate.requireProperty(details, "tabId");
-            Validate.requireNonNegativeInteger(details.tabId);
-        } catch {
+        if (!details?.url || typeof details.tabId !== 'number') {
             return;
         }
 
@@ -1233,22 +1019,7 @@
      * @param {Object} callback - The navigation event details.
      */
     browserAPI.webNavigation.onTabReplaced.addListener(details => {
-        try {
-            // parameters
-            Validate.requireObject(details);
-
-            // callback.url
-            Validate.requireProperty(details, "url");
-            Validate.requireValidUrl(details.url);
-
-            // callback.frameId
-            Validate.requireProperty(details, "frameId");
-            Validate.requireNonNegativeInteger(details.frameId);
-
-            // callback.tabId
-            Validate.requireProperty(details, "tabId");
-            Validate.requireNonNegativeInteger(details.tabId);
-        } catch {
+        if (!details?.url || typeof details.tabId !== 'number') {
             return;
         }
 
@@ -1263,24 +1034,11 @@
      * @param {Object} sender - The sender of the message.
      */
     browserAPI.runtime.onMessage.addListener((message, sender) => {
-        try {
-            // parameters
-            Validate.requireObject(message);
-            Validate.requireObject(sender);
+        if (!message?.messageType || typeof message.messageType !== 'string') {
+            return;
+        }
 
-            // message.messageType
-            Validate.requireProperty(message, "messageType");
-            Validate.requireString(message.messageType);
-
-            // sender.id
-            Validate.requireProperty(sender, "id");
-            Validate.requireString(sender.id);
-            Validate.requireEquals(sender.id, browserAPI.runtime.id);
-
-            // sender.url
-            Validate.requireProperty(sender, "url");
-            Validate.requireValidUrl(sender.url);
-        } catch {
+        if (!sender?.id || sender.id !== browserAPI.runtime.id || !sender.url) {
             return;
         }
 
@@ -1318,9 +1076,7 @@
             case Messages.CONTINUE_TO_SAFETY:
             case Messages.REPORT_WEBSITE:
             case Messages.ALLOW_WEBSITE:
-                try {
-                    Validate.requireNonNegativeInteger(tabId);
-                } catch {
+                if (typeof tabId !== 'number' || tabId < 0) {
                     return;
                 }
                 break;
@@ -1332,19 +1088,16 @@
         // Handles every message type
         switch (message.messageType) {
             case Messages.CONTINUE_TO_WEBSITE: {
-                try {
-                    // messages.blockedUrl
-                    Validate.requireStringProperty(message, 'blockedUrl');
-                    Validate.requireValidUrl(message.blockedUrl);
+                // Basic property checks
+                if (!message.blockedUrl || !message.continueUrl || message.origin === undefined) {
+                    sendToNewTabPage(tabId);
+                    return;
+                }
 
-                    // messages.continueUrl
-                    Validate.requireStringProperty(message, 'continueUrl');
-                    Validate.requireValidUrl(message.continueUrl);
-
-                    // message.origin
-                    Validate.requireStringProperty(message, 'origin');
-                    Validate.requireValidOrigin(message.origin);
-                } catch {
+                // Validate origin is a valid integer within known range
+                const originInt = Number(message.origin);
+                if (!Number.isInteger(originInt) || originInt < 0 || originInt > maxOriginValue) {
+                    console.warn(`Invalid origin value: ${message.origin}`);
                     sendToNewTabPage(tabId);
                     return;
                 }
@@ -1374,11 +1127,11 @@
                     return;
                 }
 
-                if (message.origin === 0) {
-                    console.warn(`Unknown origin: ${message.origin}`);
+                if (originInt === 0) {
+                    console.warn(`Unknown origin: ${originInt}`);
                 } else {
-                    const shortName = ProtectionResult.ShortName[message.origin];
-                    const cacheName = ProtectionResult.CacheName[message.origin];
+                    const shortName = ProtectionResult.ShortName[originInt];
+                    const cacheName = ProtectionResult.CacheName[originInt];
 
                     console.debug(`Added ${shortName} URL to allowed cache: ${message.blockedUrl}`);
                     CacheManager.addUrlToAllowedCache(message.blockedUrl, cacheName);
@@ -1387,7 +1140,7 @@
                     CacheManager.removeUrlFromBlockedCache(message.blockedUrl, cacheName);
 
                     // Remove this origin from the "remaining blockers" list for this tab
-                    removeResultOrigin(tabId, message.origin);
+                    removeResultOrigin(tabId, originInt);
                 }
 
                 safeTabUpdate(tabId, {url: message.continueUrl}).catch(error => {
@@ -1402,15 +1155,16 @@
                 break;
 
             case Messages.REPORT_WEBSITE: {
-                try {
-                    // message.reportUrl
-                    Validate.requireStringProperty(message, "reportUrl");
-                    Validate.requireValidUrl(message.reportUrl);
+                // Basic property checks
+                if (!message.reportUrl || message.origin === undefined) {
+                    sendToNewTabPage(tabId);
+                    return;
+                }
 
-                    // message.origin
-                    Validate.requireProperty(message, "origin");
-                    Validate.requireValidOrigin(message.origin);
-                } catch {
+                // Validate origin is a valid integer within known range
+                const originInt = Number(message.origin);
+                if (!Number.isInteger(originInt) || originInt < 0 || originInt > maxOriginValue) {
+                    console.warn(`Invalid origin value: ${message.origin}`);
                     sendToNewTabPage(tabId);
                     return;
                 }
@@ -1449,19 +1203,16 @@
             }
 
             case Messages.ALLOW_WEBSITE: {
-                try {
-                    // message.blockedUrl
-                    Validate.requireStringProperty(message, "blockedUrl");
-                    Validate.requireValidUrl(message.blockedUrl);
+                // Basic property checks
+                if (!message.blockedUrl || !message.continueUrl || message.origin === undefined) {
+                    return;
+                }
 
-                    // message.continueUrl
-                    Validate.requireStringProperty(message, "continueUrl");
-                    Validate.requireValidUrl(message.continueUrl);
-
-                    // message.origin
-                    Validate.requireStringProperty(message, "origin");
-                    Validate.requireValidOrigin(message.origin);
-                } catch {
+                // Validate origin is a valid integer within known range
+                const originInt = Number(message.origin);
+                if (!Number.isInteger(originInt) || originInt < 0 || originInt > maxOriginValue) {
+                    console.warn(`Invalid origin value: ${message.origin}`);
+                    sendToNewTabPage(tabId);
                     return;
                 }
 
@@ -1530,15 +1281,7 @@
             case Messages.SECLOOKUP_TOGGLED:
             case Messages.SWITCH_CH_TOGGLED:
             case Messages.QUAD9_TOGGLED:
-                try {
-                    // message.title
-                    Validate.requireProperty(message, "title");
-                    Validate.requireString(message.title);
-
-                    // message.toggleState
-                    Validate.requireProperty(message, "toggleState");
-                    Validate.requireBoolean(message.toggleState);
-                } catch {
+                if (!message.title || typeof message.toggleState !== 'boolean') {
                     break;
                 }
 
@@ -1563,14 +1306,7 @@
      * @param {Object} info - Information sent when a context menu item is clicked.
      */
     contextMenuAPI.onClicked.addListener(info => {
-        try {
-            // parameters
-            Validate.requireObject(info);
-
-            // info.menuItemId
-            Validate.requireProperty(info, "menuItemId");
-            Validate.requireString(info.menuItemId);
-        } catch {
+        if (!info?.menuItemId || typeof info.menuItemId !== 'string') {
             return;
         }
 

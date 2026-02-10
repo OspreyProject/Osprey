@@ -66,10 +66,7 @@ const Settings = (() => {
      * @returns {boolean} - Returns true if any values were updated, false otherwise.
      */
     const updateIfChanged = (target, source) => {
-        try {
-            Validate.requireObject(target);
-            Validate.requireObject(source);
-        } catch {
+        if (!source || typeof source !== 'object') {
             return false;
         }
 
@@ -126,9 +123,7 @@ const Settings = (() => {
      * @param {Function} [callback] - Optional callback to call after settings are saved.
      */
     const set = (newSettings, callback) => {
-        try {
-            Validate.requireObject(newSettings);
-        } catch {
+        if (!newSettings || typeof newSettings !== 'object') {
             return;
         }
 
@@ -165,11 +160,7 @@ const Settings = (() => {
      * @returns {*} - Returns the validated value if it is of the expected type, or the default value if it is not.
      */
     const validateSettingValue = (key, value, defaultValue) => {
-        try {
-            Validate.requireString(key);
-            Validate.requireNotNull(value);
-            Validate.requireNotNull(defaultValue);
-        } catch {
+        if (value === null || value === undefined || defaultValue === null || defaultValue === undefined) {
             return defaultValue;
         }
 
@@ -190,12 +181,6 @@ const Settings = (() => {
      * @returns {boolean} - Returns true if all partner settings are disabled, false otherwise.
      */
     const allPartnersDisabled = settings => {
-        try {
-            Validate.requireObject(settings);
-        } catch {
-            return true;
-        }
-
         return !settings.adGuardSecurityEnabled &&
             !settings.adGuardFamilyEnabled &&
             !settings.alphaMountainEnabled &&
@@ -209,12 +194,6 @@ const Settings = (() => {
      * @returns {boolean} - Returns true if all security providers are disabled, false otherwise.
      */
     const allProvidersDisabled = settings => {
-        try {
-            Validate.requireObject(settings);
-        } catch {
-            return true;
-        }
-
         return !settings.adGuardSecurityEnabled &&
             !settings.adGuardFamilyEnabled &&
             !settings.alphaMountainEnabled &&

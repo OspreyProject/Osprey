@@ -27,16 +27,6 @@ class ProtectionResult {
      * @param {number} resultOrigin - The origin of the result (e.g., from endpoint or known top website).
      */
     constructor(urlChecked, resultType, resultOrigin) {
-        try {
-            Validate.requireString(urlChecked);
-            Validate.requireInteger(resultType);
-            Validate.requireInteger(resultOrigin);
-            Validate.requireValidOrigin(resultOrigin);
-            Validate.requireValidResultType(resultType);
-        } catch {
-            return;
-        }
-
         this.url = urlChecked;
         this.resultType = resultType;
         this.origin = resultOrigin;

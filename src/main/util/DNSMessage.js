@@ -160,11 +160,6 @@ class DNSMessage {
      * @returns {boolean} - Returns true if any RR in any section has the specified type, false otherwise.
      */
     hasRRType(type) {
-        try {
-            Validate.requireInteger(type);
-        } catch {
-            return false;
-        }
         return this.sectionHasType(this.answers, type) ||
             this.sectionHasType(this.authorities, type) ||
             this.sectionHasType(this.additionals, type);
@@ -177,11 +172,6 @@ class DNSMessage {
      * @returns {boolean} - Returns true if any RR in the answers section has the specified type, false otherwise.
      */
     hasAdditionalRRType(type) {
-        try {
-            Validate.requireInteger(type);
-        } catch {
-            return false;
-        }
         return this.sectionHasType(this.additionals, type);
     }
 
@@ -193,12 +183,6 @@ class DNSMessage {
      * @returns {boolean} - Returns true if any RR in the section has the specified type, false otherwise.
      */
     sectionHasType(section, type) {
-        try {
-            Validate.requireObject(section);
-            Validate.requireInteger(type);
-        } catch {
-            return false;
-        }
         return section.some(rr => rr.type === type);
     }
 
@@ -211,12 +195,6 @@ class DNSMessage {
      * @return {boolean} - Returns true if the domain name is found in any RR, false otherwise.
      */
     containsNameInAnyRR(domain) {
-        try {
-            Validate.requireString(domain);
-        } catch {
-            return false;
-        }
-
         const needle = DNSMessage.normalizeName(domain);
         const all = [...this.answers, ...this.authorities, ...this.additionals];
 
@@ -263,12 +241,6 @@ class DNSMessage {
      * @returns {DNSMessage} - The parsed DNSMessage object.
      */
     static parse(bytes) {
-        try {
-            Validate.requireObject(bytes);
-        } catch {
-            return null;
-        }
-
         const u8 = bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes);
         const view = new DataView(u8.buffer, u8.byteOffset, u8.byteLength);
 
@@ -386,18 +358,9 @@ class DNSMessage {
      * @param {number} rdlength - The length of the RDATA in bytes.
      */
     static parseRData(array, type, rdataStart, rdlength) {
-        try {
-            Validate.requireObject(array);
-            Validate.requireInteger(type);
-            Validate.requireInteger(rdataStart);
-            Validate.requireInteger(rdlength);
-        } catch {
-            return null;
-        }
-
         // Checks if the RDATA start and length are within the bounds of the array
         if (rdataStart < 0 || rdataStart + rdlength > array.length) {
-            return null;
+            return "(Invalid RDATA bounds)";
         }
 
         const view = new DataView(array.buffer, array.byteOffset, array.byteLength);
@@ -511,15 +474,6 @@ class DNSMessage {
      * @returns {{name: string|string, off: number|*}} - The domain name and the new offset.
      */
     static readName(array, state) {
-        try {
-            Validate.requireObject(array);
-            Validate.requireObject(state);
-            Validate.requireProperty(state, "off");
-            Validate.requireInteger(state.off);
-        } catch {
-            return {name: "", off: state.off};
-        }
-
         const maxJumps = 50;
         const maxLabels = 127;
 
@@ -603,9 +557,7 @@ class DNSMessage {
      * @returns {string} - The normalized domain name.
      */
     static normalizeName(name) {
-        try {
-            Validate.requireString(name);
-        } catch {
+        if (typeof name !== 'string') {
             return "";
         }
 
@@ -684,12 +636,6 @@ class DNSMessage {
      * @returns {*|string} - The human-readable string representation of the DNS RR type.
      */
     static typeToString(type) {
-        try {
-            Validate.requireInteger(type);
-        } catch {
-            return "";
-        }
-
         const map = DNSMessage.TypeName || (DNSMessage.TypeName = Object.fromEntries(
             Object.entries(DNSMessage.RRType).map(([k, v]) => [v, k])
         ));
@@ -703,12 +649,6 @@ class DNSMessage {
      * @returns {string} - The human-readable string representation of the DNS RR class.
      */
     static classToString(rrclass) {
-        try {
-            Validate.requireInteger(rrclass);
-        } catch {
-            return "";
-        }
-
         if (rrclass === 1) {
             return "IN";
         }
@@ -722,12 +662,6 @@ class DNSMessage {
      * @returns {string} - The human-readable string representation of the DNS header flags.
      */
     static flagsToString(flags) {
-        try {
-            Validate.requireInteger(flags);
-        } catch {
-            return "";
-        }
-
         // DNS header flags: QR(15) OPCODE(14..11) AA(10) TC(9) RD(8) RA(7) Z(6) AD(5) CD(4) RCODE(3..0)
         const QR = flags >>> 15 & 0x1;
         const OPCODE = flags >>> 11 & 0xF;
@@ -801,18 +735,6 @@ class DNSMessage {
      * @returns {string} - The formatted string representation of the DNS Resource Record (RR).
      */
     static formatRR(rr, {includeRawRdata = false, maxRawBytes = 64} = {}) {
-        try {
-            Validate.requireObject(rr);
-            Validate.requireBoolean(includeRawRdata);
-            Validate.requireInteger(maxRawBytes);
-
-            // rr.type
-            Validate.requireProperty(rr, "type");
-            Validate.requireInteger(rr.type);
-        } catch {
-            return "";
-        }
-
         const t = DNSMessage.typeToString(rr.type);
         const c = DNSMessage.classToString(rr.class);
         const header = `${rr.name}  ${rr.ttl}  ${c}  ${t}`;
