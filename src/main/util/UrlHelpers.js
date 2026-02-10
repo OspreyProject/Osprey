@@ -37,7 +37,7 @@ const UrlHelpers = (() => {
             return new URL(url).searchParams.get("url");
         } catch {
             console.warn(`Invalid blocked URL format: ${url}`);
-            return "https://unknown.com";
+            return "https://www.google.com";
         }
     };
 

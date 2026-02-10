@@ -100,21 +100,23 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
 
         // Extracts the threat code from the current page URL
         const pageUrl = globalThis.document.URL;
-        const result = UrlHelpers.extractResult(pageUrl);
+        let result = UrlHelpers.extractResult(pageUrl);
 
         // Checks if the result is valid
         if (!result) {
-            console.warn("No result found in the URL.");
-            return;
+            console.warn(`No valid protection result found in URL: ${pageUrl}; setting to safe value`);
+            result = ProtectionResult.ResultType.FAILED;
         }
 
         // Converts the result code to a human-readable string
-        const resultText = ProtectionResult.ResultTypeName[result];
-        const resultTextEN = ProtectionResult.ResultTypeNameEN[result];
+        let resultText = ProtectionResult.ResultTypeName[result];
+        let resultTextEN = ProtectionResult.ResultTypeNameEN[result];
 
         // Validates the result text values
         if (!resultText || !resultTextEN) {
-            return;
+            console.warn(`Invalid result code ${result} extracted from URL: ${pageUrl}; setting to safe value`);
+            resultText = ProtectionResult.ResultTypeName[ProtectionResult.ResultType.FAILED];
+            resultTextEN = ProtectionResult.ResultTypeNameEN[ProtectionResult.ResultType.FAILED];
         }
 
         /**
@@ -226,11 +228,12 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         }
 
         // Extracts the blocked URL from the current page URL
-        const blockedUrl = UrlHelpers.extractBlockedUrl(pageUrl);
+        let blockedUrl = UrlHelpers.extractBlockedUrl(pageUrl);
 
         // Validates the blocked URL
         if (!blockedUrl) {
-            return;
+            console.warn(`No valid blocked URL found in URL: ${pageUrl}; setting to safe value`);
+            blockedUrl = "https://www.google.com";
         }
 
         // Encodes the URLs for safe use in other contexts
@@ -245,18 +248,20 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         }
 
         // Gets the origin information
-        const origin = UrlHelpers.extractOrigin(pageUrl);
+        let origin = UrlHelpers.extractOrigin(pageUrl);
 
         // Validates the origin before parsing
         if (!origin) {
-            return;
+            console.warn(`No valid origin: ${pageUrl}; setting to safe value`);
+            origin = ProtectionResult.Origin.UNKNOWN;
         }
 
-        const originInt = Number.parseInt(origin);
+        let originInt = Number.parseInt(origin);
 
         // Validates originInt is a valid integer
         if (!Number.isInteger(originInt)) {
-            return;
+            console.warn(`Invalid origin integer: ${origin} extracted from URL: ${pageUrl}; setting to safe value`);
+            originInt = ProtectionResult.Origin.UNKNOWN;
         }
 
         currentOriginInt = originInt;
@@ -469,11 +474,12 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         };
 
         // Extracts the blocked URL from the current page URL
-        const continueUrl = UrlHelpers.extractContinueUrl(pageUrl);
+        let continueUrl = UrlHelpers.extractContinueUrl(pageUrl);
 
         // Validates the continue URL
         if (!continueUrl) {
-            return;
+            console.warn(`No valid continue URL found in URL: ${pageUrl}; setting to safe value`);
+            continueUrl = "https://www.google.com";
         }
 
         Settings.get(settings => {

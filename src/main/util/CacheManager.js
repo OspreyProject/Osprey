@@ -507,13 +507,14 @@ const CacheManager = (() => {
             const key = UrlHelpers.normalizeUrl(url);
 
             if (!key) {
-                return null;
+                console.warn(`Invalid URL provided for getting blocked result type: ${url}`);
+                return ProtectionResult.ResultType.FAILED;
             }
 
             const cache = blockedCaches[name];
 
             if (!cache?.has(key)) {
-                return null;
+                return ProtectionResult.ResultType.FAILED;
             }
 
             const entry = cache.get(key);
@@ -528,7 +529,9 @@ const CacheManager = (() => {
         } catch (error) {
             console.error(`Error getting blocked result type for ${url}:`, error);
         }
-        return null;
+
+        console.warn(`Returning default result type for ${url} in provider "${name}" due to error or missing entry`);
+        return ProtectionResult.ResultType.FAILED;
     };
 
     /**
