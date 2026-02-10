@@ -29,9 +29,9 @@ const CacheManager = (() => {
     const processingKey = "processingCache";
 
     // Caches for allowed, blocked, and processing entries
-    let allowedCaches = {};
-    let blockedCaches = {};
-    let processingCaches = {};
+    let allowedCaches = Object.create(null);
+    let blockedCaches = Object.create(null);
+    let processingCaches = Object.create(null);
 
     // Timeout ID for debounced updates
     let localStorageTimeoutID = null;
@@ -136,8 +136,8 @@ const CacheManager = (() => {
      */
     const updateLocalStorage = () => {
         const write = () => {
-            const allowedOut = {};
-            const blockedOut = {};
+            const allowedOut = Object.create(null);
+            const blockedOut = Object.create(null);
 
             for (const name of Object.keys(allowedCaches)) {
                 allowedOut[name] = Object.fromEntries(allowedCaches[name]);
@@ -168,7 +168,7 @@ const CacheManager = (() => {
      */
     const updateSessionStorage = () => {
         const write = () => {
-            const out = {};
+            const out = Object.create(null);
 
             for (const name of Object.keys(processingCaches)) {
                 out[name] = Object.fromEntries(processingCaches[name]);
