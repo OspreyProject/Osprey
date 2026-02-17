@@ -778,7 +778,7 @@ const BrowserProtection = (() => {
                     return;
                 }
 
-                // If the data matches this specific pattern, it's blocked
+                // Checks if the domain is blocked
                 if (filteringData.length >= 4 && filteringData[3] === 131) {
                     console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
                     CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
@@ -880,7 +880,7 @@ const BrowserProtection = (() => {
                     return;
                 }
 
-                // If the data matches this specific pattern, it's blocked
+                // Checks if the domain is blocked
                 if (filteringData.length >= 4 && filteringData[3] === 131) {
                     console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
                     CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.ADULT_CONTENT);
@@ -982,7 +982,7 @@ const BrowserProtection = (() => {
                     return;
                 }
 
-                // If the data matches blocking patterns, it's blocked
+                // Checks if the domain is blocked
                 if (filteringData?.Comment && typeof filteringData.Comment === 'string' && filteringData.Comment.includes('EDE(16): Censored')) {
                     console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
                     CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
@@ -1084,7 +1084,7 @@ const BrowserProtection = (() => {
                     return;
                 }
 
-                // If the data matches blocking patterns, it's blocked
+                // Checks if the domain is blocked
                 if (filteringData?.Comment && typeof filteringData.Comment === 'string' && filteringData.Comment.includes('EDE(16): Censored')) {
                     console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
                     CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.ADULT_CONTENT);
