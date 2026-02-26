@@ -50,7 +50,7 @@ jobs:
 
       - name: 'Add browser_specific_settings for Firefox'
         run: |
-          jq '. += {"browser_specific_settings": {"gecko": {"id": "osprey@foulest.net", "strict_min_version": "109.0", "data_collection_permissions": {"required": ["none"]}}}}' src/main/manifest.json > src/main/manifest_temp.json
+          jq '. += {"browser_specific_settings": {"gecko": {"id": "osprey@foulest.net", "strict_min_version": "142.0", "data_collection_permissions": {"required": ["none"]}}}}' src/main/manifest.json > src/main/manifest_temp.json
           mv src/main/manifest_temp.json src/main/manifest.json
 
       - name: 'Upload Artifact'
