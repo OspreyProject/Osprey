@@ -20,11 +20,11 @@
 // Manages user preferences and configurations
 const Settings = (() => {
 
-    // Key for storing settings in local storage
-    const settingsKey = "Settings";
-
     // List of keys that are considered dangerous and should not be used for storage
     const DANGEROUS_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
+
+    // Key for storing settings in local storage
+    const settingsKey = "Settings";
 
     const defaultSettings = Object.freeze({
         // Official Partners
