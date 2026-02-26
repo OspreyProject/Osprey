@@ -3,14 +3,6 @@
   "name": "__MSG_extensionName__",
   "manifest_version": 3,
   "version": "1.4.7",
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "@osprey-browser-protection",
-      "data_collection_permissions": {
-        "required": ["none"]
-      }
-    }
-  },
   "description": "__MSG_extensionDescription__",
   "default_locale": "en",
   "background": {
