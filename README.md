@@ -100,8 +100,8 @@ entirely using [the system policies](https://github.com/Foulest/Osprey/wiki/Sett
 
 You can configure the extension's protection options in the settings:
 
-![Osprey Settings (Page 1)](https://i.imgur.com/SJO2WYT.png)
-![Osprey Settings (Page 2)](https://i.imgur.com/l9Z2Oxi.png)
+![Osprey Settings (Page 1)](https://i.imgur.com/2W1xdYF.png)
+![Osprey Settings (Page 2)](https://i.imgur.com/AqxJlEf.png)
 
 If you're unsure about the functions of each protection provider, **it's best to keep the default settings.**
 
@@ -124,16 +124,17 @@ The following providers are **enabled** by default:
 - [x] **[alphaMountain Web Protection](https://alphamountain.ai/?utm_source=osprey)**
 - [x] [CleanBrowsing Security DNS](https://cleanbrowsing.org/filters/?utm_source=osprey)
 - [x] [Cloudflare Security DNS](https://blog.cloudflare.com/introducing-1-1-1-1-for-families/?utm_source=osprey)
-- [x] [Quad9 Security DNS](https://quad9.net/?utm_source=osprey)
+- [x] [Seclookup Web Protection](https://seclookup.com/?utm_source=osprey)
 - [x] [Switch.ch Security DNS](https://portal.switch.ch/pub/public-dns)
+- [x] [Quad9 Security DNS](https://quad9.net/?utm_source=osprey)
 
 The following providers are **disabled** by default:
 
 #### Security Filters
 
 - [ ] **[PrecisionSec Web Protection](https://precisionsec.com/?utm_source=osprey)**
-- [ ] [Control D Security DNS](https://controld.com/?utm_source=osprey)
 - [ ] [CERT-EE Security DNS](https://ria.ee/en/news/application-developed-cert-ee-protects-against-phishing-and-malware/?utm_source=osprey)
+- [ ] [Control D Security DNS](https://controld.com/?utm_source=osprey)
 - [ ] [DNS4EU Security DNS](https://joindns4.eu/for-public/?utm_source=osprey)
 
 #### Adult Content Filters
