@@ -427,7 +427,7 @@
                         browserAPI.tabs.get(tabId, tab => {
                             // Checks if the tab still exists
                             if (browserAPI.runtime.lastError || !tab) {
-                                console.warn(`Tab ${tabId} no longer exists`);
+                                console.debug(`Tab ${tabId} no longer exists`);
                                 return;
                             }
 
@@ -516,7 +516,7 @@
                         browserAPI.tabs.get(tabId, tab => {
                             // Checks if the tab still exists
                             if (browserAPI.runtime.lastError || !tab) {
-                                console.warn(`Tab ${tabId} no longer exists`);
+                                console.debug(`Tab ${tabId} no longer exists`);
                                 return;
                             }
 
@@ -1039,7 +1039,7 @@
      */
     browserAPI.webNavigation.onTabReplaced.addListener(details => {
         if (!details?.url || typeof details.tabId !== 'number') {
-            console.warn(`Invalid onTabReplaced event details: ${JSON.stringify(details)}`);
+            console.debug(`Invalid onTabReplaced event details (possibly Memory Saver): ${JSON.stringify(details)}`);
             return;
         }
 
