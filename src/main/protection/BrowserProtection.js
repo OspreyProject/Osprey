@@ -26,9 +26,7 @@ const BrowserProtection = (() => {
     // API keys for various protection services
     // These aren't meant to be secret, but they are obfuscated to stop secret sniffers.
     // They will be exposed in the network requests anyway, so this is just to prevent casual snooping.
-    const alphaMountainKey = atob("NjkyZDE1MzItZTRmYy00MjFmLWJkMzYtZGFmMGNjYzZlMTFi");
     const precisionSecKey = atob("MGI1Yjc2MjgtMzgyYi0xMWYwLWE1OWMtYjNiNTIyN2IxMDc2");
-    const seclookupKey = atob("MGJkYTY0MTA4ZTJiMWE3MGVmNzBlYzExM2Q3MGY5Y2Y=");
 
     // Map to store AbortControllers for each tab
     let tabAbortControllers = new Map();
@@ -415,12 +413,9 @@ const BrowserProtection = (() => {
             // Adds the URL to the processing cache to prevent duplicate requests
             CacheManager.addUrlToProcessingCache(urlObject, cacheName, tabId);
 
-            const apiUrl = `https://api.alphamountain.ai/category/uri`;
+            const apiUrl = `https://api.osprey.ac/alphamountain`;
             const body = {
-                uri: urlString,
-                license: alphaMountainKey,
-                version: 1,
-                type: "partner.info"
+                url: urlString,
             };
 
             try {
@@ -441,7 +436,7 @@ const BrowserProtection = (() => {
                 }
 
                 // Return early if the Content-Type is not what we expect
-                if (!Validate.hasValidContentType(response, 'text/html; charset=utf-8')) {
+                if (!Validate.hasValidContentType(response, 'application/json;charset=UTF-8')) {
                     console.warn(`[${shortName}] Unexpected Content-Type: ${response.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
