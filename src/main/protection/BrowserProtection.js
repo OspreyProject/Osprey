@@ -234,7 +234,7 @@ const BrowserProtection = (() => {
 
                 // Returns early if the domain is offline
                 if (!(Status === 0 && Answer && Answer.length > 0)) {
-                    console.warn(`[${shortName}] Returned early: domain offline`);
+                    console.debug(`[${shortName}] Returned early: domain offline`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -340,7 +340,7 @@ const BrowserProtection = (() => {
 
                 // Returns early if the domain is offline
                 if (!(Status === 0 && Answer && Answer.length > 0)) {
-                    console.warn(`[${shortName}] Returned early: domain offline`);
+                    console.debug(`[${shortName}] Returned early: domain offline`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -663,7 +663,7 @@ const BrowserProtection = (() => {
 
                 // Returns early if the domain is offline
                 if (!(Status === 0 && Answer && Answer.length > 0)) {
-                    console.warn(`[${shortName}] Returned early: domain offline`);
+                    console.debug(`[${shortName}] Returned early: domain offline`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -768,7 +768,7 @@ const BrowserProtection = (() => {
 
                 // Returns early if the domain is offline
                 if (!(Status === 0 && Answer && Answer.length > 0)) {
-                    console.warn(`[${shortName}] Returned early: domain offline`);
+                    console.debug(`[${shortName}] Returned early: domain offline`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -870,7 +870,7 @@ const BrowserProtection = (() => {
 
                 // Returns early if the domain is offline
                 if (!(Status === 0 && Answer && Answer.length > 0)) {
-                    console.warn(`[${shortName}] Returned early: domain offline`);
+                    console.debug(`[${shortName}] Returned early: domain offline`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -972,7 +972,7 @@ const BrowserProtection = (() => {
 
                 // Returns early if the domain is offline
                 if (!(Status === 0 && Answer && Answer.length > 0)) {
-                    console.warn(`[${shortName}] Returned early: domain offline`);
+                    console.debug(`[${shortName}] Returned early: domain offline`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -1074,7 +1074,7 @@ const BrowserProtection = (() => {
 
                 // Returns early if the domain is offline
                 if (!(Status === 0 && Answer && Answer.length > 0)) {
-                    console.warn(`[${shortName}] Returned early: domain offline`);
+                    console.debug(`[${shortName}] Returned early: domain offline`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -1177,7 +1177,7 @@ const BrowserProtection = (() => {
 
                 // Returns early if the domain is offline
                 if (!(Status === 0 && Answer && Answer.length > 0)) {
-                    console.warn(`[${shortName}] Returned early: domain offline`);
+                    console.debug(`[${shortName}] Returned early: domain offline`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -1283,7 +1283,7 @@ const BrowserProtection = (() => {
 
                 // Returns early if the domain is offline
                 if (!(Status === 0 && Answer && Answer.length > 0)) {
-                    console.warn(`[${shortName}] Returned early: domain offline`);
+                    console.debug(`[${shortName}] Returned early: domain offline`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -1389,7 +1389,7 @@ const BrowserProtection = (() => {
 
                 // Returns early if the domain is offline
                 if (!(Status === 0 && Answer && Answer.length > 0)) {
-                    console.warn(`[${shortName}] Returned early: domain offline`);
+                    console.debug(`[${shortName}] Returned early: domain offline`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -1494,7 +1494,7 @@ const BrowserProtection = (() => {
 
                 // Returns early if the domain is offline
                 if (!(Status === 0 && Answer && Answer.length > 0)) {
-                    console.warn(`[${shortName}] Returned early: domain offline`);
+                    console.debug(`[${shortName}] Returned early: domain offline`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
