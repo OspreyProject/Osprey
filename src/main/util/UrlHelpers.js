@@ -452,7 +452,7 @@ const UrlHelpers = (() => {
         const stripped = domain.trim().replace(/\.$/, '');
 
         // Reject domains with invalid characters
-        if (!/^[a-zA-Z0-9.-]+$/.test(stripped)) {
+        if (!/^[a-zA-Z0-9._-]+$/.test(stripped)) {
             throw new Error('Domain contains invalid characters');
         }
 
