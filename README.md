@@ -75,10 +75,9 @@ provide it.
 Osprey is committed to being non-profit, non-commercial, and open-source, **forever**, with no plans to monetize the
 project in any way. Unlike other free browser extensions, Osprey doesn't collect, profile,
 and [sell your browsing data](https://ftc.gov/news-events/news/press-releases/2024/02/ftc-order-will-ban-avast-selling-browsing-data-advertising-purposes-require-it-pay-165-million-over/?utm_source=osprey)
-behind your back. We're **fully GDPR-compliant** and committed to being as transparent as possible. We don't use
-centralized servers or user accounts to protect your devices. Osprey runs **locally** on your device, offline or online,
-with **zero telemetry** or back-end analytics. Check out our [Privacy Policy here](https://osprey.ac/privacy) for more
-info.
+behind your back. We're **fully GDPR-compliant** and committed to being as transparent as possible. Osprey runs
+**locally** on your device, offline or online, with **zero telemetry**, back-end analytics, or user accounts needed.
+Check out our [Privacy Policy here](https://osprey.ac/privacy) for more info.
 
 The more protection providers join the project, the better the Osprey threat intelligence platform becomes. If you're
 interested in improving global threat intelligence and want to join the project, feel free to get in contact with us
@@ -148,7 +147,6 @@ Providers disabled by default are either due to:
 - Frequent reports of false positives
 - Failure to respond to false positive reports
 - Being an optional adult content filter
-- Being a paid service that requires a license or API key
 
 If a provider gives you false positives, report the links to them directly and disable them in the Protection Options
 panel if needed. Osprey is designed to be customizable, so you can enable or disable any of the providers at any time.
