@@ -113,21 +113,6 @@
       "description": "If set to true, Control D Family will be enabled.",
       "type": "boolean"
     },
-    "DNS4EUSecurityEnabled": {
-      "title": "DNS4EU Security Enabled",
-      "description": "If set to true, DNS4EU Security will be enabled.",
-      "type": "boolean"
-    },
-    "DNS4EUFamilyEnabled": {
-      "title": "DNS4EU Family Enabled",
-      "description": "If set to true, DNS4EU Family will be enabled.",
-      "type": "boolean"
-    },
-    "SeclookupEnabled": {
-      "title": "Seclookup Enabled",
-      "description": "If set to true, Seclookup will be enabled.",
-      "type": "boolean"
-    },
     "SwitchCHEnabled": {
       "title": "Switch.ch Enabled",
       "description": "If set to true, Switch.ch will be enabled.",

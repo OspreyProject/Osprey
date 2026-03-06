@@ -41,9 +41,6 @@ const Settings = (() => {
         cloudflareFamilyEnabled: false,
         controlDSecurityEnabled: false,
         controlDFamilyEnabled: false,
-        dns4EUSecurityEnabled: false,
-        dns4EUFamilyEnabled: false,
-        seclookupEnabled: true,
         switchCHEnabled: true,
         quad9Enabled: true,
 
@@ -208,9 +205,6 @@ const Settings = (() => {
             !settings.cloudflareFamilyEnabled &&
             !settings.controlDSecurityEnabled &&
             !settings.controlDFamilyEnabled &&
-            !settings.dns4EUSecurityEnabled &&
-            !settings.dns4EUFamilyEnabled &&
-            !settings.seclookupEnabled &&
             !settings.switchCHEnabled &&
             !settings.quad9Enabled;
     };
