@@ -270,7 +270,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         // Listens for PONG messages to update the reported by count
         browserAPI.runtime.onMessage.addListener(message => {
             // Early exit for messages we don't care about
-            if (!message || message.messageType !== Messages.BLOCKED_COUNTER_PONG) {
+            if (message?.messageType !== Messages.BLOCKED_COUNTER_PONG) {
                 return;
             }
 

@@ -455,7 +455,7 @@ const BrowserProtection = (() => {
                 // Check if the URL falls into any of the untrusted categories
                 // - 11: Child Sexual Abuse Material (CSAM)
                 // - 55: Potentially Unwanted Applications (PUA)
-                if (categories.some(category => category === 11 || category === 55)) {
+                if (categories.includes(category => category === 11 || category === 55)) {
                     console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
                     CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.UNTRUSTED);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.UNTRUSTED, origin));
@@ -464,7 +464,7 @@ const BrowserProtection = (() => {
 
                 // Check if the URL falls into any of the malicious categories
                 // - 39: Malicious
-                if (categories.some(category => category === 39)) {
+                if (categories.includes(category => category === 39)) {
                     console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
                     CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.MALICIOUS, origin));
@@ -473,7 +473,7 @@ const BrowserProtection = (() => {
 
                 // Check if the URL falls into any of the phishing categories
                 // - 51: Phishing
-                if (categories.some(category => category === 51)) {
+                if (categories.includes(category => category === 51)) {
                     console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
                     CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.PHISHING);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.PHISHING, origin));
