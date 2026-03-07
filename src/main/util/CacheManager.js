@@ -88,7 +88,7 @@ const CacheManager = (() => {
      */
     StorageUtil.getFromLocalStore(allowedKey, callback => {
         for (const name of Object.keys(allowedCaches)) {
-            if (callback[name] && typeof callback[name] === 'object') {
+            if (callback?.[name] && typeof callback[name] === 'object') {
                 const entries = Object.entries(callback[name]).filter(([key]) => !DANGEROUS_KEYS.has(key));
                 allowedCaches[name] = new Map(entries);
             }
@@ -103,7 +103,7 @@ const CacheManager = (() => {
      */
     StorageUtil.getFromLocalStore(blockedKey, callback => {
         for (const name of Object.keys(blockedCaches)) {
-            if (callback[name] && typeof callback[name] === 'object') {
+            if (callback?.[name] && typeof callback[name] === 'object') {
                 const entries = Object.entries(callback[name]).filter(([key]) => !DANGEROUS_KEYS.has(key));
 
                 blockedCaches[name] = new Map(
