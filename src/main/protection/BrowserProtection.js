@@ -23,11 +23,6 @@ const BrowserProtection = (() => {
     // Global variable for browser API compatibility
     const browserAPI = globalThis.chrome ?? globalThis.browser;
 
-    // API keys for various protection services
-    // These aren't meant to be secret, but they are obfuscated to stop secret sniffers.
-    // They will be exposed in the network requests anyway, so this is just to prevent casual snooping.
-    const precisionSecKey = atob("MGI1Yjc2MjgtMzgyYi0xMWYwLWE1OWMtYjNiNTIyN2IxMDc2");
-
     // Map to store AbortControllers for each tab
     let tabAbortControllers = new Map();
 
@@ -529,15 +524,18 @@ const BrowserProtection = (() => {
             // Adds the URL to the processing cache to prevent duplicate requests
             CacheManager.addUrlToProcessingCache(urlObject, cacheName, tabId);
 
-            const apiUrl = `https://api.precisionsec.com/check_url/${encodedURL}`;
+            const apiUrl = `https://api.osprey.ac/precisionsec`;
+            const body = {
+                url: urlString,
+            };
 
             try {
                 const response = await fetch(apiUrl, {
-                    method: "GET",
+                    method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        "API-Key": precisionSecKey,
                     },
+                    body: JSON.stringify(body),
                     signal: createTimeoutSignal(signal)
                 });
 
@@ -549,7 +547,7 @@ const BrowserProtection = (() => {
                 }
 
                 // Return early if the Content-Type is not what we expect
-                if (!Validate.hasValidContentType(response, 'application/json')) {
+                if (!Validate.hasValidContentType(response, 'application/json;charset=UTF-8')) {
                     console.warn(`[${shortName}] Unexpected Content-Type: ${response.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
