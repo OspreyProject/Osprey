@@ -135,7 +135,6 @@ const BrowserProtection = (() => {
         }
 
         // Encodes the URL components for use in API requests
-        const encodedURL = encodeURIComponent(urlString);
         const encodedURLHostname = encodeURIComponent(urlHostname);
 
         // The non-filtering URL used for DNS lookups
@@ -431,7 +430,7 @@ const BrowserProtection = (() => {
                 }
 
                 // Return early if the Content-Type is not what we expect
-                if (!Validate.hasValidContentType(response, 'application/json;charset=UTF-8')) {
+                if (!Validate.hasValidContentType(response, 'application/json')) {
                     console.warn(`[${shortName}] Unexpected Content-Type: ${response.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
@@ -547,7 +546,7 @@ const BrowserProtection = (() => {
                 }
 
                 // Return early if the Content-Type is not what we expect
-                if (!Validate.hasValidContentType(response, 'application/json;charset=UTF-8')) {
+                if (!Validate.hasValidContentType(response, 'application/json')) {
                     console.warn(`[${shortName}] Unexpected Content-Type: ${response.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
