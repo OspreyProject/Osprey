@@ -63,7 +63,14 @@ const Settings = (() => {
      * @returns {boolean} - Returns true if any values were updated, false otherwise.
      */
     const updateIfChanged = (target, source) => {
-        if (!source || typeof source !== 'object') {
+        // This happens when there are no stored settings yet, so we can skip the update process
+        // Not logging an error here prevents unnecessarily spamming the console with errors
+        if (!source) {
+            return false;
+        }
+
+        // Validates that the source is an object before proceeding with the update
+        if (typeof source !== 'object') {
             console.warn(`Invalid source object for settings update, expected an object but got ${typeof source}`);
             return false;
         }
