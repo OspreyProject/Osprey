@@ -380,10 +380,13 @@
 
             // Cancels all pending requests for the main frame navigation
             if (frameId === 0) {
-                BrowserProtection.abandonPendingRequests(tabId, "Cancelled by main frame navigation.");
+                const previousUrl = getFrameZeroUrl(tabId);
 
-                // Removes all cached keys for the tab
-                CacheManager.removeKeysByTabId(tabId);
+                // Only abort if we're actually navigating to a different URL
+                if (previousUrl !== urlString) {
+                    BrowserProtection.abandonPendingRequests(tabId, "Cancelled by main frame navigation.");
+                    CacheManager.removeKeysByTabId(tabId);
+                }
 
                 // Sets the frame-zero URL for the tab
                 setFrameZeroUrl(tabId, urlString);
