@@ -1,6 +1,6 @@
 # Privacy Policy
 
-**Effective Date:** 03/05/2026
+**Effective Date:** 03/10/2026
 
 **By installing or using Osprey: Browser Protection, you agree to the terms of this Privacy Policy.**
 
@@ -19,7 +19,7 @@ and path, excluding tracking parameters) to third-party threat intelligence or D
 are made solely to determine whether the destination is considered malicious or inappropriate. Osprey: Browser
 Protection does not itself store these requests or associate them with your identity.
 
-Requests may be sent to the provider's API directly, or to Osprey's own proxy server hosted in Frankfurt, DE, which then
+Requests may be sent to the provider's API directly, or to Osprey's own proxy server hosted in New York, NY, which then
 forwards the request to the provider. In either case, Osprey does not log or store any personally identifiable
 information. IP addresses are hashed and not stored, and the source code is open-source and [available for review on
 GitHub here.](https://github.com/OspreyProject/OspreyProxy)
