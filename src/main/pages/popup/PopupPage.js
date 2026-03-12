@@ -123,20 +123,20 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
             messageType: Messages.CONTROL_D_FAMILY_TOGGLED,
         },
         {
-            origin: ProtectionResult.Origin.SWITCH_CH,
-            name: "switchCHEnabled",
-            title: ProtectionResult.FullName[this.origin],
-            labelElementId: "switchCHStatus",
-            switchElementId: "switchCHSwitch",
-            messageType: Messages.SWITCH_CH_TOGGLED,
-        },
-        {
             origin: ProtectionResult.Origin.QUAD9,
             name: "quad9Enabled",
             title: ProtectionResult.FullName[this.origin],
             labelElementId: "quad9Status",
             switchElementId: "quad9Switch",
             messageType: Messages.QUAD9_TOGGLED,
+        },
+        {
+            origin: ProtectionResult.Origin.SWITCH_CH,
+            name: "switchCHEnabled",
+            title: ProtectionResult.FullName[this.origin],
+            labelElementId: "switchCHStatus",
+            switchElementId: "switchCHSwitch",
+            messageType: Messages.SWITCH_CH_TOGGLED,
         }
     ]);
 

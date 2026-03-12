@@ -808,16 +808,16 @@
                 console.debug("Control D Family is managed by system policy.");
             }
 
-            // Checks and sets the Switch.ch settings using the policy
-            if (policies.SwitchCHEnabled !== undefined) {
-                settings.switchCHEnabled = policies.SwitchCHEnabled;
-                console.debug("Switch.ch is managed by system policy.");
-            }
-
             // Checks and sets the Quad9 settings using the policy
             if (policies.Quad9Enabled !== undefined) {
                 settings.quad9Enabled = policies.Quad9Enabled;
                 console.debug("Quad9 is managed by system policy.");
+            }
+
+            // Checks and sets the Switch.ch settings using the policy
+            if (policies.SwitchCHEnabled !== undefined) {
+                settings.switchCHEnabled = policies.SwitchCHEnabled;
+                console.debug("Switch.ch is managed by system policy.");
             }
 
             // Updates the stored settings if any policies were applied
@@ -1277,8 +1277,8 @@
             case Messages.CONTROL_D_FAMILY_TOGGLED:
             case Messages.CONTROL_D_SECURITY_TOGGLED:
             case Messages.PRECISIONSEC_TOGGLED:
-            case Messages.SWITCH_CH_TOGGLED:
             case Messages.QUAD9_TOGGLED:
+            case Messages.SWITCH_CH_TOGGLED:
                 if (!message.title || typeof message.toggleState !== 'boolean') {
                     break;
                 }

@@ -41,8 +41,8 @@ const Settings = (() => {
         cloudflareFamilyEnabled: false,
         controlDSecurityEnabled: false,
         controlDFamilyEnabled: false,
-        switchCHEnabled: true,
         quad9Enabled: true,
+        switchCHEnabled: true,
 
         // General Settings
         contextMenuEnabled: true,
@@ -212,8 +212,8 @@ const Settings = (() => {
             !settings.cloudflareFamilyEnabled &&
             !settings.controlDSecurityEnabled &&
             !settings.controlDFamilyEnabled &&
-            !settings.switchCHEnabled &&
-            !settings.quad9Enabled;
+            !settings.quad9Enabled &&
+            !settings.switchCHEnabled;
     };
 
     return Object.freeze({

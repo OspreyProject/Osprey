@@ -83,8 +83,8 @@ ProtectionResult.Origin = Object.freeze({
     CLOUDFLARE_FAMILY: 9,
     CONTROL_D_SECURITY: 10,
     CONTROL_D_FAMILY: 11,
-    SWITCH_CH: 12,
-    QUAD9: 13,
+    QUAD9: 12,
+    SWITCH_CH: 13,
 });
 
 ProtectionResult.FullName = Object.freeze({
@@ -104,8 +104,8 @@ ProtectionResult.FullName = Object.freeze({
     9: "Cloudflare Family DNS",
     10: "Control D Security DNS",
     11: "Control D Family DNS",
-    12: "Switch.ch Security DNS",
-    13: "Quad9 Security DNS",
+    12: "Quad9 Security DNS",
+    13: "Switch.ch Security DNS",
 });
 
 ProtectionResult.ShortName = Object.freeze({
@@ -125,8 +125,8 @@ ProtectionResult.ShortName = Object.freeze({
     9: "Cloudflare Family",
     10: "Control D Security",
     11: "Control D Family",
-    12: "Switch.ch",
-    13: "Quad9",
+    12: "Quad9",
+    13: "Switch.ch",
 });
 
 ProtectionResult.CacheName = Object.freeze({
@@ -146,6 +146,6 @@ ProtectionResult.CacheName = Object.freeze({
     9: "cloudflareFamily",
     10: "controlDSecurity",
     11: "controlDFamily",
-    12: "switchCH",
-    13: "quad9",
+    12: "quad9",
+    13: "switchCH",
 });

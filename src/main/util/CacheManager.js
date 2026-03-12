@@ -69,8 +69,8 @@ const CacheManager = (() => {
         "cleanBrowsingSecurity", "cleanBrowsingFamily",
         "cloudflareSecurity", "cloudflareFamily",
         "controlDSecurity", "controlDFamily",
-        "switchCH",
         "quad9",
+        "switchCH",
     ]);
 
     // Initialize caches for each provider

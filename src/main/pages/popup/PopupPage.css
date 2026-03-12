@@ -241,8 +241,8 @@ section {
 #cloudflareFamilyDivSwitch,
 #controlDSecurityDivSwitch,
 #controlDFamilyDivSwitch,
-#switchCHDivSwitch,
-#quad9DivSwitch {
+#quad9DivSwitch,
+#switchCHDivSwitch {
     user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
