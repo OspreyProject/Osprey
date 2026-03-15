@@ -26,8 +26,8 @@ const BrowserProtection = (() => {
     // Map to store AbortControllers for each tab
     let tabAbortControllers = new Map();
 
-    // Default request timeout in milliseconds (5 seconds)
-    const REQUEST_TIMEOUT_MS = 5000;
+    // Default request timeout in milliseconds (10 seconds)
+    const REQUEST_TIMEOUT_MS = 10000;
 
     /**
      * Creates an AbortSignal that times out after the specified duration.
@@ -156,7 +156,7 @@ const BrowserProtection = (() => {
                 headers: {
                     "Accept": "application/dns-json"
                 },
-                signal: createTimeoutSignal(signal, 3000)
+                signal: createTimeoutSignal(signal, 10000)
             });
 
             // Checks if the domain is offline
