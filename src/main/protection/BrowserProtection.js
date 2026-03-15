@@ -107,7 +107,7 @@ const BrowserProtection = (() => {
      * @param {string} urlString - The URL to check.
      * @param {function} callback - The callback function to handle the result.
      */
-    const checkIfUrlIsMalicious = (tabId, urlString, callback) => {
+    const checkIfUrlIsMalicious = async (tabId, urlString, callback) => {
         // Parses the URL object
         let urlObject;
         try {
@@ -147,6 +147,34 @@ const BrowserProtection = (() => {
 
         // Gets the signal from the current AbortController
         const {signal} = tabAbortControllers.get(tabId);
+
+        // Make a validation request with Cloudflare before querying other providers
+        // Only proceed if the domain is valid and online to avoid unnecessary requests
+        try {
+            const nonFilteringResponse = await fetch(nonFilteringURL, {
+                method: "GET",
+                headers: {
+                    "Accept": "application/dns-json"
+                },
+                signal: createTimeoutSignal(signal, 1000) // Short number in case Cloudflare is down
+            });
+
+            // Checks if the domain is offline
+            if (nonFilteringResponse.ok && Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
+                const nonFilteringData = await nonFilteringResponse.json();
+                const {Status, Answer} = nonFilteringData;
+
+                if (!(Status === 0 && Answer && Answer.length > 0)) {
+                    console.warn(`[Osprey] Domain appears to be offline`);
+                    return;
+                }
+            } else {
+                console.warn(`${nonFilteringResponse.ok} - ${Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')}`);
+            }
+        } catch (error) {
+            console.warn(`[Osprey] Failed to validate URL '${urlString}': ${error}`);
+            return;
+        }
 
         /**
          * Checks the URL with AdGuard's Security DNS API.
@@ -198,37 +226,16 @@ const BrowserProtection = (() => {
                     signal: createTimeoutSignal(signal)
                 });
 
-                const nonFilteringResponse = await fetch(nonFilteringURL, {
-                    method: "GET",
-                    headers: {
-                        "Accept": "application/dns-json"
-                    },
-                    signal: createTimeoutSignal(signal)
-                });
-
-                // Checks if the domain is offline
-                if (nonFilteringResponse.ok && Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
-                    const nonFilteringData = await nonFilteringResponse.json();
-                    const {Status, Answer} = nonFilteringData;
-
-                    if (!(Status === 0 && Answer && Answer.length > 0)) {
-                        console.debug(`[${shortName}] Domain appears to be offline`);
-                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
-                        return;
-                    }
-                }
-
-                // Checks if one or more of the responses is not OK
-                if (!filteringResponse.ok || !nonFilteringResponse.ok) {
+                // Checks if the response status is valid
+                if (!filteringResponse.ok) {
                     console.warn(`[${shortName}] Invalid status received: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
 
-                // Checks if the Content-Type is not what we expect
-                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message') ||
-                    !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
-                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
+                // Checks if the Content-Type is valid
+                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message')) {
+                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -307,37 +314,16 @@ const BrowserProtection = (() => {
                     signal: createTimeoutSignal(signal)
                 });
 
-                const nonFilteringResponse = await fetch(nonFilteringURL, {
-                    method: "GET",
-                    headers: {
-                        "Accept": "application/dns-json"
-                    },
-                    signal: createTimeoutSignal(signal)
-                });
-
-                // Checks if the domain is offline
-                if (nonFilteringResponse.ok && Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
-                    const nonFilteringData = await nonFilteringResponse.json();
-                    const {Status, Answer} = nonFilteringData;
-
-                    if (!(Status === 0 && Answer && Answer.length > 0)) {
-                        console.debug(`[${shortName}] Domain appears to be offline`);
-                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
-                        return;
-                    }
-                }
-
-                // Checks if one or more of the responses is not OK
-                if (!filteringResponse.ok || !nonFilteringResponse.ok) {
+                // Checks if the response is ok
+                if (!filteringResponse.ok) {
                     console.warn(`[${shortName}] Invalid status received: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
 
-                // Checks if the Content-Type is not what we expect
-                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message') ||
-                    !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
-                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
+                // Checks if the Content-Type is valid
+                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message')) {
+                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -428,34 +414,14 @@ const BrowserProtection = (() => {
                     signal: createTimeoutSignal(signal)
                 });
 
-                const nonFilteringResponse = await fetch(nonFilteringURL, {
-                    method: "GET",
-                    headers: {
-                        "Accept": "application/dns-json"
-                    },
-                    signal: createTimeoutSignal(signal)
-                });
-
-                // Checks if the domain is offline
-                if (nonFilteringResponse.ok && Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
-                    const nonFilteringData = await nonFilteringResponse.json();
-                    const {Status, Answer} = nonFilteringData;
-
-                    if (!(Status === 0 && Answer && Answer.length > 0)) {
-                        console.debug(`[${shortName}] Domain appears to be offline`);
-                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
-                        return;
-                    }
-                }
-
-                // Checks if one or more of the responses is not OK
-                if (!filteringResponse.ok || !nonFilteringResponse.ok) {
+                // Checks if the response status is valid
+                if (!filteringResponse.ok) {
                     console.warn(`[${shortName}] Invalid status received: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
 
-                // Checks if the Content-Type is not what we expect
+                // Checks if the Content-Type is valid
                 if (!Validate.hasValidContentType(filteringResponse, 'application/json')) {
                     console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
@@ -564,34 +530,14 @@ const BrowserProtection = (() => {
                     signal: createTimeoutSignal(signal)
                 });
 
-                const nonFilteringResponse = await fetch(nonFilteringURL, {
-                    method: "GET",
-                    headers: {
-                        "Accept": "application/dns-json"
-                    },
-                    signal: createTimeoutSignal(signal)
-                });
-
-                // Checks if the domain is offline
-                if (nonFilteringResponse.ok && Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
-                    const nonFilteringData = await nonFilteringResponse.json();
-                    const {Status, Answer} = nonFilteringData;
-
-                    if (!(Status === 0 && Answer && Answer.length > 0)) {
-                        console.debug(`[${shortName}] Domain appears to be offline`);
-                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
-                        return;
-                    }
-                }
-
-                // Checks if one or more of the responses is not OK
-                if (!filteringResponse.ok || !nonFilteringResponse.ok) {
+                // Checks if the response status is valid
+                if (!filteringResponse.ok) {
                     console.warn(`[${shortName}] Invalid status received: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
 
-                // Checks if the Content-Type is not what we expect
+                // Checks if the Content-Type is valid
                 if (!Validate.hasValidContentType(filteringResponse, 'application/json')) {
                     console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
@@ -676,37 +622,16 @@ const BrowserProtection = (() => {
                     signal: createTimeoutSignal(signal)
                 });
 
-                const nonFilteringResponse = await fetch(nonFilteringURL, {
-                    method: "GET",
-                    headers: {
-                        "Accept": "application/dns-json"
-                    },
-                    signal: createTimeoutSignal(signal)
-                });
-
-                // Checks if the domain is offline
-                if (nonFilteringResponse.ok && Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
-                    const nonFilteringData = await nonFilteringResponse.json();
-                    const {Status, Answer} = nonFilteringData;
-
-                    if (!(Status === 0 && Answer && Answer.length > 0)) {
-                        console.debug(`[${shortName}] Domain appears to be offline`);
-                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
-                        return;
-                    }
-                }
-
-                // Checks if one or more of the responses is not OK
-                if (!filteringResponse.ok || !nonFilteringResponse.ok) {
+                // Checks if the response status is valid
+                if (!filteringResponse.ok) {
                     console.warn(`[${shortName}] Invalid status received: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
 
-                // Checks if the Content-Type is not what we expect
-                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message') ||
-                    !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
-                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
+                // Checks if the Content-Type is valid
+                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message')) {
+                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -785,37 +710,16 @@ const BrowserProtection = (() => {
                     signal: createTimeoutSignal(signal)
                 });
 
-                const nonFilteringResponse = await fetch(nonFilteringURL, {
-                    method: "GET",
-                    headers: {
-                        "Accept": "application/dns-json"
-                    },
-                    signal: createTimeoutSignal(signal)
-                });
-
-                // Checks if the domain is offline
-                if (nonFilteringResponse.ok && Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
-                    const nonFilteringData = await nonFilteringResponse.json();
-                    const {Status, Answer} = nonFilteringData;
-
-                    if (!(Status === 0 && Answer && Answer.length > 0)) {
-                        console.debug(`[${shortName}] Domain appears to be offline`);
-                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
-                        return;
-                    }
-                }
-
-                // Checks if one or more of the responses is not OK
-                if (!filteringResponse.ok || !nonFilteringResponse.ok) {
+                // Checks if the response status is valid
+                if (!filteringResponse.ok) {
                     console.warn(`[${shortName}] Invalid status received: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
 
-                // Checks if the Content-Type is not what we expect
-                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message') ||
-                    !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
-                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
+                // Checks if the Content-Type is valid
+                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message')) {
+                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -890,37 +794,16 @@ const BrowserProtection = (() => {
                     signal: createTimeoutSignal(signal)
                 });
 
-                const nonFilteringResponse = await fetch(nonFilteringURL, {
-                    method: "GET",
-                    headers: {
-                        "Accept": "application/dns-json"
-                    },
-                    signal: createTimeoutSignal(signal)
-                });
-
-                // Checks if the domain is offline
-                if (nonFilteringResponse.ok && Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
-                    const nonFilteringData = await nonFilteringResponse.json();
-                    const {Status, Answer} = nonFilteringData;
-
-                    if (!(Status === 0 && Answer && Answer.length > 0)) {
-                        console.debug(`[${shortName}] Domain appears to be offline`);
-                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
-                        return;
-                    }
-                }
-
-                // Checks if one or more of the responses is not OK
-                if (!filteringResponse.ok || !nonFilteringResponse.ok) {
+                // Checks if the response status is valid
+                if (!filteringResponse.ok) {
                     console.warn(`[${shortName}] Invalid status received: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
 
-                // Checks if the Content-Type is not what we expect
-                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message') ||
-                    !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
-                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
+                // Checks if the Content-Type is valid
+                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message')) {
+                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -995,37 +878,16 @@ const BrowserProtection = (() => {
                     signal: createTimeoutSignal(signal)
                 });
 
-                const nonFilteringResponse = await fetch(nonFilteringURL, {
-                    method: "GET",
-                    headers: {
-                        "Accept": "application/dns-json"
-                    },
-                    signal: createTimeoutSignal(signal)
-                });
-
-                // Checks if the domain is offline
-                if (nonFilteringResponse.ok && Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
-                    const nonFilteringData = await nonFilteringResponse.json();
-                    const {Status, Answer} = nonFilteringData;
-
-                    if (!(Status === 0 && Answer && Answer.length > 0)) {
-                        console.debug(`[${shortName}] Domain appears to be offline`);
-                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
-                        return;
-                    }
-                }
-
-                // Checks if one or more of the responses is not OK
-                if (!filteringResponse.ok || !nonFilteringResponse.ok) {
+                // Checks if the response status is valid
+                if (!filteringResponse.ok) {
                     console.warn(`[${shortName}] Invalid status received: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
 
-                // Checks if the Content-Type is not what we expect
-                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-json') ||
-                    !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
-                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
+                // Checks if the Content-Type is valid
+                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-json')) {
+                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -1100,37 +962,16 @@ const BrowserProtection = (() => {
                     signal: createTimeoutSignal(signal)
                 });
 
-                const nonFilteringResponse = await fetch(nonFilteringURL, {
-                    method: "GET",
-                    headers: {
-                        "Accept": "application/dns-json"
-                    },
-                    signal: createTimeoutSignal(signal)
-                });
-
-                // Checks if the domain is offline
-                if (nonFilteringResponse.ok && Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
-                    const nonFilteringData = await nonFilteringResponse.json();
-                    const {Status, Answer} = nonFilteringData;
-
-                    if (!(Status === 0 && Answer && Answer.length > 0)) {
-                        console.debug(`[${shortName}] Domain appears to be offline`);
-                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
-                        return;
-                    }
-                }
-
-                // Checks if one or more of the responses is not OK
-                if (!filteringResponse.ok || !nonFilteringResponse.ok) {
+                // Checks if the response status is valid
+                if (!filteringResponse.ok) {
                     console.warn(`[${shortName}] Invalid status received: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
 
-                // Checks if the Content-Type is not what we expect
-                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message') ||
-                    !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
-                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
+                // Checks if the Content-Type is valid
+                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message')) {
+                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -1205,37 +1046,16 @@ const BrowserProtection = (() => {
                     signal: createTimeoutSignal(signal)
                 });
 
-                const nonFilteringResponse = await fetch(nonFilteringURL, {
-                    method: "GET",
-                    headers: {
-                        "Accept": "application/dns-json"
-                    },
-                    signal: createTimeoutSignal(signal)
-                });
-
-                // Checks if the domain is offline
-                if (nonFilteringResponse.ok && Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
-                    const nonFilteringData = await nonFilteringResponse.json();
-                    const {Status, Answer} = nonFilteringData;
-
-                    if (!(Status === 0 && Answer && Answer.length > 0)) {
-                        console.debug(`[${shortName}] Domain appears to be offline`);
-                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
-                        return;
-                    }
-                }
-
-                // Checks if one or more of the responses is not OK
-                if (!filteringResponse.ok || !nonFilteringResponse.ok) {
+                // Checks if the response status is valid
+                if (!filteringResponse.ok) {
                     console.warn(`[${shortName}] Invalid status received: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
 
-                // Checks if the Content-Type is not what we expect
-                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message') ||
-                    !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
-                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
+                // Checks if the Content-Type is valid
+                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message')) {
+                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -1314,37 +1134,16 @@ const BrowserProtection = (() => {
                     signal: createTimeoutSignal(signal)
                 });
 
-                const nonFilteringResponse = await fetch(nonFilteringURL, {
-                    method: "GET",
-                    headers: {
-                        "Accept": "application/dns-json"
-                    },
-                    signal: createTimeoutSignal(signal)
-                });
-
-                // Checks if the domain is offline
-                if (nonFilteringResponse.ok && Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
-                    const nonFilteringData = await nonFilteringResponse.json();
-                    const {Status, Answer} = nonFilteringData;
-
-                    if (!(Status === 0 && Answer && Answer.length > 0)) {
-                        console.debug(`[${shortName}] Domain appears to be offline`);
-                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
-                        return;
-                    }
-                }
-
-                // Checks if one or more of the responses is not OK
-                if (!filteringResponse.ok || !nonFilteringResponse.ok) {
+                // Checks if the response status is valid
+                if (!filteringResponse.ok) {
                     console.warn(`[${shortName}] Invalid status received: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
 
-                // Checks if the Content-Type is not what we expect
-                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message') ||
-                    !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
-                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
+                // Checks if the Content-Type is valid
+                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message')) {
+                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -1423,37 +1222,16 @@ const BrowserProtection = (() => {
                     signal: createTimeoutSignal(signal)
                 });
 
-                const nonFilteringResponse = await fetch(nonFilteringURL, {
-                    method: "GET",
-                    headers: {
-                        "Accept": "application/dns-json"
-                    },
-                    signal: createTimeoutSignal(signal)
-                });
-
-                // Checks if the domain is offline
-                if (nonFilteringResponse.ok && Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
-                    const nonFilteringData = await nonFilteringResponse.json();
-                    const {Status, Answer} = nonFilteringData;
-
-                    if (!(Status === 0 && Answer && Answer.length > 0)) {
-                        console.debug(`[${shortName}] Domain appears to be offline`);
-                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
-                        return;
-                    }
-                }
-
-                // Checks if one or more of the responses is not OK
-                if (!filteringResponse.ok || !nonFilteringResponse.ok) {
+                // Checks if the response status is valid
+                if (!filteringResponse.ok) {
                     console.warn(`[${shortName}] Invalid status received: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
 
-                // Checks if the Content-Type is not what we expect
-                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message') ||
-                    !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
-                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
+                // Checks if the Content-Type is valid
+                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message')) {
+                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -1528,37 +1306,16 @@ const BrowserProtection = (() => {
                     signal: createTimeoutSignal(signal)
                 });
 
-                const nonFilteringResponse = await fetch(nonFilteringURL, {
-                    method: "GET",
-                    headers: {
-                        "Accept": "application/dns-json"
-                    },
-                    signal: createTimeoutSignal(signal)
-                });
-
-                // Checks if the domain is offline
-                if (nonFilteringResponse.ok && Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
-                    const nonFilteringData = await nonFilteringResponse.json();
-                    const {Status, Answer} = nonFilteringData;
-
-                    if (!(Status === 0 && Answer && Answer.length > 0)) {
-                        console.debug(`[${shortName}] Domain appears to be offline`);
-                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
-                        return;
-                    }
-                }
-
-                // Checks if one or more of the responses is not OK
-                if (!filteringResponse.ok || !nonFilteringResponse.ok) {
+                // Checks if the response status is valid
+                if (!filteringResponse.ok) {
                     console.warn(`[${shortName}] Invalid status received: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
 
-                // Checks if the Content-Type is not what we expect
-                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message') ||
-                    !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
-                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
+                // Checks if the Content-Type is valid
+                if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message')) {
+                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
