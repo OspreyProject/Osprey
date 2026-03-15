@@ -83,8 +83,8 @@ const CacheManager = (() => {
     /**
      * Loads allowed caches (without tabId) from local storage.
      *
-     * @param {string} allowedKey - The key used to retrieve the allowed caches from local storage.
-     * @param {Object} callback - The callback function to execute after loading the allowed caches.
+     * @param {string} allowedKey The key used to retrieve the allowed caches from local storage.
+     * @param {Object} callback The callback function to execute after loading the allowed caches.
      */
     StorageUtil.getFromLocalStore(allowedKey, callback => {
         for (const name of Object.keys(allowedCaches)) {
@@ -98,8 +98,8 @@ const CacheManager = (() => {
     /**
      * Loads blocked caches (without tabId) from local storage.
      *
-     * @param {string} blockedKey - The key used to retrieve the blocked caches from local storage.
-     * @param {Object} callback - The callback function to execute after loading the blocked caches.
+     * @param {string} blockedKey The key used to retrieve the blocked caches from local storage.
+     * @param {Object} callback The callback function to execute after loading the blocked caches.
      */
     StorageUtil.getFromLocalStore(blockedKey, callback => {
         for (const name of Object.keys(blockedCaches)) {
@@ -118,8 +118,8 @@ const CacheManager = (() => {
     /**
      * Loads processing caches (without tabId) from local storage.
      *
-     * @param {string} processingKey - The key used to retrieve the processing caches from local storage.
-     * @param {Object} [callback] - The callback function to execute after loading the processing caches.
+     * @param {string} processingKey The key used to retrieve the processing caches from local storage.
+     * @param {Object} [callback] The callback function to execute after loading the processing caches.
      */
     StorageUtil.getFromSessionStore(processingKey, callback => {
         for (const name of Object.keys(processingCaches)) {
@@ -188,7 +188,7 @@ const CacheManager = (() => {
     /**
      * Cleans up expired entries from all caches.
      *
-     * @returns {number} - The number of expired entries removed from all caches.
+     * @returns {number} The number of expired entries removed from all caches.
      */
     const cleanExpiredEntries = () => {
         const now = Date.now();
@@ -263,9 +263,9 @@ const CacheManager = (() => {
     /**
      * Checks if a URL is in the allowed cache for a specific provider.
      *
-     * @param {string|URL} url - The URL to check, can be a string or a URL object.
-     * @param {string} name - The name of the provider (e.g., "precisionSec").
-     * @returns {boolean} - Returns true if the URL is in the allowed cache and not expired, false otherwise.
+     * @param {string|URL} url The URL to check, can be a string or a URL object.
+     * @param {string} name The name of the provider (e.g., "precisionSec").
+     * @returns {boolean} Returns true if the URL is in the allowed cache and not expired, false otherwise.
      */
     const isUrlInAllowedCache = (url, name) => {
         try {
@@ -303,9 +303,9 @@ const CacheManager = (() => {
     /**
      * Checks if a string is in the allowed cache for a specific provider.
      *
-     * @param {string} str - The string to check.
-     * @param {string} name - The name of the provider (e.g., "precisionSec").
-     * @returns {boolean} - Returns true if the string is in the allowed cache and not expired, false otherwise.
+     * @param {string} str The string to check.
+     * @param {string} name The name of the provider (e.g., "precisionSec").
+     * @returns {boolean} Returns true if the string is in the allowed cache and not expired, false otherwise.
      */
     const isStringInAllowedCache = (str, name) => {
         try {
@@ -328,9 +328,9 @@ const CacheManager = (() => {
     /**
      * Checks if a string is in the allowed cache for a specific provider.
      *
-     * @param {string} str - The string to check against the map's patterns.
-     * @param {string} name - The name of the provider (e.g., "precisionSec").
-     * @returns {boolean} - Returns true if the string is in the allowed cache and not expired, false otherwise.
+     * @param {string} str The string to check against the map's patterns.
+     * @param {string} name The name of the provider (e.g., "precisionSec").
+     * @returns {boolean} Returns true if the string is in the allowed cache and not expired, false otherwise.
      */
     const isPatternInAllowedCache = (str, name) => {
         // Returns if the string is too long
@@ -369,8 +369,8 @@ const CacheManager = (() => {
     /**
      * Add a URL to the allowed cache for a specific provider.
      *
-     * @param {string|URL} url - The URL to add, can be a string or a URL object.
-     * @param {string} name - The name of the provider (e.g., "precisionSec").
+     * @param {string|URL} url The URL to add, can be a string or a URL object.
+     * @param {string} name The name of the provider (e.g., "precisionSec").
      */
     const addUrlToAllowedCache = (url, name) => {
         try {
@@ -402,8 +402,8 @@ const CacheManager = (() => {
     /**
      * Add a string key to the allowed cache for a specific provider.
      *
-     * @param {string} str - The string to add.
-     * @param {string} name - The name of the cache (e.g., "precisionSec", "global").
+     * @param {string} str The string to add.
+     * @param {string} name The name of the cache (e.g., "precisionSec", "global").
      */
     const addStringToAllowedCache = (str, name) => {
         try {
@@ -428,9 +428,9 @@ const CacheManager = (() => {
     /**
      * Checks if a URL is in the blocked cache for a specific provider.
      *
-     * @param {string|URL} url - The URL to check, can be a string or a URL object.
-     * @param {string} name - The name of the provider (e.g., "precisionSec").
-     * @returns {boolean} - Returns true if the URL is in the allowed cache and not expired, false otherwise.
+     * @param {string|URL} url The URL to check, can be a string or a URL object.
+     * @param {string} name The name of the provider (e.g., "precisionSec").
+     * @returns {boolean} Returns true if the URL is in the allowed cache and not expired, false otherwise.
      */
     const isUrlInBlockedCache = (url, name) => {
         try {
@@ -465,9 +465,9 @@ const CacheManager = (() => {
     /**
      * Add a URL to the blocked cache for a specific provider.
      *
-     * @param {string|URL} url - The URL to add, can be a string or a URL object.
-     * @param {string} name - The name of the provider (e.g., "precisionSec").
-     * @param {string} resultType - The resultType of the URL (e.g., "malicious", "phishing").
+     * @param {string|URL} url The URL to add, can be a string or a URL object.
+     * @param {string} name The name of the provider (e.g., "precisionSec").
+     * @param {string} resultType The resultType of the URL (e.g., "malicious", "phishing").
      */
     const addUrlToBlockedCache = (url, name, resultType) => {
         try {
@@ -500,9 +500,9 @@ const CacheManager = (() => {
     /**
      * Get the result type of a blocked URL from the cache for a specific provider.
      *
-     * @param {string|URL} url - The URL to check, can be a string or a URL object.
-     * @param {string} name - The name of the provider (e.g., "precisionSec").
-     * @returns {*|null} - Returns the result type (e.g., "Malicious", "Phishing") if found and not expired, null otherwise.
+     * @param {string|URL} url The URL to check, can be a string or a URL object.
+     * @param {string} name The name of the provider (e.g., "precisionSec").
+     * @returns {*|null} Returns the result type (e.g., "Malicious", "Phishing") if found and not expired, null otherwise.
      */
     const getBlockedResultType = (url, name) => {
         try {
@@ -539,8 +539,8 @@ const CacheManager = (() => {
     /**
      * Remove a URL from the blocked cache for a specific provider.
      *
-     * @param {string|URL} url - The URL to remove, can be a string or a URL object.
-     * @param {string} name - The name of the provider (e.g., "precisionSec").
+     * @param {string|URL} url The URL to remove, can be a string or a URL object.
+     * @param {string} name The name of the provider (e.g., "precisionSec").
      */
     const removeUrlFromBlockedCache = (url, name) => {
         try {
@@ -570,9 +570,9 @@ const CacheManager = (() => {
     /**
      * Checks if a URL is in the processing cache for a specific provider.
      *
-     * @param {string|URL} url - The URL to check, can be a string or a URL object.
-     * @param {string} name - The name of the provider (e.g., "precisionSec").
-     * @returns {boolean} - Returns true if the URL is in the processing cache and not expired, false otherwise.
+     * @param {string|URL} url The URL to check, can be a string or a URL object.
+     * @param {string} name The name of the provider (e.g., "precisionSec").
+     * @returns {boolean} Returns true if the URL is in the processing cache and not expired, false otherwise.
      */
     const isUrlInProcessingCache = (url, name) => {
         try {
@@ -610,9 +610,9 @@ const CacheManager = (() => {
     /**
      * Add a URL to the processing cache, associating it with a specific tabId.
      *
-     * @param {string|URL} url - The URL to add, can be a string or a URL object.
-     * @param {string} name - The name of the provider (e.g., "precisionSec").
-     * @param {number} tabId - The ID of the tab associated with this URL.
+     * @param {string|URL} url The URL to add, can be a string or a URL object.
+     * @param {string} name The name of the provider (e.g., "precisionSec").
+     * @param {number} tabId The ID of the tab associated with this URL.
      */
     const addUrlToProcessingCache = (url, name, tabId) => {
         try {
@@ -645,8 +645,8 @@ const CacheManager = (() => {
     /**
      * Remove a URL from the processing cache for a specific provider.
      *
-     * @param {string|URL} url - The URL to remove, can be a string or a URL object.
-     * @param {string} name - The name of the provider (e.g., "precisionSec").
+     * @param {string|URL} url The URL to remove, can be a string or a URL object.
+     * @param {string} name The name of the provider (e.g., "precisionSec").
      */
     const removeUrlFromProcessingCache = (url, name) => {
         try {
@@ -677,9 +677,9 @@ const CacheManager = (() => {
      * Retrieve all normalized-URL keys (or string keys) in the processing cache for a given provider
      * that are associated with the specified tabId and not yet expired.
      *
-     * @param {string} name - The name of the provider (e.g., "precisionSec").
-     * @param {number} tabId - The ID of the tab to filter by.
-     * @returns {string[]} - An array of keys (normalized URLs or strings) that match the criteria.
+     * @param {string} name The name of the provider (e.g., "precisionSec").
+     * @param {number} tabId The ID of the tab to filter by.
+     * @returns {string[]} An array of keys (normalized URLs or strings) that match the criteria.
      */
     const getKeysByTabId = (name, tabId) => {
         const results = [];
@@ -711,7 +711,7 @@ const CacheManager = (() => {
     /**
      * Remove all entries in the processing cache for all keys associated with a specific tabId.
      *
-     * @param {number} tabId - The ID of the tab whose entries should be removed.
+     * @param {number} tabId The ID of the tab whose entries should be removed.
      */
     const removeKeysByTabId = tabId => {
         let removedCount = 0;

@@ -58,9 +58,9 @@ const Settings = (() => {
     /**
      * Compares two objects and updates the target object with values from the source object if they differ.
      *
-     * @param {Object} target - The target object to update.
-     * @param {Object} source - The source object to compare with.
-     * @returns {boolean} - Returns true if any values were updated, false otherwise.
+     * @param {Object} target The target object to update.
+     * @param {Object} source The source object to compare with.
+     * @returns {boolean} Returns true if any values were updated, false otherwise.
      */
     const updateIfChanged = (target, source) => {
         // This happens when there are no stored settings yet, so we can skip the update process
@@ -106,7 +106,7 @@ const Settings = (() => {
     /**
      * Retrieves settings from local storage and merges them with default settings.
      *
-     * @param {Function} [callback] - The function to call with the retrieved settings.
+     * @param {Function} [callback] The function to call with the retrieved settings.
      */
     const get = callback => {
         StorageUtil.getFromLocalStore(settingsKey, function (storedSettings) {
@@ -124,8 +124,8 @@ const Settings = (() => {
     /**
      * Saves settings to local storage, merging them with any previously stored settings.
      *
-     * @param {Object} newSettings - The new settings to save.
-     * @param {Function} [callback] - Optional callback to call after settings are saved.
+     * @param {Object} newSettings The new settings to save.
+     * @param {Function} [callback] Optional callback to call after settings are saved.
      */
     const set = (newSettings, callback) => {
         if (!newSettings || typeof newSettings !== 'object') {
@@ -149,7 +149,7 @@ const Settings = (() => {
     /**
      * Restores the default settings.
      *
-     * @param {Function} [callback] - Optional callback to call after default settings are restored.
+     * @param {Function} [callback] Optional callback to call after default settings are restored.
      */
     const restoreDefaultSettings = callback => {
         StorageUtil.getFromLocalStore(settingsKey, function () {
@@ -160,10 +160,10 @@ const Settings = (() => {
     /**
      * Validates a setting value against its default value to ensure it is of the expected type.
      *
-     * @param {string} key - The key of the setting being validated.
-     * @param {*} value - The value of the setting to validate.
-     * @param {*} defaultValue - The default value of the setting, used to determine the expected type.
-     * @returns {*} - Returns the validated value if it is of the expected type, or the default value if it is not.
+     * @param {string} key The key of the setting being validated.
+     * @param {*} value The value of the setting to validate.
+     * @param {*} defaultValue The default value of the setting, used to determine the expected type.
+     * @returns {*} Returns the validated value if it is of the expected type, or the default value if it is not.
      */
     const validateSettingValue = (key, value, defaultValue) => {
         if (value === null || value === undefined || defaultValue === null || defaultValue === undefined) {
@@ -184,8 +184,8 @@ const Settings = (() => {
     /**
      * Checks if all partner settings are disabled.
      *
-     * @param {Object} settings - The settings object to check.
-     * @returns {boolean} - Returns true if all partner settings are disabled, false otherwise.
+     * @param {Object} settings The settings object to check.
+     * @returns {boolean} Returns true if all partner settings are disabled, false otherwise.
      */
     const allPartnersDisabled = settings => {
         return !settings.adGuardSecurityEnabled &&
@@ -197,8 +197,8 @@ const Settings = (() => {
     /**
      * Checks if all security providers are disabled.
      *
-     * @param {Object} settings - The settings object to check.
-     * @returns {boolean} - Returns true if all security providers are disabled, false otherwise.
+     * @param {Object} settings The settings object to check.
+     * @returns {boolean} Returns true if all security providers are disabled, false otherwise.
      */
     const allProvidersDisabled = settings => {
         return !settings.adGuardSecurityEnabled &&

@@ -26,8 +26,8 @@ const Validate = (() => {
     /**
      * Checks if a value is null or undefined.
      *
-     * @param {*} value - The value to check.
-     * @returns {boolean} - True if null or undefined, false otherwise.
+     * @param {*} value The value to check.
+     * @returns {boolean} True if null or undefined, false otherwise.
      */
     const isNullish = value => {
         return value === null || value === undefined || !value && typeof value !== 'boolean' && typeof value !== 'number';
@@ -36,8 +36,8 @@ const Validate = (() => {
     /**
      * Checks if a value is not null and not undefined.
      *
-     * @param {*} value - The value to check.
-     * @returns {boolean} - True if not null/undefined, false otherwise.
+     * @param {*} value The value to check.
+     * @returns {boolean} True if not null/undefined, false otherwise.
      */
     const isNotNull = value => {
         return !isNullish(value);
@@ -46,8 +46,8 @@ const Validate = (() => {
     /**
      * Checks if the value is a non-blank string.
      *
-     * @param {*} value - The value to check.
-     * @returns {boolean} - True if non-blank string, false otherwise.
+     * @param {*} value The value to check.
+     * @returns {boolean} True if non-blank string, false otherwise.
      */
     const isNotBlank = value => {
         return isNotNull(value) && typeof value === 'string' && value.trim().length > 0;
@@ -56,9 +56,9 @@ const Validate = (() => {
     /**
      * Validates that the response Content-Type matches the expected type.
      *
-     * @param {Response} response - The fetch response to validate.
-     * @param {string} expected - The expected Content-Type (e.g., 'application/json').
-     * @returns {boolean} - True if Content-Type matches, false otherwise.
+     * @param {Response} response The fetch response to validate.
+     * @param {string} expected The expected Content-Type (e.g., 'application/json').
+     * @returns {boolean} True if Content-Type matches, false otherwise.
      */
     const hasValidContentType = (response, expected) => {
         const contentType = response.headers.get('Content-Type') || '';
@@ -68,8 +68,8 @@ const Validate = (() => {
     /**
      * Checks if a URL string is valid and can be parsed into a URL object.
      *
-     * @param {string} urlString - The URL string to parse.
-     * @returns {{valid: boolean, url: URL|null, error: string|null}} - Parse result object.
+     * @param {string} urlString The URL string to parse.
+     * @returns {{valid: boolean, url: URL|null, error: string|null}} Parse result object.
      */
     const parseUrl = urlString => {
         if (!isNotNull(urlString)) {
@@ -91,9 +91,9 @@ const Validate = (() => {
     /**
      * Checks if a URL has a valid HTTP or HTTPS protocol.
      *
-     * @param {URL} urlObject - The URL object to check.
-     * @param {Set<string>} validProtocols - Set of valid protocol strings (e.g., 'http:', 'https:').
-     * @returns {boolean} - True if protocol is valid, false otherwise.
+     * @param {URL} urlObject The URL object to check.
+     * @param {Set<string>} validProtocols Set of valid protocol strings (e.g., 'http:', 'https:').
+     * @returns {boolean} True if protocol is valid, false otherwise.
      */
     const hasValidProtocol = (urlObject, validProtocols) => {
         if (!isNotNull(urlObject) || typeof urlObject.protocol !== 'string') {
@@ -105,9 +105,9 @@ const Validate = (() => {
     /**
      * Validates that a URL string parses correctly and has a valid HTTP(S) protocol.
      *
-     * @param {string} urlString - The URL string to validate.
-     * @param {Set<string>} validProtocols - Set of valid protocol strings.
-     * @returns {{valid: boolean, url: URL|null, error: string|null}} - Validation result object.
+     * @param {string} urlString The URL string to validate.
+     * @param {Set<string>} validProtocols Set of valid protocol strings.
+     * @returns {{valid: boolean, url: URL|null, error: string|null}} Validation result object.
      */
     const validateHttpUrl = (urlString, validProtocols) => {
         const parseResult = parseUrl(urlString);

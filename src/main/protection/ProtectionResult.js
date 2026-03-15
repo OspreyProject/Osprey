@@ -22,9 +22,9 @@ class ProtectionResult {
     /**
      * Constructor function for creating a browser protection result object.
      *
-     * @param {string} urlChecked - The URL that was checked.
-     * @param {number} resultType - The result type of the protection check (see ResultType for more info).
-     * @param {number} resultOrigin - The origin of the result (e.g., from endpoint or known top website).
+     * @param {string} urlChecked The URL that was checked.
+     * @param {number} resultType The result type of the protection check (see ResultType for more info).
+     * @param {number} resultOrigin The origin of the result (e.g., from endpoint or known top website).
      */
     constructor(urlChecked, resultType, resultOrigin) {
         this.url = urlChecked;

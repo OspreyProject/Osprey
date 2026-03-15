@@ -29,8 +29,8 @@ const UrlHelpers = (() => {
     /**
      * Extracts the blocked URL (the website being reported as malicious) from the query parameters of a URL.
      *
-     * @param {string} url - The URL containing the blocked website information.
-     * @returns {string} - The blocked URL.
+     * @param {string} url The URL containing the blocked website information.
+     * @returns {string} The blocked URL.
      */
     const extractBlockedUrl = url => {
         try {
@@ -44,8 +44,8 @@ const UrlHelpers = (() => {
     /**
      * Extracts the continue URL (typically the same as the blocked URL) from the query parameters of a URL.
      *
-     * @param {string} url - The URL containing the continue URL parameter.
-     * @returns {string} - The continue URL.
+     * @param {string} url The URL containing the continue URL parameter.
+     * @returns {string} The continue URL.
      */
     const extractContinueUrl = url => {
         try {
@@ -59,8 +59,8 @@ const UrlHelpers = (() => {
     /**
      * Extracts the origin of the protection result from the query parameters of a URL.
      *
-     * @param {string} url - The URL containing the origin.
-     * @returns {string} - The origin from the URL.
+     * @param {string} url The URL containing the origin.
+     * @returns {string} The origin from the URL.
      */
     const extractOrigin = url => {
         try {
@@ -74,8 +74,8 @@ const UrlHelpers = (() => {
     /**
      * Extracts the result (e.g., phishing, malware) from the query parameters of a URL.
      *
-     * @param {string} url - The URL containing the result.
-     * @returns {string|null} - The result from the URL, or null if not found.
+     * @param {string} url The URL containing the result.
+     * @returns {string|null} The result from the URL, or null if not found.
      */
     const extractResult = url => {
         try {
@@ -89,9 +89,9 @@ const UrlHelpers = (() => {
     /**
      * Constructs the URL for the browser's block page, which shows a warning when a website is blocked.
      *
-     * @param {Object} protectionResult - The result object containing details about the threat.
-     * @param {String|URL} continueUrl - The URL to continue to if the user clicks a continue button.
-     * @returns {string} - The full URL for the block page.
+     * @param {Object} protectionResult The result object containing details about the threat.
+     * @param {String|URL} continueUrl The URL to continue to if the user clicks a continue button.
+     * @returns {string} The full URL for the block page.
      */
     const getBlockPageUrl = (protectionResult, continueUrl) => {
         // Parses the protection result URL object
@@ -137,8 +137,8 @@ const UrlHelpers = (() => {
     /**
      * Checks if a hostname is valid according to standard hostname rules.
      *
-     * @param {string} hostname - The hostname to validate.
-     * @returns {boolean} - True if the hostname is valid, false otherwise.
+     * @param {string} hostname The hostname to validate.
+     * @returns {boolean} True if the hostname is valid, false otherwise.
      */
     const isValidHostname = hostname => {
         if (typeof hostname !== 'string') {
@@ -180,8 +180,8 @@ const UrlHelpers = (() => {
     /**
      * Normalizes an IP address.
      *
-     * @param {string} hostname - The IP/hostname to check.
-     * @returns {null|string} - The normalized IP address.
+     * @param {string} hostname The IP/hostname to check.
+     * @returns {null|string} The normalized IP address.
      */
     const normalizeIP = hostname => {
         let s = (hostname || "").trim().toLowerCase();
@@ -249,8 +249,8 @@ const UrlHelpers = (() => {
     /**
      * Checks if a hostname is locally hosted.
      *
-     * @param {string} hostname - The hostname to check.
-     * @returns {boolean|boolean} - If a hostname is locally hosted.
+     * @param {string} hostname The hostname to check.
+     * @returns {boolean|boolean} If a hostname is locally hosted.
      */
     const isLocalHostname = hostname => {
         let h = (hostname || "").trim().toLowerCase();
@@ -288,8 +288,8 @@ const UrlHelpers = (() => {
     /**
      * Checks if an IP address is private/locally hosted.
      *
-     * @param {string} ip - The IP address to check.
-     * @returns {boolean|boolean|boolean} - If the IP address is private/locally hosted.
+     * @param {string} ip The IP address to check.
+     * @returns {boolean|boolean|boolean} If the IP address is private/locally hosted.
      */
     const isPrivateIP = ip => {
         let s = (ip || "").trim().toLowerCase();
@@ -360,8 +360,8 @@ const UrlHelpers = (() => {
     /**
      * Checks if a hostname/IP address is locally hosted.
      *
-     * @param hostname - The hostname to check.
-     * @returns {boolean} - If a hostname is locally hosted.
+     * @param hostname The hostname to check.
+     * @returns {boolean} If a hostname is locally hosted.
      */
     const isInternalAddress = hostname => {
         if (isLocalHostname(hostname)) {
@@ -413,8 +413,8 @@ const UrlHelpers = (() => {
     /**
      * Normalizes a URL by removing the trailing slash and normalizing the hostname.
      *
-     * @param url {string|URL} - The URL to normalize, can be a string or a URL object.
-     * @returns {string|string} - The normalized URL as a string.
+     * @param url {string|URL} The URL to normalize, can be a string or a URL object.
+     * @returns {string|string} The normalized URL as a string.
      */
     const normalizeUrl = url => {
         if (url === null || url === undefined) {
@@ -435,9 +435,9 @@ const UrlHelpers = (() => {
     /**
      * Encodes a DNS query for the given domain and type.
      *
-     * @param {string} domain - The domain to encode.
-     * @param {number} type - The type of DNS record (default is 1 for A record).
-     * @return {string} - The base64url encoded DNS query.
+     * @param {string} domain The domain to encode.
+     * @param {number} type The type of DNS record (default is 1 for A record).
+     * @return {string} The base64url encoded DNS query.
      */
     const encodeDNSQuery = (domain, type = 1) => {
         if (typeof domain !== 'string' || !Number.isInteger(type)) {
@@ -505,9 +505,9 @@ const UrlHelpers = (() => {
      * Sanitizes a string for safe display by removing control characters
      * and truncating it to a specified maximum length.
      *
-     * @param {string} str - The string to sanitize.
-     * @param {number} [maxLength=100] - The maximum length of the sanitized string before truncation.
-     * @returns {string|string} - The sanitized string, truncated with "..." if it exceeds the maximum length.
+     * @param {string} str The string to sanitize.
+     * @param {number} [maxLength=100] The maximum length of the sanitized string before truncation.
+     * @returns {string|string} The sanitized string, truncated with "..." if it exceeds the maximum length.
      */
     const sanitizeForDisplay = (str, maxLength = 100) => {
         if (typeof str !== 'string') {

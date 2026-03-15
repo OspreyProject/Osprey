@@ -106,8 +106,8 @@
     /**
      * Retrieves the result origins for a specific tab.
      *
-     * @param {number} tabId - The ID of the tab.
-     * @returns {any|*[]} - An array of result origins for the specified tab.
+     * @param {number} tabId The ID of the tab.
+     * @returns {any|*[]} An array of result origins for the specified tab.
      */
     const getResultOrigins = tabId => {
         return resultOriginsMap.get(tabId) || [];
@@ -116,8 +116,8 @@
     /**
      * Appends a result origin to the result origins for a specific tab.
      *
-     * @param {number} tabId - The ID of the tab.
-     * @param {number} origin - The origin to append.
+     * @param {number} tabId The ID of the tab.
+     * @param {number} origin The origin to append.
      */
     const appendResultOrigin = (tabId, origin) => {
         // Appends the origin if it doesn't already exist
@@ -130,8 +130,8 @@
     /**
      * Removes a specific origin from the result origins for a given tab.
      *
-     * @param {number} tabId - The ID of the tab.
-     * @param {number} origin - The origin to remove.
+     * @param {number} tabId The ID of the tab.
+     * @param {number} origin The origin to remove.
      */
     const removeResultOrigin = (tabId, origin) => {
         resultOriginsMap.set(tabId, (resultOriginsMap.get(tabId) || []).filter(o => o !== origin));
@@ -140,7 +140,7 @@
     /**
      * Deletes the result origins for a specific tab.
      *
-     * @param {number} tabId - The ID of the tab.
+     * @param {number} tabId The ID of the tab.
      */
     const deleteResultOrigins = tabId => {
         resultOriginsMap.delete(tabId);
@@ -149,7 +149,7 @@
     /**
      * Retrieves the frame-zero URL for a specific tab.
      *
-     * @param {number} tabId - The ID of the tab.
+     * @param {number} tabId The ID of the tab.
      */
     const getFrameZeroUrl = tabId => {
         return frameZeroUrlsMap.get(tabId) || "";
@@ -158,8 +158,8 @@
     /**
      * Sets the frame-zero URL for a specific tab.
      *
-     * @param {number} tabId - The ID of the tab.
-     * @param {string} url - The URL to set.
+     * @param {number} tabId The ID of the tab.
+     * @param {string} url The URL to set.
      */
     const setFrameZeroUrl = (tabId, url) => {
         frameZeroUrlsMap.set(tabId, url);
@@ -168,7 +168,7 @@
     /**
      * Deletes the frame-zero URL for a specific tab.
      *
-     * @param {number} tabId - The ID of the tab.
+     * @param {number} tabId The ID of the tab.
      */
     const deleteFrameZeroUrl = tabId => {
         frameZeroUrlsMap.delete(tabId);
@@ -177,9 +177,9 @@
     /**
      * Safely updates a tab's properties, handling potential errors such as the tab being closed during the update process.
      *
-     * @param {number} tabId - The ID of the tab to be updated.
-     * @param {Object} updateProps - The properties to update on the tab (e.g., {url: "https://www.google.com"}).
-     * @returns {Promise<boolean>} - Returns true if the tab was successfully updated, false if the tab no longer exists or an error occurred.
+     * @param {number} tabId The ID of the tab to be updated.
+     * @param {Object} updateProps The properties to update on the tab (e.g., {url: "https://www.google.com"}).
+     * @returns {Promise<boolean>} Returns true if the tab was successfully updated, false if the tab no longer exists or an error occurred.
      */
     const safeTabUpdate = async (tabId, updateProps) => {
         try {
@@ -194,7 +194,7 @@
     /**
      * Sends the user to the new tab page.
      *
-     * @param {number} tabId - The ID of the tab to be updated.
+     * @param {number} tabId The ID of the tab to be updated.
      */
     const sendToNewTabPage = tabId => {
         if (redirectToGoogle) {
@@ -207,10 +207,10 @@
     /**
      * Function to handle navigation checks.
      *
-     * @param {Object} navigationDetails - The navigation details to handle.
+     * @param {Object} navigationDetails The navigation details to handle.
      */
     const handleNavigation = navigationDetails => {
-        // Basic property checks - navigationDetails comes from browser API
+        // Basic property checks; navigationDetails comes from browser API
         if (!navigationDetails || typeof navigationDetails.tabId !== 'number' || !navigationDetails.url) {
             console.warn(`Invalid navigation details: ${JSON.stringify(navigationDetails)}`);
             return;
@@ -671,8 +671,8 @@
     /**
      * Checks for managed policies and updates the context menu and settings accordingly.
      *
-     * @param {Array<string>} policyKeys - The keys of the policies to check for.
-     * @param {Object} policies - The policies retrieved from the browser's managed storage.
+     * @param {Array<string>} policyKeys The keys of the policies to check for.
+     * @param {Object} policies The policies retrieved from the browser's managed storage.
      */
     browserAPI.storage.managed.get(policyKeys, policies => {
         if (policies === undefined) {
@@ -836,9 +836,9 @@
     /**
      * Listens for PING messages from content scripts to update the blocked counter on the block page.
      *
-     * @param {Object} event - The message event sent from the content script.
-     * @param {Object} sender - The sender of the message.
-     * @param {function} sendResponse - The function to send a response back to the content script.
+     * @param {Object} event The message event sent from the content script.
+     * @param {Object} sender The sender of the message.
+     * @param {function} sendResponse The function to send a response back to the content script.
      */
     browserAPI.runtime.onMessage.addListener((message, sender, sendResponse) => {
         if (!message || !sender || typeof sendResponse !== 'function') {
@@ -890,8 +890,8 @@
     /**
      * Listens for onRemoved events to clear caches and session data when a tab is closed.
      *
-     * @param {number} tabId - The ID of the removed tab.
-     * @param {Object} removeInfo - Additional information about the removed tab, including windowId and isWindowClosing.
+     * @param {number} tabId The ID of the removed tab.
+     * @param {Object} removeInfo Additional information about the removed tab, including windowId and isWindowClosing.
      */
     browserAPI.tabs.onRemoved.addListener((tabIdObject, removeInfo) => {
         let tabId = Number(tabIdObject);
@@ -914,7 +914,7 @@
     /**
      * Listens for onBeforeNavigate events to handle main frame navigations and apply protections.
      *
-     * @param {Object} event - The navigation event, containing details such as url, frameId, and tabId.
+     * @param {Object} event The navigation event, containing details such as url, frameId, and tabId.
      */
     browserAPI.webNavigation.onBeforeNavigate.addListener(details => {
         if (!details?.url || typeof details.tabId !== 'number') {
@@ -929,7 +929,7 @@
     /**
      * Listens for onCommitted events.
      *
-     * @param {Object} details - The navigation event details.
+     * @param {Object} details The navigation event details.
      */
     browserAPI.webNavigation.onCommitted.addListener(details => {
         if (!details?.url || typeof details.tabId !== 'number' || !Array.isArray(details.transitionQualifiers)) {
@@ -951,8 +951,8 @@
     /**
      * Listens for onUpdated events.
      *
-     * @param {number} tabId - The ID of the updated tab.
-     * @param {Object} changeInfo - An object containing the properties that changed.
+     * @param {number} tabId The ID of the updated tab.
+     * @param {Object} changeInfo An object containing the properties that changed.
      */
     browserAPI.tabs.onUpdated.addListener((tabId, changeInfo) => {
         if (typeof tabId !== 'number' || !changeInfo) {
@@ -972,7 +972,7 @@
     /**
      * Listens for onCreatedNavigationTarget events.
      *
-     * @param {Object} details - The navigation event details.
+     * @param {Object} details The navigation event details.
      */
     browserAPI.webNavigation.onCreatedNavigationTarget.addListener(details => {
         if (!details?.url || typeof details.tabId !== 'number') {
@@ -987,7 +987,7 @@
     /**
      * Listens for onHistoryStateUpdated events.
      *
-     * @param {Object} callback - The navigation event details.
+     * @param {Object} callback The navigation event details.
      */
     browserAPI.webNavigation.onHistoryStateUpdated.addListener(details => {
         if (!details?.url || typeof details.tabId !== 'number') {
@@ -1002,7 +1002,7 @@
     /**
      * Listens for onReferenceFragmentUpdated events.
      *
-     * @param {Object} callback - The navigation event details.
+     * @param {Object} callback The navigation event details.
      */
     browserAPI.webNavigation.onReferenceFragmentUpdated.addListener(details => {
         if (!details?.url || typeof details.tabId !== 'number') {
@@ -1017,7 +1017,7 @@
     /**
      * Listens for onTabReplaced events.
      *
-     * @param {Object} callback - The navigation event details.
+     * @param {Object} callback The navigation event details.
      */
     browserAPI.webNavigation.onTabReplaced.addListener(details => {
         if (!details?.url || typeof details.tabId !== 'number') {
@@ -1032,8 +1032,8 @@
     /**
      * Listens for incoming messages from content scripts.
      *
-     * @param {Object} event - The message event sent from the content script.
-     * @param {Object} sender - The sender of the message.
+     * @param {Object} event The message event sent from the content script.
+     * @param {Object} sender The sender of the message.
      */
     browserAPI.runtime.onMessage.addListener((message, sender) => {
         if (!message?.messageType || typeof message.messageType !== 'string') {
@@ -1301,7 +1301,7 @@
     /**
      * Listens for context menu item clicks.
      *
-     * @param {Object} info - Information sent when a context menu item is clicked.
+     * @param {Object} info Information sent when a context menu item is clicked.
      */
     contextMenuAPI.onClicked.addListener(info => {
         if (!info?.menuItemId || typeof info.menuItemId !== 'string') {

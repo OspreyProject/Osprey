@@ -32,8 +32,8 @@ const StorageUtil = (() => {
     /**
      * Retrieves data from the browser's local storage.
      *
-     * @param {string} key - The key to retrieve from local storage.
-     * @param {Function} callback - The function to call with the retrieved value.
+     * @param {string} key The key to retrieve from local storage.
+     * @param {Function} callback The function to call with the retrieved value.
      */
     const getFromLocalStore = (key, callback) => {
         const fixedCallback = typeof callback === 'function' ? callback : () => {
@@ -70,9 +70,9 @@ const StorageUtil = (() => {
     /**
      * Saves data to the browser's local storage.
      *
-     * @param {string} key - The key to save to local storage.
-     * @param {any} value - The value to store.
-     * @param {Function} [callback] - Optional callback to call after saving.
+     * @param {string} key The key to save to local storage.
+     * @param {any} value The value to store.
+     * @param {Function} [callback] Optional callback to call after saving.
      */
     const setToLocalStore = (key, value, callback) => {
         const fixedCallback = typeof callback === 'function' ? callback : () => {
@@ -122,8 +122,8 @@ const StorageUtil = (() => {
     /**
      * Retrieves data from the browser's session storage.
      *
-     * @param {string} key - The key to retrieve from session storage.
-     * @param {Function} callback - The function to call with the retrieved value.
+     * @param {string} key The key to retrieve from session storage.
+     * @param {Function} callback The function to call with the retrieved value.
      */
     const getFromSessionStore = (key, callback) => {
         const fixedCallback = typeof callback === 'function' ? callback : () => {
@@ -160,9 +160,9 @@ const StorageUtil = (() => {
     /**
      * Saves data to the browser's session storage.
      *
-     * @param {string} key - The key to save to session storage.
-     * @param {any} value - The value to store.
-     * @param {Function} [callback] - Optional callback to call after saving.
+     * @param {string} key The key to save to session storage.
+     * @param {any} value The value to store.
+     * @param {Function} [callback] Optional callback to call after saving.
      */
     const setToSessionStore = (key, value, callback) => {
         const fixedCallback = typeof callback === 'function' ? callback : () => {
@@ -212,8 +212,8 @@ const StorageUtil = (() => {
     /**
      * Validates a storage key to ensure it is a non-empty string and does not contain dangerous keys.
      *
-     * @param {string} key - The key to validate.
-     * @returns {boolean} - Returns true if the key is valid, false otherwise.
+     * @param {string} key The key to validate.
+     * @returns {boolean} Returns true if the key is valid, false otherwise.
      */
     const isValidKey = (key) => {
         return typeof key === 'string' && key.length > 0 && !DANGEROUS_KEYS.has(key);

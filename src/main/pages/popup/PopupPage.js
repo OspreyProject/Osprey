@@ -32,7 +32,7 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
     // Cache for DOM elements
     let domElements = {};
 
-    // Security systems configuration - only defined once
+    // Security systems configuration; only defined once
     const securitySystems = Object.freeze([
         {
             origin: ProtectionResult.Origin.ADGUARD_SECURITY,
@@ -146,7 +146,7 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
     /**
      * Gets DOM elements for a system, caching them for future use.
      *
-     * @param {Object} system - The system object
+     * @param {Object} system The system object
      * @returns {Object} Object containing the label and switch elements
      */
     const getSystemElements = system => {
@@ -167,8 +167,8 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
     /**
      * Updates the UI for a specific security system using batched DOM operations.
      *
-     * @param {Object} system - The system object being updated.
-     * @param {boolean} isOn - Whether the protection is enabled for the system.
+     * @param {Object} system The system object being updated.
+     * @param {boolean} isOn Whether the protection is enabled for the system.
      */
     const updateProtectionStatusUI = (system, isOn) => {
         const elements = getSystemElements(system);
@@ -217,7 +217,7 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
     /**
      * Toggles the state of a security system and updates its UI.
      *
-     * @param {Object} system - The system object being toggled.
+     * @param {Object} system The system object being toggled.
      */
     const toggleProtection = system => {
         Settings.get(settings => {

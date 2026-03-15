@@ -35,7 +35,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
     /**
      * Applies visual elements based on the origin of the protection result.
      *
-     * @param {number} originInt - The integer representing the origin of the protection result.
+     * @param {number} originInt The integer representing the origin of the protection result.
      */
     const applyOriginVisuals = originInt => {
         const systemName = ProtectionResult.FullName[originInt];
@@ -52,8 +52,8 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
     /**
      * Wraps system names text to fit within a specified maximum line length.
      *
-     * @param {string} text - The text to wrap, typically a comma-separated list of system names.
-     * @returns {string} - The wrapped text, with each line not exceeding the specified maximum length.
+     * @param {string} text The text to wrap, typically a comma-separated list of system names.
+     * @returns {string} The wrapped text, with each line not exceeding the specified maximum length.
      */
     const wrapSystemNamesText = text => {
         if (typeof text !== 'string') {
@@ -324,7 +324,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         /**
          * Gets the report URL lazily when needed.
          *
-         * @returns {URL|null} - The report URL.
+         * @returns {URL|null} The report URL.
          */
         const getReportUrl = () => {
             switch (originInt) {
@@ -437,9 +437,9 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         /**
          * Sends a message to the background script with the specified message type and additional data.
          *
-         * @param {string} messageType - The type of message to send, typically defined in the Messages object.
-         * @param {Object} [additionalData={}] - Optional additional data to include in the message.
-         * @returns {Promise<void>} - A promise that resolves when the message is sent.
+         * @param {string} messageType The type of message to send, typically defined in the Messages object.
+         * @param {Object} [additionalData={}] Optional additional data to include in the message.
+         * @returns {Promise<void>} A promise that resolves when the message is sent.
          */
         const sendMessage = async (messageType, additionalData = {}) => {
             try {

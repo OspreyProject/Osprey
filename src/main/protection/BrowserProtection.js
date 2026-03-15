@@ -33,9 +33,9 @@ const BrowserProtection = (() => {
      * Creates an AbortSignal that times out after the specified duration.
      * Combines with an existing signal if provided.
      *
-     * @param {AbortSignal} existingSignal - An existing abort signal to combine with.
-     * @param {number} timeoutMs - Timeout in milliseconds.
-     * @returns {AbortSignal} - The combined abort signal.
+     * @param {AbortSignal} existingSignal An existing abort signal to combine with.
+     * @param {number} timeoutMs Timeout in milliseconds.
+     * @returns {AbortSignal} The combined abort signal.
      */
     const createTimeoutSignal = (existingSignal, timeoutMs = REQUEST_TIMEOUT_MS) => {
         const timeoutController = new AbortController();
@@ -90,8 +90,8 @@ const BrowserProtection = (() => {
     /**
      * Abandons all pending requests for a specific tab.
      *
-     * @param {number} tabId - The ID of the tab for which to abandon requests.
-     * @param {string} reason - The reason for abandoning the requests.
+     * @param {number} tabId The ID of the tab for which to abandon requests.
+     * @param {string} reason The reason for abandoning the requests.
      */
     const abandonPendingRequests = (tabId, reason) => {
         if (tabAbortControllers.has(tabId)) {
@@ -103,9 +103,9 @@ const BrowserProtection = (() => {
     /**
      * Checks if a URL is malicious or trusted.
      *
-     * @param {number} tabId - The ID of the tab that initiated the request.
-     * @param {string} urlString - The URL to check.
-     * @param {function} callback - The callback function to handle the result.
+     * @param {number} tabId The ID of the tab that initiated the request.
+     * @param {string} urlString The URL to check.
+     * @param {function} callback The callback function to handle the result.
      */
     const checkIfUrlIsMalicious = async (tabId, urlString, callback) => {
         // Parses the URL object
@@ -179,7 +179,7 @@ const BrowserProtection = (() => {
         /**
          * Checks the URL with AdGuard's Security DNS API.
          *
-         * @param {Object} settings - The settings object containing user preferences.
+         * @param {Object} settings The settings object containing user preferences.
          */
         const checkUrlWithAdGuardSecurity = async settings => {
             // Checks if the provider is enabled
@@ -267,7 +267,7 @@ const BrowserProtection = (() => {
         /**
          * Checks the URL with AdGuard's Family DNS API.
          *
-         * @param {Object} settings - The settings object containing user preferences.
+         * @param {Object} settings The settings object containing user preferences.
          */
         const checkUrlWithAdGuardFamily = async settings => {
             // Checks if the provider is enabled
@@ -363,7 +363,7 @@ const BrowserProtection = (() => {
         /**
          * Checks the URL with alphaMountain's API.
          *
-         * @param {Object} settings - The settings object containing user preferences.
+         * @param {Object} settings The settings object containing user preferences.
          */
         const checkUrlWithAlphaMountain = async settings => {
             // Checks if the provider is enabled
@@ -479,7 +479,7 @@ const BrowserProtection = (() => {
         /**
          * Checks the URL with PrecisionSec's API.
          *
-         * @param {Object} settings - The settings object containing user preferences.
+         * @param {Object} settings The settings object containing user preferences.
          */
         const checkUrlWithPrecisionSec = async settings => {
             // Checks if the provider is enabled
@@ -575,7 +575,7 @@ const BrowserProtection = (() => {
         /**
          * Checks the URL with CERT-EE's DNS API.
          *
-         * @param {Object} settings - The settings object containing user preferences.
+         * @param {Object} settings The settings object containing user preferences.
          */
         const checkUrlWithCERTEE = async settings => {
             // Checks if the provider is enabled
@@ -663,7 +663,7 @@ const BrowserProtection = (() => {
         /**
          * Checks the URL with CleanBrowsing's Security DNS API.
          *
-         * @param {Object} settings - The settings object containing user preferences.
+         * @param {Object} settings The settings object containing user preferences.
          */
         const checkUrlWithCleanBrowsingSecurity = async settings => {
             // Checks if the provider is enabled
@@ -747,7 +747,7 @@ const BrowserProtection = (() => {
         /**
          * Checks the URL with CleanBrowsing's Family DNS API.
          *
-         * @param {Object} settings - The settings object containing user preferences.
+         * @param {Object} settings The settings object containing user preferences.
          */
         const checkUrlWithCleanBrowsingFamily = async settings => {
             // Checks if the provider is enabled
@@ -831,7 +831,7 @@ const BrowserProtection = (() => {
         /**
          * Checks the URL with Cloudflare's Security DNS APIs.
          *
-         * @param {Object} settings - The settings object containing user preferences.
+         * @param {Object} settings The settings object containing user preferences.
          */
         const checkUrlWithCloudflareSecurity = async settings => {
             // Checks if the provider is enabled
@@ -915,7 +915,7 @@ const BrowserProtection = (() => {
         /**
          * Checks the URL with Cloudflare's Family DNS APIs.
          *
-         * @param {Object} settings - The settings object containing user preferences.
+         * @param {Object} settings The settings object containing user preferences.
          */
         const checkUrlWithCloudflareFamily = async settings => {
             // Checks if the provider is enabled
@@ -999,7 +999,7 @@ const BrowserProtection = (() => {
         /**
          * Checks the URL with Control D's Security DNS API.
          *
-         * @param {Object} settings - The settings object containing user preferences.
+         * @param {Object} settings The settings object containing user preferences.
          */
         const checkUrlWithControlDSecurity = async settings => {
             // Checks if the provider is enabled
@@ -1087,7 +1087,7 @@ const BrowserProtection = (() => {
         /**
          * Checks the URL with Control D's Family DNS API.
          *
-         * @param {Object} settings - The settings object containing user preferences.
+         * @param {Object} settings The settings object containing user preferences.
          */
         const checkUrlWithControlDFamily = async settings => {
             // Checks if the provider is enabled
@@ -1175,7 +1175,7 @@ const BrowserProtection = (() => {
         /**
          * Checks the URL with Quad9's DNS API.
          *
-         * @param {Object} settings - The settings object containing user preferences.
+         * @param {Object} settings The settings object containing user preferences.
          */
         const checkUrlWithQuad9 = async settings => {
             // Checks if the provider is enabled
@@ -1259,7 +1259,7 @@ const BrowserProtection = (() => {
         /**
          * Checks the URL with Switch.ch's DNS API.
          *
-         * @param {Object} settings - The settings object containing user preferences.
+         * @param {Object} settings The settings object containing user preferences.
          */
         const checkUrlWithSwitchCH = async settings => {
             // Checks if the provider is enabled
