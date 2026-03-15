@@ -195,7 +195,7 @@ const BrowserProtection = (() => {
                     headers: {
                         "Accept": "application/dns-message"
                     },
-                    signal
+                    signal: createTimeoutSignal(signal)
                 });
 
                 const nonFilteringResponse = await fetch(nonFilteringURL, {
@@ -203,7 +203,7 @@ const BrowserProtection = (() => {
                     headers: {
                         "Accept": "application/dns-json"
                     },
-                    signal
+                    signal: createTimeoutSignal(signal)
                 });
 
                 // Returns early if one or more of the responses is not OK
