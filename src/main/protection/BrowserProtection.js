@@ -165,14 +165,14 @@ const BrowserProtection = (() => {
                 const {Status, Answer} = nonFilteringData;
 
                 if (!(Status === 0 && Answer && Answer.length > 0)) {
-                    console.warn(`[Osprey] Domain appears to be offline`);
+                    console.debug(`Domain appears to be offline (${urlHostname})`);
                     return;
                 }
             } else {
                 console.warn(`${nonFilteringResponse.ok} - ${Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')}`);
             }
         } catch (error) {
-            console.warn(`[Osprey] Failed to validate URL '${urlString}': ${error}`);
+            console.warn(`Failed to validate domain '${urlString}': ${error}`);
             return;
         }
 
