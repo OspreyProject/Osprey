@@ -156,7 +156,7 @@ const BrowserProtection = (() => {
                 headers: {
                     "Accept": "application/dns-json"
                 },
-                signal: createTimeoutSignal(signal, 1500) // Short number in case Cloudflare is down
+                signal: createTimeoutSignal(signal, 3000)
             });
 
             // Checks if the domain is offline
