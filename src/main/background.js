@@ -403,139 +403,147 @@
 
             // Checks if the URL is malicious
             BrowserProtection.checkIfUrlIsMalicious(tabId, urlString, result => {
-                const duration = Date.now() - startTime;
-                const cacheName = ProtectionResult.CacheName[result.origin];
-                const fullName = ProtectionResult.FullName[result.origin];
-                const shortName = ProtectionResult.ShortName[result.origin];
-                const {resultType} = result;
-                const resultTypeName = ProtectionResult.ResultTypeName[resultType];
+                browserAPI.tabs.get(tabId, tab => {
+                    // Checks if the tab still exists
+                    if (browserAPI.runtime.lastError || !tab) {
+                        console.debug(`Tab ${tabId} no longer exists`);
+                        return;
+                    }
 
-                // Removes the URL from the system's processing cache on every callback
-                // Doesn't remove it if the result is still waiting for a response
-                if (resultType !== ProtectionResult.ResultType.WAITING) {
-                    CacheManager.removeUrlFromProcessingCache(urlObject, cacheName);
-                }
+                    const duration = Date.now() - startTime;
+                    const cacheName = ProtectionResult.CacheName[result.origin];
+                    const fullName = ProtectionResult.FullName[result.origin];
+                    const shortName = ProtectionResult.ShortName[result.origin];
+                    const {resultType} = result;
+                    const resultTypeName = ProtectionResult.ResultTypeName[resultType];
 
-                console.info(`[${shortName}] Result for ${urlString}: ${resultTypeName} (${duration}ms)`);
+                    // Removes the URL from the system's processing cache on every callback
+                    // Doesn't remove it if the result is still waiting for a response
+                    if (resultType !== ProtectionResult.ResultType.WAITING) {
+                        CacheManager.removeUrlFromProcessingCache(urlObject, cacheName);
+                    }
 
-                if (resultType !== ProtectionResult.ResultType.FAILED &&
-                    resultType !== ProtectionResult.ResultType.WAITING &&
-                    resultType !== ProtectionResult.ResultType.KNOWN_SAFE &&
-                    resultType !== ProtectionResult.ResultType.ALLOWED) {
+                    console.info(`[${shortName}] Result for ${urlString}: ${resultTypeName} (${duration}ms)`);
 
-                    if (!blocked) {
-                        browserAPI.tabs.get(tabId, tab => {
-                            // Checks if the tab still exists
-                            if (browserAPI.runtime.lastError || !tab) {
-                                console.debug(`Tab ${tabId} no longer exists`);
-                                return;
-                            }
+                    if (resultType !== ProtectionResult.ResultType.FAILED &&
+                        resultType !== ProtectionResult.ResultType.WAITING &&
+                        resultType !== ProtectionResult.ResultType.KNOWN_SAFE &&
+                        resultType !== ProtectionResult.ResultType.ALLOWED) {
 
-                            // Checks if the tab or tab.url is undefined
-                            if (tab?.url === undefined) {
-                                console.debug(`tabs.get(${tabId}) failed '${browserAPI.runtime.lastError?.message}'; bailing out.`);
-                                return;
-                            }
-
-                            const pendingUrl = tab.pendingUrl || tab.url;
-
-                            // Checks if the tab is at an extension page
-                            if (!(urlString !== pendingUrl && frameId === 0) &&
-                                (pendingUrl.startsWith("chrome-extension:") ||
-                                    pendingUrl.startsWith("moz-extension:") ||
-                                    pendingUrl.startsWith("extension:"))) {
-                                console.debug(`[${shortName}] The tab is at an extension page; bailing out. ${pendingUrl} ${frameId}`);
-                                return;
-                            }
-
-                            const targetUrl = frameId === 0 ? urlString : pendingUrl;
-
-                            if (targetUrl) {
-                                const frameZeroUrl = getFrameZeroUrl(tabId);
-                                const blockPageUrl = UrlHelpers.getBlockPageUrl(result, frameZeroUrl === undefined ? result.url : frameZeroUrl);
-                                const expectedPrefix = browserAPI.runtime.getURL("pages/warning/");
-
-                                // Validates the generated block page URL to ensure it starts with the expected prefix
-                                if (!blockPageUrl.startsWith(expectedPrefix)) {
-                                    console.error("Invalid block page URL generated");
-                                    sendToNewTabPage(tabId);
+                        if (!blocked) {
+                            browserAPI.tabs.get(tabId, tab => {
+                                // Checks if the tab still exists
+                                if (browserAPI.runtime.lastError || !tab) {
+                                    console.debug(`Tab ${tabId} no longer exists`);
                                     return;
                                 }
 
-                                // Navigates to the block page
-                                console.debug(`[${shortName}] Navigating to block page: ${blockPageUrl}.`);
-                                safeTabUpdate(tab.id, {url: blockPageUrl}).catch(error => {
-                                    console.error(`Failed to update tab ${tabId}:`, error);
-                                    sendToNewTabPage(tabId);
-                                });
-
-                                // Builds the warning notification options
-                                if (settings.notificationsEnabled) {
-                                    const notificationOptions = {
-                                        type: "basic",
-                                        iconUrl: "assets/icons/icon128.png",
-                                        title: LangUtil.UNSAFE_WEBSITE_TITLE,
-                                        message: `${LangUtil.URL_LABEL}${UrlHelpers.sanitizeForDisplay(urlString)}\n${LangUtil.REPORTED_BY_LABEL}${fullName}\n${LangUtil.REASON_LABEL}${resultTypeName}`,
-                                        priority: 2,
-                                    };
-
-                                    // Displays the warning notification
-                                    browserAPI.notifications.create(notificationOptions, notificationId => {
-                                        console.debug(`Notification created with ID: ${notificationId}`);
-                                    });
+                                // Checks if the tab or tab.url is undefined
+                                if (tab?.url === undefined) {
+                                    console.debug(`tabs.get(${tabId}) failed '${browserAPI.runtime.lastError?.message}'; bailing out.`);
+                                    return;
                                 }
-                            } else {
-                                console.debug(`Tab '${tabId}' failed to supply a top-level URL; bailing out.`);
-                            }
-                        });
-                    }
 
-                    blocked = true;
-                    firstOrigin = firstOrigin === ProtectionResult.Origin.UNKNOWN ? result.origin : firstOrigin;
+                                const pendingUrl = tab.pendingUrl || tab.url;
 
-                    // Appends the result origin to the tab's result origins
-                    // Doesn't include the first origin in the list
-                    if (result.origin !== firstOrigin) {
-                        appendResultOrigin(tabId, result.origin);
-                    }
+                                // Checks if the tab is at an extension page
+                                if (!(urlString !== pendingUrl && frameId === 0) &&
+                                    (pendingUrl.startsWith("chrome-extension:") ||
+                                        pendingUrl.startsWith("moz-extension:") ||
+                                        pendingUrl.startsWith("extension:"))) {
+                                    console.debug(`[${shortName}] The tab is at an extension page; bailing out. ${pendingUrl} ${frameId}`);
+                                    return;
+                                }
 
-                    const blockedCounterDelay = 150;
+                                const targetUrl = frameId === 0 ? urlString : pendingUrl;
 
-                    // This timeout is needed to prevent visual artifacts on page load
-                    setTimeout(() => {
-                        const resultOrigins = getResultOrigins(tabId);
-                        const fullCount = (Array.isArray(resultOrigins) ? resultOrigins.length : 0) + 1;
-                        const othersCount = Array.isArray(resultOrigins) ? resultOrigins.length : 0;
+                                if (targetUrl) {
+                                    const frameZeroUrl = getFrameZeroUrl(tabId);
+                                    const blockPageUrl = UrlHelpers.getBlockPageUrl(result, frameZeroUrl === undefined ? result.url : frameZeroUrl);
+                                    const expectedPrefix = browserAPI.runtime.getURL("pages/warning/");
 
-                        // Sets the action text to the result count
-                        browserAPI.action.setBadgeText({text: `${fullCount}`, tabId});
-                        browserAPI.action.setBadgeBackgroundColor({color: "rgb(255,75,75)", tabId});
-                        browserAPI.action.setBadgeTextColor({color: "white", tabId});
+                                    // Validates the generated block page URL to ensure it starts with the expected prefix
+                                    if (!blockPageUrl.startsWith(expectedPrefix)) {
+                                        console.error("Invalid block page URL generated");
+                                        sendToNewTabPage(tabId);
+                                        return;
+                                    }
 
-                        // If the page URL is the block page, send (count - 1)
-                        browserAPI.tabs.get(tabId, tab => {
-                            // Checks if the tab still exists
-                            if (browserAPI.runtime.lastError || !tab) {
-                                console.debug(`Tab ${tabId} no longer exists`);
-                                return;
-                            }
+                                    // Navigates to the block page
+                                    console.debug(`[${shortName}] Navigating to block page: ${blockPageUrl}.`);
+                                    safeTabUpdate(tab.id, {url: blockPageUrl}).catch(error => {
+                                        console.error(`Failed to update tab ${tabId}:`, error);
+                                        sendToNewTabPage(tabId);
+                                    });
 
-                            // Checks if the tab or tab.url is undefined
-                            if (tab?.url === undefined) {
-                                console.debug(`tabs.get(${tabId}) failed '${browserAPI.runtime.lastError?.message}'; bailing out.`);
-                                return;
-                            }
+                                    // Builds the warning notification options
+                                    if (settings.notificationsEnabled) {
+                                        const notificationOptions = {
+                                            type: "basic",
+                                            iconUrl: "assets/icons/icon128.png",
+                                            title: LangUtil.UNSAFE_WEBSITE_TITLE,
+                                            message: `${LangUtil.URL_LABEL}${UrlHelpers.sanitizeForDisplay(urlString)}\n${LangUtil.REPORTED_BY_LABEL}${fullName}\n${LangUtil.REASON_LABEL}${resultTypeName}`,
+                                            priority: 2,
+                                        };
 
-                            // Sends a PONG message to the content script to update the blocked counter
-                            browserAPI.tabs.sendMessage(tabId, {
-                                messageType: Messages.BLOCKED_COUNTER_PONG,
-                                count: othersCount,
-                                systems: resultOrigins || []
-                            }).catch(() => {
+                                        // Displays the warning notification
+                                        browserAPI.notifications.create(notificationOptions, notificationId => {
+                                            console.debug(`Notification created with ID: ${notificationId}`);
+                                        });
+                                    }
+                                } else {
+                                    console.debug(`Tab '${tabId}' failed to supply a top-level URL; bailing out.`);
+                                }
                             });
-                        });
-                    }, blockedCounterDelay);
-                }
+                        }
+
+                        blocked = true;
+                        firstOrigin = firstOrigin === ProtectionResult.Origin.UNKNOWN ? result.origin : firstOrigin;
+
+                        // Appends the result origin to the tab's result origins
+                        // Doesn't include the first origin in the list
+                        if (result.origin !== firstOrigin) {
+                            appendResultOrigin(tabId, result.origin);
+                        }
+
+                        const blockedCounterDelay = 150;
+
+                        // This timeout is needed to prevent visual artifacts on page load
+                        setTimeout(() => {
+                            const resultOrigins = getResultOrigins(tabId);
+                            const fullCount = (Array.isArray(resultOrigins) ? resultOrigins.length : 0) + 1;
+                            const othersCount = Array.isArray(resultOrigins) ? resultOrigins.length : 0;
+
+                            // If the page URL is the block page, send (count - 1)
+                            browserAPI.tabs.get(tabId, tab => {
+                                // Checks if the tab still exists
+                                if (browserAPI.runtime.lastError || !tab) {
+                                    console.debug(`Tab ${tabId} no longer exists`);
+                                    return;
+                                }
+
+                                // Checks if the tab or tab.url is undefined
+                                if (tab?.url === undefined) {
+                                    console.debug(`tabs.get(${tabId}) failed '${browserAPI.runtime.lastError?.message}'; bailing out.`);
+                                    return;
+                                }
+
+                                // Sets the action text to the result count
+                                browserAPI.action.setBadgeText({text: `${fullCount}`, tabId});
+                                browserAPI.action.setBadgeBackgroundColor({color: "rgb(255,75,75)", tabId});
+                                browserAPI.action.setBadgeTextColor({color: "white", tabId});
+
+                                // Sends a PONG message to the content script to update the blocked counter
+                                browserAPI.tabs.sendMessage(tabId, {
+                                    messageType: Messages.BLOCKED_COUNTER_PONG,
+                                    count: othersCount,
+                                    systems: resultOrigins || []
+                                }).catch(() => {
+                                });
+                            });
+                        }, blockedCounterDelay);
+                    }
+                });
             });
         });
     };
@@ -865,6 +873,11 @@
 
             // If the page URL is the block page, send (count - 1)
             browserAPI.tabs.get(tabId, tab => {
+                if (browserAPI.runtime.lastError || !tab) {
+                    console.debug(`Tab ${tabId} no longer exists`);
+                    return false;
+                }
+
                 if (!tab?.url) {
                     console.warn(`tabs.get(${tabId}) failed '${browserAPI.runtime.lastError?.message}'; bailing out.`);
                     return false;
