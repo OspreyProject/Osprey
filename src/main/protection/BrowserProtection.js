@@ -170,9 +170,10 @@ const BrowserProtection = (() => {
                 }
             } else {
                 console.warn(`${nonFilteringResponse.ok} - ${Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')}`);
+                return;
             }
         } catch (error) {
-            console.warn(`Failed to validate domain '${urlString}': ${error}`);
+            console.debug(`Failed to validate domain '${urlString}': ${error}`);
             return;
         }
 
