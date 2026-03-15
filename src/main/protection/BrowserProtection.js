@@ -26,8 +26,8 @@ const BrowserProtection = (() => {
     // Map to store AbortControllers for each tab
     let tabAbortControllers = new Map();
 
-    // Default request timeout in milliseconds (15 seconds)
-    const REQUEST_TIMEOUT_MS = 15000;
+    // Default request timeout in milliseconds (5 seconds)
+    const REQUEST_TIMEOUT_MS = 5000;
 
     /**
      * Creates an AbortSignal that times out after the specified duration.
