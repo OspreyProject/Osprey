@@ -206,7 +206,19 @@ const BrowserProtection = (() => {
                     signal: createTimeoutSignal(signal)
                 });
 
-                // Returns early if one or more of the responses is not OK
+                // Checks if the domain is offline
+                if (nonFilteringResponse.ok && Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
+                    const nonFilteringData = await nonFilteringResponse.json();
+                    const {Status, Answer} = nonFilteringData;
+
+                    if (!(Status === 0 && Answer && Answer.length > 0)) {
+                        console.debug(`[${shortName}] Domain appears to be offline`);
+                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
+                        return;
+                    }
+                }
+
+                // Checks if one or more of the responses is not OK
                 if (!filteringResponse.ok || !nonFilteringResponse.ok) {
                     console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
@@ -222,16 +234,7 @@ const BrowserProtection = (() => {
                 }
 
                 const filteringData = new Uint8Array(await filteringResponse.arrayBuffer());
-                const nonFilteringData = await nonFilteringResponse.json();
                 const response = DNSMessage.parse(filteringData);
-                const {Status, Answer} = nonFilteringData;
-
-                // Returns early if the domain is offline
-                if (!(Status === 0 && Answer && Answer.length > 0)) {
-                    console.debug(`[${shortName}] Returned early: domain offline`);
-                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
-                    return;
-                }
 
                 // Checks if the domain is blocked
                 for (const answer of response.answers) {
@@ -312,7 +315,19 @@ const BrowserProtection = (() => {
                     signal: createTimeoutSignal(signal)
                 });
 
-                // Returns early if one or more of the responses is not OK
+                // Checks if the domain is offline
+                if (nonFilteringResponse.ok && Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
+                    const nonFilteringData = await nonFilteringResponse.json();
+                    const {Status, Answer} = nonFilteringData;
+
+                    if (!(Status === 0 && Answer && Answer.length > 0)) {
+                        console.debug(`[${shortName}] Domain appears to be offline`);
+                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
+                        return;
+                    }
+                }
+
+                // Checks if one or more of the responses is not OK
                 if (!filteringResponse.ok || !nonFilteringResponse.ok) {
                     console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
@@ -328,16 +343,7 @@ const BrowserProtection = (() => {
                 }
 
                 const filteringData = new Uint8Array(await filteringResponse.arrayBuffer());
-                const nonFilteringData = await nonFilteringResponse.json();
                 const response = DNSMessage.parse(filteringData);
-                const {Status, Answer} = nonFilteringData;
-
-                // Returns early if the domain is offline
-                if (!(Status === 0 && Answer && Answer.length > 0)) {
-                    console.debug(`[${shortName}] Returned early: domain offline`);
-                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
-                    return;
-                }
 
                 // Checks if the domain is blocked
                 for (const answer of response.answers) {
@@ -422,9 +428,29 @@ const BrowserProtection = (() => {
                     signal: createTimeoutSignal(signal)
                 });
 
-                // Return early if the response is not OK
-                if (!response.ok) {
-                    console.warn(`[${shortName}] Returned early: ${response.status}`);
+                const nonFilteringResponse = await fetch(nonFilteringURL, {
+                    method: "GET",
+                    headers: {
+                        "Accept": "application/dns-json"
+                    },
+                    signal: createTimeoutSignal(signal)
+                });
+
+                // Checks if the domain is offline
+                if (nonFilteringResponse.ok && Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
+                    const nonFilteringData = await nonFilteringResponse.json();
+                    const {Status, Answer} = nonFilteringData;
+
+                    if (!(Status === 0 && Answer && Answer.length > 0)) {
+                        console.debug(`[${shortName}] Domain appears to be offline`);
+                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
+                        return;
+                    }
+                }
+
+                // Checks if one or more of the responses is not OK
+                if (!filteringResponse.ok || !nonFilteringResponse.ok) {
+                    console.warn(`[${shortName}] Invalid status received: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -538,9 +564,29 @@ const BrowserProtection = (() => {
                     signal: createTimeoutSignal(signal)
                 });
 
-                // Return early if the response is not OK
-                if (!response.ok) {
-                    console.warn(`[${shortName}] Returned early: ${response.status}`);
+                const nonFilteringResponse = await fetch(nonFilteringURL, {
+                    method: "GET",
+                    headers: {
+                        "Accept": "application/dns-json"
+                    },
+                    signal: createTimeoutSignal(signal)
+                });
+
+                // Checks if the domain is offline
+                if (nonFilteringResponse.ok && Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
+                    const nonFilteringData = await nonFilteringResponse.json();
+                    const {Status, Answer} = nonFilteringData;
+
+                    if (!(Status === 0 && Answer && Answer.length > 0)) {
+                        console.debug(`[${shortName}] Domain appears to be offline`);
+                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
+                        return;
+                    }
+                }
+
+                // Checks if one or more of the responses is not OK
+                if (!filteringResponse.ok || !nonFilteringResponse.ok) {
+                    console.warn(`[${shortName}] Invalid status received: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -638,7 +684,19 @@ const BrowserProtection = (() => {
                     signal: createTimeoutSignal(signal)
                 });
 
-                // Returns early if one or more of the responses is not OK
+                // Checks if the domain is offline
+                if (nonFilteringResponse.ok && Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
+                    const nonFilteringData = await nonFilteringResponse.json();
+                    const {Status, Answer} = nonFilteringData;
+
+                    if (!(Status === 0 && Answer && Answer.length > 0)) {
+                        console.debug(`[${shortName}] Domain appears to be offline`);
+                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
+                        return;
+                    }
+                }
+
+                // Checks if one or more of the responses is not OK
                 if (!filteringResponse.ok || !nonFilteringResponse.ok) {
                     console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
@@ -654,16 +712,7 @@ const BrowserProtection = (() => {
                 }
 
                 const filteringData = new Uint8Array(await filteringResponse.arrayBuffer());
-                const nonFilteringData = await nonFilteringResponse.json();
                 const response = DNSMessage.parse(filteringData);
-                const {Status, Answer} = nonFilteringData;
-
-                // Returns early if the domain is offline
-                if (!(Status === 0 && Answer && Answer.length > 0)) {
-                    console.debug(`[${shortName}] Returned early: domain offline`);
-                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
-                    return;
-                }
 
                 // Checks if the domain is blocked
                 for (const answer of response.answers) {
@@ -744,7 +793,19 @@ const BrowserProtection = (() => {
                     signal: createTimeoutSignal(signal)
                 });
 
-                // Returns early if one or more of the responses is not OK
+                // Checks if the domain is offline
+                if (nonFilteringResponse.ok && Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
+                    const nonFilteringData = await nonFilteringResponse.json();
+                    const {Status, Answer} = nonFilteringData;
+
+                    if (!(Status === 0 && Answer && Answer.length > 0)) {
+                        console.debug(`[${shortName}] Domain appears to be offline`);
+                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
+                        return;
+                    }
+                }
+
+                // Checks if one or more of the responses is not OK
                 if (!filteringResponse.ok || !nonFilteringResponse.ok) {
                     console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
@@ -760,15 +821,6 @@ const BrowserProtection = (() => {
                 }
 
                 const filteringData = new Uint8Array(await filteringResponse.arrayBuffer());
-                const nonFilteringData = await nonFilteringResponse.json();
-                const {Status, Answer} = nonFilteringData;
-
-                // Returns early if the domain is offline
-                if (!(Status === 0 && Answer && Answer.length > 0)) {
-                    console.debug(`[${shortName}] Returned early: domain offline`);
-                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
-                    return;
-                }
 
                 // Checks if the domain is blocked
                 if (filteringData.length >= 4 && filteringData[3] === 131) {
@@ -846,7 +898,19 @@ const BrowserProtection = (() => {
                     signal: createTimeoutSignal(signal)
                 });
 
-                // Returns early if one or more of the responses is not OK
+                // Checks if the domain is offline
+                if (nonFilteringResponse.ok && Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
+                    const nonFilteringData = await nonFilteringResponse.json();
+                    const {Status, Answer} = nonFilteringData;
+
+                    if (!(Status === 0 && Answer && Answer.length > 0)) {
+                        console.debug(`[${shortName}] Domain appears to be offline`);
+                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
+                        return;
+                    }
+                }
+
+                // Checks if one or more of the responses is not OK
                 if (!filteringResponse.ok || !nonFilteringResponse.ok) {
                     console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
@@ -862,15 +926,6 @@ const BrowserProtection = (() => {
                 }
 
                 const filteringData = new Uint8Array(await filteringResponse.arrayBuffer());
-                const nonFilteringData = await nonFilteringResponse.json();
-                const {Status, Answer} = nonFilteringData;
-
-                // Returns early if the domain is offline
-                if (!(Status === 0 && Answer && Answer.length > 0)) {
-                    console.debug(`[${shortName}] Returned early: domain offline`);
-                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
-                    return;
-                }
 
                 // Checks if the domain is blocked
                 if (filteringData.length >= 4 && filteringData[3] === 131) {
@@ -948,7 +1003,19 @@ const BrowserProtection = (() => {
                     signal: createTimeoutSignal(signal)
                 });
 
-                // Returns early if one or more of the responses is not OK
+                // Checks if the domain is offline
+                if (nonFilteringResponse.ok && Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
+                    const nonFilteringData = await nonFilteringResponse.json();
+                    const {Status, Answer} = nonFilteringData;
+
+                    if (!(Status === 0 && Answer && Answer.length > 0)) {
+                        console.debug(`[${shortName}] Domain appears to be offline`);
+                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
+                        return;
+                    }
+                }
+
+                // Checks if one or more of the responses is not OK
                 if (!filteringResponse.ok || !nonFilteringResponse.ok) {
                     console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
@@ -964,15 +1031,6 @@ const BrowserProtection = (() => {
                 }
 
                 const filteringData = await filteringResponse.json();
-                const nonFilteringData = await nonFilteringResponse.json();
-                const {Status, Answer} = nonFilteringData;
-
-                // Returns early if the domain is offline
-                if (!(Status === 0 && Answer && Answer.length > 0)) {
-                    console.debug(`[${shortName}] Returned early: domain offline`);
-                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
-                    return;
-                }
 
                 // Checks if the domain is blocked
                 if (filteringData?.Comment && typeof filteringData.Comment === 'string' && filteringData.Comment.includes('EDE(16): Censored')) {
@@ -1050,7 +1108,19 @@ const BrowserProtection = (() => {
                     signal: createTimeoutSignal(signal)
                 });
 
-                // Returns early if one or more of the responses is not OK
+                // Checks if the domain is offline
+                if (nonFilteringResponse.ok && Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
+                    const nonFilteringData = await nonFilteringResponse.json();
+                    const {Status, Answer} = nonFilteringData;
+
+                    if (!(Status === 0 && Answer && Answer.length > 0)) {
+                        console.debug(`[${shortName}] Domain appears to be offline`);
+                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
+                        return;
+                    }
+                }
+
+                // Checks if one or more of the responses is not OK
                 if (!filteringResponse.ok || !nonFilteringResponse.ok) {
                     console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
@@ -1066,15 +1136,6 @@ const BrowserProtection = (() => {
                 }
 
                 const filteringData = await filteringResponse.json();
-                const nonFilteringData = await nonFilteringResponse.json();
-                const {Status, Answer} = nonFilteringData;
-
-                // Returns early if the domain is offline
-                if (!(Status === 0 && Answer && Answer.length > 0)) {
-                    console.debug(`[${shortName}] Returned early: domain offline`);
-                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
-                    return;
-                }
 
                 // Checks if the domain is blocked
                 if (filteringData?.Comment && typeof filteringData.Comment === 'string' && filteringData.Comment.includes('EDE(16): Censored')) {
@@ -1152,7 +1213,19 @@ const BrowserProtection = (() => {
                     signal: createTimeoutSignal(signal)
                 });
 
-                // Returns early if one or more of the responses is not OK
+                // Checks if the domain is offline
+                if (nonFilteringResponse.ok && Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
+                    const nonFilteringData = await nonFilteringResponse.json();
+                    const {Status, Answer} = nonFilteringData;
+
+                    if (!(Status === 0 && Answer && Answer.length > 0)) {
+                        console.debug(`[${shortName}] Domain appears to be offline`);
+                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
+                        return;
+                    }
+                }
+
+                // Checks if one or more of the responses is not OK
                 if (!filteringResponse.ok || !nonFilteringResponse.ok) {
                     console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
@@ -1168,16 +1241,7 @@ const BrowserProtection = (() => {
                 }
 
                 const filteringData = new Uint8Array(await filteringResponse.arrayBuffer());
-                const nonFilteringData = await nonFilteringResponse.json();
                 const response = DNSMessage.parse(filteringData);
-                const {Status, Answer} = nonFilteringData;
-
-                // Returns early if the domain is offline
-                if (!(Status === 0 && Answer && Answer.length > 0)) {
-                    console.debug(`[${shortName}] Returned early: domain offline`);
-                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
-                    return;
-                }
 
                 // Checks if the domain is blocked
                 for (const answer of response.answers) {
@@ -1258,7 +1322,19 @@ const BrowserProtection = (() => {
                     signal: createTimeoutSignal(signal)
                 });
 
-                // Returns early if one or more of the responses is not OK
+                // Checks if the domain is offline
+                if (nonFilteringResponse.ok && Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
+                    const nonFilteringData = await nonFilteringResponse.json();
+                    const {Status, Answer} = nonFilteringData;
+
+                    if (!(Status === 0 && Answer && Answer.length > 0)) {
+                        console.debug(`[${shortName}] Domain appears to be offline`);
+                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
+                        return;
+                    }
+                }
+
+                // Checks if one or more of the responses is not OK
                 if (!filteringResponse.ok || !nonFilteringResponse.ok) {
                     console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
@@ -1274,16 +1350,7 @@ const BrowserProtection = (() => {
                 }
 
                 const filteringData = new Uint8Array(await filteringResponse.arrayBuffer());
-                const nonFilteringData = await nonFilteringResponse.json();
                 const response = DNSMessage.parse(filteringData);
-                const {Status, Answer} = nonFilteringData;
-
-                // Returns early if the domain is offline
-                if (!(Status === 0 && Answer && Answer.length > 0)) {
-                    console.debug(`[${shortName}] Returned early: domain offline`);
-                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
-                    return;
-                }
 
                 // Checks if the domain is blocked
                 for (const answer of response.answers) {
@@ -1364,7 +1431,19 @@ const BrowserProtection = (() => {
                     signal: createTimeoutSignal(signal)
                 });
 
-                // Returns early if one or more of the responses is not OK
+                // Checks if the domain is offline
+                if (nonFilteringResponse.ok && Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
+                    const nonFilteringData = await nonFilteringResponse.json();
+                    const {Status, Answer} = nonFilteringData;
+
+                    if (!(Status === 0 && Answer && Answer.length > 0)) {
+                        console.debug(`[${shortName}] Domain appears to be offline`);
+                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
+                        return;
+                    }
+                }
+
+                // Checks if one or more of the responses is not OK
                 if (!filteringResponse.ok || !nonFilteringResponse.ok) {
                     console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
@@ -1380,15 +1459,6 @@ const BrowserProtection = (() => {
                 }
 
                 const filteringData = new Uint8Array(await filteringResponse.arrayBuffer());
-                const nonFilteringData = await nonFilteringResponse.json();
-                const {Status, Answer} = nonFilteringData;
-
-                // Returns early if the domain is offline
-                if (!(Status === 0 && Answer && Answer.length > 0)) {
-                    console.debug(`[${shortName}] Returned early: domain offline`);
-                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
-                    return;
-                }
 
                 // Checks if the domain is blocked
                 if (filteringData.length >= 4 && filteringData[3] === 3) {
@@ -1466,7 +1536,19 @@ const BrowserProtection = (() => {
                     signal: createTimeoutSignal(signal)
                 });
 
-                // Returns early if one or more of the responses is not OK
+                // Checks if the domain is offline
+                if (nonFilteringResponse.ok && Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
+                    const nonFilteringData = await nonFilteringResponse.json();
+                    const {Status, Answer} = nonFilteringData;
+
+                    if (!(Status === 0 && Answer && Answer.length > 0)) {
+                        console.debug(`[${shortName}] Domain appears to be offline`);
+                        callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
+                        return;
+                    }
+                }
+
+                // Checks if one or more of the responses is not OK
                 if (!filteringResponse.ok || !nonFilteringResponse.ok) {
                     console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
@@ -1482,16 +1564,7 @@ const BrowserProtection = (() => {
                 }
 
                 const filteringData = new Uint8Array(await filteringResponse.arrayBuffer());
-                const nonFilteringData = await nonFilteringResponse.json();
                 const response = DNSMessage.parse(filteringData);
-                const {Status, Answer} = nonFilteringData;
-
-                // Returns early if the domain is offline
-                if (!(Status === 0 && Answer && Answer.length > 0)) {
-                    console.debug(`[${shortName}] Returned early: domain offline`);
-                    callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
-                    return;
-                }
 
                 // Checks if the domain is blocked
                 for (const answer of response.answers) {
