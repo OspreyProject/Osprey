@@ -117,7 +117,7 @@ const BrowserProtection = (() => {
             return;
         }
 
-        // Returns early if the URL is missing a hostname
+        // Checks if the URL is missing a hostname
         if (!urlObject.hostname) {
             console.warn(`Invalid URL, missing hostname: ${urlString}`);
             return;
@@ -130,7 +130,7 @@ const BrowserProtection = (() => {
         try {
             encodedDNSQuery = UrlHelpers.encodeDNSQuery(urlHostname);
         } catch (error) {
-            console.warn(`Failed to encode DNS query for hostname ${urlHostname}: ${error.message}`);
+            console.warn(`Failed to encode DNS query for hostname '${urlHostname}': ${error.message}`);
             return;
         }
 
@@ -220,12 +220,12 @@ const BrowserProtection = (() => {
 
                 // Checks if one or more of the responses is not OK
                 if (!filteringResponse.ok || !nonFilteringResponse.ok) {
-                    console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
+                    console.warn(`[${shortName}] Invalid status received: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
 
-                // Return early if the Content-Type is not what we expect
+                // Checks if the Content-Type is not what we expect
                 if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message') ||
                     !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
                     console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
@@ -329,12 +329,12 @@ const BrowserProtection = (() => {
 
                 // Checks if one or more of the responses is not OK
                 if (!filteringResponse.ok || !nonFilteringResponse.ok) {
-                    console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
+                    console.warn(`[${shortName}] Invalid status received: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
 
-                // Return early if the Content-Type is not what we expect
+                // Checks if the Content-Type is not what we expect
                 if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message') ||
                     !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
                     console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
@@ -419,7 +419,7 @@ const BrowserProtection = (() => {
             };
 
             try {
-                const response = await fetch(apiUrl, {
+                const filteringResponse = await fetch(apiUrl, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -455,14 +455,14 @@ const BrowserProtection = (() => {
                     return;
                 }
 
-                // Return early if the Content-Type is not what we expect
-                if (!Validate.hasValidContentType(response, 'application/json')) {
-                    console.warn(`[${shortName}] Unexpected Content-Type: ${response.headers.get('Content-Type')}`);
+                // Checks if the Content-Type is not what we expect
+                if (!Validate.hasValidContentType(filteringResponse, 'application/json')) {
+                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
 
-                const data = await response.json();
+                const data = await filteringResponse.json();
                 const categories = data.category?.categories;
 
                 // Check if the categories array is empty
@@ -555,7 +555,7 @@ const BrowserProtection = (() => {
             };
 
             try {
-                const response = await fetch(apiUrl, {
+                const filteringResponse = await fetch(apiUrl, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -591,14 +591,14 @@ const BrowserProtection = (() => {
                     return;
                 }
 
-                // Return early if the Content-Type is not what we expect
-                if (!Validate.hasValidContentType(response, 'application/json')) {
-                    console.warn(`[${shortName}] Unexpected Content-Type: ${response.headers.get('Content-Type')}`);
+                // Checks if the Content-Type is not what we expect
+                if (!Validate.hasValidContentType(filteringResponse, 'application/json')) {
+                    console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
 
-                const data = await response.json();
+                const data = await filteringResponse.json();
                 const {result} = data;
 
                 // Malicious
@@ -698,12 +698,12 @@ const BrowserProtection = (() => {
 
                 // Checks if one or more of the responses is not OK
                 if (!filteringResponse.ok || !nonFilteringResponse.ok) {
-                    console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
+                    console.warn(`[${shortName}] Invalid status received: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
 
-                // Return early if the Content-Type is not what we expect
+                // Checks if the Content-Type is not what we expect
                 if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message') ||
                     !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
                     console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
@@ -807,12 +807,12 @@ const BrowserProtection = (() => {
 
                 // Checks if one or more of the responses is not OK
                 if (!filteringResponse.ok || !nonFilteringResponse.ok) {
-                    console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
+                    console.warn(`[${shortName}] Invalid status received: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
 
-                // Return early if the Content-Type is not what we expect
+                // Checks if the Content-Type is not what we expect
                 if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message') ||
                     !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
                     console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
@@ -912,12 +912,12 @@ const BrowserProtection = (() => {
 
                 // Checks if one or more of the responses is not OK
                 if (!filteringResponse.ok || !nonFilteringResponse.ok) {
-                    console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
+                    console.warn(`[${shortName}] Invalid status received: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
 
-                // Return early if the Content-Type is not what we expect
+                // Checks if the Content-Type is not what we expect
                 if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message') ||
                     !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
                     console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
@@ -1017,12 +1017,12 @@ const BrowserProtection = (() => {
 
                 // Checks if one or more of the responses is not OK
                 if (!filteringResponse.ok || !nonFilteringResponse.ok) {
-                    console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
+                    console.warn(`[${shortName}] Invalid status received: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
 
-                // Return early if the Content-Type is not what we expect
+                // Checks if the Content-Type is not what we expect
                 if (!Validate.hasValidContentType(filteringResponse, 'application/dns-json') ||
                     !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
                     console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
@@ -1122,12 +1122,12 @@ const BrowserProtection = (() => {
 
                 // Checks if one or more of the responses is not OK
                 if (!filteringResponse.ok || !nonFilteringResponse.ok) {
-                    console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
+                    console.warn(`[${shortName}] Invalid status received: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
 
-                // Return early if the Content-Type is not what we expect
+                // Checks if the Content-Type is not what we expect
                 if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message') ||
                     !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
                     console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
@@ -1227,12 +1227,12 @@ const BrowserProtection = (() => {
 
                 // Checks if one or more of the responses is not OK
                 if (!filteringResponse.ok || !nonFilteringResponse.ok) {
-                    console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
+                    console.warn(`[${shortName}] Invalid status received: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
 
-                // Return early if the Content-Type is not what we expect
+                // Checks if the Content-Type is not what we expect
                 if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message') ||
                     !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
                     console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
@@ -1336,12 +1336,12 @@ const BrowserProtection = (() => {
 
                 // Checks if one or more of the responses is not OK
                 if (!filteringResponse.ok || !nonFilteringResponse.ok) {
-                    console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
+                    console.warn(`[${shortName}] Invalid status received: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
 
-                // Return early if the Content-Type is not what we expect
+                // Checks if the Content-Type is not what we expect
                 if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message') ||
                     !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
                     console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
@@ -1445,12 +1445,12 @@ const BrowserProtection = (() => {
 
                 // Checks if one or more of the responses is not OK
                 if (!filteringResponse.ok || !nonFilteringResponse.ok) {
-                    console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
+                    console.warn(`[${shortName}] Invalid status received: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
 
-                // Return early if the Content-Type is not what we expect
+                // Checks if the Content-Type is not what we expect
                 if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message') ||
                     !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
                     console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
@@ -1550,12 +1550,12 @@ const BrowserProtection = (() => {
 
                 // Checks if one or more of the responses is not OK
                 if (!filteringResponse.ok || !nonFilteringResponse.ok) {
-                    console.warn(`[${shortName}] Returned early: ${filteringResponse.status}`);
+                    console.warn(`[${shortName}] Invalid status received: ${filteringResponse.status}`);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
 
-                // Return early if the Content-Type is not what we expect
+                // Checks if the Content-Type is not what we expect
                 if (!Validate.hasValidContentType(filteringResponse, 'application/dns-message') ||
                     !Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
                     console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}, ${nonFilteringResponse.headers.get('Content-Type')}`);
