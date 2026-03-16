@@ -52,7 +52,7 @@ ProtectionResult.ResultTypeName = Object.freeze({
     4: LangUtil.MALICIOUS,
     5: LangUtil.PHISHING,
     6: LangUtil.UNTRUSTED,
-    7: LangUtil.ADULT_CONTENT
+    7: LangUtil.ADULT_CONTENT,
 });
 
 ProtectionResult.ResultTypeNameEN = Object.freeze({
@@ -68,84 +68,88 @@ ProtectionResult.ResultTypeNameEN = Object.freeze({
 
 ProtectionResult.Origin = Object.freeze({
     UNKNOWN: 0,
+    CLOUDFLARE_RESOLVER: 1,
 
     // Official Partners
-    ADGUARD_SECURITY: 1,
-    ADGUARD_FAMILY: 2,
-    ALPHAMOUNTAIN: 3,
-    PRECISIONSEC: 4,
+    ADGUARD_SECURITY: 2,
+    ADGUARD_FAMILY: 3,
+    ALPHAMOUNTAIN: 4,
+    PRECISIONSEC: 5,
 
     // Non-Partnered Providers
-    CERT_EE: 5,
-    CLEANBROWSING_SECURITY: 6,
-    CLEANBROWSING_FAMILY: 7,
-    CLOUDFLARE_SECURITY: 8,
-    CLOUDFLARE_FAMILY: 9,
-    CONTROL_D_SECURITY: 10,
-    CONTROL_D_FAMILY: 11,
-    QUAD9: 12,
-    SWITCH_CH: 13,
+    CERT_EE: 6,
+    CLEANBROWSING_SECURITY: 7,
+    CLEANBROWSING_FAMILY: 8,
+    CLOUDFLARE_SECURITY: 9,
+    CLOUDFLARE_FAMILY: 10,
+    CONTROL_D_SECURITY: 11,
+    CONTROL_D_FAMILY: 12,
+    QUAD9: 13,
+    SWITCH_CH: 14,
 });
 
 ProtectionResult.FullName = Object.freeze({
     0: "Unknown",
+    1: "Cloudflare Resolver",
 
     // Official Partners
-    1: "AdGuard Security DNS",
-    2: "AdGuard Family DNS",
-    3: "alphaMountain Web Protection",
-    4: "PrecisionSec Web Protection",
+    2: "AdGuard Security DNS",
+    3: "AdGuard Family DNS",
+    4: "alphaMountain Web Protection",
+    5: "PrecisionSec Web Protection",
 
     // Non-Partnered Providers
-    5: "CERT-EE Security DNS",
-    6: "CleanBrowsing Security DNS",
-    7: "CleanBrowsing Family DNS",
-    8: "Cloudflare Security DNS",
-    9: "Cloudflare Family DNS",
-    10: "Control D Security DNS",
-    11: "Control D Family DNS",
-    12: "Quad9 Security DNS",
-    13: "Switch.ch Security DNS",
+    6: "CERT-EE Security DNS",
+    7: "CleanBrowsing Security DNS",
+    8: "CleanBrowsing Family DNS",
+    9: "Cloudflare Security DNS",
+    10: "Cloudflare Family DNS",
+    11: "Control D Security DNS",
+    12: "Control D Family DNS",
+    13: "Quad9 Security DNS",
+    14: "Switch.ch Security DNS",
 });
 
 ProtectionResult.ShortName = Object.freeze({
     0: "Unknown",
+    1: "Cloudflare Resolver",
 
     // Official Partners
-    1: "AdGuard Security",
-    2: "AdGuard Family",
-    3: "alphaMountain",
-    4: "PrecisionSec",
+    2: "AdGuard Security",
+    3: "AdGuard Family",
+    4: "alphaMountain",
+    5: "PrecisionSec",
 
     // Non-Partnered Providers
-    5: "CERT-EE",
-    6: "CleanBrowsing Security",
-    7: "CleanBrowsing Family",
-    8: "Cloudflare Security",
-    9: "Cloudflare Family",
-    10: "Control D Security",
-    11: "Control D Family",
-    12: "Quad9",
-    13: "Switch.ch",
+    6: "CERT-EE",
+    7: "CleanBrowsing Security",
+    8: "CleanBrowsing Family",
+    9: "Cloudflare Security",
+    10: "Cloudflare Family",
+    11: "Control D Security",
+    12: "Control D Family",
+    13: "Quad9",
+    14: "Switch.ch",
 });
 
 ProtectionResult.CacheName = Object.freeze({
     0: "unknown",
+    1: "cloudflareResolver",
 
     // Official Partners
-    1: "adGuardSecurity",
-    2: "adGuardFamily",
-    3: "alphaMountain",
-    4: "precisionSec",
+    2: "adGuardSecurity",
+    3: "adGuardFamily",
+    4: "alphaMountain",
+    5: "precisionSec",
 
     // Non-Partnered Providers
-    5: "certEE",
-    6: "cleanBrowsingSecurity",
-    7: "cleanBrowsingFamily",
-    8: "cloudflareSecurity",
-    9: "cloudflareFamily",
-    10: "controlDSecurity",
-    11: "controlDFamily",
-    12: "quad9",
-    13: "switchCH",
+    6: "certEE",
+    7: "cleanBrowsingSecurity",
+    8: "cleanBrowsingFamily",
+    9: "cloudflareSecurity",
+    10: "cloudflareFamily",
+    11: "controlDSecurity",
+    12: "controlDFamily",
+    13: "quad9",
+    14: "switchCH",
 });

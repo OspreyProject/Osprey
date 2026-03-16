@@ -59,6 +59,9 @@ const CacheManager = (() => {
         // Global
         "global",
 
+        // Cloudflare Resolver
+        "cloudflareResolver",
+
         // Official Partners
         "adGuardSecurity", "adGuardFamily",
         "alphaMountain",

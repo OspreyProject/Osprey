@@ -134,11 +134,25 @@ const BrowserProtection = (() => {
             return;
         }
 
+        // Reconstructs a new URL with just the hostname
+        let urlHostnameObject;
+        try {
+            urlHostnameObject = new URL(`https://${urlHostname}`);
+        } catch (error) {
+            console.warn(`Invalid URL hostname format: ${error.message}`);
+            return;
+        }
+
         // Encodes the URL components for use in API requests
         const encodedURLHostname = encodeURIComponent(urlHostname);
 
         // The non-filtering URL used for DNS lookups
         const nonFilteringURL = `https://cloudflare-dns.com/dns-query?name=${encodedURLHostname}`;
+
+        // Other Cloudflare Resolver information
+        const origin = ProtectionResult.Origin.CLOUDFLARE_RESOLVER;
+        const shortName = ProtectionResult.ShortName[origin];
+        const cacheName = ProtectionResult.CacheName[origin];
 
         // Ensures there is an AbortController for the tab
         if (!tabAbortControllers.has(tabId)) {
@@ -150,31 +164,41 @@ const BrowserProtection = (() => {
 
         // Make a validation request with Cloudflare before querying other providers
         // Only proceed if the domain is valid and online to avoid unnecessary requests
-        try {
-            const nonFilteringResponse = await fetch(nonFilteringURL, {
-                method: "GET",
-                headers: {
-                    "Accept": "application/dns-json"
-                },
-                signal: createTimeoutSignal(signal, 10000)
-            });
+        if (!CacheManager.isUrlInAllowedCache(urlHostnameObject, cacheName)) {
+            console.debug(`[${shortName}] URL is not in allowed cache, validating with non-filtering resolver: ${urlHostname}`);
 
-            // Checks if the domain is offline
-            if (nonFilteringResponse.ok && Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')) {
-                const nonFilteringData = await nonFilteringResponse.json();
-                const {Status, Answer} = nonFilteringData;
+            try {
+                const nonFilteringResponse = await fetch(nonFilteringURL, {
+                    method: "GET",
+                    headers: {
+                        "Accept": "application/dns-json"
+                    },
+                    signal: createTimeoutSignal(signal, 10000)
+                });
 
-                if (!(Status === 0 && Answer && Answer.length > 0)) {
-                    console.debug(`Domain appears to be offline (${urlHostname})`);
+                const validContentType = Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json');
+
+                // Checks if the domain is offline
+                if (nonFilteringResponse.ok && validContentType) {
+                    const nonFilteringData = await nonFilteringResponse.json();
+                    const {Status, Answer} = nonFilteringData;
+
+                    // Adds the URL to the allowed cache if the domain resolves
+                    if (Status === 0 && Answer && Answer.length > 0) {
+                        console.debug(`[${shortName}] Response status is ${Status}; adding to allowed cache...`);
+                        CacheManager.addUrlToAllowedCache(urlHostnameObject, cacheName);
+                    } else {
+                        console.debug(`[${shortName}] Domain appears to be offline (${urlHostname})`);
+                        return;
+                    }
+                } else {
+                    console.warn(`[${shortName}] Invalid resolver response received: ${nonFilteringResponse.ok} - ${validContentType}`);
                     return;
                 }
-            } else {
-                console.warn(`${nonFilteringResponse.ok} - ${Validate.hasValidContentType(nonFilteringResponse, 'application/dns-json')}`);
+            } catch (error) {
+                console.debug(`[${shortName}] Failed to validate domain '${urlString}': ${error}`);
                 return;
             }
-        } catch (error) {
-            console.debug(`Failed to validate domain '${urlString}': ${error}`);
-            return;
         }
 
         /**
