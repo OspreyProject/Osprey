@@ -116,9 +116,15 @@ class LocalLists {
                 continue;
             }
 
-            set.add(trimmed.toLowerCase());
-        }
+            // Handle hosts file format (e.g. "127.0.0.1\thostname.com")
+            const tabIndex = trimmed.indexOf("\t");
+            const entry = tabIndex === -1 ? trimmed : trimmed.slice(tabIndex + 1).trim();
+            const normalized = entry.toLowerCase().replace(/^www\./, "");
 
+            if (normalized.length > 0) {
+                set.add(normalized);
+            }
+        }
         return set;
     }
 
@@ -232,14 +238,7 @@ LocalLists.UPDATE_INTERVAL_MS = 5 * 60 * 1000; // 5 minutes
 // Fetch timeout for list requests, kept separate from per-URL request timeouts
 LocalLists.FETCH_TIMEOUT_MS = 30000; // 30 seconds
 
-// Descriptor array — add one object per list; no other code needs to change.
-// Each descriptor contains all static config for one list:
-//   url         — remote URL that returns the list data
-//   format      — "json" for a JSON array of hostnames, "text" for one hostname per line
-//   origin      — ProtectionResult.Origin value used for results and cache lookups
-//   settingsKey — key in the settings object that enables/disables this list
-//   resultType  — ProtectionResult.ResultType to report when a hostname matches
-//   storageKey  — extension local storage key used for persisting data
+// Local list descriptors list; only defined once
 LocalLists.descriptors = Object.freeze([
     {
         url: "https://raw.githubusercontent.com/phishdestroy/destroylist/main/list.json",
@@ -259,13 +258,7 @@ LocalLists.descriptors = Object.freeze([
     },
 ]);
 
-// Mutable runtime state per list, keyed by storageKey.
-// Each entry: { domainSet: Set<string> | null, rawJson: string | null }
-//   domainSet — the loaded set of lower-cased hostnames; null until first load
-//   rawJson   — canonical JSON string used for change-detection on updates
-//
-// Module-scoped rather than a class field for JSHint compatibility (E024).
-// Accessed only through LocalLists.getState() — treated as private.
+// Mutable runtime state per list, keyed by storageKey
 const localListState = new Map(
     LocalLists.descriptors.map(descriptor => [descriptor.storageKey, {domainSet: null, rawJson: null}])
 );
