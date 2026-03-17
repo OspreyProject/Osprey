@@ -77,6 +77,7 @@ const CacheManager = (() => {
 
         // Local Filtering Lists
         "phishDestroy",
+        "phishingDatabase",
     ]);
 
     // Initialize caches for each provider

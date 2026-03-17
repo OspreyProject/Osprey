@@ -131,6 +131,14 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
             messageType: Messages.PHISH_DESTROY_TOGGLED,
         },
         {
+            origin: ProtectionResult.Origin.PHISHING_DATABASE,
+            name: "phishingDatabaseEnabled",
+            title: ProtectionResult.FullName[this.origin],
+            labelElementId: "phishingDatabaseStatus",
+            switchElementId: "phishingDatabaseSwitch",
+            messageType: Messages.PHISHING_DATABASE_TOGGLED,
+        },
+        {
             origin: ProtectionResult.Origin.QUAD9,
             name: "quad9Enabled",
             title: ProtectionResult.FullName[this.origin],

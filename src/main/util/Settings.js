@@ -46,6 +46,7 @@ const Settings = (() => {
 
         // Local Filtering Lists
         phishDestroyEnabled: true,
+        phishingDatabaseEnabled: true,
 
         // General Settings
         contextMenuEnabled: true,
@@ -216,6 +217,7 @@ const Settings = (() => {
             !settings.controlDSecurityEnabled &&
             !settings.controlDFamilyEnabled &&
             !settings.phishDestroyEnabled &&
+            !settings.phishingDatabaseEnabled &&
             !settings.quad9Enabled &&
             !settings.switchCHEnabled;
     };

@@ -89,6 +89,7 @@ ProtectionResult.Origin = Object.freeze({
 
     // Local Filtering Lists
     PHISH_DESTROY: 15,
+    PHISHING_DATABASE: 16,
 });
 
 ProtectionResult.FullName = Object.freeze({
@@ -114,6 +115,7 @@ ProtectionResult.FullName = Object.freeze({
 
     // Local Filtering Lists
     15: "PhishDestroy Feed",
+    16: "Phishing.Database Feed",
 });
 
 ProtectionResult.ShortName = Object.freeze({
@@ -139,6 +141,7 @@ ProtectionResult.ShortName = Object.freeze({
 
     // Local Filtering Lists
     15: "PhishDestroy",
+    16: "Phishing.Database",
 });
 
 ProtectionResult.CacheName = Object.freeze({
@@ -164,4 +167,5 @@ ProtectionResult.CacheName = Object.freeze({
 
     // Local Filtering Lists
     15: "phishDestroy",
+    16: "phishingDatabase",
 });

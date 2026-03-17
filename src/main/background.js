@@ -108,6 +108,7 @@
 
         // Local Filtering Lists
         'PhishDestroyEnabled',
+        'PhishingDatabaseEnabled',
     ]);
 
     /**
@@ -829,6 +830,12 @@
                 console.debug("PhishDestroy is managed by system policy.");
             }
 
+            // Checks and sets the Phishing.Database settings using the policy
+            if (policies.PhishingDatabaseEnabled !== undefined) {
+                settings.phishingDatabaseEnabled = policies.PhishingDatabaseEnabled;
+                console.debug("Phishing.Database is managed by system policy.");
+            }
+
             // Checks and sets the Quad9 settings using the policy
             if (policies.Quad9Enabled !== undefined) {
                 settings.quad9Enabled = policies.Quad9Enabled;
@@ -1304,6 +1311,7 @@
             case Messages.CONTROL_D_FAMILY_TOGGLED:
             case Messages.CONTROL_D_SECURITY_TOGGLED:
             case Messages.PHISH_DESTROY_TOGGLED:
+            case Messages.PHISHING_DATABASE_TOGGLED:
             case Messages.QUAD9_TOGGLED:
             case Messages.SWITCH_CH_TOGGLED:
                 if (!message.title || typeof message.toggleState !== 'boolean') {

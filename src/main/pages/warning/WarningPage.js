@@ -418,6 +418,14 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
                 case ProtectionResult.Origin.PHISH_DESTROY:
                     return new URL("https://phishdestroy.io/appeals");
 
+                case ProtectionResult.Origin.PHISHING_DATABASE:
+                    return new URL("mailto:support@phish.co.za?subject=False%20Positive&body=Hello%2C" +
+                        "%0A%0AI%20would%20like%20to%20report%20a%20false%20positive." +
+                        "%0AURL%3A%20" + encodedBlockedUrl + "%20%28or%20the%20hostname%20itself%29" +
+                        "%0A%0AI%20believe%20this%20website%20is%20legitimate." +
+                        "%0A%0ASent%20with%20Osprey:%20Browser%20Protection" +
+                        "%0AWebsite:%20https://osprey.ac");
+
                 case ProtectionResult.Origin.QUAD9:
                     return new URL("https://quad9.net/support/contact");
 

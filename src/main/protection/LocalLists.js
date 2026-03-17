@@ -249,6 +249,14 @@ LocalLists.descriptors = Object.freeze([
         resultType: ProtectionResult.ResultType.PHISHING,
         storageKey: "LocalList_PhishDestroy",
     },
+    {
+        url: "https://raw.githubusercontent.com/Phishing-Database/Phishing.Database/refs/heads/master/phishing-domains-ACTIVE.txt",
+        format: "text",
+        origin: ProtectionResult.Origin.PHISHING_DATABASE,
+        settingsKey: "phishingDatabaseEnabled",
+        resultType: ProtectionResult.ResultType.PHISHING,
+        storageKey: "LocalList_PhishingDatabase",
+    },
 ]);
 
 // Mutable runtime state per list, keyed by storageKey.

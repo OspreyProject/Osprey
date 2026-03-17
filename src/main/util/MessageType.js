@@ -44,6 +44,7 @@ const Messages = Object.freeze({
     CONTROL_D_SECURITY_TOGGLED: "controlDSecurityToggled",
     CONTROL_D_FAMILY_TOGGLED: "controlDFamilyToggled",
     PHISH_DESTROY_TOGGLED: "phishDestroyToggled",
+    PHISHING_DATABASE_TOGGLED: "phishingDatabaseToggled",
     QUAD9_TOGGLED: "quad9Toggled",
     SWITCH_CH_TOGGLED: "switchCHToggled",
 });
