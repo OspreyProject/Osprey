@@ -26,6 +26,9 @@ const Settings = (() => {
     // Key for storing settings in local storage
     const settingsKey = "Settings";
 
+    // In-memory cache for fast synchronous reads
+    let cachedSettings = null;
+
     const defaultSettings = Object.freeze({
         // Official Partners
         adGuardSecurityEnabled: true,
@@ -108,17 +111,28 @@ const Settings = (() => {
     };
 
     /**
-     * Retrieves settings from local storage and merges them with default settings.
+     * Retrieves settings, serving from the in-memory cache when available
+     * to avoid a storage round-trip on every call.
      *
      * @param {Function} [callback] The function to call with the retrieved settings.
      */
     const get = callback => {
+        // If the cache is warm, serve it synchronously
+        if (cachedSettings !== null) {
+            callback?.(cachedSettings);
+            return;
+        }
+
+        // Cache is cold (first call after service worker start); load from storage
         StorageUtil.getFromLocalStore(settingsKey, function (storedSettings) {
             // Clones the default settings object
             let mergedSettings = structuredClone(defaultSettings);
 
             // Merges any stored settings into the cloned default settings
             updateIfChanged(mergedSettings, storedSettings);
+
+            // Warms the cached settings
+            cachedSettings = mergedSettings;
 
             // Invokes the callback with the merged settings
             callback?.(mergedSettings);
@@ -137,17 +151,15 @@ const Settings = (() => {
             return;
         }
 
-        StorageUtil.getFromLocalStore(settingsKey, function (storedSettings) {
-            // Clones the default settings object
-            let mergedSettings = structuredClone(defaultSettings);
+        // Use the cache as the base if warm, otherwise fall back to defaults
+        const base = cachedSettings === null ? structuredClone(defaultSettings) : structuredClone(cachedSettings);
+        updateIfChanged(base, newSettings);
 
-            // Merges stored settings and new settings into the cloned default settings
-            storedSettings && updateIfChanged(mergedSettings, storedSettings);
-            updateIfChanged(mergedSettings, newSettings);
+        // Keep the cache in sync immediately, don't wait for the storage write
+        cachedSettings = base;
 
-            // Saves the merged settings back to local storage
-            StorageUtil.setToLocalStore(settingsKey, mergedSettings, callback);
-        });
+        // Persist to storage
+        StorageUtil.setToLocalStore(settingsKey, base, callback);
     };
 
     /**
@@ -157,6 +169,10 @@ const Settings = (() => {
      */
     const restoreDefaultSettings = callback => {
         StorageUtil.getFromLocalStore(settingsKey, function () {
+            // Resets the cache
+            cachedSettings = structuredClone(defaultSettings);
+
+            // Saves the default settings to local storage, overwriting any existing settings
             StorageUtil.setToLocalStore(settingsKey, defaultSettings, callback);
         });
     };
@@ -183,6 +199,14 @@ const Settings = (() => {
             return defaultValue;
         }
         return value;
+    };
+
+    /**
+     * Invalidates the in-memory cache, forcing the next get() call to re-read from storage.
+     */
+    const invalidateCache = () => {
+        cachedSettings = null;
+        console.debug("Settings cache invalidated.");
     };
 
     /**
@@ -214,5 +238,6 @@ const Settings = (() => {
         set,
         restoreDefaultSettings,
         allProvidersDisabled,
+        invalidateCache,
     });
 })();

@@ -860,6 +860,18 @@
         createContextMenu();
     });
 
+    /**
+     * Invalidates the Settings in-memory cache when the Settings are changed in storage,
+     * ensuring that the latest settings are always used.
+     *
+     * @param {Object} changes The changes object containing the keys that were changed and their old and new values.
+     * @param {string} area The storage area that was changed (e.g., "local", "sync", "managed").
+     */
+    browserAPI.storage.onChanged.addListener((changes, area) => {
+        if (area === "local" && changes.Settings) {
+            Settings.invalidateCache();
+        }
+    });
 
     /**
      * Listens for PING messages from content scripts to update the blocked counter on the block page.
