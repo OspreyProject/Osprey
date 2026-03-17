@@ -186,19 +186,6 @@ const Settings = (() => {
     };
 
     /**
-     * Checks if all partner settings are disabled.
-     *
-     * @param {Object} settings The settings object to check.
-     * @returns {boolean} Returns true if all partner settings are disabled, false otherwise.
-     */
-    const allPartnersDisabled = settings => {
-        return !settings.adGuardSecurityEnabled &&
-            !settings.adGuardFamilyEnabled &&
-            !settings.alphaMountainEnabled &&
-            !settings.precisionSecEnabled;
-    };
-
-    /**
      * Checks if all security providers are disabled.
      *
      * @param {Object} settings The settings object to check.
@@ -226,7 +213,6 @@ const Settings = (() => {
         get,
         set,
         restoreDefaultSettings,
-        allPartnersDisabled,
         allProvidersDisabled,
     });
 })();
