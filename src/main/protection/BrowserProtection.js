@@ -1406,10 +1406,29 @@ const BrowserProtection = (() => {
                 return;
             }
 
-            // Checks if the hostname appears in the list, also testing without a leading "www." subdomain
+            // Checks if the hostname appears in the list, or if any parent domain does
+            // This prevents subdomain bypass (e.g. sub.listed-phishing-domain.com)
             const normalizedHostname = urlHostname.toLowerCase();
-            const bareHostname = normalizedHostname.startsWith("www.") ? normalizedHostname.slice(4) : null;
-            const isListed = state.domainSet.has(normalizedHostname) || bareHostname !== null && state.domainSet.has(bareHostname);
+
+            const isListed = (() => {
+                // Check the hostname itself first
+                if (state.domainSet.has(normalizedHostname)) {
+                    return true;
+                }
+
+                const labels = normalizedHostname.split(".");
+
+                // Walk up the domain tree, checking each parent suffix.
+                // Stops before the TLD (must have at least two labels to be meaningful).
+                for (let i = 1; i < labels.length - 1; i++) {
+                    const ancestor = labels.slice(i).join(".");
+
+                    if (state.domainSet.has(ancestor)) {
+                        return true;
+                    }
+                }
+                return false;
+            })();
 
             if (isListed) {
                 console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
