@@ -123,6 +123,14 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
             messageType: Messages.CONTROL_D_FAMILY_TOGGLED,
         },
         {
+            origin: ProtectionResult.Origin.PHISH_DESTROY,
+            name: "phishDestroyEnabled",
+            title: ProtectionResult.FullName[this.origin],
+            labelElementId: "phishDestroyStatus",
+            switchElementId: "phishDestroySwitch",
+            messageType: Messages.PHISH_DESTROY_TOGGLED,
+        },
+        {
             origin: ProtectionResult.Origin.QUAD9,
             name: "quad9Enabled",
             title: ProtectionResult.FullName[this.origin],

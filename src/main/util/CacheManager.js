@@ -74,6 +74,9 @@ const CacheManager = (() => {
         "controlDSecurity", "controlDFamily",
         "quad9",
         "switchCH",
+
+        // Local Filtering Lists
+        "phishDestroy",
     ]);
 
     // Initialize caches for each provider

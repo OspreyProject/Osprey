@@ -39,7 +39,8 @@
 
             // Protection
             "protection/ProtectionResult.js",
-            "protection/BrowserProtection.js"
+            "protection/BrowserProtection.js",
+            "protection/LocalLists.js"
         );
     } catch (error) {
         // In Firefox-based browsers, importScripts is not available; scripts are loaded via background.html
@@ -50,6 +51,9 @@
 
     // Clears the processing cache
     CacheManager.clearProcessingCache();
+
+    // Fetches and schedules auto-updates for all local filtering lists
+    LocalLists.initAll();
 
     // Map<tabKey, Array<origin>> (Integer) of result origins per tab
     const resultOriginsMap = new Map();
@@ -101,6 +105,9 @@
         'CloudflareFamilyEnabled',
         'SwitchCHEnabled',
         'Quad9Enabled',
+
+        // Local Filtering Lists
+        'PhishDestroyEnabled',
     ]);
 
     /**
@@ -816,6 +823,12 @@
                 console.debug("Control D Family is managed by system policy.");
             }
 
+            // Checks and sets the PhishDestroy settings using the policy
+            if (policies.PhishDestroyEnabled !== undefined) {
+                settings.phishDestroyEnabled = policies.PhishDestroyEnabled;
+                console.debug("PhishDestroy is managed by system policy.");
+            }
+
             // Checks and sets the Quad9 settings using the policy
             if (policies.Quad9Enabled !== undefined) {
                 settings.quad9Enabled = policies.Quad9Enabled;
@@ -1282,6 +1295,7 @@
             case Messages.ADGUARD_FAMILY_TOGGLED:
             case Messages.ADGUARD_SECURITY_TOGGLED:
             case Messages.ALPHAMOUNTAIN_TOGGLED:
+            case Messages.PRECISIONSEC_TOGGLED:
             case Messages.CERT_EE_TOGGLED:
             case Messages.CLEANBROWSING_FAMILY_TOGGLED:
             case Messages.CLEANBROWSING_SECURITY_TOGGLED:
@@ -1289,7 +1303,7 @@
             case Messages.CLOUDFLARE_SECURITY_TOGGLED:
             case Messages.CONTROL_D_FAMILY_TOGGLED:
             case Messages.CONTROL_D_SECURITY_TOGGLED:
-            case Messages.PRECISIONSEC_TOGGLED:
+            case Messages.PHISH_DESTROY_TOGGLED:
             case Messages.QUAD9_TOGGLED:
             case Messages.SWITCH_CH_TOGGLED:
                 if (!message.title || typeof message.toggleState !== 'boolean') {

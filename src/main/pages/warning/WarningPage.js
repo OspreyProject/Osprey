@@ -415,6 +415,9 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
                         "%0A%0ASent%20with%20Osprey:%20Browser%20Protection" +
                         "%0AWebsite:%20https://osprey.ac");
 
+                case ProtectionResult.Origin.PHISH_DESTROY:
+                    return new URL("https://phishdestroy.io/appeals");
+
                 case ProtectionResult.Origin.QUAD9:
                     return new URL("https://quad9.net/support/contact");
 

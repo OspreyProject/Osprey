@@ -44,6 +44,9 @@ const Settings = (() => {
         quad9Enabled: true,
         switchCHEnabled: true,
 
+        // Local Filtering Lists
+        phishDestroyEnabled: true,
+
         // General Settings
         contextMenuEnabled: true,
         notificationsEnabled: false,
@@ -212,6 +215,7 @@ const Settings = (() => {
             !settings.cloudflareFamilyEnabled &&
             !settings.controlDSecurityEnabled &&
             !settings.controlDFamilyEnabled &&
+            !settings.phishDestroyEnabled &&
             !settings.quad9Enabled &&
             !settings.switchCHEnabled;
     };

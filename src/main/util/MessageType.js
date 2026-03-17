@@ -43,6 +43,7 @@ const Messages = Object.freeze({
     CLOUDFLARE_FAMILY_TOGGLED: "cloudflareFamilyToggled",
     CONTROL_D_SECURITY_TOGGLED: "controlDSecurityToggled",
     CONTROL_D_FAMILY_TOGGLED: "controlDFamilyToggled",
-    SWITCH_CH_TOGGLED: "switchCHToggled",
+    PHISH_DESTROY_TOGGLED: "phishDestroyToggled",
     QUAD9_TOGGLED: "quad9Toggled",
+    SWITCH_CH_TOGGLED: "switchCHToggled",
 });

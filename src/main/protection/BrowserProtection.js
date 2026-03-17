@@ -1369,6 +1369,61 @@ const BrowserProtection = (() => {
             }
         };
 
+        /**
+         * Checks the URL against a local filtering list.
+         *
+         * @param {Object} descriptor A descriptor from LocalLists.descriptors.
+         * @param {Object} settings The settings object containing user preferences.
+         */
+        const checkUrlWithLocalList = (descriptor, settings) => {
+            // Checks if this list is enabled
+            if (!settings[descriptor.settingsKey]) {
+                return;
+            }
+
+            const origin = descriptor.origin;
+            const shortName = ProtectionResult.ShortName[origin];
+            const cacheName = ProtectionResult.CacheName[origin];
+            const state = LocalLists.getState(descriptor);
+
+            // Checks if the list has been loaded yet
+            if (!state.domainSet) {
+                console.debug(`[${shortName}] List not yet loaded; skipping check for ${urlHostname}`);
+                return;
+            }
+
+            // Checks if the URL is in the allowed cache
+            if (CacheManager.isUrlInAllowedCache(urlObject, cacheName)) {
+                console.debug(`[${shortName}] URL is already allowed: ${urlString}`);
+                callback(new ProtectionResult(urlString, ProtectionResult.ResultType.KNOWN_SAFE, origin));
+                return;
+            }
+
+            // Checks if the URL is in the blocked cache
+            if (CacheManager.isUrlInBlockedCache(urlObject, cacheName)) {
+                console.debug(`[${shortName}] URL is already blocked: ${urlString}`);
+                callback(new ProtectionResult(urlString, CacheManager.getBlockedResultType(urlString, cacheName), origin));
+                return;
+            }
+
+            // Checks if the hostname appears in the list, also testing without a leading "www." subdomain
+            const normalizedHostname = urlHostname.toLowerCase();
+            const bareHostname = normalizedHostname.startsWith("www.") ? normalizedHostname.slice(4) : null;
+            const isListed = state.domainSet.has(normalizedHostname) || bareHostname !== null && state.domainSet.has(bareHostname);
+
+            if (isListed) {
+                console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
+                CacheManager.addUrlToBlockedCache(urlObject, cacheName, descriptor.resultType);
+                callback(new ProtectionResult(urlString, descriptor.resultType, origin));
+                return;
+            }
+
+            // Hostname was not found in the list; cache it as allowed
+            console.debug(`[${shortName}] Added URL to allowed cache: ${urlString}`);
+            CacheManager.addUrlToAllowedCache(urlObject, cacheName);
+            callback(new ProtectionResult(urlString, ProtectionResult.ResultType.ALLOWED, origin));
+        };
+
         // Call all the check functions asynchronously
         Settings.get(settings => {
             // Official Partners
@@ -1387,6 +1442,11 @@ const BrowserProtection = (() => {
             checkUrlWithControlDFamily(settings);
             checkUrlWithQuad9(settings);
             checkUrlWithSwitchCH(settings);
+
+            // Local Filtering Lists
+            for (const descriptor of LocalLists.descriptors) {
+                checkUrlWithLocalList(descriptor, settings);
+            }
         });
 
         // Cleans up controllers for tabs that no longer exist
@@ -1395,6 +1455,6 @@ const BrowserProtection = (() => {
 
     return Object.freeze({
         abandonPendingRequests,
-        checkIfUrlIsMalicious
+        checkIfUrlIsMalicious,
     });
 })();

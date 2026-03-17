@@ -86,6 +86,9 @@ ProtectionResult.Origin = Object.freeze({
     CONTROL_D_FAMILY: 12,
     QUAD9: 13,
     SWITCH_CH: 14,
+
+    // Local Filtering Lists
+    PHISH_DESTROY: 15,
 });
 
 ProtectionResult.FullName = Object.freeze({
@@ -108,6 +111,9 @@ ProtectionResult.FullName = Object.freeze({
     12: "Control D Family DNS",
     13: "Quad9 Security DNS",
     14: "Switch.ch Security DNS",
+
+    // Local Filtering Lists
+    15: "PhishDestroy Feed",
 });
 
 ProtectionResult.ShortName = Object.freeze({
@@ -130,6 +136,9 @@ ProtectionResult.ShortName = Object.freeze({
     12: "Control D Family",
     13: "Quad9",
     14: "Switch.ch",
+
+    // Local Filtering Lists
+    15: "PhishDestroy",
 });
 
 ProtectionResult.CacheName = Object.freeze({
@@ -152,4 +161,7 @@ ProtectionResult.CacheName = Object.freeze({
     12: "controlDFamily",
     13: "quad9",
     14: "switchCH",
+
+    // Local Filtering Lists
+    15: "phishDestroy",
 });
