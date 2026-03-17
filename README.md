@@ -89,9 +89,10 @@ If the website is malicious, Osprey will block the page and display a warning:
 
 From this page, you can report the website as safe, always ignore the website, go back to safety, and continue
 anyway. By default, Osprey creates a browser notification for blocked pages that
-[you can toggle on and off](https://github.com/Foulest/Osprey/wiki/Toggling-Notifications) using the context menu.
-You can hide the continue and report buttons, lock down the protection options, and even hide the context menu
-entirely using [the system policies](https://github.com/Foulest/Osprey/wiki/Setting-Up-System-Policies).
+[you can toggle on and off](https://github.com/OspreyProject/Osprey/wiki/Using-the-Context-Menu#enable-notifications)
+using the context menu. You can hide the continue and report buttons, lock down the protection options, and even hide
+the context menu entirely
+using [the system policies](https://github.com/Foulest/Osprey/wiki/Setting-Up-System-Policies).
 
 ## Settings
 
