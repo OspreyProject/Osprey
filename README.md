@@ -98,8 +98,8 @@ using [the system policies](https://github.com/Foulest/Osprey/wiki/Setting-Up-Sy
 
 You can configure the extension's protection options in the settings:
 
-![Osprey Settings (Page 1)](https://i.imgur.com/2W1xdYF.png)
-![Osprey Settings (Page 2)](https://i.imgur.com/AqxJlEf.png)
+![Osprey Settings (Page 1)](https://i.imgur.com/sDyLcMO.png)
+![Osprey Settings (Page 2)](https://i.imgur.com/lpFyLe6.png)
 
 If you're unsure about the functions of each protection provider, **it's best to keep the default settings.**
 
@@ -123,8 +123,10 @@ The following providers are **enabled** by default:
 - [x] **[PrecisionSec Web Protection](https://precisionsec.com/?utm_source=osprey)**
 - [x] [CleanBrowsing Security DNS](https://cleanbrowsing.org/filters/?utm_source=osprey)
 - [x] [Cloudflare Security DNS](https://blog.cloudflare.com/introducing-1-1-1-1-for-families/?utm_source=osprey)
+- [x] [PhishDestroy Feed](https://phishdestroy.io/?utm_source=osprey)
+- [x] [Phishing.Database Feed](https://github.com/Phishing-Database/Phishing.Database?utm_source=osprey)
 - [x] [Quad9 Security DNS](https://quad9.net/?utm_source=osprey)
-- [x] [Switch.ch Security DNS](https://portal.switch.ch/pub/public-dns)
+- [x] [Switch.ch Security DNS](https://portal.switch.ch/pub/public-dns/?utm_source=osprey)
 
 The following providers are **disabled** by default:
 
