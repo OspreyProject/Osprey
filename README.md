@@ -46,6 +46,15 @@ possible. Check out some of our partners below:
 
 ###
 
+Osprey also relies on **local filtering lists** from the following open-source intelligence providers:
+
+<p align="center">
+  <a href="https://phishdestroy.io/?utm_source=osprey" title="PhishDestroy"><img src="https://i.imgur.com/EQt4D5g.png" alt="PhishDestroy"></a>
+  <a href="https://github.com/Phishing-Database/Phishing.Database?utm_source=osprey" title="Phishing.Database"><img src="https://i.imgur.com/J9pmfGU.png" alt="Phishing.Database"></a>
+</p>
+
+###
+
 ## Endorsements
 
 Osprey is **endorsed** by several well-known organizations that recommend the extension for improved browser protection.
