@@ -165,6 +165,15 @@ const BrowserProtection = (() => {
         // Make a validation request with Cloudflare before querying other providers
         // Only proceed if the domain is valid and online to avoid unnecessary requests
         if (!CacheManager.isUrlInAllowedCache(urlHostnameObject, cacheName)) {
+
+            // Checks if the URL is already being validated by another in-flight request
+            if (CacheManager.isUrlInProcessingCache(urlHostnameObject, cacheName)) {
+                console.debug(`[${shortName}] URL is already processing: ${urlString}`);
+                return;
+            }
+
+            // Adds the URL to the processing cache to prevent duplicate validation requests
+            CacheManager.addUrlToProcessingCache(urlHostnameObject, cacheName, tabId);
             console.debug(`[${shortName}] URL is not in allowed cache, validating with non-filtering resolver: ${urlHostname}`);
 
             try {
@@ -187,16 +196,20 @@ const BrowserProtection = (() => {
                     if (Status === 0 && Answer && Answer.length > 0) {
                         console.debug(`[${shortName}] Response status is ${Status}; adding to allowed cache...`);
                         CacheManager.addUrlToAllowedCache(urlHostnameObject, cacheName);
+                        CacheManager.removeUrlFromProcessingCache(urlHostnameObject, cacheName);
                     } else {
                         console.debug(`[${shortName}] Domain appears to be offline (${urlHostname})`);
+                        CacheManager.removeUrlFromProcessingCache(urlHostnameObject, cacheName);
                         return;
                     }
                 } else {
                     console.warn(`[${shortName}] Invalid resolver response received: ${nonFilteringResponse.ok} - ${validContentType}`);
+                    CacheManager.removeUrlFromProcessingCache(urlHostnameObject, cacheName);
                     return;
                 }
             } catch (error) {
                 console.debug(`[${shortName}] Failed to validate domain '${urlString}': ${error}`);
+                CacheManager.removeUrlFromProcessingCache(urlHostnameObject, cacheName);
                 return;
             }
         }
