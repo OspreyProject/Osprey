@@ -46,6 +46,8 @@ possible. Check out some of our partners below:
 
 ###
 
+## Local Filtering Lists
+
 Osprey also relies on **local filtering lists** from the following open-source intelligence providers:
 
 <p align="center">
