@@ -230,28 +230,28 @@ const BrowserProtection = (() => {
             const cacheName = ProtectionResult.CacheName[origin];
 
             // Checks if the URL is in the allowed cache
-            if (CacheManager.isUrlInAllowedCache(urlObject, cacheName)) {
+            if (CacheManager.isUrlInAllowedCache(urlHostnameObject, cacheName)) {
                 console.debug(`[${shortName}] URL is already allowed: ${urlString}`);
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.KNOWN_SAFE, origin));
                 return;
             }
 
             // Checks if the URL is in the blocked cache
-            if (CacheManager.isUrlInBlockedCache(urlObject, cacheName)) {
+            if (CacheManager.isUrlInBlockedCache(urlHostnameObject, cacheName)) {
                 console.debug(`[${shortName}] URL is already blocked: ${urlString}`);
                 callback(new ProtectionResult(urlString, CacheManager.getBlockedResultType(urlString, cacheName), origin));
                 return;
             }
 
             // Checks if the URL is in the processing cache
-            if (CacheManager.isUrlInProcessingCache(urlObject, cacheName)) {
+            if (CacheManager.isUrlInProcessingCache(urlHostnameObject, cacheName)) {
                 console.debug(`[${shortName}] URL is already processing: ${urlString}`);
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.WAITING, origin));
                 return;
             }
 
             // Adds the URL to the processing cache to prevent duplicate requests
-            CacheManager.addUrlToProcessingCache(urlObject, cacheName, tabId);
+            CacheManager.addUrlToProcessingCache(urlHostnameObject, cacheName, tabId);
 
             const filteringURL = `https://dns.adguard-dns.com/dns-query?dns=${encodedDNSQuery}`;
 
@@ -286,7 +286,7 @@ const BrowserProtection = (() => {
                     if (answer.type === DNSMessage.RRType.A && typeof answer.rdata === "string" &&
                         DNSMessage.normalizeName(answer.rdata) === "94.140.14.33") {
                         console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
-                        CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
+                        CacheManager.addUrlToBlockedCache(urlHostnameObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
                         callback(new ProtectionResult(urlString, ProtectionResult.ResultType.MALICIOUS, origin));
                         return;
                     }
@@ -294,7 +294,7 @@ const BrowserProtection = (() => {
 
                 // Otherwise, the domain is either invalid or not blocked
                 console.debug(`[${shortName}] Added URL to allowed cache: ${urlString}`);
-                CacheManager.addUrlToAllowedCache(urlObject, cacheName);
+                CacheManager.addUrlToAllowedCache(urlHostnameObject, cacheName);
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.ALLOWED, origin));
             } catch (error) {
                 console.debug(`[${shortName}] Failed to check URL ${urlString}: ${error}`);
@@ -318,28 +318,28 @@ const BrowserProtection = (() => {
             const cacheName = ProtectionResult.CacheName[origin];
 
             // Checks if the URL is in the allowed cache
-            if (CacheManager.isUrlInAllowedCache(urlObject, cacheName)) {
+            if (CacheManager.isUrlInAllowedCache(urlHostnameObject, cacheName)) {
                 console.debug(`[${shortName}] URL is already allowed: ${urlString}`);
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.KNOWN_SAFE, origin));
                 return;
             }
 
             // Checks if the URL is in the blocked cache
-            if (CacheManager.isUrlInBlockedCache(urlObject, cacheName)) {
+            if (CacheManager.isUrlInBlockedCache(urlHostnameObject, cacheName)) {
                 console.debug(`[${shortName}] URL is already blocked: ${urlString}`);
                 callback(new ProtectionResult(urlString, CacheManager.getBlockedResultType(urlString, cacheName), origin));
                 return;
             }
 
             // Checks if the URL is in the processing cache
-            if (CacheManager.isUrlInProcessingCache(urlObject, cacheName)) {
+            if (CacheManager.isUrlInProcessingCache(urlHostnameObject, cacheName)) {
                 console.debug(`[${shortName}] URL is already processing: ${urlString}`);
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.WAITING, origin));
                 return;
             }
 
             // Adds the URL to the processing cache to prevent duplicate requests
-            CacheManager.addUrlToProcessingCache(urlObject, cacheName, tabId);
+            CacheManager.addUrlToProcessingCache(urlHostnameObject, cacheName, tabId);
 
             const filteringURL = `https://family.adguard-dns.com/dns-query?dns=${encodedDNSQuery}`;
 
@@ -374,7 +374,7 @@ const BrowserProtection = (() => {
                     if (answer.type === DNSMessage.RRType.A && typeof answer.rdata === "string" &&
                         DNSMessage.normalizeName(answer.rdata) === "94.140.14.33") {
                         console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
-                        CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
+                        CacheManager.addUrlToBlockedCache(urlHostnameObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
                         callback(new ProtectionResult(urlString, ProtectionResult.ResultType.MALICIOUS, origin));
                         return;
                     }
@@ -382,7 +382,7 @@ const BrowserProtection = (() => {
                     if (answer.type === DNSMessage.RRType.A && typeof answer.rdata === "string" &&
                         DNSMessage.normalizeName(answer.rdata) === "94.140.14.35") {
                         console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
-                        CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.ADULT_CONTENT);
+                        CacheManager.addUrlToBlockedCache(urlHostnameObject, cacheName, ProtectionResult.ResultType.ADULT_CONTENT);
                         callback(new ProtectionResult(urlString, ProtectionResult.ResultType.ADULT_CONTENT, origin));
                         return;
                     }
@@ -390,7 +390,7 @@ const BrowserProtection = (() => {
 
                 // Otherwise, the domain is either invalid or not blocked
                 console.debug(`[${shortName}] Added URL to allowed cache: ${urlString}`);
-                CacheManager.addUrlToAllowedCache(urlObject, cacheName);
+                CacheManager.addUrlToAllowedCache(urlHostnameObject, cacheName);
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.ALLOWED, origin));
             } catch (error) {
                 console.debug(`[${shortName}] Failed to check URL ${urlString}: ${error}`);
@@ -626,28 +626,28 @@ const BrowserProtection = (() => {
             const cacheName = ProtectionResult.CacheName[origin];
 
             // Checks if the URL is in the allowed cache
-            if (CacheManager.isUrlInAllowedCache(urlObject, cacheName)) {
+            if (CacheManager.isUrlInAllowedCache(urlHostnameObject, cacheName)) {
                 console.debug(`[${shortName}] URL is already allowed: ${urlString}`);
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.KNOWN_SAFE, origin));
                 return;
             }
 
             // Checks if the URL is in the blocked cache
-            if (CacheManager.isUrlInBlockedCache(urlObject, cacheName)) {
+            if (CacheManager.isUrlInBlockedCache(urlHostnameObject, cacheName)) {
                 console.debug(`[${shortName}] URL is already blocked: ${urlString}`);
                 callback(new ProtectionResult(urlString, CacheManager.getBlockedResultType(urlString, cacheName), origin));
                 return;
             }
 
             // Checks if the URL is in the processing cache
-            if (CacheManager.isUrlInProcessingCache(urlObject, cacheName)) {
+            if (CacheManager.isUrlInProcessingCache(urlHostnameObject, cacheName)) {
                 console.debug(`[${shortName}] URL is already processing: ${urlString}`);
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.WAITING, origin));
                 return;
             }
 
             // Adds the URL to the processing cache to prevent duplicate requests
-            CacheManager.addUrlToProcessingCache(urlObject, cacheName, tabId);
+            CacheManager.addUrlToProcessingCache(urlHostnameObject, cacheName, tabId);
 
             const filteringURL = `https://dns.cert.ee/dns-query?dns=${encodedDNSQuery}`;
 
@@ -682,7 +682,7 @@ const BrowserProtection = (() => {
                     if (answer.type === DNSMessage.RRType.A && typeof answer.rdata === "string" &&
                         DNSMessage.normalizeName(answer.rdata) === "46.226.143.58") {
                         console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
-                        CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
+                        CacheManager.addUrlToBlockedCache(urlHostnameObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
                         callback(new ProtectionResult(urlString, ProtectionResult.ResultType.MALICIOUS, origin));
                         return;
                     }
@@ -690,7 +690,7 @@ const BrowserProtection = (() => {
 
                 // Otherwise, the domain is either invalid or not blocked
                 console.debug(`[${shortName}] Added URL to allowed cache: ${urlString}`);
-                CacheManager.addUrlToAllowedCache(urlObject, cacheName);
+                CacheManager.addUrlToAllowedCache(urlHostnameObject, cacheName);
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.ALLOWED, origin));
             } catch (error) {
                 console.debug(`[${shortName}] Failed to check URL ${urlString}: ${error}`);
@@ -714,28 +714,28 @@ const BrowserProtection = (() => {
             const cacheName = ProtectionResult.CacheName[origin];
 
             // Checks if the URL is in the allowed cache
-            if (CacheManager.isUrlInAllowedCache(urlObject, cacheName)) {
+            if (CacheManager.isUrlInAllowedCache(urlHostnameObject, cacheName)) {
                 console.debug(`[${shortName}] URL is already allowed: ${urlString}`);
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.KNOWN_SAFE, origin));
                 return;
             }
 
             // Checks if the URL is in the blocked cache
-            if (CacheManager.isUrlInBlockedCache(urlObject, cacheName)) {
+            if (CacheManager.isUrlInBlockedCache(urlHostnameObject, cacheName)) {
                 console.debug(`[${shortName}] URL is already blocked: ${urlString}`);
                 callback(new ProtectionResult(urlString, CacheManager.getBlockedResultType(urlString, cacheName), origin));
                 return;
             }
 
             // Checks if the URL is in the processing cache
-            if (CacheManager.isUrlInProcessingCache(urlObject, cacheName)) {
+            if (CacheManager.isUrlInProcessingCache(urlHostnameObject, cacheName)) {
                 console.debug(`[${shortName}] URL is already processing: ${urlString}`);
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.WAITING, origin));
                 return;
             }
 
             // Adds the URL to the processing cache to prevent duplicate requests
-            CacheManager.addUrlToProcessingCache(urlObject, cacheName, tabId);
+            CacheManager.addUrlToProcessingCache(urlHostnameObject, cacheName, tabId);
 
             const filteringURL = `https://doh.cleanbrowsing.org/doh/security-filter/dns-query?dns=${encodedDNSQuery}`;
 
@@ -767,14 +767,14 @@ const BrowserProtection = (() => {
                 // Checks if the domain is blocked
                 if (filteringData.length >= 4 && filteringData[3] === 131) {
                     console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
-                    CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
+                    CacheManager.addUrlToBlockedCache(urlHostnameObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.MALICIOUS, origin));
                     return;
                 }
 
                 // Otherwise, the domain is either invalid or not blocked
                 console.debug(`[${shortName}] Added URL to allowed cache: ${urlString}`);
-                CacheManager.addUrlToAllowedCache(urlObject, cacheName);
+                CacheManager.addUrlToAllowedCache(urlHostnameObject, cacheName);
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.ALLOWED, origin));
             } catch (error) {
                 console.debug(`[${shortName}] Failed to check URL ${urlString}: ${error}`);
@@ -798,28 +798,28 @@ const BrowserProtection = (() => {
             const cacheName = ProtectionResult.CacheName[origin];
 
             // Checks if the URL is in the allowed cache
-            if (CacheManager.isUrlInAllowedCache(urlObject, cacheName)) {
+            if (CacheManager.isUrlInAllowedCache(urlHostnameObject, cacheName)) {
                 console.debug(`[${shortName}] URL is already allowed: ${urlString}`);
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.KNOWN_SAFE, origin));
                 return;
             }
 
             // Checks if the URL is in the blocked cache
-            if (CacheManager.isUrlInBlockedCache(urlObject, cacheName)) {
+            if (CacheManager.isUrlInBlockedCache(urlHostnameObject, cacheName)) {
                 console.debug(`[${shortName}] URL is already blocked: ${urlString}`);
                 callback(new ProtectionResult(urlString, CacheManager.getBlockedResultType(urlString, cacheName), origin));
                 return;
             }
 
             // Checks if the URL is in the processing cache
-            if (CacheManager.isUrlInProcessingCache(urlObject, cacheName)) {
+            if (CacheManager.isUrlInProcessingCache(urlHostnameObject, cacheName)) {
                 console.debug(`[${shortName}] URL is already processing: ${urlString}`);
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.WAITING, origin));
                 return;
             }
 
             // Adds the URL to the processing cache to prevent duplicate requests
-            CacheManager.addUrlToProcessingCache(urlObject, cacheName, tabId);
+            CacheManager.addUrlToProcessingCache(urlHostnameObject, cacheName, tabId);
 
             const filteringURL = `https://doh.cleanbrowsing.org/doh/adult-filter/dns-query?dns=${encodedDNSQuery}`;
 
@@ -851,14 +851,14 @@ const BrowserProtection = (() => {
                 // Checks if the domain is blocked
                 if (filteringData.length >= 4 && filteringData[3] === 131) {
                     console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
-                    CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.ADULT_CONTENT);
+                    CacheManager.addUrlToBlockedCache(urlHostnameObject, cacheName, ProtectionResult.ResultType.ADULT_CONTENT);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.ADULT_CONTENT, origin));
                     return;
                 }
 
                 // Otherwise, the domain is either invalid or not blocked
                 console.debug(`[${shortName}] Added URL to allowed cache: ${urlString}`);
-                CacheManager.addUrlToAllowedCache(urlObject, cacheName);
+                CacheManager.addUrlToAllowedCache(urlHostnameObject, cacheName);
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.ALLOWED, origin));
             } catch (error) {
                 console.debug(`[${shortName}] Failed to check URL ${urlString}: ${error}`);
@@ -882,28 +882,28 @@ const BrowserProtection = (() => {
             const cacheName = ProtectionResult.CacheName[origin];
 
             // Checks if the URL is in the allowed cache
-            if (CacheManager.isUrlInAllowedCache(urlObject, cacheName)) {
+            if (CacheManager.isUrlInAllowedCache(urlHostnameObject, cacheName)) {
                 console.debug(`[${shortName}] URL is already allowed: ${urlString}`);
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.KNOWN_SAFE, origin));
                 return;
             }
 
             // Checks if the URL is in the blocked cache
-            if (CacheManager.isUrlInBlockedCache(urlObject, cacheName)) {
+            if (CacheManager.isUrlInBlockedCache(urlHostnameObject, cacheName)) {
                 console.debug(`[${shortName}] URL is already blocked: ${urlString}`);
                 callback(new ProtectionResult(urlString, CacheManager.getBlockedResultType(urlString, cacheName), origin));
                 return;
             }
 
             // Checks if the URL is in the processing cache
-            if (CacheManager.isUrlInProcessingCache(urlObject, cacheName)) {
+            if (CacheManager.isUrlInProcessingCache(urlHostnameObject, cacheName)) {
                 console.debug(`[${shortName}] URL is already processing: ${urlString}`);
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.WAITING, origin));
                 return;
             }
 
             // Adds the URL to the processing cache to prevent duplicate requests
-            CacheManager.addUrlToProcessingCache(urlObject, cacheName, tabId);
+            CacheManager.addUrlToProcessingCache(urlHostnameObject, cacheName, tabId);
 
             const filteringURL = `https://security.cloudflare-dns.com/dns-query?name=${encodedURLHostname}`;
 
@@ -935,14 +935,14 @@ const BrowserProtection = (() => {
                 // Checks if the domain is blocked
                 if (filteringData?.Comment && typeof filteringData.Comment === 'string' && filteringData.Comment.includes('EDE(16): Censored')) {
                     console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
-                    CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
+                    CacheManager.addUrlToBlockedCache(urlHostnameObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.MALICIOUS, origin));
                     return;
                 }
 
                 // Otherwise, the domain is either invalid or not blocked
                 console.debug(`[${shortName}] Added URL to allowed cache: ${urlString}`);
-                CacheManager.addUrlToAllowedCache(urlObject, cacheName);
+                CacheManager.addUrlToAllowedCache(urlHostnameObject, cacheName);
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.ALLOWED, origin));
             } catch (error) {
                 console.debug(`[${shortName}] Failed to check URL ${urlString}: ${error}`);
@@ -966,28 +966,28 @@ const BrowserProtection = (() => {
             const cacheName = ProtectionResult.CacheName[origin];
 
             // Checks if the URL is in the allowed cache
-            if (CacheManager.isUrlInAllowedCache(urlObject, cacheName)) {
+            if (CacheManager.isUrlInAllowedCache(urlHostnameObject, cacheName)) {
                 console.debug(`[${shortName}] URL is already allowed: ${urlString}`);
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.KNOWN_SAFE, origin));
                 return;
             }
 
             // Checks if the URL is in the blocked cache
-            if (CacheManager.isUrlInBlockedCache(urlObject, cacheName)) {
+            if (CacheManager.isUrlInBlockedCache(urlHostnameObject, cacheName)) {
                 console.debug(`[${shortName}] URL is already blocked: ${urlString}`);
                 callback(new ProtectionResult(urlString, CacheManager.getBlockedResultType(urlString, cacheName), origin));
                 return;
             }
 
             // Checks if the URL is in the processing cache
-            if (CacheManager.isUrlInProcessingCache(urlObject, cacheName)) {
+            if (CacheManager.isUrlInProcessingCache(urlHostnameObject, cacheName)) {
                 console.debug(`[${shortName}] URL is already processing: ${urlString}`);
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.WAITING, origin));
                 return;
             }
 
             // Adds the URL to the processing cache to prevent duplicate requests
-            CacheManager.addUrlToProcessingCache(urlObject, cacheName, tabId);
+            CacheManager.addUrlToProcessingCache(urlHostnameObject, cacheName, tabId);
 
             const filteringURL = `https://family.cloudflare-dns.com/dns-query?name=${encodedURLHostname}`;
 
@@ -1019,14 +1019,14 @@ const BrowserProtection = (() => {
                 // Checks if the domain is blocked
                 if (filteringData?.Comment && typeof filteringData.Comment === 'string' && filteringData.Comment.includes('EDE(16): Censored')) {
                     console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
-                    CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.ADULT_CONTENT);
+                    CacheManager.addUrlToBlockedCache(urlHostnameObject, cacheName, ProtectionResult.ResultType.ADULT_CONTENT);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.ADULT_CONTENT, origin));
                     return;
                 }
 
                 // Otherwise, the domain is either invalid or not blocked
                 console.debug(`[${shortName}] Added URL to allowed cache: ${urlString}`);
-                CacheManager.addUrlToAllowedCache(urlObject, cacheName);
+                CacheManager.addUrlToAllowedCache(urlHostnameObject, cacheName);
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.ALLOWED, origin));
             } catch (error) {
                 console.debug(`[${shortName}] Failed to check URL ${urlString}: ${error}`);
@@ -1050,28 +1050,28 @@ const BrowserProtection = (() => {
             const cacheName = ProtectionResult.CacheName[origin];
 
             // Checks if the URL is in the allowed cache
-            if (CacheManager.isUrlInAllowedCache(urlObject, cacheName)) {
+            if (CacheManager.isUrlInAllowedCache(urlHostnameObject, cacheName)) {
                 console.debug(`[${shortName}] URL is already allowed: ${urlString}`);
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.KNOWN_SAFE, origin));
                 return;
             }
 
             // Checks if the URL is in the blocked cache
-            if (CacheManager.isUrlInBlockedCache(urlObject, cacheName)) {
+            if (CacheManager.isUrlInBlockedCache(urlHostnameObject, cacheName)) {
                 console.debug(`[${shortName}] URL is already blocked: ${urlString}`);
                 callback(new ProtectionResult(urlString, CacheManager.getBlockedResultType(urlString, cacheName), origin));
                 return;
             }
 
             // Checks if the URL is in the processing cache
-            if (CacheManager.isUrlInProcessingCache(urlObject, cacheName)) {
+            if (CacheManager.isUrlInProcessingCache(urlHostnameObject, cacheName)) {
                 console.debug(`[${shortName}] URL is already processing: ${urlString}`);
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.WAITING, origin));
                 return;
             }
 
             // Adds the URL to the processing cache to prevent duplicate requests
-            CacheManager.addUrlToProcessingCache(urlObject, cacheName, tabId);
+            CacheManager.addUrlToProcessingCache(urlHostnameObject, cacheName, tabId);
 
             const filteringURL = `https://freedns.controld.com/no-malware-typo?name=${encodedURLHostname}`;
 
@@ -1106,7 +1106,7 @@ const BrowserProtection = (() => {
                     if (answer.type === DNSMessage.RRType.A && typeof answer.rdata === "string" &&
                         DNSMessage.normalizeName(answer.rdata) === "0.0.0.0") {
                         console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
-                        CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
+                        CacheManager.addUrlToBlockedCache(urlHostnameObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
                         callback(new ProtectionResult(urlString, ProtectionResult.ResultType.MALICIOUS, origin));
                         return;
                     }
@@ -1114,7 +1114,7 @@ const BrowserProtection = (() => {
 
                 // Otherwise, the domain is either invalid or not blocked
                 console.debug(`[${shortName}] Added URL to allowed cache: ${urlString}`);
-                CacheManager.addUrlToAllowedCache(urlObject, cacheName);
+                CacheManager.addUrlToAllowedCache(urlHostnameObject, cacheName);
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.ALLOWED, origin));
             } catch (error) {
                 console.debug(`[${shortName}] Failed to check URL ${urlString}: ${error}`);
@@ -1138,28 +1138,28 @@ const BrowserProtection = (() => {
             const cacheName = ProtectionResult.CacheName[origin];
 
             // Checks if the URL is in the allowed cache
-            if (CacheManager.isUrlInAllowedCache(urlObject, cacheName)) {
+            if (CacheManager.isUrlInAllowedCache(urlHostnameObject, cacheName)) {
                 console.debug(`[${shortName}] URL is already allowed: ${urlString}`);
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.KNOWN_SAFE, origin));
                 return;
             }
 
             // Checks if the URL is in the blocked cache
-            if (CacheManager.isUrlInBlockedCache(urlObject, cacheName)) {
+            if (CacheManager.isUrlInBlockedCache(urlHostnameObject, cacheName)) {
                 console.debug(`[${shortName}] URL is already blocked: ${urlString}`);
                 callback(new ProtectionResult(urlString, CacheManager.getBlockedResultType(urlString, cacheName), origin));
                 return;
             }
 
             // Checks if the URL is in the processing cache
-            if (CacheManager.isUrlInProcessingCache(urlObject, cacheName)) {
+            if (CacheManager.isUrlInProcessingCache(urlHostnameObject, cacheName)) {
                 console.debug(`[${shortName}] URL is already processing: ${urlString}`);
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.WAITING, origin));
                 return;
             }
 
             // Adds the URL to the processing cache to prevent duplicate requests
-            CacheManager.addUrlToProcessingCache(urlObject, cacheName, tabId);
+            CacheManager.addUrlToProcessingCache(urlHostnameObject, cacheName, tabId);
 
             const filteringURL = `https://freedns.controld.com/no-drugs-porn-gambling-malware-typo?name=${encodedURLHostname}`;
 
@@ -1194,7 +1194,7 @@ const BrowserProtection = (() => {
                     if (answer.type === DNSMessage.RRType.A && typeof answer.rdata === "string" &&
                         DNSMessage.normalizeName(answer.rdata) === "0.0.0.0") {
                         console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
-                        CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.ADULT_CONTENT);
+                        CacheManager.addUrlToBlockedCache(urlHostnameObject, cacheName, ProtectionResult.ResultType.ADULT_CONTENT);
                         callback(new ProtectionResult(urlString, ProtectionResult.ResultType.ADULT_CONTENT, origin));
                         return;
                     }
@@ -1202,7 +1202,7 @@ const BrowserProtection = (() => {
 
                 // Otherwise, the domain is either invalid or not blocked
                 console.debug(`[${shortName}] Added URL to allowed cache: ${urlString}`);
-                CacheManager.addUrlToAllowedCache(urlObject, cacheName);
+                CacheManager.addUrlToAllowedCache(urlHostnameObject, cacheName);
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.ALLOWED, origin));
             } catch (error) {
                 console.debug(`[${shortName}] Failed to check URL ${urlString}: ${error}`);
@@ -1226,28 +1226,28 @@ const BrowserProtection = (() => {
             const cacheName = ProtectionResult.CacheName[origin];
 
             // Checks if the URL is in the allowed cache
-            if (CacheManager.isUrlInAllowedCache(urlObject, cacheName)) {
+            if (CacheManager.isUrlInAllowedCache(urlHostnameObject, cacheName)) {
                 console.debug(`[${shortName}] URL is already allowed: ${urlString}`);
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.KNOWN_SAFE, origin));
                 return;
             }
 
             // Checks if the URL is in the blocked cache
-            if (CacheManager.isUrlInBlockedCache(urlObject, cacheName)) {
+            if (CacheManager.isUrlInBlockedCache(urlHostnameObject, cacheName)) {
                 console.debug(`[${shortName}] URL is already blocked: ${urlString}`);
                 callback(new ProtectionResult(urlString, CacheManager.getBlockedResultType(urlString, cacheName), origin));
                 return;
             }
 
             // Checks if the URL is in the processing cache
-            if (CacheManager.isUrlInProcessingCache(urlObject, cacheName)) {
+            if (CacheManager.isUrlInProcessingCache(urlHostnameObject, cacheName)) {
                 console.debug(`[${shortName}] URL is already processing: ${urlString}`);
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.WAITING, origin));
                 return;
             }
 
             // Adds the URL to the processing cache to prevent duplicate requests
-            CacheManager.addUrlToProcessingCache(urlObject, cacheName, tabId);
+            CacheManager.addUrlToProcessingCache(urlHostnameObject, cacheName, tabId);
 
             const filteringURL = `https://dns.quad9.net/dns-query?dns=${encodedDNSQuery}`;
 
@@ -1279,14 +1279,14 @@ const BrowserProtection = (() => {
                 // Checks if the domain is blocked
                 if (filteringData.length >= 4 && filteringData[3] === 3) {
                     console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
-                    CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
+                    CacheManager.addUrlToBlockedCache(urlHostnameObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.MALICIOUS, origin));
                     return;
                 }
 
                 // Otherwise, the domain is either invalid or not blocked
                 console.debug(`[${shortName}] Added URL to allowed cache: ${urlString}`);
-                CacheManager.addUrlToAllowedCache(urlObject, cacheName);
+                CacheManager.addUrlToAllowedCache(urlHostnameObject, cacheName);
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.ALLOWED, origin));
             } catch (error) {
                 console.debug(`[${shortName}] Failed to check URL ${urlString}: ${error}`);
@@ -1310,28 +1310,28 @@ const BrowserProtection = (() => {
             const cacheName = ProtectionResult.CacheName[origin];
 
             // Checks if the URL is in the allowed cache
-            if (CacheManager.isUrlInAllowedCache(urlObject, cacheName)) {
+            if (CacheManager.isUrlInAllowedCache(urlHostnameObject, cacheName)) {
                 console.debug(`[${shortName}] URL is already allowed: ${urlString}`);
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.KNOWN_SAFE, origin));
                 return;
             }
 
             // Checks if the URL is in the blocked cache
-            if (CacheManager.isUrlInBlockedCache(urlObject, cacheName)) {
+            if (CacheManager.isUrlInBlockedCache(urlHostnameObject, cacheName)) {
                 console.debug(`[${shortName}] URL is already blocked: ${urlString}`);
                 callback(new ProtectionResult(urlString, CacheManager.getBlockedResultType(urlString, cacheName), origin));
                 return;
             }
 
             // Checks if the URL is in the processing cache
-            if (CacheManager.isUrlInProcessingCache(urlObject, cacheName)) {
+            if (CacheManager.isUrlInProcessingCache(urlHostnameObject, cacheName)) {
                 console.debug(`[${shortName}] URL is already processing: ${urlString}`);
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.WAITING, origin));
                 return;
             }
 
             // Adds the URL to the processing cache to prevent duplicate requests
-            CacheManager.addUrlToProcessingCache(urlObject, cacheName, tabId);
+            CacheManager.addUrlToProcessingCache(urlHostnameObject, cacheName, tabId);
 
             const filteringURL = `https://dns.switch.ch/dns-query?dns=${encodedDNSQuery}`;
 
@@ -1366,7 +1366,7 @@ const BrowserProtection = (() => {
                     if (answer.type === DNSMessage.RRType.CNAME && typeof answer.rdata === "string" &&
                         DNSMessage.normalizeName(answer.rdata) === "landingpage.ph.rpz.switch.ch") {
                         console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
-                        CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
+                        CacheManager.addUrlToBlockedCache(urlHostnameObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
                         callback(new ProtectionResult(urlString, ProtectionResult.ResultType.MALICIOUS, origin));
                         return;
                     }
@@ -1374,7 +1374,7 @@ const BrowserProtection = (() => {
 
                 // Otherwise, the domain is either invalid or not blocked
                 console.debug(`[${shortName}] Added URL to allowed cache: ${urlString}`);
-                CacheManager.addUrlToAllowedCache(urlObject, cacheName);
+                CacheManager.addUrlToAllowedCache(urlHostnameObject, cacheName);
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.ALLOWED, origin));
             } catch (error) {
                 console.debug(`[${shortName}] Failed to check URL ${urlString}: ${error}`);
