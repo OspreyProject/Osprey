@@ -51,6 +51,7 @@ possible. Check out some of our partners below:
 Osprey also relies on **local filtering lists** from the following open-source intelligence providers:
 
 ###
+###
 
 <p align="center">
   <a href="https://phishdestroy.io/?utm_source=osprey" title="PhishDestroy"><img src="https://i.imgur.com/Cic0wBZ.png" alt="PhishDestroy"></a>
