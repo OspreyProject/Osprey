@@ -24,6 +24,9 @@
     let supportsManagedPolicies = true;
     let redirectToGoogle = false;
 
+    // Registers the page to open when the extension is uninstalled
+    browserAPI.runtime.setUninstallURL("https://osprey.ac/uninstall");
+
     // Import necessary scripts for functionality
     try {
         importScripts(
