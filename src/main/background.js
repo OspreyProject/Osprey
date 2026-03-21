@@ -263,12 +263,6 @@
 
             let {hostname, protocol} = urlObject;
 
-            // Checks if the URL has a href
-            if (!urlObject.href || urlObject.href.length === 0) {
-                console.debug(`URL has no href: ${urlString}; bailing out.`);
-                return;
-            }
-
             // Checks if the URL has a protocol
             if (!protocol || protocol.length === 0) {
                 console.debug(`URL has no protocol: ${urlString}; bailing out.`);
@@ -450,7 +444,7 @@
                                 }
 
                                 // Checks if the tab or tab.url is undefined
-                                if (tab?.url === undefined) {
+                                if (tab.url === undefined) {
                                     console.debug(`tabs.get(${tabId}) failed '${browserAPI.runtime.lastError?.message}'; bailing out.`);
                                     return;
                                 }
@@ -470,7 +464,7 @@
 
                                 if (targetUrl) {
                                     const frameZeroUrl = getFrameZeroUrl(tabId);
-                                    const blockPageUrl = UrlHelpers.getBlockPageUrl(result, frameZeroUrl === undefined ? result.url : frameZeroUrl);
+                                    const blockPageUrl = UrlHelpers.getBlockPageUrl(result, frameZeroUrl || result.url);
                                     const expectedPrefix = browserAPI.runtime.getURL("pages/warning/");
 
                                     // Validates the generated block page URL to ensure it starts with the expected prefix
@@ -517,15 +511,12 @@
                             appendResultOrigin(tabId, result.origin);
                         }
 
-                        const blockedCounterDelay = 150;
-
                         // This timeout is needed to prevent visual artifacts on page load
                         setTimeout(() => {
                             const resultOrigins = getResultOrigins(tabId);
-                            const fullCount = (Array.isArray(resultOrigins) ? resultOrigins.length : 0) + 1;
-                            const othersCount = Array.isArray(resultOrigins) ? resultOrigins.length : 0;
+                            const fullCount = resultOrigins.length + 1;
+                            const othersCount = resultOrigins.length;
 
-                            // If the page URL is the block page, send (count - 1)
                             browserAPI.tabs.get(tabId, tab => {
                                 // Checks if the tab still exists
                                 if (browserAPI.runtime.lastError || !tab) {
@@ -534,7 +525,7 @@
                                 }
 
                                 // Checks if the tab or tab.url is undefined
-                                if (tab?.url === undefined) {
+                                if (tab.url === undefined) {
                                     console.debug(`tabs.get(${tabId}) failed '${browserAPI.runtime.lastError?.message}'; bailing out.`);
                                     return;
                                 }
@@ -548,11 +539,11 @@
                                 browserAPI.tabs.sendMessage(tabId, {
                                     messageType: Messages.BLOCKED_COUNTER_PONG,
                                     count: othersCount,
-                                    systems: resultOrigins || []
+                                    systems: resultOrigins
                                 }).catch(() => {
                                 });
                             });
-                        }, blockedCounterDelay);
+                        }, 150);
                     }
                 });
             });
@@ -617,7 +608,7 @@
             }
 
             // Gathers the policy values for updating the context menu
-            const policyKeys = [
+            const contextMenuPolicyKeys = [
                 "DisableNotifications",
                 "DisableClearAllowedWebsites",
                 "DisableReportWebsiteAsMalicious",
@@ -625,7 +616,7 @@
                 "DisableRestoreDefaultSettings"
             ];
 
-            browserAPI.storage.managed.get(policyKeys, policies => {
+            browserAPI.storage.managed.get(contextMenuPolicyKeys, policies => {
                 let updatedSettings = {};
 
                 // Checks if the enable notifications button should be disabled
@@ -651,7 +642,7 @@
                 }
 
                 // Checks if the clear allowed websites button should be disabled
-                if (policies.DisableClearAllowedWebsites !== undefined && policies.DisableClearAllowedWebsites) {
+                if (policies.DisableClearAllowedWebsites === true) {
                     contextMenuAPI.update("clearAllowedWebsites", {
                         enabled: false,
                     });
@@ -660,7 +651,7 @@
                 }
 
                 // Checks if the report website as malicious button should be disabled
-                if (policies.DisableReportWebsiteAsMalicious !== undefined && policies.DisableReportWebsiteAsMalicious) {
+                if (policies.DisableReportWebsiteAsMalicious === true) {
                     contextMenuAPI.update("reportWebsiteAsMalicious", {
                         enabled: false,
                     });
@@ -669,7 +660,7 @@
                 }
 
                 // Checks if the restore default settings button should be disabled
-                if (policies.DisableRestoreDefaultSettings !== undefined && policies.DisableRestoreDefaultSettings) {
+                if (policies.DisableRestoreDefaultSettings === true) {
                     contextMenuAPI.update("restoreDefaultSettings", {
                         enabled: false,
                     });
@@ -702,7 +693,7 @@
             let settings = {};
 
             // Checks and sets the context menu settings using the policy
-            if (policies.DisableContextMenu !== undefined && policies.DisableContextMenu === true) {
+            if (policies.DisableContextMenu === true) {
                 settings.contextMenuEnabled = false;
                 console.debug("Context menu is disabled by system policy.");
             } else {
@@ -730,7 +721,7 @@
             }
 
             // Checks and sets the continue buttons settings using the policy
-            if (policies.HideContinueButtons !== undefined && policies.HideContinueButtons === true) {
+            if (policies.HideContinueButtons === true) {
                 settings.hideContinueButtons = policies.HideContinueButtons;
                 console.debug("Continue buttons are managed by system policy.");
             } else {
@@ -738,7 +729,7 @@
             }
 
             // Checks and sets the report button settings using the policy
-            if (policies.HideReportButton !== undefined && policies.HideReportButton === true) {
+            if (policies.HideReportButton === true) {
                 settings.hideReportButton = policies.HideReportButton;
                 console.debug("Report button is managed by system policy.");
             } else {
@@ -746,7 +737,7 @@
             }
 
             // Checks and sets the lock protection options using the policy
-            if (policies.LockProtectionOptions !== undefined && policies.LockProtectionOptions === true) {
+            if (policies.LockProtectionOptions === true) {
                 settings.lockProtectionOptions = policies.LockProtectionOptions;
                 console.debug("Protection options are locked by system policy.");
             } else {
@@ -754,7 +745,7 @@
             }
 
             // Checks and sets the hide protection options using the policy
-            if (policies.HideProtectionOptions !== undefined && policies.HideProtectionOptions === true) {
+            if (policies.HideProtectionOptions === true) {
                 settings.hideProtectionOptions = policies.HideProtectionOptions;
                 console.debug("Protection options are hidden by system policy.");
             } else {
@@ -898,37 +889,35 @@
 
             const tabId = sender.tab.id;
             const resultOrigins = getResultOrigins(tabId);
-            const fullCount = (Array.isArray(resultOrigins) ? resultOrigins.length : 0) + 1;
-            const othersCount = Array.isArray(resultOrigins) ? resultOrigins.length : 0;
+            const fullCount = resultOrigins.length + 1;
+            const othersCount = resultOrigins.length;
 
             // Sets the action text to the result count
             browserAPI.action.setBadgeText({text: `${fullCount}`, tabId});
             browserAPI.action.setBadgeBackgroundColor({color: "rgb(255,75,75)", tabId});
             browserAPI.action.setBadgeTextColor({color: "white", tabId});
 
-            // If the page URL is the block page, send (count - 1)
             browserAPI.tabs.get(tabId, tab => {
                 if (browserAPI.runtime.lastError || !tab) {
                     console.debug(`Tab ${tabId} no longer exists`);
-                    return false;
+                    return;
                 }
 
-                if (!tab?.url) {
+                if (!tab.url) {
                     console.warn(`tabs.get(${tabId}) failed '${browserAPI.runtime.lastError?.message}'; bailing out.`);
-                    return false;
+                    return;
                 }
 
                 // Sends a PONG message to the content script to update the blocked counter
                 browserAPI.tabs.sendMessage(tabId, {
                     messageType: Messages.BLOCKED_COUNTER_PONG,
                     count: othersCount,
-                    systems: resultOrigins || []
+                    systems: resultOrigins
                 }).catch(() => {
                 });
 
                 // And responds to the original PING as well
-                sendResponse({count: othersCount, systems: resultOrigins || []});
-                return true;
+                sendResponse({count: othersCount, systems: resultOrigins});
             });
             return true;
         }
@@ -941,11 +930,12 @@
      * @param {number} tabId The ID of the removed tab.
      * @param {Object} removeInfo Additional information about the removed tab, including windowId and isWindowClosing.
      */
-    browserAPI.tabs.onRemoved.addListener((tabIdObject, removeInfo) => {
-        let tabId = Number(tabIdObject);
+    browserAPI.tabs.onRemoved.addListener((tabId, removeInfo) => {
+        // Cleans up controllers for tabs that no longer exist
+        BrowserProtection.cleanupTabControllers();
 
         if (!Number.isInteger(tabId) || tabId < 0) {
-            console.warn(`Invalid tabId in onRemoved event: ${tabIdObject}`);
+            console.warn(`Invalid tabId in onRemoved event: ${tabId}`);
             return;
         }
 
@@ -986,8 +976,8 @@
         }
 
         if (details.transitionQualifiers.includes("server_redirect") &&
-            (details.frameId !== 0 && details.transitionType !== "start_page") ||
-            details.frameId === 0 && details.transitionType === "link") {
+            (details.frameId !== 0 && details.transitionType !== "start_page" ||
+                details.frameId === 0 && details.transitionType === "link")) {
             console.debug(`[server_redirect] ${details.url} (frameId: ${details.frameId}) (tabId: ${details.tabId}) (type: ${details.transitionType})`);
             handleNavigation(details);
         } else if (details.transitionQualifiers.includes("client_redirect")) {
@@ -1098,16 +1088,7 @@
         if (privilegedMessageTypes.has(message.messageType)) {
             const allowedPrefix = browserAPI.runtime.getURL("pages/warning/");
 
-            // Parses the normalized sender URL object
-            let normalizedSenderUrl;
-            try {
-                normalizedSenderUrl = new URL(sender.url).href;
-            } catch {
-                console.warn(`Invalid sender URL: ${sender.url}`);
-                return;
-            }
-
-            if (!normalizedSenderUrl.startsWith(allowedPrefix)) {
+            if (!sender.url.startsWith(allowedPrefix)) {
                 console.warn(`Blocked privileged message from ${sender.url}`);
                 return;
             }
@@ -1218,22 +1199,22 @@
                 }
 
                 // Parses the report URL object
-                let reportUrl;
+                let parsedReportUrl;
                 try {
-                    reportUrl = new URL(message.reportUrl);
+                    parsedReportUrl = new URL(message.reportUrl);
                 } catch {
                     break;
                 }
 
                 // Checks if the report URL has a valid protocol
-                if (Validate.hasValidProtocol(reportUrl, validProtocols)) {
+                if (Validate.hasValidProtocol(parsedReportUrl, validProtocols)) {
                     console.debug(`Navigating to report URL: ${message.reportUrl}`);
                     browserAPI.tabs.create({url: message.reportUrl});
                     break;
                 }
 
                 // Handles mailto links separately since they are valid URLs but require special handling
-                if (reportUrl.protocol === "mailto:") {
+                if (parsedReportUrl.protocol === "mailto:") {
                     if (/^mailto:[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/.test(message.reportUrl)) {
                         console.debug(`Navigating to report URL: ${message.reportUrl}`);
                         browserAPI.tabs.create({url: message.reportUrl});
