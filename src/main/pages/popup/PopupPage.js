@@ -185,8 +185,9 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
      *
      * @param {Object} system The system object being updated.
      * @param {boolean} isOn Whether the protection is enabled for the system.
+     * @param {boolean} isLocked Whether protection options are currently locked.
      */
-    const updateProtectionStatusUI = (system, isOn) => {
+    const updateProtectionStatusUI = (system, isOn, isLocked) => {
         const elements = getSystemElements(system);
 
         if (!elements) {
@@ -198,13 +199,11 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
 
         updates.push(() => {
             if (elements.label) {
-                Settings.get(settings => {
-                    if (settings.lockProtectionOptions) {
-                        elements.label.textContent = isOn ? LangUtil.ON_LOCKED_TEXT : LangUtil.OFF_LOCKED_TEXT;
-                    } else {
-                        elements.label.textContent = isOn ? LangUtil.ON_TEXT : LangUtil.OFF_TEXT;
-                    }
-                });
+                if (isLocked) {
+                    elements.label.textContent = isOn ? LangUtil.ON_LOCKED_TEXT : LangUtil.OFF_LOCKED_TEXT;
+                } else {
+                    elements.label.textContent = isOn ? LangUtil.ON_TEXT : LangUtil.OFF_TEXT;
+                }
             } else {
                 console.warn(`'label' element not found for ${system.name} in the PopupPage DOM.`);
             }
@@ -243,7 +242,7 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
             const newState = !currentState;
 
             Settings.set({[system.name]: newState}, () => {
-                updateProtectionStatusUI(system, newState);
+                updateProtectionStatusUI(system, newState, settings.lockProtectionOptions);
 
                 browserAPI.runtime.sendMessage({
                     messageType: system.messageType,
@@ -400,8 +399,7 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
         // Loads and applies settings
         Settings.get(settings => {
             for (const system of securitySystems) {
-                const isEnabled = settings[system.name];
-                updateProtectionStatusUI(system, isEnabled);
+                updateProtectionStatusUI(system, settings[system.name], settings.lockProtectionOptions);
             }
         });
 
