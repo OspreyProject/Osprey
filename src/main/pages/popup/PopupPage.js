@@ -484,11 +484,15 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
 
 // Initializes when the DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
-    Settings.get(settings => {
-        if (settings.hideProtectionOptions) {
-            globalThis.close();
-        } else {
-            globalThis.PopupSingleton.initialize();
-        }
-    });
+    try {
+        Settings.get(settings => {
+            if (settings.hideProtectionOptions) {
+                globalThis.close();
+            } else {
+                globalThis.PopupSingleton.initialize();
+            }
+        });
+    } catch (e) {
+        console.error("PopupPage failed to initialize:", e);
+    }
 });
