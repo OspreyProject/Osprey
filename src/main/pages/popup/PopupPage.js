@@ -320,7 +320,7 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
         // Updates the version display
         if (domElements.version) {
             const {version} = manifest;
-            domElements.version.textContent += version;
+            domElements.version.textContent = LangUtil.VERSION + version;
         }
 
         // Get all elements with the class 'page'
