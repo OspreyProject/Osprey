@@ -49,8 +49,6 @@ html, body {
     margin-right: 15px;
     user-select: none;
     -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
 }
 
 .bannerText {
@@ -74,22 +72,6 @@ h3 {
     padding: 0;
     margin-top: 10px;
     margin-bottom: 15px;
-}
-
-h4 {
-    font-size: 16px;
-    color: rgb(255, 255, 255);
-    padding: 0;
-    margin-top: 0;
-    margin-bottom: 10px;
-}
-
-h5 {
-    font-size: 16px;
-    color: rgb(255, 255, 255);
-    padding: 0;
-    margin-top: 2px;
-    margin-bottom: 10px;
 }
 
 /* --------------------------------------------------
@@ -125,8 +107,6 @@ section {
     background-size: 100% 100%;
     user-select: none;
     -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
 }
 
 .switch.on {
@@ -147,6 +127,11 @@ section {
     margin-top: 5px;
     margin-bottom: 5px;
     text-decoration: none;
+}
+
+.links span {
+    font-size: 12px;
+    color: rgb(177, 181, 184);
 }
 
 #privacyPolicy:hover,
@@ -177,16 +162,12 @@ section {
     font-size: 18px;
     user-select: none;
     -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
 }
 
 .page-indicator {
     font-size: 16px;
     user-select: none;
     -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
 }
 
 .page {
@@ -223,7 +204,6 @@ section {
     position: relative;
     bottom: 2px;
     margin-right: 1px;
-    text-decoration: none;
     color: rgb(255, 215, 0);
 }
 
@@ -232,7 +212,6 @@ section {
     bottom: 2px;
     left: 2px;
     color: rgb(255, 255, 255);
-    text-decoration: none;
 }
 
 #adGuardSecurityDivSwitch,
@@ -247,9 +226,9 @@ section {
 #controlDSecurityDivSwitch,
 #controlDFamilyDivSwitch,
 #quad9DivSwitch,
-#switchCHDivSwitch {
+#switchCHDivSwitch,
+#phishDestroyDivSwitch,
+#phishingDatabaseDivSwitch {
     user-select: none;
     -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
 }
