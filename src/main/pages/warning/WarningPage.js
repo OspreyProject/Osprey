@@ -17,8 +17,6 @@
  */
 "use strict";
 
-let reportedByText;
-
 // Use a global singleton pattern to ensure we don't duplicate resources
 // noinspection FunctionWithInconsistentReturnsJS
 globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
@@ -28,6 +26,9 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
 
     // The current origin integer, initialized to UNKNOWN
     let currentOriginInt = ProtectionResult.Origin.UNKNOWN;
+
+    // Tracks the base "reported by" text for use in the onMessage listener
+    let reportedByText;
 
     // Cache for DOM elements
     let domElements = {};
