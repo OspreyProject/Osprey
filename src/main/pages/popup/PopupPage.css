@@ -122,6 +122,11 @@ section {
     height: 17px;
     margin-top: 9px;
     display: inline-block;
+    background-size: 100% 100%;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .switch.on {

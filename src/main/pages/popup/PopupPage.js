@@ -213,9 +213,11 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
                 if (isOn) {
                     elements.switchElement.classList.add("on");
                     elements.switchElement.classList.remove("off");
+                    elements.switchElement.setAttribute("aria-checked", "true");
                 } else {
                     elements.switchElement.classList.remove("on");
                     elements.switchElement.classList.add("off");
+                    elements.switchElement.setAttribute("aria-checked", "false");
                 }
             } else {
                 console.warn(`'switchElement' not found for ${system.name} in the PopupPage DOM.`);
@@ -264,7 +266,18 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
 
             if (elements?.switchElement) {
                 elements.switchElement.onclick = null;
+                elements.switchElement.onkeydown = null;
             }
+        }
+
+        // Removes click handlers from pagination arrows
+        if (domElements.prevPage) {
+            domElements.prevPage.onclick = null;
+            domElements.prevPage.onkeydown = null;
+        }
+        if (domElements.nextPage) {
+            domElements.nextPage.onclick = null;
+            domElements.nextPage.onkeydown = null;
         }
 
         // Keeps the DOM elements cache, but resets initialized status
@@ -372,6 +385,13 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
                         }
                     });
                 };
+
+                elements.switchElement.onkeydown = e => {
+                    if (e.key === " " || e.key === "Enter") {
+                        e.preventDefault();
+                        elements.switchElement.onclick();
+                    }
+                };
             } else {
                 console.warn(`'switchElement' not found for ${system.name} in the PopupPage DOM; cannot set click handler.`);
             }
@@ -422,19 +442,33 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
         };
 
         if (domElements.prevPage) {
-            domElements.prevPage.addEventListener("click", function () {
+            domElements.prevPage.onclick = () => {
                 currentPage = currentPage === 1 ? totalPages : currentPage - 1;
                 updatePageDisplay();
-            });
+            };
+
+            domElements.prevPage.onkeydown = e => {
+                if (e.key === " " || e.key === "Enter") {
+                    e.preventDefault();
+                    domElements.prevPage.onclick();
+                }
+            };
         } else {
             console.warn("'prevPage' element not found in the PopupPage DOM.");
         }
 
         if (domElements.nextPage) {
-            domElements.nextPage.addEventListener("click", function () {
+            domElements.nextPage.onclick = () => {
                 currentPage = currentPage === totalPages ? 1 : currentPage + 1;
                 updatePageDisplay();
-            });
+            };
+
+            domElements.nextPage.onkeydown = e => {
+                if (e.key === " " || e.key === "Enter") {
+                    e.preventDefault();
+                    domElements.nextPage.onclick();
+                }
+            };
         } else {
             console.warn("'nextPage' element not found in the PopupPage DOM.");
         }
