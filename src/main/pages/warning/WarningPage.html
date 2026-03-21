@@ -20,6 +20,7 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Osprey: Browser Protection</title>
     <link rel="stylesheet" href="WarningPage.css">
     <script src="../../util/Validate.js" type="text/javascript"></script>
@@ -48,15 +49,15 @@
         </h2>
 
         <p>
-            <id id="recommendation">
+            <span id="recommendation">
                 <!-- Automatically translated -->
-            </id>
+            </span>
         </p>
 
         <p>
-            <id id="details">
+            <span id="details">
                 <!-- Automatically translated -->
-            </id>
+            </span>
         </p>
 
         <p>
@@ -74,28 +75,26 @@
         </p>
 
         <p>
-            <span id="reportWebsite" style="display:none;">
+            <span id="reportWebsite" class="hidden" role="button" tabindex="0">
                 <!-- Automatically translated -->
             </span>
-            <br id="reportBreakpoint" style="display:none;">
-            <span id="allowWebsite" style="display:none;">
+            <br id="reportBreakpoint" class="hidden">
+            <span id="allowWebsite" class="hidden" role="button" tabindex="0">
                 <!-- Automatically translated -->
             </span>
         </p>
 
         <div style="margin: 24px 0 0 0;">
-            <button id="backButton" style="display:none;" class="white-pushbutton" type="submit"
-                    data-bi-id="BackButton">
-                <id id="backButtonText">
+            <button id="backButton" class="white-pushbutton hidden" type="button" data-bi-id="BackButton">
+                <span id="backButtonText">
                     <!-- Automatically translated -->
-                </id>
+                </span>
             </button>
 
-            <button id="continueButton" style="display:none;" class="white-pushbutton" type="button"
-                    data-bi-id="ContinueButton">
-                <id id="continueButtonText">
+            <button id="continueButton" class="white-pushbutton hidden" type="button" data-bi-id="ContinueButton">
+                <span id="continueButtonText">
                     <!-- Automatically translated -->
-                </id>
+                </span>
             </button>
         </div>
     </div>

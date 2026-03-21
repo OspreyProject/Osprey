@@ -500,6 +500,17 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
                         });
                     }
                 });
+
+                domElements.reportWebsite.addEventListener("keydown", async e => {
+                    if (e.key === " " || e.key === "Enter") {
+                        e.preventDefault();
+                        if (!settings.hideReportButton) {
+                            await sendMessage(Messages.REPORT_WEBSITE, {
+                                reportUrl: getReportUrl()
+                            });
+                        }
+                    }
+                });
             } else {
                 console.warn("'reportWebsite' element not found in the WarningPage DOM.");
             }
@@ -512,6 +523,18 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
                             blockedUrl: blockedUrl,
                             continueUrl: continueUrl
                         });
+                    }
+                });
+
+                domElements.allowWebsite.addEventListener("keydown", async e => {
+                    if (e.key === " " || e.key === "Enter") {
+                        e.preventDefault();
+                        if (!settings.hideContinueButtons) {
+                            await sendMessage(Messages.ALLOW_WEBSITE, {
+                                blockedUrl: blockedUrl,
+                                continueUrl: continueUrl
+                            });
+                        }
                     }
                 });
             } else {
@@ -546,13 +569,13 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
             // Handles the hide continue buttons policy
             if (!settings.hideContinueButtons) {
                 if (domElements.allowWebsite) {
-                    domElements.allowWebsite.style.display = "";
+                    domElements.allowWebsite.classList.remove("hidden");
                 } else {
                     console.warn("'allowWebsite' element not found in the WarningPage DOM.");
                 }
 
                 if (domElements.continueButton) {
-                    domElements.continueButton.style.display = "";
+                    domElements.continueButton.classList.remove("hidden");
                 } else {
                     console.warn("'continueButton' element not found in the WarningPage DOM.");
                 }
@@ -561,13 +584,13 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
             // Handles the hide report button policy
             if (!settings.hideReportButton) {
                 if (domElements.reportWebsite) {
-                    domElements.reportWebsite.style.display = "";
+                    domElements.reportWebsite.classList.remove("hidden");
                 } else {
                     console.warn("'reportWebsite' element not found in the WarningPage DOM.");
                 }
 
                 if (domElements.reportBreakpoint) {
-                    domElements.reportBreakpoint.style.display = "";
+                    domElements.reportBreakpoint.classList.remove("hidden");
                 } else {
                     console.warn("'reportBreakpoint' element not found in the WarningPage DOM.");
                 }
@@ -575,7 +598,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
 
             // Handles the back button visibility
             if (domElements.backButton) {
-                domElements.backButton.style.display = "";
+                domElements.backButton.classList.remove("hidden");
             } else {
                 console.warn("'backButton' element not found in the WarningPage DOM.");
             }
@@ -589,5 +612,9 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
 
 // Initializes when the DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
-    globalThis.WarningSingleton.initialize();
+    try {
+        globalThis.WarningSingleton.initialize();
+    } catch (e) {
+        console.error("WarningPage failed to initialize:", e);
+    }
 });
