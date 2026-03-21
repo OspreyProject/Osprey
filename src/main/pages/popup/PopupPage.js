@@ -32,128 +32,42 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
     // Cache for DOM elements
     let domElements = {};
 
+    /**
+     * Creates a security system descriptor.
+     *
+     * @param {string} origin The ProtectionResult.Origin value.
+     * @param {string} name The settings key name.
+     * @param {string} labelElementId The status label element ID.
+     * @param {string} switchElementId The toggle switch element ID.
+     * @param {string} messageType The message type for background communication.
+     * @returns {Object} Frozen system descriptor.
+     */
+    const makeSystem = (origin, name, labelElementId, switchElementId, messageType) => Object.freeze({
+        origin,
+        name,
+        title: ProtectionResult.FullName[origin],
+        labelElementId,
+        switchElementId,
+        messageType,
+    });
+
     // Security systems configuration; only defined once
     const securitySystems = Object.freeze([
-        {
-            origin: ProtectionResult.Origin.ADGUARD_SECURITY,
-            name: "adGuardSecurityEnabled",
-            title: ProtectionResult.FullName[this.origin],
-            labelElementId: "adGuardSecurityStatus",
-            switchElementId: "adGuardSecuritySwitch",
-            messageType: Messages.ADGUARD_SECURITY_TOGGLED,
-        },
-        {
-            origin: ProtectionResult.Origin.ADGUARD_FAMILY,
-            name: "adGuardFamilyEnabled",
-            title: ProtectionResult.FullName[this.origin],
-            labelElementId: "adGuardFamilyStatus",
-            switchElementId: "adGuardFamilySwitch",
-            messageType: Messages.ADGUARD_FAMILY_TOGGLED,
-        },
-        {
-            origin: ProtectionResult.Origin.ALPHAMOUNTAIN,
-            name: "alphaMountainEnabled",
-            title: ProtectionResult.FullName[this.origin],
-            labelElementId: "alphaMountainStatus",
-            switchElementId: "alphaMountainSwitch",
-            messageType: Messages.ALPHAMOUNTAIN_TOGGLED,
-        },
-        {
-            origin: ProtectionResult.Origin.PRECISIONSEC,
-            name: "precisionSecEnabled",
-            title: ProtectionResult.FullName[this.origin],
-            labelElementId: "precisionSecStatus",
-            switchElementId: "precisionSecSwitch",
-            messageType: Messages.PRECISIONSEC_TOGGLED,
-        },
-        {
-            origin: ProtectionResult.Origin.CERT_EE,
-            name: "certEEEnabled",
-            title: ProtectionResult.FullName[this.origin],
-            labelElementId: "certEEStatus",
-            switchElementId: "certEESwitch",
-            messageType: Messages.CERT_EE_TOGGLED,
-        },
-        {
-            origin: ProtectionResult.Origin.CLEANBROWSING_SECURITY,
-            name: "cleanBrowsingSecurityEnabled",
-            title: ProtectionResult.FullName[this.origin],
-            labelElementId: "cleanBrowsingSecurityStatus",
-            switchElementId: "cleanBrowsingSecuritySwitch",
-            messageType: Messages.CLEANBROWSING_SECURITY_TOGGLED,
-        },
-        {
-            origin: ProtectionResult.Origin.CLEANBROWSING_FAMILY,
-            name: "cleanBrowsingFamilyEnabled",
-            title: ProtectionResult.FullName[this.origin],
-            labelElementId: "cleanBrowsingFamilyStatus",
-            switchElementId: "cleanBrowsingFamilySwitch",
-            messageType: Messages.CLEANBROWSING_FAMILY_TOGGLED,
-        },
-        {
-            origin: ProtectionResult.Origin.CLOUDFLARE_SECURITY,
-            name: "cloudflareSecurityEnabled",
-            title: ProtectionResult.FullName[this.origin],
-            labelElementId: "cloudflareSecurityStatus",
-            switchElementId: "cloudflareSecuritySwitch",
-            messageType: Messages.CLOUDFLARE_SECURITY_TOGGLED,
-        },
-        {
-            origin: ProtectionResult.Origin.CLOUDFLARE_FAMILY,
-            name: "cloudflareFamilyEnabled",
-            title: ProtectionResult.FullName[this.origin],
-            labelElementId: "cloudflareFamilyStatus",
-            switchElementId: "cloudflareFamilySwitch",
-            messageType: Messages.CLOUDFLARE_FAMILY_TOGGLED,
-        },
-        {
-            origin: ProtectionResult.Origin.CONTROL_D_SECURITY,
-            name: "controlDSecurityEnabled",
-            title: ProtectionResult.FullName[this.origin],
-            labelElementId: "controlDSecurityStatus",
-            switchElementId: "controlDSecuritySwitch",
-            messageType: Messages.CONTROL_D_SECURITY_TOGGLED,
-        },
-        {
-            origin: ProtectionResult.Origin.CONTROL_D_FAMILY,
-            name: "controlDFamilyEnabled",
-            title: ProtectionResult.FullName[this.origin],
-            labelElementId: "controlDFamilyStatus",
-            switchElementId: "controlDFamilySwitch",
-            messageType: Messages.CONTROL_D_FAMILY_TOGGLED,
-        },
-        {
-            origin: ProtectionResult.Origin.PHISH_DESTROY,
-            name: "phishDestroyEnabled",
-            title: ProtectionResult.FullName[this.origin],
-            labelElementId: "phishDestroyStatus",
-            switchElementId: "phishDestroySwitch",
-            messageType: Messages.PHISH_DESTROY_TOGGLED,
-        },
-        {
-            origin: ProtectionResult.Origin.PHISHING_DATABASE,
-            name: "phishingDatabaseEnabled",
-            title: ProtectionResult.FullName[this.origin],
-            labelElementId: "phishingDatabaseStatus",
-            switchElementId: "phishingDatabaseSwitch",
-            messageType: Messages.PHISHING_DATABASE_TOGGLED,
-        },
-        {
-            origin: ProtectionResult.Origin.QUAD9,
-            name: "quad9Enabled",
-            title: ProtectionResult.FullName[this.origin],
-            labelElementId: "quad9Status",
-            switchElementId: "quad9Switch",
-            messageType: Messages.QUAD9_TOGGLED,
-        },
-        {
-            origin: ProtectionResult.Origin.SWITCH_CH,
-            name: "switchCHEnabled",
-            title: ProtectionResult.FullName[this.origin],
-            labelElementId: "switchCHStatus",
-            switchElementId: "switchCHSwitch",
-            messageType: Messages.SWITCH_CH_TOGGLED,
-        }
+        makeSystem(ProtectionResult.Origin.ADGUARD_SECURITY, "adGuardSecurityEnabled", "adGuardSecurityStatus", "adGuardSecuritySwitch", Messages.ADGUARD_SECURITY_TOGGLED),
+        makeSystem(ProtectionResult.Origin.ADGUARD_FAMILY, "adGuardFamilyEnabled", "adGuardFamilyStatus", "adGuardFamilySwitch", Messages.ADGUARD_FAMILY_TOGGLED),
+        makeSystem(ProtectionResult.Origin.ALPHAMOUNTAIN, "alphaMountainEnabled", "alphaMountainStatus", "alphaMountainSwitch", Messages.ALPHAMOUNTAIN_TOGGLED),
+        makeSystem(ProtectionResult.Origin.PRECISIONSEC, "precisionSecEnabled", "precisionSecStatus", "precisionSecSwitch", Messages.PRECISIONSEC_TOGGLED),
+        makeSystem(ProtectionResult.Origin.CERT_EE, "certEEEnabled", "certEEStatus", "certEESwitch", Messages.CERT_EE_TOGGLED),
+        makeSystem(ProtectionResult.Origin.CLEANBROWSING_SECURITY, "cleanBrowsingSecurityEnabled", "cleanBrowsingSecurityStatus", "cleanBrowsingSecuritySwitch", Messages.CLEANBROWSING_SECURITY_TOGGLED),
+        makeSystem(ProtectionResult.Origin.CLEANBROWSING_FAMILY, "cleanBrowsingFamilyEnabled", "cleanBrowsingFamilyStatus", "cleanBrowsingFamilySwitch", Messages.CLEANBROWSING_FAMILY_TOGGLED),
+        makeSystem(ProtectionResult.Origin.CLOUDFLARE_SECURITY, "cloudflareSecurityEnabled", "cloudflareSecurityStatus", "cloudflareSecuritySwitch", Messages.CLOUDFLARE_SECURITY_TOGGLED),
+        makeSystem(ProtectionResult.Origin.CLOUDFLARE_FAMILY, "cloudflareFamilyEnabled", "cloudflareFamilyStatus", "cloudflareFamilySwitch", Messages.CLOUDFLARE_FAMILY_TOGGLED),
+        makeSystem(ProtectionResult.Origin.CONTROL_D_SECURITY, "controlDSecurityEnabled", "controlDSecurityStatus", "controlDSecuritySwitch", Messages.CONTROL_D_SECURITY_TOGGLED),
+        makeSystem(ProtectionResult.Origin.CONTROL_D_FAMILY, "controlDFamilyEnabled", "controlDFamilyStatus", "controlDFamilySwitch", Messages.CONTROL_D_FAMILY_TOGGLED),
+        makeSystem(ProtectionResult.Origin.PHISH_DESTROY, "phishDestroyEnabled", "phishDestroyStatus", "phishDestroySwitch", Messages.PHISH_DESTROY_TOGGLED),
+        makeSystem(ProtectionResult.Origin.PHISHING_DATABASE, "phishingDatabaseEnabled", "phishingDatabaseStatus", "phishingDatabaseSwitch", Messages.PHISHING_DATABASE_TOGGLED),
+        makeSystem(ProtectionResult.Origin.QUAD9, "quad9Enabled", "quad9Status", "quad9Switch", Messages.QUAD9_TOGGLED),
+        makeSystem(ProtectionResult.Origin.SWITCH_CH, "switchCHEnabled", "switchCHStatus", "switchCHSwitch", Messages.SWITCH_CH_TOGGLED),
     ]);
 
     // Cached manifest data
