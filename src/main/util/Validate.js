@@ -24,36 +24,6 @@
 const Validate = (() => {
 
     /**
-     * Checks if a value is null or undefined.
-     *
-     * @param {*} value The value to check.
-     * @returns {boolean} True if null or undefined, false otherwise.
-     */
-    const isNullish = value => {
-        return value === null || value === undefined || !value && typeof value !== 'boolean' && typeof value !== 'number';
-    };
-
-    /**
-     * Checks if a value is not null and not undefined.
-     *
-     * @param {*} value The value to check.
-     * @returns {boolean} True if not null/undefined, false otherwise.
-     */
-    const isNotNull = value => {
-        return !isNullish(value);
-    };
-
-    /**
-     * Checks if the value is a non-blank string.
-     *
-     * @param {*} value The value to check.
-     * @returns {boolean} True if non-blank string, false otherwise.
-     */
-    const isNotBlank = value => {
-        return isNotNull(value) && typeof value === 'string' && value.trim().length > 0;
-    };
-
-    /**
      * Validates that the response Content-Type matches the expected type.
      *
      * @param {Response} response The fetch response to validate.
@@ -61,31 +31,13 @@ const Validate = (() => {
      * @returns {boolean} True if Content-Type matches, false otherwise.
      */
     const hasValidContentType = (response, expected) => {
+        if (response?.headers === null || typeof expected !== 'string') {
+            return false;
+        }
+
         const contentType = response.headers.get('Content-Type') || '';
-        return contentType.toLowerCase().includes(expected.toLowerCase());
-    };
-
-    /**
-     * Checks if a URL string is valid and can be parsed into a URL object.
-     *
-     * @param {string} urlString The URL string to parse.
-     * @returns {{valid: boolean, url: URL|null, error: string|null}} Parse result object.
-     */
-    const parseUrl = urlString => {
-        if (!isNotNull(urlString)) {
-            return {valid: false, url: null, error: 'URL string is null or undefined'};
-        }
-
-        if (!isNotBlank(urlString)) {
-            return {valid: false, url: null, error: 'URL string is blank'};
-        }
-
-        try {
-            const url = new URL(urlString);
-            return {valid: true, url: url, error: null};
-        } catch (error) {
-            return {valid: false, url: null, error: error.message};
-        }
+        const mediaType = contentType.split(';')[0].trim().toLowerCase();
+        return mediaType === expected.toLowerCase();
     };
 
     /**
@@ -96,7 +48,7 @@ const Validate = (() => {
      * @returns {boolean} True if protocol is valid, false otherwise.
      */
     const hasValidProtocol = (urlObject, validProtocols) => {
-        if (!isNotNull(urlObject) || typeof urlObject.protocol !== 'string') {
+        if (urlObject === null || typeof urlObject.protocol !== 'string') {
             return false;
         }
         return validProtocols.has(urlObject.protocol.toLowerCase());
@@ -110,20 +62,29 @@ const Validate = (() => {
      * @returns {{valid: boolean, url: URL|null, error: string|null}} Validation result object.
      */
     const validateHttpUrl = (urlString, validProtocols) => {
-        const parseResult = parseUrl(urlString);
-
-        if (!parseResult.valid) {
-            return parseResult;
+        if (!(validProtocols instanceof Set) || validProtocols.size === 0) {
+            return {valid: false, url: null, error: 'validProtocols must be a non-empty Set'};
         }
 
-        if (!hasValidProtocol(parseResult.url, validProtocols)) {
-            return {
-                valid: false,
-                url: parseResult.url,
-                error: `Invalid protocol: ${parseResult.url.protocol}`
-            };
+        if (urlString === null) {
+            return {valid: false, url: null, error: 'URL string is null or undefined'};
         }
-        return parseResult;
+
+        if (typeof urlString !== 'string' || urlString.trim().length === 0) {
+            return {valid: false, url: null, error: 'URL string is blank'};
+        }
+
+        let url;
+        try {
+            url = new URL(urlString);
+        } catch (error) {
+            return {valid: false, url: null, error: error.message};
+        }
+
+        if (!hasValidProtocol(url, validProtocols)) {
+            return {valid: false, url, error: `Invalid protocol: ${url.protocol}`};
+        }
+        return {valid: true, url, error: null};
     };
 
     // Public API
