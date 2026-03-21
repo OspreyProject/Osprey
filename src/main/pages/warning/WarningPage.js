@@ -269,7 +269,12 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         applyOriginVisuals(currentOriginInt);
 
         // Listens for PONG messages to update the reported by count
-        browserAPI.runtime.onMessage.addListener(message => {
+        browserAPI.runtime.onMessage.addListener((message, sender) => {
+            // Only accept messages from our own extension
+            if (sender.id !== browserAPI.runtime.id) {
+                return;
+            }
+
             // Early exit for messages we don't care about
             if (message?.messageType !== Messages.BLOCKED_COUNTER_PONG) {
                 return;
