@@ -17,7 +17,7 @@
     "default_popup": "pages/popup/PopupPage.html"
   },
   "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'"
+    "extension_pages": "script-src 'self'; style-src 'self'; img-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
   },
   "icons": {
     "16": "assets/icons/icon16.png",
