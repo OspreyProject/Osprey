@@ -34,9 +34,21 @@ const UrlHelpers = (() => {
      */
     const extractBlockedUrl = url => {
         try {
-            return new URL(url).searchParams.get("url");
+            const extracted = new URL(url).searchParams.get("url");
+
+            if (!extracted) {
+                return "https://www.google.com";
+            }
+
+            const parsed = new URL(extracted);
+
+            if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
+                console.warn(`Blocked URL has disallowed protocol: ${parsed.protocol}`);
+                return "https://www.google.com";
+            }
+            return extracted;
         } catch {
-            console.warn(`Invalid blocked URL format: ${url}`);
+            console.warn(`Invalid blocked URL format: ${sanitizeForDisplay(url)}`);
             return "https://www.google.com";
         }
     };
@@ -49,9 +61,21 @@ const UrlHelpers = (() => {
      */
     const extractContinueUrl = url => {
         try {
-            return new URL(url).searchParams.get("curl");
+            const extracted = new URL(url).searchParams.get("curl");
+
+            if (!extracted) {
+                return "https://www.google.com";
+            }
+
+            const parsed = new URL(extracted);
+
+            if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
+                console.warn(`Continue URL has disallowed protocol: ${parsed.protocol}`);
+                return "https://www.google.com";
+            }
+            return extracted;
         } catch {
-            console.warn(`Invalid continue URL format: ${url}`);
+            console.warn(`Invalid continue URL format: ${sanitizeForDisplay(url)}`);
             return "https://www.google.com";
         }
     };
@@ -114,11 +138,11 @@ const UrlHelpers = (() => {
         }
 
         // Parses the block page URL object
-        let blockPageUrl;
-        try {
-            blockPageUrl = new URL(blockPageBaseUrl);
-        } catch {
-            console.warn(`Invalid block page base URL format: ${blockPageBaseUrl}`);
+        const blockPageUrl = new URL(blockPageBaseUrl);
+
+        // Validates that origin and resultType are integers before embedding in the URL
+        if (!Number.isInteger(protectionResult.origin) || !Number.isInteger(protectionResult.resultType)) {
+            console.warn('Invalid protection result: origin and resultType must be integers');
             return "";
         }
 
@@ -149,29 +173,17 @@ const UrlHelpers = (() => {
             return false;
         }
 
-        if (hostname.includes('..')) {
-            return false;
-        }
-
-        if (hostname.startsWith('.')) {
-            return false;
-        }
-
-        if (hostname.endsWith('.')) {
-            return false;
-        }
-
         if (hostname.length > 253) {
             return false;
         }
 
-        if (UrlHelpers.isInternalAddress(hostname)) {
+        if (isInternalAddress(hostname)) {
             return false;
         }
 
         const labels = hostname.split('.');
 
-        if (labels.some(label => label.length === 0 || label.length > 63)) {
+        if (labels.some(label => label.length > 63)) {
             return false;
         }
         return !labels.some(label => !/^[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?$/.test(label));
@@ -247,25 +259,30 @@ const UrlHelpers = (() => {
     };
 
     /**
+     * Strips brackets and zone/scope ID from an IPv6 literal for uniform comparison.
+     *
+     * @param {string} raw The raw hostname or IP string.
+     * @returns {string} The normalized string with brackets and zone ID removed.
+     */
+    const stripIPv6Decorators = raw => {
+        let s = (raw || "").trim().toLowerCase();
+
+        if (s.startsWith("[") && s.endsWith("]")) {
+            s = s.slice(1, -1);
+        }
+
+        const pct = s.indexOf("%");
+        return pct === -1 ? s : s.slice(0, pct);
+    };
+
+    /**
      * Checks if a hostname is locally hosted.
      *
      * @param {string} hostname The hostname to check.
      * @returns {boolean|boolean} If a hostname is locally hosted.
      */
     const isLocalHostname = hostname => {
-        let h = (hostname || "").trim().toLowerCase();
-
-        // Strip brackets and zone/scope id for IPv6 literals
-        if (h.startsWith("[") && h.endsWith("]")) {
-            h = h.slice(1, -1);
-        }
-
-        const pct = h.indexOf("%");
-
-        // Remove zone index
-        if (pct !== -1) {
-            h = h.slice(0, pct);
-        }
+        let h = stripIPv6Decorators(hostname);
 
         // localhost and .localhost/.local domains
         if (h === "localhost" || h.endsWith(".localhost") || h.endsWith(".local")) {
@@ -292,19 +309,7 @@ const UrlHelpers = (() => {
      * @returns {boolean|boolean|boolean} If the IP address is private/locally hosted.
      */
     const isPrivateIP = ip => {
-        let s = (ip || "").trim().toLowerCase();
-
-        // Strip brackets and zone/scope id for IPv6 literals
-        if (s.startsWith("[") && s.endsWith("]")) {
-            s = s.slice(1, -1);
-        }
-
-        const pct = s.indexOf("%");
-
-        // Remove zone index
-        if (pct !== -1) {
-            s = s.slice(0, pct);
-        }
+        let s = stripIPv6Decorators(ip);
 
         // IPv6 ranges
         if (s.includes(":")) {
@@ -332,7 +337,7 @@ const UrlHelpers = (() => {
                 const v4n = normalizeIP(v4);
 
                 if (!v4n) {
-                    console.warn(`Invalid IPv4 tail in IPv6 address: ${ip}`);
+                    console.warn(`Invalid IPv4 tail in IPv6 address: ${s}`);
                     return false;
                 }
 
@@ -343,7 +348,8 @@ const UrlHelpers = (() => {
                     v4n.startsWith("169.254.") ||           // link-local
                     v4n === "0.0.0.0";                      // unspecified
             }
-            console.warn(`Invalid IPv6 address: ${ip}`);
+
+            console.warn(`Invalid IPv6 address: ${s}`);
             return false;
         }
 
@@ -368,45 +374,13 @@ const UrlHelpers = (() => {
             return true;
         }
 
-        let h = (hostname || "").trim().toLowerCase();
+        const h = stripIPv6Decorators(hostname);
 
-        // Strip brackets and zone/scope id for IPv6 literals
-        if (h.startsWith("[") && h.endsWith("]")) {
-            h = h.slice(1, -1);
-        }
-
-        const pct = h.indexOf("%");
-
-        // Remove zone index
-        if (pct !== -1) {
-            h = h.slice(0, pct);
-        }
-
-        // IPv6 checks
         if (h.includes(":")) {
-            // :: or ::1 handled by isLocalHostname; cover ULA/link-local here
-            // ULA fc00::/7 => prefixes "fc" or "fd"
-            if (h.startsWith("fc") || h.startsWith("fd")) {
-                return true;
-            }
-
-            // Link-local fe80::/10 => fe80..febf (quick prefix test)
-            if (/^fe([89ab])[0-9a-f]{2}:/i.test(h)) {
-                return true;
-            }
-
-            // IPv4-mapped ::ffff:a.b.c.d -> check embedded IPv4 range
-            if (h.startsWith("::ffff:")) {
-                const v4 = h.slice(7);
-                const v4n = normalizeIP(v4);
-                return v4n ? isPrivateIP(v4n) : false;
-            }
-            console.warn(`Invalid IPv6 address: ${hostname}`);
-            return false;
+            return isPrivateIP(h);
         }
 
-        // IPv4 checks
-        const ip = normalizeIP(h); // IPv4 or simple IPv6 normalization
+        const ip = normalizeIP(h);
         return ip ? isPrivateIP(ip) : false;
     };
 
@@ -422,7 +396,13 @@ const UrlHelpers = (() => {
             return '';
         }
 
-        const u = typeof url === "string" ? new URL(url) : url;
+        let u;
+        try {
+            u = typeof url === "string" ? new URL(url) : url;
+        } catch {
+            console.warn(`Invalid URL format: ${sanitizeForDisplay(String(url))}`);
+            return '';
+        }
 
         // Removes trailing dots from the hostname
         const host = u.hostname.toLowerCase().replace(/\.$/, '');
@@ -430,75 +410,6 @@ const UrlHelpers = (() => {
         // Removes trailing slashes from the pathname
         const path = u.pathname.replace(/\/+$/, '');
         return host + path;
-    };
-
-    /**
-     * Encodes a DNS query for the given domain and type.
-     *
-     * @param {string} domain The domain to encode.
-     * @param {number} type The type of DNS record (default is 1 for A record).
-     * @return {string} The base64url encoded DNS query.
-     */
-    const encodeDNSQuery = (domain, type = 1) => {
-        if (typeof domain !== 'string' || !Number.isInteger(type)) {
-            return '';
-        }
-
-        if (type < 0 || type > 65535) {
-            throw new TypeError('type must be a valid DNS record type (0-65535)');
-        }
-
-        // Strip trailing dot; DNS wire format carries labels explicitly
-        const stripped = domain.trim().replace(/\.$/, '');
-
-        // Reject domains with invalid characters
-        if (!/^[a-zA-Z0-9._-]+$/.test(stripped)) {
-            throw new Error('Domain contains invalid characters');
-        }
-
-        // Reject overly long domains (max 253 chars per RFC)
-        if (stripped.length > 253) {
-            throw new Error('Domain exceeds maximum length');
-        }
-
-        const header = new Uint8Array([
-            0x00, 0x00, // ID
-            0x01, 0x00, // flags: standard query, recursion desired
-            0x00, 0x01, // QDCOUNT = 1
-            0x00, 0x00, // ANCOUNT
-            0x00, 0x00, // NSCOUNT
-            0x00, 0x00  // ARCOUNT
-        ]);
-
-        const qname = [];
-
-        for (const label of stripped.split('.')) {
-            const bytes = new TextEncoder().encode(label);
-
-            if (bytes.length === 0 || bytes.length > 63) {
-                throw new Error(`Invalid label length in domain ${stripped}: ${bytes.length}`);
-            }
-
-            qname.push(bytes.length, ...bytes);
-        }
-
-        qname.push(0x00); // end of QNAME
-
-        const qtype = new Uint8Array([type >>> 8 & 0xff, type & 0xff]);
-        const qclass = new Uint8Array([0x00, 0x01]); // IN
-        const packet = new Uint8Array(header.length + qname.length + qtype.length + qclass.length);
-
-        packet.set(header, 0);
-        packet.set(qname, header.length);
-        packet.set(qtype, header.length + qname.length);
-        packet.set(qclass, header.length + qname.length + qtype.length);
-
-        let bin = '';
-
-        for (const byte of packet) {
-            bin += String.fromCodePoint(byte);
-        }
-        return btoa(bin).replaceAll('+', '-').replaceAll('/', '_').replace(/=+$/, '');
     };
 
     /**
@@ -516,7 +427,7 @@ const UrlHelpers = (() => {
         }
 
         const sanitized = str.replaceAll(/[\u0000-\u001F\u007F-\u009F]/g, '');
-        return sanitized.length > maxLength ? sanitized.substring(0, maxLength) + '...' : sanitized;
+        return sanitized.length > maxLength ? sanitized.substring(0, maxLength) + '\u2026' : sanitized;
     };
 
     return Object.freeze({
@@ -528,7 +439,6 @@ const UrlHelpers = (() => {
         getBlockPageUrl,
         isValidHostname,
         sanitizeForDisplay,
-        isInternalAddress,
-        encodeDNSQuery
+        isInternalAddress
     });
 })();
