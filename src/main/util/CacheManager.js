@@ -49,6 +49,11 @@ const CacheManager = (() => {
 
     // Sets the expiration time for cache entries based on user settings
     Settings.get(settings => {
+        if (!settings || typeof settings !== 'object') {
+            console.error('CacheManager: Settings.get returned invalid settings; using default expiration time.');
+            return;
+        }
+
         const expSeconds = Number(settings.cacheExpirationSeconds);
         const min = 60; // 1 minute in seconds
         const max = 31536000; // 1 year in seconds
@@ -81,6 +86,9 @@ const CacheManager = (() => {
         "phishingDatabase",
     ]);
 
+    // Set for O(1) provider name validation
+    const providersSet = new Set(providers);
+
     // Initialize caches for each provider
     for (const name of providers) {
         allowedCaches[name] = new Map();
@@ -98,7 +106,7 @@ const CacheManager = (() => {
     StorageUtil.getFromLocalStore(allowedKey, callback => {
         for (const name of Object.keys(allowedCaches)) {
             if (callback?.[name] && typeof callback[name] === 'object') {
-                const entries = Object.entries(callback[name]).filter(([key]) => !DANGEROUS_KEYS.has(key));
+                const entries = Object.entries(callback[name]).filter(([key]) => !StorageUtil.isDangerousKey(key));
                 allowedCaches[name] = new Map(entries);
             }
         }
@@ -111,9 +119,11 @@ const CacheManager = (() => {
      * @param {Object} callback The callback function to execute after loading the blocked caches.
      */
     StorageUtil.getFromLocalStore(blockedKey, callback => {
+        const validResultTypes = new Set(Object.values(ProtectionResult.ResultType));
+
         for (const name of Object.keys(blockedCaches)) {
             if (callback?.[name] && typeof callback[name] === 'object') {
-                const entries = Object.entries(callback[name]).filter(([key]) => !DANGEROUS_KEYS.has(key));
+                const entries = Object.entries(callback[name]).filter(([key]) => !StorageUtil.isDangerousKey(key));
 
                 blockedCaches[name] = new Map(
                     entries.flatMap(([url, {exp, resultType}]) => {
@@ -143,7 +153,7 @@ const CacheManager = (() => {
         if (callback && typeof callback === 'object') {
             for (const name of Object.keys(processingCaches)) {
                 if (callback[name] && typeof callback[name] === 'object') {
-                    const entries = Object.entries(callback[name]).filter(([key]) => !DANGEROUS_KEYS.has(key));
+                    const entries = Object.entries(callback[name]).filter(([key]) => !StorageUtil.isDangerousKey(key));
                     processingCaches[name] = new Map(entries);
                 }
             }
@@ -295,6 +305,11 @@ const CacheManager = (() => {
      * @returns {boolean} Returns true if the URL is in the allowed cache and not expired, false otherwise.
      */
     const isUrlInAllowedCache = (url, name) => {
+        if (name !== "all" && !providersSet.has(name)) {
+            console.warn(`Unknown cache provider name: "${name}"`);
+            return false;
+        }
+
         try {
             const key = UrlHelpers.normalizeUrl(url);
 
@@ -313,7 +328,7 @@ const CacheManager = (() => {
             if (map.has(key)) {
                 const exp = map.get(key);
 
-                if (exp > Date.now()) {
+                if (exp === 0 || exp > Date.now()) {
                     return true;
                 }
 
@@ -347,8 +362,9 @@ const CacheManager = (() => {
 
         try {
             const map = allowedCaches[name];
+            const patternCache = allowedPatternCaches[name];
 
-            if (!map) {
+            if (!map || !patternCache) {
                 console.warn(`Allowed cache "${name}" not found`);
                 return false;
             }
@@ -386,6 +402,11 @@ const CacheManager = (() => {
      * @param {string} name The name of the provider (e.g., "precisionSec").
      */
     const addUrlToAllowedCache = (url, name) => {
+        if (name !== "all" && !providersSet.has(name)) {
+            console.warn(`Unknown cache provider name: "${name}"`);
+            return;
+        }
+
         try {
             const key = UrlHelpers.normalizeUrl(url);
 
@@ -419,9 +440,17 @@ const CacheManager = (() => {
      * @param {string} name The name of the cache (e.g., "precisionSec", "global").
      */
     const addStringToAllowedCache = (str, name) => {
-        try {
-            const expTime = 0;
+        if (typeof str !== 'string' || str.length > 2048) {
+            console.warn(`Invalid string provided for allowed cache string addition: "${str}"`);
+            return;
+        }
 
+        if (name !== "all" && !providersSet.has(name)) {
+            console.warn(`Unknown cache provider name: "${name}"`);
+            return;
+        }
+
+        try {
             if (name === "all") {
                 for (const cache of Object.values(allowedCaches)) {
                     cache.set(str, 0);
@@ -456,6 +485,11 @@ const CacheManager = (() => {
      * @returns {boolean} Returns true if the URL is in the allowed cache and not expired, false otherwise.
      */
     const isUrlInBlockedCache = (url, name) => {
+        if (name !== "all" && !providersSet.has(name)) {
+            console.warn(`Unknown cache provider name: "${name}"`);
+            return false;
+        }
+
         try {
             const key = UrlHelpers.normalizeUrl(url);
 
@@ -472,7 +506,7 @@ const CacheManager = (() => {
 
             const entry = map.get(key);
 
-            if (entry.exp > Date.now()) {
+            if (entry.exp === 0 || entry.exp > Date.now()) {
                 return true;
             }
 
@@ -493,6 +527,16 @@ const CacheManager = (() => {
      * @param {string} resultType The resultType of the URL (e.g., "malicious", "phishing").
      */
     const addUrlToBlockedCache = (url, name, resultType) => {
+        if (name !== "all" && !providersSet.has(name)) {
+            console.warn(`Unknown cache provider name: "${name}"`);
+            return;
+        }
+
+        if (!Number.isFinite(resultType)) {
+            console.warn(`Invalid resultType provided for blocked cache addition: ${resultType}`);
+            return;
+        }
+
         try {
             const key = UrlHelpers.normalizeUrl(url);
 
@@ -528,6 +572,11 @@ const CacheManager = (() => {
      * @returns {*|null} Returns the result type (e.g., "Malicious", "Phishing") if found and not expired, null otherwise.
      */
     const getBlockedResultType = (url, name) => {
+        if (name !== "all" && !providersSet.has(name)) {
+            console.warn(`Unknown cache provider name: "${name}"`);
+            return ProtectionResult.ResultType.FAILED;
+        }
+
         try {
             const key = UrlHelpers.normalizeUrl(url);
 
@@ -544,7 +593,7 @@ const CacheManager = (() => {
 
             const entry = cache.get(key);
 
-            if (entry.exp > Date.now()) {
+            if (entry.exp === 0 || entry.exp > Date.now()) {
                 return entry.resultType;
             }
 
@@ -565,6 +614,11 @@ const CacheManager = (() => {
      * @param {string} name The name of the provider (e.g., "precisionSec").
      */
     const removeUrlFromBlockedCache = (url, name) => {
+        if (name !== "all" && !providersSet.has(name)) {
+            console.warn(`Unknown cache provider name: "${name}"`);
+            return;
+        }
+
         try {
             const key = UrlHelpers.normalizeUrl(url);
 
@@ -597,6 +651,11 @@ const CacheManager = (() => {
      * @returns {boolean} Returns true if the URL is in the processing cache and not expired, false otherwise.
      */
     const isUrlInProcessingCache = (url, name) => {
+        if (name !== "all" && !providersSet.has(name)) {
+            console.warn(`Unknown cache provider name: "${name}"`);
+            return false;
+        }
+
         try {
             const key = UrlHelpers.normalizeUrl(url);
 
@@ -637,6 +696,11 @@ const CacheManager = (() => {
      * @param {number} tabId The ID of the tab associated with this URL.
      */
     const addUrlToProcessingCache = (url, name, tabId) => {
+        if (name !== "all" && !providersSet.has(name)) {
+            console.warn(`Unknown cache provider name: "${name}"`);
+            return;
+        }
+
         try {
             const key = UrlHelpers.normalizeUrl(url);
 
@@ -671,6 +735,11 @@ const CacheManager = (() => {
      * @param {string} name The name of the provider (e.g., "precisionSec").
      */
     const removeUrlFromProcessingCache = (url, name) => {
+        if (name !== "all" && !providersSet.has(name)) {
+            console.warn(`Unknown cache provider name: "${name}"`);
+            return;
+        }
+
         try {
             const key = UrlHelpers.normalizeUrl(url);
 
