@@ -38,12 +38,10 @@
             "util/CacheManager.js",
             "util/MessageType.js",
             "util/LangUtil.js",
-            "util/DNSMessage.js",
 
             // Protection
             "protection/ProtectionResult.js",
             "protection/BrowserProtection.js",
-            "protection/LocalLists.js"
         );
     } catch (error) {
         // In Firefox-based browsers, importScripts is not available; scripts are loaded via background.html
@@ -54,9 +52,6 @@
 
     // Clears the processing cache
     CacheManager.clearProcessingCache();
-
-    // Fetches and schedules auto-updates for all local filtering lists
-    LocalLists.initAll();
 
     // Map<tabKey, Array<origin>> (Integer) of result origins per tab
     const resultOriginsMap = new Map();
@@ -96,8 +91,6 @@
         'AdGuardSecurityEnabled',
         'AdGuardFamilyEnabled',
         'AlphaMountainEnabled',
-        'ControlDSecurityEnabled',
-        'ControlDFamilyEnabled',
         'PrecisionSecEnabled',
 
         // Non-Partnered Providers
@@ -106,12 +99,12 @@
         'CleanBrowsingFamilyEnabled',
         'CloudflareSecurityEnabled',
         'CloudflareFamilyEnabled',
-        'SwitchCHEnabled',
-        'Quad9Enabled',
-
-        // Local Filtering Lists
+        'ControlDSecurityEnabled',
+        'ControlDFamilyEnabled',
         'PhishDestroyEnabled',
         'PhishingDatabaseEnabled',
+        'Quad9Enabled',
+        'SwitchCHEnabled',
     ]);
 
     /**
