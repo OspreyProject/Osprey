@@ -41,8 +41,8 @@ const CacheManager = (() => {
     // Cleanup interval for expired entries (5 minutes)
     const cleanupInterval = 5 * 60 * 1000;
 
-    // Expiration time for cache entries in milliseconds
-    let expirationTime;
+    // Expiration time for cache entries in seconds (7 days by default)
+    let expirationTime = 604800;
 
     // Sets the expiration time for cache entries based on user settings
     Settings.get(settings => {
