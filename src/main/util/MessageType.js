@@ -17,34 +17,44 @@
  */
 "use strict";
 
-const Messages = Object.freeze({
+{
+    const Messages = Object.freeze(Object.assign(Object.create(null), {
 
-    // Blocked Counter Actions
-    BLOCKED_COUNTER_PING: "blockedCounterPing",
-    BLOCKED_COUNTER_PONG: "blockedCounterPong",
+        // Blocked Counter Actions
+        BLOCKED_COUNTER_PING: "blockedCounterPing",
+        BLOCKED_COUNTER_PONG: "blockedCounterPong",
 
-    // Block Page Actions
-    CONTINUE_TO_SAFETY: "continueToSafety",
-    CONTINUE_TO_WEBSITE: "continueToWebsite",
-    REPORT_WEBSITE: "reportWebsite",
-    ALLOW_WEBSITE: "allowWebsite",
+        // Block Page Actions
+        CONTINUE_TO_SAFETY: "continueToSafety",
+        CONTINUE_TO_WEBSITE: "continueToWebsite",
+        REPORT_WEBSITE: "reportWebsite",
+        ALLOW_WEBSITE: "allowWebsite",
 
-    // Official Partners
-    ADGUARD_SECURITY_TOGGLED: "adGuardSecurityToggled",
-    ADGUARD_FAMILY_TOGGLED: "adGuardFamilyToggled",
-    ALPHAMOUNTAIN_TOGGLED: "alphaMountainToggled",
-    PRECISIONSEC_TOGGLED: "precisionSecToggled",
+        // Official Partners
+        ADGUARD_SECURITY_TOGGLED: "adGuardSecurityToggled",
+        ADGUARD_FAMILY_TOGGLED: "adGuardFamilyToggled",
+        ALPHAMOUNTAIN_TOGGLED: "alphaMountainToggled",
+        PRECISIONSEC_TOGGLED: "precisionSecToggled",
 
-    // Non-Partnered Providers
-    CERT_EE_TOGGLED: "certEEToggled",
-    CLEANBROWSING_SECURITY_TOGGLED: "cleanBrowsingSecurityToggled",
-    CLEANBROWSING_FAMILY_TOGGLED: "cleanBrowsingFamilyToggled",
-    CLOUDFLARE_SECURITY_TOGGLED: "cloudflareSecurityToggled",
-    CLOUDFLARE_FAMILY_TOGGLED: "cloudflareFamilyToggled",
-    CONTROL_D_SECURITY_TOGGLED: "controlDSecurityToggled",
-    CONTROL_D_FAMILY_TOGGLED: "controlDFamilyToggled",
-    PHISH_DESTROY_TOGGLED: "phishDestroyToggled",
-    PHISHING_DATABASE_TOGGLED: "phishingDatabaseToggled",
-    QUAD9_TOGGLED: "quad9Toggled",
-    SWITCH_CH_TOGGLED: "switchCHToggled",
-});
+        // Non-Partnered Providers
+        CERT_EE_TOGGLED: "certEEToggled",
+        CLEANBROWSING_SECURITY_TOGGLED: "cleanBrowsingSecurityToggled",
+        CLEANBROWSING_FAMILY_TOGGLED: "cleanBrowsingFamilyToggled",
+        CLOUDFLARE_SECURITY_TOGGLED: "cloudflareSecurityToggled",
+        CLOUDFLARE_FAMILY_TOGGLED: "cloudflareFamilyToggled",
+        CONTROL_D_SECURITY_TOGGLED: "controlDSecurityToggled",
+        CONTROL_D_FAMILY_TOGGLED: "controlDFamilyToggled",
+        PHISH_DESTROY_TOGGLED: "phishDestroyToggled",
+        PHISHING_DATABASE_TOGGLED: "phishingDatabaseToggled",
+        QUAD9_TOGGLED: "quad9Toggled",
+        SWITCH_CH_TOGGLED: "switchCHToggled",
+    }));
+
+    const _values = Object.values(Messages);
+    console.assert(
+        new Set(_values).size === _values.length,
+        'Messages: duplicate message type values detected; handler collisions will occur'
+    );
+
+    globalThis.Messages = Messages;
+}
