@@ -59,8 +59,6 @@ html, body {
     padding: 0;
     user-select: none;
     -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
 }
 
 .bannerText {
@@ -116,20 +114,14 @@ p {
     white-space: nowrap;
     background-color: rgb(243, 183, 34);
     text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
-    transition: height 0s;
 }
 
 .white-pushbutton:active {
-    color: rgb(255, 255, 255);
     background-color: rgb(191, 141, 26);
-    transition-duration: 1ms;
-    transition-timing-function: ease-out;
 }
 
 .white-pushbutton:hover {
     border: 2px solid rgb(191, 141, 26);
-    transition-duration: 0.15s;
-    transition-timing-function: ease-out;
     cursor: pointer;
 }
 
@@ -179,4 +171,18 @@ p {
 -------------------------------------------------- */
 .hidden {
     display: none;
+}
+
+/* --------------------------------------------------
+   URL Display
+-------------------------------------------------- */
+#url {
+    word-break: break-all;
+}
+
+/* --------------------------------------------------
+   Button Row
+-------------------------------------------------- */
+#buttonRow {
+    margin: 24px 0 0 0;
 }

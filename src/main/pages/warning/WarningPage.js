@@ -33,6 +33,12 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
     // Cache for DOM elements
     let domElements = {};
 
+    // Guard to ensure the onMessage listener is only registered once
+    let messageListenerRegistered = false;
+
+    // Guard to ensure the pageshow listener is only registered once
+    let pageshowListenerRegistered = false;
+
     /**
      * Applies visual elements based on the origin of the protection result.
      *
@@ -51,43 +57,6 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
     };
 
     /**
-     * Wraps system names text to fit within a specified maximum line length.
-     *
-     * @param {string} text The text to wrap, typically a comma-separated list of system names.
-     * @returns {string} The wrapped text, with each line not exceeding the specified maximum length.
-     */
-    const wrapSystemNamesText = text => {
-        if (typeof text !== 'string') {
-            console.warn(`Expected a string for wrapSystemNamesText, but received ${typeof text}`);
-            return '';
-        }
-
-        const parts = text.split(', ');
-        const lines = [];
-        let currentLine = '';
-        let maxLineLength = 110;
-
-        for (const part of parts) {
-            const nextSegment = currentLine ? `${currentLine}, ${part}` : part;
-
-            if (nextSegment.length <= maxLineLength) {
-                currentLine = nextSegment;
-            } else {
-                if (currentLine) {
-                    lines.push(currentLine);
-                }
-
-                currentLine = part;
-            }
-        }
-
-        if (currentLine) {
-            lines.push(currentLine);
-        }
-        return lines.join('\n');
-    };
-
-    /**
      * Initialize the popup or refresh if already initialized.
      */
     const initialize = () => {
@@ -100,7 +69,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         );
 
         // Extracts the threat code from the current page URL
-        const pageUrl = globalThis.document.URL;
+        const pageUrl = document.URL;
         let result = UrlHelpers.extractResult(pageUrl);
 
         // Checks if the result is valid
@@ -127,11 +96,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
             const bannerText = document.querySelector('.bannerText');
 
             // Sets the document title text
-            if (document.title) {
-                document.title = LangUtil.TITLE;
-            } else {
-                console.warn("Document title element not found for the WarningPage.");
-            }
+            document.title = LangUtil.TITLE;
 
             // Sets the banner text
             if (bannerText) {
@@ -231,8 +196,8 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         // Extracts the blocked URL from the current page URL
         let blockedUrl = UrlHelpers.extractBlockedUrl(pageUrl);
 
-        // Validates the blocked URL
-        if (!blockedUrl) {
+        // Validates the blocked URL against an allowed-scheme whitelist
+        if (!blockedUrl || !blockedUrl.startsWith("https://") && !blockedUrl.startsWith("http://")) {
             console.warn(`No valid blocked URL found in URL: ${pageUrl}; setting to safe value`);
             blockedUrl = "https://www.google.com";
         }
@@ -257,7 +222,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
             origin = ProtectionResult.Origin.UNKNOWN;
         }
 
-        let originInt = Number.parseInt(origin);
+        let originInt = Number.parseInt(origin, 10);
 
         // Validates originInt is a valid integer
         if (!Number.isInteger(originInt)) {
@@ -269,47 +234,51 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         applyOriginVisuals(currentOriginInt);
 
         // Listens for PONG messages to update the reported by count
-        browserAPI.runtime.onMessage.addListener((message, sender) => {
-            // Only accept messages from our own extension
-            if (sender.id !== browserAPI.runtime.id) {
-                return;
-            }
+        if (!messageListenerRegistered) {
+            messageListenerRegistered = true;
 
-            // Early exit for messages we don't care about
-            if (message?.messageType !== Messages.BLOCKED_COUNTER_PONG) {
-                return;
-            }
-
-            // Validate required properties for PONG messages
-            if (typeof message.count !== 'number' || !Array.isArray(message.systems)) {
-                return;
-            }
-
-            if (domElements.reportedBy) {
-                if (message.count > 0) {
-                    let othersText = LangUtil.REPORTED_BY_OTHERS.replace("___", message.count.toString());
-
-                    // Sets the reported by text with the count of other systems
-                    domElements.reportedBy.textContent = `${reportedByText} ${othersText}`;
-
-                    // Replace each system with its short name, filtering out invalid entries
-                    message.systems = message.systems
-                        .filter(system => Number.isInteger(system))
-                        .map(system => ProtectionResult.ShortName[system] || String(system));
-
-                    // Make the innerText hoverable and set the hover text
-                    const alsoReportedBy = LangUtil.REPORTED_BY_ALSO;
-                    const wrappedTitle = wrapSystemNamesText(`${alsoReportedBy}${message.systems.join(', ')}`);
-                    domElements.reportedBy.title = `${wrappedTitle}`;
-                } else {
-                    // If there are no "others", revert to base text & clear tooltip
-                    domElements.reportedBy.textContent = reportedByText;
-                    domElements.reportedBy.title = "";
+            browserAPI.runtime.onMessage.addListener((message, sender) => {
+                // Only accept messages from our own extension
+                if (sender.id !== browserAPI.runtime.id) {
+                    return;
                 }
-            } else {
-                console.warn("'reportedBy' element not found in the WarningPage DOM.");
-            }
-        });
+
+                // Early exit for messages we don't care about
+                if (message?.messageType !== Messages.BLOCKED_COUNTER_PONG) {
+                    return;
+                }
+
+                // Validate required properties for PONG messages
+                if (typeof message.count !== 'number' || !Array.isArray(message.systems)) {
+                    return;
+                }
+
+                if (domElements.reportedBy) {
+                    if (message.count > 0) {
+                        let othersText = LangUtil.REPORTED_BY_OTHERS.replace("___", message.count.toString());
+
+                        // Sets the reported by text with the count of other systems
+                        domElements.reportedBy.textContent = `${reportedByText} ${othersText}`;
+
+                        // Replace each system with its short name, filtering out invalid entries
+                        const systems = message.systems
+                            .filter(system => Number.isInteger(system))
+                            .map(system => ProtectionResult.ShortName[system] || String(system));
+
+                        // Build and sanitize the tooltip string
+                        const alsoReportedBy = LangUtil.REPORTED_BY_ALSO;
+                        const rawTitle = `${alsoReportedBy}${systems.join(', ')}`;
+                        domElements.reportedBy.title = rawTitle.replace(/[^\p{L}\p{N}\p{Z}\p{P}]/gu, '');
+                    } else {
+                        // If there are no "others", revert to base text & clear tooltip
+                        domElements.reportedBy.textContent = reportedByText;
+                        domElements.reportedBy.title = "";
+                    }
+                } else {
+                    console.warn("'reportedBy' element not found in the WarningPage DOM.");
+                }
+            });
+        }
 
         // Sends a PING message to get the count of reported websites
         browserAPI.runtime.sendMessage({
@@ -318,14 +287,18 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         });
 
         // Re-apply icon & re-request counts on refresh / bfcache restore
-        globalThis.addEventListener('pageshow', () => {
-            applyOriginVisuals(currentOriginInt);
+        if (!pageshowListenerRegistered) {
+            pageshowListenerRegistered = true;
 
-            browserAPI.runtime.sendMessage({
-                messageType: Messages.BLOCKED_COUNTER_PING
-            }).catch(() => {
+            globalThis.addEventListener('pageshow', () => {
+                applyOriginVisuals(currentOriginInt);
+
+                browserAPI.runtime.sendMessage({
+                    messageType: Messages.BLOCKED_COUNTER_PING
+                }).catch(() => {
+                });
             });
-        });
+        }
 
         /**
          * Gets the report URL lazily when needed.
@@ -333,121 +306,126 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
          * @returns {URL|null} The report URL.
          */
         const getReportUrl = () => {
-            switch (originInt) {
-                case ProtectionResult.Origin.ADGUARD_SECURITY:
-                    return new URL("mailto:support@adguard.com?subject=False%20Positive&body=Hello%2C" +
-                        "%0A%0AI%20would%20like%20to%20report%20a%20false%20positive." +
-                        "%0A%0AProduct%3A%20AdGuard%20Public%20DNS" +
-                        "%0AURL%3A%20" + encodedBlockedUrl + "%20%28or%20the%20hostname%20itself%29" +
-                        "%0ADetected%20as%3A%20" + encodedResultTextEN +
-                        "%0A%0AI%20believe%20this%20website%20is%20legitimate." +
-                        "%0A%0ASent%20with%20Osprey:%20Browser%20Protection" +
-                        "%0AWebsite:%20https://osprey.ac");
+            try {
+                switch (originInt) {
+                    case ProtectionResult.Origin.ADGUARD_SECURITY:
+                        return new URL("mailto:support@adguard.com?subject=False%20Positive&body=Hello%2C" +
+                            "%0A%0AI%20would%20like%20to%20report%20a%20false%20positive." +
+                            "%0A%0AProduct%3A%20AdGuard%20Public%20DNS" +
+                            "%0AURL%3A%20" + encodedBlockedUrl + "%20%28or%20the%20hostname%20itself%29" +
+                            "%0ADetected%20as%3A%20" + encodedResultTextEN +
+                            "%0A%0AI%20believe%20this%20website%20is%20legitimate." +
+                            "%0A%0ASent%20with%20Osprey:%20Browser%20Protection" +
+                            "%0AWebsite:%20https://osprey.ac");
 
-                case ProtectionResult.Origin.ADGUARD_FAMILY:
-                    return new URL("mailto:support@adguard.com?subject=False%20Positive&body=Hello%2C" +
-                        "%0A%0AI%20would%20like%20to%20report%20a%20false%20positive." +
-                        "%0A%0AProduct%3A%20AdGuard%20Family%20DNS" +
-                        "%0AURL%3A%20" + encodedBlockedUrl + "%20%28or%20the%20hostname%20itself%29" +
-                        "%0ADetected%20as%3A%20" + encodedResultTextEN +
-                        "%0A%0AI%20believe%20this%20website%20is%20legitimate." +
-                        "%0A%0ASent%20with%20Osprey:%20Browser%20Protection" +
-                        "%0AWebsite:%20https://osprey.ac");
+                    case ProtectionResult.Origin.ADGUARD_FAMILY:
+                        return new URL("mailto:support@adguard.com?subject=False%20Positive&body=Hello%2C" +
+                            "%0A%0AI%20would%20like%20to%20report%20a%20false%20positive." +
+                            "%0A%0AProduct%3A%20AdGuard%20Family%20DNS" +
+                            "%0AURL%3A%20" + encodedBlockedUrl + "%20%28or%20the%20hostname%20itself%29" +
+                            "%0ADetected%20as%3A%20" + encodedResultTextEN +
+                            "%0A%0AI%20believe%20this%20website%20is%20legitimate." +
+                            "%0A%0ASent%20with%20Osprey:%20Browser%20Protection" +
+                            "%0AWebsite:%20https://osprey.ac");
 
-                case ProtectionResult.Origin.ALPHAMOUNTAIN:
-                    return new URL("https://alphamountain.freshdesk.com/support/tickets/new");
+                    case ProtectionResult.Origin.ALPHAMOUNTAIN:
+                        return new URL("https://alphamountain.freshdesk.com/support/tickets/new");
 
-                case ProtectionResult.Origin.PRECISIONSEC:
-                    return new URL("mailto:info@precisionsec.com?subject=False%20Positive&body=Hello%2C" +
-                        "%0A%0AI%20would%20like%20to%20report%20a%20false%20positive." +
-                        "%0A%0AProduct%3A%20PrecisionSec%20Web%20Protection" +
-                        "%0AURL%3A%20" + encodedBlockedUrl + "%20%28or%20the%20hostname%20itself%29" +
-                        "%0ADetected%20as%3A%20" + encodedResultTextEN +
-                        "%0A%0AI%20believe%20this%20website%20is%20legitimate." +
-                        "%0A%0ASent%20with%20Osprey:%20Browser%20Protection" +
-                        "%0AWebsite:%20https://osprey.ac");
+                    case ProtectionResult.Origin.PRECISIONSEC:
+                        return new URL("mailto:info@precisionsec.com?subject=False%20Positive&body=Hello%2C" +
+                            "%0A%0AI%20would%20like%20to%20report%20a%20false%20positive." +
+                            "%0A%0AProduct%3A%20PrecisionSec%20Web%20Protection" +
+                            "%0AURL%3A%20" + encodedBlockedUrl + "%20%28or%20the%20hostname%20itself%29" +
+                            "%0ADetected%20as%3A%20" + encodedResultTextEN +
+                            "%0A%0AI%20believe%20this%20website%20is%20legitimate." +
+                            "%0A%0ASent%20with%20Osprey:%20Browser%20Protection" +
+                            "%0AWebsite:%20https://osprey.ac");
 
-                case ProtectionResult.Origin.CERT_EE:
-                    return new URL("mailto:ria@ria.ee?subject=False%20Positive&body=Hello%2C" +
-                        "%0A%0AI%20would%20like%20to%20report%20a%20false%20positive." +
-                        "%0A%0AProduct%3A%20CERT-EE%20DNS" +
-                        "%0AURL%3A%20" + encodedBlockedUrl + "%20%28or%20the%20hostname%20itself%29" +
-                        "%0ADetected%20as%3A%20" + encodedResultTextEN +
-                        "%0A%0AI%20believe%20this%20website%20is%20legitimate." +
-                        "%0A%0ASent%20with%20Osprey:%20Browser%20Protection" +
-                        "%0AWebsite:%20https://osprey.ac");
+                    case ProtectionResult.Origin.CERT_EE:
+                        return new URL("mailto:ria@ria.ee?subject=False%20Positive&body=Hello%2C" +
+                            "%0A%0AI%20would%20like%20to%20report%20a%20false%20positive." +
+                            "%0A%0AProduct%3A%20CERT-EE%20DNS" +
+                            "%0AURL%3A%20" + encodedBlockedUrl + "%20%28or%20the%20hostname%20itself%29" +
+                            "%0ADetected%20as%3A%20" + encodedResultTextEN +
+                            "%0A%0AI%20believe%20this%20website%20is%20legitimate." +
+                            "%0A%0ASent%20with%20Osprey:%20Browser%20Protection" +
+                            "%0AWebsite:%20https://osprey.ac");
 
-                case ProtectionResult.Origin.CLEANBROWSING_SECURITY:
-                    return new URL("mailto:support@cleanbrowsing.org?subject=False%20Positive&body=Hello%2C" +
-                        "%0A%0AI%20would%20like%20to%20report%20a%20false%20positive." +
-                        "%0A%0AProduct%3A%20CleanBrowsing%20Security%20Filter" +
-                        "%0AURL%3A%20" + encodedBlockedUrl + "%20%28or%20the%20hostname%20itself%29" +
-                        "%0ADetected%20as%3A%20" + encodedResultTextEN +
-                        "%0A%0AI%20believe%20this%20website%20is%20legitimate." +
-                        "%0A%0ASent%20with%20Osprey:%20Browser%20Protection" +
-                        "%0AWebsite:%20https://osprey.ac");
+                    case ProtectionResult.Origin.CLEANBROWSING_SECURITY:
+                        return new URL("mailto:support@cleanbrowsing.org?subject=False%20Positive&body=Hello%2C" +
+                            "%0A%0AI%20would%20like%20to%20report%20a%20false%20positive." +
+                            "%0A%0AProduct%3A%20CleanBrowsing%20Security%20Filter" +
+                            "%0AURL%3A%20" + encodedBlockedUrl + "%20%28or%20the%20hostname%20itself%29" +
+                            "%0ADetected%20as%3A%20" + encodedResultTextEN +
+                            "%0A%0AI%20believe%20this%20website%20is%20legitimate." +
+                            "%0A%0ASent%20with%20Osprey:%20Browser%20Protection" +
+                            "%0AWebsite:%20https://osprey.ac");
 
-                case ProtectionResult.Origin.CLEANBROWSING_FAMILY:
-                    return new URL("mailto:support@cleanbrowsing.org?subject=False%20Positive&body=Hello%2C" +
-                        "%0A%0AI%20would%20like%20to%20report%20a%20false%20positive." +
-                        "%0A%0AProduct%3A%20CleanBrowsing%20Adult%20Filter" +
-                        "%0AURL%3A%20" + encodedBlockedUrl + "%20%28or%20the%20hostname%20itself%29" +
-                        "%0ADetected%20as%3A%20" + encodedResultTextEN +
-                        "%0A%0AI%20believe%20this%20website%20is%20legitimate." +
-                        "%0A%0ASent%20with%20Osprey:%20Browser%20Protection" +
-                        "%0AWebsite:%20https://osprey.ac");
+                    case ProtectionResult.Origin.CLEANBROWSING_FAMILY:
+                        return new URL("mailto:support@cleanbrowsing.org?subject=False%20Positive&body=Hello%2C" +
+                            "%0A%0AI%20would%20like%20to%20report%20a%20false%20positive." +
+                            "%0A%0AProduct%3A%20CleanBrowsing%20Adult%20Filter" +
+                            "%0AURL%3A%20" + encodedBlockedUrl + "%20%28or%20the%20hostname%20itself%29" +
+                            "%0ADetected%20as%3A%20" + encodedResultTextEN +
+                            "%0A%0AI%20believe%20this%20website%20is%20legitimate." +
+                            "%0A%0ASent%20with%20Osprey:%20Browser%20Protection" +
+                            "%0AWebsite:%20https://osprey.ac");
 
-                case ProtectionResult.Origin.CLOUDFLARE_SECURITY:
-                case ProtectionResult.Origin.CLOUDFLARE_FAMILY:
-                    return new URL("https://radar.cloudflare.com/domains/feedback/" + encodedBlockedUrl);
+                    case ProtectionResult.Origin.CLOUDFLARE_SECURITY:
+                    case ProtectionResult.Origin.CLOUDFLARE_FAMILY:
+                        return new URL("https://radar.cloudflare.com/domains/feedback/" + encodedBlockedUrl);
 
-                case ProtectionResult.Origin.CONTROL_D_SECURITY:
-                    return new URL("mailto:help@controld.com?subject=False%20Positive&body=Hello%2C" +
-                        "%0A%0AI%20would%20like%20to%20report%20a%20false%20positive." +
-                        "%0A%0AProduct%3A%20Control%20D%20Security%20DNS" +
-                        "%0AURL%3A%20" + encodedBlockedUrl + "%20%28or%20the%20hostname%20itself%29" +
-                        "%0ADetected%20as%3A%20" + encodedResultTextEN +
-                        "%0A%0AI%20believe%20this%20website%20is%20legitimate." +
-                        "%0A%0ASent%20with%20Osprey:%20Browser%20Protection" +
-                        "%0AWebsite:%20https://osprey.ac");
+                    case ProtectionResult.Origin.CONTROL_D_SECURITY:
+                        return new URL("mailto:help@controld.com?subject=False%20Positive&body=Hello%2C" +
+                            "%0A%0AI%20would%20like%20to%20report%20a%20false%20positive." +
+                            "%0A%0AProduct%3A%20Control%20D%20Security%20DNS" +
+                            "%0AURL%3A%20" + encodedBlockedUrl + "%20%28or%20the%20hostname%20itself%29" +
+                            "%0ADetected%20as%3A%20" + encodedResultTextEN +
+                            "%0A%0AI%20believe%20this%20website%20is%20legitimate." +
+                            "%0A%0ASent%20with%20Osprey:%20Browser%20Protection" +
+                            "%0AWebsite:%20https://osprey.ac");
 
-                case ProtectionResult.Origin.CONTROL_D_FAMILY:
-                    return new URL("mailto:help@controld.com?subject=False%20Positive&body=Hello%2C" +
-                        "%0A%0AI%20would%20like%20to%20report%20a%20false%20positive." +
-                        "%0A%0AProduct%3A%20Control%20D%20Family%20DNS" +
-                        "%0AURL%3A%20" + encodedBlockedUrl + "%20%28or%20the%20hostname%20itself%29" +
-                        "%0ADetected%20as%3A%20" + encodedResultTextEN +
-                        "%0A%0AI%20believe%20this%20website%20is%20legitimate." +
-                        "%0A%0ASent%20with%20Osprey:%20Browser%20Protection" +
-                        "%0AWebsite:%20https://osprey.ac");
+                    case ProtectionResult.Origin.CONTROL_D_FAMILY:
+                        return new URL("mailto:help@controld.com?subject=False%20Positive&body=Hello%2C" +
+                            "%0A%0AI%20would%20like%20to%20report%20a%20false%20positive." +
+                            "%0A%0AProduct%3A%20Control%20D%20Family%20DNS" +
+                            "%0AURL%3A%20" + encodedBlockedUrl + "%20%28or%20the%20hostname%20itself%29" +
+                            "%0ADetected%20as%3A%20" + encodedResultTextEN +
+                            "%0A%0AI%20believe%20this%20website%20is%20legitimate." +
+                            "%0A%0ASent%20with%20Osprey:%20Browser%20Protection" +
+                            "%0AWebsite:%20https://osprey.ac");
 
-                case ProtectionResult.Origin.PHISH_DESTROY:
-                    return new URL("https://phishdestroy.io/appeals");
+                    case ProtectionResult.Origin.PHISH_DESTROY:
+                        return new URL("https://phishdestroy.io/appeals");
 
-                case ProtectionResult.Origin.PHISHING_DATABASE:
-                    return new URL("mailto:support@phish.co.za?subject=False%20Positive&body=Hello%2C" +
-                        "%0A%0AI%20would%20like%20to%20report%20a%20false%20positive." +
-                        "%0AURL%3A%20" + encodedBlockedUrl + "%20%28or%20the%20hostname%20itself%29" +
-                        "%0A%0AI%20believe%20this%20website%20is%20legitimate." +
-                        "%0A%0ASent%20with%20Osprey:%20Browser%20Protection" +
-                        "%0AWebsite:%20https://osprey.ac");
+                    case ProtectionResult.Origin.PHISHING_DATABASE:
+                        return new URL("mailto:support@phish.co.za?subject=False%20Positive&body=Hello%2C" +
+                            "%0A%0AI%20would%20like%20to%20report%20a%20false%20positive." +
+                            "%0AURL%3A%20" + encodedBlockedUrl + "%20%28or%20the%20hostname%20itself%29" +
+                            "%0A%0AI%20believe%20this%20website%20is%20legitimate." +
+                            "%0A%0ASent%20with%20Osprey:%20Browser%20Protection" +
+                            "%0AWebsite:%20https://osprey.ac");
 
-                case ProtectionResult.Origin.QUAD9:
-                    return new URL("https://quad9.net/support/contact");
+                    case ProtectionResult.Origin.QUAD9:
+                        return new URL("https://quad9.net/support/contact");
 
-                case ProtectionResult.Origin.SWITCH_CH:
-                    return new URL("mailto:dnsfirewall@switch.ch?subject=False%20Positive&body=Hello%2C" +
-                        "%0A%0AI%20would%20like%20to%20report%20a%20false%20positive." +
-                        "%0A%0AProduct%3A%20Switch.ch%20Public%20DNS" +
-                        "%0AURL%3A%20" + encodedBlockedUrl + "%20%28or%20the%20hostname%20itself%29" +
-                        "%0ADetected%20as%3A%20" + encodedResultTextEN +
-                        "%0A%0AI%20believe%20this%20website%20is%20legitimate." +
-                        "%0A%0ASent%20with%20Osprey:%20Browser%20Protection" +
-                        "%0AWebsite:%20https://osprey.ac");
+                    case ProtectionResult.Origin.SWITCH_CH:
+                        return new URL("mailto:dnsfirewall@switch.ch?subject=False%20Positive&body=Hello%2C" +
+                            "%0A%0AI%20would%20like%20to%20report%20a%20false%20positive." +
+                            "%0A%0AProduct%3A%20Switch.ch%20Public%20DNS" +
+                            "%0AURL%3A%20" + encodedBlockedUrl + "%20%28or%20the%20hostname%20itself%29" +
+                            "%0ADetected%20as%3A%20" + encodedResultTextEN +
+                            "%0A%0AI%20believe%20this%20website%20is%20legitimate." +
+                            "%0A%0ASent%20with%20Osprey:%20Browser%20Protection" +
+                            "%0AWebsite:%20https://osprey.ac");
 
-                default:
-                    console.warn(`No report URL defined for origin integer: ${originInt}`);
-                    return null;
+                    default:
+                        console.warn(`No report URL defined for origin integer: ${originInt}`);
+                        return null;
+                }
+            } catch (error) {
+                console.error("Failed to construct report URL:", error);
+                return null;
             }
         };
 
@@ -460,43 +438,41 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
          */
         const sendMessage = async (messageType, additionalData = {}) => {
             try {
-                // Creates the message object and converts URL objects to strings
+                // Creates the message object
                 const message = {
                     messageType,
-                    blockedUrl: blockedUrl instanceof URL ? blockedUrl.toString() : blockedUrl,
-                    origin: origin instanceof URL ? origin.toString() : origin,
+                    blockedUrl,
+                    origin,
                     ...additionalData
                 };
-
-                // Converts URL objects to strings in additionalData
-                for (const key in message) {
-                    if (Object.hasOwn(message, key) && message[key] instanceof URL) {
-                        message[key] = message[key].toString();
-                    }
-                }
-
                 await browserAPI.runtime.sendMessage(message);
             } catch (error) {
                 console.error(`Error sending message ${messageType}:`, error);
             }
         };
 
-        // Extracts the blocked URL from the current page URL
+        // Extracts the continue URL from the current page URL
         let continueUrl = UrlHelpers.extractContinueUrl(pageUrl);
 
-        // Validates the continue URL
-        if (!continueUrl) {
+        // Validates the continue URL against an allowed-scheme whitelist
+        if (!continueUrl || !continueUrl.startsWith("https://") && !continueUrl.startsWith("http://")) {
             console.warn(`No valid continue URL found in URL: ${pageUrl}; setting to safe value`);
             continueUrl = "https://www.google.com";
         }
 
         Settings.get(settings => {
+            // Validate settings object; fail closed on missing or malformed value
+            if (!settings || typeof settings !== 'object') {
+                console.error("WarningPage: Settings.get returned invalid settings; defaulting to restrictive policy.");
+                settings = {hideContinueButtons: true, hideReportButton: true};
+            }
+
             // Adds event listener to "Report this website as safe" button
             if (domElements.reportWebsite) {
                 domElements.reportWebsite.addEventListener("click", async () => {
                     if (!settings.hideReportButton) {
                         await sendMessage(Messages.REPORT_WEBSITE, {
-                            reportUrl: getReportUrl()
+                            reportUrl: getReportUrl()?.toString() ?? null
                         });
                     }
                 });
@@ -506,7 +482,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
                         e.preventDefault();
                         if (!settings.hideReportButton) {
                             await sendMessage(Messages.REPORT_WEBSITE, {
-                                reportUrl: getReportUrl()
+                                reportUrl: getReportUrl()?.toString() ?? null
                             });
                         }
                     }
@@ -520,7 +496,6 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
                 domElements.allowWebsite.addEventListener("click", async () => {
                     if (!settings.hideContinueButtons) {
                         await sendMessage(Messages.ALLOW_WEBSITE, {
-                            blockedUrl: blockedUrl,
                             continueUrl: continueUrl
                         });
                     }
@@ -531,7 +506,6 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
                         e.preventDefault();
                         if (!settings.hideContinueButtons) {
                             await sendMessage(Messages.ALLOW_WEBSITE, {
-                                blockedUrl: blockedUrl,
                                 continueUrl: continueUrl
                             });
                         }
@@ -544,9 +518,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
             // Adds event listener to "Back to safety" button
             if (domElements.backButton) {
                 domElements.backButton.addEventListener("click", async () => {
-                    await sendMessage(Messages.CONTINUE_TO_SAFETY, {
-                        blockedUrl: blockedUrl
-                    });
+                    await sendMessage(Messages.CONTINUE_TO_SAFETY);
                 });
             } else {
                 console.warn("'backButton' element not found in the WarningPage DOM.");
@@ -557,7 +529,6 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
                 domElements.continueButton.addEventListener("click", async () => {
                     if (!settings.hideContinueButtons) {
                         await sendMessage(Messages.CONTINUE_TO_WEBSITE, {
-                            blockedUrl: blockedUrl,
                             continueUrl: continueUrl
                         });
                     }
@@ -570,6 +541,8 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
             if (!settings.hideContinueButtons) {
                 if (domElements.allowWebsite) {
                     domElements.allowWebsite.classList.remove("hidden");
+                    domElements.allowWebsite.removeAttribute("aria-hidden");
+                    domElements.allowWebsite.removeAttribute("aria-disabled");
                 } else {
                     console.warn("'allowWebsite' element not found in the WarningPage DOM.");
                 }
@@ -585,6 +558,8 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
             if (!settings.hideReportButton) {
                 if (domElements.reportWebsite) {
                     domElements.reportWebsite.classList.remove("hidden");
+                    domElements.reportWebsite.removeAttribute("aria-hidden");
+                    domElements.reportWebsite.removeAttribute("aria-disabled");
                 } else {
                     console.warn("'reportWebsite' element not found in the WarningPage DOM.");
                 }
