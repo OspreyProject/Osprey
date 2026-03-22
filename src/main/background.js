@@ -1258,11 +1258,21 @@
                     return;
                 }
 
-                const hostnameString = `*.${hostname}`;
+                const dotIndex = hostname.indexOf(".");
+                let hostnameString;
 
-                // Adds the hostname to the global allowed cache
+                if (dotIndex === -1) {
+                    hostnameString = `*.${hostname}`;
+                } else {
+                    // Only go one level up if the parent is itself a proper domain (has a dot), not a bare TLD
+                    const parent = hostname.slice(dotIndex + 1);
+                    hostnameString = parent.includes(".") ? `*.${parent}` : `*.${hostname}`;
+                }
+
+                // Adds the hostname to the global allowed cache and removes it from all blocked caches
                 console.debug(`Adding hostname to the global allowed cache: ${hostnameString}`);
                 CacheManager.addStringToAllowedCache(hostnameString, "global");
+                CacheManager.removeUrlFromBlockedCache(blockedUrlObject, "all");
 
                 // Validates the continue URL
                 const continueUrlResult = Validate.validateHttpUrl(message.continueUrl, validProtocols);

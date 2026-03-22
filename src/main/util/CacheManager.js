@@ -30,6 +30,7 @@ const CacheManager = (() => {
 
     // Caches for allowed, blocked, and processing entries
     let allowedCaches = Object.create(null);
+    let allowedPatternCaches = Object.create(null);
     let blockedCaches = Object.create(null);
     let processingCaches = Object.create(null);
 
@@ -83,6 +84,7 @@ const CacheManager = (() => {
     // Initialize caches for each provider
     for (const name of providers) {
         allowedCaches[name] = new Map();
+        allowedPatternCaches[name] = new Set();
         blockedCaches[name] = new Map();
         processingCaches[name] = new Map();
     }
@@ -114,9 +116,18 @@ const CacheManager = (() => {
                 const entries = Object.entries(callback[name]).filter(([key]) => !DANGEROUS_KEYS.has(key));
 
                 blockedCaches[name] = new Map(
-                    entries.map(([url, entry]) => [
-                        url, {exp: entry.exp, resultType: entry.resultType}
-                    ])
+                    entries.flatMap(([url, {exp, resultType}]) => {
+                        if (!Number.isFinite(exp) && exp !== 0 || !Number.isFinite(resultType)) {
+                            console.warn(`Skipping invalid blocked cache entry for "${url}": invalid exp or resultType`);
+                            return [];
+                        }
+
+                        if (!validResultTypes.has(resultType)) {
+                            console.warn(`Skipping blocked cache entry for "${url}": unrecognized resultType ${resultType}`);
+                            return [];
+                        }
+                        return [[url, {exp, resultType}]];
+                    })
                 );
             }
         }
@@ -129,8 +140,8 @@ const CacheManager = (() => {
      * @param {Object} [callback] The callback function to execute after loading the processing caches.
      */
     StorageUtil.getFromSessionStore(processingKey, callback => {
-        for (const name of Object.keys(processingCaches)) {
-            if (callback && typeof callback === 'object') {
+        if (callback && typeof callback === 'object') {
+            for (const name of Object.keys(processingCaches)) {
                 if (callback[name] && typeof callback[name] === 'object') {
                     const entries = Object.entries(callback[name]).filter(([key]) => !DANGEROUS_KEYS.has(key));
                     processingCaches[name] = new Map(entries);
@@ -224,9 +235,18 @@ const CacheManager = (() => {
             }
         };
 
-        cleanGroup(allowedCaches, () => updateLocalStorage());
-        cleanGroup(blockedCaches, () => updateLocalStorage());
+        let localDirty = false;
+        cleanGroup(allowedCaches, () => {
+            localDirty = true;
+        });
+        cleanGroup(blockedCaches, () => {
+            localDirty = true;
+        });
         cleanGroup(processingCaches, () => updateSessionStorage());
+
+        if (localDirty) {
+            updateLocalStorage();
+        }
         return totalRemoved;
     };
 
@@ -310,39 +330,18 @@ const CacheManager = (() => {
     /**
      * Checks if a string is in the allowed cache for a specific provider.
      *
-     * @param {string} str The string to check.
-     * @param {string} name The name of the provider (e.g., "precisionSec").
-     * @returns {boolean} Returns true if the string is in the allowed cache and not expired, false otherwise.
-     */
-    const isStringInAllowedCache = (str, name) => {
-        try {
-            const map = allowedCaches[name];
-
-            if (!map) {
-                console.warn(`Allowed cache "${name}" not found`);
-                return false;
-            }
-
-            if (map.has(str)) {
-                return true;
-            }
-        } catch (error) {
-            console.error(`Error checking allowed cache for string "${str}":`, error);
-        }
-        return false;
-    };
-
-    /**
-     * Checks if a string is in the allowed cache for a specific provider.
-     *
      * @param {string} str The string to check against the map's patterns.
      * @param {string} name The name of the provider (e.g., "precisionSec").
      * @returns {boolean} Returns true if the string is in the allowed cache and not expired, false otherwise.
      */
     const isPatternInAllowedCache = (str, name) => {
-        // Returns if the string is too long
         if (typeof str !== 'string' || str.length > 2048) {
-            console.warn(`Invalid string provided for allowed cache pattern check: "${str}"`);
+            console.warn(`Invalid string provided: "${str}"`);
+            return false;
+        }
+
+        if (name !== "all" && !providersSet.has(name)) {
+            console.warn(`Unknown cache provider name: "${name}"`);
             return false;
         }
 
@@ -354,16 +353,23 @@ const CacheManager = (() => {
                 return false;
             }
 
-            // Checks if any key in the map (patterns, like *.example.com) matches the string
-            for (const pattern of map.keys()) {
-                // Uses a simple pattern matching logic
-                if (pattern.startsWith("*.")) {
-                    const domain = pattern.slice(2);
+            // O(1) exact-key check
+            if (map.has(str)) {
+                return true;
+            }
 
-                    if (str === domain || str.endsWith("." + domain)) {
-                        return true;
-                    }
-                } else if (str === pattern) {
+            // O(1) wildcard pattern check for *.str
+            if (patternCache.has("*." + str)) {
+                return true;
+            }
+
+            const dotIndex = str.indexOf(".");
+
+            // O(n) wildcard pattern check for str with subdomains (e.g., sub.str)
+            if (dotIndex !== -1) {
+                const wildcardKey = "*." + str.slice(dotIndex + 1);
+
+                if (patternCache.has(wildcardKey)) {
                     return true;
                 }
             }
@@ -418,10 +424,20 @@ const CacheManager = (() => {
 
             if (name === "all") {
                 for (const cache of Object.values(allowedCaches)) {
-                    cache.set(str, expTime);
+                    cache.set(str, 0);
+                }
+
+                if (str.startsWith("*.")) {
+                    for (const patternCache of Object.values(allowedPatternCaches)) {
+                        patternCache.add(str);
+                    }
                 }
             } else if (allowedCaches[name]) {
-                allowedCaches[name].set(str, expTime);
+                allowedCaches[name].set(str, 0);
+
+                if (str.startsWith("*.")) {
+                    allowedPatternCaches[name].add(str);
+                }
             } else {
                 console.warn(`Cache "${name}" not found`);
             }
@@ -489,11 +505,11 @@ const CacheManager = (() => {
             const cache = blockedCaches[name];
 
             if (name === "all") {
-                for (const cache of Object.values(blockedCaches)) {
-                    cache.set(key, {exp: expTime, resultType: resultType});
+                for (const providerCache of Object.values(blockedCaches)) {
+                    providerCache.set(key, {exp: expTime, resultType});
                 }
             } else if (cache) {
-                cache.set(key, {exp: expTime, resultType: resultType});
+                cache.set(key, {exp: expTime, resultType});
             } else {
                 console.warn(`Cache "${name}" not found`);
             }
@@ -530,16 +546,15 @@ const CacheManager = (() => {
 
             if (entry.exp > Date.now()) {
                 return entry.resultType;
-            } else {
-                // Entry expired, remove it
-                cache.delete(key);
-                updateLocalStorage();
             }
+
+            // Entry expired, remove it
+            cache.delete(key);
+            updateLocalStorage();
         } catch (error) {
             console.error(`Error getting blocked result type for ${url}:`, error);
+            console.warn(`Returning default result type for ${url} in provider "${name}" due to error`);
         }
-
-        console.warn(`Returning default result type for ${url} in provider "${name}" due to error or missing entry`);
         return ProtectionResult.ResultType.FAILED;
     };
 
@@ -631,7 +646,7 @@ const CacheManager = (() => {
             }
 
             const expTime = Date.now() + 60 * 1000; // Expiration for processing cache is 60 seconds
-            const entry = {exp: expTime, tabId: tabId};
+            const entry = {exp: expTime, tabId};
 
             if (name === "all") {
                 for (const cache of Object.values(processingCaches)) {
@@ -681,41 +696,6 @@ const CacheManager = (() => {
     };
 
     /**
-     * Retrieve all normalized-URL keys (or string keys) in the processing cache for a given provider
-     * that are associated with the specified tabId and not yet expired.
-     *
-     * @param {string} name The name of the provider (e.g., "precisionSec").
-     * @param {number} tabId The ID of the tab to filter by.
-     * @returns {string[]} An array of keys (normalized URLs or strings) that match the criteria.
-     */
-    const getKeysByTabId = (name, tabId) => {
-        const results = [];
-        const map = processingCaches[name];
-
-        // Checks if the map is valid
-        if (!map) {
-            console.warn(`Processing cache "${name}" not found`);
-            return results;
-        }
-
-        const now = Date.now();
-
-        // Removes expired keys from the map
-        for (const [key, entry] of map.entries()) {
-            if (entry.tabId === tabId) {
-                if (entry.exp > now) {
-                    results.push(key);
-                } else {
-                    map.delete(key);
-                }
-            }
-        }
-
-        updateSessionStorage();
-        return results;
-    };
-
-    /**
      * Remove all entries in the processing cache for all keys associated with a specific tabId.
      *
      * @param {number} tabId The ID of the tab whose entries should be removed.
@@ -726,17 +706,22 @@ const CacheManager = (() => {
         for (const name of Object.keys(processingCaches)) {
             const map = processingCaches[name];
 
-            // Checks if the cache is valid
             if (!map) {
                 console.warn(`Processing cache "${name}" not found`);
                 continue;
             }
 
+            const toRemove = [];
+
             for (const [key, entry] of map.entries()) {
                 if (entry.tabId === tabId) {
-                    removedCount++;
-                    map.delete(key);
+                    toRemove.push(key);
                 }
+            }
+
+            for (const key of toRemove) {
+                map.delete(key);
+                removedCount++;
             }
         }
 
@@ -752,7 +737,6 @@ const CacheManager = (() => {
         clearBlockedCache,
         clearProcessingCache,
         isUrlInAllowedCache,
-        isStringInAllowedCache,
         isPatternInAllowedCache,
         addUrlToAllowedCache,
         addStringToAllowedCache,
@@ -763,8 +747,6 @@ const CacheManager = (() => {
         isUrlInProcessingCache,
         addUrlToProcessingCache,
         removeUrlFromProcessingCache,
-        getKeysByTabId,
-        removeKeysByTabId,
-        providers
+        removeKeysByTabId
     });
 })();
