@@ -17,59 +17,97 @@
  */
 "use strict";
 
-// Global variable for browser API compatibility
-const browserAPI = globalThis.chrome ?? globalThis.browser;
+{
+    const browserAPI = globalThis.chrome ?? globalThis.browser;
 
-const LangUtil = Object.freeze({
+    /**
+     * Retrieves a localized message by key, warning if the key is missing or unregistered.
+     *
+     * @param {string} key The i18n message key.
+     * @returns {string} The localized message, or the key name if not found.
+     */
+    const msg = key => {
+        if (typeof key !== 'string' || key.length === 0) {
+            console.warn(`LangUtil: msg() called with invalid key: ${key}`);
+            return '';
+        }
+
+        if (!browserAPI?.i18n?.getMessage) {
+            console.error('LangUtil: browserAPI.i18n is not available');
+            return key;
+        }
+
+        const value = browserAPI.i18n.getMessage(key);
+
+        if (!value) {
+            console.error(`LangUtil: missing i18n message for key '${key}'`);
+            return key;
+        }
+        return value;
+    };
+
+    const LangUtil = Object.create(null);
+
+    const define = (prop, key) => {
+        Object.defineProperty(LangUtil, prop, {
+            get() {
+                return msg(key);
+            },
+            enumerable: true,
+        });
+    };
 
     // Global
-    TITLE: browserAPI.i18n.getMessage('extensionName'),
-    LOGO_ALT: browserAPI.i18n.getMessage('logoAlt'),
-    URL_LABEL: browserAPI.i18n.getMessage('urlLabel'),
-    REPORTED_BY_LABEL: browserAPI.i18n.getMessage('reportedByLabel'),
-    REASON_LABEL: browserAPI.i18n.getMessage('reasonLabel'),
+    define('TITLE', 'extensionName');
+    define('LOGO_ALT', 'logoAlt');
+    define('URL_LABEL', 'urlLabel');
+    define('REPORTED_BY_LABEL', 'reportedByLabel');
+    define('REASON_LABEL', 'reasonLabel');
 
     // Background
-    UNSAFE_WEBSITE_TITLE: browserAPI.i18n.getMessage('unsafeWebsiteTitle'),
-    CLEAR_ALLOWED_WEBSITES_TITLE: browserAPI.i18n.getMessage('clearAllowedWebsitesTitle'),
-    CLEAR_ALLOWED_WEBSITES_MESSAGE: browserAPI.i18n.getMessage('clearAllowedWebsitesMessage'),
-    RESTORE_DEFAULTS_TITLE: browserAPI.i18n.getMessage('restoreDefaultsTitle'),
-    RESTORE_DEFAULTS_MESSAGE: browserAPI.i18n.getMessage('restoreDefaultsMessage'),
-    TOGGLE_NOTIFICATIONS_CONTEXT: browserAPI.i18n.getMessage('toggleNotificationsContext'),
-    TOGGLE_FRAME_NAVIGATION_CONTEXT: browserAPI.i18n.getMessage('toggleFrameNavigationContext'),
-    CLEAR_ALLOWED_WEBSITES_CONTEXT: browserAPI.i18n.getMessage('clearAllowedWebsitesContext'),
-    REPORT_WEBSITE_AS_MALICIOUS_CONTEXT: browserAPI.i18n.getMessage('reportWebsiteAsMaliciousContext'),
-    RESTORE_DEFAULTS_CONTEXT: browserAPI.i18n.getMessage('restoreDefaultsContext'),
+    define('UNSAFE_WEBSITE_TITLE', 'unsafeWebsiteTitle');
+    define('CLEAR_ALLOWED_WEBSITES_TITLE', 'clearAllowedWebsitesTitle');
+    define('CLEAR_ALLOWED_WEBSITES_MESSAGE', 'clearAllowedWebsitesMessage');
+    define('RESTORE_DEFAULTS_TITLE', 'restoreDefaultsTitle');
+    define('RESTORE_DEFAULTS_MESSAGE', 'restoreDefaultsMessage');
+    define('TOGGLE_NOTIFICATIONS_CONTEXT', 'toggleNotificationsContext');
+    define('TOGGLE_FRAME_NAVIGATION_CONTEXT', 'toggleFrameNavigationContext');
+    define('CLEAR_ALLOWED_WEBSITES_CONTEXT', 'clearAllowedWebsitesContext');
+    define('REPORT_WEBSITE_AS_MALICIOUS_CONTEXT', 'reportWebsiteAsMaliciousContext');
+    define('RESTORE_DEFAULTS_CONTEXT', 'restoreDefaultsContext');
 
     // Popup Page
-    ON_TEXT: browserAPI.i18n.getMessage('onText'),
-    OFF_TEXT: browserAPI.i18n.getMessage('offText'),
-    ON_LOCKED_TEXT: browserAPI.i18n.getMessage('onLockedText'),
-    OFF_LOCKED_TEXT: browserAPI.i18n.getMessage('offLockedText'),
-    POPUP_TITLE: browserAPI.i18n.getMessage('popupTitle'),
-    GITHUB_LINK: browserAPI.i18n.getMessage('githubLink'),
-    VERSION: browserAPI.i18n.getMessage('version'),
-    PRIVACY_POLICY: browserAPI.i18n.getMessage('privacyPolicy'),
-    OFFICIAL_PARTNER_TITLE: browserAPI.i18n.getMessage('officialPartnerTitle'),
+    define('ON_TEXT', 'onText');
+    define('OFF_TEXT', 'offText');
+    define('ON_LOCKED_TEXT', 'onLockedText');
+    define('OFF_LOCKED_TEXT', 'offLockedText');
+    define('POPUP_TITLE', 'popupTitle');
+    define('GITHUB_LINK', 'githubLink');
+    define('VERSION', 'version');
+    define('PRIVACY_POLICY', 'privacyPolicy');
+    define('OFFICIAL_PARTNER_TITLE', 'officialPartnerTitle');
 
     // Warning Page
-    WARNING_TITLE: browserAPI.i18n.getMessage('warningTitle'),
-    RECOMMENDATION: browserAPI.i18n.getMessage('recommendation'),
-    DETAILS: browserAPI.i18n.getMessage('details'),
-    REPORT_WEBSITE: browserAPI.i18n.getMessage('reportWebsite'),
-    ALLOW_WEBSITE: browserAPI.i18n.getMessage('allowWebsite'),
-    BACK_BUTTON: browserAPI.i18n.getMessage('backButton'),
-    CONTINUE_BUTTON: browserAPI.i18n.getMessage('continueButton'),
-    REPORTED_BY_OTHERS: browserAPI.i18n.getMessage('reportedByOthers'),
-    REPORTED_BY_ALSO: browserAPI.i18n.getMessage('reportedByAlso'),
+    define('WARNING_TITLE', 'warningTitle');
+    define('RECOMMENDATION', 'recommendation');
+    define('DETAILS', 'details');
+    define('REPORT_WEBSITE', 'reportWebsite');
+    define('ALLOW_WEBSITE', 'allowWebsite');
+    define('BACK_BUTTON', 'backButton');
+    define('CONTINUE_BUTTON', 'continueButton');
+    define('REPORTED_BY_OTHERS', 'reportedByOthers');
+    define('REPORTED_BY_ALSO', 'reportedByAlso');
 
     // Protection Result
-    KNOWN_SAFE: browserAPI.i18n.getMessage('knownSafe'),
-    FAILED: browserAPI.i18n.getMessage('failed'),
-    WAITING: browserAPI.i18n.getMessage('waiting'),
-    ALLOWED: browserAPI.i18n.getMessage('allowed'),
-    MALICIOUS: browserAPI.i18n.getMessage('malicious'),
-    PHISHING: browserAPI.i18n.getMessage('phishing'),
-    UNTRUSTED: browserAPI.i18n.getMessage('untrusted'),
-    ADULT_CONTENT: browserAPI.i18n.getMessage('adultContent'),
-});
+    define('KNOWN_SAFE', 'knownSafe');
+    define('FAILED', 'failed');
+    define('WAITING', 'waiting');
+    define('ALLOWED', 'allowed');
+    define('MALICIOUS', 'malicious');
+    define('PHISHING', 'phishing');
+    define('UNTRUSTED', 'untrusted');
+    define('ADULT_CONTENT', 'adultContent');
+
+    Object.freeze(LangUtil);
+    globalThis.LangUtil = LangUtil;
+}
