@@ -86,8 +86,9 @@ security researchers, and end-users can trust to secure their browsing, wherever
 Osprey is committed to being non-profit, non-commercial, and open-source, **forever**, with no plans to monetize the
 project in any way. Unlike other free browser extensions, Osprey doesn't collect, profile,
 or [sell your browsing data](https://ftc.gov/news-events/news/press-releases/2024/02/ftc-order-will-ban-avast-selling-browsing-data-advertising-purposes-require-it-pay-165-million-over/?utm_source=osprey)
-behind your back. We're committed to being as transparent as possible. Osprey runs locally on your device with **zero
-telemetry**, user-identifiable back-end analytics, or user accounts needed. Check out
+behind your back. URL checks are routed through Osprey's privacy-respecting proxy server
+at [api.osprey.ac](https://api.osprey.ac), which forwards requests to our protection partners without transmitting any
+personally identifiable information. No user accounts are required. Check out
 our [Privacy Policy here](https://osprey.ac/privacy) for more info.
 
 The more protection providers join the project, the better the Osprey threat intelligence platform becomes. If you're
