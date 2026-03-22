@@ -20,9 +20,6 @@
 // Manages the cache for the allowed protection providers
 const CacheManager = (() => {
 
-    // List of keys that are considered dangerous and should not be used for storage
-    const DANGEROUS_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
-
     // Key names for the caches in local and session storage
     const allowedKey = "allowedCache";
     const blockedKey = "blockedCache";
