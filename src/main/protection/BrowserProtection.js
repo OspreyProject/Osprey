@@ -233,44 +233,44 @@ const BrowserProtection = (() => {
                             shortName, filteringResponse, callback, data) => {
         switch (result) {
             case "failed":
-                console.warn(`[${shortName}] Invalid status received: ${filteringResponse.status}`);
                 CacheManager.removeUrlFromProcessingCache(cacheObject, cacheName);
-                callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
+                console.debug(`[${shortName}] Upstream lookup failed for ${urlString}`);
+                callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, Number(origin)));
                 return;
 
             case "allowed":
                 console.debug(`[${shortName}] Added URL to allowed cache: ${urlString}`);
                 CacheManager.addUrlToAllowedCache(urlObject, cacheName);
-                callback(new ProtectionResult(urlString, ProtectionResult.ResultType.ALLOWED, origin));
+                callback(new ProtectionResult(urlString, ProtectionResult.ResultType.ALLOWED, Number(origin)));
                 return;
 
             case "malicious":
                 console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
                 CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.MALICIOUS);
-                callback(new ProtectionResult(urlString, ProtectionResult.ResultType.MALICIOUS, origin));
+                callback(new ProtectionResult(urlString, ProtectionResult.ResultType.MALICIOUS, Number(origin)));
                 return;
 
             case "phishing":
                 console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
                 CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.PHISHING);
-                callback(new ProtectionResult(urlString, ProtectionResult.ResultType.PHISHING, origin));
+                callback(new ProtectionResult(urlString, ProtectionResult.ResultType.PHISHING, Number(origin)));
                 return;
 
             case "untrusted":
                 console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
                 CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.UNTRUSTED);
-                callback(new ProtectionResult(urlString, ProtectionResult.ResultType.UNTRUSTED, origin));
+                callback(new ProtectionResult(urlString, ProtectionResult.ResultType.UNTRUSTED, Number(origin)));
                 return;
 
             case "adult_content":
                 console.debug(`[${shortName}] Added URL to blocked cache: ${urlString}`);
                 CacheManager.addUrlToBlockedCache(urlObject, cacheName, ProtectionResult.ResultType.ADULT_CONTENT);
-                callback(new ProtectionResult(urlString, ProtectionResult.ResultType.ADULT_CONTENT, origin));
+                callback(new ProtectionResult(urlString, ProtectionResult.ResultType.ADULT_CONTENT, Number(origin)));
                 return;
 
             default:
                 console.warn(`[${shortName}] Returned an unexpected result for URL ${urlString}: ${data}`);
-                callback(new ProtectionResult(urlString, ProtectionResult.ResultType.ALLOWED, origin));
+                callback(new ProtectionResult(urlString, ProtectionResult.ResultType.ALLOWED, Number(origin)));
         }
     };
 
@@ -453,7 +453,7 @@ const BrowserProtection = (() => {
                 // Checks if the response status is valid
                 if (!filteringResponse.ok) {
                     console.warn(`[${shortName}] Invalid status received: ${filteringResponse.status}`);
-                    CacheManager.removeUrlFromProcessingCache(cacheObject, cacheName); // add this
+                    CacheManager.removeUrlFromProcessingCache(cacheObject, cacheName);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }
@@ -461,7 +461,7 @@ const BrowserProtection = (() => {
                 // Checks if the Content-Type is valid
                 if (!Validate.hasValidContentType(filteringResponse, 'application/json')) {
                     console.warn(`[${shortName}] Unexpected Content-Type: ${filteringResponse.headers.get('Content-Type')}`);
-                    CacheManager.removeUrlFromProcessingCache(cacheObject, cacheName); // add this
+                    CacheManager.removeUrlFromProcessingCache(cacheObject, cacheName);
                     callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, origin));
                     return;
                 }

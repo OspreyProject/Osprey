@@ -854,6 +854,7 @@
      * @param {Object} changes The changes object containing the keys that were changed and their old and new values.
      * @param {string} area The storage area that was changed (e.g., "local", "sync", "managed").
      */
+    // noinspection JSDeprecatedSymbols
     browserAPI.storage.onChanged.addListener((changes, area) => {
         if (area === "local" && changes.Settings) {
             Settings.invalidateCache();
@@ -867,6 +868,7 @@
      * @param {Object} sender The sender of the message.
      * @param {function} sendResponse The function to send a response back to the content script.
      */
+    // noinspection JSDeprecatedSymbols
     browserAPI.runtime.onMessage.addListener((message, sender, sendResponse) => {
         if (!message || !sender || typeof sendResponse !== 'function') {
             console.warn(`Invalid message event: ${JSON.stringify({message, sender})}`);
@@ -923,6 +925,7 @@
      * @param {number} tabId The ID of the removed tab.
      * @param {Object} removeInfo Additional information about the removed tab, including windowId and isWindowClosing.
      */
+    // noinspection JSDeprecatedSymbols
     browserAPI.tabs.onRemoved.addListener((tabId, removeInfo) => {
         // Cleans up controllers for tabs that no longer exist
         BrowserProtection.cleanupTabControllers();
@@ -935,11 +938,11 @@
         console.debug(`Tab removed (tabId: ${tabId}, windowId: ${removeInfo?.windowId}, isWindowClosing: ${removeInfo?.isWindowClosing})`);
 
         // Removes all cached keys for the tab
-        CacheManager.removeKeysByTabId(tabId);
+        CacheManager.removeKeysByTabId(Number(tabId));
 
         // Removes the tab from session-backed maps
-        deleteResultOrigins(tabId);
-        deleteFrameZeroUrl(tabId);
+        deleteResultOrigins(Number(tabId));
+        deleteFrameZeroUrl(Number(tabId));
     });
 
     /**
@@ -947,6 +950,7 @@
      *
      * @param {Object} event The navigation event, containing details such as url, frameId, and tabId.
      */
+    // noinspection JSDeprecatedSymbols
     browserAPI.webNavigation.onBeforeNavigate.addListener(details => {
         if (!details?.url || typeof details.tabId !== 'number') {
             console.warn(`Invalid onBeforeNavigate event details: ${JSON.stringify(details)}`);
@@ -962,6 +966,7 @@
      *
      * @param {Object} details The navigation event details.
      */
+    // noinspection JSDeprecatedSymbols
     browserAPI.webNavigation.onCommitted.addListener(details => {
         if (!details?.url || typeof details.tabId !== 'number' || !Array.isArray(details.transitionQualifiers)) {
             console.warn(`Invalid onCommitted event details: ${JSON.stringify(details)}`);
@@ -985,6 +990,7 @@
      * @param {number} tabId The ID of the updated tab.
      * @param {Object} changeInfo An object containing the properties that changed.
      */
+    // noinspection JSDeprecatedSymbols
     browserAPI.tabs.onUpdated.addListener((tabId, changeInfo) => {
         if (typeof tabId !== 'number' || !changeInfo) {
             console.warn(`Invalid onUpdated event: tabId=${tabId}, changeInfo=${JSON.stringify(changeInfo)}`);
@@ -1005,6 +1011,7 @@
      *
      * @param {Object} details The navigation event details.
      */
+    // noinspection JSDeprecatedSymbols
     browserAPI.webNavigation.onCreatedNavigationTarget.addListener(details => {
         if (!details?.url || typeof details.tabId !== 'number') {
             console.warn(`Invalid onCreatedNavigationTarget event details: ${JSON.stringify(details)}`);
@@ -1020,6 +1027,7 @@
      *
      * @param {Object} callback The navigation event details.
      */
+    // noinspection JSDeprecatedSymbols
     browserAPI.webNavigation.onHistoryStateUpdated.addListener(details => {
         if (!details?.url || typeof details.tabId !== 'number') {
             console.warn(`Invalid onHistoryStateUpdated event details: ${JSON.stringify(details)}`);
@@ -1035,6 +1043,7 @@
      *
      * @param {Object} callback The navigation event details.
      */
+    // noinspection JSDeprecatedSymbols
     browserAPI.webNavigation.onReferenceFragmentUpdated.addListener(details => {
         if (!details?.url || typeof details.tabId !== 'number') {
             console.warn(`Invalid onReferenceFragmentUpdated event details: ${JSON.stringify(details)}`);
@@ -1050,6 +1059,7 @@
      *
      * @param {Object} callback The navigation event details.
      */
+    // noinspection JSDeprecatedSymbols
     browserAPI.webNavigation.onTabReplaced.addListener(details => {
         if (!details?.url || typeof details.tabId !== 'number') {
             console.debug(`Invalid onTabReplaced event details (possibly Memory Saver): ${JSON.stringify(details)}`);
@@ -1066,6 +1076,7 @@
      * @param {Object} event The message event sent from the content script.
      * @param {Object} sender The sender of the message.
      */
+    // noinspection JSDeprecatedSymbols
     browserAPI.runtime.onMessage.addListener((message, sender) => {
         if (!message?.messageType || typeof message.messageType !== 'string') {
             console.warn(`Invalid message received: ${JSON.stringify(message)}`);
@@ -1337,6 +1348,7 @@
      *
      * @param {Object} info Information sent when a context menu item is clicked.
      */
+    // noinspection JSDeprecatedSymbols
     contextMenuAPI.onClicked.addListener(info => {
         if (!info?.menuItemId || typeof info.menuItemId !== 'string') {
             console.warn(`Invalid context menu click info: ${JSON.stringify(info)}`);

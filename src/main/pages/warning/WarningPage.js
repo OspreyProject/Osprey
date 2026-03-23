@@ -197,6 +197,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         let blockedUrl = UrlHelpers.extractBlockedUrl(pageUrl);
 
         // Validates the blocked URL against an allowed-scheme whitelist
+        // noinspection HttpUrlsUsage
         if (!blockedUrl || !blockedUrl.startsWith("https://") && !blockedUrl.startsWith("http://")) {
             console.warn(`No valid blocked URL found in URL: ${pageUrl}; setting to safe value`);
             blockedUrl = "https://www.google.com";
@@ -237,6 +238,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         if (!messageListenerRegistered) {
             messageListenerRegistered = true;
 
+            // noinspection JSDeprecatedSymbols
             browserAPI.runtime.onMessage.addListener((message, sender) => {
                 // Only accept messages from our own extension
                 if (sender.id !== browserAPI.runtime.id) {
@@ -268,7 +270,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
                         // Build and sanitize the tooltip string
                         const alsoReportedBy = LangUtil.REPORTED_BY_ALSO;
                         const rawTitle = `${alsoReportedBy}${systems.join(', ')}`;
-                        domElements.reportedBy.title = rawTitle.replace(/[^\p{L}\p{N}\p{Z}\p{P}]/gu, '');
+                        domElements.reportedBy.title = rawTitle.replaceAll(/[^\p{L}\p{N}\p{Z}\p{P}]/gu, '');
                     } else {
                         // If there are no "others", revert to base text & clear tooltip
                         domElements.reportedBy.textContent = reportedByText;
@@ -455,6 +457,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         let continueUrl = UrlHelpers.extractContinueUrl(pageUrl);
 
         // Validates the continue URL against an allowed-scheme whitelist
+        // noinspection HttpUrlsUsage
         if (!continueUrl || !continueUrl.startsWith("https://") && !continueUrl.startsWith("http://")) {
             console.warn(`No valid continue URL found in URL: ${pageUrl}; setting to safe value`);
             continueUrl = "https://www.google.com";
