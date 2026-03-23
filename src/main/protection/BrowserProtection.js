@@ -233,7 +233,6 @@ const BrowserProtection = (() => {
                             shortName, filteringResponse, callback, data) => {
         switch (result) {
             case "failed":
-                CacheManager.removeUrlFromProcessingCache(cacheObject, cacheName);
                 console.debug(`[${shortName}] Upstream lookup failed for ${urlString}`);
                 callback(new ProtectionResult(urlString, ProtectionResult.ResultType.FAILED, Number(origin)));
                 return;
@@ -449,6 +448,9 @@ const BrowserProtection = (() => {
                     body: JSON.stringify({url: urlString}),
                     signal: createTimeoutSignal(signal)
                 });
+
+                // Removes the URL from the processing cache on response
+                CacheManager.removeUrlFromProcessingCache(cacheObject, cacheName);
 
                 // Checks if the response status is valid
                 if (!filteringResponse.ok) {
