@@ -269,6 +269,10 @@ const CacheManager = (() => {
             cache.clear();
         }
 
+        for (const patternCache of Object.values(allowedPatternCaches)) {
+            patternCache.clear();
+        }
+
         updateLocalStorage();
     };
 
