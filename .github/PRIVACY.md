@@ -1,15 +1,20 @@
 # Privacy Policy
 
-**Effective Date:** 03/22/2026
+**Effective Date:** 03/26/2026
 
 Osprey: Browser Protection and the team behind [OspreyProject](https://github.com/OspreyProject) is committed to
-protecting your privacy. This Privacy Policy explains what data is processed when you use the extension, why, and how.
+protecting your privacy. This Privacy Policy explains what data is processed when you use the current browser
+extension and its supporting proxy service, why that data is processed, and how it is handled.
 
-Osprey consists of two components:
+The current Osprey service described in this Privacy Policy consists of two components:
 
 - The **browser extension**, which runs locally on your device.
 - The **proxy server** (OspreyProxy), which runs on a VPS hosted in New York, NY
   at [api.osprey.ac](https://api.osprey.ac).
+
+This Privacy Policy applies to the current free browser extension and the OspreyProxy service described below. If Osprey
+introduces additional products or an enterprise plan in the future, we may provide a separate privacy policy or a
+supplemental notice describing the data practices for those services.
 
 Understanding which component does what is important for understanding how your data is handled.
 
@@ -24,7 +29,8 @@ on the provider type:
 
 - **DNS-based providers** (AdGuard DNS, CERT-EE, CleanBrowsing, Cloudflare, Control D, Quad9, and Switch.ch): the
   proxy server extracts only the hostname and submits it as a DNS-over-HTTPS query.
-- **API-based providers** (alphaMountain and PrecisionSec): the proxy server forwards the full URL including path.
+- **API-based providers** (alphaMountain, ChainPatrol, and PrecisionSec): the proxy server forwards the full URL
+  including path.
 - **Local threat intelligence lists**: the proxy server checks the hostname against its own in-memory domain sets
   without making any external requests.
 
@@ -51,6 +57,7 @@ providers never receive your IP address.
 
 - **API-based providers** receive the full URL:
     - alphaMountain ([privacy policy](https://alphamountain.ai/privacy-policy/))
+    - ChainPatrol ([privacy policy](https://chainpatrol.com/legal/privacy))
     - PrecisionSec ([privacy policy](https://precisionsec.com/privacy-policy/))
 - **DNS-based providers** receive only the hostname as part of a DNS-over-HTTPS query:
     - AdGuard DNS ([privacy policy](https://adguard-dns.io/en/privacy.html))
@@ -97,7 +104,7 @@ All data in local storage is cleared when you uninstall the browser extension or
 Local extension data is retained until you uninstall the browser extension or clear it manually via the context menu.
 Any error-case log messages on the proxy server exist only in the VPS's runtime memory via journald and are never
 written to disk; they are lost when the server restarts and are not retained in any form. Aggregate request counts on
-the proxy server are retained indefinitely but contain no personal data.
+the proxy server are retained indefinitely. These counts do not include IP addresses, URLs, or other direct identifiers.
 
 ## Changes to This Privacy Policy
 
