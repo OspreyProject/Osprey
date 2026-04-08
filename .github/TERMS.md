@@ -1,6 +1,6 @@
 # Terms of Service
 
-**Effective Date:** 03/26/2026
+**Effective Date:** 04/07/2026
 
 These Terms of Service ("Terms") govern your use of the Osprey website, the hosted Osprey proxy service at
 [api.osprey.ac](https://api.osprey.ac), and related hosted materials or services made available by the Osprey project
@@ -18,8 +18,8 @@ Osprey is meant to supplement your own judgment and other security tools, not re
 ## 2. Open-Source Software
 
 The Osprey browser extension, OspreyProxy, and related source code made available by the project are licensed under the
-GNU General Public License v3.0 ("GPLv3"), unless a different license is expressly stated for a specific component or
-file.
+GNU General Public License, version 3, or (at your option) any later version ("GPLv3 or later"), unless a different
+license is expressly stated for a specific component or file.
 
 Your rights to use, copy, modify, and distribute project source code are governed by the applicable open-source
 license, not by these Terms.
@@ -50,8 +50,8 @@ product or service without prior written permission from the Osprey project. Thi
 part of a paid offering, charging others for access to Osprey-backed lookups, or offering Osprey-derived API results
 as a commercial service.
 
-This restriction applies to the hosted Service and APIs, not to any source code made available under GPLv3. Rights in
-GPLv3-licensed code remain governed by the applicable open-source license.
+This restriction applies to the hosted Service and APIs, not to any source code made available under GPLv3 or later.
+Rights in GPLv3-or-later-licensed code remain governed by the applicable open-source license.
 
 ## 6. No Guarantee of Detection
 
@@ -79,12 +79,14 @@ third parties.
 
 ## 8. Third-Party Services
 
-The Service may rely on third-party threat intelligence, DNS filtering, hosting, network, security, or infrastructure
-providers. We are not responsible for outages, errors, policy changes, or inaccuracies caused by third-party services.
+The Service may rely on third-party threat intelligence, DNS filtering, hosting, network, security, monitoring,
+or infrastructure providers. We are not responsible for outages, errors, policy changes, or inaccuracies caused by
+third-party services.
 
 ## 9. Privacy
 
-Our [Privacy Policy](./PRIVACY.md) describes how the current Osprey service processes data.
+Our [Privacy Policy](./PRIVACY.md) describes how the current Osprey service processes data, including limited
+operational monitoring and service telemetry used to run, secure, and maintain the service.
 
 If we introduce additional products or an enterprise offering in the future, those services may be governed by a
 separate privacy policy or supplemental notice.
