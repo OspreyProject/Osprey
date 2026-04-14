@@ -18,11 +18,12 @@
 "use strict";
 
 globalThis.OspreyBrowserAPI = (() => {
-    const api = globalThis.browser ?? globalThis.chrome;
+    const api = globalThis.chrome ?? globalThis.browser;
+    const isFirefox = api !== globalThis.chrome;
 
     const withCallback = (fn, context, args = []) => new Promise((resolve, reject) => {
-        if (typeof fn !== 'function') {
-            console.warn('OspreyBrowserAPI.withCallback called with an unavailable API function');
+        if (typeof fn !== "function") {
+            console.warn("OspreyBrowserAPI.withCallback called with an unavailable API function");
             resolve(undefined);
             return;
         }
@@ -48,14 +49,16 @@ globalThis.OspreyBrowserAPI = (() => {
         };
 
         try {
-            const maybePromise = fn.call(context, ...args, callback);
-
-            if (typeof maybePromise?.then === 'function') {
-                maybePromise.then(
+            if (isFirefox) {
+                const maybePromise = fn.call(context, ...args);
+                Promise.resolve(maybePromise).then(
                     value => settle(resolve, value),
                     error => settle(reject, error)
                 );
+                return;
             }
+
+            fn.call(context, ...args, callback);
         } catch (error) {
             console.error('Browser API call threw before completion', error);
             settle(reject, error);
