@@ -49,7 +49,7 @@ const bootstrapScripts = [
 try {
     importScripts(...bootstrapScripts);
 } catch (error) {
-    console.error('Failed to bootstrap Osprey background service worker', error);
+    console.warn('Failed to bootstrap Osprey background service worker', error);
 }
 
 (() => {
