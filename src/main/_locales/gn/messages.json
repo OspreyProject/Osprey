@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Eku’ejey katu"
   },
-  "popupTitle": {
-    "message": "Ñemoĩporã ñangareko rehegua"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "Hecha GitHub-pe"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Política ñemigua rehegua"
-  },
-  "onText": {
-    "message": "Oĩ hína"
-  },
-  "offText": {
-    "message": "Ndoikói"
-  },
-  "onLockedText": {
-    "message": "Oĩ hína (Ojoko)"
-  },
-  "offLockedText": {
-    "message": "Ndoikói (Ojoko)"
   },
   "knownSafe": {
     "message": "Ojekuaa hekorosãha"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Phishing"
   },
-  "untrusted": {
-    "message": "Ndojeroviáiva"
-  },
   "adultContent": {
     "message": "Ñe’ẽrã kakuaa rehegua"
-  },
-  "toggleNotificationsContext": {
-    "message": "Emoneĩ marandu’i"
   },
   "toggleFrameNavigationContext": {
     "message": "Embopoi koraikutu rape"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Emyesakã ko ñanduti renda iñañaha"
-  },
-  "restoreDefaultsContext": {
-    "message": "Emyengovia ñemoĩporã ijypykuéva"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Ñemoĩporã ijypykuéva ojevy"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Ñemoĩporã ijypykuéva oñembojevýma."
   },
   "unsafeWebsiteTitle": {
     "message": "Ñanduti renda hekorosã’ỹva ojoko"

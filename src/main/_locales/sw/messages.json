@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Endelea hata hivyo"
   },
-  "popupTitle": {
-    "message": "Chaguo za Ulinzi"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "Tazama kwenye GitHub"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Sera ya Faragha"
-  },
-  "onText": {
-    "message": "Washa"
-  },
-  "offText": {
-    "message": "Zima"
-  },
-  "onLockedText": {
-    "message": "Washa (Imefungwa)"
-  },
-  "offLockedText": {
-    "message": "Zima (Imefungwa)"
   },
   "knownSafe": {
     "message": "Inajulikana kuwa salama"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Uvuvi (Phishing)"
   },
-  "untrusted": {
-    "message": "Haitumiki kwa kuaminika"
-  },
   "adultContent": {
     "message": "Maudhui ya watu wazima"
-  },
-  "toggleNotificationsContext": {
-    "message": "Wezesha arifa"
   },
   "toggleFrameNavigationContext": {
     "message": "Puuza urambazaji wa fremu"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Ripoti tovuti kama hatari"
-  },
-  "restoreDefaultsContext": {
-    "message": "Rejesha mipangilio chaguomsingi"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Mipangilio Chaguomsingi Imerudishwa"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Mipangilio chaguomsingi imerudishwa."
   },
   "unsafeWebsiteTitle": {
     "message": "Tovuti isiyo salama imezuiwa"

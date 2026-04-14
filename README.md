@@ -9,7 +9,7 @@
 
 [LinkedIn Page](https://osprey.ac/linkedin)
 • [Privacy Policy](https://osprey.ac/privacy)
-• [Wiki (FAQs)](https://github.com/Foulest/Osprey/wiki)
+• [Wiki (FAQs)](https://osprey.ac/wiki)
 • [MalwareTips](https://malwaretips.com/threads/osprey-browser-protection-discussion-and-updates.135565/?utm_source=osprey)
 • [Wilders Security](https://wilderssecurity.com/threads/osprey-browser-protection.456729/?utm_source=osprey)
 
@@ -23,14 +23,6 @@
 
 ![Osprey Banner](https://i.imgur.com/zzv8QYh.png)
 
-###
-
-## Install & Setup Guide
-
-<p align="center">
-  <a href="https://youtu.be/CAVACABfZ0E" title="Watch on YouTube"><img src="https://i.imgur.com/5dqFscb.png" alt="Watch on YouTube"></a>
-</p>
-
 ## Official Partners
 
 Osprey has **officially partnered** with industry-leading security companies to provide you with the best protection
@@ -40,7 +32,8 @@ possible. Check out some of our partners below:
 
 <p align="center">
   <a href="https://adguard-dns.io/?utm_source=osprey" title="AdGuard DNS"><img src="https://i.imgur.com/4AXgbsC.png" alt="AdGuard DNS"></a>
-  <a href="https://alphamountain.ai/?utm_source=osprey" title="alphaMountain"><img src="https://i.imgur.com/EbcGHb2.png" alt="alphaMountain"></a>
+  <a href="https://alphamountain.ai/?utm_source=osprey" title="AlphaMountain"><img src="https://i.imgur.com/EbcGHb2.png" alt="AlphaMountain"></a>
+  <a href="https://chainpatrol.com/?utm_source=osprey" title="ChainPatrol"><img src="https://i.imgur.com/Wv4HQXp.png" alt="ChainPatrol"></a>
   <a href="https://precisionsec.com/?utm_source=osprey" title="PrecisionSec"><img src="https://i.imgur.com/gf9ahFa.png" alt="PrecisionSec"></a>
 </p>
 
@@ -62,7 +55,8 @@ Osprey's proxy server also relies on **local filtering lists** from the followin
 ## Endorsements
 
 Osprey is **endorsed** by several well-known organizations that recommend the extension for improved browser protection.
-Check out some of our endorsers below:
+Some, but not all, of the companies that endorse Osprey are also protection providers in the project. Check out some of
+our endorsers below:
 
 ###
 
@@ -83,41 +77,49 @@ home users and businesses by empowering open-source intelligence to combat malwa
 globe. The best protection is **free protection**, and building a privacy-first, open-source tool that IT teams,
 security researchers, and end-users can trust to secure their browsing, wherever they go, is the best way to provide it.
 
-Osprey is committed to being non-profit, non-commercial, and open-source, **forever**, with no plans to monetize the
-project in any way. Unlike other free browser extensions, Osprey doesn't collect, profile,
+Osprey is committed to keeping the free version non-commercial, privacy-first, and open-source, **forever**. We may
+introduce a paid enterprise tier in the future, but the free version of Osprey will remain non-commercial and will not
+be monetized in any way. Unlike other free browser extensions, Osprey doesn't collect, profile,
 or [sell your browsing data](https://ftc.gov/news-events/news/press-releases/2024/02/ftc-order-will-ban-avast-selling-browsing-data-advertising-purposes-require-it-pay-165-million-over/?utm_source=osprey)
 behind your back. URL checks are routed through Osprey's privacy-respecting proxy server
 at [api.osprey.ac](https://api.osprey.ac), which forwards requests to our protection partners without transmitting any
-personally identifiable information. No user accounts are required. Check out
+personally identifiable information. No user accounts are required for the free version. Check out
 our [Privacy Policy here](https://osprey.ac/privacy) for more info.
 
 The more protection providers join the project, the better the Osprey threat intelligence platform becomes. If you're
-interested in improving global threat intelligence and want to join the project, feel free to get in contact with us
-at **support@osprey.ac**.
+interested in improving global threat intelligence and want to join the project, feel free to get in contact with us at
+**support@osprey.ac**.
+
+## Popup Page
+
+When you click on the Osprey icon in your browser toolbar, you'll see the popup page:
+
+![Osprey Popup](https://i.imgur.com/1B2a9C2.png)
+
+From this page, you can see how many providers are enabled, how many websites have been blocked,
+and access the **settings page**.
+
+## Settings Page
+
+You can configure the extension's protection options in the settings page:
+
+![Osprey Settings](https://i.imgur.com/ikrEgnj.png)
+
+If you're unsure about the functions of each protection provider, **it's best to keep the default settings.**
+
+You can restore them by clicking either the **Reset Default Providers** or **Reset All** buttons found at the bottom of
+the settings page.
 
 ## Warning Page
 
 If the website is malicious, Osprey will block the page and display a warning:
 
-![Osprey Warning](https://i.imgur.com/ZmVOFfU.png)
+![Osprey Warning](https://i.imgur.com/irDjm0Z.png)
 
 From this page, you can report the website as safe, always ignore the website, go back to safety, and continue
-anyway. By default, Osprey creates a browser notification for blocked pages that
-[you can toggle on and off](https://github.com/OspreyProject/Osprey/wiki/Using-the-Context-Menu#enable-notifications)
-using the context menu. You can hide the continue and report buttons, lock down the protection options, and even hide
+anyway. You can hide the continue and report buttons, lock down the protection options, and even hide
 the context menu entirely
-using [the system policies](https://github.com/Foulest/Osprey/wiki/Setting-Up-System-Policies).
-
-## Settings
-
-You can configure the extension's protection options in the settings:
-
-![Osprey Settings (Page 1)](https://i.imgur.com/sDyLcMO.png)
-![Osprey Settings (Page 2)](https://i.imgur.com/lpFyLe6.png)
-
-If you're unsure about the functions of each protection provider, **it's best to keep the default settings.**
-
-You can restore them by right-clicking the extension icon and selecting **Restore default settings**.
+using [the system policies](https://github.com/OspreyProject/Osprey/wiki/Setting-Up-System-Policies).
 
 ## Detections
 
@@ -125,7 +127,6 @@ Osprey blocks websites that are classified as:
 
 - [Malicious](https://us.norton.com/blog/malware/what-are-malicious-websites/?utm_source=osprey)
 - [Phishing](https://us.norton.com/blog/online-scams/what-is-phishing/?utm_source=osprey)
-- [Untrusted](https://mcafee.com/blogs/internet-security/how-to-tell-whether-a-website-is-safe-or-unsafe/?utm_source=osprey)
 - [Adult Content](https://library.fiveable.me/key-terms/mass-media-society/adult-content/?utm_source=osprey)
 
 ## Protection Providers
@@ -133,21 +134,18 @@ Osprey blocks websites that are classified as:
 The following providers are **enabled** by default:
 
 - [x] **[AdGuard Security DNS](https://adguard-dns.io/?utm_source=osprey)**
-- [x] **[alphaMountain Web Protection](https://alphamountain.ai/?utm_source=osprey)**
+- [x] **[AlphaMountain Web Protection](https://alphamountain.ai/?utm_source=osprey)**
+- [x] **[ChainPatrol Web Protection](https://chainpatrol.com/?utm_source=osprey)**
 - [x] **[PrecisionSec Web Protection](https://precisionsec.com/?utm_source=osprey)**
 - [x] [CleanBrowsing Security DNS](https://cleanbrowsing.org/filters/?utm_source=osprey)
 - [x] [Cloudflare Security DNS](https://blog.cloudflare.com/introducing-1-1-1-1-for-families/?utm_source=osprey)
+- [x] [Control D Security DNS](https://controld.com/?utm_source=osprey)
 - [x] [PhishDestroy Feed](https://phishdestroy.io/?utm_source=osprey)
 - [x] [Phishing.Database Feed](https://github.com/Phishing-Database/Phishing.Database?utm_source=osprey)
 - [x] [Quad9 Security DNS](https://quad9.net/?utm_source=osprey)
 - [x] [Switch.ch Security DNS](https://portal.switch.ch/pub/public-dns/?utm_source=osprey)
 
 The following providers are **disabled** by default:
-
-#### Security Filters
-
-- [ ] [CERT-EE Security DNS](https://ria.ee/en/news/application-developed-cert-ee-protects-against-phishing-and-malware/?utm_source=osprey)
-- [ ] [Control D Security DNS](https://controld.com/?utm_source=osprey)
 
 #### Adult Content Filters
 

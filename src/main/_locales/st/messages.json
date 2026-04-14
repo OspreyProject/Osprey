@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Tsoela pele leha ho le joalo"
   },
-  "popupTitle": {
-    "message": "Likhetho tsa Tšireletso"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "Sheba ho GitHub"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Leano la Lekunutu"
-  },
-  "onText": {
-    "message": "Bulehile"
-  },
-  "offText": {
-    "message": "Tima"
-  },
-  "onLockedText": {
-    "message": "Bulehile (Notletsoe)"
-  },
-  "offLockedText": {
-    "message": "Tima (Notletsoe)"
   },
   "knownSafe": {
     "message": "E Tsejoa e le e Bolokehileng"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Phishing (Bokhoba ba bosholu)"
   },
-  "untrusted": {
-    "message": "Ha e tšepahale"
-  },
   "adultContent": {
     "message": "Litaba tsa Batho ba Baholo"
-  },
-  "toggleNotificationsContext": {
-    "message": "Lumella litsebiso"
   },
   "toggleFrameNavigationContext": {
     "message": "Hlokomoloha navigation ea foreimi"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Tlaleha sebaka sa marang-rang e le se kotsi"
-  },
-  "restoreDefaultsContext": {
-    "message": "Khutlisetsa litlhophiso tse sa fetoheng"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Litlhophiso tse sa fetoheng li Khutliselitsoe"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Litlhophiso tse sa fetoheng li khutliselitsoe."
   },
   "unsafeWebsiteTitle": {
     "message": "Webosaete e sa Sireletsehang e Thibetsoe"

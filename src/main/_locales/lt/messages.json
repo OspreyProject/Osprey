@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Tęsti vis tiek"
   },
-  "popupTitle": {
-    "message": "Apsaugos parinktys"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "Peržiūrėti GitHub"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Privatumo politika"
-  },
-  "onText": {
-    "message": "Įjungta"
-  },
-  "offText": {
-    "message": "Išjungta"
-  },
-  "onLockedText": {
-    "message": "Įjungta (užrakinta)"
-  },
-  "offLockedText": {
-    "message": "Išjungta (užrakinta)"
   },
   "knownSafe": {
     "message": "Žinoma kaip saugi"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Phishing"
   },
-  "untrusted": {
-    "message": "Nepatikima"
-  },
   "adultContent": {
     "message": "Suaugusiųjų turinys"
-  },
-  "toggleNotificationsContext": {
-    "message": "Įjungti pranešimus"
   },
   "toggleFrameNavigationContext": {
     "message": "Ignoruoti kadrų naršymą"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Pranešti apie kenkėjišką svetainę"
-  },
-  "restoreDefaultsContext": {
-    "message": "Atkurti numatytuosius nustatymus"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Numatytieji nustatymai atkurti"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Numatytieji nustatymai buvo atkurti."
   },
   "unsafeWebsiteTitle": {
     "message": "Nesaugi svetainė užblokuota"

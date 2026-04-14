@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Все пак продължи"
   },
-  "popupTitle": {
-    "message": "Опции за защита"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "Преглед в GitHub"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Политика за поверителност"
-  },
-  "onText": {
-    "message": "Включено"
-  },
-  "offText": {
-    "message": "Изключено"
-  },
-  "onLockedText": {
-    "message": "Включено (Заключено)"
-  },
-  "offLockedText": {
-    "message": "Изключено (Заключено)"
   },
   "knownSafe": {
     "message": "Доверен"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Фишинг"
   },
-  "untrusted": {
-    "message": "Ненадежден"
-  },
   "adultContent": {
     "message": "Съдържание за възрастни"
-  },
-  "toggleNotificationsContext": {
-    "message": "Активиране на известията"
   },
   "toggleFrameNavigationContext": {
     "message": "Игнориране на навигация в рамки"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Докладвайте уебсайта като злонамерен"
-  },
-  "restoreDefaultsContext": {
-    "message": "Възстановяване на настройките по подразбиране"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Настройките по подразбиране са възстановени"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Настройките по подразбиране са възстановени."
   },
   "unsafeWebsiteTitle": {
     "message": "Опасен уебсайт блокиран"

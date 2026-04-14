@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "هر حال کې دوام ورکړئ"
   },
-  "popupTitle": {
-    "message": "د ساتنې انتخابونه"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "په GitHub کې وګورئ"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "د محرمیت تګلاره"
-  },
-  "onText": {
-    "message": "آن"
-  },
-  "offText": {
-    "message": "آف"
-  },
-  "onLockedText": {
-    "message": "آن (لاک شوی)"
-  },
-  "offLockedText": {
-    "message": "آف (لاک شوی)"
   },
   "knownSafe": {
     "message": "معلومه خوندي"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "فیشینګ"
   },
-  "untrusted": {
-    "message": "بې باوره"
-  },
   "adultContent": {
     "message": "د لويانو منځپانګه"
-  },
-  "toggleNotificationsContext": {
-    "message": "خبرتیاوې فعالې کړئ"
   },
   "toggleFrameNavigationContext": {
     "message": "د چوکاټ نیویګیشن له پامه وغورځوئ"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "ویبپاڼه د ناوړه په توګه راپور کړئ"
-  },
-  "restoreDefaultsContext": {
-    "message": "اصلي امستنې بېرته راولي"
-  },
-  "restoreDefaultsTitle": {
-    "message": "اصلي امستنې بېرته راوستل شوې"
-  },
-  "restoreDefaultsMessage": {
-    "message": "اصلي امستنې بېرته راوستل شوې دي."
   },
   "unsafeWebsiteTitle": {
     "message": "ناخوندي ویب پاڼه بنده شوه"

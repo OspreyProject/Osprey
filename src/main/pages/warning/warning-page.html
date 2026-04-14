@@ -1,0 +1,125 @@
+<!--
+  Osprey - a browser extension that protects you from malicious websites.
+  Copyright (C) 2026 Osprey Project (https://github.com/OspreyProject)
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program. If not, see <https://www.gnu.org/licenses/>.
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <title></title>
+    <link rel="stylesheet" href="warning-page.css">
+    <script src="../../shared/browser-api.js"></script>
+    <script src="../../shared/i18n.js"></script>
+    <script src="../../providers/provider-groups.js"></script>
+    <script src="../../providers/proxy-builtins.js"></script>
+    <script src="../../providers/direct-integrations.js"></script>
+    <script src="../../catalog/catalog-validator.js"></script>
+    <script src="../../providers/provider-catalog.js"></script>
+    <script src="../../providers/custom-provider-normalizer.js"></script>
+    <script src="../../state/provider-state-store.js"></script>
+    <script src="../../platform/protection-result.js"></script>
+    <script src="../../platform/url-service.js"></script>
+    <script src="../../platform/message-bus.js"></script>
+    <script src="../../platform/report-link-builder.js"></script>
+    <script src="../../shared/lang-util.js"></script>
+    <script src="warning-page.js"></script>
+</head>
+
+<body id="background" class="gray">
+<div id="banner" class="banner">
+    <img id="logo" class="logo" src="../../assets/osprey/icon128.png" alt="">
+    <div class="banner-text-group">
+        <span class="bannerText">
+            <!-- Automatically translated -->
+        </span>
+    </div>
+</div>
+
+<div class="warning-page-title">
+    <!-- Automatically translated -->
+</div>
+
+<main class="warning-main">
+    <section class="warning-card">
+        <div class="warning-hero">
+            <div class="warning-icon-wrap" aria-hidden="true">
+                <img class="warning-icon" src="../../assets/misc/warning.avif" alt="">
+            </div>
+
+            <div class="warning-hero-copy">
+                <h1 id="warningTitle" class="warning-title">
+                    <!-- Automatically translated -->
+                </h1>
+
+                <p id="recommendation" class="warning-lead">
+                    <!-- Automatically translated -->
+                </p>
+
+                <p id="details" class="warning-text">
+                    <!-- Automatically translated -->
+                </p>
+            </div>
+        </div>
+
+        <div class="warning-details">
+            <div class="detail-row">
+                <div class="detail-label" id="urlLabel">
+                    <!-- Automatically translated -->
+                </div>
+                <div class="detail-value" id="url"></div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-label" id="reportedByLabel">
+                    <!-- Automatically translated -->
+                </div>
+                <div class="detail-value" id="reportedBy"></div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-label" id="reasonLabel">
+                    <!-- Automatically translated -->
+                </div>
+                <div class="detail-value" id="reason"></div>
+            </div>
+        </div>
+
+        <div class="warning-links">
+            <button id="reportWebsite" class="inline-action-btn hidden" type="button" hidden disabled>
+                <!-- Automatically translated -->
+            </button>
+            <br id="reportBreakpoint" class="hidden" hidden>
+            <button id="allowWebsite" class="inline-action-btn hidden" type="button" hidden disabled>
+                <!-- Automatically translated -->
+            </button>
+        </div>
+
+        <div id="buttonRow" class="button-row">
+            <button id="backButton" class="action-btn primary-btn" type="button">
+                <!-- Automatically translated -->
+            </button>
+
+            <button id="continueButton" class="action-btn secondary-btn hidden" type="button" hidden disabled>
+                <!-- Automatically translated -->
+            </button>
+        </div>
+    </section>
+</main>
+</body>
+</html>

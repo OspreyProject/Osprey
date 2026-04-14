@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Коопсуз эместигине карабай улантуу"
   },
-  "popupTitle": {
-    "message": "Коргоо Параметрлери"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "GitHub'да көрүү"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Купуялык Саясаты"
-  },
-  "onText": {
-    "message": "Иштетилген"
-  },
-  "offText": {
-    "message": "Өчүрүлгөн"
-  },
-  "onLockedText": {
-    "message": "Иштетилген (Бекитилген)"
-  },
-  "offLockedText": {
-    "message": "Өчүрүлгөн (Бекитилген)"
   },
   "knownSafe": {
     "message": "Коопсуз деп белгилүү"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Фишинг"
   },
-  "untrusted": {
-    "message": "Ишенимсиз"
-  },
   "adultContent": {
     "message": "Чоңдор үчүн контент"
-  },
-  "toggleNotificationsContext": {
-    "message": "Билдирмелерди иштетүү"
   },
   "toggleFrameNavigationContext": {
     "message": "Frame навигациясын четке кагуу"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Веб-сайтты зыяндуу деп кабарлаңыз"
-  },
-  "restoreDefaultsContext": {
-    "message": "Баштапкы жөндөөлөрдү калыбына келтирүү"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Баштапкы Жөндөөлөр Калыбына Келтирилди"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Баштапкы жөндөөлөр калыбына келтирилди."
   },
   "unsafeWebsiteTitle": {
     "message": "Коопсуз эмес Веб-сайт Бөгөттөлдү"

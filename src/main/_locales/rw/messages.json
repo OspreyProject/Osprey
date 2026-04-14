@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Komeza n’ubwo bidatekanye"
   },
-  "popupTitle": {
-    "message": "Amahitamo y’Umutekano"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "Reba kuri GitHub"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Politiki y’ibanga"
-  },
-  "onText": {
-    "message": "Yakira"
-  },
-  "offText": {
-    "message": "Yahagaritswe"
-  },
-  "onLockedText": {
-    "message": "Yakira (Ifunze)"
-  },
-  "offLockedText": {
-    "message": "Yahagaritswe (Ifunze)"
   },
   "knownSafe": {
     "message": "Bizwi ko ari byizewe"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Kwiyitirira"
   },
-  "untrusted": {
-    "message": "Ntidukwiye kwizerwa"
-  },
   "adultContent": {
     "message": "Ibirimo by’abakuze"
-  },
-  "toggleNotificationsContext": {
-    "message": "Fungura amakuru atangwa"
   },
   "toggleFrameNavigationContext": {
     "message": "Wirengagize kugenda muri frame"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Tanga raporo ko urubuga ari rubi cyangwa rwangiza"
-  },
-  "restoreDefaultsContext": {
-    "message": "Garura igenamiterere rya mbere"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Igenamiterere rya mbere ryagaruwe"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Igenamiterere rya mbere ryagaruwe."
   },
   "unsafeWebsiteTitle": {
     "message": "Urubuga rutizewe rwabujijwe"

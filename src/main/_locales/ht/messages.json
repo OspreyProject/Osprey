@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Kontinye kanmenm"
   },
-  "popupTitle": {
-    "message": "Opsyon Pwoteksyon"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "Gade sou GitHub"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Règleman sou Konfidansyalite"
-  },
-  "onText": {
-    "message": "Limèn"
-  },
-  "offText": {
-    "message": "Etenn"
-  },
-  "onLockedText": {
-    "message": "Limèn (Bloke)"
-  },
-  "offLockedText": {
-    "message": "Etenn (Bloke)"
   },
   "knownSafe": {
     "message": "Konnen kòm an Sekirite"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Phishing"
   },
-  "untrusted": {
-    "message": "Pa gen konfyans"
-  },
   "adultContent": {
     "message": "Kontni pou granmoun"
-  },
-  "toggleNotificationsContext": {
-    "message": "Pèmèt notifikasyon yo"
   },
   "toggleFrameNavigationContext": {
     "message": "Inyore navigasyon ankadreman"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Siyale sitwèb la kòm malveyan"
-  },
-  "restoreDefaultsContext": {
-    "message": "Retabli paramèt default yo"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Paramèt default yo retabli"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Paramèt default yo te retabli."
   },
   "unsafeWebsiteTitle": {
     "message": "Sit entènèt ki pa an sekirite bloke"

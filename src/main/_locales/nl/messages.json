@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Toch doorgaan"
   },
-  "popupTitle": {
-    "message": "Beveiligingsopties"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "Bekijk op GitHub"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Privacybeleid"
-  },
-  "onText": {
-    "message": "Aan"
-  },
-  "offText": {
-    "message": "Uit"
-  },
-  "onLockedText": {
-    "message": "Aan (vergrendeld)"
-  },
-  "offLockedText": {
-    "message": "Uit (vergrendeld)"
   },
   "knownSafe": {
     "message": "Bekend als veilig"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Phishing"
   },
-  "untrusted": {
-    "message": "Onbetrouwbaar"
-  },
   "adultContent": {
     "message": "Inhoud voor volwassenen"
-  },
-  "toggleNotificationsContext": {
-    "message": "Meldingen inschakelen"
   },
   "toggleFrameNavigationContext": {
     "message": "Framenavigatie negeren"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Website als schadelijk melden"
-  },
-  "restoreDefaultsContext": {
-    "message": "Standaardinstellingen herstellen"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Standaardinstellingen hersteld"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Standaardinstellingen zijn hersteld."
   },
   "unsafeWebsiteTitle": {
     "message": "Onveilige website geblokkeerd"

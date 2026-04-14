@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Vazhdo gjithsesi"
   },
-  "popupTitle": {
-    "message": "Opsionet e Mbrojtjes"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "Shiko në GitHub"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Politika e Privatësisë"
-  },
-  "onText": {
-    "message": "Aktiv"
-  },
-  "offText": {
-    "message": "Joaktiv"
-  },
-  "onLockedText": {
-    "message": "Aktiv (I bllokuar)"
-  },
-  "offLockedText": {
-    "message": "Joaktiv (I bllokuar)"
   },
   "knownSafe": {
     "message": "I njohur si i sigurt"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Phishing"
   },
-  "untrusted": {
-    "message": "I pasigurt"
-  },
   "adultContent": {
     "message": "Përmbajtje për të rritur"
-  },
-  "toggleNotificationsContext": {
-    "message": "Aktivizo njoftimet"
   },
   "toggleFrameNavigationContext": {
     "message": "Injoro navigimin në kornizë"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Raporto faqen e internetit si të dëmshme"
-  },
-  "restoreDefaultsContext": {
-    "message": "Rivendos cilësimet e parazgjedhura"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Cilësimet e Parazgjedhura u Rivendosën"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Cilësimet e parazgjedhura janë rivendosur."
   },
   "unsafeWebsiteTitle": {
     "message": "Website i Pasigurt i Bllokuar"

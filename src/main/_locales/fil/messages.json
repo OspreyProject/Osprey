@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Magpatuloy pa rin"
   },
-  "popupTitle": {
-    "message": "Mga Opsyon sa Proteksyon"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "Tingnan sa GitHub"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Patakaran sa Privacy"
-  },
-  "onText": {
-    "message": "Bukas"
-  },
-  "offText": {
-    "message": "Patay"
-  },
-  "onLockedText": {
-    "message": "Bukas (Naka-lock)"
-  },
-  "offLockedText": {
-    "message": "Patay (Naka-lock)"
   },
   "knownSafe": {
     "message": "Kilala bilang Ligtas"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Phishing"
   },
-  "untrusted": {
-    "message": "Hindi Mapagkakatiwalaan"
-  },
   "adultContent": {
     "message": "Nilalaman para sa Matatanda"
-  },
-  "toggleNotificationsContext": {
-    "message": "Paganahin ang mga notipikasyon"
   },
   "toggleFrameNavigationContext": {
     "message": "Balewalain ang frame navigation"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "I-report ang website bilang malisyoso"
-  },
-  "restoreDefaultsContext": {
-    "message": "Ibalik ang default na mga setting"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Naibalik ang Default na Mga Setting"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Naibalik na ang default na mga setting."
   },
   "unsafeWebsiteTitle": {
     "message": "Na-block ang Hindi Ligtas na Website"

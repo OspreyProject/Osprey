@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Yine de devam et"
   },
-  "popupTitle": {
-    "message": "Koruma Seçenekleri"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "GitHub’da Görüntüle"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Gizlilik Politikası"
-  },
-  "onText": {
-    "message": "Açık"
-  },
-  "offText": {
-    "message": "Kapalı"
-  },
-  "onLockedText": {
-    "message": "Açık (Kilitli)"
-  },
-  "offLockedText": {
-    "message": "Kapalı (Kilitli)"
   },
   "knownSafe": {
     "message": "Güvenli Bilinen"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Oltalama"
   },
-  "untrusted": {
-    "message": "Güvenilmez"
-  },
   "adultContent": {
     "message": "Yetişkin İçeriği"
-  },
-  "toggleNotificationsContext": {
-    "message": "Bildirimleri etkinleştir"
   },
   "toggleFrameNavigationContext": {
     "message": "Çerçeve gezinmesini yoksay"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Web sitesini kötü amaçlı olarak bildir"
-  },
-  "restoreDefaultsContext": {
-    "message": "Varsayılan ayarları geri yükle"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Varsayılan Ayarlar Geri Yüklendi"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Varsayılan ayarlar geri yüklendi."
   },
   "unsafeWebsiteTitle": {
     "message": "Güvenli Olmayan Web Sitesi Engellendi"

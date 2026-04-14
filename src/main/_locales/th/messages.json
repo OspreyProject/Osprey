@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "ดำเนินการต่อ"
   },
-  "popupTitle": {
-    "message": "ตัวเลือกการป้องกัน"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "ดูบน GitHub"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "นโยบายความเป็นส่วนตัว"
-  },
-  "onText": {
-    "message": "เปิด"
-  },
-  "offText": {
-    "message": "ปิด"
-  },
-  "onLockedText": {
-    "message": "เปิด (ล็อก)"
-  },
-  "offLockedText": {
-    "message": "ปิด (ล็อก)"
   },
   "knownSafe": {
     "message": "ทราบว่าปลอดภัย"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "ฟิชชิง"
   },
-  "untrusted": {
-    "message": "ไม่น่าเชื่อถือ"
-  },
   "adultContent": {
     "message": "เนื้อหาสำหรับผู้ใหญ่"
-  },
-  "toggleNotificationsContext": {
-    "message": "เปิดการแจ้งเตือน"
   },
   "toggleFrameNavigationContext": {
     "message": "ละเว้นการนำทางเฟรม"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "รายงานเว็บไซต์ว่าเป็นอันตราย"
-  },
-  "restoreDefaultsContext": {
-    "message": "กู้คืนการตั้งค่าเริ่มต้น"
-  },
-  "restoreDefaultsTitle": {
-    "message": "การตั้งค่าเริ่มต้นถูกกู้คืนแล้ว"
-  },
-  "restoreDefaultsMessage": {
-    "message": "การตั้งค่าเริ่มต้นถูกกู้คืนแล้ว"
   },
   "unsafeWebsiteTitle": {
     "message": "บล็อกเว็บไซต์ที่ไม่ปลอดภัย"

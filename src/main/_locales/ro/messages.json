@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Continuați oricum"
   },
-  "popupTitle": {
-    "message": "Opțiuni de protecție"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "Vizualizați pe GitHub"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Politica de confidențialitate"
-  },
-  "onText": {
-    "message": "Pornit"
-  },
-  "offText": {
-    "message": "Oprit"
-  },
-  "onLockedText": {
-    "message": "Pornit (blocat)"
-  },
-  "offLockedText": {
-    "message": "Oprit (blocat)"
   },
   "knownSafe": {
     "message": "Cunoscut ca sigur"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Phishing"
   },
-  "untrusted": {
-    "message": "Nesigur"
-  },
   "adultContent": {
     "message": "Conținut pentru adulți"
-  },
-  "toggleNotificationsContext": {
-    "message": "Activați notificările"
   },
   "toggleFrameNavigationContext": {
     "message": "Ignorați navigarea în cadre"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Raportează site-ul web ca fiind rău intenționat"
-  },
-  "restoreDefaultsContext": {
-    "message": "Restaurați setările implicite"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Setările implicite au fost restaurate"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Setările implicite au fost restaurate."
   },
   "unsafeWebsiteTitle": {
     "message": "Site web nesigur blocat"

@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "မည်သို့ပင် ဖြစ်စေ ဆက်လက်သုံးရန်"
   },
-  "popupTitle": {
-    "message": "ကာကွယ်မှု ရွေးချယ်စရာများ"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "GitHub တွင် ကြည့်ရန်"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "ကိုယ်ပိုင်လုံခြုံမှု မူဝါဒ"
-  },
-  "onText": {
-    "message": "ဖွင့်"
-  },
-  "offText": {
-    "message": "ပိတ်"
-  },
-  "onLockedText": {
-    "message": "ဖွင့် (ပိတ်ထားသည်)"
-  },
-  "offLockedText": {
-    "message": "ပိတ် (ပိတ်ထားသည်)"
   },
   "knownSafe": {
     "message": "အန္တရာယ်မရှိဟု သတ်မှတ်ထားသည်"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "လိမ်လည်မှု"
   },
-  "untrusted": {
-    "message": "ယုံကြည်မရ"
-  },
   "adultContent": {
     "message": "အရွယ်ရောက်သူများ အကြောင်းအရာ"
-  },
-  "toggleNotificationsContext": {
-    "message": "အသိပေးချက်များကို ဖွင့်ရန်"
   },
   "toggleFrameNavigationContext": {
     "message": "Frame navigation ကို လျစ်လျူရှုရန်"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "ဝက်ဘ်ဆိုဒ်ကို မကောင်းဆိုးဝါးသည်ဟု တင်ပြပါ။"
-  },
-  "restoreDefaultsContext": {
-    "message": "မူရင်း အပြင်အဆင်များ သို့ ပြန်သွားရန်"
-  },
-  "restoreDefaultsTitle": {
-    "message": "မူရင်း အပြင်အဆင်များ ပြန်ထားပြီးပါပြီ"
-  },
-  "restoreDefaultsMessage": {
-    "message": "မူရင်း အပြင်အဆင်များ ပြန်ထားပြီးပါပြီ။"
   },
   "unsafeWebsiteTitle": {
     "message": "အန္တရာယ်ရှိသော ဝဘ်ဆိုဒ်ကို ပိတ်ဆို့ထားသည်"

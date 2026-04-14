@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Continuer quand même"
   },
-  "popupTitle": {
-    "message": "Options de protection"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "Voir sur GitHub"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Politique de confidentialité"
-  },
-  "onText": {
-    "message": "Activé"
-  },
-  "offText": {
-    "message": "Désactivé"
-  },
-  "onLockedText": {
-    "message": "Activé (verrouillé)"
-  },
-  "offLockedText": {
-    "message": "Désactivé (verrouillé)"
   },
   "knownSafe": {
     "message": "Connu comme sûr"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Hameçonnage"
   },
-  "untrusted": {
-    "message": "Non fiable"
-  },
   "adultContent": {
     "message": "Contenu pour adultes"
-  },
-  "toggleNotificationsContext": {
-    "message": "Activer les notifications"
   },
   "toggleFrameNavigationContext": {
     "message": "Ignorer la navigation par cadre"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Signaler un site web comme malveillant"
-  },
-  "restoreDefaultsContext": {
-    "message": "Restaurer les paramètres par défaut"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Paramètres par défaut restaurés"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Les paramètres par défaut ont été restaurés."
   },
   "unsafeWebsiteTitle": {
     "message": "Site web non sécurisé bloqué"

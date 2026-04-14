@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Şeýle-de bolsa dowam et"
   },
-  "popupTitle": {
-    "message": "Gorag Saýlawlary"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "GitHub-da Gör"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Gizlinlik Syýasaty"
-  },
-  "onText": {
-    "message": "Açyk"
-  },
-  "offText": {
-    "message": "Ýapyk"
-  },
-  "onLockedText": {
-    "message": "Açyk (Gulply)"
-  },
-  "offLockedText": {
-    "message": "Ýapyk (Gulply)"
   },
   "knownSafe": {
     "message": "Howpsuz diýip bilinýän"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Phishing"
   },
-  "untrusted": {
-    "message": "Ynamly däl"
-  },
   "adultContent": {
     "message": "Ulularyň Mazmuny"
-  },
-  "toggleNotificationsContext": {
-    "message": "Bildirişleri aç"
   },
   "toggleFrameNavigationContext": {
     "message": "Çarçuwanyň ugruny äsgermezlik et"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Report website as malicious"
-  },
-  "restoreDefaultsContext": {
-    "message": "Bellenen bahalary dikelt"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Bellenen Bahalar Dikeltdi"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Bellenen bahalar dikeldildi."
   },
   "unsafeWebsiteTitle": {
     "message": "Howply Web-Saýt Bloklandy"

@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Continueu igualment"
   },
-  "popupTitle": {
-    "message": "Opcions de protecció"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "Veure a GitHub"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Política de privadesa"
-  },
-  "onText": {
-    "message": "Activat"
-  },
-  "offText": {
-    "message": "Desactivat"
-  },
-  "onLockedText": {
-    "message": "Activat (bloquejat)"
-  },
-  "offLockedText": {
-    "message": "Desactivat (bloquejat)"
   },
   "knownSafe": {
     "message": "De confiança"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Phishing"
   },
-  "untrusted": {
-    "message": "No fiable"
-  },
   "adultContent": {
     "message": "Contingut per a adults"
-  },
-  "toggleNotificationsContext": {
-    "message": "Activa les notificacions"
   },
   "toggleFrameNavigationContext": {
     "message": "Ignora la navegació per marcs"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Informa el lloc web com a maliciós"
-  },
-  "restoreDefaultsContext": {
-    "message": "Restaura la configuració predeterminada"
-  },
-  "restoreDefaultsTitle": {
-    "message": "S’ha restaurat la configuració predeterminada"
-  },
-  "restoreDefaultsMessage": {
-    "message": "S'han restaurat els paràmetres predeterminats."
   },
   "unsafeWebsiteTitle": {
     "message": "Lloc web insegur blocat"

@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Jätka ikkagi"
   },
-  "popupTitle": {
-    "message": "Kaitsevalikud"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "Vaata GitHubis"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Privaatsuspoliitika"
-  },
-  "onText": {
-    "message": "Sees"
-  },
-  "offText": {
-    "message": "Väljas"
-  },
-  "onLockedText": {
-    "message": "Sees (lukus)"
-  },
-  "offLockedText": {
-    "message": "Väljas (lukus)"
   },
   "knownSafe": {
     "message": "Tuntud kui turvaline"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Andmepüük"
   },
-  "untrusted": {
-    "message": "Ebausaldusväärne"
-  },
   "adultContent": {
     "message": "Täiskasvanute sisu"
-  },
-  "toggleNotificationsContext": {
-    "message": "Luba teavitused"
   },
   "toggleFrameNavigationContext": {
     "message": "Eira raaminavigatsiooni"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Teata veebisaidist kui pahatahtlikust"
-  },
-  "restoreDefaultsContext": {
-    "message": "Taasta vaikeväärtused"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Vaikeväärtused taastatud"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Vaikeväärtused on taastatud."
   },
   "unsafeWebsiteTitle": {
     "message": "Ohtlik veebisait blokeeritud"

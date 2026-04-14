@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Tohizo ihany"
   },
-  "popupTitle": {
-    "message": "Safidy Fiarovana"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "Jereo ao amin'ny GitHub"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Politikan'ny tsiambaratelo"
-  },
-  "onText": {
-    "message": "Mandeha"
-  },
-  "offText": {
-    "message": "Maty"
-  },
-  "onLockedText": {
-    "message": "Mandeha (Voahidy)"
-  },
-  "offLockedText": {
-    "message": "Maty (Voahidy)"
   },
   "knownSafe": {
     "message": "Fantatra fa azo antoka"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Fitaka (Phishing)"
   },
-  "untrusted": {
-    "message": "Tsy azo itokisana"
-  },
   "adultContent": {
     "message": "Atiny ho an'ny olon-dehibe"
-  },
-  "toggleNotificationsContext": {
-    "message": "Alefaso ny fampandrenesana"
   },
   "toggleFrameNavigationContext": {
     "message": "Aza jerena ny fitetezana frame"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Tatitra ny tranonkala ho ratsy fanahy"
-  },
-  "restoreDefaultsContext": {
-    "message": "Avereno amin'ny fanahafana fototra"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Naverina ny fanahafana fototra"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Naverina ny fanahafana fototra."
   },
   "unsafeWebsiteTitle": {
     "message": "Tranokala tsy azo antoka voasakana"

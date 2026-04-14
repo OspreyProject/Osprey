@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Vseeno nadaljuj"
   },
-  "popupTitle": {
-    "message": "Možnosti zaščite"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "Poglej na GitHubu"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Pravilnik o zasebnosti"
-  },
-  "onText": {
-    "message": "Vklopljeno"
-  },
-  "offText": {
-    "message": "Izklopljeno"
-  },
-  "onLockedText": {
-    "message": "Vklopljeno (zaklenjeno)"
-  },
-  "offLockedText": {
-    "message": "Izklopljeno (zaklenjeno)"
   },
   "knownSafe": {
     "message": "Znano kot varno"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Lažno predstavljanje"
   },
-  "untrusted": {
-    "message": "Nezaupljivo"
-  },
   "adultContent": {
     "message": "Vsebina za odrasle"
-  },
-  "toggleNotificationsContext": {
-    "message": "Omogoči obvestila"
   },
   "toggleFrameNavigationContext": {
     "message": "Prezri navigacijo po okvirjih"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Prijavi spletno mesto kot zlonamerno"
-  },
-  "restoreDefaultsContext": {
-    "message": "Obnovi privzete nastavitve"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Privzete nastavitve obnovljene"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Privzete nastavitve so bile obnovljene."
   },
   "unsafeWebsiteTitle": {
     "message": "Nevarna spletna stran blokirana"

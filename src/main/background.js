@@ -17,1415 +17,279 @@
  */
 "use strict";
 
-// noinspection JSDeprecatedSymbols
+const bootstrapScripts = [
+    'shared/browser-api.js',
+    'shared/i18n.js',
+    'shared/timed-signal.js',
+    'providers/provider-groups.js',
+    'providers/proxy-builtins.js',
+    'providers/direct-integrations.js',
+    'catalog/catalog-validator.js',
+    'platform/protection-result.js',
+    'platform/url-service.js',
+    'platform/report-link-builder.js',
+    'providers/custom-provider-normalizer.js',
+    'providers/provider-catalog.js',
+    'state/provider-state-store.js',
+    'state/policy-service.js',
+    'platform/request-builder.js',
+    'platform/response-rule-engine.js',
+    'state/cache-service.js',
+    'platform/message-bus.js',
+    'providers/provider-runtime-factory.js',
+    'platform/dns-validator.js',
+    'providers/provider-engine.js',
+    'background/result-aggregation-service.js',
+    'background/badge-service.js',
+    'background/blocking-service.js',
+    'background/navigation-service.js',
+    'background/context-menu-service.js',
+];
+
+try {
+    importScripts(...bootstrapScripts);
+} catch (error) {
+    console.error('Failed to bootstrap Osprey background service worker', error);
+}
+
 (() => {
-    const browserAPI = globalThis.chrome ?? globalThis.browser;
-    const contextMenuAPI = browserAPI?.contextMenus ?? browserAPI?.menus;
-    let supportsManagedPolicies = true;
-    let redirectToGoogle = false;
-
-    // Registers the page to open when the extension is uninstalled
-    browserAPI.runtime.setUninstallURL("https://osprey.ac/uninstall");
-
-    // Import necessary scripts for functionality
-    try {
-        importScripts(
-            // Util
-            "util/Validate.js",
-            "util/StorageUtil.js",
-            "util/Settings.js",
-            "util/UrlHelpers.js",
-            "util/CacheManager.js",
-            "util/MessageType.js",
-            "util/LangUtil.js",
-
-            // Protection
-            "protection/ProtectionResult.js",
-            "protection/BrowserProtection.js",
-        );
-    } catch (error) {
-        // In Firefox-based browsers, importScripts is not available; scripts are loaded via background.html
-        redirectToGoogle = true;
-        console.debug("Running in Firefox or another environment without importScripts");
-        console.debug(`Error: ${error}`);
-    }
-
-    // Clears the processing cache
-    CacheManager.clearProcessingCache();
-
-    // Map<tabKey, Array<origin>> (Integer) of result origins per tab
-    const resultOriginsMap = new Map();
-
-    // Map<tabKey, urlString> of frame-zero URLs per tab
-    const frameZeroUrlsMap = new Map();
-
-    // Set of valid protocols to check for
-    const validProtocols = new Set(['http:', 'https:']);
-
-    // Set of privileged message types that require sender verification
-    const privilegedMessageTypes = Object.freeze(new Set([
-        Messages.CONTINUE_TO_WEBSITE,
-        Messages.CONTINUE_TO_SAFETY,
-        Messages.REPORT_WEBSITE,
-        Messages.ALLOW_WEBSITE
-    ]));
-
-    // Maximum valid origin value (derived from ProtectionResult.Origin)
-    const maxOriginValue = Math.max(...Object.values(ProtectionResult.Origin));
-
-    // Report URL for the "Report Website as Malicious" context menu item
-    const reportUrl = "https://github.com/OspreyProject/Osprey/wiki/Report-Website-as-Malicious";
-
-    // Set of all policy keys needed for managed policies
-    const policyKeys = Object.freeze([
-        'DisableContextMenu',
-        'DisableNotifications',
-        'HideContinueButtons',
-        'HideReportButton',
-        'IgnoreFrameNavigation',
-        'CacheExpirationSeconds',
-        'LockProtectionOptions',
-        'HideProtectionOptions',
-
-        // Official Partners
-        'AdGuardSecurityEnabled',
-        'AdGuardFamilyEnabled',
-        'AlphaMountainEnabled',
-        'PrecisionSecEnabled',
-
-        // Non-Partnered Providers
-        'CERTEEEnabled',
-        'CleanBrowsingSecurityEnabled',
-        'CleanBrowsingFamilyEnabled',
-        'CloudflareSecurityEnabled',
-        'CloudflareFamilyEnabled',
-        'ControlDSecurityEnabled',
-        'ControlDFamilyEnabled',
-        'PhishDestroyEnabled',
-        'PhishingDatabaseEnabled',
-        'Quad9Enabled',
-        'SwitchCHEnabled',
-    ]);
-
-    /**
-     * Retrieves the result origins for a specific tab.
-     *
-     * @param {number} tabId The ID of the tab.
-     * @returns {any|*[]} An array of result origins for the specified tab.
-     */
-    const getResultOrigins = tabId => {
-        return resultOriginsMap.get(tabId) || [];
-    };
-
-    /**
-     * Appends a result origin to the result origins for a specific tab.
-     *
-     * @param {number} tabId The ID of the tab.
-     * @param {number} origin The origin to append.
-     */
-    const appendResultOrigin = (tabId, origin) => {
-        // Appends the origin if it doesn't already exist
-        const origins = resultOriginsMap.get(tabId) || [];
-        if (!origins.includes(origin)) {
-            resultOriginsMap.set(tabId, [...origins, origin]);
-        }
-    };
-
-    /**
-     * Removes a specific origin from the result origins for a given tab.
-     *
-     * @param {number} tabId The ID of the tab.
-     * @param {number} origin The origin to remove.
-     */
-    const removeResultOrigin = (tabId, origin) => {
-        resultOriginsMap.set(tabId, (resultOriginsMap.get(tabId) || []).filter(o => o !== origin));
-    };
-
-    /**
-     * Deletes the result origins for a specific tab.
-     *
-     * @param {number} tabId The ID of the tab.
-     */
-    const deleteResultOrigins = tabId => {
-        resultOriginsMap.delete(tabId);
-    };
-
-    /**
-     * Retrieves the frame-zero URL for a specific tab.
-     *
-     * @param {number} tabId The ID of the tab.
-     */
-    const getFrameZeroUrl = tabId => {
-        return frameZeroUrlsMap.get(tabId) || "";
-    };
-
-    /**
-     * Sets the frame-zero URL for a specific tab.
-     *
-     * @param {number} tabId The ID of the tab.
-     * @param {string} url The URL to set.
-     */
-    const setFrameZeroUrl = (tabId, url) => {
-        frameZeroUrlsMap.set(tabId, url);
-    };
-
-    /**
-     * Deletes the frame-zero URL for a specific tab.
-     *
-     * @param {number} tabId The ID of the tab.
-     */
-    const deleteFrameZeroUrl = tabId => {
-        frameZeroUrlsMap.delete(tabId);
-    };
-
-    /**
-     * Safely updates a tab's properties, handling potential errors such as the tab being closed during the update process.
-     *
-     * @param {number} tabId The ID of the tab to be updated.
-     * @param {Object} updateProps The properties to update on the tab (e.g., {url: "https://www.google.com"}).
-     * @returns {Promise<boolean>} Returns true if the tab was successfully updated, false if the tab no longer exists or an error occurred.
-     */
-    const safeTabUpdate = async (tabId, updateProps) => {
-        try {
-            await browserAPI.tabs.update(tabId, updateProps);
-            return true;
-        } catch (error) {
-            console.warn(`Failed to update tab ${tabId}:`, error.message);
-            return false;
-        }
-    };
-
-    /**
-     * Sends the user to the new tab page.
-     *
-     * @param {number} tabId The ID of the tab to be updated.
-     */
-    const sendToNewTabPage = tabId => {
-        if (redirectToGoogle) {
-            safeTabUpdate(tabId, {url: "https://www.google.com"});
-        } else {
-            safeTabUpdate(tabId, {url: "about:newtab"});
-        }
-    };
-
-    /**
-     * Function to handle navigation checks.
-     *
-     * @param {Object} navigationDetails The navigation details to handle.
-     */
-    const handleNavigation = navigationDetails => {
-        // Basic property checks; navigationDetails comes from browser API
-        if (!navigationDetails || typeof navigationDetails.tabId !== 'number' || !navigationDetails.url) {
-            console.warn(`Invalid navigation details: ${JSON.stringify(navigationDetails)}`);
-            return;
-        }
-
-        Settings.get(settings => {
-            // Retrieves settings to check if protection is enabled
-            if (Settings.allProvidersDisabled(settings)) {
-                console.debug("Protection is disabled; bailing out early.");
-                return;
-            }
-
-            let {tabId, frameId, url: urlString} = navigationDetails;
-
-            // Checks if the frame ID is not the main frame
-            if (settings.ignoreFrameNavigation && frameId !== 0) {
-                console.debug(`Ignoring frame navigation: ${urlString} #${frameId}; bailing out.`);
-                return;
-            }
-
-            // Parses the URL object
-            let urlObject;
-            try {
-                urlObject = new URL(urlString);
-            } catch (error) {
-                console.warn(`Invalid URL format: ${error.message}`);
-                return;
-            }
-
-            // Canonicalizes the URL
-            urlObject.hash = "";
-            urlObject.password = "";
-            urlObject.port = "";
-            urlObject.search = "";
-            urlObject.username = "";
-
-            // Debug info for the URL object
-            console.debug(urlObject);
-
-            let {hostname, protocol} = urlObject;
-
-            // Checks if the URL has a protocol
-            if (!protocol || protocol.length === 0) {
-                console.debug(`URL has no protocol: ${urlString}; bailing out.`);
-                return;
-            }
-
-            let hasHostname = true;
-            let previouslyBlob = false;
-
-            // Unwraps blob: URLs safely
-            if (urlObject.protocol === 'blob:') {
-                // Parses the blob URL object
-                let innerUrl;
-                try {
-                    innerUrl = new URL(urlString.slice(5));
-                } catch (error) {
-                    console.warn(`Invalid blob URL: ${urlString}; bailing out: ${error}`);
-                    return;
-                }
-
-                // Drops the "blob:" prefix and parses the inner URL
-                if (innerUrl.protocol === 'http:' || innerUrl.protocol === 'https:') {
-                    urlObject = innerUrl;
-                    urlString = innerUrl.href;
-                    previouslyBlob = true;
-                } else {
-                    console.debug(`Non-HTTP(S) blob origin: ${innerUrl.protocol}; bailing out.`);
-                    return;
-                }
-            }
-
-            // Checks if the URL has a valid protocol (HTTP or HTTPS)
-            if (!validProtocols.has(protocol.toLowerCase()) && !previouslyBlob) {
-                console.debug(`Invalid protocol: ${protocol}; bailing out.`);
-                return;
-            }
-
-            // Checks if the URL has a hostname
-            if (!hostname || hostname.length === 0) {
-                // This behavior is expected in blob: URLs
-                if (previouslyBlob) {
-                    console.debug(`Missing hostname in URL: ${urlString}; extracting from URL object.`);
-                } else {
-                    console.warn(`Missing hostname in URL: ${urlString}; extracting from URL object.`);
-                }
-
-                // Extracts and sets the hostname from the URL by taking the characters
-                // after the first "://" and before the first "/"
-                const parsedHostname = urlString.split('://')[1].split('/')[0].split(':')[0];
-
-                if (parsedHostname) {
-                    console.debug(`Extracted hostname: ${parsedHostname}`);
-                    urlObject.hostname = parsedHostname;
-                    hostname = parsedHostname;
-                } else {
-                    console.warn(`Failed to extract hostname from URL: ${urlString}; proceeding with empty hostname.`);
-                    hasHostname = false;
-                }
-            }
-
-            if (hasHostname) {
-                // Ignores hostnames with no dots at all (excludes IPv6)
-                if (!hostname.includes('.') &&
-                    !hostname.includes("[") &&
-                    !hostname.includes("]") &&
-                    !hostname.includes(":")) {
-                    console.debug(`Hostname has no dots: ${hostname}; bailing out.`);
-                    return;
-                }
-
-                // Ignores hostnames with invalid trailing dot amounts
-                if (hostname.endsWith('..')) {
-                    console.debug(`Hostname has invalid trailing dots: ${hostname}; bailing out.`);
-                    return;
-                }
-
-                // Removes www. prefix from hostname
-                if (hostname.startsWith('www.')) {
-                    console.debug(`Removing www. prefix from hostname: ${hostname}`);
-                    hostname = hostname.slice(4);
-                }
-
-                // Removes trailing dots from hostname
-                if (hostname.endsWith('.')) {
-                    console.debug(`Removing trailing dots from hostname: ${hostname}`);
-
-                    while (hostname.endsWith('.')) {
-                        hostname = hostname.slice(0, -1);
-                    }
-                }
-
-                // Excludes local/internal network addresses
-                if (UrlHelpers.isInternalAddress(hostname)) {
-                    console.debug(`Local/internal network URL detected: ${urlString}; bailing out.`);
-                    return;
-                }
-
-                // Checks if the hostname is in the global allowed cache
-                if (CacheManager.isPatternInAllowedCache(hostname, "global")) {
-                    console.debug(`URL is in the global allowed cache: ${urlString}; bailing out.`);
-                    return;
-                }
-
-                // Sets the cleaned hostname back to the URL object
-                urlObject.hostname = hostname;
-            }
-
-            // Removes trailing slashes from pathname
-            if (urlObject.pathname.endsWith('/') && urlObject.pathname.length > 1) {
-                urlObject.pathname = urlObject.pathname.replace(/\/+$/, '');
-            }
-
-            // Re-builds the URL string, sets it to the href if hostname is missing
-            if (hasHostname) {
-                urlString = "https://" + hostname + urlObject.pathname;
-            } else {
-                console.warn(`Hostname is missing; using full href: ${urlObject.href}`);
-                urlString = urlObject.href;
-            }
-
-            // Cancels all pending requests for the main frame navigation
-            if (frameId === 0) {
-                const previousUrl = getFrameZeroUrl(tabId);
-
-                // Only abort if we're actually navigating to a different URL
-                if (previousUrl !== urlString) {
-                    BrowserProtection.abandonPendingRequests(tabId, "Cancelled by main frame navigation.");
-                    CacheManager.removeKeysByTabId(tabId);
-                }
-
-                // Sets the frame-zero URL for the tab
-                setFrameZeroUrl(tabId, urlString);
-            }
-
-            let blocked = false;
-            let firstOrigin = ProtectionResult.Origin.UNKNOWN;
-
-            // Clears result origins for the tab
-            deleteResultOrigins(tabId);
-
-            const startTime = Date.now();
-            console.info("Checking URL:", urlString);
-
-            // Checks if the URL is malicious
-            BrowserProtection.checkIfUrlIsMalicious(tabId, urlString, result => {
-                browserAPI.tabs.get(tabId, tab => {
-                    // Checks if the tab still exists
-                    if (browserAPI.runtime.lastError || !tab) {
-                        console.debug(`Tab ${tabId} no longer exists`);
-                        return;
-                    }
-
-                    const duration = Date.now() - startTime;
-                    const cacheName = ProtectionResult.CacheName[result.origin];
-                    const fullName = ProtectionResult.FullName[result.origin];
-                    const shortName = ProtectionResult.ShortName[result.origin];
-                    const {resultType} = result;
-                    const resultTypeName = ProtectionResult.ResultTypeName[resultType];
-
-                    // Removes the URL from the system's processing cache on every callback
-                    // Doesn't remove it if the result is still waiting for a response
-                    if (resultType !== ProtectionResult.ResultType.WAITING) {
-                        CacheManager.removeUrlFromProcessingCache(urlObject, cacheName);
-                    }
-
-                    console.info(`[${shortName}] Result for ${urlString}: ${resultTypeName} (${duration}ms)`);
-
-                    if (resultType !== ProtectionResult.ResultType.FAILED &&
-                        resultType !== ProtectionResult.ResultType.WAITING &&
-                        resultType !== ProtectionResult.ResultType.KNOWN_SAFE &&
-                        resultType !== ProtectionResult.ResultType.ALLOWED) {
-
-                        if (!blocked) {
-                            browserAPI.tabs.get(tabId, tab => {
-                                // Checks if the tab still exists
-                                if (browserAPI.runtime.lastError || !tab) {
-                                    console.debug(`Tab ${tabId} no longer exists`);
-                                    return;
-                                }
-
-                                // Checks if the tab or tab.url is undefined
-                                if (tab.url === undefined) {
-                                    console.debug(`tabs.get(${tabId}) failed '${browserAPI.runtime.lastError?.message}'; bailing out.`);
-                                    return;
-                                }
-
-                                const pendingUrl = tab.pendingUrl || tab.url;
-
-                                // Checks if the tab is at an extension page
-                                if (!(urlString !== pendingUrl && frameId === 0) &&
-                                    (pendingUrl.startsWith("chrome-extension:") ||
-                                        pendingUrl.startsWith("moz-extension:") ||
-                                        pendingUrl.startsWith("extension:"))) {
-                                    console.debug(`[${shortName}] The tab is at an extension page; bailing out. ${pendingUrl} ${frameId}`);
-                                    return;
-                                }
-
-                                const targetUrl = frameId === 0 ? urlString : pendingUrl;
-
-                                if (targetUrl) {
-                                    const frameZeroUrl = getFrameZeroUrl(tabId);
-                                    const blockPageUrl = UrlHelpers.getBlockPageUrl(result, frameZeroUrl || result.url);
-                                    const expectedPrefix = browserAPI.runtime.getURL("pages/warning/");
-
-                                    // Validates the generated block page URL to ensure it starts with the expected prefix
-                                    if (!blockPageUrl.startsWith(expectedPrefix)) {
-                                        console.error("Invalid block page URL generated");
-                                        sendToNewTabPage(tabId);
-                                        return;
-                                    }
-
-                                    // Navigates to the block page
-                                    console.debug(`[${shortName}] Navigating to block page: ${blockPageUrl}.`);
-                                    safeTabUpdate(tab.id, {url: blockPageUrl}).catch(error => {
-                                        console.error(`Failed to update tab ${tabId}:`, error);
-                                        sendToNewTabPage(tabId);
-                                    });
-
-                                    // Builds the warning notification options
-                                    if (settings.notificationsEnabled) {
-                                        const notificationOptions = {
-                                            type: "basic",
-                                            iconUrl: "assets/icons/icon128.png",
-                                            title: LangUtil.UNSAFE_WEBSITE_TITLE,
-                                            message: `${LangUtil.URL_LABEL}${UrlHelpers.sanitizeForDisplay(urlString)}\n${LangUtil.REPORTED_BY_LABEL}${fullName}\n${LangUtil.REASON_LABEL}${resultTypeName}`,
-                                            priority: 2,
-                                        };
-
-                                        // Displays the warning notification
-                                        browserAPI.notifications.create(notificationOptions, notificationId => {
-                                            console.debug(`Notification created with ID: ${notificationId}`);
-                                        });
-                                    }
-                                } else {
-                                    console.debug(`Tab '${tabId}' failed to supply a top-level URL; bailing out.`);
-                                }
-                            });
-                        }
-
-                        blocked = true;
-                        firstOrigin = firstOrigin === ProtectionResult.Origin.UNKNOWN ? result.origin : firstOrigin;
-
-                        // Appends the result origin to the tab's result origins
-                        // Doesn't include the first origin in the list
-                        if (result.origin !== firstOrigin) {
-                            appendResultOrigin(tabId, result.origin);
-                        }
-
-                        // This timeout is needed to prevent visual artifacts on page load
-                        setTimeout(() => {
-                            const resultOrigins = getResultOrigins(tabId);
-                            const fullCount = resultOrigins.length + 1;
-                            const othersCount = resultOrigins.length;
-
-                            browserAPI.tabs.get(tabId, tab => {
-                                // Checks if the tab still exists
-                                if (browserAPI.runtime.lastError || !tab) {
-                                    console.debug(`Tab ${tabId} no longer exists`);
-                                    return;
-                                }
-
-                                // Checks if the tab or tab.url is undefined
-                                if (tab.url === undefined) {
-                                    console.debug(`tabs.get(${tabId}) failed '${browserAPI.runtime.lastError?.message}'; bailing out.`);
-                                    return;
-                                }
-
-                                // Sets the action text to the result count
-                                browserAPI.action.setBadgeText({text: `${fullCount}`, tabId});
-                                browserAPI.action.setBadgeBackgroundColor({color: "rgb(255,75,75)", tabId});
-                                browserAPI.action.setBadgeTextColor({color: "white", tabId});
-
-                                // Sends a PONG message to the content script to update the blocked counter
-                                browserAPI.tabs.sendMessage(tabId, {
-                                    messageType: Messages.BLOCKED_COUNTER_PONG,
-                                    count: othersCount,
-                                    systems: resultOrigins
-                                }).catch(() => {
-                                });
-                            });
-                        }, 150);
-                    }
-                });
-            });
-        });
-    };
-
-    /**
-     * Creates the context menu for the extension.
-     */
-    const createContextMenu = () => {
-        Settings.get(settings => {
-            // Removes existing menu items to avoid duplicates
-            contextMenuAPI.removeAll();
-
-            // Checks if the context menu is disabled by policies
-            if (!settings.contextMenuEnabled) {
-                return;
-            }
-
-            // Creates the toggle notifications menu item
-            contextMenuAPI.create({
-                id: "toggleNotifications",
-                title: LangUtil.TOGGLE_NOTIFICATIONS_CONTEXT,
-                type: "checkbox",
-                checked: settings.notificationsEnabled,
-                contexts: ["action"],
-            });
-
-            // Creates the toggle frame navigation menu item
-            contextMenuAPI.create({
-                id: "toggleFrameNavigation",
-                title: LangUtil.TOGGLE_FRAME_NAVIGATION_CONTEXT,
-                type: "checkbox",
-                checked: settings.ignoreFrameNavigation,
-                contexts: ["action"],
-            });
-
-            // Creates the clear allowed websites menu item
-            contextMenuAPI.create({
-                id: "clearAllowedWebsites",
-                title: LangUtil.CLEAR_ALLOWED_WEBSITES_CONTEXT,
-                contexts: ["action"],
-            });
-
-            // Creates the report website as malicious menu item
-            contextMenuAPI.create({
-                id: "reportWebsiteAsMalicious",
-                title: LangUtil.REPORT_WEBSITE_AS_MALICIOUS_CONTEXT,
-                contexts: ["action"],
-            });
-
-            // Creates the restore default settings menu item
-            contextMenuAPI.create({
-                id: "restoreDefaultSettings",
-                title: LangUtil.RESTORE_DEFAULTS_CONTEXT,
-                contexts: ["action"],
-            });
-
-            // Returns early if managed policies are not supported
-            if (!supportsManagedPolicies) {
-                return;
-            }
-
-            // Gathers the policy values for updating the context menu
-            const contextMenuPolicyKeys = [
-                "DisableNotifications",
-                "DisableClearAllowedWebsites",
-                "DisableReportWebsiteAsMalicious",
-                "IgnoreFrameNavigation",
-                "DisableRestoreDefaultSettings"
-            ];
-
-            browserAPI.storage.managed.get(contextMenuPolicyKeys, policies => {
-                let updatedSettings = {};
-
-                // Checks if the enable notifications button should be disabled
-                if (policies.DisableNotifications !== undefined) {
-                    contextMenuAPI.update("toggleNotifications", {
-                        enabled: false,
-                        checked: !policies.DisableNotifications,
-                    });
-
-                    updatedSettings.notificationsEnabled = !policies.DisableNotifications;
-                    console.debug("Notifications are managed by system policy.");
-                }
-
-                // Checks if the ignore frame navigation button should be disabled
-                if (policies.IgnoreFrameNavigation !== undefined) {
-                    contextMenuAPI.update("toggleFrameNavigation", {
-                        enabled: false,
-                        checked: policies.IgnoreFrameNavigation,
-                    });
-
-                    updatedSettings.ignoreFrameNavigation = policies.IgnoreFrameNavigation;
-                    console.debug("Ignoring frame navigation is managed by system policy.");
-                }
-
-                // Checks if the clear allowed websites button should be disabled
-                if (policies.DisableClearAllowedWebsites === true) {
-                    contextMenuAPI.update("clearAllowedWebsites", {
-                        enabled: false,
-                    });
-
-                    console.debug("Clear allowed websites button is managed by system policy.");
-                }
-
-                // Checks if the report website as malicious button should be disabled
-                if (policies.DisableReportWebsiteAsMalicious === true) {
-                    contextMenuAPI.update("reportWebsiteAsMalicious", {
-                        enabled: false,
-                    });
-
-                    console.debug("Report website as malicious button is managed by system policy.");
-                }
-
-                // Checks if the restore default settings button should be disabled
-                if (policies.DisableRestoreDefaultSettings === true) {
-                    contextMenuAPI.update("restoreDefaultSettings", {
-                        enabled: false,
-                    });
-
-                    console.debug("Restore default settings button is managed by system policy.");
-                }
-
-                // Updates settings cumulatively if any policy-based changes were made
-                if (Object.keys(updatedSettings).length > 0) {
-                    Settings.set(updatedSettings, () => {
-                        console.debug("Updated settings from context menu creation:", updatedSettings);
-                    });
-                }
-            });
-        });
-    };
-
-    /**
-     * Checks for managed policies and updates the context menu and settings accordingly.
-     *
-     * @param {Array<string>} policyKeys The keys of the policies to check for.
-     * @param {Object} policies The policies retrieved from the browser's managed storage.
-     */
-    browserAPI.storage.managed.get(policyKeys, policies => {
-        if (policies === undefined) {
-            supportsManagedPolicies = false;
-            console.debug("Managed policies are not supported or setup correctly in this browser.");
-        } else {
-            supportsManagedPolicies = true;
-            let settings = {};
-
-            // Checks and sets the context menu settings using the policy
-            if (policies.DisableContextMenu === true) {
-                settings.contextMenuEnabled = false;
-                console.debug("Context menu is disabled by system policy.");
-            } else {
-                settings.contextMenuEnabled = true;
-            }
-
-            const defaultCacheExpiration = 604800; // 7 days in seconds
-
-            // Checks and sets the cache expiration time using the policy
-            if (policies.CacheExpirationSeconds === undefined) {
-                settings.cacheExpirationSeconds = defaultCacheExpiration;
-            } else {
-                const minSeconds = 60; // 1 minute in seconds
-                const maxSeconds = 31536000; // 1 year in seconds
-
-                if (typeof policies.CacheExpirationSeconds !== "number" ||
-                    policies.CacheExpirationSeconds < minSeconds ||
-                    policies.CacheExpirationSeconds > maxSeconds) {
-                    settings.cacheExpirationSeconds = defaultCacheExpiration;
-                    console.debug("Cache expiration time is invalid; using default value.");
-                } else {
-                    settings.cacheExpirationSeconds = policies.CacheExpirationSeconds;
-                    console.debug(`Cache expiration time set to: ${policies.CacheExpirationSeconds}`);
-                }
-            }
-
-            // Checks and sets the continue buttons settings using the policy
-            if (policies.HideContinueButtons === true) {
-                settings.hideContinueButtons = policies.HideContinueButtons;
-                console.debug("Continue buttons are managed by system policy.");
-            } else {
-                settings.hideContinueButtons = false;
-            }
-
-            // Checks and sets the report button settings using the policy
-            if (policies.HideReportButton === true) {
-                settings.hideReportButton = policies.HideReportButton;
-                console.debug("Report button is managed by system policy.");
-            } else {
-                settings.hideReportButton = false;
-            }
-
-            // Checks and sets the lock protection options using the policy
-            if (policies.LockProtectionOptions === true) {
-                settings.lockProtectionOptions = policies.LockProtectionOptions;
-                console.debug("Protection options are locked by system policy.");
-            } else {
-                settings.lockProtectionOptions = false;
-            }
-
-            // Checks and sets the hide protection options using the policy
-            if (policies.HideProtectionOptions === true) {
-                settings.hideProtectionOptions = policies.HideProtectionOptions;
-                console.debug("Protection options are hidden by system policy.");
-            } else {
-                settings.hideProtectionOptions = false;
-            }
-
-            // Checks and sets the AdGuard Security settings using the policy
-            if (policies.AdGuardSecurityEnabled !== undefined) {
-                settings.adGuardSecurityEnabled = policies.AdGuardSecurityEnabled;
-                console.debug("AdGuard Security is managed by system policy.");
-            }
-
-            // Checks and sets the AdGuard Family settings using the policy
-            if (policies.AdGuardFamilyEnabled !== undefined) {
-                settings.adGuardFamilyEnabled = policies.AdGuardFamilyEnabled;
-                console.debug("AdGuard Family is managed by system policy.");
-            }
-
-            // Checks and sets the alphaMountain settings using the policy
-            if (policies.AlphaMountainEnabled !== undefined) {
-                settings.alphaMountainEnabled = policies.AlphaMountainEnabled;
-                console.debug("alphaMountain Web Protection is managed by system policy.");
-            }
-
-            // Checks and sets the PrecisionSec settings using the policy
-            if (policies.PrecisionSecEnabled !== undefined) {
-                settings.precisionSecEnabled = policies.PrecisionSecEnabled;
-                console.debug("PrecisionSec is managed by system policy.");
-            }
-
-            // Checks and sets the CERT-EE settings using the policy
-            if (policies.CERTEEEnabled !== undefined) {
-                settings.certEEEnabled = policies.CERTEEEnabled;
-                console.debug("CERT-EE is managed by system policy.");
-            }
-
-            // Checks and sets the CleanBrowsing Security settings using the policy
-            if (policies.CleanBrowsingSecurityEnabled !== undefined) {
-                settings.cleanBrowsingSecurityEnabled = policies.CleanBrowsingSecurityEnabled;
-                console.debug("CleanBrowsing Security is managed by system policy.");
-            }
-
-            // Checks and sets the CleanBrowsing Family settings using the policy
-            if (policies.CleanBrowsingFamilyEnabled !== undefined) {
-                settings.cleanBrowsingFamilyEnabled = policies.CleanBrowsingFamilyEnabled;
-                console.debug("CleanBrowsing Family is managed by system policy.");
-            }
-
-            // Checks and sets the Cloudflare Security settings using the policy
-            if (policies.CloudflareSecurityEnabled !== undefined) {
-                settings.cloudflareSecurityEnabled = policies.CloudflareSecurityEnabled;
-                console.debug("Cloudflare Security is managed by system policy.");
-            }
-
-            // Checks and sets the Cloudflare Family settings using the policy
-            if (policies.CloudflareFamilyEnabled !== undefined) {
-                settings.cloudflareFamilyEnabled = policies.CloudflareFamilyEnabled;
-                console.debug("Cloudflare Family is managed by system policy.");
-            }
-
-            // Checks and sets the Control D Security settings using the policy
-            if (policies.ControlDSecurityEnabled !== undefined) {
-                settings.controlDSecurityEnabled = policies.ControlDSecurityEnabled;
-                console.debug("Control D Security is managed by system policy.");
-            }
-
-            // Checks and sets the Control D Family settings using the policy
-            if (policies.ControlDFamilyEnabled !== undefined) {
-                settings.controlDFamilyEnabled = policies.ControlDFamilyEnabled;
-                console.debug("Control D Family is managed by system policy.");
-            }
-
-            // Checks and sets the PhishDestroy settings using the policy
-            if (policies.PhishDestroyEnabled !== undefined) {
-                settings.phishDestroyEnabled = policies.PhishDestroyEnabled;
-                console.debug("PhishDestroy is managed by system policy.");
-            }
-
-            // Checks and sets the Phishing.Database settings using the policy
-            if (policies.PhishingDatabaseEnabled !== undefined) {
-                settings.phishingDatabaseEnabled = policies.PhishingDatabaseEnabled;
-                console.debug("Phishing.Database is managed by system policy.");
-            }
-
-            // Checks and sets the Quad9 settings using the policy
-            if (policies.Quad9Enabled !== undefined) {
-                settings.quad9Enabled = policies.Quad9Enabled;
-                console.debug("Quad9 is managed by system policy.");
-            }
-
-            // Checks and sets the Switch.ch settings using the policy
-            if (policies.SwitchCHEnabled !== undefined) {
-                settings.switchCHEnabled = policies.SwitchCHEnabled;
-                console.debug("Switch.ch is managed by system policy.");
-            }
-
-            // Updates the stored settings if any policies were applied
-            if (Object.keys(settings).length > 0) {
-                Settings.set(settings, () => {
-                    console.debug("Updated settings on install: ", settings);
-                });
-            }
-        }
-
-        // Creates the context menu
-        createContextMenu();
+    // Global variables
+    const blockingService = globalThis.OspreyBlockingService;
+    const browserAPI = globalThis.OspreyBrowserAPI;
+    const cacheService = globalThis.OspreyCacheService;
+    const contextMenuService = globalThis.OspreyContextMenuService;
+    const i18n = globalThis.OspreyI18n;
+    const messages = globalThis.OspreyMessageBus.Messages;
+    const navigationService = globalThis.OspreyNavigationService;
+    const protectionResult = globalThis.OspreyProtectionResult;
+    const providerCatalog = globalThis.OspreyProviderCatalog;
+    const providerEngine = globalThis.OspreyProviderEngine;
+    const providerStateStore = globalThis.OspreyProviderStateStore;
+    const reportLinkBuilder = globalThis.OspreyReportLinkBuilder;
+    const resultAggregationService = globalThis.OspreyResultAggregationService;
+
+    const emptyBlockedCounterResponse = Object.freeze({
+        count: 0,
+        systems: [],
+        primaryOrigin: null,
+        primaryResult: null
     });
 
-    /**
-     * Invalidates the Settings in-memory cache when the Settings are changed in storage,
-     * ensuring that the latest settings are always used.
-     *
-     * @param {Object} changes The changes object containing the keys that were changed and their old and new values.
-     * @param {string} area The storage area that was changed (e.g., "local", "sync", "managed").
-     */
-    // noinspection JSDeprecatedSymbols
-    browserAPI.storage.onChanged.addListener((changes, area) => {
-        if (area === "local" && changes.Settings) {
-            Settings.invalidateCache();
-        }
+    const getMenuRelevantAppState = stateValue => ({
+        contextMenuEnabled: Boolean(stateValue?.app?.contextMenuEnabled),
+        ignoreFrameNavigation: Boolean(stateValue?.app?.ignoreFrameNavigation),
+        disableClearAllowedWebsites: Boolean(stateValue?.app?.disableClearAllowedWebsites),
     });
 
-    /**
-     * Listens for PING messages from content scripts to update the blocked counter on the block page.
-     *
-     * @param {Object} event The message event sent from the content script.
-     * @param {Object} sender The sender of the message.
-     * @param {function} sendResponse The function to send a response back to the content script.
-     */
-    // noinspection JSDeprecatedSymbols
-    browserAPI.runtime.onMessage.addListener((message, sender, sendResponse) => {
-        if (!message || !sender || typeof sendResponse !== 'function') {
-            console.warn(`Invalid message event: ${JSON.stringify({message, sender})}`);
-            return false;
-        }
-
-        if (message.messageType === Messages.BLOCKED_COUNTER_PING) {
-            // Validate sender is from this extension
-            if (!sender.tab?.id || sender.id !== browserAPI.runtime.id) {
-                console.warn(`Invalid message sender: ${JSON.stringify(sender)}`);
-                return false;
-            }
-
-            const tabId = sender.tab.id;
-            const resultOrigins = getResultOrigins(tabId);
-            const fullCount = resultOrigins.length + 1;
-            const othersCount = resultOrigins.length;
-
-            // Sets the action text to the result count
-            browserAPI.action.setBadgeText({text: `${fullCount}`, tabId});
-            browserAPI.action.setBadgeBackgroundColor({color: "rgb(255,75,75)", tabId});
-            browserAPI.action.setBadgeTextColor({color: "white", tabId});
-
-            browserAPI.tabs.get(tabId, tab => {
-                if (browserAPI.runtime.lastError || !tab) {
-                    console.debug(`Tab ${tabId} no longer exists`);
-                    return;
-                }
-
-                if (!tab.url) {
-                    console.warn(`tabs.get(${tabId}) failed '${browserAPI.runtime.lastError?.message}'; bailing out.`);
-                    return;
-                }
-
-                // Sends a PONG message to the content script to update the blocked counter
-                browserAPI.tabs.sendMessage(tabId, {
-                    messageType: Messages.BLOCKED_COUNTER_PONG,
-                    count: othersCount,
-                    systems: resultOrigins
-                }).catch(() => {
-                });
-
-                // And responds to the original PING as well
-                sendResponse({count: othersCount, systems: resultOrigins});
-            });
-            return true;
-        }
+    const respond = (sendResponse, payload) => {
+        sendResponse?.(payload);
         return false;
+    };
+
+    const refreshContextMenus = errorMessage => contextMenuService.create().catch(error => {
+        console.error(errorMessage, error);
     });
 
-    /**
-     * Listens for onRemoved events to clear caches and session data when a tab is closed.
-     *
-     * @param {number} tabId The ID of the removed tab.
-     * @param {Object} removeInfo Additional information about the removed tab, including windowId and isWindowClosing.
-     */
-    // noinspection JSDeprecatedSymbols
-    browserAPI.tabs.onRemoved.addListener((tabId, removeInfo) => {
-        // Cleans up controllers for tabs that no longer exist
-        BrowserProtection.cleanupTabControllers();
+    const buildBlockedCounterResponse = tabId => {
+        const context = resultAggregationService.getBlockedContext(tabId);
 
-        if (!Number.isInteger(tabId) || tabId < 0) {
-            console.warn(`Invalid tabId in onRemoved event: ${tabId}`);
-            return;
+        if (!context) {
+            return emptyBlockedCounterResponse;
         }
 
-        console.debug(`Tab removed (tabId: ${tabId}, windowId: ${removeInfo?.windowId}, isWindowClosing: ${removeInfo?.isWindowClosing})`);
+        const systems = context.origins.filter(origin => origin !== context.primaryOrigin);
 
-        // Removes all cached keys for the tab
-        CacheManager.removeKeysByTabId(Number(tabId));
+        return {
+            count: systems.length,
+            systems,
+            primaryOrigin: context.primaryOrigin,
+            primaryResult: context.primaryResult
+        };
+    };
 
-        // Removes the tab from session-backed maps
-        deleteResultOrigins(Number(tabId));
-        deleteFrameZeroUrl(Number(tabId));
-    });
+    const openReportUrlForOrigin = async ({origin, blockedUrl, result}) => {
+        const definition = providerCatalog.getDefinition(origin, await providerStateStore.getState());
 
-    /**
-     * Listens for onBeforeNavigate events to handle main frame navigations and apply protections.
-     *
-     * @param {Object} event The navigation event, containing details such as url, frameId, and tabId.
-     */
-    // noinspection JSDeprecatedSymbols
-    browserAPI.webNavigation.onBeforeNavigate.addListener(details => {
-        if (!details?.url || typeof details.tabId !== 'number') {
-            console.warn(`Invalid onBeforeNavigate event details: ${JSON.stringify(details)}`);
-            return;
+        if (!definition) {
+            console.warn(`No provider definition found for origin ${origin} when building report URL`);
+            return null;
         }
 
-        console.debug(`[onBeforeNavigate] ${details.url} (frameId: ${details.frameId}) (tabId: ${details.tabId})`);
-        handleNavigation(details);
-    });
+        return reportLinkBuilder.build(definition.report, {
+            blockedUrl,
+            resultLabelEnglish: i18n.translate(protectionResult.messageKeys[protectionResult.normalize(result)] || 'failed'),
+        });
+    };
 
-    /**
-     * Listens for onCommitted events.
-     *
-     * @param {Object} details The navigation event details.
-     */
-    // noinspection JSDeprecatedSymbols
-    browserAPI.webNavigation.onCommitted.addListener(details => {
-        if (!details?.url || typeof details.tabId !== 'number' || !Array.isArray(details.transitionQualifiers)) {
-            console.warn(`Invalid onCommitted event details: ${JSON.stringify(details)}`);
-            return;
+    const didMenuRelevantAppStateChange = (previousStateValue, nextStateValue) => {
+        const previousApp = getMenuRelevantAppState(previousStateValue);
+        const nextApp = getMenuRelevantAppState(nextStateValue);
+
+        return previousApp.contextMenuEnabled !== nextApp.contextMenuEnabled ||
+            previousApp.ignoreFrameNavigation !== nextApp.ignoreFrameNavigation ||
+            previousApp.disableClearAllowedWebsites !== nextApp.disableClearAllowedWebsites;
+    };
+
+    const respondAsync = (sendResponse, promise, errorMessage) => {
+        promise.then(response => {
+            sendResponse?.(response || {
+                ok: true
+            });
+        }).catch(error => {
+            console.error(errorMessage, error);
+            sendResponse?.({
+                ok: false
+            });
+        });
+        return true;
+    };
+
+    const withTabId = (tabId, warningMessage, sendResponse, callback) => {
+        if (typeof tabId === 'number') {
+            callback(tabId);
+        } else {
+            console.warn(warningMessage);
+            respond(sendResponse, {
+                ok: false
+            });
+        }
+    };
+
+    const messageHandlers = {
+        [messages.BLOCKED_COUNTER_PING]: ({tabId, sendResponse}) => {
+            respond(sendResponse, typeof tabId === 'number' ? buildBlockedCounterResponse(tabId) : emptyBlockedCounterResponse);
+        },
+
+        [messages.CONTINUE_TO_SAFETY]: ({tabId, sendResponse}) => {
+            withTabId(
+                tabId,
+                'OspreyBackground rejected CONTINUE_TO_SAFETY because the sender had no tab id',
+                sendResponse,
+                validTabId => respondAsync(
+                    sendResponse,
+                    blockingService.sendToSafety(validTabId).then(() => ({ok: true})),
+                    `Failed CONTINUE_TO_SAFETY for tab ${validTabId}`
+                )
+            );
+        },
+
+        [messages.CONTINUE_TO_WEBSITE]: ({message, tabId, sendResponse}) => {
+            if (typeof message.continueUrl !== 'string') {
+                console.warn('OspreyBackground rejected CONTINUE_TO_WEBSITE because the message payload was incomplete');
+                return respond(sendResponse, {ok: false});
+            }
+
+            return withTabId(
+                tabId,
+                'OspreyBackground rejected CONTINUE_TO_WEBSITE because the sender had no tab id',
+                sendResponse,
+                validTabId => respondAsync(
+                    sendResponse,
+                    blockingService.continueToWebsite(validTabId, message.blockedUrl || message.continueUrl, message.origin, message.continueUrl),
+                    `Failed CONTINUE_TO_WEBSITE for tab ${validTabId} and URL ${message.continueUrl}`
+                )
+            );
+        },
+
+        [messages.ALLOW_WEBSITE]: ({message, tabId, sendResponse}) => {
+            if (typeof message.blockedUrl !== 'string') {
+                console.warn('OspreyBackground rejected ALLOW_WEBSITE because the message payload was incomplete');
+                return respond(sendResponse, {ok: false});
+            }
+
+            return withTabId(
+                tabId,
+                'OspreyBackground rejected ALLOW_WEBSITE because the sender had no tab id',
+                sendResponse,
+                validTabId => respondAsync(
+                    sendResponse,
+                    blockingService.allowWebsite(validTabId, message.blockedUrl, message.continueUrl || message.blockedUrl),
+                    `Failed ALLOW_WEBSITE for tab ${validTabId}`
+                )
+            );
+        },
+
+        [messages.REPORT_WEBSITE]: ({message, tabId, sendResponse}) => {
+            if (typeof message.reportUrl === 'string') {
+                return respondAsync(sendResponse, blockingService.reportWebsite(message.reportUrl), `Failed REPORT_WEBSITE for tab ${tabId}`);
+            }
+
+            if (typeof message.origin === 'string' && typeof message.blockedUrl === 'string') {
+                return respondAsync(
+                    sendResponse,
+                    openReportUrlForOrigin({
+                        origin: message.origin,
+                        blockedUrl: message.blockedUrl,
+                        result: message.result
+                    }).then(reportUrl => reportUrl ? blockingService.reportWebsite(reportUrl) : {ok: false}),
+                    `Failed REPORT_WEBSITE for tab ${tabId}`
+                );
+            }
+
+            console.warn('OspreyBackground rejected REPORT_WEBSITE because the message payload was incomplete');
+            return respond(sendResponse, {ok: false});
+        },
+    };
+
+    const handleMessage = (message, sender, sendResponse) => {
+        if (!message || sender?.id !== browserAPI.api?.runtime.id) {
+            console.warn(`No message for ${message?.id} for ${sender?.id}`);
+            return false;
         }
 
-        if (details.transitionQualifiers.includes("server_redirect") &&
-            (details.frameId !== 0 && details.transitionType !== "start_page" ||
-                details.frameId === 0 && details.transitionType === "link")) {
-            console.debug(`[server_redirect] ${details.url} (frameId: ${details.frameId}) (tabId: ${details.tabId}) (type: ${details.transitionType})`);
-            handleNavigation(details);
-        } else if (details.transitionQualifiers.includes("client_redirect")) {
-            console.debug(`[client_redirect] ${details.url} (frameId: ${details.frameId}) (tabId: ${details.tabId}) (type: ${details.transitionType})`);
-            handleNavigation(details);
-        }
-    });
+        const handler = messageHandlers[message.messageType];
 
-    /**
-     * Listens for onUpdated events.
-     *
-     * @param {number} tabId The ID of the updated tab.
-     * @param {Object} changeInfo An object containing the properties that changed.
-     */
-    // noinspection JSDeprecatedSymbols
-    browserAPI.tabs.onUpdated.addListener((tabId, changeInfo) => {
-        if (typeof tabId !== 'number' || !changeInfo) {
-            console.warn(`Invalid onUpdated event: tabId=${tabId}, changeInfo=${JSON.stringify(changeInfo)}`);
-            return;
+        if (!handler) {
+            console.warn(`No message for ${message?.id}`);
+            return false;
+        }
+        const messageTabId = typeof message?.tabId === 'number' ? message.tabId : null;
+        return handler({message, sender, sendResponse, tabId: sender.tab?.id ?? messageTabId});
+    };
+
+    const init = async () => {
+        try {
+            browserAPI.api?.runtime.setUninstallURL?.('https://osprey.ac/uninstall');
+        } catch {
+            console.error('Failed to set uninstall URL, browser API may not be available');
         }
 
-        if (changeInfo.url?.startsWith("blob:")) {
-            changeInfo.tabId = tabId;
-            changeInfo.frameId = 0;
+        browserAPI.api?.runtime.onMessage.addListener(handleMessage);
 
-            console.debug(`[onTabUpdated] ${tabId} updated URL to ${changeInfo.url})`);
-            handleNavigation(changeInfo);
-        }
-    });
+        browserAPI.api?.tabs.onRemoved?.addListener(tabId => {
+            resultAggregationService.clear(tabId);
+            providerEngine.abortTab(tabId);
+            cacheService.clearProcessingByTab(tabId);
+        });
 
-    /**
-     * Listens for onCreatedNavigationTarget events.
-     *
-     * @param {Object} details The navigation event details.
-     */
-    // noinspection JSDeprecatedSymbols
-    browserAPI.webNavigation.onCreatedNavigationTarget.addListener(details => {
-        if (!details?.url || typeof details.tabId !== 'number') {
-            console.warn(`Invalid onCreatedNavigationTarget event details: ${JSON.stringify(details)}`);
-            return;
-        }
-
-        console.debug(`[onCreatedNavigationTarget] ${details.url} (frameId: ${details.frameId}) (tabId: ${details.tabId})`);
-        handleNavigation(details);
-    });
-
-    /**
-     * Listens for onHistoryStateUpdated events.
-     *
-     * @param {Object} callback The navigation event details.
-     */
-    // noinspection JSDeprecatedSymbols
-    browserAPI.webNavigation.onHistoryStateUpdated.addListener(details => {
-        if (!details?.url || typeof details.tabId !== 'number') {
-            console.warn(`Invalid onHistoryStateUpdated event details: ${JSON.stringify(details)}`);
-            return;
-        }
-
-        console.debug(`[onHistoryStateUpdated] ${details.url} (frameId: ${details.frameId}) (tabId: ${details.tabId})`);
-        handleNavigation(details);
-    });
-
-    /**
-     * Listens for onReferenceFragmentUpdated events.
-     *
-     * @param {Object} callback The navigation event details.
-     */
-    // noinspection JSDeprecatedSymbols
-    browserAPI.webNavigation.onReferenceFragmentUpdated.addListener(details => {
-        if (!details?.url || typeof details.tabId !== 'number') {
-            console.warn(`Invalid onReferenceFragmentUpdated event details: ${JSON.stringify(details)}`);
-            return;
-        }
-
-        console.debug(`[onReferenceFragmentUpdated] ${details.url} (frameId: ${details.frameId}) (tabId: ${details.tabId})`);
-        handleNavigation(details);
-    });
-
-    /**
-     * Listens for onTabReplaced events.
-     *
-     * @param {Object} callback The navigation event details.
-     */
-    // noinspection JSDeprecatedSymbols
-    browserAPI.webNavigation.onTabReplaced.addListener(details => {
-        if (!details?.url || typeof details.tabId !== 'number') {
-            console.debug(`Invalid onTabReplaced event details (possibly Memory Saver): ${JSON.stringify(details)}`);
-            return;
-        }
-
-        console.debug(`[onTabReplaced] ${details.url} (frameId: ${details.frameId}) (tabId: ${details.tabId})`);
-        handleNavigation(details);
-    });
-
-    /**
-     * Listens for incoming messages from content scripts.
-     *
-     * @param {Object} event The message event sent from the content script.
-     * @param {Object} sender The sender of the message.
-     */
-    // noinspection JSDeprecatedSymbols
-    browserAPI.runtime.onMessage.addListener((message, sender) => {
-        if (!message?.messageType || typeof message.messageType !== 'string') {
-            console.warn(`Invalid message received: ${JSON.stringify(message)}`);
-            return;
-        }
-
-        if (!sender?.id || sender.id !== browserAPI.runtime.id || !sender.url) {
-            console.warn(`Invalid message sender: ${JSON.stringify(sender)}`);
-            return;
-        }
-
-        // Gate privileged actions to the Warning page
-        if (privilegedMessageTypes.has(message.messageType)) {
-            const allowedPrefix = browserAPI.runtime.getURL("pages/warning/");
-
-            if (!sender.url.startsWith(allowedPrefix)) {
-                console.warn(`Blocked privileged message from ${sender.url}`);
+        browserAPI.api?.storage.onChanged?.addListener((changes, area) => {
+            if (area === 'managed') {
+                refreshContextMenus('Failed to update context menus after managed storage change');
                 return;
             }
-        }
 
-        const tabId = sender.tab?.id;
-
-        // Handles validating the tabId for privileged messages
-        switch (message.messageType) {
-            case Messages.CONTINUE_TO_WEBSITE:
-            case Messages.CONTINUE_TO_SAFETY:
-            case Messages.REPORT_WEBSITE:
-            case Messages.ALLOW_WEBSITE:
-                if (typeof tabId !== 'number' || tabId < 0) {
-                    console.warn(`Invalid tabId in message sender: ${tabId}`);
-                    return;
-                }
-                break;
-
-            default:
-                break;
-        }
-
-        // Handles every message type
-        switch (message.messageType) {
-            case Messages.CONTINUE_TO_WEBSITE: {
-                // Basic property checks
-                if (!message.blockedUrl || !message.continueUrl || message.origin === undefined) {
-                    console.warn(`Missing required properties in CONTINUE_TO_WEBSITE message: ${JSON.stringify(message)}`);
-                    sendToNewTabPage(tabId);
-                    return;
-                }
-
-                // Validate origin is a valid integer within known range
-                const originInt = Number(message.origin);
-                if (!Number.isInteger(originInt) || originInt < 0 || originInt > maxOriginValue) {
-                    console.warn(`Invalid origin value: ${message.origin}`);
-                    sendToNewTabPage(tabId);
-                    return;
-                }
-
-                // Validates the blocked URL
-                const blockedUrlResult = Validate.validateHttpUrl(message.blockedUrl, validProtocols);
-                if (!blockedUrlResult.valid) {
-                    console.warn(`Invalid blocked URL: ${blockedUrlResult.error}; sending to new tab page.`);
-                    sendToNewTabPage(tabId);
-                    return;
-                }
-                const blockedUrlObject = blockedUrlResult.url;
-
-                // Validates the continue URL
-                const continueUrlResult = Validate.validateHttpUrl(message.continueUrl, validProtocols);
-                if (!continueUrlResult.valid) {
-                    console.warn(`Invalid continue URL: ${continueUrlResult.error}; sending to new tab page.`);
-                    sendToNewTabPage(tabId);
-                    return;
-                }
-                const continueUrlObject = continueUrlResult.url;
-
-                // Verify the continueUrl.origin matches the blockedUrl.origin
-                if (blockedUrlObject.origin !== continueUrlObject.origin) {
-                    console.warn(`Continue URL origin mismatch: ${continueUrlObject.origin} vs ${blockedUrlObject.origin}`);
-                    sendToNewTabPage(tabId);
-                    return;
-                }
-
-                if (originInt === 0) {
-                    console.warn(`Unknown origin: ${originInt}`);
-                } else {
-                    const shortName = ProtectionResult.ShortName[originInt];
-                    const cacheName = ProtectionResult.CacheName[originInt];
-
-                    console.debug(`Added ${shortName} URL to allowed cache: ${message.blockedUrl}`);
-                    CacheManager.addUrlToAllowedCache(message.blockedUrl, cacheName);
-
-                    console.debug(`Removed ${shortName} URL from blocked cache: ${message.blockedUrl}`);
-                    CacheManager.removeUrlFromBlockedCache(message.blockedUrl, cacheName);
-
-                    // Remove this origin from the "remaining blockers" list for this tab
-                    removeResultOrigin(tabId, originInt);
-                }
-
-                safeTabUpdate(tabId, {url: message.continueUrl}).catch(error => {
-                    console.error(`Failed to update tab ${tabId}:`, error);
-                    sendToNewTabPage(tabId);
-                });
-                break;
+            if (area !== 'local') {
+                return;
             }
 
-            case Messages.CONTINUE_TO_SAFETY:
-                sendToNewTabPage(tabId);
-                break;
+            const stateChange = changes?.[providerStateStore.stateKey];
 
-            case Messages.REPORT_WEBSITE: {
-                // Basic property checks
-                if (!message.reportUrl || message.origin === undefined) {
-                    console.warn(`Missing required properties in REPORT_WEBSITE message: ${JSON.stringify(message)}`);
-                    sendToNewTabPage(tabId);
-                    return;
-                }
-
-                // Validate origin is a valid integer within known range
-                const originInt = Number(message.origin);
-                if (!Number.isInteger(originInt) || originInt < 0 || originInt > maxOriginValue) {
-                    console.warn(`Invalid origin value: ${message.origin}`);
-                    sendToNewTabPage(tabId);
-                    return;
-                }
-
-                // Parses the report URL object
-                let parsedReportUrl;
-                try {
-                    parsedReportUrl = new URL(message.reportUrl);
-                } catch {
-                    break;
-                }
-
-                // Checks if the report URL has a valid protocol
-                if (Validate.hasValidProtocol(parsedReportUrl, validProtocols)) {
-                    console.debug(`Navigating to report URL: ${message.reportUrl}`);
-                    browserAPI.tabs.create({url: message.reportUrl});
-                    break;
-                }
-
-                // Handles mailto links separately since they are valid URLs but require special handling
-                if (parsedReportUrl.protocol === "mailto:") {
-                    if (/^mailto:[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/.test(message.reportUrl)) {
-                        console.debug(`Navigating to report URL: ${message.reportUrl}`);
-                        browserAPI.tabs.create({url: message.reportUrl});
-                    } else {
-                        console.warn(`Invalid mailto URL format: ${message.reportUrl}`);
-                        sendToNewTabPage(tabId);
-                    }
-                    break;
-                }
-
-                // If the protocol is invalid, logs a warning and redirects to the new tab page
-                console.warn(`Invalid protocol in report URL: ${message.reportUrl}; sending to new tab page.`);
-                sendToNewTabPage(tabId);
-                break;
+            if (!stateChange || !didMenuRelevantAppStateChange(stateChange.oldValue, stateChange.newValue)) {
+                return;
             }
 
-            case Messages.ALLOW_WEBSITE: {
-                // Basic property checks
-                if (!message.blockedUrl || !message.continueUrl || message.origin === undefined) {
-                    console.warn(`Missing required properties in ALLOW_WEBSITE message: ${JSON.stringify(message)}`);
-                    return;
-                }
+            refreshContextMenus('Failed to update context menus after provider state change');
+        });
 
-                // Validate origin is a valid integer within known range
-                const originInt = Number(message.origin);
-                if (!Number.isInteger(originInt) || originInt < 0 || originInt > maxOriginValue) {
-                    console.warn(`Invalid origin value: ${message.origin}`);
-                    sendToNewTabPage(tabId);
-                    return;
-                }
+        navigationService.register();
+        contextMenuService.register();
 
-                // Validates the blocked URL
-                const blockedUrlResult = Validate.validateHttpUrl(message.blockedUrl, validProtocols);
-                if (!blockedUrlResult.valid) {
-                    console.warn(`Invalid blocked URL: ${blockedUrlResult.error}; sending to new tab page.`);
-                    sendToNewTabPage(tabId);
-                    return;
-                }
-                const blockedUrlObject = blockedUrlResult.url;
+        await contextMenuService.create().catch(error => {
+            console.error('Failed to create context menus on initialization', error);
+        });
+    };
 
-                // Extracts the hostname from the blocked URL
-                const hostname = blockedUrlObject.hostname;
-
-                // Validates the hostname to ensure it is a valid domain or IP address
-                if (!UrlHelpers.isValidHostname(hostname)) {
-                    console.warn(`Invalid hostname pattern: ${hostname}`);
-                    sendToNewTabPage(tabId);
-                    return;
-                }
-
-                const dotIndex = hostname.indexOf(".");
-                let hostnameString;
-
-                if (dotIndex === -1) {
-                    hostnameString = `*.${hostname}`;
-                } else {
-                    // Only go one level up if the parent is itself a proper domain (has a dot), not a bare TLD
-                    const parent = hostname.slice(dotIndex + 1);
-                    hostnameString = parent.includes(".") ? `*.${parent}` : `*.${hostname}`;
-                }
-
-                // Adds the hostname to the global allowed cache and removes it from all blocked caches
-                console.debug(`Adding hostname to the global allowed cache: ${hostnameString}`);
-                CacheManager.addStringToAllowedCache(hostnameString, "global");
-                CacheManager.removeUrlFromBlockedCache(blockedUrlObject, "all");
-
-                // Validates the continue URL
-                const continueUrlResult = Validate.validateHttpUrl(message.continueUrl, validProtocols);
-                if (!continueUrlResult.valid) {
-                    console.warn(`Invalid continue URL: ${continueUrlResult.error}; sending to new tab page.`);
-                    sendToNewTabPage(tabId);
-                    return;
-                }
-                const continueUrlObject = continueUrlResult.url;
-
-                // Verify continueUrl matches blockedUrl origin
-                if (blockedUrlObject.origin !== continueUrlObject.origin) {
-                    console.warn(`Continue URL origin mismatch: ${continueUrlObject.origin} vs ${blockedUrlObject.origin}`);
-                    sendToNewTabPage(tabId);
-                    return;
-                }
-
-                // Sends the user to the continue URL, or the new tab page on error
-                safeTabUpdate(tabId, {url: message.continueUrl}).catch(error => {
-                    console.error(`Failed to update tab ${tabId}:`, error);
-                    sendToNewTabPage(tabId);
-                });
-                break;
-            }
-
-            case Messages.ADGUARD_FAMILY_TOGGLED:
-            case Messages.ADGUARD_SECURITY_TOGGLED:
-            case Messages.ALPHAMOUNTAIN_TOGGLED:
-            case Messages.PRECISIONSEC_TOGGLED:
-            case Messages.CERT_EE_TOGGLED:
-            case Messages.CLEANBROWSING_FAMILY_TOGGLED:
-            case Messages.CLEANBROWSING_SECURITY_TOGGLED:
-            case Messages.CLOUDFLARE_FAMILY_TOGGLED:
-            case Messages.CLOUDFLARE_SECURITY_TOGGLED:
-            case Messages.CONTROL_D_FAMILY_TOGGLED:
-            case Messages.CONTROL_D_SECURITY_TOGGLED:
-            case Messages.PHISH_DESTROY_TOGGLED:
-            case Messages.PHISHING_DATABASE_TOGGLED:
-            case Messages.QUAD9_TOGGLED:
-            case Messages.SWITCH_CH_TOGGLED:
-                if (!message.title || typeof message.toggleState !== 'boolean') {
-                    break;
-                }
-
-                console.info(`${message.title} has been ${message.toggleState ? "enabled" : "disabled"}.`);
-                break;
-
-            case Messages.BLOCKED_COUNTER_PING:
-            case Messages.BLOCKED_COUNTER_PONG:
-                // This message type is used for blocked counter pings and pongs.
-                break;
-
-            default:
-                console.warn(`Received unknown message type: ${message.messageType}`);
-                console.warn(`Message: ${JSON.stringify(message)}`);
-                break;
-        }
-    });
-
-    /**
-     * Listens for context menu item clicks.
-     *
-     * @param {Object} info Information sent when a context menu item is clicked.
-     */
-    // noinspection JSDeprecatedSymbols
-    contextMenuAPI.onClicked.addListener(info => {
-        if (!info?.menuItemId || typeof info.menuItemId !== 'string') {
-            console.warn(`Invalid context menu click info: ${JSON.stringify(info)}`);
-            return;
-        }
-
-        switch (info.menuItemId) {
-            case "toggleNotifications":
-                // Toggles notifications
-                Settings.set({notificationsEnabled: info.checked});
-                console.debug(`Enable notifications: ${info.checked}`);
-                break;
-
-            case "toggleFrameNavigation":
-                // Toggles ignoring frame navigation
-                Settings.set({ignoreFrameNavigation: info.checked});
-                console.debug(`Ignore frame navigation: ${info.checked}`);
-                break;
-
-            case "reportWebsiteAsMalicious":
-                // Opens the report website in a new tab
-                browserAPI.tabs.create({url: reportUrl});
-                console.debug("Opened the report website in a new tab.");
-                break;
-
-            case "clearAllowedWebsites": {
-                // Clears every internal cache
-                CacheManager.clearAllowedCache();
-                CacheManager.clearBlockedCache();
-                CacheManager.clearProcessingCache();
-                console.debug("Cleared all internal website caches.");
-
-                // Builds the browser notification to send the user
-                const notificationOptions = {
-                    type: "basic",
-                    iconUrl: "assets/icons/icon128.png",
-                    title: LangUtil.CLEAR_ALLOWED_WEBSITES_TITLE,
-                    message: LangUtil.CLEAR_ALLOWED_WEBSITES_MESSAGE,
-                    priority: 2,
-                };
-
-                // Creates and displays the browser notification
-                browserAPI.notifications.create(notificationOptions, id => {
-                    console.debug(`Notification created with ID: ${id}`);
-                });
-                break;
-            }
-
-            case "restoreDefaultSettings": {
-                // Restores default settings
-                Settings.restoreDefaultSettings();
-                console.debug("Restored default settings.");
-
-                // Builds the browser notification to send the user
-                const notificationOptions = {
-                    type: "basic",
-                    iconUrl: "assets/icons/icon128.png",
-                    title: LangUtil.RESTORE_DEFAULTS_TITLE,
-                    message: LangUtil.RESTORE_DEFAULTS_MESSAGE,
-                    priority: 2,
-                };
-
-                // Creates and displays a browser notification
-                browserAPI.notifications.create(notificationOptions, id => {
-                    console.debug(`Notification created with ID: ${id}`);
-                });
-
-                // Re-creates the context menu
-                setTimeout(() => {
-                    createContextMenu();
-                    console.debug("Re-created context menu.");
-                }, 100);
-                break;
-            }
-
-            default:
-                break;
-        }
+    init().catch(error => {
+        console.error('Background init failed', error);
     });
 })();

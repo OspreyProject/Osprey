@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "ಆದರೂ ಮುಂದುವರಿಸಿ"
   },
-  "popupTitle": {
-    "message": "ರಕ್ಷಣಾ ಆಯ್ಕೆಗಳು"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "GitHub ನಲ್ಲಿ ವೀಕ್ಷಿಸಿ"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "ಗೌಪ್ಯತಾ ನೀತಿ"
-  },
-  "onText": {
-    "message": "ಆನ್"
-  },
-  "offText": {
-    "message": "ಆಫ್"
-  },
-  "onLockedText": {
-    "message": "ಆನ್ (ಲಾಕ್ ಮಾಡಲಾಗಿದೆ)"
-  },
-  "offLockedText": {
-    "message": "ಆಫ್ (ಲಾಕ್ ಮಾಡಲಾಗಿದೆ)"
   },
   "knownSafe": {
     "message": "ತಿಳಿದಿರುವ ಸುರಕ್ಷಿತ"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "ಫಿಶಿಂಗ್"
   },
-  "untrusted": {
-    "message": "ನಂಬಲರ್ಹವಲ್ಲ"
-  },
   "adultContent": {
     "message": "ವಯಸ್ಕರ ವಿಷಯ"
-  },
-  "toggleNotificationsContext": {
-    "message": "ಅಧಿಸೂಚನೆಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ"
   },
   "toggleFrameNavigationContext": {
     "message": "ಫ್ರೇಮ್ ನ್ಯಾವಿಗೇಶನ್ ಅನ್ನು ನಿರ್ಲಕ್ಷಿಸಿ"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "ವೆಬ್ಸೈಟ್ ಅನ್ನು ದುರುದ್ದೇಶಿತವೆಂದು ವರದಿ ಮಾಡಿ"
-  },
-  "restoreDefaultsContext": {
-    "message": "ಡೀಫಾಲ್ಟ್ ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ಮರುಸ್ಥಾಪಿಸಿ"
-  },
-  "restoreDefaultsTitle": {
-    "message": "ಡೀಫಾಲ್ಟ್ ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ಮರುಸ್ಥಾಪಿಸಲಾಗಿದೆ"
-  },
-  "restoreDefaultsMessage": {
-    "message": "ಡೀಫಾಲ್ಟ್ ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ಮರುಸ್ಥಾಪಿಸಲಾಗಿದೆ."
   },
   "unsafeWebsiteTitle": {
     "message": "ಅಸುರಕ್ಷಿತ ವೆಬ್‌ಸೈಟ್ ತಡೆಗಟ್ಟಲಾಗಿದೆ"

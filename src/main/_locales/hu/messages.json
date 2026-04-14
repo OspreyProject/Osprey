@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Folytatás mindenképp"
   },
-  "popupTitle": {
-    "message": "Védelmi beállítások"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "Megtekintés GitHubon"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Adatvédelmi irányelvek"
-  },
-  "onText": {
-    "message": "Be"
-  },
-  "offText": {
-    "message": "Ki"
-  },
-  "onLockedText": {
-    "message": "Be (zárolva)"
-  },
-  "offLockedText": {
-    "message": "Ki (zárolva)"
   },
   "knownSafe": {
     "message": "Ismert biztonságos"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Adathalászat"
   },
-  "untrusted": {
-    "message": "Megbízhatatlan"
-  },
   "adultContent": {
     "message": "Felnőtt tartalom"
-  },
-  "toggleNotificationsContext": {
-    "message": "Értesítések engedélyezése"
   },
   "toggleFrameNavigationContext": {
     "message": "Keretes navigáció figyelmen kívül hagyása"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Jelentse a webhelyet rosszindulatúnak"
-  },
-  "restoreDefaultsContext": {
-    "message": "Alapértelmezett beállítások visszaállítása"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Alapértelmezett beállítások visszaállítva"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Az alapértelmezett beállítások visszaállításra kerültek."
   },
   "unsafeWebsiteTitle": {
     "message": "Nem biztonságos weboldal blokkolva"

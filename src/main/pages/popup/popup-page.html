@@ -1,0 +1,89 @@
+<!--
+  Osprey - a browser extension that protects you from malicious websites.
+  Copyright (C) 2026 Osprey Project (https://github.com/OspreyProject)
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program. If not, see <https://www.gnu.org/licenses/>.
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <title>
+        Osprey: Browser Protection
+    </title>
+    <link rel="stylesheet" href="popup-page.css">
+    <script src="../../shared/browser-api.js" type="text/javascript"></script>
+    <script src="../../shared/i18n.js" type="text/javascript"></script>
+    <script src="../../providers/provider-groups.js" type="text/javascript"></script>
+    <script src="../../providers/proxy-builtins.js" type="text/javascript"></script>
+    <script src="../../providers/direct-integrations.js" type="text/javascript"></script>
+    <script src="../../catalog/catalog-validator.js" type="text/javascript"></script>
+    <script src="../../providers/provider-catalog.js" type="text/javascript"></script>
+    <script src="../../providers/custom-provider-normalizer.js" type="text/javascript"></script>
+    <script src="../../state/provider-state-store.js" type="text/javascript"></script>
+    <script src="../../shared/lang-util.js" type="text/javascript"></script>
+    <script src="popup-page.js" type="text/javascript"></script>
+</head>
+
+<body id="background" class="gray">
+
+<div id="banner" class="banner">
+    <img id="logo" class="logo" src="../../assets/osprey/icon128.png" alt="">
+    <div class="banner-text-group">
+        <span class="bannerText">
+             <!-- Automatically translated -->
+        </span>
+    </div>
+</div>
+
+<section class="alternate">
+    <div class="status-view">
+        <div class="checkmark-placeholder">
+            <img id="statusIcon" src="../../assets/misc/checkmark.avif" alt="">
+        </div>
+        <p id="statusHeading" class="status-heading">
+            <!-- Automatically translated -->
+        </p>
+        <p id="providerCount" class="provider-count"></p>
+        <button id="settingsButton" class="settings-button" type="button">
+            <!-- Automatically translated -->
+        </button>
+    </div>
+
+    <div class="links">
+        <span id="version">
+            <!-- Automatically translated -->
+        </span>
+        <span aria-hidden="true"> | </span>
+        <a id="websiteLink" href="https://osprey.ac"
+           target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">
+            <!-- Automatically translated -->
+        </a>
+        <span aria-hidden="true"> | </span>
+        <a id="privacyPolicy" href="https://github.com/OspreyProject/Osprey/blob/main/.github/PRIVACY.md"
+           target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">
+            <!-- Automatically translated -->
+        </a>
+        <span aria-hidden="true"> | </span>
+        <a id="termsFooterLink" href="https://github.com/OspreyProject/Osprey/blob/main/.github/TERMS.md"
+           target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">
+            <!-- Automatically translated -->
+        </a>
+    </div>
+</section>
+</body>
+</html>

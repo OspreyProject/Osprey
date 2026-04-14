@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "پھر بھی جاری رکھیں"
   },
-  "popupTitle": {
-    "message": "تحفظ کے اختیارات"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "GitHub پر دیکھیں"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "پرائیویسی پالیسی"
-  },
-  "onText": {
-    "message": "چالو"
-  },
-  "offText": {
-    "message": "بند"
-  },
-  "onLockedText": {
-    "message": "چالو (لاک)"
-  },
-  "offLockedText": {
-    "message": "بند (لاک)"
   },
   "knownSafe": {
     "message": "محفوظ کے طور پر جانا جاتا ہے"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "فشنگ"
   },
-  "untrusted": {
-    "message": "غیر معتبر"
-  },
   "adultContent": {
     "message": "بالغ مواد"
-  },
-  "toggleNotificationsContext": {
-    "message": "اطلاعات فعال کریں"
   },
   "toggleFrameNavigationContext": {
     "message": "فریم نیویگیشن کو نظر انداز کریں"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Report website as malicious"
-  },
-  "restoreDefaultsContext": {
-    "message": "ڈیفالٹ سیٹنگز بحال کریں"
-  },
-  "restoreDefaultsTitle": {
-    "message": "ڈیفالٹ سیٹنگز بحال کر دی گئیں"
-  },
-  "restoreDefaultsMessage": {
-    "message": "ڈیفالٹ سیٹنگز بحال کر دی گئی ہیں۔"
   },
   "unsafeWebsiteTitle": {
     "message": "غیر محفوظ ویب سائٹ بلاک کر دی گئی"

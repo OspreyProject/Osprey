@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Қалай болғанда да жалғастыру"
   },
-  "popupTitle": {
-    "message": "Қорғау параметрлері"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "GitHub-та көру"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Құпиялылық саясаты"
-  },
-  "onText": {
-    "message": "Қосулы"
-  },
-  "offText": {
-    "message": "Өшірулі"
-  },
-  "onLockedText": {
-    "message": "Қосулы (бұғатталған)"
-  },
-  "offLockedText": {
-    "message": "Өшірулі (бұғатталған)"
   },
   "knownSafe": {
     "message": "Қауіпсіз деп танылған"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Фишинг"
   },
-  "untrusted": {
-    "message": "Сенімсіз"
-  },
   "adultContent": {
     "message": "Ересектерге арналған мазмұн"
-  },
-  "toggleNotificationsContext": {
-    "message": "Хабарландыруларды қосу"
   },
   "toggleFrameNavigationContext": {
     "message": "Фрейм навигациясын елемеу"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Веб-сайтты зиянды деп хабарлау"
-  },
-  "restoreDefaultsContext": {
-    "message": "Әдепкі баптауларды қалпына келтіру"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Әдепкі баптаулар қалпына келтірілді"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Әдепкі баптаулар қалпына келтірілді."
   },
   "unsafeWebsiteTitle": {
     "message": "Қауіпсіз емес веб-сайт бұғатталды"

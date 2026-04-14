@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "仍然繼續"
   },
-  "popupTitle": {
-    "message": "保護選項"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "在 GitHub 檢視"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "隱私權政策"
-  },
-  "onText": {
-    "message": "開啟"
-  },
-  "offText": {
-    "message": "關閉"
-  },
-  "onLockedText": {
-    "message": "開啟（已鎖定）"
-  },
-  "offLockedText": {
-    "message": "關閉（已鎖定）"
   },
   "knownSafe": {
     "message": "已知安全"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "網路釣魚"
   },
-  "untrusted": {
-    "message": "不受信任"
-  },
   "adultContent": {
     "message": "成人內容"
-  },
-  "toggleNotificationsContext": {
-    "message": "啟用通知"
   },
   "toggleFrameNavigationContext": {
     "message": "忽略框架導覽"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "將網站標記為惡意網站"
-  },
-  "restoreDefaultsContext": {
-    "message": "還原預設設定"
-  },
-  "restoreDefaultsTitle": {
-    "message": "預設設定已還原"
-  },
-  "restoreDefaultsMessage": {
-    "message": "預設設定已還原。"
   },
   "unsafeWebsiteTitle": {
     "message": "不安全的網站已被封鎖"

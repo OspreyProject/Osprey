@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Teruskan juga"
   },
-  "popupTitle": {
-    "message": "Pilihan Perlindungan"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "Lihat di GitHub"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Dasar Privasi"
-  },
-  "onText": {
-    "message": "Hidup"
-  },
-  "offText": {
-    "message": "Mati"
-  },
-  "onLockedText": {
-    "message": "Hidup (Dikunci)"
-  },
-  "offLockedText": {
-    "message": "Mati (Dikunci)"
   },
   "knownSafe": {
     "message": "Dikenali Selamat"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Phishing"
   },
-  "untrusted": {
-    "message": "Tidak Dipercayai"
-  },
   "adultContent": {
     "message": "Kandungan Dewasa"
-  },
-  "toggleNotificationsContext": {
-    "message": "Dayakan notifikasi"
   },
   "toggleFrameNavigationContext": {
     "message": "Abaikan navigasi bingkai"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Laporkan laman web ini sebagai berbahaya"
-  },
-  "restoreDefaultsContext": {
-    "message": "Pulihkan tetapan lalai"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Tetapan Lalai Dipulihkan"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Tetapan lalai telah dipulihkan."
   },
   "unsafeWebsiteTitle": {
     "message": "Laman Web Tidak Selamat Disekat"

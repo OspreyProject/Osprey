@@ -1,137 +1,177 @@
 {
   "_comment_1": "https://chromium.org/administrators/configuring-policy-for-extensions",
-  "_comment_2": "In Windows, these policies are stored under HKLM\\SOFTWARE\\Policies\\Google\\Chrome\\3rdParty\\Extensions\\<extensionID>\\policy",
-  "_comment_3": "e.g. a REG_DWORD named 'DisableNotifications' with a value of 1 will result in the notifications being disabled.",
-  "_comment_4": "The extension ID is found in the chrome://extensions or edge://extensions page.",
+  "_comment_2": "Windows path: HKLM\\SOFTWARE\\Policies\\Google\\Chrome\\3rdParty\\Extensions\\<extensionID>\\policy",
   "type": "object",
   "properties": {
-    "DisableNotifications": {
-      "title": "Disable Notifications",
-      "description": "If set to true, notifications will be disabled.",
-      "type": "boolean"
-    },
     "DisableContextMenu": {
       "title": "Disable Context Menu",
-      "description": "If set to true, the context menu will be disabled.",
-      "type": "boolean"
+      "description": "If true, the toolbar context menu is disabled.",
+      "type": "boolean",
+      "default": false
     },
     "HideContinueButtons": {
       "title": "Hide Continue Buttons",
-      "description": "If set to true, the continue buttons will be hidden.",
-      "type": "boolean"
+      "description": "If true, the warning page continue buttons are hidden.",
+      "type": "boolean",
+      "default": false
     },
     "HideReportButton": {
       "title": "Hide Report Button",
-      "description": "If set to true, the report button will be hidden.",
-      "type": "boolean"
-    },
-    "LockProtectionOptions": {
-      "title": "Lock Protection Options",
-      "description": "If set to true, the protection options will be locked.",
-      "type": "boolean"
-    },
-    "HideProtectionOptions": {
-      "title": "Hide Protection Options",
-      "description": "If set to true, the protection options will be hidden.",
-      "type": "boolean"
+      "description": "If true, the warning page report button is hidden.",
+      "type": "boolean",
+      "default": false
     },
     "DisableClearAllowedWebsites": {
       "title": "Disable Clear Allowed Websites",
-      "description": "If set to true, the clear allowed websites button will be disabled.",
-      "type": "boolean"
-    },
-    "DisableRestoreDefaultSettings": {
-      "title": "Disable Restore Default Settings",
-      "description": "If set to true, the restore default settings button will be disabled.",
-      "type": "boolean"
+      "description": "If true, the clear-allowed-websites action is disabled.",
+      "type": "boolean",
+      "default": false
     },
     "IgnoreFrameNavigation": {
       "title": "Ignore Frame Navigation",
-      "description": "If set to true, frame navigation will be ignored.",
-      "type": "boolean"
+      "description": "If true, frame navigation events are ignored.",
+      "type": "boolean",
+      "default": true
     },
     "CacheExpirationSeconds": {
       "title": "Cache Expiration Seconds",
-      "description": "If set, the cache expiry time will be set to this value in seconds.",
+      "description": "Cache entry lifetime in seconds.",
       "type": "integer",
       "minimum": 60,
       "maximum": 2592000,
       "default": 604800
     },
+    "LockProtectionOptions": {
+      "title": "Lock Protection Options",
+      "description": "If true, provider toggles and provider settings are locked in the options page.",
+      "type": "boolean",
+      "default": false
+    },
+    "DisableResetButtons": {
+      "title": "Disable Reset Buttons",
+      "description": "If true, reset actions in the settings page are disabled.",
+      "type": "boolean",
+      "default": false
+    },
+    "DisableCustomProviders": {
+      "title": "Disable Custom Providers",
+      "description": "If true, custom providers are hidden and cannot be created, modified, deleted, or enabled.",
+      "type": "boolean",
+      "default": false
+    },
+    "DisableThirdPartyIntegrations": {
+      "title": "Disable Third-Party Integrations",
+      "description": "If true, third-party direct integrations are disabled and cannot be enabled from settings.",
+      "type": "boolean",
+      "default": false
+    },
+    "SecLookupApiKey": {
+      "title": "SecLookup API Key",
+      "description": "Managed API key for the SecLookup integration.",
+      "type": "string",
+      "default": ""
+    },
+    "HideProtectionOptions": {
+      "title": "Hide Protection Options",
+      "description": "If true, protection options are hidden from the popup and options page.",
+      "type": "boolean",
+      "default": false
+    },
     "AdGuardSecurityEnabled": {
-      "title": "AdGuard Security Enabled",
-      "description": "If set to true, AdGuard Security will be enabled.",
-      "type": "boolean"
+      "title": "AdGuard Security DNS Enabled",
+      "description": "Managed enabled state for AdGuard Security DNS.",
+      "type": "boolean",
+      "default": true
     },
     "AdGuardFamilyEnabled": {
-      "title": "AdGuard Family Enabled",
-      "description": "If set to true, AdGuard Family will be enabled.",
-      "type": "boolean"
+      "title": "AdGuard Family DNS Enabled",
+      "description": "Managed enabled state for AdGuard Family DNS.",
+      "type": "boolean",
+      "default": false
     },
     "AlphaMountainEnabled": {
-      "title": "alphaMountain Enabled",
-      "description": "If set to true, alphaMountain will be enabled.",
-      "type": "boolean"
+      "title": "AlphaMountain Web Protection Enabled",
+      "description": "Managed enabled state for AlphaMountain Web Protection.",
+      "type": "boolean",
+      "default": true
+    },
+    "ChainPatrolEnabled": {
+      "title": "ChainPatrol Web Protection Enabled",
+      "description": "Managed enabled state for ChainPatrol Web Protection.",
+      "type": "boolean",
+      "default": true
     },
     "PrecisionSecEnabled": {
-      "title": "PrecisionSec Enabled",
-      "description": "If set to true, PrecisionSec will be enabled.",
-      "type": "boolean"
+      "title": "PrecisionSec Web Protection Enabled",
+      "description": "Managed enabled state for PrecisionSec Web Protection.",
+      "type": "boolean",
+      "default": true
     },
     "CERTEEEnabled": {
-      "title": "CERT-EE Enabled",
-      "description": "If set to true, CERT-EE will be enabled.",
-      "type": "boolean"
+      "title": "CERT-EE Security DNS Enabled",
+      "description": "Managed enabled state for CERT-EE Security DNS.",
+      "type": "boolean",
+      "default": true
     },
     "CleanBrowsingSecurityEnabled": {
-      "title": "CleanBrowsing Security Enabled",
-      "description": "If set to true, CleanBrowsing Security will be enabled.",
-      "type": "boolean"
+      "title": "CleanBrowsing Security DNS Enabled",
+      "description": "Managed enabled state for CleanBrowsing Security DNS.",
+      "type": "boolean",
+      "default": true
     },
     "CleanBrowsingFamilyEnabled": {
-      "title": "CleanBrowsing Family Enabled",
-      "description": "If set to true, CleanBrowsing Family will be enabled.",
-      "type": "boolean"
+      "title": "CleanBrowsing Family DNS Enabled",
+      "description": "Managed enabled state for CleanBrowsing Family DNS.",
+      "type": "boolean",
+      "default": false
     },
     "CloudflareSecurityEnabled": {
-      "title": "Cloudflare Security Enabled",
-      "description": "If set to true, Cloudflare Security will be enabled.",
-      "type": "boolean"
+      "title": "Cloudflare Security DNS Enabled",
+      "description": "Managed enabled state for Cloudflare Security DNS.",
+      "type": "boolean",
+      "default": true
     },
     "CloudflareFamilyEnabled": {
-      "title": "Cloudflare Family Enabled",
-      "description": "If set to true, Cloudflare Family will be enabled.",
-      "type": "boolean"
+      "title": "Cloudflare Family DNS Enabled",
+      "description": "Managed enabled state for Cloudflare Family DNS.",
+      "type": "boolean",
+      "default": false
     },
     "ControlDSecurityEnabled": {
-      "title": "Control D Security Enabled",
-      "description": "If set to true, Control D Security will be enabled.",
-      "type": "boolean"
+      "title": "Control D Security DNS Enabled",
+      "description": "Managed enabled state for Control D Security DNS.",
+      "type": "boolean",
+      "default": false
     },
     "ControlDFamilyEnabled": {
-      "title": "Control D Family Enabled",
-      "description": "If set to true, Control D Family will be enabled.",
-      "type": "boolean"
+      "title": "Control D Family DNS Enabled",
+      "description": "Managed enabled state for Control D Family DNS.",
+      "type": "boolean",
+      "default": false
     },
     "PhishDestroyEnabled": {
-      "title": "PhishDestroy Enabled",
-      "description": "If set to true, PhishDestroy will be enabled.",
-      "type": "boolean"
+      "title": "PhishDestroy Feed Enabled",
+      "description": "Managed enabled state for PhishDestroy Feed.",
+      "type": "boolean",
+      "default": true
     },
     "PhishingDatabaseEnabled": {
-      "title": "Phishing.Database Enabled",
-      "description": "If set to true, Phishing.Database will be enabled.",
-      "type": "boolean"
+      "title": "Phishing.Database Feed Enabled",
+      "description": "Managed enabled state for Phishing.Database Feed.",
+      "type": "boolean",
+      "default": true
     },
     "Quad9Enabled": {
-      "title": "Quad9 Enabled",
-      "description": "If set to true, Quad9 will be enabled.",
-      "type": "boolean"
+      "title": "Quad9 Security DNS Enabled",
+      "description": "Managed enabled state for Quad9 Security DNS.",
+      "type": "boolean",
+      "default": true
     },
     "SwitchCHEnabled": {
-      "title": "Switch.ch Enabled",
-      "description": "If set to true, Switch.ch will be enabled.",
-      "type": "boolean"
+      "title": "Switch.ch Security DNS Enabled",
+      "description": "Managed enabled state for Switch.ch Security DNS.",
+      "type": "boolean",
+      "default": true
     }
   }
 }

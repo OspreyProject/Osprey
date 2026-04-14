@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Halda áfram engu að síður"
   },
-  "popupTitle": {
-    "message": "Varnarvalkostir"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "Skoða á GitHub"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Persónuverndarstefna"
-  },
-  "onText": {
-    "message": "Kveikt"
-  },
-  "offText": {
-    "message": "Slökkt"
-  },
-  "onLockedText": {
-    "message": "Kveikt (læst)"
-  },
-  "offLockedText": {
-    "message": "Slökkt (læst)"
   },
   "knownSafe": {
     "message": "Þekkt öruggt"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Netveiði"
   },
-  "untrusted": {
-    "message": "Ótraust"
-  },
   "adultContent": {
     "message": "Fullorðinsefni"
-  },
-  "toggleNotificationsContext": {
-    "message": "Virkja tilkynningar"
   },
   "toggleFrameNavigationContext": {
     "message": "Hunsa rammanavigeringu"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Tilkynna vefsíðuna sem illgjörna"
-  },
-  "restoreDefaultsContext": {
-    "message": "Endurheimta sjálfgefnar stillingar"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Sjálfgefnar stillingar endurheimtar"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Sjálfgefnar stillingar hafa verið endurheimtar."
   },
   "unsafeWebsiteTitle": {
     "message": "Óörugg vefsíða lokuð"

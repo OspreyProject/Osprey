@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "කෙසේ වුවත් ඉදිරියට යන්න"
   },
-  "popupTitle": {
-    "message": "ආරක්ෂක විකල්ප"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "GitHub හි බලන්න"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "පෞද්ගලිකත්ව ප්‍රතිපත්තිය"
-  },
-  "onText": {
-    "message": "On"
-  },
-  "offText": {
-    "message": "Off"
-  },
-  "onLockedText": {
-    "message": "On (අගුලු දැමූ)"
-  },
-  "offLockedText": {
-    "message": "Off (අගුලු දැමූ)"
   },
   "knownSafe": {
     "message": "ඇතැම් ආරක්ෂිත"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Phishing (වංචාකාරී)"
   },
-  "untrusted": {
-    "message": "අවිශ්වාසනීය"
-  },
   "adultContent": {
     "message": "වැඩිහිටියන් සඳහා අන්තර්ගතය"
-  },
-  "toggleNotificationsContext": {
-    "message": "දැනුම්දීම් සක්‍රිය කරන්න"
   },
   "toggleFrameNavigationContext": {
     "message": "රාමු නාවිගේෂන් නොසලකා හරින්න"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "වෙබ් අඩවිය දුෂ్ప്രවෘත්තිකර ලෙස වාර්තා කරන්න"
-  },
-  "restoreDefaultsContext": {
-    "message": "පෙරනිමි සැකසුම් ප්‍රතිස්ථාපනය කරන්න"
-  },
-  "restoreDefaultsTitle": {
-    "message": "පෙරනිමි සැකසුම් ප්‍රතිස්ථාපනය කර ඇත"
-  },
-  "restoreDefaultsMessage": {
-    "message": "පෙරනිමි සැකසුම් ප්‍රතිස්ථාපනය කර ඇත."
   },
   "unsafeWebsiteTitle": {
     "message": "අනාරක්ෂිත වෙබ් අඩවිය අවහිර කරන ලදී"

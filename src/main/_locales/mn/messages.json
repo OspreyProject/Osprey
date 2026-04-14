@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Ямартай ч үргэлжлүүлэх"
   },
-  "popupTitle": {
-    "message": "Хамгаалалтын тохиргоо"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "GitHub дээр харах"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Нууцлалын бодлого"
-  },
-  "onText": {
-    "message": "Асаалттай"
-  },
-  "offText": {
-    "message": "Унтраалттай"
-  },
-  "onLockedText": {
-    "message": "Асаалттай (Түгжигдсэн)"
-  },
-  "offLockedText": {
-    "message": "Унтраалттай (Түгжигдсэн)"
   },
   "knownSafe": {
     "message": "Аюулгүй гэж мэдэгдсэн"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Фишинг"
   },
-  "untrusted": {
-    "message": "Итгэж болохгүй"
-  },
   "adultContent": {
     "message": "Насанд хүрэгчдийн агуулга"
-  },
-  "toggleNotificationsContext": {
-    "message": "Мэдэгдлийг идэвхжүүлэх"
   },
   "toggleFrameNavigationContext": {
     "message": "Frame навигацыг үл тоомсорлох"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Вэбсайтыг хортой гэж мэдэгдэх"
-  },
-  "restoreDefaultsContext": {
-    "message": "Үндсэн тохиргоог сэргээх"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Үндсэн тохиргоо сэргээгдсэн"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Үндсэн тохиргоо сэргээгдсэн."
   },
   "unsafeWebsiteTitle": {
     "message": "Аюултай вэбсайт хаагдсан"

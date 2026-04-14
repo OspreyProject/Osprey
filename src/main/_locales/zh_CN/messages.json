@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "仍然继续"
   },
-  "popupTitle": {
-    "message": "保护选项"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "在 GitHub 上查看"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "隐私政策"
-  },
-  "onText": {
-    "message": "开启"
-  },
-  "offText": {
-    "message": "关闭"
-  },
-  "onLockedText": {
-    "message": "开启（锁定）"
-  },
-  "offLockedText": {
-    "message": "关闭（锁定）"
   },
   "knownSafe": {
     "message": "已知安全"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "网络钓鱼"
   },
-  "untrusted": {
-    "message": "不受信任"
-  },
   "adultContent": {
     "message": "成人内容"
-  },
-  "toggleNotificationsContext": {
-    "message": "启用通知"
   },
   "toggleFrameNavigationContext": {
     "message": "忽略框架导航"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "举报网站为恶意网站"
-  },
-  "restoreDefaultsContext": {
-    "message": "恢复默认设置"
-  },
-  "restoreDefaultsTitle": {
-    "message": "默认设置已恢复"
-  },
-  "restoreDefaultsMessage": {
-    "message": "默认设置已恢复。"
   },
   "unsafeWebsiteTitle": {
     "message": "不安全的网站已被阻止"

@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "ކަމެއްކަން ކުރާނެތް"
   },
-  "popupTitle": {
-    "message": "ސަޕޯޓް އޮޕްޝަންސް"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "GitHub އަށް ބަލާ"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "ޕްރައިވަސީ ޕޮލިސީ"
-  },
-  "onText": {
-    "message": "އޮން"
-  },
-  "offText": {
-    "message": "އޮފް"
-  },
-  "onLockedText": {
-    "message": "އޮން (ލޮކް ކޮށްފި)"
-  },
-  "offLockedText": {
-    "message": "އޮފް (ލޮކް ކޮށްފި)"
   },
   "knownSafe": {
     "message": "ސޭފް ކަމަށް ބަލަހައްޓެއްގެ"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "ފިޝިންގ"
   },
-  "untrusted": {
-    "message": "ނުވަތަ އައިއަރުގެ"
-  },
   "adultContent": {
     "message": "އިންޑަލްޓް ކޮންޓެންޓް"
-  },
-  "toggleNotificationsContext": {
-    "message": "ނޮޓިފިކޭޝަންސް އެނޭބަލް ކުރޭ"
   },
   "toggleFrameNavigationContext": {
     "message": "ފްރޭމް ނެވިގޭޝަން ނުބަދަލާ"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "ވෙබ්ސයිޓް މެލޭޝަސް ކަމަށް ރިޕޯޓް ކުރައްވާ"
-  },
-  "restoreDefaultsContext": {
-    "message": "ޑިފޯލްޓް ސެޓިންގް ކުރޭ"
-  },
-  "restoreDefaultsTitle": {
-    "message": "ޑިފޯލްޓް ސެޓިންގް ކުރެއްވި"
-  },
-  "restoreDefaultsMessage": {
-    "message": "ޑިފޯލްޓް ސެޓިންގް ކުރެއްވިއްޖެ."
   },
   "unsafeWebsiteTitle": {
     "message": "އެންސޭފް ވެބްސައިޓް ބްލޮކް ކުރެއްވި"

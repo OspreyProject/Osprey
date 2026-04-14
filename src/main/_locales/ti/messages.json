@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "ከምኡውን ክትቅጽል"
   },
-  "popupTitle": {
-    "message": "ኣማራጺ መከላኸይ"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "ብGitHub ተመልከት"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "ፖሊሲ ብዝሓለፈ ምስጢር"
-  },
-  "onText": {
-    "message": "ብርቱዕ"
-  },
-  "offText": {
-    "message": "ዝተዘጋ"
-  },
-  "onLockedText": {
-    "message": "ብርቱዕ (ተዝጊዑ)"
-  },
-  "offLockedText": {
-    "message": "ዝተዘጋ (ተዝጊዑ)"
   },
   "knownSafe": {
     "message": "ብዛዕባኡ ዝሓለፈ ዘሎ"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "ፊሺንግ"
   },
-  "untrusted": {
-    "message": "ዘይተኣማንነት"
-  },
   "adultContent": {
     "message": "ትሕዝቶ ዓብዪ"
-  },
-  "toggleNotificationsContext": {
-    "message": "መልእኽቲ ኣስተዋፅኦ ኣክትት"
   },
   "toggleFrameNavigationContext": {
     "message": "ናይ ፍሬም መምለስ ኣይትረኽብ"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "ድሕረ-ገፅን እንዳይጥል ተመዝግበው"
-  },
-  "restoreDefaultsContext": {
-    "message": "ናይ መእተዊ ትእዛዝ ኣዳልዮም"
-  },
-  "restoreDefaultsTitle": {
-    "message": "ናይ መእተዊ ትእዛዝ ተመልሶም"
-  },
-  "restoreDefaultsMessage": {
-    "message": "ናይ መእተዊ ትእዛዝ ተመልሶም።"
   },
   "unsafeWebsiteTitle": {
     "message": "ዘይተሓረሰ ድሕሪት ተገድሶም"

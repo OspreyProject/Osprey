@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "ສືບຕໍ່ແມ່ນວ່າບໍ່ປອດໄພ"
   },
-  "popupTitle": {
-    "message": "ຕົວເລືອກການປ້ອງກັນ"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "ເບິ່ງໃນ GitHub"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "ນະໂຍບາຍຄວາມປອດໄພ"
-  },
-  "onText": {
-    "message": "ເປີດ"
-  },
-  "offText": {
-    "message": "ປິດ"
-  },
-  "onLockedText": {
-    "message": "ເປີດ (ຖືກລັອກ)"
-  },
-  "offLockedText": {
-    "message": "ປິດ (ຖືກລັອກ)"
   },
   "knownSafe": {
     "message": "ຮູ້ຈັກວ່າປອດໄພ"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Phishing"
   },
-  "untrusted": {
-    "message": "ບໍ່ເຊື່ອໃຈ"
-  },
   "adultContent": {
     "message": "ເນື້ອຫາສໍາລັບຜູ້ໃຫຍ່"
-  },
-  "toggleNotificationsContext": {
-    "message": "ເປີດການແຈ້ງເຕືອນ"
   },
   "toggleFrameNavigationContext": {
     "message": "ມອບໃຈການນໍາທາງແຟຣມ"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "ລາຍງານເວັບໄຊທ໌ວ່າເປັນອັນຕະລາຍ"
-  },
-  "restoreDefaultsContext": {
-    "message": "ກູ້ຄືນການຕັ້ງຄ່າເລີ່ມຕົ້ນ"
-  },
-  "restoreDefaultsTitle": {
-    "message": "ການຕັ້ງຄ່າເລີ່ມຕົ້ນຖືກກູ້ຄືນແລ້ວ"
-  },
-  "restoreDefaultsMessage": {
-    "message": "ການຕັ້ງຄ່າເລີ່ມຕົ້ນຖືກກູ້ຄືນແລ້ວ."
   },
   "unsafeWebsiteTitle": {
     "message": "ເວັບໄຊທີ່ບໍ່ປອດໄພຖືກປິດກັ້ນ"

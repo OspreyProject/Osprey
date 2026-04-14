@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "फिर भी जारी रखें"
   },
-  "popupTitle": {
-    "message": "सुरक्षा विकल्प"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "GitHub पर देखें"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "गोपनीयता नीति"
-  },
-  "onText": {
-    "message": "चालू"
-  },
-  "offText": {
-    "message": "बंद"
-  },
-  "onLockedText": {
-    "message": "चालू (लॉक्ड)"
-  },
-  "offLockedText": {
-    "message": "बंद (लॉक्ड)"
   },
   "knownSafe": {
     "message": "ज्ञात सुरक्षित"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "फ़िशिंग"
   },
-  "untrusted": {
-    "message": "अविश्वसनीय"
-  },
   "adultContent": {
     "message": "वयस्क सामग्री"
-  },
-  "toggleNotificationsContext": {
-    "message": "सूचनाएँ सक्षम करें"
   },
   "toggleFrameNavigationContext": {
     "message": "फ्रेम नेविगेशन को नज़रअंदाज़ करें"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "वेबसाइट को दुर्भावनापूर्ण के रूप में रिपोर्ट करें"
-  },
-  "restoreDefaultsContext": {
-    "message": "डिफ़ॉल्ट सेटिंग्स पुनर्स्थापित करें"
-  },
-  "restoreDefaultsTitle": {
-    "message": "डिफ़ॉल्ट सेटिंग्स पुनर्स्थापित की गईं"
-  },
-  "restoreDefaultsMessage": {
-    "message": "डिफ़ॉल्ट सेटिंग्स पुनर्स्थापित कर दी गई हैं।"
   },
   "unsafeWebsiteTitle": {
     "message": "असुरक्षित वेबसाइट ब्लॉक की गई"

@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Давом диҳед новобаста аз ин"
   },
-  "popupTitle": {
-    "message": "Имконоти Ҳимоя"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "Дар GitHub тамошо кунед"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Сиёсати Махфият"
-  },
-  "onText": {
-    "message": "Фаъол"
-  },
-  "offText": {
-    "message": "Хомӯш"
-  },
-  "onLockedText": {
-    "message": "Фаъол (Қулфшуда)"
-  },
-  "offLockedText": {
-    "message": "Хомӯш (Қулфшуда)"
   },
   "knownSafe": {
     "message": "Маълум аст, ки бехатар аст"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Фишинг"
   },
-  "untrusted": {
-    "message": "Боваринок нест"
-  },
   "adultContent": {
     "message": "Мазмуни Калонсолон"
-  },
-  "toggleNotificationsContext": {
-    "message": "Огоҳиномаҳоро фаъол кунед"
   },
   "toggleFrameNavigationContext": {
     "message": "Навигатсияи чаҳорчӯбаро нодида гиред"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Сомонаро ҳамчун зараровар гузориш диҳед"
-  },
-  "restoreDefaultsContext": {
-    "message": "Барқарор кардани танзимоти аслӣ"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Танзимоти аслӣ барқарор карда шуд"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Танзимоти аслӣ барқарор карда шуданд."
   },
   "unsafeWebsiteTitle": {
     "message": "Сомонаи Хатарнок Манъ карда шуд"

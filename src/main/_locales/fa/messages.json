@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "ادامه با وجود خطر"
   },
-  "popupTitle": {
-    "message": "گزینه‌های محافظت"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "مشاهده در GitHub"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "سیاست حفظ حریم خصوصی"
-  },
-  "onText": {
-    "message": "روشن"
-  },
-  "offText": {
-    "message": "خاموش"
-  },
-  "onLockedText": {
-    "message": "روشن (قفل شده)"
-  },
-  "offLockedText": {
-    "message": "خاموش (قفل شده)"
   },
   "knownSafe": {
     "message": "مطمئن شناخته شده"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "فیشینگ"
   },
-  "untrusted": {
-    "message": "غیرقابل اعتماد"
-  },
   "adultContent": {
     "message": "محتوای بزرگسالان"
-  },
-  "toggleNotificationsContext": {
-    "message": "فعال‌سازی اعلان‌ها"
   },
   "toggleFrameNavigationContext": {
     "message": "نادیده گرفتن ناوبری فریم‌ها"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "گزارش دادن وب‌سایت به‌عنوان مخرب"
-  },
-  "restoreDefaultsContext": {
-    "message": "بازگرداندن تنظیمات پیش‌فرض"
-  },
-  "restoreDefaultsTitle": {
-    "message": "تنظیمات پیش‌فرض بازگردانده شد"
-  },
-  "restoreDefaultsMessage": {
-    "message": "تنظیمات پیش‌فرض بازگردانده شدند."
   },
   "unsafeWebsiteTitle": {
     "message": "وب‌سایت ناامن مسدود شد"

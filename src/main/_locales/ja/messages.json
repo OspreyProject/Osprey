@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "それでも続行する"
   },
-  "popupTitle": {
-    "message": "保護オプション"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "GitHub で表示"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "プライバシーポリシー"
-  },
-  "onText": {
-    "message": "オン"
-  },
-  "offText": {
-    "message": "オフ"
-  },
-  "onLockedText": {
-    "message": "オン (ロック中)"
-  },
-  "offLockedText": {
-    "message": "オフ (ロック中)"
   },
   "knownSafe": {
     "message": "安全と確認済み"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "フィッシング"
   },
-  "untrusted": {
-    "message": "信頼できない"
-  },
   "adultContent": {
     "message": "アダルトコンテンツ"
-  },
-  "toggleNotificationsContext": {
-    "message": "通知を有効にする"
   },
   "toggleFrameNavigationContext": {
     "message": "フレームナビゲーションを無視する"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "ウェブサイトを悪意のあるものとして報告する"
-  },
-  "restoreDefaultsContext": {
-    "message": "デフォルト設定を復元"
-  },
-  "restoreDefaultsTitle": {
-    "message": "デフォルト設定が復元されました"
-  },
-  "restoreDefaultsMessage": {
-    "message": "デフォルト設定が復元されました。"
   },
   "unsafeWebsiteTitle": {
     "message": "安全でないウェブサイトがブロックされました"

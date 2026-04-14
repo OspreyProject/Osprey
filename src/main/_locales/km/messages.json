@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "បន្តទោះបីជាមិនមានសុវត្ថិភាព"
   },
-  "popupTitle": {
-    "message": "ជម្រើសការពារ"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "មើលនៅលើ GitHub"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "គោលនយោបាយឯកជនភាព"
-  },
-  "onText": {
-    "message": "បើក"
-  },
-  "offText": {
-    "message": "បិទ"
-  },
-  "onLockedText": {
-    "message": "បើក (ចាក់សោ)"
-  },
-  "offLockedText": {
-    "message": "បិទ (ចាក់សោ)"
   },
   "knownSafe": {
     "message": "ត្រូវបានគេស្គាល់ថាមានសុវត្ថិភាព"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Phishing (ការលួចព័ត៌មាន)"
   },
-  "untrusted": {
-    "message": "គ្មានទំនុកចិត្ត"
-  },
   "adultContent": {
     "message": "មាតិកាសម្រាប់មនុស្សពេញវ័យ"
-  },
-  "toggleNotificationsContext": {
-    "message": "បើកការជូនដំណឹង"
   },
   "toggleFrameNavigationContext": {
     "message": "មិនអើពើការរុករកក្នុងស៊ុម"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "រាយការណ៍គេហទំព័រថាជាអាក្រក់"
-  },
-  "restoreDefaultsContext": {
-    "message": "ស្ដារការកំណត់លំនាំដើម"
-  },
-  "restoreDefaultsTitle": {
-    "message": "ការកំណត់លំនាំដើមត្រូវបានស្ដារ"
-  },
-  "restoreDefaultsMessage": {
-    "message": "ការកំណត់លំនាំដើមត្រូវបានស្ដារឡើងវិញ។"
   },
   "unsafeWebsiteTitle": {
     "message": "បានទប់ស្កាត់វេបសាយគ្មានសុវត្ថិភាព"

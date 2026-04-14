@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "എന്തായാലും തുടരുക"
   },
-  "popupTitle": {
-    "message": "സംരക്ഷണ ഓപ്ഷനുകൾ"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "GitHub-ൽ കാണുക"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "സ്വകാര്യതാ നയം"
-  },
-  "onText": {
-    "message": "ഓൺ"
-  },
-  "offText": {
-    "message": "ഓഫ്"
-  },
-  "onLockedText": {
-    "message": "ഓൺ (ലോക്കുചെയ്തത്)"
-  },
-  "offLockedText": {
-    "message": "ഓഫ് (ലോക്കുചെയ്തത്)"
   },
   "knownSafe": {
     "message": "സുരക്ഷിതമായി അറിയപ്പെടുന്നത്"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "ഫിഷിംഗ്"
   },
-  "untrusted": {
-    "message": "വിശ്വസനീയമല്ലാത്തത്"
-  },
   "adultContent": {
     "message": "പ്രായപൂർത്തിയായവർക്കുള്ള ഉള്ളടക്കം"
-  },
-  "toggleNotificationsContext": {
-    "message": "അറിയിപ്പുകൾ പ്രവർത്തനക്ഷമമാക്കുക"
   },
   "toggleFrameNavigationContext": {
     "message": "ഫ്രെയിം നാവിഗേഷൻ അവഗണിക്കുക"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "വെബ്സൈറ്റ് ദുരുപയോഗപരമാണെന്ന് റിപ്പോർട്ട് ചെയ്യുക"
-  },
-  "restoreDefaultsContext": {
-    "message": "സ്ഥിരസ്ഥിതി ക്രമീകരണങ്ങൾ പുനഃസ്ഥാപിക്കുക"
-  },
-  "restoreDefaultsTitle": {
-    "message": "സ്ഥിരസ്ഥിതി ക്രമീകരണങ്ങൾ പുനഃസ്ഥാപിച്ചു"
-  },
-  "restoreDefaultsMessage": {
-    "message": "സ്ഥിരസ്ഥിതി ക്രമീകരണങ്ങൾ പുനഃസ്ഥാപിച്ചിരിക്കുന്നു."
   },
   "unsafeWebsiteTitle": {
     "message": "അസുരക്ഷിത വെബ്സൈറ്റ് തടയപ്പെട്ടു"

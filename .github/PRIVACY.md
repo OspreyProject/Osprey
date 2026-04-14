@@ -27,7 +27,7 @@ services, and local threat intelligence lists to determine whether the URL is un
 The browser extension sends the full URL to the proxy server for all checks. How the proxy server handles it depends
 on the provider type:
 
-- **DNS-based providers** (AdGuard DNS, CleanBrowsing, Cloudflare, Control D, Quad9, and Switch.ch): the proxy server
+- **DNS-based providers** (AdGuard DNS, CERT-EE, CleanBrowsing, Cloudflare, Control D, Quad9, and Switch.ch): the proxy server
   extracts only the hostname and submits it as a DNS-over-HTTPS query.
 - **API-based providers** (AlphaMountain, ChainPatrol, and PrecisionSec): the proxy server forwards the full URL,
   including path.
@@ -65,6 +65,7 @@ providers never receive your IP address from the browser extension's lookup requ
     - PrecisionSec ([privacy policy](https://precisionsec.com/privacy-policy/))
 - **DNS-based providers** receive only the hostname as part of a DNS-over-HTTPS query:
     - AdGuard DNS ([privacy policy](https://adguard-dns.io/en/privacy.html))
+    - CERT-EE ([privacy policy](https://ria.ee/en/authority-news-and-contact/processing-personal-data))
     - CleanBrowsing ([privacy policy](https://cleanbrowsing.org/privacy))
     - Cloudflare ([privacy policy](https://cloudflare.com/privacypolicy))
     - Control D ([privacy policy](https://controld.com/privacy))

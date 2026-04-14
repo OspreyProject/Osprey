@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Vẫn tiếp tục"
   },
-  "popupTitle": {
-    "message": "Tùy chọn Bảo vệ"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "Xem trên GitHub"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Chính sách Quyền riêng tư"
-  },
-  "onText": {
-    "message": "Bật"
-  },
-  "offText": {
-    "message": "Tắt"
-  },
-  "onLockedText": {
-    "message": "Bật (Khóa)"
-  },
-  "offLockedText": {
-    "message": "Tắt (Khóa)"
   },
   "knownSafe": {
     "message": "Được biết là An toàn"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Lừa đảo (Phishing)"
   },
-  "untrusted": {
-    "message": "Không đáng tin cậy"
-  },
   "adultContent": {
     "message": "Nội dung Người lớn"
-  },
-  "toggleNotificationsContext": {
-    "message": "Bật thông báo"
   },
   "toggleFrameNavigationContext": {
     "message": "Bỏ qua điều hướng khung"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Báo cáo trang web là trang web độc hại"
-  },
-  "restoreDefaultsContext": {
-    "message": "Khôi phục cài đặt mặc định"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Đã khôi phục Cài đặt mặc định"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Các cài đặt mặc định đã được khôi phục."
   },
   "unsafeWebsiteTitle": {
     "message": "Trang web không an toàn đã bị chặn"

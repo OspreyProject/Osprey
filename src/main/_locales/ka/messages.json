@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "გაგრძელება მიუხედავად ამისა"
   },
-  "popupTitle": {
-    "message": "დაცვის პარამეტრები"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "გახსენით GitHub-ზე"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "კონფიდენციალურობის პოლიტიკა"
-  },
-  "onText": {
-    "message": "ჩართულია"
-  },
-  "offText": {
-    "message": "გამორთულია"
-  },
-  "onLockedText": {
-    "message": "ჩართულია (დაბლოკილი)"
-  },
-  "offLockedText": {
-    "message": "გამორთულია (დაბლოკილი)"
   },
   "knownSafe": {
     "message": "ცნობილი როგორც უსაფრთხო"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "ფიშინგი"
   },
-  "untrusted": {
-    "message": " अविश्वसनीय"
-  },
   "adultContent": {
     "message": "ზრდასრული შინაარსი"
-  },
-  "toggleNotificationsContext": {
-    "message": "შეტყობინებების ჩართვა"
   },
   "toggleFrameNavigationContext": {
     "message": "ფრემის ნავიგაციის იგნორირება"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "განაცხადეთ ვებსაიტი, როგორც მავნე"
-  },
-  "restoreDefaultsContext": {
-    "message": "ნაგულისხმევ პარამეტრებზე დაბრუნება"
-  },
-  "restoreDefaultsTitle": {
-    "message": "ნაგულისხმევი პარამეტრები აღდგა"
-  },
-  "restoreDefaultsMessage": {
-    "message": "ნაგულისხმევი პარამეტრები აღდგა."
   },
   "unsafeWebsiteTitle": {
     "message": "არაუზრუნველყოფილი ვებგვერდი დაბლოკილია"

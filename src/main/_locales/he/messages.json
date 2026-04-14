@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "המשך בכל זאת"
   },
-  "popupTitle": {
-    "message": "אפשרויות הגנה"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "צפה ב-GitHub"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "מדיניות פרטיות"
-  },
-  "onText": {
-    "message": "פעיל"
-  },
-  "offText": {
-    "message": "כבוי"
-  },
-  "onLockedText": {
-    "message": "פעיל (נעול)"
-  },
-  "offLockedText": {
-    "message": "כבוי (נעול)"
   },
   "knownSafe": {
     "message": "מוכר כבטוח"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "דיוג"
   },
-  "untrusted": {
-    "message": "לא מהימן"
-  },
   "adultContent": {
     "message": "תוכן למבוגרים"
-  },
-  "toggleNotificationsContext": {
-    "message": "אפשר התראות"
   },
   "toggleFrameNavigationContext": {
     "message": "התעלם מניווט במסגרת"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "דווח על אתר כזדוני"
-  },
-  "restoreDefaultsContext": {
-    "message": "שחזר הגדרות ברירת מחדל"
-  },
-  "restoreDefaultsTitle": {
-    "message": "הגדרות ברירת המחדל שוחזרו"
-  },
-  "restoreDefaultsMessage": {
-    "message": "הגדרות ברירת המחדל שוחזרו."
   },
   "unsafeWebsiteTitle": {
     "message": "אתר לא בטוח נחסם"

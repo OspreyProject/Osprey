@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Продолжить в любом случае"
   },
-  "popupTitle": {
-    "message": "Параметры защиты"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "Посмотреть на GitHub"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Политика конфиденциальности"
-  },
-  "onText": {
-    "message": "Вкл"
-  },
-  "offText": {
-    "message": "Выкл"
-  },
-  "onLockedText": {
-    "message": "Вкл (заблокировано)"
-  },
-  "offLockedText": {
-    "message": "Выкл (заблокировано)"
   },
   "knownSafe": {
     "message": "Известно как безопасный"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Фишинг"
   },
-  "untrusted": {
-    "message": "Ненадежный"
-  },
   "adultContent": {
     "message": "Контент для взрослых"
-  },
-  "toggleNotificationsContext": {
-    "message": "Включить уведомления"
   },
   "toggleFrameNavigationContext": {
     "message": "Игнорировать навигацию по фреймам"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Сообщить о вредоносном веб-сайте"
-  },
-  "restoreDefaultsContext": {
-    "message": "Восстановить настройки по умолчанию"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Настройки по умолчанию восстановлены"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Настройки по умолчанию были восстановлены."
   },
   "unsafeWebsiteTitle": {
     "message": "Небезопасный сайт заблокирован"

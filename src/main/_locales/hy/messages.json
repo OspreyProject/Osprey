@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Շարունակել ամեն դեպքում"
   },
-  "popupTitle": {
-    "message": "Պաշտպանության Կարգավորումներ"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "Դիտել GitHub-ում"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Գաղտնիության Քաղաքականություն"
-  },
-  "onText": {
-    "message": "Միացված"
-  },
-  "offText": {
-    "message": "Անջատված"
-  },
-  "onLockedText": {
-    "message": "Միացված (Կողպված)"
-  },
-  "offLockedText": {
-    "message": "Անջատված (Կողպված)"
   },
   "knownSafe": {
     "message": "Գիտակցաբար Անվտանգ"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Ֆիշինգ"
   },
-  "untrusted": {
-    "message": "Անվստահելի"
-  },
   "adultContent": {
     "message": "Մեծահասակների Բովանդակություն"
-  },
-  "toggleNotificationsContext": {
-    "message": "Միացնել ծանուցումները"
   },
   "toggleFrameNavigationContext": {
     "message": "Անտեսել շրջանակային նավիգացիան"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Հայտնել կայքը որպես վնասակար"
-  },
-  "restoreDefaultsContext": {
-    "message": "Վերականգնել նախնական կարգավորումները"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Նախնական կարգավորումները վերականգնվեցին"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Նախնական կարգավորումները վերականգնվել են։"
   },
   "unsafeWebsiteTitle": {
     "message": "Անվտանգ չեղած կայքը արգելափակված է"

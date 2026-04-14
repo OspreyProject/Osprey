@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Kontynuuj mimo to"
   },
-  "popupTitle": {
-    "message": "Opcje ochrony"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "Zobacz na GitHub"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Polityka prywatności"
-  },
-  "onText": {
-    "message": "Włączone"
-  },
-  "offText": {
-    "message": "Wyłączone"
-  },
-  "onLockedText": {
-    "message": "Włączone (zablokowane)"
-  },
-  "offLockedText": {
-    "message": "Wyłączone (zablokowane)"
   },
   "knownSafe": {
     "message": "Znane jako bezpieczne"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Phishing"
   },
-  "untrusted": {
-    "message": "Niezaufane"
-  },
   "adultContent": {
     "message": "Treści dla dorosłych"
-  },
-  "toggleNotificationsContext": {
-    "message": "Włącz powiadomienia"
   },
   "toggleFrameNavigationContext": {
     "message": "Ignoruj nawigację w ramkach"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Zgłoś stronę internetową jako złośliwą"
-  },
-  "restoreDefaultsContext": {
-    "message": "Przywróć ustawienia domyślne"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Przywrócono ustawienia domyślne"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Ustawienia domyślne zostały przywrócone."
   },
   "unsafeWebsiteTitle": {
     "message": "Niebezpieczna strona zablokowana"

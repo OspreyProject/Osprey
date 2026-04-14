@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Pokračovať napriek tomu"
   },
-  "popupTitle": {
-    "message": "Možnosti ochrany"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "Zobraziť na GitHube"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Zásady ochrany osobných údajov"
-  },
-  "onText": {
-    "message": "Zapnuté"
-  },
-  "offText": {
-    "message": "Vypnuté"
-  },
-  "onLockedText": {
-    "message": "Zapnuté (uzamknuté)"
-  },
-  "offLockedText": {
-    "message": "Vypnuté (uzamknuté)"
   },
   "knownSafe": {
     "message": "Známe ako bezpečné"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Phishing"
   },
-  "untrusted": {
-    "message": "Nedôveryhodné"
-  },
   "adultContent": {
     "message": "Obsah pre dospelých"
-  },
-  "toggleNotificationsContext": {
-    "message": "Povoliť upozornenia"
   },
   "toggleFrameNavigationContext": {
     "message": "Ignorovať navigáciu vo frame-och"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Nahlásiť webovú stránku ako škodlivú"
-  },
-  "restoreDefaultsContext": {
-    "message": "Obnoviť predvolené nastavenia"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Predvolené nastavenia obnovené"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Predvolené nastavenia boli obnovené."
   },
   "unsafeWebsiteTitle": {
     "message": "Nebezpečná webová stránka zablokovaná"

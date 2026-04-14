@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "متابعة على أي حال"
   },
-  "popupTitle": {
-    "message": "خيارات الحماية"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "عرض على GitHub"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "سياسة الخصوصية"
-  },
-  "onText": {
-    "message": "تشغيل"
-  },
-  "offText": {
-    "message": "إيقاف"
-  },
-  "onLockedText": {
-    "message": "تشغيل (مقفل)"
-  },
-  "offLockedText": {
-    "message": "إيقاف (مقفل)"
   },
   "knownSafe": {
     "message": "موثوق"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "التصيد"
   },
-  "untrusted": {
-    "message": "غير موثوق"
-  },
   "adultContent": {
     "message": "محتوى للبالغين"
-  },
-  "toggleNotificationsContext": {
-    "message": "تمكين الإشعارات"
   },
   "toggleFrameNavigationContext": {
     "message": "تجاهل التنقل بين الإطارات"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "الإبلاغ عن موقع ويب باعتباره ضارًا"
-  },
-  "restoreDefaultsContext": {
-    "message": "استعادة الإعدادات الافتراضية"
-  },
-  "restoreDefaultsTitle": {
-    "message": "تمت استعادة الإعدادات الافتراضية"
-  },
-  "restoreDefaultsMessage": {
-    "message": "تمت استعادة الإعدادات الافتراضية."
   },
   "unsafeWebsiteTitle": {
     "message": "تم حظر موقع غير آمن"

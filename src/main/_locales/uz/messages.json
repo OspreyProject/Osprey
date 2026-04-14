@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Baribir davom etish"
   },
-  "popupTitle": {
-    "message": "Himoya Sozlamalari"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "GitHub’da ko‘rish"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Maxfiylik Siyosati"
-  },
-  "onText": {
-    "message": "Yoqilgan"
-  },
-  "offText": {
-    "message": "O‘chirilgan"
-  },
-  "onLockedText": {
-    "message": "Yoqilgan (Bloklangan)"
-  },
-  "offLockedText": {
-    "message": "O‘chirilgan (Bloklangan)"
   },
   "knownSafe": {
     "message": "Xavfsiz deb tan olingan"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Fishing"
   },
-  "untrusted": {
-    "message": "Ishonchsiz"
-  },
   "adultContent": {
     "message": "Kattalar uchun Kontent"
-  },
-  "toggleNotificationsContext": {
-    "message": "Bildirishnomalarni yoqish"
   },
   "toggleFrameNavigationContext": {
     "message": "Freym navigatsiyasini e’tiborsiz qoldirish"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Veb-saytni zararli deb xabar bering"
-  },
-  "restoreDefaultsContext": {
-    "message": "Standart sozlamalarni tiklash"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Standart Sozlamalar Tiklandi"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Standart sozlamalar tiklandi."
   },
   "unsafeWebsiteTitle": {
     "message": "Xavfsiz bo‘lmagan veb-sayt bloklandi"

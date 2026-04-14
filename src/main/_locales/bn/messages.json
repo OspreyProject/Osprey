@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "তবুও চালিয়ে যান"
   },
-  "popupTitle": {
-    "message": "সুরক্ষা সেটিংস"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "GitHub এ দেখুন"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "গোপনীয়তা নীতি"
-  },
-  "onText": {
-    "message": "চালু"
-  },
-  "offText": {
-    "message": "বন্ধ"
-  },
-  "onLockedText": {
-    "message": "চালু (লক করা)"
-  },
-  "offLockedText": {
-    "message": "বন্ধ (লক করা)"
   },
   "knownSafe": {
     "message": "বিশ্বস্ত"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "ফিশিং"
   },
-  "untrusted": {
-    "message": "অবিশ্বস্ত"
-  },
   "adultContent": {
     "message": "প্রাপ্তবয়স্ক কন্টেন্ট"
-  },
-  "toggleNotificationsContext": {
-    "message": "বিজ্ঞপ্তি সক্রিয় করুন"
   },
   "toggleFrameNavigationContext": {
     "message": "ফ্রেম নেভিগেশন উপেক্ষা করুন"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "ওয়েবসাইটটিকে ক্ষতিকর হিসেবে রিপোর্ট করুন"
-  },
-  "restoreDefaultsContext": {
-    "message": "ডিফল্ট সেটিংস পুনরুদ্ধার করুন"
-  },
-  "restoreDefaultsTitle": {
-    "message": "ডিফল্ট সেটিংস পুনরুদ্ধার করা হয়েছে"
-  },
-  "restoreDefaultsMessage": {
-    "message": "ডিফল্ট সেটিংস পুনরুদ্ধার করা হয়েছে।"
   },
   "unsafeWebsiteTitle": {
     "message": "অনিরাপদ ওয়েবসাইট ব্লক করা হয়েছে"

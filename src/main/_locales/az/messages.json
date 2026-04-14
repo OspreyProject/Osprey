@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Hər halda davam et"
   },
-  "popupTitle": {
-    "message": "Qorunma Seçimləri"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "GitHub-da bax"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Məxfilik Siyasəti"
-  },
-  "onText": {
-    "message": "Açıq"
-  },
-  "offText": {
-    "message": "Bağlı"
-  },
-  "onLockedText": {
-    "message": "Açıq (Bloklanıb)"
-  },
-  "offLockedText": {
-    "message": "Bağlı (Bloklanıb)"
   },
   "knownSafe": {
     "message": "Məlum Təhlükəsiz"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Fişinq"
   },
-  "untrusted": {
-    "message": "Etibarsız"
-  },
   "adultContent": {
     "message": "Yetkinlər üçün Məzmun"
-  },
-  "toggleNotificationsContext": {
-    "message": "Bildirişləri aktiv et"
   },
   "toggleFrameNavigationContext": {
     "message": "Çərçivə naviqasiyasını görməməzlikdən gəl"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Vebsaytı zərərli kimi hesabat edin"
-  },
-  "restoreDefaultsContext": {
-    "message": "Defolt ayarları bərpa et"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Defolt Ayarlar Bərpa Olundu"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Defolt ayarlar bərpa edilib."
   },
   "unsafeWebsiteTitle": {
     "message": "Təhlükəli Vebsayt Bloklandı"

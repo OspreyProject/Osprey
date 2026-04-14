@@ -8,6 +8,9 @@
   "logoAlt": {
     "message": "Osprey Logo"
   },
+  "unsafeWebsiteTitle": {
+    "message": "Unsafe Website Blocked"
+  },
   "warningTitle": {
     "message": "Warning: This website is unsafe"
   },
@@ -44,29 +47,17 @@
   "continueButton": {
     "message": "Continue anyway"
   },
-  "popupTitle": {
-    "message": "Protection Options"
-  },
-  "githubLink": {
-    "message": "View on GitHub"
-  },
   "version": {
     "message": "Version: "
+  },
+  "websiteLink": {
+    "message": "Website"
   },
   "privacyPolicy": {
     "message": "Privacy Policy"
   },
-  "onText": {
-    "message": "On"
-  },
-  "offText": {
-    "message": "Off"
-  },
-  "onLockedText": {
-    "message": "On (Locked)"
-  },
-  "offLockedText": {
-    "message": "Off (Locked)"
+  "termsLink": {
+    "message": "Terms"
   },
   "knownSafe": {
     "message": "Known Safe"
@@ -86,14 +77,8 @@
   "phishing": {
     "message": "Phishing"
   },
-  "untrusted": {
-    "message": "Untrusted"
-  },
   "adultContent": {
     "message": "Adult Content"
-  },
-  "toggleNotificationsContext": {
-    "message": "Enable notifications"
   },
   "toggleFrameNavigationContext": {
     "message": "Ignore frame navigation"
@@ -101,28 +86,217 @@
   "clearAllowedWebsitesContext": {
     "message": "Clear list of allowed websites"
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Report website as malicious"
+  },
   "clearAllowedWebsitesTitle": {
     "message": "Allowed Websites Cleared"
   },
   "clearAllowedWebsitesMessage": {
     "message": "All allowed websites have been cleared."
   },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "Report website as malicious"
+  "settingsTitle": {
+    "message": "Settings"
   },
-  "restoreDefaultsContext": {
-    "message": "Restore default settings"
+  "providersSection": {
+    "message": "Providers"
   },
-  "restoreDefaultsTitle": {
-    "message": "Default Settings Restored"
+  "thirdPartySection": {
+    "message": "Third-Party Integrations"
   },
-  "restoreDefaultsMessage": {
-    "message": "Default settings have been restored."
+  "customProvidersSection": {
+    "message": "Custom Providers"
   },
-  "unsafeWebsiteTitle": {
-    "message": "Unsafe Website Blocked"
+  "addProviderToggle": {
+    "message": "+ Add Provider"
+  },
+  "cancelAddProvider": {
+    "message": "− Cancel"
+  },
+  "newProvider": {
+    "message": "New Provider"
+  },
+  "addProviderButton": {
+    "message": "Add Provider"
+  },
+  "resetDefaultProviders": {
+    "message": "Reset Default Providers"
+  },
+  "resetAll": {
+    "message": "Reset All"
+  },
+  "fieldLabelName": {
+    "message": "Name"
+  },
+  "fieldLabelApiUrl": {
+    "message": "API URL"
+  },
+  "fieldLabelMethod": {
+    "message": "Method"
+  },
+  "fieldLabelApiKey": {
+    "message": "API Key"
+  },
+  "fieldLabelRequestHeaders": {
+    "message": "Request Headers"
+  },
+  "fieldLabelRequestBody": {
+    "message": "Request Body"
+  },
+  "fieldLabelBlockLogic": {
+    "message": "Block Logic"
+  },
+  "tagRequestHeadersHint": {
+    "message": "Placeholders: {api_key}"
+  },
+  "tagRequestBodyHint": {
+    "message": "Placeholders: {url}, {hostname}, {api_key}"
+  },
+  "tagBlockLogicHint": {
+    "message": "Evaluated top-to-bottom. Use 'response' to reference body."
+  },
+  "addRuleButton": {
+    "message": "+ Add Rule"
+  },
+  "logicIfLabel": {
+    "message": "IF"
+  },
+  "logicReturnLabel": {
+    "message": "RETURN"
+  },
+  "applyButton": {
+    "message": "Apply"
+  },
+  "deleteButton": {
+    "message": "Delete"
+  },
+  "indicatorAdultContent": {
+    "message": "Adult Content Filter"
   },
   "officialPartnerTitle": {
     "message": "Official Partner"
+  },
+  "indicatorIpProtected": {
+    "message": "IP Address Protected"
+  },
+  "showApiKey": {
+    "message": "Show API key"
+  },
+  "hideApiKey": {
+    "message": "Hide API key"
+  },
+  "noCustomProviders": {
+    "message": "No custom providers added yet."
+  },
+  "toastSaved": {
+    "message": "Saved."
+  },
+  "toastFailedToSave": {
+    "message": "Failed to save."
+  },
+  "toastFailedToDelete": {
+    "message": "Failed to delete provider."
+  },
+  "toastProviderAdded": {
+    "message": "Provider added."
+  },
+  "toastProviderDeleted": {
+    "message": "Provider deleted."
+  },
+  "toastDefaultProvidersRestored": {
+    "message": "Default providers restored."
+  },
+  "toastAllSettingsRestored": {
+    "message": "All settings restored."
+  },
+  "toastSaveApiKeyFirst": {
+    "message": "Save a valid API key before enabling this integration."
+  },
+  "toastFailedToUpdateState": {
+    "message": "Failed to update provider state."
+  },
+  "statusHeadingSecure": {
+    "message": "You are secure"
+  },
+  "statusHeadingNoProviders": {
+    "message": "No providers enabled"
+  },
+  "statusIconAltProtected": {
+    "message": "Protected"
+  },
+  "providersEnabledCount": {
+    "message": "___ of ___ providers enabled"
+  },
+  "openSettings": {
+    "message": "Open Settings"
+  },
+  "unknownOrigin": {
+    "message": "Unknown"
+  },
+  "urlUnavailable": {
+    "message": "Unavailable"
+  },
+  "contextVerifyFailed": {
+    "message": "This warning page could not verify a safe action context. Continue and allow actions are disabled."
+  },
+  "providerLogoAlt": {
+    "message": "$1 Logo"
+  },
+  "providerNameFallback": {
+    "message": "Provider"
+  },
+  "toastMaxLogicRules": {
+    "message": "A maximum of $1 rules is allowed."
+  },
+  "toastCannotEnableProvider": {
+    "message": "Cannot enable provider: $1"
+  },
+  "errorApiUrlRequired": {
+    "message": "An HTTPS API URL is required."
+  },
+  "errorApiUrlInvalid": {
+    "message": "The API URL must be a valid absolute URL."
+  },
+  "errorApiUrlHttps": {
+    "message": "Custom providers must use HTTPS."
+  },
+  "errorApiUrlPrivate": {
+    "message": "Custom providers cannot use localhost or private-network endpoints."
+  },
+  "errorApiUrlCredentials": {
+    "message": "Credentials cannot be embedded in the API URL."
+  },
+  "errorHeadersTooMany": {
+    "message": "No more than $1 request headers are allowed."
+  },
+  "errorHeaderFormat": {
+    "message": "Each request header must use the format Header-Name: value."
+  },
+  "errorHeaderInvalidName": {
+    "message": "The header name \"$1\" is invalid."
+  },
+  "errorHeaderForbiddenName": {
+    "message": "The header name \"$1\" is not allowed."
+  },
+  "errorRequestBodyInvalidJson": {
+    "message": "The request body must be valid JSON after placeholder substitution."
+  },
+  "errorRuleConditionEmpty": {
+    "message": "Rule conditions cannot be empty."
+  },
+  "errorRuleConditionUnsupported": {
+    "message": "Rule conditions contain unsupported characters."
+  },
+  "errorRuleConditionResponseRef": {
+    "message": "Rule conditions must reference response fields such as response.result."
+  },
+  "errorRuleConditionForbiddenToken": {
+    "message": "Rule conditions cannot contain \"$1\"."
+  },
+  "errorRulesTooMany": {
+    "message": "No more than $1 block-logic rules are allowed."
+  },
+  "errorProviderNameRequired": {
+    "message": "A provider name is required."
   }
 }

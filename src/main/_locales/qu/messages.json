@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Kunanpuniña ñawpaqman riqsiy"
   },
-  "popupTitle": {
-    "message": "Ama llullakuy ruwanakuna"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "GitHubpi qhaway"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Privacidad Kamachiy"
-  },
-  "onText": {
-    "message": "On"
-  },
-  "offText": {
-    "message": "Off"
-  },
-  "onLockedText": {
-    "message": "On (Wichq'asqa)"
-  },
-  "offLockedText": {
-    "message": "Off (Wichq'asqa)"
   },
   "knownSafe": {
     "message": "Rikuchisqa seguridadniyuq"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Llullakusqa (Phishing)"
   },
-  "untrusted": {
-    "message": "Mana iyarisqa"
-  },
   "adultContent": {
     "message": "Runa hatun ñawpaqpi ruwasqa"
-  },
-  "toggleNotificationsContext": {
-    "message": "Willakuykunata kachariy"
   },
   "toggleFrameNavigationContext": {
     "message": "Marco navegacionta ama qhawariychu"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Kay web p'anqata mana allin kasqanmanta willay"
-  },
-  "restoreDefaultsContext": {
-    "message": "Chayqa ñawpaq kamachikuna kutichiy"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Ñawpaq kamachikuna kutichisqa"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Ñawpaq kamachikuna kutichisqa kachkan."
   },
   "unsafeWebsiteTitle": {
     "message": "Mana seguridadniyuq web wasi hark'asqa"

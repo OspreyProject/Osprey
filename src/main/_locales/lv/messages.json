@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Tomēr turpināt"
   },
-  "popupTitle": {
-    "message": "Aizsardzības opcijas"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "Skatīt GitHub"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Privātuma politika"
-  },
-  "onText": {
-    "message": "Ieslēgts"
-  },
-  "offText": {
-    "message": "Izslēgts"
-  },
-  "onLockedText": {
-    "message": "Ieslēgts (bloķēts)"
-  },
-  "offLockedText": {
-    "message": "Izslēgts (bloķēts)"
   },
   "knownSafe": {
     "message": "Zināms kā drošs"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Pikšķerēšana"
   },
-  "untrusted": {
-    "message": "Neuzticams"
-  },
   "adultContent": {
     "message": "Pieaugušo saturs"
-  },
-  "toggleNotificationsContext": {
-    "message": "Iespējot paziņojumus"
   },
   "toggleFrameNavigationContext": {
     "message": "Ignorēt rāmja navigāciju"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Ziņot par ļaunprātīgu tīmekļa vietni"
-  },
-  "restoreDefaultsContext": {
-    "message": "Atjaunot noklusējuma iestatījumus"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Noklusējuma iestatījumi atjaunoti"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Noklusējuma iestatījumi ir atjaunoti."
   },
   "unsafeWebsiteTitle": {
     "message": "Nedroša vietne bloķēta"

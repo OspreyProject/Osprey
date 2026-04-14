@@ -1,0 +1,65 @@
+<!--
+  Osprey - a browser extension that protects you from malicious websites.
+  Copyright (C) 2026 Osprey Project (https://github.com/OspreyProject)
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program. If not, see <https://www.gnu.org/licenses/>.
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <title></title>
+    <link rel="stylesheet" href="settings-page.css">
+    <script src="../../shared/browser-api.js" type="text/javascript"></script>
+    <script src="../../shared/i18n.js" type="text/javascript"></script>
+    <script src="../../providers/provider-groups.js" type="text/javascript"></script>
+    <script src="../../providers/proxy-builtins.js" type="text/javascript"></script>
+    <script src="../../providers/direct-integrations.js" type="text/javascript"></script>
+    <script src="../../catalog/catalog-validator.js" type="text/javascript"></script>
+    <script src="../../providers/provider-catalog.js" type="text/javascript"></script>
+    <script src="../../providers/custom-provider-normalizer.js" type="text/javascript"></script>
+    <script src="../../state/provider-state-store.js" type="text/javascript"></script>
+    <script src="../../state/policy-service.js" type="text/javascript"></script>
+    <script src="../../providers/provider-runtime-factory.js" type="text/javascript"></script>
+    <script src="../../shared/lang-util.js" type="text/javascript"></script>
+    <script src="ui/form-helpers.js" type="text/javascript"></script>
+    <script src="ui/toast.js" type="text/javascript"></script>
+    <script src="ui/provider-card.js" type="text/javascript"></script>
+    <script src="ui/provider-list.js" type="text/javascript"></script>
+    <script src="ui/settings-controller.js" type="text/javascript"></script>
+    <script src="settings-page.js" type="text/javascript"></script>
+</head>
+
+<body id="background" class="gray">
+<div id="banner" class="banner">
+    <img id="logo" class="logo" src="../../assets/osprey/icon128.png" alt="">
+    <div class="banner-text-group">
+        <span class="bannerText">
+            <!-- Automatically translated -->
+        </span>
+    </div>
+</div>
+
+<div class="settings-page-title">
+    <!-- Automatically translated -->
+</div>
+
+<main class="settings-main">
+    <div id="providerList"></div>
+</main>
+</body>
+</html>

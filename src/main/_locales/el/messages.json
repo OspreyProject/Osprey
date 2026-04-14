@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Συνέχεια ούτως ή άλλως"
   },
-  "popupTitle": {
-    "message": "Επιλογές προστασίας"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "Προβολή στο GitHub"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Πολιτική απορρήτου"
-  },
-  "onText": {
-    "message": "Ενεργό"
-  },
-  "offText": {
-    "message": "Ανενεργό"
-  },
-  "onLockedText": {
-    "message": "Ενεργό (Κλειδωμένο)"
-  },
-  "offLockedText": {
-    "message": "Ανενεργό (Κλειδωμένο)"
   },
   "knownSafe": {
     "message": "Αξιόπιστο"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Phishing"
   },
-  "untrusted": {
-    "message": "Μη αξιόπιστο"
-  },
   "adultContent": {
     "message": "Περιεχόμενο ενηλίκων"
-  },
-  "toggleNotificationsContext": {
-    "message": "Ενεργοποίηση ειδοποιήσεων"
   },
   "toggleFrameNavigationContext": {
     "message": "Παράβλεψη πλοήγησης σε πλαίσια"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Αναφορά ιστότοπου ως κακόβουλου"
-  },
-  "restoreDefaultsContext": {
-    "message": "Επαναφορά προεπιλεγμένων ρυθμίσεων"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Οι προεπιλεγμένες ρυθμίσεις επαναφέρθηκαν"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Οι προεπιλεγμένες ρυθμίσεις έχουν επαναφερθεί."
   },
   "unsafeWebsiteTitle": {
     "message": "Μη ασφαλής ιστότοπος αποκλείστηκε"

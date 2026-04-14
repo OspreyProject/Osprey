@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Trotzdem fortfahren"
   },
-  "popupTitle": {
-    "message": "Schutzoptionen"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "Auf GitHub anzeigen"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Datenschutzerklärung"
-  },
-  "onText": {
-    "message": "Ein"
-  },
-  "offText": {
-    "message": "Aus"
-  },
-  "onLockedText": {
-    "message": "Ein (gesperrt)"
-  },
-  "offLockedText": {
-    "message": "Aus (gesperrt)"
   },
   "knownSafe": {
     "message": "Als sicher bekannt"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Phishing"
   },
-  "untrusted": {
-    "message": "Nicht vertrauenswürdig"
-  },
   "adultContent": {
     "message": "Inhalt für Erwachsene"
-  },
-  "toggleNotificationsContext": {
-    "message": "Benachrichtigungen aktivieren"
   },
   "toggleFrameNavigationContext": {
     "message": "Frame-Navigation ignorieren"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Website als bösartig melden"
-  },
-  "restoreDefaultsContext": {
-    "message": "Standardeinstellungen wiederherstellen"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Standardeinstellungen wiederhergestellt"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Die Standardeinstellungen wurden wiederhergestellt."
   },
   "unsafeWebsiteTitle": {
     "message": "Unsichere Website blockiert"

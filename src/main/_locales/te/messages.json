@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "ఏదేమైనా కొనసాగించు"
   },
-  "popupTitle": {
-    "message": "రక్షణ ఎంపికలు"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "GitHub లో చూడండి"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "గోప్యతా విధానం"
-  },
-  "onText": {
-    "message": "ఆన్"
-  },
-  "offText": {
-    "message": "ఆఫ్"
-  },
-  "onLockedText": {
-    "message": "ఆన్ (లాక్ చేయబడింది)"
-  },
-  "offLockedText": {
-    "message": "ఆఫ్ (లాక్ చేయబడింది)"
   },
   "knownSafe": {
     "message": "సురక్షితంగా తెలిసినది"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "ఫిషింగ్"
   },
-  "untrusted": {
-    "message": "నమ్మదగనిది"
-  },
   "adultContent": {
     "message": "వయోజన కంటెంట్"
-  },
-  "toggleNotificationsContext": {
-    "message": "నోటిఫికేషన్‌లను ప్రారంభించండి"
   },
   "toggleFrameNavigationContext": {
     "message": "ఫ్రేమ్ నావిగేషన్‌ను నిర్లక్ష్యం చేయండి"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "వెబ్సైట్ను హానికరమైనదిగా నివేదించండి"
-  },
-  "restoreDefaultsContext": {
-    "message": "డిఫాల్ట్ సెట్టింగ్‌లను పునరుద్ధరించండి"
-  },
-  "restoreDefaultsTitle": {
-    "message": "డిఫాల్ట్ సెట్టింగ్‌లు పునరుద్ధరించబడ్డాయి"
-  },
-  "restoreDefaultsMessage": {
-    "message": "డిఫాల్ట్ సెట్టింగ్‌లు పునరుద్ధరించబడ్డాయి."
   },
   "unsafeWebsiteTitle": {
     "message": "అసురక్షిత వెబ్‌సైట్ బ్లాక్ చేయబడింది"

@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Продовжити все одно"
   },
-  "popupTitle": {
-    "message": "Параметри захисту"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "Переглянути на GitHub"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Політика конфіденційності"
-  },
-  "onText": {
-    "message": "Увімкнено"
-  },
-  "offText": {
-    "message": "Вимкнено"
-  },
-  "onLockedText": {
-    "message": "Увімкнено (Заблоковано)"
-  },
-  "offLockedText": {
-    "message": "Вимкнено (Заблоковано)"
   },
   "knownSafe": {
     "message": "Відомо як безпечний"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Фішинг"
   },
-  "untrusted": {
-    "message": "Ненадійний"
-  },
   "adultContent": {
     "message": "Контент для дорослих"
-  },
-  "toggleNotificationsContext": {
-    "message": "Увімкнути сповіщення"
   },
   "toggleFrameNavigationContext": {
     "message": "Ігнорувати навігацію у фреймах"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Повідомити про шкідливий веб-сайт"
-  },
-  "restoreDefaultsContext": {
-    "message": "Відновити стандартні налаштування"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Стандартні налаштування відновлено"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Стандартні налаштування відновлено."
   },
   "unsafeWebsiteTitle": {
     "message": "Небезпечний вебсайт заблоковано"

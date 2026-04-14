@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "ቢሆንም ቀጥል"
   },
-  "popupTitle": {
-    "message": "የመከላከያ አማራጮች"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "በ GitHub ላይ እይ"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "የግላዊነት ፖሊሲ"
-  },
-  "onText": {
-    "message": "ነቅቷል"
-  },
-  "offText": {
-    "message": "ዝግቷል"
-  },
-  "onLockedText": {
-    "message": "ነቅቷል (የተቆለፈ)"
-  },
-  "offLockedText": {
-    "message": "ዝግቷል (የተቆለፈ)"
   },
   "knownSafe": {
     "message": "የታመነ"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "ፊሺንግ"
   },
-  "untrusted": {
-    "message": "የማይታመን"
-  },
   "adultContent": {
     "message": "የአዋቂ ይዘት"
-  },
-  "toggleNotificationsContext": {
-    "message": "ማሳወቂያዎችን አንቃ"
   },
   "toggleFrameNavigationContext": {
     "message": "የራም አሰሳን ችላ አድርግ"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "ድህረ-ገፅን እንደ ጎጂ ሪፖርት ያድርጉ"
-  },
-  "restoreDefaultsContext": {
-    "message": "ነባሪ ቅንብሮችን ይመልሱ"
-  },
-  "restoreDefaultsTitle": {
-    "message": "ነባሪ ቅንብሮች ተመልሰዋል"
-  },
-  "restoreDefaultsMessage": {
-    "message": "ነባሪ ቅንብሮች ተመልሰዋል።"
   },
   "unsafeWebsiteTitle": {
     "message": "የማይታመን ድር ጣቢያ ታግዷል"

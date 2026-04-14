@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Fortsæt alligevel"
   },
-  "popupTitle": {
-    "message": "Beskyttelsesindstillinger"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "Vis på GitHub"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Privatlivspolitik"
-  },
-  "onText": {
-    "message": "Til"
-  },
-  "offText": {
-    "message": "Fra"
-  },
-  "onLockedText": {
-    "message": "Til (låst)"
-  },
-  "offLockedText": {
-    "message": "Fra (låst)"
   },
   "knownSafe": {
     "message": "Kendt som sikker"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Phishing"
   },
-  "untrusted": {
-    "message": "Ikke pålidelig"
-  },
   "adultContent": {
     "message": "Voksenindhold"
-  },
-  "toggleNotificationsContext": {
-    "message": "Aktivér meddelelser"
   },
   "toggleFrameNavigationContext": {
     "message": "Ignorer rammenavigation"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Anmeld webstedet som ondsindet"
-  },
-  "restoreDefaultsContext": {
-    "message": "Gendan standardindstillinger"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Standardindstillinger gendannet"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Standardindstillingerne er blevet gendannet."
   },
   "unsafeWebsiteTitle": {
     "message": "Usikkert websted blokeret"

@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Qhubeka nokuba kunjalo"
   },
-  "popupTitle": {
-    "message": "Iinketho Zokhuseleko"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "Jonga ku-GitHub"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Umgaqo-nkqubo Wabucala"
-  },
-  "onText": {
-    "message": "Ivuliwe"
-  },
-  "offText": {
-    "message": "Icinyiwe"
-  },
-  "onLockedText": {
-    "message": "Ivuliwe (Ivaliweyo)"
-  },
-  "offLockedText": {
-    "message": "Icinyiwe (Ivaliweyo)"
   },
   "knownSafe": {
     "message": "Iyaziwa njengekhuselekileyo"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Ukukhohlisa (Phishing)"
   },
-  "untrusted": {
-    "message": "Engathembekiyo"
-  },
   "adultContent": {
     "message": "Umxholo Wabantu Abadala"
-  },
-  "toggleNotificationsContext": {
-    "message": "Vumela izaziso"
   },
   "toggleFrameNavigationContext": {
     "message": "Sukuhoya ukuhamba kwefreyimu"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Xela iwebhusayithi njengeyingozi"
-  },
-  "restoreDefaultsContext": {
-    "message": "Buyisela iisetingi ezimiselweyo"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Iisetingi Ezimiselweyo Zibuyiselwe"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Iisetingi ezimiselweyo zibuyiselwe."
   },
   "unsafeWebsiteTitle": {
     "message": "Iwebhusayithi Engakhuselekanga Ithintelwe"

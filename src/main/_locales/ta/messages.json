@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "எப்படியாவது தொடரவும்"
   },
-  "popupTitle": {
-    "message": "பாதுகாப்பு விருப்பங்கள்"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "GitHub-இல் காண்க"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "தனியுரிமைக் கொள்கை"
-  },
-  "onText": {
-    "message": "இயக்கு"
-  },
-  "offText": {
-    "message": "ஆஃப்"
-  },
-  "onLockedText": {
-    "message": "இயக்கு (பூட்டப்பட்டது)"
-  },
-  "offLockedText": {
-    "message": "ஆஃப் (பூட்டப்பட்டது)"
   },
   "knownSafe": {
     "message": "பாதுகாப்பானது என அறியப்பட்டது"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "ஃபிஷிங்"
   },
-  "untrusted": {
-    "message": "நம்பமுடியாதது"
-  },
   "adultContent": {
     "message": "வயது வந்தோருக்கான உள்ளடக்கம்"
-  },
-  "toggleNotificationsContext": {
-    "message": "அறிவிப்புகளை இயக்கு"
   },
   "toggleFrameNavigationContext": {
     "message": "சட்டக வழிசெலுத்தலை புறக்கணி"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "இணையதளத்தை தீங்கிழைக்கும் எனப் புகாரளிக்கவும்"
-  },
-  "restoreDefaultsContext": {
-    "message": "இயல்புநிலை அமைப்புகளை மீட்டமை"
-  },
-  "restoreDefaultsTitle": {
-    "message": "இயல்புநிலை அமைப்புகள் மீட்டமைக்கப்பட்டன"
-  },
-  "restoreDefaultsMessage": {
-    "message": "இயல்புநிலை அமைப்புகள் மீட்டமைக்கப்பட்டுள்ளன."
   },
   "unsafeWebsiteTitle": {
     "message": "பாதுகாப்பற்ற வலைத்தளம் தடுக்கப்பட்டது"

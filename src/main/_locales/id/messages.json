@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Tetap lanjutkan"
   },
-  "popupTitle": {
-    "message": "Opsi Perlindungan"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "Lihat di GitHub"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Kebijakan Privasi"
-  },
-  "onText": {
-    "message": "Aktif"
-  },
-  "offText": {
-    "message": "Nonaktif"
-  },
-  "onLockedText": {
-    "message": "Aktif (Terkunci)"
-  },
-  "offLockedText": {
-    "message": "Nonaktif (Terkunci)"
   },
   "knownSafe": {
     "message": "Dikenal Aman"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Phishing"
   },
-  "untrusted": {
-    "message": "Tidak Tepercaya"
-  },
   "adultContent": {
     "message": "Konten Dewasa"
-  },
-  "toggleNotificationsContext": {
-    "message": "Aktifkan notifikasi"
   },
   "toggleFrameNavigationContext": {
     "message": "Abaikan navigasi frame"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Laporkan situs web sebagai berbahaya"
-  },
-  "restoreDefaultsContext": {
-    "message": "Pulihkan pengaturan default"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Pengaturan Default Dipulihkan"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Pengaturan default telah dipulihkan."
   },
   "unsafeWebsiteTitle": {
     "message": "Situs Web Tidak Aman Diblokir"

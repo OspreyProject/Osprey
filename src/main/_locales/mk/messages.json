@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Сепак продолжи"
   },
-  "popupTitle": {
-    "message": "Опции за заштита"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "Види на GitHub"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Политика за приватност"
-  },
-  "onText": {
-    "message": "Вклучено"
-  },
-  "offText": {
-    "message": "Исклучено"
-  },
-  "onLockedText": {
-    "message": "Вклучено (Заклучено)"
-  },
-  "offLockedText": {
-    "message": "Исклучено (Заклучено)"
   },
   "knownSafe": {
     "message": "Познато како безбедно"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Фишинг"
   },
-  "untrusted": {
-    "message": "Непоуздано"
-  },
   "adultContent": {
     "message": "Содржина за возрасни"
-  },
-  "toggleNotificationsContext": {
-    "message": "Овозможи известувања"
   },
   "toggleFrameNavigationContext": {
     "message": "Игнорирај навигација со рамки"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Пријави ја веб-страницата како злонамерна"
-  },
-  "restoreDefaultsContext": {
-    "message": "Врати ги стандардните поставки"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Стандардните поставки се вратени"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Стандардните поставки беа вратени."
   },
   "unsafeWebsiteTitle": {
     "message": "Блокирана небезбедна веб-страница"

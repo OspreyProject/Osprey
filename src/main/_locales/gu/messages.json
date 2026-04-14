@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "છતાં પણ ચાલુ રાખો"
   },
-  "popupTitle": {
-    "message": "સુરક્ષા વિકલ્પો"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "GitHub પર જુઓ"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "ગોપનીયતા નીતિ"
-  },
-  "onText": {
-    "message": "ચાલુ"
-  },
-  "offText": {
-    "message": "બંધ"
-  },
-  "onLockedText": {
-    "message": "ચાલુ (લોક્ડ)"
-  },
-  "offLockedText": {
-    "message": "બંધ (લોક્ડ)"
   },
   "knownSafe": {
     "message": "જાણીતું સુરક્ષિત"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "ફિશિંગ"
   },
-  "untrusted": {
-    "message": "અવિશ્વસનીય"
-  },
   "adultContent": {
     "message": "પ્રাপ্তવયસ્ક સામગ્રી"
-  },
-  "toggleNotificationsContext": {
-    "message": "સૂચનાઓ સક્રિય કરો"
   },
   "toggleFrameNavigationContext": {
     "message": "ફ્રેમ નેવિગેશન અવગણો"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "વેબસાઇટને દુષ્કૃત્યકારી તરીકે રિપોર્ટ કરો"
-  },
-  "restoreDefaultsContext": {
-    "message": "ડિફોલ્ટ સેટિંગ્સ પુનઃસ્થાપિત કરો"
-  },
-  "restoreDefaultsTitle": {
-    "message": "ડિફોલ્ટ સેટિંગ્સ પુનઃસ્થાપિત થયા"
-  },
-  "restoreDefaultsMessage": {
-    "message": "ડિફોલ્ટ સેટિંગ્સ પુનઃસ્થાપિત કરવામાં આવ્યા છે."
   },
   "unsafeWebsiteTitle": {
     "message": "અસુરક્ષિત વેબસાઇટ બ્લોક કરવામાં આવી"

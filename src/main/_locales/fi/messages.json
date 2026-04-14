@@ -44,10 +44,7 @@
   "continueButton": {
     "message": "Jatka silti"
   },
-  "popupTitle": {
-    "message": "Suojausasetukset"
-  },
-  "githubLink": {
+  "websiteLink": {
     "message": "Näytä GitHubissa"
   },
   "version": {
@@ -55,18 +52,6 @@
   },
   "privacyPolicy": {
     "message": "Tietosuojakäytäntö"
-  },
-  "onText": {
-    "message": "Päällä"
-  },
-  "offText": {
-    "message": "Pois"
-  },
-  "onLockedText": {
-    "message": "Päällä (lukittu)"
-  },
-  "offLockedText": {
-    "message": "Pois (lukittu)"
   },
   "knownSafe": {
     "message": "Tunnetusti turvallinen"
@@ -86,14 +71,8 @@
   "phishing": {
     "message": "Tietojenkalastelu"
   },
-  "untrusted": {
-    "message": "Epäluotettava"
-  },
   "adultContent": {
     "message": "Aikuissisältö"
-  },
-  "toggleNotificationsContext": {
-    "message": "Ota ilmoitukset käyttöön"
   },
   "toggleFrameNavigationContext": {
     "message": "Ohita kehysnavigointi"
@@ -109,15 +88,6 @@
   },
   "reportWebsiteAsMaliciousContext": {
     "message": "Ilmoita verkkosivusto haitalliseksi"
-  },
-  "restoreDefaultsContext": {
-    "message": "Palauta oletusasetukset"
-  },
-  "restoreDefaultsTitle": {
-    "message": "Oletusasetukset palautettu"
-  },
-  "restoreDefaultsMessage": {
-    "message": "Oletusasetukset on palautettu."
   },
   "unsafeWebsiteTitle": {
     "message": "Turvaton verkkosivusto estetty"
