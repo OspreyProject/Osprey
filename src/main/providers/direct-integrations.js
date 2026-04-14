@@ -169,47 +169,6 @@ globalThis.OspreyDirectIntegrations = (() => {
         }),
 
         integration({
-            id: 'lumu',
-            aliases: ['maltiverse'],
-            displayName: 'Lumu Maltiverse',
-            group: providerGroups.direct_integrations.id,
-            icon: 'assets/providers/maltiverse.png',
-            enabledByDefault: false,
-            lookupTarget: 'hostname',
-            tags: ['api_key_required', 'hostname_only'],
-            apiKeyUrl: 'https://maltiverse.com/profile/user',
-
-            request: Object.freeze({
-                urlTemplate: 'https://api.maltiverse.com/hostname/{lookupValue}',
-                method: 'GET',
-                headers: Object.freeze([
-                    Object.freeze({
-                        name: 'Authorization',
-                        value: 'Bearer: {api_key}'
-                    }),
-                ]),
-                bodyTemplate: '',
-                contentType: 'application/json',
-                timeoutMs: 7000,
-            }),
-
-            responseRules: Object.freeze([
-                Object.freeze({
-                    path: 'is_phishing',
-                    operator: 'equals',
-                    value: true,
-                    result: 'PHISHING'
-                }),
-            ]),
-
-            report: Object.freeze({
-                type: 'mailto_false_positive',
-                email: 'info@lumu.io',
-                productName: 'Lumu Maltiverse API'
-            }),
-        }),
-
-        integration({
             id: 'seclookup',
             aliases: ['secLookup'],
             displayName: 'SecLookup',
