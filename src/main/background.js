@@ -49,7 +49,9 @@ const bootstrapScripts = [
 try {
     importScripts(...bootstrapScripts);
 } catch (error) {
-    console.warn('Failed to bootstrap Osprey background service worker', error);
+    // In Firefox-based browsers, importScripts is not available; scripts are loaded via background.html
+    console.debug("Running in Firefox or another environment without importScripts");
+    console.debug(`Error: ${error}`);
 }
 
 (() => {
