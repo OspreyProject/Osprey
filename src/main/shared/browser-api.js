@@ -18,8 +18,7 @@
 "use strict";
 
 globalThis.OspreyBrowserAPI = (() => {
-    const api = globalThis.chrome ?? globalThis.browser;
-    const isFirefox = api !== globalThis.chrome;
+    const api = globalThis.browser ?? globalThis.chrome;
 
     const withCallback = (fn, context, args = []) => new Promise((resolve, reject) => {
         if (typeof fn !== "function") {
@@ -49,25 +48,31 @@ globalThis.OspreyBrowserAPI = (() => {
         };
 
         try {
-            if (isFirefox) {
-                const maybePromise = fn.call(context, ...args);
-                Promise.resolve(maybePromise).then(
-                    value => settle(resolve, value),
-                    error => settle(reject, error)
-                );
-                return;
-            }
-
             fn.call(context, ...args, callback);
         } catch (error) {
-            console.error('Browser API call threw before completion', error);
+            console.error("Browser API call threw before completion", error);
             settle(reject, error);
         }
     });
 
     const call = (path, ...args) => {
         const context = path.slice(0, -1).reduce((value, key) => value?.[key], api);
-        return withCallback(context?.[path[path.length - 1]], context, args);
+        const fn = context?.[path[path.length - 1]];
+
+        if (typeof fn !== "function") {
+            return Promise.resolve(undefined);
+        }
+
+        try {
+            const result = fn.call(context, ...args);
+
+            if (result && typeof result.then === "function") {
+                return result;
+            }
+        } catch (error) {
+            return Promise.reject(error);
+        }
+        return withCallback(fn, context, args);
     };
 
     const safeRuntimeURL = path => {
@@ -85,22 +90,22 @@ globalThis.OspreyBrowserAPI = (() => {
         withCallback,
         call,
 
-        storageGet: (area, keys = null) => call(['storage', area, 'get'], keys),
-        storageSet: (area, value) => call(['storage', area, 'set'], value),
-        tabsGet: tabId => call(['tabs', 'get'], tabId),
-        tabsUpdate: (tabId, updateProperties) => call(['tabs', 'update'], tabId, updateProperties),
-        tabsCreate: createProperties => call(['tabs', 'create'], createProperties),
-        tabsSendMessage: (tabId, message) => call(['tabs', 'sendMessage'], tabId, message),
+        storageGet: (area, keys = null) => call(["storage", area, "get"], keys),
+        storageSet: (area, value) => call(["storage", area, "set"], value),
+        tabsGet: tabId => call(["tabs", "get"], tabId),
+        tabsUpdate: (tabId, updateProperties) => call(["tabs", "update"], tabId, updateProperties),
+        tabsCreate: createProperties => call(["tabs", "create"], createProperties),
+        tabsSendMessage: (tabId, message) => call(["tabs", "sendMessage"], tabId, message),
 
         notificationsCreate: (options, notificationId = undefined) => notificationId ?
-            call(['notifications', 'create'], notificationId, options) :
-            call(['notifications', 'create'], options),
+            call(["notifications", "create"], notificationId, options) :
+            call(["notifications", "create"], options),
 
-        actionSetBadgeText: details => call(['action', 'setBadgeText'], details),
-        actionSetBadgeBackgroundColor: details => call(['action', 'setBadgeBackgroundColor'], details),
-        actionSetBadgeTextColor: details => call(['action', 'setBadgeTextColor'], details),
-        runtimeSendMessage: message => call(['runtime', 'sendMessage'], message),
-        runtimeOpenOptionsPage: () => call(['runtime', 'openOptionsPage']),
+        actionSetBadgeText: details => call(["action", "setBadgeText"], details),
+        actionSetBadgeBackgroundColor: details => call(["action", "setBadgeBackgroundColor"], details),
+        actionSetBadgeTextColor: details => call(["action", "setBadgeTextColor"], details),
+        runtimeSendMessage: message => call(["runtime", "sendMessage"], message),
+        runtimeOpenOptionsPage: () => call(["runtime", "openOptionsPage"]),
 
         safeRuntimeURL,
     });

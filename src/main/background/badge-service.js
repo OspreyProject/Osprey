@@ -23,7 +23,7 @@ globalThis.OspreyBadgeService = (() => {
 
     const ignore = () => undefined;
     const badgeCounts = new Map();
-    const setColor = (tabId, method, color) => browserAPI[method]({tabId, color});
+    const setColor = (tabId, method, color) => browserAPI[method]({color, tabId});
     const clear = tabId => {
         if (badgeCounts.get(tabId) === 0) {
             return Promise.resolve();
