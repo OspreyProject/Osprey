@@ -324,7 +324,6 @@ globalThis.OspreyResponseRuleEngine = (() => {
         if (expression.type === 'condition') {
             return compare(getPathValue(responseBody, expression.path), String(expression.operator || 'equals'), expression.value);
         }
-
         return false;
     };
 

@@ -323,7 +323,6 @@ globalThis.OspreyCustomProviderNormalizer = (() => {
                 result: result.trim().toUpperCase(),
             };
         }
-
         return null;
     };
 
