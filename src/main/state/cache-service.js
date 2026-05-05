@@ -118,7 +118,9 @@ globalThis.OspreyCacheService = (() => {
 
         flushTimer = setTimeout(() => {
             flushTimer = null;
-            flush();
+            flush().then(r => r).catch(error => {
+                console.error("OspreyCacheService failed to flush cache snapshot", error);
+            });
         }, delayMs);
 
         if (!flushPromise) {
@@ -154,7 +156,7 @@ globalThis.OspreyCacheService = (() => {
         if (fresh || !loadingPromise) {
             loadingPromise = resolveLoadingSnapshot();
         }
-        return await loadingPromise;
+        return loadingPromise;
     };
 
     const pruneExpiredEntries = (entries, now) => {

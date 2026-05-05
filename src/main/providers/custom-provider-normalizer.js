@@ -82,7 +82,7 @@ globalThis.OspreyCustomProviderNormalizer = (() => {
             return Number(value);
         }
 
-        if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
+        if (value.startsWith('"') && value.endsWith('"') || value.startsWith("'") && value.endsWith("'")) {
             return value.slice(1, -1);
         }
         return value;
@@ -108,7 +108,7 @@ globalThis.OspreyCustomProviderNormalizer = (() => {
                 continue;
             }
 
-            if (remaining[0] === '(' || remaining[0] === ')') {
+            if (remaining.startsWith('(') || remaining.startsWith(')')) {
                 tokens.push({type: remaining[0]});
                 index += 1;
                 continue;

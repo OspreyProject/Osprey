@@ -55,7 +55,7 @@ globalThis.OspreyProtectionResult = (() => {
     });
 
     const normalize = value => {
-        if (value == null || value === '') {
+        if (value === null || value === '') {
             return resultTypes.FAILED;
         }
 

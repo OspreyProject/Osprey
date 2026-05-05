@@ -97,11 +97,10 @@ globalThis.OspreyRequestBuilder = (() => {
         };
     };
 
-    const buildRequest = (provider, url, providerState = {}) => (
+    const buildRequest = (provider, url, providerState = {}) =>
         provider.kind === 'proxy_builtin' ?
             buildProxyRequest(provider, url) :
-            buildDirectRequest(provider, url, providerState.apiKey || '')
-    );
+            buildDirectRequest(provider, url, providerState.apiKey || '');
 
     // Public API
     return Object.freeze({
