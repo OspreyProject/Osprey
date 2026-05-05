@@ -58,23 +58,18 @@ globalThis.OspreyProviderStateStore = (() => {
         return providerState;
     };
 
-
     const getSharedApiKeyGroupMembers = providerId => {
         const definition = providerCatalog.getDefinition(providerId);
         const groupId = String(definition?.sharedApiKeyGroup || '');
-
         return groupId ? providerCatalog.getSharedApiKeyGroupMembers(groupId) : [];
     };
 
     const getDefinitionStates = stateOrCustomProviders => {
-        const candidate = stateOrCustomProviders && typeof stateOrCustomProviders === 'object'
-            ? stateOrCustomProviders
-            : {};
+        const candidate = stateOrCustomProviders && typeof stateOrCustomProviders === 'object' ? stateOrCustomProviders : {};
 
         return providerCatalog.getAllDefinitions(
-            Object.hasOwn(candidate, 'customProviders') || Object.hasOwn(candidate, 'providers') || Object.hasOwn(candidate, 'app')
-                ? candidate
-                : {customProviders: candidate}
+            Object.hasOwn(candidate, 'customProviders') || Object.hasOwn(candidate, 'providers') ||
+            Object.hasOwn(candidate, 'app') ? candidate : {customProviders: candidate}
         );
     };
 
@@ -190,10 +185,6 @@ globalThis.OspreyProviderStateStore = (() => {
         return base;
     };
 
-    // -------------------------------------------------------------------------
-    // Legacy migration (v1 → v2)
-    // -------------------------------------------------------------------------
-
     const legacyFieldKeyFor = (definition, suffix) => `${definition.aliases?.[0] || definition.id}${suffix}`;
 
     const migrateLegacyState = (legacySettings, legacyCustomProviders) => {
@@ -219,10 +210,6 @@ globalThis.OspreyProviderStateStore = (() => {
         });
         return migrated;
     };
-
-    // -------------------------------------------------------------------------
-    // Storage I/O
-    // -------------------------------------------------------------------------
 
     const readStoredState = async () => {
         const stored = await browserAPI.storageGet('local', stateKey).catch(() => ({}));

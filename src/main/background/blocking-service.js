@@ -38,9 +38,11 @@ globalThis.OspreyBlockingService = (() => {
     const buildSuppressedNavigationKey = (tabId, normalizedUrl) => `${tabId}::${normalizedUrl}`;
     const getBlockingThreshold = enabledCount => enabledCount >= 4 ? 2 : 1;
     const getProvidersById = runtime => new Map((runtime?.providers || []).map(provider => [provider.id, provider]));
+
     const getApplicableEnabledProviders = (runtime, result) => (runtime?.providers || []).filter(provider =>
         provider.state.enabled && providerCatalog.supportsBlockingResult(provider, result)
     );
+
     const getBlockedCount = (runtime, blockedContext, result) => {
         if (!runtime || !Array.isArray(blockedContext?.origins) || blockedContext.origins.length === 0) {
             return 0;
@@ -49,6 +51,7 @@ globalThis.OspreyBlockingService = (() => {
         const providersById = getProvidersById(runtime);
         return blockedContext.origins.filter(origin => providerCatalog.supportsBlockingResult(providersById.get(origin), result)).length;
     };
+
     const shouldBypassBlockingThreshold = (runtime, blockedContext, result) => {
         if (!runtime || !Array.isArray(blockedContext?.origins) || blockedContext.origins.length === 0) {
             return false;
@@ -60,6 +63,7 @@ globalThis.OspreyBlockingService = (() => {
             return providerCatalog.supportsBlockingResult(provider, result) && provider?.bypassBlockingThreshold === true;
         });
     };
+
     const failureResult = Object.freeze({ok: false});
     const isMissingTabError = error => /No tab with id/i.test(String(error?.message || error || ''));
 

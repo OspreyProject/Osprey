@@ -24,6 +24,7 @@ globalThis.OspreyBadgeService = (() => {
     const ignore = () => undefined;
     const badgeCounts = new Map();
     const setColor = (tabId, method, color) => browserAPI[method]({color, tabId});
+
     const clear = tabId => {
         if (badgeCounts.get(tabId) === 0) {
             return Promise.resolve();
@@ -40,15 +41,15 @@ globalThis.OspreyBadgeService = (() => {
 
         badgeCounts.set(tabId, count);
         return Promise.all([
-        // Sets the badge text to the block count
-        browserAPI.actionSetBadgeText({tabId, text: String(count)}),
+            // Sets the badge text to the block count
+            browserAPI.actionSetBadgeText({tabId, text: String(count)}),
 
-        // Sets the badge background color to red
-        setColor(tabId, "actionSetBadgeBackgroundColor", "#ff4b4b"),
+            // Sets the badge background color to red
+            setColor(tabId, "actionSetBadgeBackgroundColor", "#ff4b4b"),
 
-        // Sets the badge text color to white
-        setColor(tabId, "actionSetBadgeTextColor", "#ffffff")
-    ]).catch(ignore);
+            // Sets the badge text color to white
+            setColor(tabId, "actionSetBadgeTextColor", "#ffffff")
+        ]).catch(ignore);
     };
 
     const syncWithContext = (tabId, context) => {

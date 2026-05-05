@@ -29,9 +29,9 @@ globalThis.OspreyProviderEngine = (() => {
 
     const abortControllers = new Map();
 
-    const normalizeCandidateNames = names => Array.isArray(names)
-        ? names.map(value => String(value || '').trim().toLowerCase()).filter(Boolean)
-        : [];
+    const normalizeCandidateNames = names => Array.isArray(names) ?
+        names.map(value => String(value || '').trim().toLowerCase()).filter(Boolean) : [];
+
     const normalizeLookupName = value => String(value || '').trim().toLowerCase();
 
     const createSharedResponseIndexes = responseBody => {
@@ -61,7 +61,6 @@ globalThis.OspreyProviderEngine = (() => {
                 }
             }
         }
-
         return Object.freeze({metaDefenderByProvider, apiVoidByEngine});
     };
 
@@ -86,7 +85,6 @@ globalThis.OspreyProviderEngine = (() => {
         if (!Array.isArray(sources)) {
             return null;
         }
-
         return sources.find(source => providerNames.includes(normalizeLookupName(source?.provider))) || null;
     };
 
@@ -112,7 +110,6 @@ globalThis.OspreyProviderEngine = (() => {
         if (!Array.isArray(engineList)) {
             return null;
         }
-
         return engineList.find(engine => engineNames.includes(normalizeLookupName(engine?.name))) || null;
     };
 
@@ -124,7 +121,6 @@ globalThis.OspreyProviderEngine = (() => {
         if (provider?.responseRuleScope === 'apivoid_provider_block') {
             return getAPIVoidProviderBlock(provider, responseBody, indexes);
         }
-
         return responseBody;
     };
 
@@ -166,7 +162,6 @@ globalThis.OspreyProviderEngine = (() => {
             if (!response.ok) {
                 throw new Error(`HTTP ${response.status}`);
             }
-
             return await response.json();
         } finally {
             timed.cleanup();

@@ -65,7 +65,6 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
         });
     };
 
-
     const createRuntime = async ({fresh = false} = {}) => {
         if (!fresh && cachedRuntime) {
             return cachedRuntime;
@@ -81,7 +80,6 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
                 throw error;
             });
         }
-
         return loadingRuntime;
     };
 

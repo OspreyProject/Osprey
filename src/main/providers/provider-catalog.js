@@ -137,7 +137,6 @@ globalThis.OspreyProviderCatalog = (() => {
         if (protectionResult?.blockingResults?.has(normalizedResult)) {
             return !hasAdultFilter(definition);
         }
-
         return false;
     };
 

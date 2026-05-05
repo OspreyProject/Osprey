@@ -35,7 +35,6 @@ globalThis.OspreyDirectIntegrations = (() => {
         timeoutMs: 7000,
     });
 
-
     const apiVoidDomainReputationRequest = Object.freeze({
         urlTemplate: 'https://api.apivoid.com/v2/domain-reputation',
         method: 'POST',
@@ -81,11 +80,11 @@ globalThis.OspreyDirectIntegrations = (() => {
                 result: 'ALLOWED'
             }),
         ]).map(rule => Object.freeze({...rule}))),
+
         report: Object.freeze({
             type: 'none'
         }),
     });
-
 
     const apivoidIntegration = ({id, displayName, aliases = [], engineNames, responseRules}) => integration({
         id,
@@ -115,6 +114,7 @@ globalThis.OspreyDirectIntegrations = (() => {
                 result: 'ALLOWED'
             }),
         ]).map(rule => Object.freeze({...rule}))),
+
         report: Object.freeze({
             type: 'none'
         }),

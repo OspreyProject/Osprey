@@ -50,7 +50,11 @@ globalThis.OspreyCacheService = (() => {
         const providers = value.providers && typeof value.providers === "object" ?
             Object.fromEntries(Object.entries(value.providers).map(([providerId, record]) => [providerId, normalizeProvider(record)])) : {};
 
-        return {...defaultSnapshot(), globalAllowPatterns: normalizePatterns(value.globalAllowPatterns), providers};
+        return {
+            ...defaultSnapshot(),
+            globalAllowPatterns: normalizePatterns(value.globalAllowPatterns),
+            providers
+        };
     };
 
     const ensureProvider = (snapshot, providerId) => {
@@ -122,7 +126,6 @@ globalThis.OspreyCacheService = (() => {
                 flushResolver = resolve;
             });
         }
-
         return flushPromise;
     };
 
@@ -235,7 +238,6 @@ globalThis.OspreyCacheService = (() => {
         if (!removed) {
             return;
         }
-
         await scheduleFlush();
     };
 
@@ -272,7 +274,6 @@ globalThis.OspreyCacheService = (() => {
         }
     };
 
-
     const storeOutcomes = async (entries, expirationSeconds) => {
         if (!Array.isArray(entries) || entries.length === 0) {
             return;
@@ -299,7 +300,6 @@ globalThis.OspreyCacheService = (() => {
                 providerRecord.allowed[lookupKey] = {exp: expiry};
             }
         }
-
         await scheduleFlush();
     };
 

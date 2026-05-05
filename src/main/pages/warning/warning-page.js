@@ -67,15 +67,18 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
     };
 
     const sendRuntimeMessage = message => browserAPI.runtimeSendMessage(message);
+
     const withCurrentTabId = message => ({
         ...message,
         tabId: typeof currentContext?.tabId === 'number' ? currentContext.tabId : message?.tabId,
     });
+
     const isExpectedPortClosureError = error => {
         const message = String(error?.message || error || '');
         return message.includes('The message port closed before a response was received') ||
             message.includes('A listener indicated an asynchronous response by returning true, but the message channel closed before a response was received');
     };
+
     const sendRuntimeMessageForNavigatingAction = async message => {
         try {
             return await sendRuntimeMessage(message);
@@ -87,6 +90,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
             throw error;
         }
     };
+
     const resultName = result => LangUtil[String(protectionResult.normalize(result) || protectionResult.resultTypes.FAILED).toUpperCase()] || LangUtil.FAILED;
     const resultNameEnglish = result => protectionResult.messageKeys[protectionResult.normalize(result)] || 'failed';
     const isKnownResult = result => Boolean(protectionResult.messageKeys[protectionResult.normalize(result)]);
