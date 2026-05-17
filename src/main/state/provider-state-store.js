@@ -20,18 +20,15 @@
 globalThis.OspreyProviderStateStore = (() => {
     // Global variables
     const browserAPI = globalThis.OspreyBrowserAPI;
-    const customProviderNormalizer = globalThis.OspreyCustomProviderNormalizer;
     const providerCatalog = globalThis.OspreyProviderCatalog;
 
     const stateKey = 'osprey_state';
     const legacyKey = 'Settings';
-    const legacyCustomProvidersKey = 'customProviders';
 
     let cachedState = null;
     let loadingPromise = null;
 
     const asObject = value => value && typeof value === 'object' ? value : {};
-    const asArray = value => Array.isArray(value) ? value : [];
     const coerceBoolean = (value, fallback) => typeof value === 'boolean' ? value : fallback;
     const coerceString = (value, fallback = '') => typeof value === 'string' ? value : fallback;
     const clone = value => structuredClone(value);
@@ -64,31 +61,10 @@ globalThis.OspreyProviderStateStore = (() => {
         return groupId ? providerCatalog.getSharedApiKeyGroupMembers(groupId) : [];
     };
 
-    const getDefinitionStates = stateOrCustomProviders => {
-        const candidate = stateOrCustomProviders && typeof stateOrCustomProviders === 'object' ? stateOrCustomProviders : {};
-
-        return providerCatalog.getAllDefinitions(
-            Object.hasOwn(candidate, 'customProviders') || Object.hasOwn(candidate, 'providers') ||
-            Object.hasOwn(candidate, 'app') ? candidate : {customProviders: candidate}
-        );
-    };
-
-    const forEachCustomProvider = (customProviders, callback) => {
-        const items = Array.isArray(customProviders) ? customProviders : Object.values(asObject(customProviders));
-
-        for (const raw of items) {
-            const definition = customProviderNormalizer.normalize(raw);
-
-            if (definition) {
-                callback(definition, raw);
-            }
-        }
-    };
-
     const buildDefaultProviders = () => {
         const providers = Object.create(null);
 
-        for (const {id, enabledByDefault} of getDefinitionStates({})) {
+        for (const {id, enabledByDefault} of providerCatalog.getAllDefinitions()) {
             providers[id] = {enabled: Boolean(enabledByDefault)};
         }
         return providers;
@@ -106,13 +82,11 @@ globalThis.OspreyProviderStateStore = (() => {
             hidePopupPanel: false,
             disableClearAllowedWebsites: false,
             disableResetButtons: false,
-            disableCustomProviders: false,
             disableThirdPartyIntegrations: false,
             cacheExpirationSeconds: 604800,
         },
 
         providers: buildDefaultProviders(),
-        customProviders: {},
     });
 
     const boolAppKeys = [
@@ -124,7 +98,6 @@ globalThis.OspreyProviderStateStore = (() => {
         'hidePopupPanel',
         'disableClearAllowedWebsites',
         'disableResetButtons',
-        'disableCustomProviders',
         'disableThirdPartyIntegrations',
     ];
 
@@ -159,55 +132,32 @@ globalThis.OspreyProviderStateStore = (() => {
         );
     };
 
-    const addCustomProviders = (base, customProviders, providerStates, apiKeySelector) => {
-        forEachCustomProvider(customProviders, (definition, raw) => {
-            base.customProviders[definition.id] = definition;
-            const customState = providerStates?.[definition.id] || {};
-
-            applyProviderState(base, {
-                enabled: customState.enabled,
-                apiKey: apiKeySelector(raw, customState),
-            }, definition.id, false);
-        });
-    };
-
     const normalizeState = input => {
         const base = defaultState();
         const state = asObject(input);
 
         applyAppSettings(base.app, state.app);
 
-        for (const {id, enabledByDefault} of getDefinitionStates({})) {
+        for (const {id, enabledByDefault} of providerCatalog.getAllDefinitions()) {
             applyProviderState(base, state.providers?.[id] || {}, id, enabledByDefault);
         }
-
-        addCustomProviders(base, state.customProviders, state.providers, (raw, customState) => customState.apiKey || raw.apiKey);
         return base;
     };
 
     const legacyFieldKeyFor = (definition, suffix) => `${definition.aliases?.[0] || definition.id}${suffix}`;
 
-    const migrateLegacyState = (legacySettings, legacyCustomProviders) => {
+    const migrateLegacyState = (legacySettings) => {
         const migrated = defaultState();
         const source = asObject(legacySettings);
 
         applyAppSettings(migrated.app, source);
 
-        for (const definition of getDefinitionStates({})) {
+        for (const definition of providerCatalog.getAllDefinitions()) {
             applyProviderState(migrated, {
                 enabled: source[legacyFieldKeyFor(definition, 'Enabled')],
                 apiKey: source[legacyFieldKeyFor(definition, 'ApiKey')],
             }, definition.id, definition.enabledByDefault);
         }
-
-        forEachCustomProvider(asArray(legacyCustomProviders), (definition, raw) => {
-            migrated.customProviders[definition.id] = definition;
-
-            applyProviderState(migrated, {
-                enabled: source[`${raw.id}Enabled`],
-                apiKey: raw.apiKey,
-            }, definition.id, false);
-        });
         return migrated;
     };
 
@@ -219,8 +169,8 @@ globalThis.OspreyProviderStateStore = (() => {
             return normalizeState(next);
         }
 
-        const legacy = await browserAPI.storageGet('local', [legacyKey, legacyCustomProvidersKey]).catch(() => ({}));
-        const migrated = migrateLegacyState(legacy?.[legacyKey], legacy?.[legacyCustomProvidersKey]);
+        const legacy = await browserAPI.storageGet('local', [legacyKey]).catch(() => ({}));
+        const migrated = migrateLegacyState(legacy?.[legacyKey]);
 
         await browserAPI.storageSet('local', {[stateKey]: migrated}).catch(() => {
             console.error('OspreyProviderStateStore failed to persist migrated legacy state');
@@ -298,46 +248,12 @@ globalThis.OspreyProviderStateStore = (() => {
         ensureProviderState(current, providerId).apiKey = normalizedApiKey;
     }));
 
-    const setCustomProviders = (customProviders, additionalProviderStates = {}) => updateState(state => {
-        if (state.app.lockSettings || state.app.disableCustomProviders) {
-            return state;
-        }
-
-        const next = Object.create(null);
-
-        forEachCustomProvider(asArray(customProviders), (definition, raw) => {
-            customProviderNormalizer.validate(definition);
-            next[definition.id] = definition;
-
-            const providerState = ensureProviderState(state, definition.id);
-
-            if (typeof raw?.apiKey === 'string') {
-                providerState.apiKey = raw.apiKey;
-            }
-        });
-
-        for (const existingId of Object.keys(state.customProviders || {})) {
-            if (!Object.hasOwn(next, existingId)) {
-                delete state.providers[existingId];
-            }
-        }
-
-        for (const [id, providerState] of Object.entries(additionalProviderStates)) {
-            if (state.providers[id] && typeof providerState?.enabled === 'boolean') {
-                state.providers[id].enabled = providerState.enabled;
-            }
-        }
-
-        state.customProviders = next;
-        return state;
-    });
-
     const resetDefaultProviders = () => updateState(state => {
         if (state.app.disableResetButtons) {
             return state;
         }
 
-        for (const definition of getDefinitionStates({})) {
+        for (const definition of providerCatalog.getAllDefinitions()) {
             const providerState = ensureProviderState(state, definition.id, definition.enabledByDefault, '');
 
             providerState.enabled = definition.enabledByDefault;
@@ -358,11 +274,11 @@ globalThis.OspreyProviderStateStore = (() => {
         return setState(defaultState());
     };
 
-    const countEnabledProviders = state => getDefinitionStates(state).reduce(
+    const countEnabledProviders = state => providerCatalog.getAllDefinitions().reduce(
         (count, definition) => count + (state?.providers?.[definition.id]?.enabled ? 1 : 0), 0
     );
 
-    const countTotalProviders = state => getDefinitionStates(state).length;
+    const countTotalProviders = () => providerCatalog.getAllDefinitions().length;
 
     const invalidateCache = () => {
         cachedState = null;
@@ -375,10 +291,6 @@ globalThis.OspreyProviderStateStore = (() => {
         }
     });
 
-    const generateCustomProviderId = () => customProviderNormalizer.generateId();
-    const normalizeCustomDefinition = value => customProviderNormalizer.normalize(value);
-    const validateCustomDefinition = value => customProviderNormalizer.validate(value);
-
     // Public API
     return Object.freeze({
         stateKey,
@@ -388,7 +300,6 @@ globalThis.OspreyProviderStateStore = (() => {
         setAppSettings,
         setProviderEnabled,
         setProviderApiKey,
-        setCustomProviders,
         resetDefaultProviders,
         resetAll,
         countEnabledProviders,
@@ -396,8 +307,5 @@ globalThis.OspreyProviderStateStore = (() => {
         invalidateCache,
         normalizeState,
         buildDefaultState: defaultState,
-        generateCustomProviderId,
-        normalizeCustomDefinition,
-        validateCustomDefinition,
     });
 })();

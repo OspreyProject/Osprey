@@ -184,7 +184,8 @@ globalThis.OspreyResponseRuleEngine = (() => {
             return null;
         }
 
-        const simpleMatch = !source.includes('&&') && !source.includes('||') ? /^response\.([A-Za-z0-9_.[\]-]+)\s*(===|!==|>|<|>=|<=|contains|exists|not_exists|truthy|falsy)\s*(.*)$/.exec(source) : null;
+        const simpleMatch = !source.includes('&&') && !source.includes('||') ?
+            /^response\.([A-Za-z0-9_.[\]-]+)\s*(===|!==|>|<|>=|<=|contains|exists|not_exists|truthy|falsy)\s*(.*)$/.exec(source) : null;
 
         if (simpleMatch) {
             const [, path, operatorToken, rawValue] = simpleMatch;

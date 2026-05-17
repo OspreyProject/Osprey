@@ -69,7 +69,7 @@ globalThis.OspreyCacheService = (() => {
     const setRecord = async (providerId, type, lookupKey, record) => {
         const snapshot = await getSnapshot();
         ensureProvider(snapshot, providerId)[type][lookupKey] = record;
-        scheduleFlush();
+        await scheduleFlush();
     };
 
     const deleteRecord = async (providerId, type, lookupKey) => {
@@ -81,7 +81,7 @@ globalThis.OspreyCacheService = (() => {
         }
 
         delete records[lookupKey];
-        scheduleFlush();
+        await scheduleFlush();
     };
 
     const createEntryGetter = type => async (providerId, lookupKey) => getRecord(await getSnapshot(), providerId, type, lookupKey);

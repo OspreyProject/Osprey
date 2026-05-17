@@ -47,10 +47,4 @@ globalThis.OspreyProviderGroups = Object.freeze({
         title: 'Direct Integrations',
         order: 50
     }),
-
-    custom_providers: Object.freeze({
-        id: 'custom_providers',
-        title: 'Custom Providers',
-        order: 60
-    }),
 });

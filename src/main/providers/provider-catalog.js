@@ -44,58 +44,14 @@ globalThis.OspreyProviderCatalog = (() => {
         }
     }
 
-    const customDefinitionFromState = record => {
-        if (!record || typeof record !== 'object' || typeof record.id !== 'string' || !/^custom-[a-z0-9-]+$/.test(record.id)) {
-            return null;
-        }
+    const getAllDefinitions = () => Object.freeze([...staticDefinitions]);
+    const resolveId = (idOrAlias) => staticAliasMap.get(idOrAlias);
 
-        const request = record.request || {};
+    const getDefinition = (idOrAlias) => {
+        const resolvedId = resolveId(idOrAlias);
+        const definition = byId.get(resolvedId) || null;
 
-        return Object.freeze({
-            kind: 'direct_custom',
-            group: 'custom_providers',
-            enabledByDefault: false,
-            icon: '',
-            aliases: cloneArray(record.aliases),
-            tags: cloneArray(record.tags),
-            report: record.report || {type: 'none'},
-            id: record.id,
-            displayName: String(record.displayName || record.name || record.id),
-            lookupTarget: record.lookupTarget === 'hostname' ? 'hostname' : 'url',
-            bypassBlockingThreshold: record.bypassBlockingThreshold === true,
-            request: Object.freeze({
-                urlTemplate: String(request.urlTemplate || ''),
-                method: request.method === 'POST' ? 'POST' : 'GET',
-                headers: normalizeHeaders(request.headers),
-                bodyTemplate: String(request.bodyTemplate || ''),
-                contentType: String(request.contentType || 'application/json'),
-                timeoutMs: Number(request.timeoutMs) > 0 ? Number(request.timeoutMs) : 7000,
-            }),
-            responseRules: Array.isArray(record.responseRules) ? record.responseRules.map(rule => Object.freeze({...rule})) : [],
-        });
-    };
-
-    const getCustomDefinitions = state => Object.values(state?.customProviders || {}).map(customDefinitionFromState).filter(Boolean);
-
-    const resolveCustomId = (idOrAlias, state) => {
-        const needle = String(idOrAlias || '');
-
-        for (const {id, aliases = []} of getCustomDefinitions(state)) {
-            if (id === needle || aliases.includes(needle)) {
-                return id;
-            }
-        }
-        return needle;
-    };
-
-    const getAllDefinitions = state => Object.freeze([...staticDefinitions, ...getCustomDefinitions(state)]);
-    const resolveId = (idOrAlias, state = null) => staticAliasMap.get(idOrAlias) || resolveCustomId(idOrAlias, state);
-
-    const getDefinition = (idOrAlias, state = null) => {
-        const resolvedId = resolveId(idOrAlias, state);
-        const definition = byId.get(resolvedId) || getCustomDefinitions(state).find(({id}) => id === resolvedId) || null;
-
-        if (!definition && String(idOrAlias || '').trim() && !/^custom-[a-z0-9-]+$/i.test(String(idOrAlias))) {
+        if (!definition && String(idOrAlias || '').trim()) {
             console.warn(`OspreyProviderCatalog could not resolve provider '${idOrAlias}'`);
         }
         return definition;

@@ -25,21 +25,7 @@ globalThis.OspreyProviderCard = (() => {
     const browserAPI = globalThis.OspreyBrowserAPI;
     const toast = globalThis.OspreyToast;
 
-    const comparisonOpMap = Object.freeze({
-        equals: '===',
-        not_equals: '!==',
-        greater_than: '>',
-        less_than: '<',
-        greater_or_equal: '>=',
-        less_or_equal: '<='
-    });
-
     const createDiv = (className, ...children) => formHelpers.createElement('div', {className}, ...children);
-
-    const createFieldLabel = textContent => formHelpers.createElement('label', {
-        className: 'field-label',
-        textContent
-    });
 
     const createFallbackLogo = () => formHelpers.createElement('span', {
         className: 'provider-logo-fallback',
@@ -169,9 +155,7 @@ globalThis.OspreyProviderCard = (() => {
 
     function wireProviderInteractions(item, header, toggleSwitch, providerId, {
         isThirdParty = false,
-        isCustom = false,
         getApiKey = () => '',
-        validateCustom = () => ({ok: true}),
         onStateChanged,
         disabled = false,
     } = {}) {
@@ -201,17 +185,6 @@ globalThis.OspreyProviderCard = (() => {
 
                 if (!key || !key.trim()) {
                     toast.show(LangUtil.TOAST_SAVE_API_KEY_FIRST, true);
-                    setToggleVisualState(toggleSwitch, false);
-                    return;
-                }
-            }
-
-            if (nextState && isCustom) {
-                const validation = validateCustom();
-
-                if (!validation.ok) {
-                    console.warn(`ProviderCard blocked enabling custom provider '${providerId}': ${validation.error}`);
-                    toast.show(LangUtil.format('toastCannotEnableProvider', validation.error), true);
                     setToggleVisualState(toggleSwitch, false);
                     return;
                 }
@@ -408,294 +381,6 @@ globalThis.OspreyProviderCard = (() => {
         return item;
     }
 
-    function rulesToLogicBlocks(rules) {
-        return Array.isArray(rules) ? rules.map(rule => {
-            if (typeof rule?.condition === 'string' && rule.condition.trim()) {
-                return {
-                    condition: rule.condition.trim(),
-                    resultType: String(rule.result || 'MALICIOUS')
-                };
-            }
-
-            const op = comparisonOpMap[String(rule?.operator || '')] ||
-                (String(rule?.operator || '') === 'contains' ? 'contains' : '');
-
-            if (!op) {
-                return null;
-            }
-
-            let val = rule?.value;
-
-            if (typeof val === 'string') {
-                val = JSON.stringify(val);
-            } else if (typeof val !== 'number' && typeof val !== 'boolean') {
-                return null;
-            }
-
-            return {
-                condition: `response.${rule.path} ${op} ${String(val)}`,
-                resultType: String(rule.result || 'MALICIOUS')
-            };
-        }).filter(Boolean) : [];
-    }
-
-    const persistCustomProviders = mutator => providerStateStore.getState().then(state => {
-        const existing = Object.values(state.customProviders || {});
-        return providerStateStore.setCustomProviders(mutator(existing.slice(), state) || existing);
-    });
-
-    function serializeProviderSnapshot(value) {
-        return JSON.stringify({
-            name: value.name,
-            apiUrl: value.apiUrl,
-            method: value.method,
-            apiKey: value.apiKey,
-            requestHeaders: value.requestHeaders,
-            requestBody: value.requestBody,
-            logicBlocks: value.logicBlocks
-        });
-    }
-
-    function snapshotCustomProvider(provider) {
-        const record = provider && typeof provider === 'object' ? provider : {};
-
-        const hasStoredDefinitionShape = typeof record.displayName === 'string' ||
-            typeof record.request === 'object' || Array.isArray(record.responseRules);
-
-        if (hasStoredDefinitionShape) {
-            const request = record.request || {};
-
-            return serializeProviderSnapshot({
-                name: formHelpers.normalizeProviderName(record.displayName ?? record.name ?? ''),
-                apiUrl: formHelpers.sanitizeSingleLine(request.urlTemplate ?? record.apiUrl ?? '', 2048),
-                method: String(request.method ?? record.method ?? 'GET').toUpperCase() === 'POST' ? 'POST' : 'GET',
-                apiKey: formHelpers.normalizeApiKey(record.apiKey ?? ''),
-                requestHeaders: formHelpers.sanitizeMultiline(
-                    Array.isArray(request.headers) ?
-                        request.headers.map(header => `${header?.name || ''}: ${header?.value || ''}`).join('\n') :
-                        record.requestHeaders ?? '',
-                    formHelpers.maxHeadersLength
-                ),
-                requestBody: formHelpers.sanitizeMultiline(request.bodyTemplate ?? record.requestBody ?? '', formHelpers.maxBodyLength),
-                logicBlocks: rulesToLogicBlocks(record.responseRules)
-            });
-        }
-
-        const normalized = formHelpers.normalizeCustomProviderInput(record ?? {});
-        return normalized.ok ? serializeProviderSnapshot(normalized.value) : null;
-    }
-
-    function collectCustomProviderDraftSnapshot(body, providerId) {
-        const readField = selector => body.querySelector(selector)?.value ?? '';
-
-        return serializeProviderSnapshot({
-            id: providerId,
-            name: formHelpers.normalizeProviderName(readField('[data-field="name"]')),
-            apiUrl: formHelpers.sanitizeSingleLine(readField('[data-field="apiUrl"]'), 2048),
-            method: String(readField('[data-field="method"]') || 'GET').toUpperCase() === 'POST' ? 'POST' : 'GET',
-            apiKey: formHelpers.normalizeApiKey(readField('[data-field="apiKey"]')),
-            requestHeaders: formHelpers.sanitizeMultiline(readField('[data-field="requestHeaders"]'), formHelpers.maxHeadersLength),
-            requestBody: formHelpers.sanitizeMultiline(readField('[data-field="requestBody"]'), formHelpers.maxBodyLength),
-            logicBlocks: formHelpers.readLogicBlocks(body).map(rule => ({
-                condition: formHelpers.sanitizeSingleLine(rule?.condition ?? '', 200),
-                resultType: String(rule?.resultType || 'MALICIOUS')
-            }))
-        });
-    }
-
-    function collectCustomProviderFromBody(body, providerId) {
-        const readField = selector => body.querySelector(selector)?.value ?? '';
-
-        return formHelpers.normalizeCustomProviderInput({
-            id: providerId,
-            name: readField('[data-field="name"]'),
-            apiUrl: readField('[data-field="apiUrl"]'),
-            method: readField('[data-field="method"]'),
-            apiKey: readField('[data-field="apiKey"]'),
-            requestHeaders: readField('[data-field="requestHeaders"]'),
-            requestBody: readField('[data-field="requestBody"]'),
-            logicBlocks: formHelpers.readLogicBlocks(body),
-        }, {
-            providerId
-        });
-    }
-
-    function createHalfField(labelText, control) {
-        return createDiv('field-group field-half', createFieldLabel(labelText), control);
-    }
-
-    function createCustomCard(definition, providerState, existingRawDefinition, runtime = null) {
-        const providerId = definition.id;
-        const savedApiKey = String(providerState?.apiKey || '');
-
-        const {
-            item,
-            header,
-            toggleSwitch,
-            body
-        } = createCardShell('custom', providerId, definition, '', Boolean(providerState?.enabled));
-
-        const passwordField = formHelpers.createPasswordField({
-            value: formHelpers.sanitizeMultiline(savedApiKey, formHelpers.maxAPIKeyLength),
-            dataset: {
-                field: 'apiKey'
-            },
-        });
-
-        const nameInput = formHelpers.createEditableInput({
-            value: formHelpers.normalizeProviderName(definition.displayName ?? ''),
-            dataset: {
-                field: 'name'
-            },
-        });
-
-        const apiUrlInput = formHelpers.createEditableInput({
-            value: formHelpers.sanitizeSingleLine(definition.request?.urlTemplate ?? '', 2048),
-            placeholder: 'https://api.example.com/check',
-            dataset: {
-                field: 'apiUrl'
-            },
-        });
-
-        const methodSelect = formHelpers.createMethodSelect(
-            String(definition.request?.method ?? 'GET').toUpperCase() === 'POST' ? 'POST' : 'GET',
-            {
-                field: 'method'
-            },
-        );
-
-        const requestHeaders = formHelpers.createEditableTextArea({
-            value: formHelpers.sanitizeMultiline(
-                Array.isArray(definition.request?.headers) ? definition.request.headers.map(hdr => `${hdr.name}: ${hdr.value}`).join('\n') : '',
-                formHelpers.maxHeadersLength,
-            ),
-            placeholder: 'X-API-Key: {api_key}',
-            dataset: {
-                field: 'requestHeaders'
-            },
-        });
-
-        const requestBody = formHelpers.createEditableTextArea({
-            value: formHelpers.sanitizeMultiline(definition.request?.bodyTemplate ?? '', formHelpers.maxBodyLength),
-            placeholder: '{"url": "{url}"}',
-            dataset: {
-                field: 'requestBody'
-            },
-        });
-
-        const fieldsLocked = Boolean(runtime?.effectiveState?.app?.lockSettings || runtime?.effectiveState?.app?.disableCustomProviders);
-
-        const applyButton = formHelpers.createElement('button', {
-            type: 'button',
-            className: 'action-btn apply-btn',
-            textContent: LangUtil.APPLY_BUTTON,
-            disabled: true
-        });
-
-        const deleteButton = formHelpers.createElement('button', {
-            type: 'button',
-            className: 'action-btn delete-btn',
-            textContent: LangUtil.DELETE_BUTTON,
-            disabled: fieldsLocked
-        });
-
-        let savedSnapshot = snapshotCustomProvider(existingRawDefinition);
-        let savedDraftSnapshot = savedSnapshot;
-
-        const syncApplyState = () => {
-            const liveDraftSnapshot = collectCustomProviderDraftSnapshot(body, providerId);
-            const changed = Boolean(savedDraftSnapshot && liveDraftSnapshot !== savedDraftSnapshot);
-            setActionButtonState(applyButton, changed, 'is-changed');
-        };
-
-        const logicEditor = formHelpers.createLogicBlockEditor(rulesToLogicBlocks(definition.responseRules), syncApplyState);
-        const fields = [nameInput, apiUrlInput, methodSelect, passwordField.input, requestHeaders, requestBody];
-
-        body.append(
-            formHelpers.createFieldGroup(LangUtil.FIELD_LABEL_NAME, nameInput),
-            formHelpers.createFieldGroup(LangUtil.FIELD_LABEL_API_URL, apiUrlInput, formHelpers.createRequiredTag('*')),
-
-            createDiv('field-row',
-                createHalfField(LangUtil.FIELD_LABEL_METHOD, methodSelect),
-                createHalfField(LangUtil.FIELD_LABEL_API_KEY, passwordField.wrapper)
-            ),
-
-            formHelpers.createFieldGroup(
-                LangUtil.FIELD_LABEL_REQUEST_HEADERS,
-                requestHeaders,
-                null,
-                formHelpers.createFieldHelp(LangUtil.TAG_REQUEST_HEADERS_HINT)
-            ),
-
-            formHelpers.createFieldGroup(
-                LangUtil.FIELD_LABEL_REQUEST_BODY,
-                requestBody,
-                null,
-                formHelpers.createFieldHelp(LangUtil.TAG_REQUEST_BODY_HINT)
-            ),
-
-            logicEditor,
-            createDiv('provider-actions', applyButton, deleteButton)
-        );
-
-        for (const field of fields) {
-            field.disabled = fieldsLocked;
-
-            for (const type of ['input', 'change']) {
-                field.addEventListener(type, syncApplyState);
-            }
-        }
-
-        applyButton.addEventListener('click', () => {
-            if (applyButton.disabled || fieldsLocked) {
-                return;
-            }
-
-            const normalized = collectCustomProviderFromBody(body, providerId);
-
-            if (!normalized.ok) {
-                console.warn(`ProviderCard rejected custom provider save for '${providerId}': ${normalized.error}`);
-                toast.show(normalized.error, true);
-                return;
-            }
-
-            persistCustomProviders(existing => existing.map(p => p.id === providerId ? normalized.value : p)).then(() => {
-                savedSnapshot = serializeProviderSnapshot(normalized.value);
-                savedDraftSnapshot = collectCustomProviderDraftSnapshot(body, providerId);
-                syncApplyState();
-                toast.show(LangUtil.TOAST_SAVED);
-                document.dispatchEvent(new CustomEvent('osprey:settings-changed'));
-            }).catch(error => {
-                console.error(`ProviderCard failed to save custom provider '${providerId}'`, error);
-                toast.show(LangUtil.TOAST_FAILED_TO_SAVE, true);
-            });
-        });
-
-        deleteButton.addEventListener('click', () => {
-            if (fieldsLocked) {
-                return;
-            }
-
-            persistCustomProviders(existing => existing.filter(p => p.id !== providerId)).then(() => {
-                toast.show(LangUtil.TOAST_PROVIDER_DELETED);
-                document.dispatchEvent(new CustomEvent('osprey:settings-changed'));
-            }).catch(error => {
-                console.error(`ProviderCard failed to delete custom provider '${providerId}'`, error);
-                toast.show(LangUtil.TOAST_FAILED_TO_DELETE, true);
-            });
-        });
-
-        wireProviderInteractions(item, header, toggleSwitch, providerId, {
-            isCustom: true,
-            validateCustom: () => collectCustomProviderFromBody(body, providerId),
-            disabled: fieldsLocked,
-        });
-
-        item.append(header, body);
-        syncApplyState();
-        return item;
-    }
-
     function buildProviderCard(definition, providerState, state, runtime = null) {
         const iconUrl = providerCatalog.resolveIconUrl(definition, 2);
 
@@ -706,12 +391,8 @@ globalThis.OspreyProviderCard = (() => {
             case 'direct_static':
                 return createThirdPartyCard(definition, providerState, iconUrl, runtime);
 
-            case 'direct_custom':
-                const rawDef = state?.customProviders?.[definition.id] || definition;
-                return createCustomCard(definition, providerState, rawDef, runtime);
-
             default:
-                return createCustomCard(definition, providerState, definition, runtime);
+                return null;
         }
     }
 

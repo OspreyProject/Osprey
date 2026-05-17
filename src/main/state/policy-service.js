@@ -34,7 +34,6 @@ globalThis.OspreyPolicyService = (() => {
         ['LockProtectionOptions', 'boolean', 'lockSettings'],
         ['HideProtectionOptions', 'boolean', 'hidePopupPanel'],
         ['DisableResetButtons', 'boolean', 'disableResetButtons'],
-        ['DisableCustomProviders', 'boolean', 'disableCustomProviders'],
         ['DisableThirdPartyIntegrations', 'boolean', 'disableThirdPartyIntegrations'],
     ];
 
@@ -121,19 +120,6 @@ globalThis.OspreyPolicyService = (() => {
                     providerManagedApiKeyIds.add(definition.id);
                 }
             }
-        }
-
-        if (effective.app.disableCustomProviders) {
-            for (const definition of providerCatalog.getAllDefinitions(effective)) {
-                if (definition.kind !== 'direct_custom' || !effective.providers[definition.id]) {
-                    continue;
-                }
-
-                effective.providers[definition.id].enabled = false;
-                providerManagedIds.add(definition.id);
-            }
-
-            effective.customProviders = {};
         }
 
         return Object.freeze({

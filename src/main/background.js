@@ -28,7 +28,6 @@ const bootstrapScripts = [
     'platform/protection-result.js',
     'platform/url-service.js',
     'platform/report-link-builder.js',
-    'providers/custom-provider-normalizer.js',
     'providers/provider-catalog.js',
     'state/provider-state-store.js',
     'state/policy-service.js',

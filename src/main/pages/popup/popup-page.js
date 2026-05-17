@@ -84,7 +84,7 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
 
         providerStateStore.getState().then(state => {
             const enabledCount = providerStateStore.countEnabledProviders(state);
-            const total = providerStateStore.countTotalProviders(state);
+            const total = providerStateStore.countTotalProviders();
             const noProviders = enabledCount === 0;
 
             if (domElements.statusIcon) {

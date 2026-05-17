@@ -63,7 +63,6 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
             hideReportButton: true
         },
         providers: {},
-        customProviders: {},
     };
 
     const sendRuntimeMessage = message => browserAPI.runtimeSendMessage(message);
@@ -79,14 +78,13 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
             message.includes('A listener indicated an asynchronous response by returning true, but the message channel closed before a response was received');
     };
 
-    const sendRuntimeMessageForNavigatingAction = async message => {
+    const sendNavigationMessage = async message => {
         try {
             return await sendRuntimeMessage(message);
         } catch (error) {
             if (isExpectedPortClosureError(error)) {
                 return {ok: true, navigated: true, disconnected: true};
             }
-
             throw error;
         }
     };
@@ -164,13 +162,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         if (typeof id !== 'string') {
             return LangUtil.UNKNOWN_ORIGIN;
         }
-
-        const customDefinition = currentState?.customProviders?.[id];
-
-        return providerNameMap?.get(id) ??
-            customDefinition?.displayName ??
-            providerCatalog.getDefinition(id, currentState)?.displayName ??
-            id;
+        return providerNameMap?.get(id) ?? providerCatalog.getDefinition(id)?.displayName ?? id;
     }
 
     function applyOriginVisuals(origin) {
@@ -329,8 +321,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
                 return null;
             }
 
-            const definition = currentState?.customProviders?.[context.origin] ||
-                providerCatalog.getDefinition(context.origin, currentState);
+            const definition = providerCatalog.getDefinition(context.origin);
 
             if (!definition?.report || definition.report.type === 'none') {
                 return null;
@@ -410,7 +401,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
 
     function wireActions(state) {
         currentState = state;
-        providerNameMap = new Map(providerCatalog.getAllDefinitions(state).map(def => [def.id, def.displayName]));
+        providerNameMap = new Map(providerCatalog.getAllDefinitions().map(def => [def.id, def.displayName]));
 
         applyOriginVisuals(currentOrigin);
         refreshBlockedCounter().catch(() => {
@@ -429,17 +420,17 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
                 await sendRuntimeMessage({...buildActionMessage(messages.REPORT_WEBSITE), reportUrl});
             }],
 
-            [domElements.allowWebsite, () => sendRuntimeMessageForNavigatingAction(buildActionMessage(messages.ALLOW_WEBSITE))],
+            [domElements.allowWebsite, () => sendNavigationMessage(buildActionMessage(messages.ALLOW_WEBSITE))],
 
             [domElements.continueButton, async () => {
-                const response = await sendRuntimeMessageForNavigatingAction(buildActionMessage(messages.CONTINUE_TO_WEBSITE));
+                const response = await sendNavigationMessage(buildActionMessage(messages.CONTINUE_TO_WEBSITE));
 
                 if (response?.context) {
                     applyNextBlockedContext(response.context);
                 }
             }],
 
-            [domElements.backButton, () => sendRuntimeMessageForNavigatingAction(buildActionMessage(messages.CONTINUE_TO_SAFETY))],
+            [domElements.backButton, () => sendNavigationMessage(buildActionMessage(messages.CONTINUE_TO_SAFETY))],
         ];
 
         for (const [button, handler] of actionBindings) {

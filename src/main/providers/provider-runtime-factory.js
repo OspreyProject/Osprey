@@ -31,7 +31,7 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
         const persistedState = await providerStateStore.getState();
         const policyResult = await policyService.applyToState(persistedState);
         const {effectiveState, policies, appManagedKeys, providerManagedIds, providerManagedApiKeyIds} = policyResult;
-        const definitions = providerCatalog.getAllDefinitions(effectiveState);
+        const definitions = providerCatalog.getAllDefinitions();
 
         const providers = definitions.map(definition => {
             const providerState = effectiveState.providers?.[definition.id] ?? {

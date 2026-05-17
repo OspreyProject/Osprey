@@ -47,21 +47,7 @@ globalThis.OspreyProviderEngine = (() => {
                 }
             }
         }
-
-        const apiVoidByEngine = new Map();
-        const apiVoidEngines = responseBody?.blacklists?.engines;
-        const apiVoidEngineList = apiVoidEngines && typeof apiVoidEngines === 'object' ? Object.values(apiVoidEngines) : [];
-
-        if (Array.isArray(apiVoidEngineList)) {
-            for (const engine of apiVoidEngineList) {
-                const key = normalizeLookupName(engine?.name);
-
-                if (key) {
-                    apiVoidByEngine.set(key, engine);
-                }
-            }
-        }
-        return Object.freeze({metaDefenderByProvider, apiVoidByEngine});
+        return Object.freeze({metaDefenderByProvider});
     };
 
     const getMetaDefenderProviderBlock = (provider, responseBody, indexes = null) => {
@@ -88,38 +74,9 @@ globalThis.OspreyProviderEngine = (() => {
         return sources.find(source => providerNames.includes(normalizeLookupName(source?.provider))) || null;
     };
 
-    const getAPIVoidProviderBlock = (provider, responseBody, indexes = null) => {
-        const engineNames = normalizeCandidateNames(provider?.apiVoidEngineNames);
-
-        if (engineNames.length === 0) {
-            return null;
-        }
-
-        if (indexes?.apiVoidByEngine instanceof Map) {
-            for (const engineName of engineNames) {
-                if (indexes.apiVoidByEngine.has(engineName)) {
-                    return indexes.apiVoidByEngine.get(engineName) || null;
-                }
-            }
-            return null;
-        }
-
-        const engines = responseBody?.blacklists?.engines;
-        const engineList = engines && typeof engines === 'object' ? Object.values(engines) : [];
-
-        if (!Array.isArray(engineList)) {
-            return null;
-        }
-        return engineList.find(engine => engineNames.includes(normalizeLookupName(engine?.name))) || null;
-    };
-
     const getRuleEvaluationBody = (provider, responseBody, indexes = null) => {
         if (provider?.responseRuleScope === 'metadefender_provider_block') {
             return getMetaDefenderProviderBlock(provider, responseBody, indexes);
-        }
-
-        if (provider?.responseRuleScope === 'apivoid_provider_block') {
-            return getAPIVoidProviderBlock(provider, responseBody, indexes);
         }
         return responseBody;
     };
