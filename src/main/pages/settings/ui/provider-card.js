@@ -250,7 +250,6 @@ globalThis.OspreyProviderCard = (() => {
 
         body.append(
             formHelpers.createFieldGroup(LangUtil.FIELD_LABEL_API_URL, formHelpers.createReadOnlyInput(providerCatalog.proxyEndpointUrl(definition))),
-            formHelpers.createFieldGroup(LangUtil.FIELD_LABEL_METHOD, formHelpers.createReadOnlyInput('POST'))
         );
 
         wireProviderInteractions(item, header, toggleSwitch, definition.id, {
@@ -366,7 +365,6 @@ globalThis.OspreyProviderCard = (() => {
 
         body.append(
             formHelpers.createFieldGroup(LangUtil.FIELD_LABEL_API_URL, formHelpers.createReadOnlyInput(requestUrl)),
-            formHelpers.createFieldGroup(LangUtil.FIELD_LABEL_METHOD, formHelpers.createReadOnlyInput(definition.request?.method || 'GET')),
             apiKeyFieldGroup,
             createDiv('provider-actions', applyButton)
         );

@@ -88,7 +88,6 @@
         RESET_ALL: 'resetAll',
 
         FIELD_LABEL_API_URL: 'fieldLabelApiUrl',
-        FIELD_LABEL_METHOD: 'fieldLabelMethod',
         FIELD_LABEL_API_KEY: 'fieldLabelApiKey',
 
         APPLY_BUTTON: 'applyButton',
