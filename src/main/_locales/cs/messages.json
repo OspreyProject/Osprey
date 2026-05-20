@@ -1,0 +1,185 @@
+{
+  "extensionName": {
+    "message": "Osprey: Ochrana prohlížeče"
+  },
+  "extensionDescription": {
+    "message": "Chraňte se před online hrozbami v reálném čase pomocí více poskytovatelů ochrany prohlížeče."
+  },
+  "logoAlt": {
+    "message": "Logo Osprey"
+  },
+  "unsafeWebsiteTitle": {
+    "message": "Nebezpečná webová stránka zablokována"
+  },
+  "warningTitle": {
+    "message": "Upozornění: Tato webová stránka je nebezpečná"
+  },
+  "recommendation": {
+    "message": "Osprey zablokoval přístup na tuto webovou stránku. Pokračování není bezpečné."
+  },
+  "details": {
+    "message": "Pokud jste vlastníkem této webové stránky, obraťte se na poskytovatele zabezpečení a vyřešte problém."
+  },
+  "urlLabel": {
+    "message": "URL: "
+  },
+  "reportedByLabel": {
+    "message": "Nahlášeno: "
+  },
+  "reportedByOthers": {
+    "message": "(a ___ dalších)"
+  },
+  "reportedByAlso": {
+    "message": "Také nahlášeno: "
+  },
+  "reasonLabel": {
+    "message": "Důvod: "
+  },
+  "reportWebsite": {
+    "message": "Nahlásit tuto stránku jako bezpečnou"
+  },
+  "allowWebsite": {
+    "message": "Tuto stránku vždy ignorovat"
+  },
+  "backButton": {
+    "message": "Zpět do bezpečí"
+  },
+  "continueButton": {
+    "message": "Přesto pokračovat"
+  },
+  "version": {
+    "message": "Verze: "
+  },
+  "websiteLink": {
+    "message": "Webová stránka"
+  },
+  "privacyPolicy": {
+    "message": "Zásady ochrany osobních údajů"
+  },
+  "termsLink": {
+    "message": "Podmínky"
+  },
+  "knownSafe": {
+    "message": "Bezpečné"
+  },
+  "failed": {
+    "message": "Selhalo"
+  },
+  "waiting": {
+    "message": "Čekání"
+  },
+  "allowed": {
+    "message": "Povoleno"
+  },
+  "malicious": {
+    "message": "Škodlivé"
+  },
+  "phishing": {
+    "message": "Phishing"
+  },
+  "adultContent": {
+    "message": "Obsah pro dospělé"
+  },
+  "toggleFrameNavigationContext": {
+    "message": "Ignorovat navigaci rámců"
+  },
+  "clearAllowedWebsitesContext": {
+    "message": "Vymazat seznam povolených stránek"
+  },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Nahlásit stránku jako škodlivou"
+  },
+  "clearAllowedWebsitesTitle": {
+    "message": "Povolené stránky vymazány"
+  },
+  "clearAllowedWebsitesMessage": {
+    "message": "Všechny povolené webové stránky byly vymazány."
+  },
+  "settingsTitle": {
+    "message": "Nastavení"
+  },
+  "providersSection": {
+    "message": "Poskytovatelé"
+  },
+  "thirdPartySection": {
+    "message": "Integrace třetích stran"
+  },
+  "resetDefaultProviders": {
+    "message": "Obnovit výchozí poskytovatele"
+  },
+  "resetAll": {
+    "message": "Obnovit vše"
+  },
+  "fieldLabelApiUrl": {
+    "message": "URL rozhraní API"
+  },
+  "fieldLabelApiKey": {
+    "message": "Klíč API"
+  },
+  "applyButton": {
+    "message": "Použít"
+  },
+  "indicatorAdultContent": {
+    "message": "Filtr obsahu pro dospělé"
+  },
+  "officialPartnerTitle": {
+    "message": "Oficiální partner"
+  },
+  "indicatorIpProtected": {
+    "message": "IP adresa chráněna"
+  },
+  "showApiKey": {
+    "message": "Zobrazit klíč API"
+  },
+  "hideApiKey": {
+    "message": "Skrýt klíč API"
+  },
+  "toastSaved": {
+    "message": "Uloženo."
+  },
+  "toastFailedToSave": {
+    "message": "Uložení se nezdařilo."
+  },
+  "toastDefaultProvidersRestored": {
+    "message": "Výchozí poskytovatelé obnoveni."
+  },
+  "toastAllSettingsRestored": {
+    "message": "Všechna nastavení obnovena."
+  },
+  "toastSaveApiKeyFirst": {
+    "message": "Před povolením této integrace uložte platný klíč API."
+  },
+  "toastFailedToUpdateState": {
+    "message": "Aktualizace stavu poskytovatele se nezdařila."
+  },
+  "statusHeadingSecure": {
+    "message": "Jste v bezpečí"
+  },
+  "statusHeadingNoProviders": {
+    "message": "Žádní povolení poskytovatelé"
+  },
+  "statusIconAltProtected": {
+    "message": "Chráněno"
+  },
+  "providersEnabledCount": {
+    "message": "___ z ___ poskytovatelů povoleno"
+  },
+  "openSettings": {
+    "message": "Otevřít nastavení"
+  },
+  "unknownOrigin": {
+    "message": "Neznámý"
+  },
+  "urlUnavailable": {
+    "message": "Nedostupné"
+  },
+  "contextVerifyFailed": {
+    "message": "Tato varovná stránka nemohla ověřit kontext bezpečné akce. Možnosti pokračovat a povolit jsou zakázány."
+  },
+  "providerLogoAlt": {
+    "message": "Logo $1"
+  },
+  "providerNameFallback": {
+    "message": "Poskytovatel"
+  }
+}

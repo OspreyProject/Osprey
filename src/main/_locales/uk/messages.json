@@ -1,0 +1,185 @@
+{
+  "extensionName": {
+    "message": "Osprey: Захист браузера"
+  },
+  "extensionDescription": {
+    "message": "Захист від онлайн-загроз у режимі реального часу з використанням кількох постачальників захисту браузера."
+  },
+  "logoAlt": {
+    "message": "Логотип Osprey"
+  },
+  "unsafeWebsiteTitle": {
+    "message": "Небезпечний сайт заблоковано"
+  },
+  "warningTitle": {
+    "message": "Попередження: цей сайт небезпечний"
+  },
+  "recommendation": {
+    "message": "Osprey заблокував доступ до цього сайту. Продовжувати небезпечно."
+  },
+  "details": {
+    "message": "Якщо ви є власником цього сайту, зверніться до постачальника безпеки для вирішення проблеми."
+  },
+  "urlLabel": {
+    "message": "URL: "
+  },
+  "reportedByLabel": {
+    "message": "Повідомлено: "
+  },
+  "reportedByOthers": {
+    "message": "(і ще ___)"
+  },
+  "reportedByAlso": {
+    "message": "Також повідомлено: "
+  },
+  "reasonLabel": {
+    "message": "Причина: "
+  },
+  "reportWebsite": {
+    "message": "Повідомити про цей сайт як безпечний"
+  },
+  "allowWebsite": {
+    "message": "Завжди ігнорувати цей сайт"
+  },
+  "backButton": {
+    "message": "Повернутися до безпеки"
+  },
+  "continueButton": {
+    "message": "Продовжити однаково"
+  },
+  "version": {
+    "message": "Версія: "
+  },
+  "websiteLink": {
+    "message": "Сайт"
+  },
+  "privacyPolicy": {
+    "message": "Політика конфіденційності"
+  },
+  "termsLink": {
+    "message": "Умови"
+  },
+  "knownSafe": {
+    "message": "Відомий як безпечний"
+  },
+  "failed": {
+    "message": "Помилка"
+  },
+  "waiting": {
+    "message": "Очікування"
+  },
+  "allowed": {
+    "message": "Дозволено"
+  },
+  "malicious": {
+    "message": "Шкідливий"
+  },
+  "phishing": {
+    "message": "Фішинг"
+  },
+  "adultContent": {
+    "message": "Контент для дорослих"
+  },
+  "toggleFrameNavigationContext": {
+    "message": "Ігнорувати навігацію фреймів"
+  },
+  "clearAllowedWebsitesContext": {
+    "message": "Очистити список дозволених сайтів"
+  },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Повідомити про сайт як шкідливий"
+  },
+  "clearAllowedWebsitesTitle": {
+    "message": "Дозволені сайти очищено"
+  },
+  "clearAllowedWebsitesMessage": {
+    "message": "Усі дозволені сайти було очищено."
+  },
+  "settingsTitle": {
+    "message": "Налаштування"
+  },
+  "providersSection": {
+    "message": "Постачальники"
+  },
+  "thirdPartySection": {
+    "message": "Інтеграції сторонніх сервісів"
+  },
+  "resetDefaultProviders": {
+    "message": "Відновити постачальників за замовчуванням"
+  },
+  "resetAll": {
+    "message": "Скинути все"
+  },
+  "fieldLabelApiUrl": {
+    "message": "URL API"
+  },
+  "fieldLabelApiKey": {
+    "message": "Ключ API"
+  },
+  "applyButton": {
+    "message": "Застосувати"
+  },
+  "indicatorAdultContent": {
+    "message": "Фільтр контенту для дорослих"
+  },
+  "officialPartnerTitle": {
+    "message": "Офіційний партнер"
+  },
+  "indicatorIpProtected": {
+    "message": "IP-адреса захищена"
+  },
+  "showApiKey": {
+    "message": "Показати ключ API"
+  },
+  "hideApiKey": {
+    "message": "Приховати ключ API"
+  },
+  "toastSaved": {
+    "message": "Збережено."
+  },
+  "toastFailedToSave": {
+    "message": "Не вдалося зберегти."
+  },
+  "toastDefaultProvidersRestored": {
+    "message": "Постачальники за замовчуванням відновлені."
+  },
+  "toastAllSettingsRestored": {
+    "message": "Усі налаштування відновлені."
+  },
+  "toastSaveApiKeyFirst": {
+    "message": "Збережіть дійсний ключ API перед увімкненням цієї інтеграції."
+  },
+  "toastFailedToUpdateState": {
+    "message": "Не вдалося оновити стан постачальника."
+  },
+  "statusHeadingSecure": {
+    "message": "Ви захищені"
+  },
+  "statusHeadingNoProviders": {
+    "message": "Немає активних постачальників"
+  },
+  "statusIconAltProtected": {
+    "message": "Захищено"
+  },
+  "providersEnabledCount": {
+    "message": "___ з ___ постачальників активні"
+  },
+  "openSettings": {
+    "message": "Відкрити налаштування"
+  },
+  "unknownOrigin": {
+    "message": "Невідомо"
+  },
+  "urlUnavailable": {
+    "message": "Недоступно"
+  },
+  "contextVerifyFailed": {
+    "message": "Ця сторінка попередження не змогла перевірити контекст безпечної дії. Продовжити і дозволити вимкнено."
+  },
+  "providerLogoAlt": {
+    "message": "Логотип $1"
+  },
+  "providerNameFallback": {
+    "message": "Постачальник"
+  }
+}

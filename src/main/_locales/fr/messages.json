@@ -1,0 +1,185 @@
+{
+  "extensionName": {
+    "message": "Osprey: Protection du navigateur"
+  },
+  "extensionDescription": {
+    "message": "Protégez-vous contre les menaces en ligne en temps réel grâce à plusieurs fournisseurs de protection du navigateur."
+  },
+  "logoAlt": {
+    "message": "Logo Osprey"
+  },
+  "unsafeWebsiteTitle": {
+    "message": "Site web non sécurisé bloqué"
+  },
+  "warningTitle": {
+    "message": "Avertissement: Ce site web est dangereux"
+  },
+  "recommendation": {
+    "message": "Osprey a bloqué l'accès à ce site web. Il n'est pas sûr de continuer."
+  },
+  "details": {
+    "message": "Si vous êtes le propriétaire de ce site web, veuillez contacter le fournisseur de sécurité pour résoudre le problème."
+  },
+  "urlLabel": {
+    "message": "URL: "
+  },
+  "reportedByLabel": {
+    "message": "Signalé par: "
+  },
+  "reportedByOthers": {
+    "message": "(et ___ autres)"
+  },
+  "reportedByAlso": {
+    "message": "Aussi signalé par: "
+  },
+  "reasonLabel": {
+    "message": "Raison: "
+  },
+  "reportWebsite": {
+    "message": "Signaler ce site comme sûr"
+  },
+  "allowWebsite": {
+    "message": "Toujours ignorer ce site"
+  },
+  "backButton": {
+    "message": "Retour à la sécurité"
+  },
+  "continueButton": {
+    "message": "Continuer quand même"
+  },
+  "version": {
+    "message": "Version: "
+  },
+  "websiteLink": {
+    "message": "Site web"
+  },
+  "privacyPolicy": {
+    "message": "Politique de confidentialité"
+  },
+  "termsLink": {
+    "message": "Conditions"
+  },
+  "knownSafe": {
+    "message": "Sécurisé connu"
+  },
+  "failed": {
+    "message": "Échoué"
+  },
+  "waiting": {
+    "message": "En attente"
+  },
+  "allowed": {
+    "message": "Autorisé"
+  },
+  "malicious": {
+    "message": "Malveillant"
+  },
+  "phishing": {
+    "message": "Hameçonnage"
+  },
+  "adultContent": {
+    "message": "Contenu adulte"
+  },
+  "toggleFrameNavigationContext": {
+    "message": "Ignorer la navigation des cadres"
+  },
+  "clearAllowedWebsitesContext": {
+    "message": "Effacer la liste des sites autorisés"
+  },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Signaler le site comme malveillant"
+  },
+  "clearAllowedWebsitesTitle": {
+    "message": "Sites autorisés effacés"
+  },
+  "clearAllowedWebsitesMessage": {
+    "message": "Tous les sites autorisés ont été effacés."
+  },
+  "settingsTitle": {
+    "message": "Paramètres"
+  },
+  "providersSection": {
+    "message": "Fournisseurs"
+  },
+  "thirdPartySection": {
+    "message": "Intégrations tierces"
+  },
+  "resetDefaultProviders": {
+    "message": "Réinitialiser les fournisseurs par défaut"
+  },
+  "resetAll": {
+    "message": "Tout réinitialiser"
+  },
+  "fieldLabelApiUrl": {
+    "message": "URL de l'API"
+  },
+  "fieldLabelApiKey": {
+    "message": "Clé API"
+  },
+  "applyButton": {
+    "message": "Appliquer"
+  },
+  "indicatorAdultContent": {
+    "message": "Filtre de contenu adulte"
+  },
+  "officialPartnerTitle": {
+    "message": "Partenaire officiel"
+  },
+  "indicatorIpProtected": {
+    "message": "Adresse IP protégée"
+  },
+  "showApiKey": {
+    "message": "Afficher la clé API"
+  },
+  "hideApiKey": {
+    "message": "Masquer la clé API"
+  },
+  "toastSaved": {
+    "message": "Enregistré."
+  },
+  "toastFailedToSave": {
+    "message": "Échec de l'enregistrement."
+  },
+  "toastDefaultProvidersRestored": {
+    "message": "Fournisseurs par défaut restaurés."
+  },
+  "toastAllSettingsRestored": {
+    "message": "Tous les paramètres restaurés."
+  },
+  "toastSaveApiKeyFirst": {
+    "message": "Enregistrez une clé API valide avant d'activer cette intégration."
+  },
+  "toastFailedToUpdateState": {
+    "message": "Échec de la mise à jour de l'état du fournisseur."
+  },
+  "statusHeadingSecure": {
+    "message": "Vous êtes en sécurité"
+  },
+  "statusHeadingNoProviders": {
+    "message": "Aucun fournisseur activé"
+  },
+  "statusIconAltProtected": {
+    "message": "Protégé"
+  },
+  "providersEnabledCount": {
+    "message": "___ sur ___ fournisseurs activés"
+  },
+  "openSettings": {
+    "message": "Ouvrir les paramètres"
+  },
+  "unknownOrigin": {
+    "message": "Inconnu"
+  },
+  "urlUnavailable": {
+    "message": "Indisponible"
+  },
+  "contextVerifyFailed": {
+    "message": "Cette page d'avertissement n'a pas pu vérifier un contexte d'action sécurisé. Continuer et autoriser sont désactivés."
+  },
+  "providerLogoAlt": {
+    "message": "Logo $1"
+  },
+  "providerNameFallback": {
+    "message": "Fournisseur"
+  }
+}

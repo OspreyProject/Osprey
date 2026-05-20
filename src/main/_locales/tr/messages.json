@@ -1,0 +1,185 @@
+{
+  "extensionName": {
+    "message": "Osprey: Tarayıcı Koruması"
+  },
+  "extensionDescription": {
+    "message": "Birden fazla tarayıcı koruma sağlayıcısı kullanarak çevrimiçi tehditlere karşı gerçek zamanlı koruma sağlayın."
+  },
+  "logoAlt": {
+    "message": "Osprey Logosu"
+  },
+  "unsafeWebsiteTitle": {
+    "message": "Güvensiz Web Sitesi Engellendi"
+  },
+  "warningTitle": {
+    "message": "Uyarı: Bu web sitesi güvensiz"
+  },
+  "recommendation": {
+    "message": "Osprey bu web sitesine erişimi engelledi. Devam etmek güvenli değil."
+  },
+  "details": {
+    "message": "Bu web sitesinin sahibiyseniz, sorunu çözmek için güvenlik sağlayıcısıyla iletişime geçin."
+  },
+  "urlLabel": {
+    "message": "URL: "
+  },
+  "reportedByLabel": {
+    "message": "Bildiren: "
+  },
+  "reportedByOthers": {
+    "message": "(ve ___ diğeri)"
+  },
+  "reportedByAlso": {
+    "message": "Ayrıca bildiren: "
+  },
+  "reasonLabel": {
+    "message": "Neden: "
+  },
+  "reportWebsite": {
+    "message": "Bu web sitesini güvenli olarak bildir"
+  },
+  "allowWebsite": {
+    "message": "Bu web sitesini her zaman yoksay"
+  },
+  "backButton": {
+    "message": "Güvenliğe geri dön"
+  },
+  "continueButton": {
+    "message": "Yine de devam et"
+  },
+  "version": {
+    "message": "Sürüm: "
+  },
+  "websiteLink": {
+    "message": "Web sitesi"
+  },
+  "privacyPolicy": {
+    "message": "Gizlilik Politikası"
+  },
+  "termsLink": {
+    "message": "Koşullar"
+  },
+  "knownSafe": {
+    "message": "Bilinen Güvenli"
+  },
+  "failed": {
+    "message": "Başarısız"
+  },
+  "waiting": {
+    "message": "Bekliyor"
+  },
+  "allowed": {
+    "message": "İzin Verildi"
+  },
+  "malicious": {
+    "message": "Kötü Amaçlı"
+  },
+  "phishing": {
+    "message": "Kimlik Avı"
+  },
+  "adultContent": {
+    "message": "Yetişkin İçeriği"
+  },
+  "toggleFrameNavigationContext": {
+    "message": "Çerçeve gezintisini yoksay"
+  },
+  "clearAllowedWebsitesContext": {
+    "message": "İzin verilen web siteleri listesini temizle"
+  },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Web sitesini kötü amaçlı olarak bildir"
+  },
+  "clearAllowedWebsitesTitle": {
+    "message": "İzin Verilen Web Siteleri Temizlendi"
+  },
+  "clearAllowedWebsitesMessage": {
+    "message": "İzin verilen tüm web siteleri temizlendi."
+  },
+  "settingsTitle": {
+    "message": "Ayarlar"
+  },
+  "providersSection": {
+    "message": "Sağlayıcılar"
+  },
+  "thirdPartySection": {
+    "message": "Üçüncü Taraf Entegrasyonları"
+  },
+  "resetDefaultProviders": {
+    "message": "Varsayılan sağlayıcıları sıfırla"
+  },
+  "resetAll": {
+    "message": "Tümünü sıfırla"
+  },
+  "fieldLabelApiUrl": {
+    "message": "API URL'si"
+  },
+  "fieldLabelApiKey": {
+    "message": "API Anahtarı"
+  },
+  "applyButton": {
+    "message": "Uygula"
+  },
+  "indicatorAdultContent": {
+    "message": "Yetişkin içerik filtresi"
+  },
+  "officialPartnerTitle": {
+    "message": "Resmi Ortak"
+  },
+  "indicatorIpProtected": {
+    "message": "IP Adresi Korunuyor"
+  },
+  "showApiKey": {
+    "message": "API anahtarını göster"
+  },
+  "hideApiKey": {
+    "message": "API anahtarını gizle"
+  },
+  "toastSaved": {
+    "message": "Kaydedildi."
+  },
+  "toastFailedToSave": {
+    "message": "Kaydedilemedi."
+  },
+  "toastDefaultProvidersRestored": {
+    "message": "Varsayılan sağlayıcılar geri yüklendi."
+  },
+  "toastAllSettingsRestored": {
+    "message": "Tüm ayarlar geri yüklendi."
+  },
+  "toastSaveApiKeyFirst": {
+    "message": "Bu entegrasyonu etkinleştirmeden önce geçerli bir API anahtarı kaydedin."
+  },
+  "toastFailedToUpdateState": {
+    "message": "Sağlayıcı durumu güncellenemedi."
+  },
+  "statusHeadingSecure": {
+    "message": "Güvendesiniz"
+  },
+  "statusHeadingNoProviders": {
+    "message": "Etkin sağlayıcı yok"
+  },
+  "statusIconAltProtected": {
+    "message": "Korumalı"
+  },
+  "providersEnabledCount": {
+    "message": "___ / ___ sağlayıcı etkin"
+  },
+  "openSettings": {
+    "message": "Ayarları aç"
+  },
+  "unknownOrigin": {
+    "message": "Bilinmiyor"
+  },
+  "urlUnavailable": {
+    "message": "Kullanılamıyor"
+  },
+  "contextVerifyFailed": {
+    "message": "Bu uyarı sayfası güvenli eylem bağlamını doğrulayamadı. Devam et ve izin ver devre dışı bırakıldı."
+  },
+  "providerLogoAlt": {
+    "message": "$1 Logosu"
+  },
+  "providerNameFallback": {
+    "message": "Sağlayıcı"
+  }
+}

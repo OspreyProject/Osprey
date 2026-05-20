@@ -1,0 +1,185 @@
+{
+  "extensionName": {
+    "message": "Osprey: Zaštita preglednika"
+  },
+  "extensionDescription": {
+    "message": "Zaštitite se od online prijetnji u stvarnom vremenu koristeći više pružatelja zaštite preglednika."
+  },
+  "logoAlt": {
+    "message": "Osprey logotip"
+  },
+  "unsafeWebsiteTitle": {
+    "message": "Nesigurna web-stranica blokirana"
+  },
+  "warningTitle": {
+    "message": "Upozorenje: Ova web-stranica nije sigurna"
+  },
+  "recommendation": {
+    "message": "Osprey je blokirao pristup ovoj web-stranici. Nije sigurno nastaviti."
+  },
+  "details": {
+    "message": "Ako ste vlasnik ove web-stranice, obratite se sigurnosnom pružatelju za rješavanje problema."
+  },
+  "urlLabel": {
+    "message": "URL: "
+  },
+  "reportedByLabel": {
+    "message": "Prijavio: "
+  },
+  "reportedByOthers": {
+    "message": "(i ___ ostalih)"
+  },
+  "reportedByAlso": {
+    "message": "Također prijavio: "
+  },
+  "reasonLabel": {
+    "message": "Razlog: "
+  },
+  "reportWebsite": {
+    "message": "Prijavi ovu web-stranicu kao sigurnu"
+  },
+  "allowWebsite": {
+    "message": "Uvijek zanemarivati ovu web-stranicu"
+  },
+  "backButton": {
+    "message": "Natrag na sigurnost"
+  },
+  "continueButton": {
+    "message": "Svejedno nastavi"
+  },
+  "version": {
+    "message": "Verzija: "
+  },
+  "websiteLink": {
+    "message": "Web-stranica"
+  },
+  "privacyPolicy": {
+    "message": "Pravila privatnosti"
+  },
+  "termsLink": {
+    "message": "Uvjeti"
+  },
+  "knownSafe": {
+    "message": "Poznato sigurno"
+  },
+  "failed": {
+    "message": "Neuspješno"
+  },
+  "waiting": {
+    "message": "Čekanje"
+  },
+  "allowed": {
+    "message": "Dopušteno"
+  },
+  "malicious": {
+    "message": "Zlonamjerno"
+  },
+  "phishing": {
+    "message": "Krađa identiteta"
+  },
+  "adultContent": {
+    "message": "Sadržaj za odrasle"
+  },
+  "toggleFrameNavigationContext": {
+    "message": "Zanemari navigaciju okvira"
+  },
+  "clearAllowedWebsitesContext": {
+    "message": "Obriši popis dopuštenih web-stranica"
+  },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Prijavi web-stranicu kao zlonamjernu"
+  },
+  "clearAllowedWebsitesTitle": {
+    "message": "Dopuštene web-stranice obrisane"
+  },
+  "clearAllowedWebsitesMessage": {
+    "message": "Sve dopuštene web-stranice su obrisane."
+  },
+  "settingsTitle": {
+    "message": "Postavke"
+  },
+  "providersSection": {
+    "message": "Pružatelji"
+  },
+  "thirdPartySection": {
+    "message": "Integracije trećih strana"
+  },
+  "resetDefaultProviders": {
+    "message": "Vrati zadane pružatelje"
+  },
+  "resetAll": {
+    "message": "Vrati sve"
+  },
+  "fieldLabelApiUrl": {
+    "message": "API URL"
+  },
+  "fieldLabelApiKey": {
+    "message": "API ključ"
+  },
+  "applyButton": {
+    "message": "Primijeni"
+  },
+  "indicatorAdultContent": {
+    "message": "Filter sadržaja za odrasle"
+  },
+  "officialPartnerTitle": {
+    "message": "Službeni partner"
+  },
+  "indicatorIpProtected": {
+    "message": "IP adresa zaštićena"
+  },
+  "showApiKey": {
+    "message": "Prikaži API ključ"
+  },
+  "hideApiKey": {
+    "message": "Sakrij API ključ"
+  },
+  "toastSaved": {
+    "message": "Spremljeno."
+  },
+  "toastFailedToSave": {
+    "message": "Spremanje nije uspjelo."
+  },
+  "toastDefaultProvidersRestored": {
+    "message": "Zadani pružatelji vraćeni."
+  },
+  "toastAllSettingsRestored": {
+    "message": "Sve postavke vraćene."
+  },
+  "toastSaveApiKeyFirst": {
+    "message": "Spremi valjani API ključ prije omogućavanja ove integracije."
+  },
+  "toastFailedToUpdateState": {
+    "message": "Ažuriranje stanja pružatelja nije uspjelo."
+  },
+  "statusHeadingSecure": {
+    "message": "Zaštićeni ste"
+  },
+  "statusHeadingNoProviders": {
+    "message": "Nema omogućenih pružatelja"
+  },
+  "statusIconAltProtected": {
+    "message": "Zaštićeno"
+  },
+  "providersEnabledCount": {
+    "message": "___ od ___ pružatelja omogućeno"
+  },
+  "openSettings": {
+    "message": "Otvori postavke"
+  },
+  "unknownOrigin": {
+    "message": "Nepoznato"
+  },
+  "urlUnavailable": {
+    "message": "Nedostupno"
+  },
+  "contextVerifyFailed": {
+    "message": "Ova stranica s upozorenjem nije mogla provjeriti siguran kontekst radnje. Nastavi i dopusti su onemogućeni."
+  },
+  "providerLogoAlt": {
+    "message": "$1 logotip"
+  },
+  "providerNameFallback": {
+    "message": "Pružatelj"
+  }
+}

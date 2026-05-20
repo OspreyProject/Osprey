@@ -1,0 +1,185 @@
+{
+  "extensionName": {
+    "message": "Osprey: حماية المتصفح"
+  },
+  "extensionDescription": {
+    "message": "الحماية من التهديدات الإلكترونية في الوقت الفعلي باستخدام مزودي حماية متعددين للمتصفح."
+  },
+  "logoAlt": {
+    "message": "شعار Osprey"
+  },
+  "unsafeWebsiteTitle": {
+    "message": "تم حظر موقع ويب غير آمن"
+  },
+  "warningTitle": {
+    "message": "تحذير: هذا الموقع غير آمن"
+  },
+  "recommendation": {
+    "message": "قام Osprey بحظر الوصول إلى هذا الموقع. من غير الآمن المتابعة."
+  },
+  "details": {
+    "message": "إذا كنت مالك هذا الموقع، يرجى التواصل مع مزود الأمان لحل المشكلة."
+  },
+  "urlLabel": {
+    "message": "الرابط: "
+  },
+  "reportedByLabel": {
+    "message": "تم الإبلاغ بواسطة: "
+  },
+  "reportedByOthers": {
+    "message": "(و ___ آخرين)"
+  },
+  "reportedByAlso": {
+    "message": "تم الإبلاغ أيضاً بواسطة: "
+  },
+  "reasonLabel": {
+    "message": "السبب: "
+  },
+  "reportWebsite": {
+    "message": "الإبلاغ عن هذا الموقع بأنه آمن"
+  },
+  "allowWebsite": {
+    "message": "تجاهل هذا الموقع دائماً"
+  },
+  "backButton": {
+    "message": "العودة إلى الأمان"
+  },
+  "continueButton": {
+    "message": "المتابعة على أي حال"
+  },
+  "version": {
+    "message": "الإصدار: "
+  },
+  "websiteLink": {
+    "message": "الموقع الإلكتروني"
+  },
+  "privacyPolicy": {
+    "message": "سياسة الخصوصية"
+  },
+  "termsLink": {
+    "message": "الشروط"
+  },
+  "knownSafe": {
+    "message": "آمن ومعروف"
+  },
+  "failed": {
+    "message": "فشل"
+  },
+  "waiting": {
+    "message": "انتظار"
+  },
+  "allowed": {
+    "message": "مسموح"
+  },
+  "malicious": {
+    "message": "خبيث"
+  },
+  "phishing": {
+    "message": "تصيد احتيالي"
+  },
+  "adultContent": {
+    "message": "محتوى للبالغين"
+  },
+  "toggleFrameNavigationContext": {
+    "message": "تجاهل تصفح الإطارات"
+  },
+  "clearAllowedWebsitesContext": {
+    "message": "مسح قائمة المواقع المسموح بها"
+  },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "الإبلاغ عن الموقع بأنه خبيث"
+  },
+  "clearAllowedWebsitesTitle": {
+    "message": "تم مسح المواقع المسموح بها"
+  },
+  "clearAllowedWebsitesMessage": {
+    "message": "تم مسح جميع المواقع المسموح بها."
+  },
+  "settingsTitle": {
+    "message": "الإعدادات"
+  },
+  "providersSection": {
+    "message": "المزودون"
+  },
+  "thirdPartySection": {
+    "message": "تكاملات الطرف الثالث"
+  },
+  "resetDefaultProviders": {
+    "message": "إعادة تعيين المزودين الافتراضيين"
+  },
+  "resetAll": {
+    "message": "إعادة تعيين الكل"
+  },
+  "fieldLabelApiUrl": {
+    "message": "رابط API"
+  },
+  "fieldLabelApiKey": {
+    "message": "مفتاح API"
+  },
+  "applyButton": {
+    "message": "تطبيق"
+  },
+  "indicatorAdultContent": {
+    "message": "فلتر المحتوى للبالغين"
+  },
+  "officialPartnerTitle": {
+    "message": "شريك رسمي"
+  },
+  "indicatorIpProtected": {
+    "message": "عنوان IP محمي"
+  },
+  "showApiKey": {
+    "message": "إظهار مفتاح API"
+  },
+  "hideApiKey": {
+    "message": "إخفاء مفتاح API"
+  },
+  "toastSaved": {
+    "message": "تم الحفظ."
+  },
+  "toastFailedToSave": {
+    "message": "فشل الحفظ."
+  },
+  "toastDefaultProvidersRestored": {
+    "message": "تمت استعادة المزودين الافتراضيين."
+  },
+  "toastAllSettingsRestored": {
+    "message": "تمت استعادة جميع الإعدادات."
+  },
+  "toastSaveApiKeyFirst": {
+    "message": "احفظ مفتاح API صالحاً قبل تفعيل هذا التكامل."
+  },
+  "toastFailedToUpdateState": {
+    "message": "فشل تحديث حالة المزود."
+  },
+  "statusHeadingSecure": {
+    "message": "أنت بأمان"
+  },
+  "statusHeadingNoProviders": {
+    "message": "لا يوجد مزودون مفعّلون"
+  },
+  "statusIconAltProtected": {
+    "message": "محمي"
+  },
+  "providersEnabledCount": {
+    "message": "___ من ___ مزود مفعّل"
+  },
+  "openSettings": {
+    "message": "فتح الإعدادات"
+  },
+  "unknownOrigin": {
+    "message": "غير معروف"
+  },
+  "urlUnavailable": {
+    "message": "غير متاح"
+  },
+  "contextVerifyFailed": {
+    "message": "تعذّر على صفحة التحذير هذه التحقق من سياق إجراء آمن. تم تعطيل خياري المتابعة والسماح."
+  },
+  "providerLogoAlt": {
+    "message": "شعار $1"
+  },
+  "providerNameFallback": {
+    "message": "المزود"
+  }
+}

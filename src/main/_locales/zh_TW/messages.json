@@ -1,0 +1,185 @@
+{
+  "extensionName": {
+    "message": "Osprey：瀏覽器保護"
+  },
+  "extensionDescription": {
+    "message": "使用多個瀏覽器保護提供商，即時防護線上威脅。"
+  },
+  "logoAlt": {
+    "message": "Osprey 標誌"
+  },
+  "unsafeWebsiteTitle": {
+    "message": "不安全網站已被封鎖"
+  },
+  "warningTitle": {
+    "message": "警告：此網站不安全"
+  },
+  "recommendation": {
+    "message": "Osprey 已封鎖對此網站的存取。繼續操作並不安全。"
+  },
+  "details": {
+    "message": "如果您是該網站的擁有者，請聯絡安全提供商以解決此問題。"
+  },
+  "urlLabel": {
+    "message": "網址："
+  },
+  "reportedByLabel": {
+    "message": "舉報方："
+  },
+  "reportedByOthers": {
+    "message": "（及其他 ___ 方）"
+  },
+  "reportedByAlso": {
+    "message": "同時舉報方："
+  },
+  "reasonLabel": {
+    "message": "原因："
+  },
+  "reportWebsite": {
+    "message": "將此網站舉報為安全"
+  },
+  "allowWebsite": {
+    "message": "一律忽略此網站"
+  },
+  "backButton": {
+    "message": "返回安全頁面"
+  },
+  "continueButton": {
+    "message": "仍然繼續"
+  },
+  "version": {
+    "message": "版本："
+  },
+  "websiteLink": {
+    "message": "網站"
+  },
+  "privacyPolicy": {
+    "message": "隱私權政策"
+  },
+  "termsLink": {
+    "message": "條款"
+  },
+  "knownSafe": {
+    "message": "已知安全"
+  },
+  "failed": {
+    "message": "失敗"
+  },
+  "waiting": {
+    "message": "等待中"
+  },
+  "allowed": {
+    "message": "已允許"
+  },
+  "malicious": {
+    "message": "惡意"
+  },
+  "phishing": {
+    "message": "網路釣魚"
+  },
+  "adultContent": {
+    "message": "成人內容"
+  },
+  "toggleFrameNavigationContext": {
+    "message": "忽略框架導覽"
+  },
+  "clearAllowedWebsitesContext": {
+    "message": "清除允許網站清單"
+  },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "將網站舉報為惡意"
+  },
+  "clearAllowedWebsitesTitle": {
+    "message": "已清除允許的網站"
+  },
+  "clearAllowedWebsitesMessage": {
+    "message": "所有允許的網站已被清除。"
+  },
+  "settingsTitle": {
+    "message": "設定"
+  },
+  "providersSection": {
+    "message": "提供商"
+  },
+  "thirdPartySection": {
+    "message": "第三方整合"
+  },
+  "resetDefaultProviders": {
+    "message": "重設預設提供商"
+  },
+  "resetAll": {
+    "message": "全部重設"
+  },
+  "fieldLabelApiUrl": {
+    "message": "API 網址"
+  },
+  "fieldLabelApiKey": {
+    "message": "API 金鑰"
+  },
+  "applyButton": {
+    "message": "套用"
+  },
+  "indicatorAdultContent": {
+    "message": "成人內容過濾器"
+  },
+  "officialPartnerTitle": {
+    "message": "官方合作夥伴"
+  },
+  "indicatorIpProtected": {
+    "message": "IP 位址已受保護"
+  },
+  "showApiKey": {
+    "message": "顯示 API 金鑰"
+  },
+  "hideApiKey": {
+    "message": "隱藏 API 金鑰"
+  },
+  "toastSaved": {
+    "message": "已儲存。"
+  },
+  "toastFailedToSave": {
+    "message": "儲存失敗。"
+  },
+  "toastDefaultProvidersRestored": {
+    "message": "預設提供商已還原。"
+  },
+  "toastAllSettingsRestored": {
+    "message": "所有設定已還原。"
+  },
+  "toastSaveApiKeyFirst": {
+    "message": "在啟用此整合之前，請先儲存有效的 API 金鑰。"
+  },
+  "toastFailedToUpdateState": {
+    "message": "更新提供商狀態失敗。"
+  },
+  "statusHeadingSecure": {
+    "message": "您已受到保護"
+  },
+  "statusHeadingNoProviders": {
+    "message": "未啟用任何提供商"
+  },
+  "statusIconAltProtected": {
+    "message": "已保護"
+  },
+  "providersEnabledCount": {
+    "message": "___ / ___ 提供商已啟用"
+  },
+  "openSettings": {
+    "message": "開啟設定"
+  },
+  "unknownOrigin": {
+    "message": "未知"
+  },
+  "urlUnavailable": {
+    "message": "不可用"
+  },
+  "contextVerifyFailed": {
+    "message": "此警告頁面無法驗證安全操作內容。繼續和允許操作已被停用。"
+  },
+  "providerLogoAlt": {
+    "message": "$1 標誌"
+  },
+  "providerNameFallback": {
+    "message": "提供商"
+  }
+}

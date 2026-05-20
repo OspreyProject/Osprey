@@ -1,0 +1,185 @@
+{
+  "extensionName": {
+    "message": "Osprey: Защита браузера"
+  },
+  "extensionDescription": {
+    "message": "Защита от онлайн-угроз в режиме реального времени с использованием нескольких провайдеров защиты браузера."
+  },
+  "logoAlt": {
+    "message": "Логотип Osprey"
+  },
+  "unsafeWebsiteTitle": {
+    "message": "Небезопасный сайт заблокирован"
+  },
+  "warningTitle": {
+    "message": "Предупреждение: этот сайт небезопасен"
+  },
+  "recommendation": {
+    "message": "Osprey заблокировал доступ к этому сайту. Продолжать небезопасно."
+  },
+  "details": {
+    "message": "Если вы являетесь владельцем этого сайта, обратитесь к провайдеру безопасности для решения проблемы."
+  },
+  "urlLabel": {
+    "message": "URL: "
+  },
+  "reportedByLabel": {
+    "message": "Сообщено: "
+  },
+  "reportedByOthers": {
+    "message": "(и ещё ___)"
+  },
+  "reportedByAlso": {
+    "message": "Также сообщено: "
+  },
+  "reasonLabel": {
+    "message": "Причина: "
+  },
+  "reportWebsite": {
+    "message": "Сообщить об этом сайте как безопасном"
+  },
+  "allowWebsite": {
+    "message": "Всегда игнорировать этот сайт"
+  },
+  "backButton": {
+    "message": "Вернуться в безопасное место"
+  },
+  "continueButton": {
+    "message": "Продолжить всё равно"
+  },
+  "version": {
+    "message": "Версия: "
+  },
+  "websiteLink": {
+    "message": "Сайт"
+  },
+  "privacyPolicy": {
+    "message": "Политика конфиденциальности"
+  },
+  "termsLink": {
+    "message": "Условия"
+  },
+  "knownSafe": {
+    "message": "Известен как безопасный"
+  },
+  "failed": {
+    "message": "Ошибка"
+  },
+  "waiting": {
+    "message": "Ожидание"
+  },
+  "allowed": {
+    "message": "Разрешено"
+  },
+  "malicious": {
+    "message": "Вредоносный"
+  },
+  "phishing": {
+    "message": "Фишинг"
+  },
+  "adultContent": {
+    "message": "Контент для взрослых"
+  },
+  "toggleFrameNavigationContext": {
+    "message": "Игнорировать навигацию фреймов"
+  },
+  "clearAllowedWebsitesContext": {
+    "message": "Очистить список разрешённых сайтов"
+  },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Сообщить о сайте как вредоносном"
+  },
+  "clearAllowedWebsitesTitle": {
+    "message": "Разрешённые сайты очищены"
+  },
+  "clearAllowedWebsitesMessage": {
+    "message": "Все разрешённые сайты были очищены."
+  },
+  "settingsTitle": {
+    "message": "Настройки"
+  },
+  "providersSection": {
+    "message": "Провайдеры"
+  },
+  "thirdPartySection": {
+    "message": "Интеграции сторонних сервисов"
+  },
+  "resetDefaultProviders": {
+    "message": "Восстановить провайдеров по умолчанию"
+  },
+  "resetAll": {
+    "message": "Сбросить всё"
+  },
+  "fieldLabelApiUrl": {
+    "message": "URL API"
+  },
+  "fieldLabelApiKey": {
+    "message": "Ключ API"
+  },
+  "applyButton": {
+    "message": "Применить"
+  },
+  "indicatorAdultContent": {
+    "message": "Фильтр контента для взрослых"
+  },
+  "officialPartnerTitle": {
+    "message": "Официальный партнёр"
+  },
+  "indicatorIpProtected": {
+    "message": "IP-адрес защищён"
+  },
+  "showApiKey": {
+    "message": "Показать ключ API"
+  },
+  "hideApiKey": {
+    "message": "Скрыть ключ API"
+  },
+  "toastSaved": {
+    "message": "Сохранено."
+  },
+  "toastFailedToSave": {
+    "message": "Не удалось сохранить."
+  },
+  "toastDefaultProvidersRestored": {
+    "message": "Провайдеры по умолчанию восстановлены."
+  },
+  "toastAllSettingsRestored": {
+    "message": "Все настройки восстановлены."
+  },
+  "toastSaveApiKeyFirst": {
+    "message": "Сохраните действительный ключ API перед включением этой интеграции."
+  },
+  "toastFailedToUpdateState": {
+    "message": "Не удалось обновить статус провайдера."
+  },
+  "statusHeadingSecure": {
+    "message": "Вы защищены"
+  },
+  "statusHeadingNoProviders": {
+    "message": "Нет активных провайдеров"
+  },
+  "statusIconAltProtected": {
+    "message": "Защищено"
+  },
+  "providersEnabledCount": {
+    "message": "___ из ___ провайдеров активны"
+  },
+  "openSettings": {
+    "message": "Открыть настройки"
+  },
+  "unknownOrigin": {
+    "message": "Неизвестно"
+  },
+  "urlUnavailable": {
+    "message": "Недоступно"
+  },
+  "contextVerifyFailed": {
+    "message": "Эта страница предупреждения не смогла проверить контекст безопасного действия. Продолжить и разрешить отключены."
+  },
+  "providerLogoAlt": {
+    "message": "Логотип $1"
+  },
+  "providerNameFallback": {
+    "message": "Провайдер"
+  }
+}

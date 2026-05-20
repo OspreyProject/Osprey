@@ -1,0 +1,185 @@
+{
+  "extensionName": {
+    "message": "Osprey: Naršyklės apsauga"
+  },
+  "extensionDescription": {
+    "message": "Apsisaugokite nuo internetinių grėsmių realiuoju laiku naudodami kelis naršyklės apsaugos teikėjus."
+  },
+  "logoAlt": {
+    "message": "Osprey logotipas"
+  },
+  "unsafeWebsiteTitle": {
+    "message": "Nesaugi svetainė užblokuota"
+  },
+  "warningTitle": {
+    "message": "Įspėjimas: ši svetainė yra nesaugi"
+  },
+  "recommendation": {
+    "message": "Osprey užblokavo prieigą prie šios svetainės. Tęsti nėra saugu."
+  },
+  "details": {
+    "message": "Jei esate šios svetainės savininkas, kreipkitės į saugos teikėją, kad išspręstumėte problemą."
+  },
+  "urlLabel": {
+    "message": "URL: "
+  },
+  "reportedByLabel": {
+    "message": "Pranešė: "
+  },
+  "reportedByOthers": {
+    "message": "(ir ___ kitų)"
+  },
+  "reportedByAlso": {
+    "message": "Taip pat pranešė: "
+  },
+  "reasonLabel": {
+    "message": "Priežastis: "
+  },
+  "reportWebsite": {
+    "message": "Pranešti apie šią svetainę kaip saugią"
+  },
+  "allowWebsite": {
+    "message": "Visada ignoruoti šią svetainę"
+  },
+  "backButton": {
+    "message": "Grįžti į saugią vietą"
+  },
+  "continueButton": {
+    "message": "Tęsti bet kuriuo atveju"
+  },
+  "version": {
+    "message": "Versija: "
+  },
+  "websiteLink": {
+    "message": "Svetainė"
+  },
+  "privacyPolicy": {
+    "message": "Privatumo politika"
+  },
+  "termsLink": {
+    "message": "Sąlygos"
+  },
+  "knownSafe": {
+    "message": "Žinoma saugi"
+  },
+  "failed": {
+    "message": "Nepavyko"
+  },
+  "waiting": {
+    "message": "Laukiama"
+  },
+  "allowed": {
+    "message": "Leidžiama"
+  },
+  "malicious": {
+    "message": "Kenkėjiška"
+  },
+  "phishing": {
+    "message": "Sukčiavimas apsimetant"
+  },
+  "adultContent": {
+    "message": "Suaugusiems skirtas turinys"
+  },
+  "toggleFrameNavigationContext": {
+    "message": "Ignoruoti kadrų naršymą"
+  },
+  "clearAllowedWebsitesContext": {
+    "message": "Išvalyti leidžiamų svetainių sąrašą"
+  },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Pranešti apie svetainę kaip kenkėjišką"
+  },
+  "clearAllowedWebsitesTitle": {
+    "message": "Leidžiamos svetainės išvalytos"
+  },
+  "clearAllowedWebsitesMessage": {
+    "message": "Visos leidžiamos svetainės buvo išvalytos."
+  },
+  "settingsTitle": {
+    "message": "Nustatymai"
+  },
+  "providersSection": {
+    "message": "Teikėjai"
+  },
+  "thirdPartySection": {
+    "message": "Trečiųjų šalių integracijos"
+  },
+  "resetDefaultProviders": {
+    "message": "Atkurti numatytuosius teikėjus"
+  },
+  "resetAll": {
+    "message": "Atkurti viską"
+  },
+  "fieldLabelApiUrl": {
+    "message": "API URL"
+  },
+  "fieldLabelApiKey": {
+    "message": "API raktas"
+  },
+  "applyButton": {
+    "message": "Taikyti"
+  },
+  "indicatorAdultContent": {
+    "message": "Suaugusiems skirto turinio filtras"
+  },
+  "officialPartnerTitle": {
+    "message": "Oficialus partneris"
+  },
+  "indicatorIpProtected": {
+    "message": "IP adresas apsaugotas"
+  },
+  "showApiKey": {
+    "message": "Rodyti API raktą"
+  },
+  "hideApiKey": {
+    "message": "Slėpti API raktą"
+  },
+  "toastSaved": {
+    "message": "Išsaugota."
+  },
+  "toastFailedToSave": {
+    "message": "Nepavyko išsaugoti."
+  },
+  "toastDefaultProvidersRestored": {
+    "message": "Numatytieji teikėjai atkurti."
+  },
+  "toastAllSettingsRestored": {
+    "message": "Visi nustatymai atkurti."
+  },
+  "toastSaveApiKeyFirst": {
+    "message": "Prieš įgalindami šią integraciją išsaugokite galiojantį API raktą."
+  },
+  "toastFailedToUpdateState": {
+    "message": "Nepavyko atnaujinti teikėjo būsenos."
+  },
+  "statusHeadingSecure": {
+    "message": "Esate saugūs"
+  },
+  "statusHeadingNoProviders": {
+    "message": "Nėra įgalintų teikėjų"
+  },
+  "statusIconAltProtected": {
+    "message": "Apsaugota"
+  },
+  "providersEnabledCount": {
+    "message": "___ iš ___ teikėjų įgalinta"
+  },
+  "openSettings": {
+    "message": "Atidaryti nustatymus"
+  },
+  "unknownOrigin": {
+    "message": "Nežinoma"
+  },
+  "urlUnavailable": {
+    "message": "Nepasiekiama"
+  },
+  "contextVerifyFailed": {
+    "message": "Šis įspėjimo puslapis negalėjo patvirtinti saugaus veiksmo konteksto. Tęsti ir leisti yra išjungti."
+  },
+  "providerLogoAlt": {
+    "message": "$1 logotipas"
+  },
+  "providerNameFallback": {
+    "message": "Teikėjas"
+  }
+}

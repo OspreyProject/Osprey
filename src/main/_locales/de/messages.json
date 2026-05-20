@@ -1,0 +1,185 @@
+{
+  "extensionName": {
+    "message": "Osprey: Browserschutz"
+  },
+  "extensionDescription": {
+    "message": "Schützen Sie sich in Echtzeit vor Online-Bedrohungen mit mehreren Browser-Schutzanbietern."
+  },
+  "logoAlt": {
+    "message": "Osprey-Logo"
+  },
+  "unsafeWebsiteTitle": {
+    "message": "Unsichere Website blockiert"
+  },
+  "warningTitle": {
+    "message": "Warnung: Diese Website ist unsicher"
+  },
+  "recommendation": {
+    "message": "Osprey hat den Zugriff auf diese Website blockiert. Es ist nicht sicher, fortzufahren."
+  },
+  "details": {
+    "message": "Wenn Sie der Inhaber dieser Website sind, wenden Sie sich bitte an den Sicherheitsanbieter, um das Problem zu beheben."
+  },
+  "urlLabel": {
+    "message": "URL: "
+  },
+  "reportedByLabel": {
+    "message": "Gemeldet von: "
+  },
+  "reportedByOthers": {
+    "message": "(und ___ weitere)"
+  },
+  "reportedByAlso": {
+    "message": "Auch gemeldet von: "
+  },
+  "reasonLabel": {
+    "message": "Grund: "
+  },
+  "reportWebsite": {
+    "message": "Diese Website als sicher melden"
+  },
+  "allowWebsite": {
+    "message": "Diese Website immer ignorieren"
+  },
+  "backButton": {
+    "message": "Zurück zur Sicherheit"
+  },
+  "continueButton": {
+    "message": "Trotzdem fortfahren"
+  },
+  "version": {
+    "message": "Version: "
+  },
+  "websiteLink": {
+    "message": "Website"
+  },
+  "privacyPolicy": {
+    "message": "Datenschutzrichtlinie"
+  },
+  "termsLink": {
+    "message": "Nutzungsbedingungen"
+  },
+  "knownSafe": {
+    "message": "Bekannt sicher"
+  },
+  "failed": {
+    "message": "Fehlgeschlagen"
+  },
+  "waiting": {
+    "message": "Warten"
+  },
+  "allowed": {
+    "message": "Erlaubt"
+  },
+  "malicious": {
+    "message": "Schädlich"
+  },
+  "phishing": {
+    "message": "Phishing"
+  },
+  "adultContent": {
+    "message": "Inhalte für Erwachsene"
+  },
+  "toggleFrameNavigationContext": {
+    "message": "Frame-Navigation ignorieren"
+  },
+  "clearAllowedWebsitesContext": {
+    "message": "Liste erlaubter Websites löschen"
+  },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Website als schädlich melden"
+  },
+  "clearAllowedWebsitesTitle": {
+    "message": "Erlaubte Websites gelöscht"
+  },
+  "clearAllowedWebsitesMessage": {
+    "message": "Alle erlaubten Websites wurden gelöscht."
+  },
+  "settingsTitle": {
+    "message": "Einstellungen"
+  },
+  "providersSection": {
+    "message": "Anbieter"
+  },
+  "thirdPartySection": {
+    "message": "Drittanbieter-Integrationen"
+  },
+  "resetDefaultProviders": {
+    "message": "Standard-Anbieter zurücksetzen"
+  },
+  "resetAll": {
+    "message": "Alles zurücksetzen"
+  },
+  "fieldLabelApiUrl": {
+    "message": "API-URL"
+  },
+  "fieldLabelApiKey": {
+    "message": "API-Schlüssel"
+  },
+  "applyButton": {
+    "message": "Anwenden"
+  },
+  "indicatorAdultContent": {
+    "message": "Filter für Inhalte für Erwachsene"
+  },
+  "officialPartnerTitle": {
+    "message": "Offizieller Partner"
+  },
+  "indicatorIpProtected": {
+    "message": "IP-Adresse geschützt"
+  },
+  "showApiKey": {
+    "message": "API-Schlüssel anzeigen"
+  },
+  "hideApiKey": {
+    "message": "API-Schlüssel ausblenden"
+  },
+  "toastSaved": {
+    "message": "Gespeichert."
+  },
+  "toastFailedToSave": {
+    "message": "Speichern fehlgeschlagen."
+  },
+  "toastDefaultProvidersRestored": {
+    "message": "Standard-Anbieter wiederhergestellt."
+  },
+  "toastAllSettingsRestored": {
+    "message": "Alle Einstellungen wiederhergestellt."
+  },
+  "toastSaveApiKeyFirst": {
+    "message": "Speichern Sie einen gültigen API-Schlüssel, bevor Sie diese Integration aktivieren."
+  },
+  "toastFailedToUpdateState": {
+    "message": "Anbieterstatus konnte nicht aktualisiert werden."
+  },
+  "statusHeadingSecure": {
+    "message": "Sie sind sicher"
+  },
+  "statusHeadingNoProviders": {
+    "message": "Keine Anbieter aktiviert"
+  },
+  "statusIconAltProtected": {
+    "message": "Geschützt"
+  },
+  "providersEnabledCount": {
+    "message": "___ von ___ Anbietern aktiviert"
+  },
+  "openSettings": {
+    "message": "Einstellungen öffnen"
+  },
+  "unknownOrigin": {
+    "message": "Unbekannt"
+  },
+  "urlUnavailable": {
+    "message": "Nicht verfügbar"
+  },
+  "contextVerifyFailed": {
+    "message": "Diese Warnseite konnte keinen sicheren Aktionskontext verifizieren. Fortfahren und Zulassen sind deaktiviert."
+  },
+  "providerLogoAlt": {
+    "message": "$1-Logo"
+  },
+  "providerNameFallback": {
+    "message": "Anbieter"
+  }
+}

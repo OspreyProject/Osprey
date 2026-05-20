@@ -1,0 +1,185 @@
+{
+  "extensionName": {
+    "message": "Osprey: Webbläsarskydd"
+  },
+  "extensionDescription": {
+    "message": "Skydda dig mot onlinehot i realtid med flera leverantörer av webbläsarskydd."
+  },
+  "logoAlt": {
+    "message": "Osprey-logotyp"
+  },
+  "unsafeWebsiteTitle": {
+    "message": "Osäker webbplats blockerad"
+  },
+  "warningTitle": {
+    "message": "Varning: Den här webbplatsen är osäker"
+  },
+  "recommendation": {
+    "message": "Osprey har blockerat åtkomst till den här webbplatsen. Det är inte säkert att fortsätta."
+  },
+  "details": {
+    "message": "Om du äger den här webbplatsen, kontakta säkerhetsleverantören för att lösa problemet."
+  },
+  "urlLabel": {
+    "message": "URL: "
+  },
+  "reportedByLabel": {
+    "message": "Rapporterad av: "
+  },
+  "reportedByOthers": {
+    "message": "(och ___ andra)"
+  },
+  "reportedByAlso": {
+    "message": "Även rapporterad av: "
+  },
+  "reasonLabel": {
+    "message": "Orsak: "
+  },
+  "reportWebsite": {
+    "message": "Rapportera den här webbplatsen som säker"
+  },
+  "allowWebsite": {
+    "message": "Ignorera alltid den här webbplatsen"
+  },
+  "backButton": {
+    "message": "Tillbaka till säkerhet"
+  },
+  "continueButton": {
+    "message": "Fortsätt ändå"
+  },
+  "version": {
+    "message": "Version: "
+  },
+  "websiteLink": {
+    "message": "Webbplats"
+  },
+  "privacyPolicy": {
+    "message": "Integritetspolicy"
+  },
+  "termsLink": {
+    "message": "Villkor"
+  },
+  "knownSafe": {
+    "message": "Känd säker"
+  },
+  "failed": {
+    "message": "Misslyckades"
+  },
+  "waiting": {
+    "message": "Väntar"
+  },
+  "allowed": {
+    "message": "Tillåten"
+  },
+  "malicious": {
+    "message": "Skadlig"
+  },
+  "phishing": {
+    "message": "Nätfiske"
+  },
+  "adultContent": {
+    "message": "Vuxeninnehåll"
+  },
+  "toggleFrameNavigationContext": {
+    "message": "Ignorera ramnavigering"
+  },
+  "clearAllowedWebsitesContext": {
+    "message": "Rensa lista över tillåtna webbplatser"
+  },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Rapportera webbplats som skadlig"
+  },
+  "clearAllowedWebsitesTitle": {
+    "message": "Tillåtna webbplatser rensade"
+  },
+  "clearAllowedWebsitesMessage": {
+    "message": "Alla tillåtna webbplatser har rensats."
+  },
+  "settingsTitle": {
+    "message": "Inställningar"
+  },
+  "providersSection": {
+    "message": "Leverantörer"
+  },
+  "thirdPartySection": {
+    "message": "Tredjepartsintegrationer"
+  },
+  "resetDefaultProviders": {
+    "message": "Återställ standardleverantörer"
+  },
+  "resetAll": {
+    "message": "Återställ allt"
+  },
+  "fieldLabelApiUrl": {
+    "message": "API-URL"
+  },
+  "fieldLabelApiKey": {
+    "message": "API-nyckel"
+  },
+  "applyButton": {
+    "message": "Tillämpa"
+  },
+  "indicatorAdultContent": {
+    "message": "Filter för vuxeninnehåll"
+  },
+  "officialPartnerTitle": {
+    "message": "Officiell partner"
+  },
+  "indicatorIpProtected": {
+    "message": "IP-adress skyddad"
+  },
+  "showApiKey": {
+    "message": "Visa API-nyckel"
+  },
+  "hideApiKey": {
+    "message": "Dölj API-nyckel"
+  },
+  "toastSaved": {
+    "message": "Sparad."
+  },
+  "toastFailedToSave": {
+    "message": "Det gick inte att spara."
+  },
+  "toastDefaultProvidersRestored": {
+    "message": "Standardleverantörer återställda."
+  },
+  "toastAllSettingsRestored": {
+    "message": "Alla inställningar återställda."
+  },
+  "toastSaveApiKeyFirst": {
+    "message": "Spara en giltig API-nyckel innan du aktiverar den här integrationen."
+  },
+  "toastFailedToUpdateState": {
+    "message": "Det gick inte att uppdatera leverantörens status."
+  },
+  "statusHeadingSecure": {
+    "message": "Du är säker"
+  },
+  "statusHeadingNoProviders": {
+    "message": "Inga leverantörer aktiverade"
+  },
+  "statusIconAltProtected": {
+    "message": "Skyddad"
+  },
+  "providersEnabledCount": {
+    "message": "___ av ___ leverantörer aktiverade"
+  },
+  "openSettings": {
+    "message": "Öppna inställningar"
+  },
+  "unknownOrigin": {
+    "message": "Okänd"
+  },
+  "urlUnavailable": {
+    "message": "Ej tillgänglig"
+  },
+  "contextVerifyFailed": {
+    "message": "Den här varningssidan kunde inte verifiera ett säkert åtgärdssammanhang. Fortsätt och tillåt är inaktiverade."
+  },
+  "providerLogoAlt": {
+    "message": "$1-logotyp"
+  },
+  "providerNameFallback": {
+    "message": "Leverantör"
+  }
+}

@@ -1,0 +1,185 @@
+{
+  "extensionName": {
+    "message": "Osprey: Browserbeskyttelse"
+  },
+  "extensionDescription": {
+    "message": "Beskyt mod onlinetrusler i realtid med flere browserbeskyttelsesudbydere."
+  },
+  "logoAlt": {
+    "message": "Osprey-logo"
+  },
+  "unsafeWebsiteTitle": {
+    "message": "Usikkert websted blokeret"
+  },
+  "warningTitle": {
+    "message": "Advarsel: Dette websted er usikkert"
+  },
+  "recommendation": {
+    "message": "Osprey har blokeret adgangen til dette websted. Det er ikke sikkert at fortsætte."
+  },
+  "details": {
+    "message": "Hvis du ejer dette websted, bedes du kontakte sikkerhedsudbyderen for at løse problemet."
+  },
+  "urlLabel": {
+    "message": "URL: "
+  },
+  "reportedByLabel": {
+    "message": "Rapporteret af: "
+  },
+  "reportedByOthers": {
+    "message": "(og ___ andre)"
+  },
+  "reportedByAlso": {
+    "message": "Også rapporteret af: "
+  },
+  "reasonLabel": {
+    "message": "Årsag: "
+  },
+  "reportWebsite": {
+    "message": "Rapportér dette websted som sikkert"
+  },
+  "allowWebsite": {
+    "message": "Ignorer altid dette websted"
+  },
+  "backButton": {
+    "message": "Tilbage til sikkerhed"
+  },
+  "continueButton": {
+    "message": "Fortsæt alligevel"
+  },
+  "version": {
+    "message": "Version: "
+  },
+  "websiteLink": {
+    "message": "Websted"
+  },
+  "privacyPolicy": {
+    "message": "Privatlivspolitik"
+  },
+  "termsLink": {
+    "message": "Vilkår"
+  },
+  "knownSafe": {
+    "message": "Kendt sikkert"
+  },
+  "failed": {
+    "message": "Mislykkedes"
+  },
+  "waiting": {
+    "message": "Venter"
+  },
+  "allowed": {
+    "message": "Tilladt"
+  },
+  "malicious": {
+    "message": "Ondsindet"
+  },
+  "phishing": {
+    "message": "Phishing"
+  },
+  "adultContent": {
+    "message": "Voksenindhold"
+  },
+  "toggleFrameNavigationContext": {
+    "message": "Ignorer frame-navigation"
+  },
+  "clearAllowedWebsitesContext": {
+    "message": "Ryd liste over tilladte websteder"
+  },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Rapportér websted som ondsindet"
+  },
+  "clearAllowedWebsitesTitle": {
+    "message": "Tilladte websteder ryddet"
+  },
+  "clearAllowedWebsitesMessage": {
+    "message": "Alle tilladte websteder er blevet ryddet."
+  },
+  "settingsTitle": {
+    "message": "Indstillinger"
+  },
+  "providersSection": {
+    "message": "Udbydere"
+  },
+  "thirdPartySection": {
+    "message": "Tredjepartsintegrationer"
+  },
+  "resetDefaultProviders": {
+    "message": "Nulstil standardudbydere"
+  },
+  "resetAll": {
+    "message": "Nulstil alt"
+  },
+  "fieldLabelApiUrl": {
+    "message": "API URL"
+  },
+  "fieldLabelApiKey": {
+    "message": "API-nøgle"
+  },
+  "applyButton": {
+    "message": "Anvend"
+  },
+  "indicatorAdultContent": {
+    "message": "Filter for voksenindhold"
+  },
+  "officialPartnerTitle": {
+    "message": "Officiel partner"
+  },
+  "indicatorIpProtected": {
+    "message": "IP-adresse beskyttet"
+  },
+  "showApiKey": {
+    "message": "Vis API-nøgle"
+  },
+  "hideApiKey": {
+    "message": "Skjul API-nøgle"
+  },
+  "toastSaved": {
+    "message": "Gemt."
+  },
+  "toastFailedToSave": {
+    "message": "Kunne ikke gemme."
+  },
+  "toastDefaultProvidersRestored": {
+    "message": "Standardudbydere gendannet."
+  },
+  "toastAllSettingsRestored": {
+    "message": "Alle indstillinger gendannet."
+  },
+  "toastSaveApiKeyFirst": {
+    "message": "Gem en gyldig API-nøgle, før du aktiverer denne integration."
+  },
+  "toastFailedToUpdateState": {
+    "message": "Kunne ikke opdatere udbyderens tilstand."
+  },
+  "statusHeadingSecure": {
+    "message": "Du er sikker"
+  },
+  "statusHeadingNoProviders": {
+    "message": "Ingen udbydere aktiveret"
+  },
+  "statusIconAltProtected": {
+    "message": "Beskyttet"
+  },
+  "providersEnabledCount": {
+    "message": "___ af ___ udbydere aktiveret"
+  },
+  "openSettings": {
+    "message": "Åbn indstillinger"
+  },
+  "unknownOrigin": {
+    "message": "Ukendt"
+  },
+  "urlUnavailable": {
+    "message": "Utilgængelig"
+  },
+  "contextVerifyFailed": {
+    "message": "Denne advarselsside kunne ikke bekræfte en sikker handlingskontekst. Fortsæt og tillad er deaktiveret."
+  },
+  "providerLogoAlt": {
+    "message": "$1-logo"
+  },
+  "providerNameFallback": {
+    "message": "Udbyder"
+  }
+}

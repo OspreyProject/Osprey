@@ -1,0 +1,185 @@
+{
+  "extensionName": {
+    "message": "Osprey: Browserbescherming"
+  },
+  "extensionDescription": {
+    "message": "Bescherm uzelf in realtime tegen online bedreigingen met meerdere browserbeschermingsproviders."
+  },
+  "logoAlt": {
+    "message": "Osprey-logo"
+  },
+  "unsafeWebsiteTitle": {
+    "message": "Onveilige website geblokkeerd"
+  },
+  "warningTitle": {
+    "message": "Waarschuwing: deze website is onveilig"
+  },
+  "recommendation": {
+    "message": "Osprey heeft de toegang tot deze website geblokkeerd. Het is niet veilig om door te gaan."
+  },
+  "details": {
+    "message": "Als u de eigenaar van deze website bent, neem dan contact op met de beveiligingsprovider om het probleem op te lossen."
+  },
+  "urlLabel": {
+    "message": "URL: "
+  },
+  "reportedByLabel": {
+    "message": "Gemeld door: "
+  },
+  "reportedByOthers": {
+    "message": "(en ___ anderen)"
+  },
+  "reportedByAlso": {
+    "message": "Ook gemeld door: "
+  },
+  "reasonLabel": {
+    "message": "Reden: "
+  },
+  "reportWebsite": {
+    "message": "Deze website rapporteren als veilig"
+  },
+  "allowWebsite": {
+    "message": "Deze website altijd negeren"
+  },
+  "backButton": {
+    "message": "Terug naar veiligheid"
+  },
+  "continueButton": {
+    "message": "Toch doorgaan"
+  },
+  "version": {
+    "message": "Versie: "
+  },
+  "websiteLink": {
+    "message": "Website"
+  },
+  "privacyPolicy": {
+    "message": "Privacybeleid"
+  },
+  "termsLink": {
+    "message": "Voorwaarden"
+  },
+  "knownSafe": {
+    "message": "Bekend veilig"
+  },
+  "failed": {
+    "message": "Mislukt"
+  },
+  "waiting": {
+    "message": "Wachten"
+  },
+  "allowed": {
+    "message": "Toegestaan"
+  },
+  "malicious": {
+    "message": "Kwaadaardig"
+  },
+  "phishing": {
+    "message": "Phishing"
+  },
+  "adultContent": {
+    "message": "Inhoud voor volwassenen"
+  },
+  "toggleFrameNavigationContext": {
+    "message": "Frame-navigatie negeren"
+  },
+  "clearAllowedWebsitesContext": {
+    "message": "Lijst met toegestane websites wissen"
+  },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Website rapporteren als kwaadaardig"
+  },
+  "clearAllowedWebsitesTitle": {
+    "message": "Toegestane websites gewist"
+  },
+  "clearAllowedWebsitesMessage": {
+    "message": "Alle toegestane websites zijn gewist."
+  },
+  "settingsTitle": {
+    "message": "Instellingen"
+  },
+  "providersSection": {
+    "message": "Providers"
+  },
+  "thirdPartySection": {
+    "message": "Integraties van derden"
+  },
+  "resetDefaultProviders": {
+    "message": "Standaardproviders herstellen"
+  },
+  "resetAll": {
+    "message": "Alles herstellen"
+  },
+  "fieldLabelApiUrl": {
+    "message": "API-URL"
+  },
+  "fieldLabelApiKey": {
+    "message": "API-sleutel"
+  },
+  "applyButton": {
+    "message": "Toepassen"
+  },
+  "indicatorAdultContent": {
+    "message": "Filter voor inhoud voor volwassenen"
+  },
+  "officialPartnerTitle": {
+    "message": "Officiële partner"
+  },
+  "indicatorIpProtected": {
+    "message": "IP-adres beschermd"
+  },
+  "showApiKey": {
+    "message": "API-sleutel weergeven"
+  },
+  "hideApiKey": {
+    "message": "API-sleutel verbergen"
+  },
+  "toastSaved": {
+    "message": "Opgeslagen."
+  },
+  "toastFailedToSave": {
+    "message": "Opslaan mislukt."
+  },
+  "toastDefaultProvidersRestored": {
+    "message": "Standaardproviders hersteld."
+  },
+  "toastAllSettingsRestored": {
+    "message": "Alle instellingen hersteld."
+  },
+  "toastSaveApiKeyFirst": {
+    "message": "Sla een geldige API-sleutel op voordat u deze integratie inschakelt."
+  },
+  "toastFailedToUpdateState": {
+    "message": "Providerstatus bijwerken mislukt."
+  },
+  "statusHeadingSecure": {
+    "message": "U bent veilig"
+  },
+  "statusHeadingNoProviders": {
+    "message": "Geen providers ingeschakeld"
+  },
+  "statusIconAltProtected": {
+    "message": "Beschermd"
+  },
+  "providersEnabledCount": {
+    "message": "___ van ___ providers ingeschakeld"
+  },
+  "openSettings": {
+    "message": "Instellingen openen"
+  },
+  "unknownOrigin": {
+    "message": "Onbekend"
+  },
+  "urlUnavailable": {
+    "message": "Niet beschikbaar"
+  },
+  "contextVerifyFailed": {
+    "message": "Deze waarschuwingspagina kon geen veilige actiecontext verifiëren. Doorgaan en toestaan zijn uitgeschakeld."
+  },
+  "providerLogoAlt": {
+    "message": "$1-logo"
+  },
+  "providerNameFallback": {
+    "message": "Provider"
+  }
+}
