@@ -58,6 +58,7 @@ globalThis.OspreyBlockingService = (() => {
         }
 
         const providersById = getProvidersById(runtime);
+
         return blockedContext.origins.some(origin => {
             const provider = providersById.get(origin);
             return providerCatalog.supportsBlockingResult(provider, result) && provider?.bypassBlockingThreshold === true;
