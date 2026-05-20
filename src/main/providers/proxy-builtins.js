@@ -271,5 +271,17 @@ globalThis.OspreyProxyBuiltins = (() => {
             policyKey: 'SwitchCHEnabled',
             report: mailtoFalsePositiveReport('dnsfirewall@switch.ch', 'Switch.ch Public DNS'),
         }),
+
+        hostnameBuiltin({
+            id: 'urlhaus',
+            aliases: ['urlhaus'],
+            displayName: 'URLhaus Feed',
+            group: providerGroups.feeds.id,
+            icon: 'assets/providers/urlhaus.avif',
+            enabledByDefault: true,
+            endpoint: 'urlhaus',
+            policyKey: 'URLhausEnabled',
+            report: externalUrlReport('https://www.spamhaus.com/abuse-ch/#contact-us'),
+        }),
     ]);
 })();
