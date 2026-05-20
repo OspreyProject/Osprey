@@ -104,71 +104,20 @@
   "thirdPartySection": {
     "message": "Third-Party Integrations"
   },
-  "customProvidersSection": {
-    "message": "Custom Providers"
-  },
-  "addProviderToggle": {
-    "message": "+ Add Provider"
-  },
-  "cancelAddProvider": {
-    "message": "− Cancel"
-  },
-  "newProvider": {
-    "message": "New Provider"
-  },
-  "addProviderButton": {
-    "message": "Add Provider"
-  },
   "resetDefaultProviders": {
     "message": "Reset Default Providers"
   },
   "resetAll": {
     "message": "Reset All"
   },
-  "fieldLabelName": {
-    "message": "Name"
-  },
   "fieldLabelApiUrl": {
     "message": "API URL"
-  },
-  "fieldLabelMethod": {
-    "message": "Method"
   },
   "fieldLabelApiKey": {
     "message": "API Key"
   },
-  "fieldLabelRequestHeaders": {
-    "message": "Request Headers"
-  },
-  "fieldLabelRequestBody": {
-    "message": "Request Body"
-  },
-  "fieldLabelBlockLogic": {
-    "message": "Block Logic"
-  },
-  "tagRequestHeadersHint": {
-    "message": "Placeholders: {api_key}"
-  },
-  "tagRequestBodyHint": {
-    "message": "Placeholders: {url}, {hostname}, {api_key}"
-  },
-  "tagBlockLogicHint": {
-    "message": "Evaluated top-to-bottom. Use 'response' to reference body."
-  },
-  "addRuleButton": {
-    "message": "+ Add Rule"
-  },
-  "logicIfLabel": {
-    "message": "IF"
-  },
-  "logicReturnLabel": {
-    "message": "RETURN"
-  },
   "applyButton": {
     "message": "Apply"
-  },
-  "deleteButton": {
-    "message": "Delete"
   },
   "indicatorAdultContent": {
     "message": "Adult Content Filter"
@@ -185,23 +134,11 @@
   "hideApiKey": {
     "message": "Hide API key"
   },
-  "noCustomProviders": {
-    "message": "No custom providers added yet."
-  },
   "toastSaved": {
     "message": "Saved."
   },
   "toastFailedToSave": {
     "message": "Failed to save."
-  },
-  "toastFailedToDelete": {
-    "message": "Failed to delete provider."
-  },
-  "toastProviderAdded": {
-    "message": "Provider added."
-  },
-  "toastProviderDeleted": {
-    "message": "Provider deleted."
   },
   "toastDefaultProvidersRestored": {
     "message": "Default providers restored."
@@ -244,59 +181,5 @@
   },
   "providerNameFallback": {
     "message": "Provider"
-  },
-  "toastMaxLogicRules": {
-    "message": "A maximum of $1 rules is allowed."
-  },
-  "toastCannotEnableProvider": {
-    "message": "Cannot enable provider: $1"
-  },
-  "errorApiUrlRequired": {
-    "message": "An HTTPS API URL is required."
-  },
-  "errorApiUrlInvalid": {
-    "message": "The API URL must be a valid absolute URL."
-  },
-  "errorApiUrlHttps": {
-    "message": "Custom providers must use HTTPS."
-  },
-  "errorApiUrlPrivate": {
-    "message": "Custom providers cannot use localhost or private-network endpoints."
-  },
-  "errorApiUrlCredentials": {
-    "message": "Credentials cannot be embedded in the API URL."
-  },
-  "errorHeadersTooMany": {
-    "message": "No more than $1 request headers are allowed."
-  },
-  "errorHeaderFormat": {
-    "message": "Each request header must use the format Header-Name: value."
-  },
-  "errorHeaderInvalidName": {
-    "message": "The header name \"$1\" is invalid."
-  },
-  "errorHeaderForbiddenName": {
-    "message": "The header name \"$1\" is not allowed."
-  },
-  "errorRequestBodyInvalidJson": {
-    "message": "The request body must be valid JSON after placeholder substitution."
-  },
-  "errorRuleConditionEmpty": {
-    "message": "Rule conditions cannot be empty."
-  },
-  "errorRuleConditionUnsupported": {
-    "message": "Rule conditions contain unsupported characters."
-  },
-  "errorRuleConditionResponseRef": {
-    "message": "Rule conditions must reference response fields such as response.result."
-  },
-  "errorRuleConditionForbiddenToken": {
-    "message": "Rule conditions cannot contain \"$1\"."
-  },
-  "errorRulesTooMany": {
-    "message": "No more than $1 block-logic rules are allowed."
-  },
-  "errorProviderNameRequired": {
-    "message": "A provider name is required."
   }
 }
