@@ -52,9 +52,9 @@ No data collection, no accounts needed; just free, effective protection for ever
 
 Osprey's goal is to be the most trusted, transparent, and effective browser protection extension for home users and
 businesses, while being **free, forever**. Unlike other free extensions, Osprey will **never** collect, profile, or sell
-your browsing data. URL checks are routed through our privacy-respecting
-[proxy server](https://github.com/Foulest/OspreyProxy), so providers never see your IP address or which sites you're
-visiting.
+your browsing data. Osprey checks every URL you visit with the providers shown above using our privacy-respecting
+[proxy server](https://github.com/Foulest/OspreyProxy), so they never see your IP address or which
+sites you're visiting.
 
 ## Contact Us
 
