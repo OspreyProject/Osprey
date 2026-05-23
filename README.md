@@ -59,6 +59,6 @@ our [proxy server](https://github.com/Foulest/OspreyProxy) on your behalf.
 
 ## Contact Us
 
-Questions or concerns? Want to become a provider? Contact support@osprey.ac.
+Questions or concerns? Want to become a provider? Contact [support@osprey.ac](mailto:support@osprey.ac).
 
 For support or queries, please open an issue in the [Issues section](https://github.com/OspreyProject/Osprey/issues).
