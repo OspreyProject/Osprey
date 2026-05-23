@@ -53,12 +53,6 @@
       "type": "boolean",
       "default": false
     },
-    "DisableCustomProviders": {
-      "title": "Disable Custom Providers",
-      "description": "If true, custom providers are hidden and cannot be created, modified, deleted, or enabled.",
-      "type": "boolean",
-      "default": false
-    },
     "DisableThirdPartyIntegrations": {
       "title": "Disable Third-Party Integrations",
       "description": "If true, third-party direct integrations are disabled and cannot be enabled from settings.",
@@ -68,6 +62,18 @@
     "SecLookupApiKey": {
       "title": "SecLookup API Key",
       "description": "Managed API key for the SecLookup integration.",
+      "type": "string",
+      "default": ""
+    },
+    "XcitiumApiKey": {
+      "title": "Xcitium API Key",
+      "description": "Managed API key for the Xcitium Verdict Cloud integration.",
+      "type": "string",
+      "default": ""
+    },
+    "MetaDefenderApiKey": {
+      "title": "MetaDefender API Key",
+      "description": "Managed API key for the MetaDefender integrations.",
       "type": "string",
       "default": ""
     },
@@ -149,6 +155,18 @@
       "type": "boolean",
       "default": false
     },
+    "OpenDNSSecurityEnabled": {
+      "title": "OpenDNS Security DNS Enabled",
+      "description": "Managed enabled state for OpenDNS Security DNS.",
+      "type": "boolean",
+      "default": true
+    },
+    "OpenDNSFamilyEnabled": {
+      "title": "OpenDNS Family DNS Enabled",
+      "description": "Managed enabled state for OpenDNS Family DNS.",
+      "type": "boolean",
+      "default": false
+    },
     "PhishDestroyEnabled": {
       "title": "PhishDestroy Feed Enabled",
       "description": "Managed enabled state for PhishDestroy Feed.",
@@ -170,6 +188,12 @@
     "SwitchCHEnabled": {
       "title": "Switch.ch Security DNS Enabled",
       "description": "Managed enabled state for Switch.ch Security DNS.",
+      "type": "boolean",
+      "default": true
+    },
+    "URLhausEnabled": {
+      "title": "URLhaus Feed Enabled",
+      "description": "Managed enabled state for URLhaus Feed.",
       "type": "boolean",
       "default": true
     }
