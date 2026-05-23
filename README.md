@@ -25,8 +25,6 @@ No data collection, no accounts needed; just free, effective protection for ever
 
 ![Osprey Banner](https://i.imgur.com/zzv8QYh.png)
 
-## About Osprey
-
 Osprey's goal is to be the most trusted, transparent, and effective browser protection extension for home users and
 businesses, while being **free, forever.** Unlike other free extensions, Osprey will **never** collect, profile, or sell
 your browsing data. Your IP address is **never** shared with any third party, and URL checks are routed through our
