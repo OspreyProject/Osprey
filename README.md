@@ -35,10 +35,10 @@ your browsing data.
 
 ###
 
-You can check Osprey's real-time protection status by clicking the ![Icon](https://i.imgur.com/E1SM8OJ.png) extension
-icon in your browser's toolbar.
+You can check Osprey's real-time protection status by left-clicking the ![Icon](https://i.imgur.com/E1SM8OJ.png)
+extension icon in your browser's toolbar.
 
-![Popup Panel](https://i.imgur.com/UeEIekP.png)
+![Popup Panel](https://i.imgur.com/0MaOw9D.png)
 
 ###
 
@@ -57,6 +57,15 @@ You can even add your own API keys for third-party integrations that support it.
 When Osprey blocks a website, you'll see a warning page like this:
 
 ![Warning Page](https://i.imgur.com/TBt8oLo.png)
+
+From there, you can choose to go back to safety or proceed to the site if you believe it's a false positive.
+
+###
+
+You can open the context menu by right-clicking the ![Icon](https://i.imgur.com/E1SM8OJ.png) extension
+icon. From there, you can clear the list of allowed websites, report a website as malicious, and more.
+
+![Context Menu](https://i.imgur.com/mamxWB9.png)
 
 ###
 
