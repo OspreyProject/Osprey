@@ -75,9 +75,6 @@ Osprey routes every URL you visit to our protection providers shown below, using
 [proxy server](https://github.com/Foulest/OspreyProxy), ensuring that providers never see your real IP address or any
 personally identifiable information.
 
-Providers only see requests originating from the proxy server's IP address, which is shared by thousands of users,
-making it **impossible** for any provider to associate a URL lookup with you specifically.
-
 ###
 
 <p align="center">
@@ -100,6 +97,9 @@ making it **impossible** for any provider to associate a URL lookup with you spe
 </p>
 
 ###
+
+Providers only see requests originating from the proxy server's IP address, which is shared by thousands of users,
+making it **impossible** for any provider to associate a URL lookup with you specifically.
 
 ## Contact Us
 
