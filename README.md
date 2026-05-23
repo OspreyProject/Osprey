@@ -25,6 +25,16 @@ No data collection, no accounts needed; just free, effective protection for ever
 
 ![Osprey Banner](https://i.imgur.com/zzv8QYh.png)
 
+## Mission
+
+Osprey's goal is to be the most trusted, transparent, and effective browser protection extension for home users and
+businesses, while being **free, forever.** Unlike other free extensions, Osprey will **never** collect, profile, or sell
+your browsing data. Your IP address is **never** shared with any third party, and URL checks are routed through our
+privacy-respecting proxy server.
+
+The more providers that join, the stronger the threat intelligence platform becomes. To get involved, reach out at
+**support@osprey.ac**.
+
 ## Protection Providers
 
 Osprey checks URLs against a combination of industry-leading threat intelligence APIs, DNS filtering services, and
@@ -63,16 +73,6 @@ Osprey is also endorsed by the following companies, who have reviewed and approv
   <a href="https://joindns4.eu/?utm_source=osprey" title="DNS4EU"><img src="https://i.imgur.com/g6bTuVS.png" alt="DNS4EU"></a>
   <a href="https://concourse-cloud.com/?utm_source=osprey" title="Concourse Cloud"><img src="https://i.imgur.com/pfAZVvp.png" alt="Concourse Cloud"></a>
 </p>
-
-## Mission
-
-Osprey's goal is to be the most trusted, transparent, and effective browser protection extension for home users and
-businesses, while being **free, forever.** Unlike other free extensions, Osprey will **never** collect, profile, or sell
-your browsing data. Your IP address is **never** shared with any third party, and URL checks are routed through our
-privacy-respecting proxy server.
-
-The more providers that join, the stronger the threat intelligence platform becomes. To get involved, reach out at
-**support@osprey.ac**.
 
 ## Disclaimer
 
