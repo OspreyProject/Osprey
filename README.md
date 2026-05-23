@@ -72,8 +72,11 @@ icon. From there, you can clear the list of allowed websites, report a website a
 ## Protection Providers
 
 Osprey routes every URL you visit to our protection providers shown below, using our privacy-respecting
-[proxy server](https://github.com/Foulest/OspreyProxy), so they never see your IP address or which
-sites you're visiting.
+[proxy server](https://github.com/Foulest/OspreyProxy), ensuring that providers never see your real IP address or any
+personally identifiable information.
+
+Providers only see requests originating from the proxy server's IP address, which is shared by thousands of users,
+making it **impossible** for any provider to associate a URL lookup with you specifically.
 
 ###
 
