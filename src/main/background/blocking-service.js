@@ -239,7 +239,7 @@ globalThis.OspreyBlockingService = (() => {
                 return;
             }
 
-            console.error(`Failed to navigate to record ${tabId}`, error);
+            console.error(`Failed to navigate to recorded warning page for URL ${navigationUrl} in tabId ${tabId}`, error);
         });
     };
 
@@ -275,7 +275,7 @@ globalThis.OspreyBlockingService = (() => {
             }
 
             if (runtime.effectiveState.app.hidePopupPanel && details.url.includes("/pages/popup/popup-page.html")) {
-                console.warn(`Failed to navigate to record ${details.url} (Reason: protection options are hidden)`);
+                console.debug(`Failed to navigate to record ${details.url} (Reason: protection options are hidden)`);
                 return;
             }
 
