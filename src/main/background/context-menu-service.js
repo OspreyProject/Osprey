@@ -99,8 +99,8 @@ globalThis.OspreyContextMenuService = (() => {
         [menuIds.CLEAR_ALLOWED_WEBSITES]: () => clearAllowedWebsites().catch(logError('Failed to clear allowed websites from context menu')),
 
         [menuIds.REPORT_MALICIOUS]: () => browserAPI.tabsCreate({
-            url: 'https://github.com/OspreyProject/Osprey/wiki/Report-Website-as-Malicious'
-        }).catch(logError('Failed to open malicious website reporting documentation')),
+            url: 'https://phish.report/analysis'
+        }).catch(logError('Failed to open Phish.Report website')),
     });
 
     const handleClick = info => {
