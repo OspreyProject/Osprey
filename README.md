@@ -28,12 +28,13 @@ No data collection, no accounts needed; just free, effective protection for ever
 Osprey's goal is to be the most trusted, transparent, and effective browser protection extension for home users and
 businesses, while being **free, forever.** Unlike other free extensions, Osprey will **never** collect, profile, or sell
 your browsing data. Your IP address is **never** shared with any third party, and URL checks are routed through our
-privacy-respecting proxy server.
+privacy-respecting [proxy server](https://github.com/Foulest/OspreyProxy).
 
 ## Protection Providers
 
 Osprey checks URLs against a combination of industry-leading threat intelligence APIs, DNS filtering services, and
-locally maintained blocklists found below, all queried through the proxy server on your behalf.
+locally maintained blocklists found below, all queried through
+our [proxy server](https://github.com/Foulest/OspreyProxy) on your behalf.
 
 ###
 
@@ -53,31 +54,11 @@ locally maintained blocklists found below, all queried through the proxy server 
   <a href="https://switch.ch/?utm_source=osprey" title="Switch.ch"><img src="https://i.imgur.com/tsoJSZu.png" alt="Switch.ch"></a>
   <a href="https://urlhaus.abuse.ch/?utm_source=osprey" title="URLhaus"><img src="https://i.imgur.com/FqgBU5k.png" alt="URLhaus"></a>
   <a href="https://seclookup.com/?utm_source=osprey" title="Seclookup"><img src="https://i.imgur.com/2g2Zmf0.png" alt="Seclookup"></a>
-  <a href="https://seclookup.com/?utm_source=osprey" title="Seclookup"><img src="https://i.imgur.com/2g2Zmf0.png" alt="Seclookup"></a>
+  <a href="https://metadefender.com/?utm_source=osprey" title="MetaDefender"><img src="https://i.imgur.com/GYWXDM8.png" alt="MetaDefender"></a>
 </p>
 
-The more providers that join, the stronger the threat intelligence platform becomes. To get involved, reach out at
-**support@osprey.ac**.
+## Contact Us
 
-###
-
-## Endorsed By
-
-Osprey is also endorsed by the following companies, who have reviewed and approved our privacy and security practices.
-
-###
-
-<p align="center">
-  <a href="https://joindns4.eu/?utm_source=osprey" title="DNS4EU"><img src="https://i.imgur.com/g6bTuVS.png" alt="DNS4EU"></a>
-  <a href="https://concourse-cloud.com/?utm_source=osprey" title="Concourse Cloud"><img src="https://i.imgur.com/pfAZVvp.png" alt="Concourse Cloud"></a>
-</p>
-
-## Disclaimer
-
-Osprey uses the names of third-party DNS and security providers solely for descriptive and interoperability purposes.
-All trademarks, logos, and brand names are the property of their respective owners. Osprey is not affiliated with any
-listed provider except where explicitly noted above. Questions or concerns? Contact support@osprey.ac.
-
-## Getting Help
+Questions or concerns? Want to become a provider? Contact support@osprey.ac.
 
 For support or queries, please open an issue in the [Issues section](https://github.com/OspreyProject/Osprey/issues).
