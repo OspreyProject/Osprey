@@ -54,36 +54,6 @@ globalThis.OspreyProxyBuiltins = (() => {
 
     return Object.freeze([
         builtin({
-            id: 'adguard-security',
-            aliases: ['adGuardSecurity'],
-            displayName: 'AdGuard Security DNS',
-            group: providerGroups.official_partners.id,
-            icon: 'assets/providers/adguard.avif',
-            enabledByDefault: true,
-            bypassBlockingThreshold: false,
-            endpoint: 'adguard-security',
-            lookupTarget: 'hostname',
-            tags: ['proxy', 'partner', 'hostname_only'],
-            policyKey: 'AdGuardSecurityEnabled',
-            report: mailtoFalsePositiveReport('support@adguard.com', 'AdGuard Public DNS'),
-        }),
-
-        builtin({
-            id: 'adguard-family',
-            aliases: ['adGuardFamily'],
-            displayName: 'AdGuard Family DNS',
-            group: providerGroups.adult_content_filters.id,
-            icon: 'assets/providers/adguard.avif',
-            enabledByDefault: false,
-            bypassBlockingThreshold: false,
-            endpoint: 'adguard-family',
-            lookupTarget: 'hostname',
-            tags: ['proxy', 'partner', 'hostname_only', 'adult_filter'],
-            policyKey: 'AdGuardFamilyEnabled',
-            report: mailtoFalsePositiveReport('support@adguard.com', 'AdGuard Family DNS'),
-        }),
-
-        builtin({
             id: 'alphamountain',
             aliases: ['alphaMountain'],
             displayName: 'AlphaMountain Web Protection',
@@ -123,6 +93,36 @@ globalThis.OspreyProxyBuiltins = (() => {
             tags: ['proxy', 'hostname_only', 'partner'],
             policyKey: 'PrecisionSecEnabled',
             report: mailtoFalsePositiveReport('info@precisionsec.com', 'PrecisionSec Web Protection'),
+        }),
+
+        builtin({
+            id: 'adguard-security',
+            aliases: ['adGuardSecurity'],
+            displayName: 'AdGuard Security DNS',
+            group: providerGroups.official_partners.id,
+            icon: 'assets/providers/adguard.avif',
+            enabledByDefault: true,
+            bypassBlockingThreshold: false,
+            endpoint: 'adguard-security',
+            lookupTarget: 'hostname',
+            tags: ['proxy', 'hostname_only'],
+            policyKey: 'AdGuardSecurityEnabled',
+            report: mailtoFalsePositiveReport('support@adguard.com', 'AdGuard Public DNS'),
+        }),
+
+        builtin({
+            id: 'adguard-family',
+            aliases: ['adGuardFamily'],
+            displayName: 'AdGuard Family DNS',
+            group: providerGroups.adult_content_filters.id,
+            icon: 'assets/providers/adguard.avif',
+            enabledByDefault: false,
+            bypassBlockingThreshold: false,
+            endpoint: 'adguard-family',
+            lookupTarget: 'hostname',
+            tags: ['proxy', 'hostname_only', 'adult_filter'],
+            policyKey: 'AdGuardFamilyEnabled',
+            report: mailtoFalsePositiveReport('support@adguard.com', 'AdGuard Family DNS'),
         }),
 
         hostnameBuiltin({

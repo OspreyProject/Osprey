@@ -83,18 +83,6 @@
       "type": "boolean",
       "default": false
     },
-    "AdGuardSecurityEnabled": {
-      "title": "AdGuard Security DNS Enabled",
-      "description": "Managed enabled state for AdGuard Security DNS.",
-      "type": "boolean",
-      "default": true
-    },
-    "AdGuardFamilyEnabled": {
-      "title": "AdGuard Family DNS Enabled",
-      "description": "Managed enabled state for AdGuard Family DNS.",
-      "type": "boolean",
-      "default": false
-    },
     "AlphaMountainEnabled": {
       "title": "AlphaMountain Web Protection Enabled",
       "description": "Managed enabled state for AlphaMountain Web Protection.",
@@ -112,6 +100,18 @@
       "description": "Managed enabled state for PrecisionSec Web Protection.",
       "type": "boolean",
       "default": true
+    },
+    "AdGuardSecurityEnabled": {
+      "title": "AdGuard Security DNS Enabled",
+      "description": "Managed enabled state for AdGuard Security DNS.",
+      "type": "boolean",
+      "default": true
+    },
+    "AdGuardFamilyEnabled": {
+      "title": "AdGuard Family DNS Enabled",
+      "description": "Managed enabled state for AdGuard Family DNS.",
+      "type": "boolean",
+      "default": false
     },
     "CERTEEEnabled": {
       "title": "CERT-EE Security DNS Enabled",
