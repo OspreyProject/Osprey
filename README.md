@@ -47,6 +47,7 @@ No data collection, no accounts needed; just free, effective protection for ever
 </p>
 
 ###
+###
 
 ## About Osprey
 
@@ -55,6 +56,12 @@ businesses, while being **free, forever**. Unlike other free extensions, Osprey 
 your browsing data. Osprey checks every URL you visit with the providers shown above using our privacy-respecting
 [proxy server](https://github.com/Foulest/OspreyProxy), so they never see your IP address or which
 sites you're visiting.
+
+###
+
+When Osprey blocks a website, you'll see a warning page like this:
+
+![Warning Page](https://i.imgur.com/TBt8oLo.png)
 
 ## Contact Us
 
