@@ -308,6 +308,12 @@ globalThis.OspreyCacheService = (() => {
     // Run cache cleanup on a 5-minute interval rather than on every read
     setInterval(cleanupExpired, 5 * 60 * 1000);
 
+    // Perform an initial cleanup on startup to remove any entries that
+    // may have expired while the extension was not running
+    cleanupExpired().catch(error => {
+        console.warn("OspreyCacheService failed to cleanup on startup", error);
+    });
+
     // Public API
     return Object.freeze({
         matchesGlobalPattern,
