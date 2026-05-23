@@ -31,9 +31,26 @@ No data collection, no accounts needed; just free, effective protection for ever
 
 Osprey's goal is to be the most trusted, transparent, and effective browser protection extension for home users and
 businesses, while being **free, forever**. Unlike other free extensions, Osprey will **never** collect, profile, or sell
-your browsing data. Osprey checks every URL you visit with the providers shown below using our privacy-respecting
-[proxy server](https://github.com/Foulest/OspreyProxy), so they never see your IP address or which
-sites you're visiting.
+your browsing data.
+
+###
+
+You can check Osprey's real-time protection status by clicking the extension
+icon (![Icon](https://i.imgur.com/E1SM8OJ.png)) in your browser's toolbar.
+
+![Popup Panel](https://i.imgur.com/3N1YGFj.png)
+
+###
+
+The settings page allows you to configure which providers Osprey uses to check websites.
+
+![Settings Page](https://i.imgur.com/lQ8KVZ6.png)
+
+###
+
+You can even add your own API keys for third-party integrations that support it.
+
+![Third-Party Integrations](https://i.imgur.com/EJfJwlw.png)
 
 ###
 
@@ -44,6 +61,12 @@ When Osprey blocks a website, you'll see a warning page like this:
 ###
 
 ## Protection Providers
+
+Osprey routes every URL you visit to our protection providers shown below, using our privacy-respecting
+[proxy server](https://github.com/Foulest/OspreyProxy), so they never see your IP address or which
+sites you're visiting.
+
+###
 
 <p align="center">
   <a href="https://alphamountain.ai/?utm_source=osprey" title="AlphaMountain"><img src="https://i.imgur.com/EbcGHb2.png" alt="AlphaMountain"></a>
@@ -63,6 +86,8 @@ When Osprey blocks a website, you'll see a warning page like this:
   <a href="https://seclookup.com/?utm_source=osprey" title="Seclookup"><img src="https://i.imgur.com/2g2Zmf0.png" alt="Seclookup"></a>
   <a href="https://metadefender.com/?utm_source=osprey" title="MetaDefender"><img src="https://i.imgur.com/GYWXDM8.png" alt="MetaDefender"></a>
 </p>
+
+###
 
 ## Contact Us
 
