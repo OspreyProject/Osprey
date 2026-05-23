@@ -42,7 +42,7 @@ globalThis.OspreyRequestBuilder = (() => {
     };
 
     const buildProxyRequest = (provider, url) => ({
-        url: `${provider.proxyBaseUrl}/${provider.endpoint}`,
+        url: `${provider.proxyBaseUrl}`.replace(/\/+$/, '') + `/` + `${provider.endpoint}`.replace(/^\/+/, ''),
         options: {
             method: 'POST',
             headers: {
