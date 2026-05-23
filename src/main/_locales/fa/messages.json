@@ -1,75 +1,66 @@
 {
   "extensionName": {
-    "message": "Osprey: محافظت مرورگر"
+    "message": "Osprey: حفاظت از مرورگر"
   },
   "extensionDescription": {
-    "message": "با استفاده از چندین ارائهدهندهٔ محافظت از مرورگرها، در زمان واقعی در برابر تهدیدات آنلاین محافظت کنید."
+    "message": "با استفاده از چندین ارائه‌دهنده حفاظت مرورگر، در برابر تهدیدات آنلاین به‌صورت بلادرنگ محافظت کنید."
   },
   "logoAlt": {
     "message": "لوگوی Osprey"
+  },
+  "unsafeWebsiteTitle": {
+    "message": "وب‌سایت ناامن مسدود شد"
   },
   "warningTitle": {
     "message": "هشدار: این وب‌سایت ناامن است"
   },
   "recommendation": {
-    "message": "Osprey دسترسی به این وب‌سایت را مسدود کرده است. ادامه دادن ناامن است."
+    "message": "Osprey دسترسی به این وب‌سایت را مسدود کرده است. ادامه دادن ایمن نیست."
   },
   "details": {
-    "message": "اگر مالک این وب‌سایت هستید، لطفاً برای رفع مشکل با ارائه‌دهنده امنیت تماس بگیرید."
+    "message": "اگر مالک این وب‌سایت هستید، برای رفع مشکل با ارائه‌دهنده امنیتی تماس بگیرید."
   },
   "urlLabel": {
-    "message": "آدرس URL: "
+    "message": "آدرس: "
   },
   "reportedByLabel": {
-    "message": "گزارش شده توسط: "
+    "message": "گزارش‌شده توسط: "
   },
   "reportedByOthers": {
     "message": "(و ___ نفر دیگر)"
   },
   "reportedByAlso": {
-    "message": "همچنین گزارش شده توسط: "
+    "message": "همچنین گزارش‌شده توسط: "
   },
   "reasonLabel": {
     "message": "دلیل: "
   },
   "reportWebsite": {
-    "message": "گزارش این وب‌سایت به‌عنوان امن"
+    "message": "گزارش این وب‌سایت به‌عنوان ایمن"
   },
   "allowWebsite": {
     "message": "همیشه این وب‌سایت را نادیده بگیر"
   },
   "backButton": {
-    "message": "بازگشت به حالت امن"
+    "message": "بازگشت به امنیت"
   },
   "continueButton": {
-    "message": "ادامه با وجود خطر"
-  },
-  "popupTitle": {
-    "message": "گزینه‌های محافظت"
-  },
-  "githubLink": {
-    "message": "مشاهده در GitHub"
+    "message": "ادامه به هر حال"
   },
   "version": {
     "message": "نسخه: "
   },
+  "websiteLink": {
+    "message": "وب‌سایت"
+  },
   "privacyPolicy": {
     "message": "سیاست حفظ حریم خصوصی"
   },
-  "onText": {
-    "message": "روشن"
-  },
-  "offText": {
-    "message": "خاموش"
-  },
-  "onLockedText": {
-    "message": "روشن (قفل شده)"
-  },
-  "offLockedText": {
-    "message": "خاموش (قفل شده)"
+  "termsLink": {
+    "message": "شرایط"
   },
   "knownSafe": {
-    "message": "مطمئن شناخته شده"
+    "message": "ایمن شناخته‌شده"
   },
   "failed": {
     "message": "ناموفق"
@@ -81,48 +72,114 @@
     "message": "مجاز"
   },
   "malicious": {
-    "message": "بدافزار"
+    "message": "مخرب"
   },
   "phishing": {
     "message": "فیشینگ"
   },
-  "untrusted": {
-    "message": "غیرقابل اعتماد"
-  },
   "adultContent": {
     "message": "محتوای بزرگسالان"
   },
-  "toggleNotificationsContext": {
-    "message": "فعال‌سازی اعلان‌ها"
-  },
   "toggleFrameNavigationContext": {
-    "message": "نادیده گرفتن ناوبری فریم‌ها"
+    "message": "نادیده گرفتن ناوبری فریم"
   },
   "clearAllowedWebsitesContext": {
-    "message": "پاک کردن فهرست وب‌سایت‌های مجاز"
+    "message": "پاک کردن لیست وب‌سایت‌های مجاز"
+  },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "گزارش وب‌سایت به‌عنوان مخرب"
   },
   "clearAllowedWebsitesTitle": {
     "message": "وب‌سایت‌های مجاز پاک شدند"
   },
   "clearAllowedWebsitesMessage": {
-    "message": "تمام وب‌سایت‌های مجاز پاک شدند."
+    "message": "همه وب‌سایت‌های مجاز پاک شدند."
   },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "گزارش دادن وب‌سایت به‌عنوان مخرب"
+  "settingsTitle": {
+    "message": "تنظیمات"
   },
-  "restoreDefaultsContext": {
-    "message": "بازگرداندن تنظیمات پیش‌فرض"
+  "providersSection": {
+    "message": "ارائه‌دهندگان"
   },
-  "restoreDefaultsTitle": {
-    "message": "تنظیمات پیش‌فرض بازگردانده شد"
+  "thirdPartySection": {
+    "message": "یکپارچه‌سازی‌های شخص ثالث"
   },
-  "restoreDefaultsMessage": {
-    "message": "تنظیمات پیش‌فرض بازگردانده شدند."
+  "resetDefaultProviders": {
+    "message": "بازنشانی ارائه‌دهندگان پیش‌فرض"
   },
-  "unsafeWebsiteTitle": {
-    "message": "وب‌سایت ناامن مسدود شد"
+  "resetAll": {
+    "message": "بازنشانی همه"
+  },
+  "fieldLabelApiUrl": {
+    "message": "آدرس API"
+  },
+  "fieldLabelApiKey": {
+    "message": "کلید API"
+  },
+  "applyButton": {
+    "message": "اعمال"
+  },
+  "indicatorAdultContent": {
+    "message": "فیلتر محتوای بزرگسالان"
   },
   "officialPartnerTitle": {
     "message": "شریک رسمی"
+  },
+  "indicatorIpProtected": {
+    "message": "آدرس IP محافظت‌شده"
+  },
+  "showApiKey": {
+    "message": "نمایش کلید API"
+  },
+  "hideApiKey": {
+    "message": "پنهان کردن کلید API"
+  },
+  "toastSaved": {
+    "message": "ذخیره شد."
+  },
+  "toastFailedToSave": {
+    "message": "ذخیره‌سازی ناموفق بود."
+  },
+  "toastDefaultProvidersRestored": {
+    "message": "ارائه‌دهندگان پیش‌فرض بازیابی شدند."
+  },
+  "toastAllSettingsRestored": {
+    "message": "همه تنظیمات بازیابی شدند."
+  },
+  "toastSaveApiKeyFirst": {
+    "message": "قبل از فعال کردن این یکپارچه‌سازی، یک کلید API معتبر ذخیره کنید."
+  },
+  "toastFailedToUpdateState": {
+    "message": "به‌روزرسانی وضعیت ارائه‌دهنده ناموفق بود."
+  },
+  "statusHeadingSecure": {
+    "message": "شما ایمن هستید"
+  },
+  "statusHeadingNoProviders": {
+    "message": "هیچ ارائه‌دهنده‌ای فعال نیست"
+  },
+  "statusIconAltProtected": {
+    "message": "محافظت‌شده"
+  },
+  "providersEnabledCount": {
+    "message": "___ از ___ ارائه‌دهنده فعال"
+  },
+  "openSettings": {
+    "message": "باز کردن تنظیمات"
+  },
+  "unknownOrigin": {
+    "message": "ناشناخته"
+  },
+  "urlUnavailable": {
+    "message": "در دسترس نیست"
+  },
+  "contextVerifyFailed": {
+    "message": "این صفحه هشدار نتوانست زمینه اقدام ایمن را تأیید کند. ادامه دادن و مجاز کردن غیرفعال هستند."
+  },
+  "providerLogoAlt": {
+    "message": "لوگوی $1"
+  },
+  "providerNameFallback": {
+    "message": "ارائه‌دهنده"
   }
 }

@@ -1,21 +1,24 @@
 {
   "extensionName": {
-    "message": "Osprey: ブラウザー保護"
+    "message": "Osprey: ブラウザ保護"
   },
   "extensionDescription": {
-    "message": "複数のブラウザ保護プロバイダーを使用して、オンライン上の脅威からリアルタイムで保護します。"
+    "message": "複数のブラウザ保護プロバイダーを使用して、オンラインの脅威からリアルタイムで保護します。"
   },
   "logoAlt": {
-    "message": "Osprey ロゴ"
+    "message": "Ospreyロゴ"
+  },
+  "unsafeWebsiteTitle": {
+    "message": "安全でないウェブサイトをブロックしました"
   },
   "warningTitle": {
     "message": "警告: このウェブサイトは安全ではありません"
   },
   "recommendation": {
-    "message": "Osprey がこのウェブサイトへのアクセスをブロックしました。続行するのは安全ではありません。"
+    "message": "Ospreyがこのウェブサイトへのアクセスをブロックしました。続行することは安全ではありません。"
   },
   "details": {
-    "message": "このウェブサイトの所有者である場合は、問題を解決するためにセキュリティプロバイダーに連絡してください。"
+    "message": "このウェブサイトの所有者である場合は、問題を解決するためにセキュリティプロバイダーにお問い合わせください。"
   },
   "urlLabel": {
     "message": "URL: "
@@ -24,10 +27,10 @@
     "message": "報告者: "
   },
   "reportedByOthers": {
-    "message": "(および ___ 人)"
+    "message": "(他 ___ 件)"
   },
   "reportedByAlso": {
-    "message": "また報告者: "
+    "message": "他にも報告: "
   },
   "reasonLabel": {
     "message": "理由: "
@@ -36,40 +39,28 @@
     "message": "このウェブサイトを安全として報告する"
   },
   "allowWebsite": {
-    "message": "常にこのウェブサイトを無視する"
+    "message": "このウェブサイトを常に無視する"
   },
   "backButton": {
-    "message": "安全に戻る"
+    "message": "安全な場所に戻る"
   },
   "continueButton": {
     "message": "それでも続行する"
   },
-  "popupTitle": {
-    "message": "保護オプション"
-  },
-  "githubLink": {
-    "message": "GitHub で表示"
-  },
   "version": {
     "message": "バージョン: "
+  },
+  "websiteLink": {
+    "message": "ウェブサイト"
   },
   "privacyPolicy": {
     "message": "プライバシーポリシー"
   },
-  "onText": {
-    "message": "オン"
-  },
-  "offText": {
-    "message": "オフ"
-  },
-  "onLockedText": {
-    "message": "オン (ロック中)"
-  },
-  "offLockedText": {
-    "message": "オフ (ロック中)"
+  "termsLink": {
+    "message": "利用規約"
   },
   "knownSafe": {
-    "message": "安全と確認済み"
+    "message": "安全確認済み"
   },
   "failed": {
     "message": "失敗"
@@ -86,43 +77,109 @@
   "phishing": {
     "message": "フィッシング"
   },
-  "untrusted": {
-    "message": "信頼できない"
-  },
   "adultContent": {
     "message": "アダルトコンテンツ"
   },
-  "toggleNotificationsContext": {
-    "message": "通知を有効にする"
-  },
   "toggleFrameNavigationContext": {
-    "message": "フレームナビゲーションを無視する"
+    "message": "フレームナビゲーションを無視"
   },
   "clearAllowedWebsitesContext": {
-    "message": "許可されたウェブサイト一覧をクリア"
-  },
-  "clearAllowedWebsitesTitle": {
-    "message": "許可されたウェブサイトをクリアしました"
-  },
-  "clearAllowedWebsitesMessage": {
-    "message": "すべての許可されたウェブサイトがクリアされました。"
+    "message": "許可済みウェブサイトリストをクリア"
   },
   "reportWebsiteAsMaliciousContext": {
-    "message": "ウェブサイトを悪意のあるものとして報告する"
+    "message": "ウェブサイトを悪意のあるものとして報告"
   },
-  "restoreDefaultsContext": {
-    "message": "デフォルト設定を復元"
+  "clearAllowedWebsitesTitle": {
+    "message": "許可済みウェブサイトをクリアしました"
   },
-  "restoreDefaultsTitle": {
-    "message": "デフォルト設定が復元されました"
+  "clearAllowedWebsitesMessage": {
+    "message": "すべての許可済みウェブサイトがクリアされました。"
   },
-  "restoreDefaultsMessage": {
-    "message": "デフォルト設定が復元されました。"
+  "settingsTitle": {
+    "message": "設定"
   },
-  "unsafeWebsiteTitle": {
-    "message": "安全でないウェブサイトがブロックされました"
+  "providersSection": {
+    "message": "プロバイダー"
+  },
+  "thirdPartySection": {
+    "message": "サードパーティ統合"
+  },
+  "resetDefaultProviders": {
+    "message": "デフォルトプロバイダーをリセット"
+  },
+  "resetAll": {
+    "message": "すべてリセット"
+  },
+  "fieldLabelApiUrl": {
+    "message": "API URL"
+  },
+  "fieldLabelApiKey": {
+    "message": "APIキー"
+  },
+  "applyButton": {
+    "message": "適用"
+  },
+  "indicatorAdultContent": {
+    "message": "アダルトコンテンツフィルター"
   },
   "officialPartnerTitle": {
     "message": "公式パートナー"
+  },
+  "indicatorIpProtected": {
+    "message": "IPアドレス保護済み"
+  },
+  "showApiKey": {
+    "message": "APIキーを表示"
+  },
+  "hideApiKey": {
+    "message": "APIキーを非表示"
+  },
+  "toastSaved": {
+    "message": "保存しました。"
+  },
+  "toastFailedToSave": {
+    "message": "保存に失敗しました。"
+  },
+  "toastDefaultProvidersRestored": {
+    "message": "デフォルトプロバイダーが復元されました。"
+  },
+  "toastAllSettingsRestored": {
+    "message": "すべての設定が復元されました。"
+  },
+  "toastSaveApiKeyFirst": {
+    "message": "この統合を有効にする前に有効なAPIキーを保存してください。"
+  },
+  "toastFailedToUpdateState": {
+    "message": "プロバイダーの状態の更新に失敗しました。"
+  },
+  "statusHeadingSecure": {
+    "message": "保護されています"
+  },
+  "statusHeadingNoProviders": {
+    "message": "有効なプロバイダーがありません"
+  },
+  "statusIconAltProtected": {
+    "message": "保護済み"
+  },
+  "providersEnabledCount": {
+    "message": "___ / ___ プロバイダーが有効"
+  },
+  "openSettings": {
+    "message": "設定を開く"
+  },
+  "unknownOrigin": {
+    "message": "不明"
+  },
+  "urlUnavailable": {
+    "message": "利用不可"
+  },
+  "contextVerifyFailed": {
+    "message": "この警告ページは安全なアクションコンテキストを確認できませんでした。続行と許可は無効になっています。"
+  },
+  "providerLogoAlt": {
+    "message": "$1 ロゴ"
+  },
+  "providerNameFallback": {
+    "message": "プロバイダー"
   }
 }

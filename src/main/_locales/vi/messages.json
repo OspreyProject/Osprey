@@ -3,25 +3,28 @@
     "message": "Osprey: Bảo vệ Trình duyệt"
   },
   "extensionDescription": {
-    "message": "Bảo vệ khỏi các mối đe dọa trực tuyến theo thời gian thực bằng cách sử dụng nhiều nhà cung cấp bảo vệ trình duyệt."
+    "message": "Bảo vệ khỏi các mối đe dọa trực tuyến theo thời gian thực bằng nhiều nhà cung cấp bảo vệ trình duyệt."
   },
   "logoAlt": {
     "message": "Logo Osprey"
+  },
+  "unsafeWebsiteTitle": {
+    "message": "Trang web không an toàn đã bị chặn"
   },
   "warningTitle": {
     "message": "Cảnh báo: Trang web này không an toàn"
   },
   "recommendation": {
-    "message": "Osprey đã chặn truy cập vào trang web này. Tiếp tục sẽ không an toàn."
+    "message": "Osprey đã chặn quyền truy cập vào trang web này. Tiếp tục là không an toàn."
   },
   "details": {
-    "message": "Nếu bạn là chủ sở hữu của trang web này, vui lòng liên hệ với nhà cung cấp bảo mật để giải quyết vấn đề."
+    "message": "Nếu bạn là chủ sở hữu trang web này, hãy liên hệ với nhà cung cấp bảo mật để giải quyết vấn đề."
   },
   "urlLabel": {
     "message": "URL: "
   },
   "reportedByLabel": {
-    "message": "Báo cáo bởi: "
+    "message": "Được báo cáo bởi: "
   },
   "reportedByOthers": {
     "message": "(và ___ người khác)"
@@ -39,37 +42,25 @@
     "message": "Luôn bỏ qua trang web này"
   },
   "backButton": {
-    "message": "Quay lại an toàn"
+    "message": "Quay lại nơi an toàn"
   },
   "continueButton": {
-    "message": "Vẫn tiếp tục"
-  },
-  "popupTitle": {
-    "message": "Tùy chọn Bảo vệ"
-  },
-  "githubLink": {
-    "message": "Xem trên GitHub"
+    "message": "Tiếp tục dù sao"
   },
   "version": {
     "message": "Phiên bản: "
   },
+  "websiteLink": {
+    "message": "Trang web"
+  },
   "privacyPolicy": {
     "message": "Chính sách Quyền riêng tư"
   },
-  "onText": {
-    "message": "Bật"
-  },
-  "offText": {
-    "message": "Tắt"
-  },
-  "onLockedText": {
-    "message": "Bật (Khóa)"
-  },
-  "offLockedText": {
-    "message": "Tắt (Khóa)"
+  "termsLink": {
+    "message": "Điều khoản"
   },
   "knownSafe": {
-    "message": "Được biết là An toàn"
+    "message": "Đã biết An toàn"
   },
   "failed": {
     "message": "Thất bại"
@@ -84,45 +75,111 @@
     "message": "Độc hại"
   },
   "phishing": {
-    "message": "Lừa đảo (Phishing)"
-  },
-  "untrusted": {
-    "message": "Không đáng tin cậy"
+    "message": "Lừa đảo"
   },
   "adultContent": {
-    "message": "Nội dung Người lớn"
-  },
-  "toggleNotificationsContext": {
-    "message": "Bật thông báo"
+    "message": "Nội dung người lớn"
   },
   "toggleFrameNavigationContext": {
     "message": "Bỏ qua điều hướng khung"
   },
   "clearAllowedWebsitesContext": {
-    "message": "Xóa danh sách các trang web được phép"
+    "message": "Xóa danh sách trang web được phép"
+  },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Báo cáo trang web là độc hại"
   },
   "clearAllowedWebsitesTitle": {
-    "message": "Đã xóa các Trang web được phép"
+    "message": "Đã xóa trang web được phép"
   },
   "clearAllowedWebsitesMessage": {
     "message": "Tất cả các trang web được phép đã được xóa."
   },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "Báo cáo trang web là trang web độc hại"
+  "settingsTitle": {
+    "message": "Cài đặt"
   },
-  "restoreDefaultsContext": {
-    "message": "Khôi phục cài đặt mặc định"
+  "providersSection": {
+    "message": "Nhà cung cấp"
   },
-  "restoreDefaultsTitle": {
-    "message": "Đã khôi phục Cài đặt mặc định"
+  "thirdPartySection": {
+    "message": "Tích hợp bên thứ ba"
   },
-  "restoreDefaultsMessage": {
-    "message": "Các cài đặt mặc định đã được khôi phục."
+  "resetDefaultProviders": {
+    "message": "Đặt lại nhà cung cấp mặc định"
   },
-  "unsafeWebsiteTitle": {
-    "message": "Trang web không an toàn đã bị chặn"
+  "resetAll": {
+    "message": "Đặt lại tất cả"
+  },
+  "fieldLabelApiUrl": {
+    "message": "URL API"
+  },
+  "fieldLabelApiKey": {
+    "message": "Khóa API"
+  },
+  "applyButton": {
+    "message": "Áp dụng"
+  },
+  "indicatorAdultContent": {
+    "message": "Bộ lọc nội dung người lớn"
   },
   "officialPartnerTitle": {
-    "message": "Đối tác Chính thức"
+    "message": "Đối tác chính thức"
+  },
+  "indicatorIpProtected": {
+    "message": "Địa chỉ IP được bảo vệ"
+  },
+  "showApiKey": {
+    "message": "Hiện khóa API"
+  },
+  "hideApiKey": {
+    "message": "Ẩn khóa API"
+  },
+  "toastSaved": {
+    "message": "Đã lưu."
+  },
+  "toastFailedToSave": {
+    "message": "Lưu thất bại."
+  },
+  "toastDefaultProvidersRestored": {
+    "message": "Đã khôi phục nhà cung cấp mặc định."
+  },
+  "toastAllSettingsRestored": {
+    "message": "Đã khôi phục tất cả cài đặt."
+  },
+  "toastSaveApiKeyFirst": {
+    "message": "Lưu khóa API hợp lệ trước khi bật tích hợp này."
+  },
+  "toastFailedToUpdateState": {
+    "message": "Cập nhật trạng thái nhà cung cấp thất bại."
+  },
+  "statusHeadingSecure": {
+    "message": "Bạn đang an toàn"
+  },
+  "statusHeadingNoProviders": {
+    "message": "Không có nhà cung cấp nào được bật"
+  },
+  "statusIconAltProtected": {
+    "message": "Được bảo vệ"
+  },
+  "providersEnabledCount": {
+    "message": "___ trong ___ nhà cung cấp được bật"
+  },
+  "openSettings": {
+    "message": "Mở cài đặt"
+  },
+  "unknownOrigin": {
+    "message": "Không rõ"
+  },
+  "urlUnavailable": {
+    "message": "Không có sẵn"
+  },
+  "contextVerifyFailed": {
+    "message": "Trang cảnh báo này không thể xác minh ngữ cảnh hành động an toàn. Tiếp tục và cho phép đã bị vô hiệu hóa."
+  },
+  "providerLogoAlt": {
+    "message": "Logo $1"
+  },
+  "providerNameFallback": {
+    "message": "Nhà cung cấp"
   }
 }

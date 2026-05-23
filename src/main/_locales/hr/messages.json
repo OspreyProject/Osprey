@@ -3,19 +3,22 @@
     "message": "Osprey: Zaštita preglednika"
   },
   "extensionDescription": {
-    "message": "Pwoteje kont menas sou entènèt an tan reyèl lè w itilize plizyè founisè pwoteksyon navigatè."
+    "message": "Zaštitite se od online prijetnji u stvarnom vremenu koristeći više pružatelja zaštite preglednika."
   },
   "logoAlt": {
-    "message": "Osprey logo"
+    "message": "Osprey logotip"
+  },
+  "unsafeWebsiteTitle": {
+    "message": "Nesigurna web-stranica blokirana"
   },
   "warningTitle": {
-    "message": "Upozorenje: Ova web stranica nije sigurna"
+    "message": "Upozorenje: Ova web-stranica nije sigurna"
   },
   "recommendation": {
-    "message": "Osprey je blokirao pristup ovoj web stranici. Nije sigurno nastaviti."
+    "message": "Osprey je blokirao pristup ovoj web-stranici. Nije sigurno nastaviti."
   },
   "details": {
-    "message": "Ako ste vlasnik ove web stranice, kontaktirajte pružatelja sigurnosnih usluga kako biste riješili problem."
+    "message": "Ako ste vlasnik ove web-stranice, obratite se sigurnosnom pružatelju za rješavanje problema."
   },
   "urlLabel": {
     "message": "URL: "
@@ -24,58 +27,46 @@
     "message": "Prijavio: "
   },
   "reportedByOthers": {
-    "message": "(i ___ drugih)"
+    "message": "(i ___ ostalih)"
   },
   "reportedByAlso": {
-    "message": "Također prijavili: "
+    "message": "Također prijavio: "
   },
   "reasonLabel": {
     "message": "Razlog: "
   },
   "reportWebsite": {
-    "message": "Prijavi ovu web stranicu kao sigurnu"
+    "message": "Prijavi ovu web-stranicu kao sigurnu"
   },
   "allowWebsite": {
-    "message": "Uvijek ignoriraj ovu web stranicu"
+    "message": "Uvijek zanemarivati ovu web-stranicu"
   },
   "backButton": {
-    "message": "Natrag na sigurno"
+    "message": "Natrag na sigurnost"
   },
   "continueButton": {
-    "message": "Nastavi svejedno"
-  },
-  "popupTitle": {
-    "message": "Postavke zaštite"
-  },
-  "githubLink": {
-    "message": "Pogledaj na GitHubu"
+    "message": "Svejedno nastavi"
   },
   "version": {
     "message": "Verzija: "
   },
+  "websiteLink": {
+    "message": "Web-stranica"
+  },
   "privacyPolicy": {
-    "message": "Politika privatnosti"
+    "message": "Pravila privatnosti"
   },
-  "onText": {
-    "message": "Uključeno"
-  },
-  "offText": {
-    "message": "Isključeno"
-  },
-  "onLockedText": {
-    "message": "Uključeno (zaključano)"
-  },
-  "offLockedText": {
-    "message": "Isključeno (zaključano)"
+  "termsLink": {
+    "message": "Uvjeti"
   },
   "knownSafe": {
-    "message": "Poznato kao sigurno"
+    "message": "Poznato sigurno"
   },
   "failed": {
-    "message": "Neuspjelo"
+    "message": "Neuspješno"
   },
   "waiting": {
-    "message": "Na čekanju"
+    "message": "Čekanje"
   },
   "allowed": {
     "message": "Dopušteno"
@@ -84,45 +75,111 @@
     "message": "Zlonamjerno"
   },
   "phishing": {
-    "message": "Phishing"
-  },
-  "untrusted": {
-    "message": "Nepouzdano"
+    "message": "Krađa identiteta"
   },
   "adultContent": {
     "message": "Sadržaj za odrasle"
   },
-  "toggleNotificationsContext": {
-    "message": "Omogući obavijesti"
-  },
   "toggleFrameNavigationContext": {
-    "message": "Ignoriraj navigaciju unutar okvira"
+    "message": "Zanemari navigaciju okvira"
   },
   "clearAllowedWebsitesContext": {
-    "message": "Izbriši popis dopuštenih web stranica"
-  },
-  "clearAllowedWebsitesTitle": {
-    "message": "Dopuštene web stranice izbrisane"
-  },
-  "clearAllowedWebsitesMessage": {
-    "message": "Sve dopuštene web stranice su izbrisane."
+    "message": "Obriši popis dopuštenih web-stranica"
   },
   "reportWebsiteAsMaliciousContext": {
-    "message": "Prijavite web-stranicu kao zlonamjernu"
+    "message": "Prijavi web-stranicu kao zlonamjernu"
   },
-  "restoreDefaultsContext": {
-    "message": "Vrati zadane postavke"
+  "clearAllowedWebsitesTitle": {
+    "message": "Dopuštene web-stranice obrisane"
   },
-  "restoreDefaultsTitle": {
-    "message": "Zadane postavke vraćene"
+  "clearAllowedWebsitesMessage": {
+    "message": "Sve dopuštene web-stranice su obrisane."
   },
-  "restoreDefaultsMessage": {
-    "message": "Zadane postavke su vraćene."
+  "settingsTitle": {
+    "message": "Postavke"
   },
-  "unsafeWebsiteTitle": {
-    "message": "Nesigurna web stranica blokirana"
+  "providersSection": {
+    "message": "Pružatelji"
+  },
+  "thirdPartySection": {
+    "message": "Integracije trećih strana"
+  },
+  "resetDefaultProviders": {
+    "message": "Vrati zadane pružatelje"
+  },
+  "resetAll": {
+    "message": "Vrati sve"
+  },
+  "fieldLabelApiUrl": {
+    "message": "API URL"
+  },
+  "fieldLabelApiKey": {
+    "message": "API ključ"
+  },
+  "applyButton": {
+    "message": "Primijeni"
+  },
+  "indicatorAdultContent": {
+    "message": "Filter sadržaja za odrasle"
   },
   "officialPartnerTitle": {
     "message": "Službeni partner"
+  },
+  "indicatorIpProtected": {
+    "message": "IP adresa zaštićena"
+  },
+  "showApiKey": {
+    "message": "Prikaži API ključ"
+  },
+  "hideApiKey": {
+    "message": "Sakrij API ključ"
+  },
+  "toastSaved": {
+    "message": "Spremljeno."
+  },
+  "toastFailedToSave": {
+    "message": "Spremanje nije uspjelo."
+  },
+  "toastDefaultProvidersRestored": {
+    "message": "Zadani pružatelji vraćeni."
+  },
+  "toastAllSettingsRestored": {
+    "message": "Sve postavke vraćene."
+  },
+  "toastSaveApiKeyFirst": {
+    "message": "Spremi valjani API ključ prije omogućavanja ove integracije."
+  },
+  "toastFailedToUpdateState": {
+    "message": "Ažuriranje stanja pružatelja nije uspjelo."
+  },
+  "statusHeadingSecure": {
+    "message": "Zaštićeni ste"
+  },
+  "statusHeadingNoProviders": {
+    "message": "Nema omogućenih pružatelja"
+  },
+  "statusIconAltProtected": {
+    "message": "Zaštićeno"
+  },
+  "providersEnabledCount": {
+    "message": "___ od ___ pružatelja omogućeno"
+  },
+  "openSettings": {
+    "message": "Otvori postavke"
+  },
+  "unknownOrigin": {
+    "message": "Nepoznato"
+  },
+  "urlUnavailable": {
+    "message": "Nedostupno"
+  },
+  "contextVerifyFailed": {
+    "message": "Ova stranica s upozorenjem nije mogla provjeriti siguran kontekst radnje. Nastavi i dopusti su onemogućeni."
+  },
+  "providerLogoAlt": {
+    "message": "$1 logotip"
+  },
+  "providerNameFallback": {
+    "message": "Pružatelj"
   }
 }

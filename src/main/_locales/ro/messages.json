@@ -1,21 +1,24 @@
 {
   "extensionName": {
-    "message": "Osprey: Protecția browserului"
+    "message": "Osprey: Protecție browser"
   },
   "extensionDescription": {
-    "message": "Protejați-vă împotriva amenințărilor online în timp real folosind mai mulți furnizori de protecție pentru browser."
+    "message": "Protejați-vă în timp real împotriva amenințărilor online folosind mai mulți furnizori de protecție pentru browser."
   },
   "logoAlt": {
     "message": "Logo Osprey"
   },
+  "unsafeWebsiteTitle": {
+    "message": "Site web nesigur blocat"
+  },
   "warningTitle": {
-    "message": "Avertizare: Acest site web nu este sigur"
+    "message": "Avertisment: Acest site web este nesigur"
   },
   "recommendation": {
     "message": "Osprey a blocat accesul la acest site web. Nu este sigur să continuați."
   },
   "details": {
-    "message": "Dacă sunteți proprietarul acestui site web, vă rugăm să contactați furnizorul de securitate pentru a rezolva problema."
+    "message": "Dacă sunteți proprietarul acestui site web, contactați furnizorul de securitate pentru a rezolva problema."
   },
   "urlLabel": {
     "message": "URL: "
@@ -27,16 +30,16 @@
     "message": "(și ___ alții)"
   },
   "reportedByAlso": {
-    "message": "Raportat de asemenea de: "
+    "message": "Raportat și de: "
   },
   "reasonLabel": {
     "message": "Motiv: "
   },
   "reportWebsite": {
-    "message": "Raportați acest site web ca sigur"
+    "message": "Raportați acest site ca sigur"
   },
   "allowWebsite": {
-    "message": "Ignorați întotdeauna acest site web"
+    "message": "Ignorați întotdeauna acest site"
   },
   "backButton": {
     "message": "Înapoi la siguranță"
@@ -44,85 +47,139 @@
   "continueButton": {
     "message": "Continuați oricum"
   },
-  "popupTitle": {
-    "message": "Opțiuni de protecție"
-  },
-  "githubLink": {
-    "message": "Vizualizați pe GitHub"
-  },
   "version": {
     "message": "Versiune: "
+  },
+  "websiteLink": {
+    "message": "Site web"
   },
   "privacyPolicy": {
     "message": "Politica de confidențialitate"
   },
-  "onText": {
-    "message": "Pornit"
-  },
-  "offText": {
-    "message": "Oprit"
-  },
-  "onLockedText": {
-    "message": "Pornit (blocat)"
-  },
-  "offLockedText": {
-    "message": "Oprit (blocat)"
+  "termsLink": {
+    "message": "Termeni"
   },
   "knownSafe": {
-    "message": "Cunoscut ca sigur"
+    "message": "Cunoscut sigur"
   },
   "failed": {
     "message": "Eșuat"
   },
   "waiting": {
-    "message": "Se așteaptă"
+    "message": "Așteptare"
   },
   "allowed": {
     "message": "Permis"
   },
   "malicious": {
-    "message": "Rău intenționat"
+    "message": "Malițios"
   },
   "phishing": {
     "message": "Phishing"
   },
-  "untrusted": {
-    "message": "Nesigur"
-  },
   "adultContent": {
     "message": "Conținut pentru adulți"
   },
-  "toggleNotificationsContext": {
-    "message": "Activați notificările"
-  },
   "toggleFrameNavigationContext": {
-    "message": "Ignorați navigarea în cadre"
+    "message": "Ignorați navigarea cadrelor"
   },
   "clearAllowedWebsitesContext": {
     "message": "Ștergeți lista site-urilor permise"
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Raportați site-ul ca malițios"
+  },
   "clearAllowedWebsitesTitle": {
-    "message": "Site-urile permise au fost șterse"
+    "message": "Site-uri permise șterse"
   },
   "clearAllowedWebsitesMessage": {
     "message": "Toate site-urile permise au fost șterse."
   },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "Raportează site-ul web ca fiind rău intenționat"
+  "settingsTitle": {
+    "message": "Setări"
   },
-  "restoreDefaultsContext": {
-    "message": "Restaurați setările implicite"
+  "providersSection": {
+    "message": "Furnizori"
   },
-  "restoreDefaultsTitle": {
-    "message": "Setările implicite au fost restaurate"
+  "thirdPartySection": {
+    "message": "Integrări terțe"
   },
-  "restoreDefaultsMessage": {
-    "message": "Setările implicite au fost restaurate."
+  "resetDefaultProviders": {
+    "message": "Restabiliți furnizorii impliciți"
   },
-  "unsafeWebsiteTitle": {
-    "message": "Site web nesigur blocat"
+  "resetAll": {
+    "message": "Restabiliți totul"
+  },
+  "fieldLabelApiUrl": {
+    "message": "URL API"
+  },
+  "fieldLabelApiKey": {
+    "message": "Cheie API"
+  },
+  "applyButton": {
+    "message": "Aplicați"
+  },
+  "indicatorAdultContent": {
+    "message": "Filtru conținut pentru adulți"
   },
   "officialPartnerTitle": {
     "message": "Partener oficial"
+  },
+  "indicatorIpProtected": {
+    "message": "Adresă IP protejată"
+  },
+  "showApiKey": {
+    "message": "Afișați cheia API"
+  },
+  "hideApiKey": {
+    "message": "Ascundeți cheia API"
+  },
+  "toastSaved": {
+    "message": "Salvat."
+  },
+  "toastFailedToSave": {
+    "message": "Salvarea a eșuat."
+  },
+  "toastDefaultProvidersRestored": {
+    "message": "Furnizorii impliciți au fost restabiliți."
+  },
+  "toastAllSettingsRestored": {
+    "message": "Toate setările au fost restabilite."
+  },
+  "toastSaveApiKeyFirst": {
+    "message": "Salvați o cheie API validă înainte de a activa această integrare."
+  },
+  "toastFailedToUpdateState": {
+    "message": "Actualizarea stării furnizorului a eșuat."
+  },
+  "statusHeadingSecure": {
+    "message": "Ești în siguranță"
+  },
+  "statusHeadingNoProviders": {
+    "message": "Niciun furnizor activat"
+  },
+  "statusIconAltProtected": {
+    "message": "Protejat"
+  },
+  "providersEnabledCount": {
+    "message": "___ din ___ furnizori activați"
+  },
+  "openSettings": {
+    "message": "Deschideți setările"
+  },
+  "unknownOrigin": {
+    "message": "Necunoscut"
+  },
+  "urlUnavailable": {
+    "message": "Indisponibil"
+  },
+  "contextVerifyFailed": {
+    "message": "Această pagină de avertizare nu a putut verifica un context de acțiune sigur. Continuare și permite sunt dezactivate."
+  },
+  "providerLogoAlt": {
+    "message": "Logo $1"
+  },
+  "providerNameFallback": {
+    "message": "Furnizor"
   }
 }

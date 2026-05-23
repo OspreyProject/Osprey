@@ -3,19 +3,22 @@
     "message": "Osprey: Ochrona przeglądarki"
   },
   "extensionDescription": {
-    "message": "Chroń się przed zagrożeniami internetowymi w czasie rzeczywistym, korzystając z wielu dostawców zabezpieczeń przeglądarek."
+    "message": "Chroń się przed zagrożeniami online w czasie rzeczywistym, korzystając z wielu dostawców ochrony przeglądarki."
   },
   "logoAlt": {
     "message": "Logo Osprey"
   },
+  "unsafeWebsiteTitle": {
+    "message": "Niebezpieczna strona zablokowana"
+  },
   "warningTitle": {
-    "message": "Ostrzeżenie: Ta strona internetowa jest niebezpieczna"
+    "message": "Ostrzeżenie: Ta strona jest niebezpieczna"
   },
   "recommendation": {
-    "message": "Osprey zablokował dostęp do tej strony internetowej. Kontynuowanie nie jest bezpieczne."
+    "message": "Osprey zablokował dostęp do tej strony. Kontynuowanie nie jest bezpieczne."
   },
   "details": {
-    "message": "Jeśli jesteś właścicielem tej strony internetowej, skontaktuj się z dostawcą usług bezpieczeństwa, aby rozwiązać problem."
+    "message": "Jeśli jesteś właścicielem tej strony, skontaktuj się z dostawcą zabezpieczeń, aby rozwiązać problem."
   },
   "urlLabel": {
     "message": "URL: "
@@ -27,7 +30,7 @@
     "message": "(i ___ innych)"
   },
   "reportedByAlso": {
-    "message": "Zgłoszone także przez: "
+    "message": "Zgłoszone również przez: "
   },
   "reasonLabel": {
     "message": "Powód: "
@@ -39,40 +42,28 @@
     "message": "Zawsze ignoruj tę stronę"
   },
   "backButton": {
-    "message": "Powrót do bezpieczeństwa"
+    "message": "Wróć do bezpieczeństwa"
   },
   "continueButton": {
     "message": "Kontynuuj mimo to"
   },
-  "popupTitle": {
-    "message": "Opcje ochrony"
-  },
-  "githubLink": {
-    "message": "Zobacz na GitHub"
-  },
   "version": {
     "message": "Wersja: "
+  },
+  "websiteLink": {
+    "message": "Strona internetowa"
   },
   "privacyPolicy": {
     "message": "Polityka prywatności"
   },
-  "onText": {
-    "message": "Włączone"
-  },
-  "offText": {
-    "message": "Wyłączone"
-  },
-  "onLockedText": {
-    "message": "Włączone (zablokowane)"
-  },
-  "offLockedText": {
-    "message": "Wyłączone (zablokowane)"
+  "termsLink": {
+    "message": "Warunki"
   },
   "knownSafe": {
-    "message": "Znane jako bezpieczne"
+    "message": "Znana bezpieczna"
   },
   "failed": {
-    "message": "Niepowodzenie"
+    "message": "Nieudane"
   },
   "waiting": {
     "message": "Oczekiwanie"
@@ -86,20 +77,17 @@
   "phishing": {
     "message": "Phishing"
   },
-  "untrusted": {
-    "message": "Niezaufane"
-  },
   "adultContent": {
     "message": "Treści dla dorosłych"
   },
-  "toggleNotificationsContext": {
-    "message": "Włącz powiadomienia"
-  },
   "toggleFrameNavigationContext": {
-    "message": "Ignoruj nawigację w ramkach"
+    "message": "Ignoruj nawigację ramek"
   },
   "clearAllowedWebsitesContext": {
     "message": "Wyczyść listę dozwolonych stron"
+  },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Zgłoś stronę jako złośliwą"
   },
   "clearAllowedWebsitesTitle": {
     "message": "Dozwolone strony wyczyszczone"
@@ -107,22 +95,91 @@
   "clearAllowedWebsitesMessage": {
     "message": "Wszystkie dozwolone strony zostały wyczyszczone."
   },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "Zgłoś stronę internetową jako złośliwą"
+  "settingsTitle": {
+    "message": "Ustawienia"
   },
-  "restoreDefaultsContext": {
-    "message": "Przywróć ustawienia domyślne"
+  "providersSection": {
+    "message": "Dostawcy"
   },
-  "restoreDefaultsTitle": {
-    "message": "Przywrócono ustawienia domyślne"
+  "thirdPartySection": {
+    "message": "Integracje firm trzecich"
   },
-  "restoreDefaultsMessage": {
-    "message": "Ustawienia domyślne zostały przywrócone."
+  "resetDefaultProviders": {
+    "message": "Przywróć domyślnych dostawców"
   },
-  "unsafeWebsiteTitle": {
-    "message": "Niebezpieczna strona zablokowana"
+  "resetAll": {
+    "message": "Przywróć wszystko"
+  },
+  "fieldLabelApiUrl": {
+    "message": "URL API"
+  },
+  "fieldLabelApiKey": {
+    "message": "Klucz API"
+  },
+  "applyButton": {
+    "message": "Zastosuj"
+  },
+  "indicatorAdultContent": {
+    "message": "Filtr treści dla dorosłych"
   },
   "officialPartnerTitle": {
     "message": "Oficjalny partner"
+  },
+  "indicatorIpProtected": {
+    "message": "Adres IP chroniony"
+  },
+  "showApiKey": {
+    "message": "Pokaż klucz API"
+  },
+  "hideApiKey": {
+    "message": "Ukryj klucz API"
+  },
+  "toastSaved": {
+    "message": "Zapisano."
+  },
+  "toastFailedToSave": {
+    "message": "Zapisanie nie powiodło się."
+  },
+  "toastDefaultProvidersRestored": {
+    "message": "Przywrócono domyślnych dostawców."
+  },
+  "toastAllSettingsRestored": {
+    "message": "Wszystkie ustawienia przywrócone."
+  },
+  "toastSaveApiKeyFirst": {
+    "message": "Zapisz prawidłowy klucz API przed włączeniem tej integracji."
+  },
+  "toastFailedToUpdateState": {
+    "message": "Aktualizacja stanu dostawcy nie powiodła się."
+  },
+  "statusHeadingSecure": {
+    "message": "Jesteś bezpieczny"
+  },
+  "statusHeadingNoProviders": {
+    "message": "Brak włączonych dostawców"
+  },
+  "statusIconAltProtected": {
+    "message": "Chroniony"
+  },
+  "providersEnabledCount": {
+    "message": "___ z ___ dostawców włączonych"
+  },
+  "openSettings": {
+    "message": "Otwórz ustawienia"
+  },
+  "unknownOrigin": {
+    "message": "Nieznane"
+  },
+  "urlUnavailable": {
+    "message": "Niedostępne"
+  },
+  "contextVerifyFailed": {
+    "message": "Ta strona ostrzeżenia nie mogła zweryfikować bezpiecznego kontekstu akcji. Kontynuuj i zezwól są wyłączone."
+  },
+  "providerLogoAlt": {
+    "message": "Logo $1"
+  },
+  "providerNameFallback": {
+    "message": "Dostawca"
   }
 }

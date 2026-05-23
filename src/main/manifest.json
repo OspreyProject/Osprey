@@ -2,7 +2,7 @@
   "short_name": "Osprey",
   "name": "__MSG_extensionName__",
   "manifest_version": 3,
-  "version": "1.5.0",
+  "version": "2.0.0",
   "description": "__MSG_extensionDescription__",
   "default_locale": "en",
   "background": {
@@ -10,19 +10,19 @@
   },
   "action": {
     "default_icon": {
-      "16": "assets/icons/icon16.png",
-      "24": "assets/icons/icon24.png",
-      "32": "assets/icons/icon32.png"
+      "16": "assets/osprey/icon16.png",
+      "24": "assets/osprey/icon24.png",
+      "32": "assets/osprey/icon32.png"
     },
-    "default_popup": "pages/popup/PopupPage.html"
+    "default_popup": "pages/popup/popup-page.html"
   },
   "content_security_policy": {
-    "extension_pages": "script-src 'self'; style-src 'self'; img-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+    "extension_pages": "script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
   },
   "icons": {
-    "16": "assets/icons/icon16.png",
-    "48": "assets/icons/icon48.png",
-    "128": "assets/icons/icon128.png"
+    "16": "assets/osprey/icon16.png",
+    "48": "assets/osprey/icon48.png",
+    "128": "assets/osprey/icon128.png"
   },
   "permissions": [
     "tabs",
@@ -38,5 +38,9 @@
   "storage": {
     "managed_schema": "policies.json"
   },
-  "update_url": "https://clients2.google.com/service/update2/crx"
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "options_ui": {
+    "page": "pages/settings/settings-page.html",
+    "open_in_tab": true
+  }
 }

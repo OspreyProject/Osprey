@@ -8,29 +8,32 @@
   "logoAlt": {
     "message": "Osprey Logosu"
   },
+  "unsafeWebsiteTitle": {
+    "message": "Güvensiz Web Sitesi Engellendi"
+  },
   "warningTitle": {
-    "message": "Uyarı: Bu web sitesi güvenli değil"
+    "message": "Uyarı: Bu web sitesi güvensiz"
   },
   "recommendation": {
     "message": "Osprey bu web sitesine erişimi engelledi. Devam etmek güvenli değil."
   },
   "details": {
-    "message": "Bu web sitesinin sahibiyseniz, lütfen sorunu çözmek için güvenlik sağlayıcısıyla iletişime geçin."
+    "message": "Bu web sitesinin sahibiyseniz, sorunu çözmek için güvenlik sağlayıcısıyla iletişime geçin."
   },
   "urlLabel": {
     "message": "URL: "
   },
   "reportedByLabel": {
-    "message": "Bildirilen kişi: "
+    "message": "Bildiren: "
   },
   "reportedByOthers": {
-    "message": "(ve ___ diğerleri)"
+    "message": "(ve ___ diğeri)"
   },
   "reportedByAlso": {
-    "message": "Ayrıca bildirenler: "
+    "message": "Ayrıca bildiren: "
   },
   "reasonLabel": {
-    "message": "Sebep: "
+    "message": "Neden: "
   },
   "reportWebsite": {
     "message": "Bu web sitesini güvenli olarak bildir"
@@ -44,38 +47,26 @@
   "continueButton": {
     "message": "Yine de devam et"
   },
-  "popupTitle": {
-    "message": "Koruma Seçenekleri"
-  },
-  "githubLink": {
-    "message": "GitHub’da Görüntüle"
-  },
   "version": {
     "message": "Sürüm: "
+  },
+  "websiteLink": {
+    "message": "Web sitesi"
   },
   "privacyPolicy": {
     "message": "Gizlilik Politikası"
   },
-  "onText": {
-    "message": "Açık"
-  },
-  "offText": {
-    "message": "Kapalı"
-  },
-  "onLockedText": {
-    "message": "Açık (Kilitli)"
-  },
-  "offLockedText": {
-    "message": "Kapalı (Kilitli)"
+  "termsLink": {
+    "message": "Koşullar"
   },
   "knownSafe": {
-    "message": "Güvenli Bilinen"
+    "message": "Bilinen Güvenli"
   },
   "failed": {
     "message": "Başarısız"
   },
   "waiting": {
-    "message": "Bekleniyor"
+    "message": "Bekliyor"
   },
   "allowed": {
     "message": "İzin Verildi"
@@ -84,45 +75,111 @@
     "message": "Kötü Amaçlı"
   },
   "phishing": {
-    "message": "Oltalama"
-  },
-  "untrusted": {
-    "message": "Güvenilmez"
+    "message": "Kimlik Avı"
   },
   "adultContent": {
     "message": "Yetişkin İçeriği"
   },
-  "toggleNotificationsContext": {
-    "message": "Bildirimleri etkinleştir"
-  },
   "toggleFrameNavigationContext": {
-    "message": "Çerçeve gezinmesini yoksay"
+    "message": "Çerçeve gezintisini yoksay"
   },
   "clearAllowedWebsitesContext": {
     "message": "İzin verilen web siteleri listesini temizle"
+  },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Web sitesini kötü amaçlı olarak bildir"
   },
   "clearAllowedWebsitesTitle": {
     "message": "İzin Verilen Web Siteleri Temizlendi"
   },
   "clearAllowedWebsitesMessage": {
-    "message": "Tüm izin verilen web siteleri temizlendi."
+    "message": "İzin verilen tüm web siteleri temizlendi."
   },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "Web sitesini kötü amaçlı olarak bildir"
+  "settingsTitle": {
+    "message": "Ayarlar"
   },
-  "restoreDefaultsContext": {
-    "message": "Varsayılan ayarları geri yükle"
+  "providersSection": {
+    "message": "Sağlayıcılar"
   },
-  "restoreDefaultsTitle": {
-    "message": "Varsayılan Ayarlar Geri Yüklendi"
+  "thirdPartySection": {
+    "message": "Üçüncü Taraf Entegrasyonları"
   },
-  "restoreDefaultsMessage": {
-    "message": "Varsayılan ayarlar geri yüklendi."
+  "resetDefaultProviders": {
+    "message": "Varsayılan sağlayıcıları sıfırla"
   },
-  "unsafeWebsiteTitle": {
-    "message": "Güvenli Olmayan Web Sitesi Engellendi"
+  "resetAll": {
+    "message": "Tümünü sıfırla"
+  },
+  "fieldLabelApiUrl": {
+    "message": "API URL'si"
+  },
+  "fieldLabelApiKey": {
+    "message": "API Anahtarı"
+  },
+  "applyButton": {
+    "message": "Uygula"
+  },
+  "indicatorAdultContent": {
+    "message": "Yetişkin içerik filtresi"
   },
   "officialPartnerTitle": {
-    "message": "Resmî Ortak"
+    "message": "Resmi Ortak"
+  },
+  "indicatorIpProtected": {
+    "message": "IP Adresi Korunuyor"
+  },
+  "showApiKey": {
+    "message": "API anahtarını göster"
+  },
+  "hideApiKey": {
+    "message": "API anahtarını gizle"
+  },
+  "toastSaved": {
+    "message": "Kaydedildi."
+  },
+  "toastFailedToSave": {
+    "message": "Kaydedilemedi."
+  },
+  "toastDefaultProvidersRestored": {
+    "message": "Varsayılan sağlayıcılar geri yüklendi."
+  },
+  "toastAllSettingsRestored": {
+    "message": "Tüm ayarlar geri yüklendi."
+  },
+  "toastSaveApiKeyFirst": {
+    "message": "Bu entegrasyonu etkinleştirmeden önce geçerli bir API anahtarı kaydedin."
+  },
+  "toastFailedToUpdateState": {
+    "message": "Sağlayıcı durumu güncellenemedi."
+  },
+  "statusHeadingSecure": {
+    "message": "Güvendesiniz"
+  },
+  "statusHeadingNoProviders": {
+    "message": "Etkin sağlayıcı yok"
+  },
+  "statusIconAltProtected": {
+    "message": "Korumalı"
+  },
+  "providersEnabledCount": {
+    "message": "___ / ___ sağlayıcı etkin"
+  },
+  "openSettings": {
+    "message": "Ayarları aç"
+  },
+  "unknownOrigin": {
+    "message": "Bilinmiyor"
+  },
+  "urlUnavailable": {
+    "message": "Kullanılamıyor"
+  },
+  "contextVerifyFailed": {
+    "message": "Bu uyarı sayfası güvenli eylem bağlamını doğrulayamadı. Devam et ve izin ver devre dışı bırakıldı."
+  },
+  "providerLogoAlt": {
+    "message": "$1 Logosu"
+  },
+  "providerNameFallback": {
+    "message": "Sağlayıcı"
   }
 }

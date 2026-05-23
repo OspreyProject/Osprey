@@ -8,11 +8,14 @@
   "logoAlt": {
     "message": "Logo Osprey"
   },
+  "unsafeWebsiteTitle": {
+    "message": "Sito web non sicuro bloccato"
+  },
   "warningTitle": {
-    "message": "Avviso: Questo sito web non è sicuro"
+    "message": "Avviso: questo sito web non è sicuro"
   },
   "recommendation": {
-    "message": "Osprey ha bloccato l’accesso a questo sito web. Non è sicuro continuare."
+    "message": "Osprey ha bloccato l'accesso a questo sito web. Non è sicuro continuare."
   },
   "details": {
     "message": "Se sei il proprietario di questo sito web, contatta il fornitore di sicurezza per risolvere il problema."
@@ -33,10 +36,10 @@
     "message": "Motivo: "
   },
   "reportWebsite": {
-    "message": "Segnala questo sito web come sicuro"
+    "message": "Segnala questo sito come sicuro"
   },
   "allowWebsite": {
-    "message": "Ignora sempre questo sito web"
+    "message": "Ignora sempre questo sito"
   },
   "backButton": {
     "message": "Torna alla sicurezza"
@@ -44,32 +47,20 @@
   "continueButton": {
     "message": "Continua comunque"
   },
-  "popupTitle": {
-    "message": "Opzioni di protezione"
-  },
-  "githubLink": {
-    "message": "Visualizza su GitHub"
-  },
   "version": {
     "message": "Versione: "
+  },
+  "websiteLink": {
+    "message": "Sito web"
   },
   "privacyPolicy": {
     "message": "Informativa sulla privacy"
   },
-  "onText": {
-    "message": "Attivo"
-  },
-  "offText": {
-    "message": "Disattivo"
-  },
-  "onLockedText": {
-    "message": "Attivo (bloccato)"
-  },
-  "offLockedText": {
-    "message": "Disattivo (bloccato)"
+  "termsLink": {
+    "message": "Termini"
   },
   "knownSafe": {
-    "message": "Conosciuto come sicuro"
+    "message": "Sicuro noto"
   },
   "failed": {
     "message": "Non riuscito"
@@ -86,43 +77,109 @@
   "phishing": {
     "message": "Phishing"
   },
-  "untrusted": {
-    "message": "Non attendibile"
-  },
   "adultContent": {
     "message": "Contenuti per adulti"
   },
-  "toggleNotificationsContext": {
-    "message": "Abilita notifiche"
-  },
   "toggleFrameNavigationContext": {
-    "message": "Ignora la navigazione nei frame"
+    "message": "Ignora la navigazione dei frame"
   },
   "clearAllowedWebsitesContext": {
-    "message": "Cancella elenco dei siti web consentiti"
-  },
-  "clearAllowedWebsitesTitle": {
-    "message": "Siti web consentiti cancellati"
-  },
-  "clearAllowedWebsitesMessage": {
-    "message": "Tutti i siti web consentiti sono stati cancellati."
+    "message": "Cancella elenco siti consentiti"
   },
   "reportWebsiteAsMaliciousContext": {
-    "message": "Segnala il sito web come dannoso"
+    "message": "Segnala sito come dannoso"
   },
-  "restoreDefaultsContext": {
-    "message": "Ripristina impostazioni predefinite"
+  "clearAllowedWebsitesTitle": {
+    "message": "Siti consentiti cancellati"
   },
-  "restoreDefaultsTitle": {
-    "message": "Impostazioni predefinite ripristinate"
+  "clearAllowedWebsitesMessage": {
+    "message": "Tutti i siti consentiti sono stati cancellati."
   },
-  "restoreDefaultsMessage": {
-    "message": "Le impostazioni predefinite sono state ripristinate."
+  "settingsTitle": {
+    "message": "Impostazioni"
   },
-  "unsafeWebsiteTitle": {
-    "message": "Sito web non sicuro bloccato"
+  "providersSection": {
+    "message": "Fornitori"
+  },
+  "thirdPartySection": {
+    "message": "Integrazioni di terze parti"
+  },
+  "resetDefaultProviders": {
+    "message": "Ripristina fornitori predefiniti"
+  },
+  "resetAll": {
+    "message": "Ripristina tutto"
+  },
+  "fieldLabelApiUrl": {
+    "message": "URL API"
+  },
+  "fieldLabelApiKey": {
+    "message": "Chiave API"
+  },
+  "applyButton": {
+    "message": "Applica"
+  },
+  "indicatorAdultContent": {
+    "message": "Filtro contenuti per adulti"
   },
   "officialPartnerTitle": {
     "message": "Partner ufficiale"
+  },
+  "indicatorIpProtected": {
+    "message": "Indirizzo IP protetto"
+  },
+  "showApiKey": {
+    "message": "Mostra chiave API"
+  },
+  "hideApiKey": {
+    "message": "Nascondi chiave API"
+  },
+  "toastSaved": {
+    "message": "Salvato."
+  },
+  "toastFailedToSave": {
+    "message": "Salvataggio non riuscito."
+  },
+  "toastDefaultProvidersRestored": {
+    "message": "Fornitori predefiniti ripristinati."
+  },
+  "toastAllSettingsRestored": {
+    "message": "Tutte le impostazioni ripristinate."
+  },
+  "toastSaveApiKeyFirst": {
+    "message": "Salva una chiave API valida prima di abilitare questa integrazione."
+  },
+  "toastFailedToUpdateState": {
+    "message": "Aggiornamento dello stato del fornitore non riuscito."
+  },
+  "statusHeadingSecure": {
+    "message": "Sei al sicuro"
+  },
+  "statusHeadingNoProviders": {
+    "message": "Nessun fornitore abilitato"
+  },
+  "statusIconAltProtected": {
+    "message": "Protetto"
+  },
+  "providersEnabledCount": {
+    "message": "___ di ___ fornitori abilitati"
+  },
+  "openSettings": {
+    "message": "Apri impostazioni"
+  },
+  "unknownOrigin": {
+    "message": "Sconosciuto"
+  },
+  "urlUnavailable": {
+    "message": "Non disponibile"
+  },
+  "contextVerifyFailed": {
+    "message": "Questa pagina di avviso non ha potuto verificare un contesto di azione sicura. Continua e consenti sono disabilitati."
+  },
+  "providerLogoAlt": {
+    "message": "Logo $1"
+  },
+  "providerNameFallback": {
+    "message": "Fornitore"
   }
 }

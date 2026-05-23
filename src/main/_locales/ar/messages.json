@@ -1,81 +1,72 @@
 {
   "extensionName": {
-    "message": "أوسبري: حماية المتصفح"
+    "message": "Osprey: حماية المتصفح"
   },
   "extensionDescription": {
-    "message": "احمِ نفسك من التهديدات عبر الإنترنت في الوقت الفعلي باستخدام عدة مزودي حماية للمتصفح."
+    "message": "الحماية من التهديدات الإلكترونية في الوقت الفعلي باستخدام مزودي حماية متعددين للمتصفح."
   },
   "logoAlt": {
-    "message": "شعار أوسبري"
+    "message": "شعار Osprey"
+  },
+  "unsafeWebsiteTitle": {
+    "message": "تم حظر موقع ويب غير آمن"
   },
   "warningTitle": {
     "message": "تحذير: هذا الموقع غير آمن"
   },
   "recommendation": {
-    "message": "قام أوسبري بحظر الوصول إلى هذا الموقع. الاستمرار غير آمن."
+    "message": "قام Osprey بحظر الوصول إلى هذا الموقع. من غير الآمن المتابعة."
   },
   "details": {
-    "message": "إذا كنت مالك هذا الموقع، يرجى الاتصال بمزود الأمان لحل المشكلة."
+    "message": "إذا كنت مالك هذا الموقع، يرجى التواصل مع مزود الأمان لحل المشكلة."
   },
   "urlLabel": {
-    "message": "عنوان URL: "
+    "message": "الرابط: "
   },
   "reportedByLabel": {
-    "message": "تم الإبلاغ عنه بواسطة: "
+    "message": "تم الإبلاغ بواسطة: "
   },
   "reportedByOthers": {
-    "message": "(و___ آخرين)"
+    "message": "(و ___ آخرين)"
   },
   "reportedByAlso": {
-    "message": "تم الإبلاغ عنه أيضًا بواسطة: "
+    "message": "تم الإبلاغ أيضاً بواسطة: "
   },
   "reasonLabel": {
-    "message": "سبب: "
+    "message": "السبب: "
   },
   "reportWebsite": {
-    "message": "الإبلاغ عن هذا الموقع على أنه آمن"
+    "message": "الإبلاغ عن هذا الموقع بأنه آمن"
   },
   "allowWebsite": {
-    "message": "تجاهل هذا الموقع دائمًا"
+    "message": "تجاهل هذا الموقع دائماً"
   },
   "backButton": {
-    "message": "العودة إلى صفحة آمنة"
+    "message": "العودة إلى الأمان"
   },
   "continueButton": {
-    "message": "متابعة على أي حال"
-  },
-  "popupTitle": {
-    "message": "خيارات الحماية"
-  },
-  "githubLink": {
-    "message": "عرض على GitHub"
+    "message": "المتابعة على أي حال"
   },
   "version": {
-    "message": "إصدار: "
+    "message": "الإصدار: "
+  },
+  "websiteLink": {
+    "message": "الموقع الإلكتروني"
   },
   "privacyPolicy": {
     "message": "سياسة الخصوصية"
   },
-  "onText": {
-    "message": "تشغيل"
-  },
-  "offText": {
-    "message": "إيقاف"
-  },
-  "onLockedText": {
-    "message": "تشغيل (مقفل)"
-  },
-  "offLockedText": {
-    "message": "إيقاف (مقفل)"
+  "termsLink": {
+    "message": "الشروط"
   },
   "knownSafe": {
-    "message": "موثوق"
+    "message": "آمن ومعروف"
   },
   "failed": {
     "message": "فشل"
   },
   "waiting": {
-    "message": "جارٍ الانتظار…"
+    "message": "انتظار"
   },
   "allowed": {
     "message": "مسموح"
@@ -84,45 +75,111 @@
     "message": "خبيث"
   },
   "phishing": {
-    "message": "التصيد"
-  },
-  "untrusted": {
-    "message": "غير موثوق"
+    "message": "تصيد احتيالي"
   },
   "adultContent": {
     "message": "محتوى للبالغين"
   },
-  "toggleNotificationsContext": {
-    "message": "تمكين الإشعارات"
-  },
   "toggleFrameNavigationContext": {
-    "message": "تجاهل التنقل بين الإطارات"
+    "message": "تجاهل تصفح الإطارات"
   },
   "clearAllowedWebsitesContext": {
     "message": "مسح قائمة المواقع المسموح بها"
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "الإبلاغ عن الموقع بأنه خبيث"
+  },
   "clearAllowedWebsitesTitle": {
-    "message": "تمت إزالة المواقع المسموح بها"
+    "message": "تم مسح المواقع المسموح بها"
   },
   "clearAllowedWebsitesMessage": {
-    "message": "لقد تم مسح جميع المواقع المسموح بها."
+    "message": "تم مسح جميع المواقع المسموح بها."
   },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "الإبلاغ عن موقع ويب باعتباره ضارًا"
+  "settingsTitle": {
+    "message": "الإعدادات"
   },
-  "restoreDefaultsContext": {
-    "message": "استعادة الإعدادات الافتراضية"
+  "providersSection": {
+    "message": "المزودون"
   },
-  "restoreDefaultsTitle": {
-    "message": "تمت استعادة الإعدادات الافتراضية"
+  "thirdPartySection": {
+    "message": "تكاملات الطرف الثالث"
   },
-  "restoreDefaultsMessage": {
-    "message": "تمت استعادة الإعدادات الافتراضية."
+  "resetDefaultProviders": {
+    "message": "إعادة تعيين المزودين الافتراضيين"
   },
-  "unsafeWebsiteTitle": {
-    "message": "تم حظر موقع غير آمن"
+  "resetAll": {
+    "message": "إعادة تعيين الكل"
+  },
+  "fieldLabelApiUrl": {
+    "message": "رابط API"
+  },
+  "fieldLabelApiKey": {
+    "message": "مفتاح API"
+  },
+  "applyButton": {
+    "message": "تطبيق"
+  },
+  "indicatorAdultContent": {
+    "message": "فلتر المحتوى للبالغين"
   },
   "officialPartnerTitle": {
-    "message": "الشريك الرسمي"
+    "message": "شريك رسمي"
+  },
+  "indicatorIpProtected": {
+    "message": "عنوان IP محمي"
+  },
+  "showApiKey": {
+    "message": "إظهار مفتاح API"
+  },
+  "hideApiKey": {
+    "message": "إخفاء مفتاح API"
+  },
+  "toastSaved": {
+    "message": "تم الحفظ."
+  },
+  "toastFailedToSave": {
+    "message": "فشل الحفظ."
+  },
+  "toastDefaultProvidersRestored": {
+    "message": "تمت استعادة المزودين الافتراضيين."
+  },
+  "toastAllSettingsRestored": {
+    "message": "تمت استعادة جميع الإعدادات."
+  },
+  "toastSaveApiKeyFirst": {
+    "message": "احفظ مفتاح API صالحاً قبل تفعيل هذا التكامل."
+  },
+  "toastFailedToUpdateState": {
+    "message": "فشل تحديث حالة المزود."
+  },
+  "statusHeadingSecure": {
+    "message": "أنت بأمان"
+  },
+  "statusHeadingNoProviders": {
+    "message": "لا يوجد مزودون مفعّلون"
+  },
+  "statusIconAltProtected": {
+    "message": "محمي"
+  },
+  "providersEnabledCount": {
+    "message": "___ من ___ مزود مفعّل"
+  },
+  "openSettings": {
+    "message": "فتح الإعدادات"
+  },
+  "unknownOrigin": {
+    "message": "غير معروف"
+  },
+  "urlUnavailable": {
+    "message": "غير متاح"
+  },
+  "contextVerifyFailed": {
+    "message": "تعذّر على صفحة التحذير هذه التحقق من سياق إجراء آمن. تم تعطيل خياري المتابعة والسماح."
+  },
+  "providerLogoAlt": {
+    "message": "شعار $1"
+  },
+  "providerNameFallback": {
+    "message": "المزود"
   }
 }

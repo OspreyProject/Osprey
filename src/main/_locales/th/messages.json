@@ -3,16 +3,19 @@
     "message": "Osprey: การป้องกันเบราว์เซอร์"
   },
   "extensionDescription": {
-    "message": "ป้องกันภัยคุกคามออนไลน์แบบเรียลไทม์ด้วยผู้ให้บริการการป้องกันเบราว์เซอร์หลายราย"
+    "message": "ป้องกันภัยคุกคามออนไลน์แบบเรียลไทม์โดยใช้ผู้ให้บริการป้องกันเบราว์เซอร์หลายราย"
   },
   "logoAlt": {
     "message": "โลโก้ Osprey"
+  },
+  "unsafeWebsiteTitle": {
+    "message": "เว็บไซต์ที่ไม่ปลอดภัยถูกบล็อก"
   },
   "warningTitle": {
     "message": "คำเตือน: เว็บไซต์นี้ไม่ปลอดภัย"
   },
   "recommendation": {
-    "message": "Osprey ได้บล็อกการเข้าถึงเว็บไซต์นี้ การดำเนินการต่อไม่ปลอดภัย"
+    "message": "Osprey ได้บล็อกการเข้าถึงเว็บไซต์นี้ ไม่ปลอดภัยที่จะดำเนินการต่อ"
   },
   "details": {
     "message": "หากคุณเป็นเจ้าของเว็บไซต์นี้ โปรดติดต่อผู้ให้บริการด้านความปลอดภัยเพื่อแก้ไขปัญหา"
@@ -24,10 +27,10 @@
     "message": "รายงานโดย: "
   },
   "reportedByOthers": {
-    "message": "(และ ___ คนอื่นๆ)"
+    "message": "(และอีก ___)"
   },
   "reportedByAlso": {
-    "message": "รายงานเพิ่มเติมโดย: "
+    "message": "รายงานโดยเพิ่มเติม: "
   },
   "reasonLabel": {
     "message": "เหตุผล: "
@@ -36,40 +39,28 @@
     "message": "รายงานเว็บไซต์นี้ว่าปลอดภัย"
   },
   "allowWebsite": {
-    "message": "เพิกเฉยเว็บไซต์นี้เสมอ"
+    "message": "ละเว้นเว็บไซต์นี้เสมอ"
   },
   "backButton": {
     "message": "กลับสู่ความปลอดภัย"
   },
   "continueButton": {
-    "message": "ดำเนินการต่อ"
-  },
-  "popupTitle": {
-    "message": "ตัวเลือกการป้องกัน"
-  },
-  "githubLink": {
-    "message": "ดูบน GitHub"
+    "message": "ดำเนินการต่อไปก็ได้"
   },
   "version": {
     "message": "เวอร์ชัน: "
   },
+  "websiteLink": {
+    "message": "เว็บไซต์"
+  },
   "privacyPolicy": {
     "message": "นโยบายความเป็นส่วนตัว"
   },
-  "onText": {
-    "message": "เปิด"
-  },
-  "offText": {
-    "message": "ปิด"
-  },
-  "onLockedText": {
-    "message": "เปิด (ล็อก)"
-  },
-  "offLockedText": {
-    "message": "ปิด (ล็อก)"
+  "termsLink": {
+    "message": "เงื่อนไข"
   },
   "knownSafe": {
-    "message": "ทราบว่าปลอดภัย"
+    "message": "ปลอดภัยที่รู้จัก"
   },
   "failed": {
     "message": "ล้มเหลว"
@@ -78,22 +69,16 @@
     "message": "กำลังรอ"
   },
   "allowed": {
-    "message": "อนุญาตแล้ว"
+    "message": "อนุญาต"
   },
   "malicious": {
-    "message": "เป็นอันตราย"
+    "message": "อันตราย"
   },
   "phishing": {
     "message": "ฟิชชิง"
   },
-  "untrusted": {
-    "message": "ไม่น่าเชื่อถือ"
-  },
   "adultContent": {
     "message": "เนื้อหาสำหรับผู้ใหญ่"
-  },
-  "toggleNotificationsContext": {
-    "message": "เปิดการแจ้งเตือน"
   },
   "toggleFrameNavigationContext": {
     "message": "ละเว้นการนำทางเฟรม"
@@ -101,28 +86,100 @@
   "clearAllowedWebsitesContext": {
     "message": "ล้างรายการเว็บไซต์ที่อนุญาต"
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "รายงานเว็บไซต์ว่าเป็นอันตราย"
+  },
   "clearAllowedWebsitesTitle": {
-    "message": "ล้างเว็บไซต์ที่อนุญาตแล้ว"
+    "message": "เว็บไซต์ที่อนุญาตถูกล้างแล้ว"
   },
   "clearAllowedWebsitesMessage": {
     "message": "เว็บไซต์ที่อนุญาตทั้งหมดถูกล้างแล้ว"
   },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "รายงานเว็บไซต์ว่าเป็นอันตราย"
+  "settingsTitle": {
+    "message": "การตั้งค่า"
   },
-  "restoreDefaultsContext": {
-    "message": "กู้คืนการตั้งค่าเริ่มต้น"
+  "providersSection": {
+    "message": "ผู้ให้บริการ"
   },
-  "restoreDefaultsTitle": {
-    "message": "การตั้งค่าเริ่มต้นถูกกู้คืนแล้ว"
+  "thirdPartySection": {
+    "message": "การรวมระบบบุคคลที่สาม"
   },
-  "restoreDefaultsMessage": {
-    "message": "การตั้งค่าเริ่มต้นถูกกู้คืนแล้ว"
+  "resetDefaultProviders": {
+    "message": "รีเซ็ตผู้ให้บริการเริ่มต้น"
   },
-  "unsafeWebsiteTitle": {
-    "message": "บล็อกเว็บไซต์ที่ไม่ปลอดภัย"
+  "resetAll": {
+    "message": "รีเซ็ตทั้งหมด"
+  },
+  "fieldLabelApiUrl": {
+    "message": "API URL"
+  },
+  "fieldLabelApiKey": {
+    "message": "คีย์ API"
+  },
+  "applyButton": {
+    "message": "ใช้งาน"
+  },
+  "indicatorAdultContent": {
+    "message": "ตัวกรองเนื้อหาสำหรับผู้ใหญ่"
   },
   "officialPartnerTitle": {
-    "message": "พาร์ทเนอร์อย่างเป็นทางการ"
+    "message": "พันธมิตรอย่างเป็นทางการ"
+  },
+  "indicatorIpProtected": {
+    "message": "ที่อยู่ IP ได้รับการป้องกัน"
+  },
+  "showApiKey": {
+    "message": "แสดงคีย์ API"
+  },
+  "hideApiKey": {
+    "message": "ซ่อนคีย์ API"
+  },
+  "toastSaved": {
+    "message": "บันทึกแล้ว"
+  },
+  "toastFailedToSave": {
+    "message": "บันทึกไม่สำเร็จ"
+  },
+  "toastDefaultProvidersRestored": {
+    "message": "คืนค่าผู้ให้บริการเริ่มต้นแล้ว"
+  },
+  "toastAllSettingsRestored": {
+    "message": "คืนค่าการตั้งค่าทั้งหมดแล้ว"
+  },
+  "toastSaveApiKeyFirst": {
+    "message": "บันทึกคีย์ API ที่ถูกต้องก่อนเปิดใช้งานการรวมระบบนี้"
+  },
+  "toastFailedToUpdateState": {
+    "message": "อัปเดตสถานะผู้ให้บริการไม่สำเร็จ"
+  },
+  "statusHeadingSecure": {
+    "message": "คุณปลอดภัย"
+  },
+  "statusHeadingNoProviders": {
+    "message": "ไม่มีผู้ให้บริการที่เปิดใช้งาน"
+  },
+  "statusIconAltProtected": {
+    "message": "ได้รับการป้องกัน"
+  },
+  "providersEnabledCount": {
+    "message": "___ จาก ___ ผู้ให้บริการเปิดใช้งาน"
+  },
+  "openSettings": {
+    "message": "เปิดการตั้งค่า"
+  },
+  "unknownOrigin": {
+    "message": "ไม่ทราบ"
+  },
+  "urlUnavailable": {
+    "message": "ไม่พร้อมใช้งาน"
+  },
+  "contextVerifyFailed": {
+    "message": "หน้าคำเตือนนี้ไม่สามารถยืนยันบริบทการดำเนินการที่ปลอดภัยได้ ปุ่มดำเนินการต่อและอนุญาตถูกปิดใช้งาน"
+  },
+  "providerLogoAlt": {
+    "message": "โลโก้ $1"
+  },
+  "providerNameFallback": {
+    "message": "ผู้ให้บริการ"
   }
 }

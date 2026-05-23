@@ -1,0 +1,184 @@
+/*
+ * Osprey - a browser extension that protects you from malicious websites.
+ * Copyright (C) 2026 Osprey Project (https://github.com/OspreyProject)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+/* --------------------------------------------------
+   General Styles
+-------------------------------------------------- */
+html, body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    font-weight: 400;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.gray {
+    background-color: #282828;
+}
+
+/* --------------------------------------------------
+   Banner
+-------------------------------------------------- */
+.banner {
+    display: flex;
+    align-items: stretch;
+    background-color: #f3ba22;
+    color: #ffffff;
+    position: relative;
+}
+
+.logo {
+    width: 50px;
+    display: block;
+    object-fit: cover;
+    user-select: none;
+    -webkit-user-select: none;
+    flex-shrink: 0;
+}
+
+.banner-text-group {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.bannerText {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.2;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+    padding: 8px 0;
+}
+
+/* --------------------------------------------------
+   Alternate Section Text
+-------------------------------------------------- */
+.alternate {
+    color: #ffffff;
+}
+
+/* --------------------------------------------------
+   Status View
+-------------------------------------------------- */
+.status-view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 10px 20px;
+    width: 320px;
+    box-sizing: border-box;
+}
+
+.checkmark-placeholder {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background-color: #3c3c3c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+}
+
+.checkmark-placeholder img {
+    width: 54px;
+    height: 54px;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.status-heading {
+    font-size: 20px;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0 0 8px;
+    text-align: center;
+}
+
+.provider-count {
+    font-size: 13px;
+    color: #b1b5b8;
+    margin: 0 0 24px;
+    text-align: center;
+}
+
+.settings-button {
+    background-color: #f3ba22;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 24px;
+    font-size: 14px;
+    font-family: 'Segoe UI', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.settings-button:hover {
+    background-color: #dca81c;
+}
+
+.settings-button:active {
+    background-color: #c89814;
+}
+
+/* --------------------------------------------------
+   Links
+-------------------------------------------------- */
+.links {
+    text-align: center;
+    margin-top: 10px;
+    padding-bottom: 10px;
+}
+
+.links a {
+    font-size: 12px;
+    color: #b1b5b8;
+    display: inline-block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-decoration: none;
+}
+
+.links span {
+    font-size: 12px;
+    color: #b1b5b8;
+}
+
+#privacyPolicy:hover,
+#websiteLink:hover {
+    text-decoration: underline;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#termsFooterLink:hover {
+    text-decoration: underline;
+}

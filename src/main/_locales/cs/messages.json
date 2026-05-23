@@ -3,126 +3,183 @@
     "message": "Osprey: Ochrana prohlížeče"
   },
   "extensionDescription": {
-    "message": "Chraňte se před online hrozbami v reálném čase pomocí několika poskytovatelů ochrany prohlížeče."
+    "message": "Chraňte se před online hrozbami v reálném čase pomocí více poskytovatelů ochrany prohlížeče."
   },
   "logoAlt": {
     "message": "Logo Osprey"
   },
+  "unsafeWebsiteTitle": {
+    "message": "Nebezpečná webová stránka zablokována"
+  },
   "warningTitle": {
-    "message": "Varování: Tento web je nebezpečný"
+    "message": "Upozornění: Tato webová stránka je nebezpečná"
   },
   "recommendation": {
-    "message": "Osprey zablokoval přístup k tomuto webu. Pokračování je nebezpečné."
+    "message": "Osprey zablokoval přístup na tuto webovou stránku. Pokračování není bezpečné."
   },
   "details": {
-    "message": "Pokud jste vlastníkem tohoto webu, kontaktujte prosím poskytovatele zabezpečení, aby problém vyřešil."
+    "message": "Pokud jste vlastníkem této webové stránky, obraťte se na poskytovatele zabezpečení a vyřešte problém."
   },
   "urlLabel": {
     "message": "URL: "
   },
   "reportedByLabel": {
-    "message": "Nahlásil(a): "
+    "message": "Nahlášeno: "
   },
   "reportedByOthers": {
     "message": "(a ___ dalších)"
   },
   "reportedByAlso": {
-    "message": "Také nahlásili: "
+    "message": "Také nahlášeno: "
   },
   "reasonLabel": {
     "message": "Důvod: "
   },
   "reportWebsite": {
-    "message": "Nahlásit tento web jako bezpečný"
+    "message": "Nahlásit tuto stránku jako bezpečnou"
   },
   "allowWebsite": {
-    "message": "Tento web vždy ignorovat"
+    "message": "Tuto stránku vždy ignorovat"
   },
   "backButton": {
-    "message": "Zpět na bezpečnou stránku"
+    "message": "Zpět do bezpečí"
   },
   "continueButton": {
-    "message": "Pokračovat přesto"
-  },
-  "popupTitle": {
-    "message": "Možnosti ochrany"
-  },
-  "githubLink": {
-    "message": "Zobrazit na GitHubu"
+    "message": "Přesto pokračovat"
   },
   "version": {
     "message": "Verze: "
   },
+  "websiteLink": {
+    "message": "Webová stránka"
+  },
   "privacyPolicy": {
     "message": "Zásady ochrany osobních údajů"
   },
-  "onText": {
-    "message": "Zapnuto"
-  },
-  "offText": {
-    "message": "Vypnuto"
-  },
-  "onLockedText": {
-    "message": "Zapnuto (uzamčeno)"
-  },
-  "offLockedText": {
-    "message": "Vypnuto (uzamčeno)"
+  "termsLink": {
+    "message": "Podmínky"
   },
   "knownSafe": {
-    "message": "Důvěryhodný"
+    "message": "Bezpečné"
   },
   "failed": {
-    "message": "Chyba"
+    "message": "Selhalo"
   },
   "waiting": {
-    "message": "Čekání…"
+    "message": "Čekání"
   },
   "allowed": {
     "message": "Povoleno"
   },
   "malicious": {
-    "message": "Škodlivý"
+    "message": "Škodlivé"
   },
   "phishing": {
     "message": "Phishing"
   },
-  "untrusted": {
-    "message": "Nedůvěryhodný"
-  },
   "adultContent": {
     "message": "Obsah pro dospělé"
-  },
-  "toggleNotificationsContext": {
-    "message": "Povolit upozornění"
   },
   "toggleFrameNavigationContext": {
     "message": "Ignorovat navigaci rámců"
   },
   "clearAllowedWebsitesContext": {
-    "message": "Vymazat seznam povolených webů"
-  },
-  "clearAllowedWebsitesTitle": {
-    "message": "Seznam povolených webů byl vymazán"
-  },
-  "clearAllowedWebsitesMessage": {
-    "message": "Všechny povolené weby byly vymazány."
+    "message": "Vymazat seznam povolených stránek"
   },
   "reportWebsiteAsMaliciousContext": {
-    "message": "Nahlásit webovou stránku jako škodlivou"
+    "message": "Nahlásit stránku jako škodlivou"
   },
-  "restoreDefaultsContext": {
-    "message": "Obnovit výchozí nastavení"
+  "clearAllowedWebsitesTitle": {
+    "message": "Povolené stránky vymazány"
   },
-  "restoreDefaultsTitle": {
-    "message": "Výchozí nastavení obnoveno"
+  "clearAllowedWebsitesMessage": {
+    "message": "Všechny povolené webové stránky byly vymazány."
   },
-  "restoreDefaultsMessage": {
-    "message": "Výchozí nastavení bylo obnoveno."
+  "settingsTitle": {
+    "message": "Nastavení"
   },
-  "unsafeWebsiteTitle": {
-    "message": "Nebezpečný web zablokován"
+  "providersSection": {
+    "message": "Poskytovatelé"
+  },
+  "thirdPartySection": {
+    "message": "Integrace třetích stran"
+  },
+  "resetDefaultProviders": {
+    "message": "Obnovit výchozí poskytovatele"
+  },
+  "resetAll": {
+    "message": "Obnovit vše"
+  },
+  "fieldLabelApiUrl": {
+    "message": "URL rozhraní API"
+  },
+  "fieldLabelApiKey": {
+    "message": "Klíč API"
+  },
+  "applyButton": {
+    "message": "Použít"
+  },
+  "indicatorAdultContent": {
+    "message": "Filtr obsahu pro dospělé"
   },
   "officialPartnerTitle": {
     "message": "Oficiální partner"
+  },
+  "indicatorIpProtected": {
+    "message": "IP adresa chráněna"
+  },
+  "showApiKey": {
+    "message": "Zobrazit klíč API"
+  },
+  "hideApiKey": {
+    "message": "Skrýt klíč API"
+  },
+  "toastSaved": {
+    "message": "Uloženo."
+  },
+  "toastFailedToSave": {
+    "message": "Uložení se nezdařilo."
+  },
+  "toastDefaultProvidersRestored": {
+    "message": "Výchozí poskytovatelé obnoveni."
+  },
+  "toastAllSettingsRestored": {
+    "message": "Všechna nastavení obnovena."
+  },
+  "toastSaveApiKeyFirst": {
+    "message": "Před povolením této integrace uložte platný klíč API."
+  },
+  "toastFailedToUpdateState": {
+    "message": "Aktualizace stavu poskytovatele se nezdařila."
+  },
+  "statusHeadingSecure": {
+    "message": "Jste v bezpečí"
+  },
+  "statusHeadingNoProviders": {
+    "message": "Žádní povolení poskytovatelé"
+  },
+  "statusIconAltProtected": {
+    "message": "Chráněno"
+  },
+  "providersEnabledCount": {
+    "message": "___ z ___ poskytovatelů povoleno"
+  },
+  "openSettings": {
+    "message": "Otevřít nastavení"
+  },
+  "unknownOrigin": {
+    "message": "Neznámý"
+  },
+  "urlUnavailable": {
+    "message": "Nedostupné"
+  },
+  "contextVerifyFailed": {
+    "message": "Tato varovná stránka nemohla ověřit kontext bezpečné akce. Možnosti pokračovat a povolit jsou zakázány."
+  },
+  "providerLogoAlt": {
+    "message": "Logo $1"
+  },
+  "providerNameFallback": {
+    "message": "Poskytovatel"
   }
 }

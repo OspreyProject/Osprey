@@ -3,19 +3,22 @@
     "message": "Osprey: Browserbeskyttelse"
   },
   "extensionDescription": {
-    "message": "Beskyt dig mod onlinetrusler i realtid ved hjælp af flere browserbeskyttelsesudbydere."
+    "message": "Beskyt mod onlinetrusler i realtid med flere browserbeskyttelsesudbydere."
   },
   "logoAlt": {
-    "message": "Osprey Logo"
+    "message": "Osprey-logo"
+  },
+  "unsafeWebsiteTitle": {
+    "message": "Usikkert websted blokeret"
   },
   "warningTitle": {
     "message": "Advarsel: Dette websted er usikkert"
   },
   "recommendation": {
-    "message": "Osprey har blokeret adgangen til dette websted. Det er usikkert at fortsætte."
+    "message": "Osprey har blokeret adgangen til dette websted. Det er ikke sikkert at fortsætte."
   },
   "details": {
-    "message": "Hvis du er ejeren af dette websted, bedes du kontakte sikkerhedsudbyderen for at løse problemet."
+    "message": "Hvis du ejer dette websted, bedes du kontakte sikkerhedsudbyderen for at løse problemet."
   },
   "urlLabel": {
     "message": "URL: "
@@ -39,40 +42,28 @@
     "message": "Ignorer altid dette websted"
   },
   "backButton": {
-    "message": "Tilbage til sikker side"
+    "message": "Tilbage til sikkerhed"
   },
   "continueButton": {
     "message": "Fortsæt alligevel"
   },
-  "popupTitle": {
-    "message": "Beskyttelsesindstillinger"
-  },
-  "githubLink": {
-    "message": "Vis på GitHub"
-  },
   "version": {
     "message": "Version: "
+  },
+  "websiteLink": {
+    "message": "Websted"
   },
   "privacyPolicy": {
     "message": "Privatlivspolitik"
   },
-  "onText": {
-    "message": "Til"
-  },
-  "offText": {
-    "message": "Fra"
-  },
-  "onLockedText": {
-    "message": "Til (låst)"
-  },
-  "offLockedText": {
-    "message": "Fra (låst)"
+  "termsLink": {
+    "message": "Vilkår"
   },
   "knownSafe": {
-    "message": "Kendt som sikker"
+    "message": "Kendt sikkert"
   },
   "failed": {
-    "message": "Mislykket"
+    "message": "Mislykkedes"
   },
   "waiting": {
     "message": "Venter"
@@ -86,43 +77,109 @@
   "phishing": {
     "message": "Phishing"
   },
-  "untrusted": {
-    "message": "Ikke pålidelig"
-  },
   "adultContent": {
     "message": "Voksenindhold"
   },
-  "toggleNotificationsContext": {
-    "message": "Aktivér meddelelser"
-  },
   "toggleFrameNavigationContext": {
-    "message": "Ignorer rammenavigation"
+    "message": "Ignorer frame-navigation"
   },
   "clearAllowedWebsitesContext": {
-    "message": "Ryd listen over tilladte websteder"
+    "message": "Ryd liste over tilladte websteder"
+  },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Rapportér websted som ondsindet"
   },
   "clearAllowedWebsitesTitle": {
-    "message": "Listen over tilladte websteder er ryddet"
+    "message": "Tilladte websteder ryddet"
   },
   "clearAllowedWebsitesMessage": {
     "message": "Alle tilladte websteder er blevet ryddet."
   },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "Anmeld webstedet som ondsindet"
+  "settingsTitle": {
+    "message": "Indstillinger"
   },
-  "restoreDefaultsContext": {
-    "message": "Gendan standardindstillinger"
+  "providersSection": {
+    "message": "Udbydere"
   },
-  "restoreDefaultsTitle": {
-    "message": "Standardindstillinger gendannet"
+  "thirdPartySection": {
+    "message": "Tredjepartsintegrationer"
   },
-  "restoreDefaultsMessage": {
-    "message": "Standardindstillingerne er blevet gendannet."
+  "resetDefaultProviders": {
+    "message": "Nulstil standardudbydere"
   },
-  "unsafeWebsiteTitle": {
-    "message": "Usikkert websted blokeret"
+  "resetAll": {
+    "message": "Nulstil alt"
+  },
+  "fieldLabelApiUrl": {
+    "message": "API URL"
+  },
+  "fieldLabelApiKey": {
+    "message": "API-nøgle"
+  },
+  "applyButton": {
+    "message": "Anvend"
+  },
+  "indicatorAdultContent": {
+    "message": "Filter for voksenindhold"
   },
   "officialPartnerTitle": {
     "message": "Officiel partner"
+  },
+  "indicatorIpProtected": {
+    "message": "IP-adresse beskyttet"
+  },
+  "showApiKey": {
+    "message": "Vis API-nøgle"
+  },
+  "hideApiKey": {
+    "message": "Skjul API-nøgle"
+  },
+  "toastSaved": {
+    "message": "Gemt."
+  },
+  "toastFailedToSave": {
+    "message": "Kunne ikke gemme."
+  },
+  "toastDefaultProvidersRestored": {
+    "message": "Standardudbydere gendannet."
+  },
+  "toastAllSettingsRestored": {
+    "message": "Alle indstillinger gendannet."
+  },
+  "toastSaveApiKeyFirst": {
+    "message": "Gem en gyldig API-nøgle, før du aktiverer denne integration."
+  },
+  "toastFailedToUpdateState": {
+    "message": "Kunne ikke opdatere udbyderens tilstand."
+  },
+  "statusHeadingSecure": {
+    "message": "Du er sikker"
+  },
+  "statusHeadingNoProviders": {
+    "message": "Ingen udbydere aktiveret"
+  },
+  "statusIconAltProtected": {
+    "message": "Beskyttet"
+  },
+  "providersEnabledCount": {
+    "message": "___ af ___ udbydere aktiveret"
+  },
+  "openSettings": {
+    "message": "Åbn indstillinger"
+  },
+  "unknownOrigin": {
+    "message": "Ukendt"
+  },
+  "urlUnavailable": {
+    "message": "Utilgængelig"
+  },
+  "contextVerifyFailed": {
+    "message": "Denne advarselsside kunne ikke bekræfte en sikker handlingskontekst. Fortsæt og tillad er deaktiveret."
+  },
+  "providerLogoAlt": {
+    "message": "$1-logo"
+  },
+  "providerNameFallback": {
+    "message": "Udbyder"
   }
 }

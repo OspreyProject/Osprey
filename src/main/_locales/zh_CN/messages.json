@@ -3,70 +3,61 @@
     "message": "Osprey：浏览器保护"
   },
   "extensionDescription": {
-    "message": "通过多个浏览器保护提供商，实时抵御网络威胁。"
+    "message": "使用多个浏览器保护提供商，实时防护在线威胁。"
   },
   "logoAlt": {
     "message": "Osprey 标志"
+  },
+  "unsafeWebsiteTitle": {
+    "message": "不安全网站已被拦截"
   },
   "warningTitle": {
     "message": "警告：此网站不安全"
   },
   "recommendation": {
-    "message": "Osprey 已阻止访问此网站。继续操作不安全。"
+    "message": "Osprey 已阻止访问此网站。继续操作并不安全。"
   },
   "details": {
-    "message": "如果您是此网站的所有者，请联系安全提供商以解决问题。"
+    "message": "如果您是该网站的所有者，请联系安全提供商以解决此问题。"
   },
   "urlLabel": {
-    "message": "网址: "
+    "message": "网址："
   },
   "reportedByLabel": {
-    "message": "报告人: "
+    "message": "举报方："
   },
   "reportedByOthers": {
-    "message": "（以及 ___ 其他人）"
+    "message": "（及其他 ___ 方）"
   },
   "reportedByAlso": {
-    "message": "还由以下人员报告: "
+    "message": "同时举报方："
   },
   "reasonLabel": {
-    "message": "原因: "
+    "message": "原因："
   },
   "reportWebsite": {
-    "message": "将此网站报告为安全"
+    "message": "将此网站举报为安全"
   },
   "allowWebsite": {
     "message": "始终忽略此网站"
   },
   "backButton": {
-    "message": "返回安全"
+    "message": "返回安全页面"
   },
   "continueButton": {
     "message": "仍然继续"
   },
-  "popupTitle": {
-    "message": "保护选项"
-  },
-  "githubLink": {
-    "message": "在 GitHub 上查看"
-  },
   "version": {
-    "message": "版本: "
+    "message": "版本："
+  },
+  "websiteLink": {
+    "message": "网站"
   },
   "privacyPolicy": {
     "message": "隐私政策"
   },
-  "onText": {
-    "message": "开启"
-  },
-  "offText": {
-    "message": "关闭"
-  },
-  "onLockedText": {
-    "message": "开启（锁定）"
-  },
-  "offLockedText": {
-    "message": "关闭（锁定）"
+  "termsLink": {
+    "message": "条款"
   },
   "knownSafe": {
     "message": "已知安全"
@@ -86,43 +77,109 @@
   "phishing": {
     "message": "网络钓鱼"
   },
-  "untrusted": {
-    "message": "不受信任"
-  },
   "adultContent": {
     "message": "成人内容"
-  },
-  "toggleNotificationsContext": {
-    "message": "启用通知"
   },
   "toggleFrameNavigationContext": {
     "message": "忽略框架导航"
   },
   "clearAllowedWebsitesContext": {
-    "message": "清除允许的网站列表"
+    "message": "清除允许网站列表"
+  },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "将网站举报为恶意"
   },
   "clearAllowedWebsitesTitle": {
-    "message": "允许的网站已清除"
+    "message": "已清除允许的网站"
   },
   "clearAllowedWebsitesMessage": {
     "message": "所有允许的网站已被清除。"
   },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "举报网站为恶意网站"
+  "settingsTitle": {
+    "message": "设置"
   },
-  "restoreDefaultsContext": {
-    "message": "恢复默认设置"
+  "providersSection": {
+    "message": "提供商"
   },
-  "restoreDefaultsTitle": {
-    "message": "默认设置已恢复"
+  "thirdPartySection": {
+    "message": "第三方集成"
   },
-  "restoreDefaultsMessage": {
-    "message": "默认设置已恢复。"
+  "resetDefaultProviders": {
+    "message": "重置默认提供商"
   },
-  "unsafeWebsiteTitle": {
-    "message": "不安全的网站已被阻止"
+  "resetAll": {
+    "message": "全部重置"
+  },
+  "fieldLabelApiUrl": {
+    "message": "API 网址"
+  },
+  "fieldLabelApiKey": {
+    "message": "API 密钥"
+  },
+  "applyButton": {
+    "message": "应用"
+  },
+  "indicatorAdultContent": {
+    "message": "成人内容过滤器"
   },
   "officialPartnerTitle": {
     "message": "官方合作伙伴"
+  },
+  "indicatorIpProtected": {
+    "message": "IP 地址已受保护"
+  },
+  "showApiKey": {
+    "message": "显示 API 密钥"
+  },
+  "hideApiKey": {
+    "message": "隐藏 API 密钥"
+  },
+  "toastSaved": {
+    "message": "已保存。"
+  },
+  "toastFailedToSave": {
+    "message": "保存失败。"
+  },
+  "toastDefaultProvidersRestored": {
+    "message": "默认提供商已恢复。"
+  },
+  "toastAllSettingsRestored": {
+    "message": "所有设置已恢复。"
+  },
+  "toastSaveApiKeyFirst": {
+    "message": "在启用此集成之前，请先保存有效的 API 密钥。"
+  },
+  "toastFailedToUpdateState": {
+    "message": "更新提供商状态失败。"
+  },
+  "statusHeadingSecure": {
+    "message": "您已受到保护"
+  },
+  "statusHeadingNoProviders": {
+    "message": "未启用任何提供商"
+  },
+  "statusIconAltProtected": {
+    "message": "已保护"
+  },
+  "providersEnabledCount": {
+    "message": "___ / ___ 提供商已启用"
+  },
+  "openSettings": {
+    "message": "打开设置"
+  },
+  "unknownOrigin": {
+    "message": "未知"
+  },
+  "urlUnavailable": {
+    "message": "不可用"
+  },
+  "contextVerifyFailed": {
+    "message": "此警告页面无法验证安全操作上下文。继续和允许操作已被禁用。"
+  },
+  "providerLogoAlt": {
+    "message": "$1 标志"
+  },
+  "providerNameFallback": {
+    "message": "提供商"
   }
 }

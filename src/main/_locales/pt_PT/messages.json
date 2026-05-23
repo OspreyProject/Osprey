@@ -3,19 +3,22 @@
     "message": "Osprey: Proteção do Navegador"
   },
   "extensionDescription": {
-    "message": "Proteja-se contra ameaças online em tempo real usando vários fornecedores de proteção de navegador."
+    "message": "Proteja-se contra ameaças online em tempo real utilizando vários fornecedores de proteção do navegador."
   },
   "logoAlt": {
-    "message": "Logótipo Osprey"
+    "message": "Logótipo do Osprey"
+  },
+  "unsafeWebsiteTitle": {
+    "message": "Site inseguro bloqueado"
   },
   "warningTitle": {
-    "message": "Aviso: Este site não é seguro"
+    "message": "Aviso: Este site é inseguro"
   },
   "recommendation": {
     "message": "O Osprey bloqueou o acesso a este site. Não é seguro continuar."
   },
   "details": {
-    "message": "Se é o proprietário deste site, por favor contacte o fornecedor de segurança para resolver o problema."
+    "message": "Se for o proprietário deste site, contacte o fornecedor de segurança para resolver o problema."
   },
   "urlLabel": {
     "message": "URL: "
@@ -42,37 +45,25 @@
     "message": "Voltar à segurança"
   },
   "continueButton": {
-    "message": "Continuar mesmo assim"
-  },
-  "popupTitle": {
-    "message": "Opções de Proteção"
-  },
-  "githubLink": {
-    "message": "Ver no GitHub"
+    "message": "Continuar na mesma"
   },
   "version": {
     "message": "Versão: "
   },
+  "websiteLink": {
+    "message": "Site"
+  },
   "privacyPolicy": {
     "message": "Política de Privacidade"
   },
-  "onText": {
-    "message": "Ligado"
-  },
-  "offText": {
-    "message": "Desligado"
-  },
-  "onLockedText": {
-    "message": "Ligado (Bloqueado)"
-  },
-  "offLockedText": {
-    "message": "Desligado (Bloqueado)"
+  "termsLink": {
+    "message": "Termos"
   },
   "knownSafe": {
-    "message": "Conhecido como Seguro"
+    "message": "Seguro conhecido"
   },
   "failed": {
-    "message": "Falhou"
+    "message": "Falhado"
   },
   "waiting": {
     "message": "A aguardar"
@@ -86,43 +77,109 @@
   "phishing": {
     "message": "Phishing"
   },
-  "untrusted": {
-    "message": "Não Fidedigno"
-  },
   "adultContent": {
-    "message": "Conteúdo para Adultos"
-  },
-  "toggleNotificationsContext": {
-    "message": "Ativar notificações"
+    "message": "Conteúdo para adultos"
   },
   "toggleFrameNavigationContext": {
-    "message": "Ignorar navegação em frames"
+    "message": "Ignorar navegação de frames"
   },
   "clearAllowedWebsitesContext": {
     "message": "Limpar lista de sites permitidos"
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Reportar site como malicioso"
+  },
   "clearAllowedWebsitesTitle": {
-    "message": "Sites Permitidos Limpos"
+    "message": "Sites permitidos limpos"
   },
   "clearAllowedWebsitesMessage": {
     "message": "Todos os sites permitidos foram limpos."
   },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "Denunciar site como malicioso"
+  "settingsTitle": {
+    "message": "Definições"
   },
-  "restoreDefaultsContext": {
-    "message": "Repor definições padrão"
+  "providersSection": {
+    "message": "Fornecedores"
   },
-  "restoreDefaultsTitle": {
-    "message": "Definições Padrão Repostas"
+  "thirdPartySection": {
+    "message": "Integrações de terceiros"
   },
-  "restoreDefaultsMessage": {
-    "message": "As definições padrão foram repostas."
+  "resetDefaultProviders": {
+    "message": "Repor fornecedores predefinidos"
   },
-  "unsafeWebsiteTitle": {
-    "message": "Site Não Seguro Bloqueado"
+  "resetAll": {
+    "message": "Repor tudo"
+  },
+  "fieldLabelApiUrl": {
+    "message": "URL da API"
+  },
+  "fieldLabelApiKey": {
+    "message": "Chave de API"
+  },
+  "applyButton": {
+    "message": "Aplicar"
+  },
+  "indicatorAdultContent": {
+    "message": "Filtro de conteúdo para adultos"
   },
   "officialPartnerTitle": {
-    "message": "Parceiro Oficial"
+    "message": "Parceiro oficial"
+  },
+  "indicatorIpProtected": {
+    "message": "Endereço IP protegido"
+  },
+  "showApiKey": {
+    "message": "Mostrar chave de API"
+  },
+  "hideApiKey": {
+    "message": "Ocultar chave de API"
+  },
+  "toastSaved": {
+    "message": "Guardado."
+  },
+  "toastFailedToSave": {
+    "message": "Falha ao guardar."
+  },
+  "toastDefaultProvidersRestored": {
+    "message": "Fornecedores predefinidos restaurados."
+  },
+  "toastAllSettingsRestored": {
+    "message": "Todas as definições restauradas."
+  },
+  "toastSaveApiKeyFirst": {
+    "message": "Guarde uma chave de API válida antes de ativar esta integração."
+  },
+  "toastFailedToUpdateState": {
+    "message": "Falha ao atualizar o estado do fornecedor."
+  },
+  "statusHeadingSecure": {
+    "message": "Está seguro"
+  },
+  "statusHeadingNoProviders": {
+    "message": "Nenhum fornecedor ativo"
+  },
+  "statusIconAltProtected": {
+    "message": "Protegido"
+  },
+  "providersEnabledCount": {
+    "message": "___ de ___ fornecedores ativos"
+  },
+  "openSettings": {
+    "message": "Abrir definições"
+  },
+  "unknownOrigin": {
+    "message": "Desconhecido"
+  },
+  "urlUnavailable": {
+    "message": "Indisponível"
+  },
+  "contextVerifyFailed": {
+    "message": "Esta página de aviso não conseguiu verificar um contexto de ação segura. Continuar e permitir estão desativados."
+  },
+  "providerLogoAlt": {
+    "message": "Logótipo de $1"
+  },
+  "providerNameFallback": {
+    "message": "Fornecedor"
   }
 }

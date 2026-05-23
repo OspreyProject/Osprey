@@ -3,19 +3,22 @@
     "message": "Osprey: Böngészővédelem"
   },
   "extensionDescription": {
-    "message": "Védje magát az online fenyegetések ellen valós időben több böngészővédelmi szolgáltató segítségével."
+    "message": "Valós idejű védelmet nyújt az online fenyegetések ellen több böngészővédelmi szolgáltató segítségével."
   },
   "logoAlt": {
     "message": "Osprey logó"
+  },
+  "unsafeWebsiteTitle": {
+    "message": "Nem biztonságos weboldal blokkolva"
   },
   "warningTitle": {
     "message": "Figyelmeztetés: Ez a weboldal nem biztonságos"
   },
   "recommendation": {
-    "message": "Az Osprey letiltotta a hozzáférést ehhez a weboldalhoz. A folytatás nem biztonságos."
+    "message": "Az Osprey blokkolta a hozzáférést ehhez a weboldalhoz. Nem biztonságos a folytatás."
   },
   "details": {
-    "message": "Ha Ön a weboldal tulajdonosa, kérjük, vegye fel a kapcsolatot a biztonsági szolgáltatóval a probléma megoldásához."
+    "message": "Ha Ön a weboldal tulajdonosa, kérjük vegye fel a kapcsolatot a biztonsági szolgáltatóval a probléma megoldása érdekében."
   },
   "urlLabel": {
     "message": "URL: "
@@ -24,52 +27,40 @@
     "message": "Jelentette: "
   },
   "reportedByOthers": {
-    "message": "(és még ___ mások)"
+    "message": "(és ___ másik)"
   },
   "reportedByAlso": {
-    "message": "Továbbá jelentette: "
+    "message": "Szintén jelentette: "
   },
   "reasonLabel": {
     "message": "Ok: "
   },
   "reportWebsite": {
-    "message": "Jelentse ezt a weboldalt biztonságosként"
+    "message": "Weboldal jelentése biztonságosként"
   },
   "allowWebsite": {
-    "message": "Mindig hagyja figyelmen kívül ezt a weboldalt"
+    "message": "Weboldal mindig figyelmen kívül hagyása"
   },
   "backButton": {
-    "message": "Vissza a biztonsághoz"
+    "message": "Vissza a biztonságba"
   },
   "continueButton": {
-    "message": "Folytatás mindenképp"
-  },
-  "popupTitle": {
-    "message": "Védelmi beállítások"
-  },
-  "githubLink": {
-    "message": "Megtekintés GitHubon"
+    "message": "Folytatás mindenképpen"
   },
   "version": {
     "message": "Verzió: "
   },
+  "websiteLink": {
+    "message": "Weboldal"
+  },
   "privacyPolicy": {
-    "message": "Adatvédelmi irányelvek"
+    "message": "Adatvédelmi szabályzat"
   },
-  "onText": {
-    "message": "Be"
-  },
-  "offText": {
-    "message": "Ki"
-  },
-  "onLockedText": {
-    "message": "Be (zárolva)"
-  },
-  "offLockedText": {
-    "message": "Ki (zárolva)"
+  "termsLink": {
+    "message": "Feltételek"
   },
   "knownSafe": {
-    "message": "Ismert biztonságos"
+    "message": "Ismerten biztonságos"
   },
   "failed": {
     "message": "Sikertelen"
@@ -78,51 +69,117 @@
     "message": "Várakozás"
   },
   "allowed": {
-    "message": "Engedélyezve"
+    "message": "Engedélyezett"
   },
   "malicious": {
-    "message": "Kártékony"
+    "message": "Rosszindulatú"
   },
   "phishing": {
     "message": "Adathalászat"
   },
-  "untrusted": {
-    "message": "Megbízhatatlan"
-  },
   "adultContent": {
     "message": "Felnőtt tartalom"
   },
-  "toggleNotificationsContext": {
-    "message": "Értesítések engedélyezése"
-  },
   "toggleFrameNavigationContext": {
-    "message": "Keretes navigáció figyelmen kívül hagyása"
+    "message": "Képkeret-navigáció figyelmen kívül hagyása"
   },
   "clearAllowedWebsitesContext": {
     "message": "Engedélyezett weboldalak listájának törlése"
+  },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Weboldal jelentése rosszindulatúként"
   },
   "clearAllowedWebsitesTitle": {
     "message": "Engedélyezett weboldalak törölve"
   },
   "clearAllowedWebsitesMessage": {
-    "message": "Minden engedélyezett weboldal törölve lett."
+    "message": "Az összes engedélyezett weboldal törölve lett."
   },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "Jelentse a webhelyet rosszindulatúnak"
+  "settingsTitle": {
+    "message": "Beállítások"
   },
-  "restoreDefaultsContext": {
-    "message": "Alapértelmezett beállítások visszaállítása"
+  "providersSection": {
+    "message": "Szolgáltatók"
   },
-  "restoreDefaultsTitle": {
-    "message": "Alapértelmezett beállítások visszaállítva"
+  "thirdPartySection": {
+    "message": "Harmadik féltől származó integrációk"
   },
-  "restoreDefaultsMessage": {
-    "message": "Az alapértelmezett beállítások visszaállításra kerültek."
+  "resetDefaultProviders": {
+    "message": "Alapértelmezett szolgáltatók visszaállítása"
   },
-  "unsafeWebsiteTitle": {
-    "message": "Nem biztonságos weboldal blokkolva"
+  "resetAll": {
+    "message": "Összes visszaállítása"
+  },
+  "fieldLabelApiUrl": {
+    "message": "API URL"
+  },
+  "fieldLabelApiKey": {
+    "message": "API kulcs"
+  },
+  "applyButton": {
+    "message": "Alkalmaz"
+  },
+  "indicatorAdultContent": {
+    "message": "Felnőtt tartalom szűrő"
   },
   "officialPartnerTitle": {
     "message": "Hivatalos partner"
+  },
+  "indicatorIpProtected": {
+    "message": "IP-cím védett"
+  },
+  "showApiKey": {
+    "message": "API kulcs megjelenítése"
+  },
+  "hideApiKey": {
+    "message": "API kulcs elrejtése"
+  },
+  "toastSaved": {
+    "message": "Mentve."
+  },
+  "toastFailedToSave": {
+    "message": "Mentés sikertelen."
+  },
+  "toastDefaultProvidersRestored": {
+    "message": "Alapértelmezett szolgáltatók visszaállítva."
+  },
+  "toastAllSettingsRestored": {
+    "message": "Minden beállítás visszaállítva."
+  },
+  "toastSaveApiKeyFirst": {
+    "message": "Mentsen el egy érvényes API kulcsot az integráció engedélyezése előtt."
+  },
+  "toastFailedToUpdateState": {
+    "message": "A szolgáltató állapotának frissítése sikertelen."
+  },
+  "statusHeadingSecure": {
+    "message": "Biztonságban van"
+  },
+  "statusHeadingNoProviders": {
+    "message": "Nincs engedélyezett szolgáltató"
+  },
+  "statusIconAltProtected": {
+    "message": "Védett"
+  },
+  "providersEnabledCount": {
+    "message": "___ / ___ szolgáltató engedélyezve"
+  },
+  "openSettings": {
+    "message": "Beállítások megnyitása"
+  },
+  "unknownOrigin": {
+    "message": "Ismeretlen"
+  },
+  "urlUnavailable": {
+    "message": "Nem elérhető"
+  },
+  "contextVerifyFailed": {
+    "message": "Ez a figyelmeztető oldal nem tudta ellenőrizni a biztonságos műveleti környezetet. A folytatás és az engedélyezés le van tiltva."
+  },
+  "providerLogoAlt": {
+    "message": "$1 logó"
+  },
+  "providerNameFallback": {
+    "message": "Szolgáltató"
   }
 }

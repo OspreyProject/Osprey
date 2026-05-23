@@ -3,13 +3,16 @@
     "message": "Osprey: Protecció del navegador"
   },
   "extensionDescription": {
-    "message": "Protegiu-vos de les amenaces en línia en temps real utilitzant diversos proveïdors de protecció de navegadors."
+    "message": "Protegeix-te de les amenaces en línia en temps real amb múltiples proveïdors de protecció del navegador."
   },
   "logoAlt": {
-    "message": "Logotip d’Osprey"
+    "message": "Logotip d'Osprey"
+  },
+  "unsafeWebsiteTitle": {
+    "message": "Lloc web no segur bloquejat"
   },
   "warningTitle": {
-    "message": "Avís: Aquest lloc web no és segur"
+    "message": "Avís: aquest lloc web no és segur"
   },
   "recommendation": {
     "message": "Osprey ha bloquejat l'accés a aquest lloc web. No és segur continuar."
@@ -21,61 +24,49 @@
     "message": "URL: "
   },
   "reportedByLabel": {
-    "message": "Reportat per: "
+    "message": "Notificat per: "
   },
   "reportedByOthers": {
-    "message": "(i ___ altres)"
+    "message": "(i ___ més)"
   },
   "reportedByAlso": {
-    "message": "També reportat per: "
+    "message": "També notificat per: "
   },
   "reasonLabel": {
     "message": "Motiu: "
   },
   "reportWebsite": {
-    "message": "Informa d'aquest lloc web com a segur"
+    "message": "Notifica aquest lloc web com a segur"
   },
   "allowWebsite": {
-    "message": "Ignoreu sempre aquest lloc web"
+    "message": "Ignora sempre aquest lloc web"
   },
   "backButton": {
-    "message": "Torna a una pàgina segura"
+    "message": "Torna a la seguretat"
   },
   "continueButton": {
-    "message": "Continueu igualment"
-  },
-  "popupTitle": {
-    "message": "Opcions de protecció"
-  },
-  "githubLink": {
-    "message": "Veure a GitHub"
+    "message": "Continua igualment"
   },
   "version": {
     "message": "Versió: "
   },
+  "websiteLink": {
+    "message": "Lloc web"
+  },
   "privacyPolicy": {
     "message": "Política de privadesa"
   },
-  "onText": {
-    "message": "Activat"
-  },
-  "offText": {
-    "message": "Desactivat"
-  },
-  "onLockedText": {
-    "message": "Activat (bloquejat)"
-  },
-  "offLockedText": {
-    "message": "Desactivat (bloquejat)"
+  "termsLink": {
+    "message": "Condicions"
   },
   "knownSafe": {
-    "message": "De confiança"
+    "message": "Segur conegut"
   },
   "failed": {
-    "message": "Error"
+    "message": "Ha fallat"
   },
   "waiting": {
-    "message": "En espera"
+    "message": "Esperant"
   },
   "allowed": {
     "message": "Permès"
@@ -84,45 +75,111 @@
     "message": "Maliciós"
   },
   "phishing": {
-    "message": "Phishing"
-  },
-  "untrusted": {
-    "message": "No fiable"
+    "message": "Pesca d'identitat"
   },
   "adultContent": {
     "message": "Contingut per a adults"
   },
-  "toggleNotificationsContext": {
-    "message": "Activa les notificacions"
-  },
   "toggleFrameNavigationContext": {
-    "message": "Ignora la navegació per marcs"
+    "message": "Ignora la navegació de marcs"
   },
   "clearAllowedWebsitesContext": {
     "message": "Esborra la llista de llocs web permesos"
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Notifica el lloc web com a maliciós"
+  },
   "clearAllowedWebsitesTitle": {
-    "message": "Llista de llocs web permesos esborrada"
+    "message": "Llocs web permesos esborrats"
   },
   "clearAllowedWebsitesMessage": {
-    "message": "Tots els llocs web permesos han estat eliminats."
+    "message": "S'han esborrat tots els llocs web permesos."
   },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "Informa el lloc web com a maliciós"
+  "settingsTitle": {
+    "message": "Configuració"
   },
-  "restoreDefaultsContext": {
-    "message": "Restaura la configuració predeterminada"
+  "providersSection": {
+    "message": "Proveïdors"
   },
-  "restoreDefaultsTitle": {
-    "message": "S’ha restaurat la configuració predeterminada"
+  "thirdPartySection": {
+    "message": "Integracions de tercers"
   },
-  "restoreDefaultsMessage": {
-    "message": "S'han restaurat els paràmetres predeterminats."
+  "resetDefaultProviders": {
+    "message": "Restableix els proveïdors predeterminats"
   },
-  "unsafeWebsiteTitle": {
-    "message": "Lloc web insegur blocat"
+  "resetAll": {
+    "message": "Restableix-ho tot"
+  },
+  "fieldLabelApiUrl": {
+    "message": "URL de l'API"
+  },
+  "fieldLabelApiKey": {
+    "message": "Clau de l'API"
+  },
+  "applyButton": {
+    "message": "Aplica"
+  },
+  "indicatorAdultContent": {
+    "message": "Filtre de contingut per a adults"
   },
   "officialPartnerTitle": {
     "message": "Soci oficial"
+  },
+  "indicatorIpProtected": {
+    "message": "Adreça IP protegida"
+  },
+  "showApiKey": {
+    "message": "Mostra la clau de l'API"
+  },
+  "hideApiKey": {
+    "message": "Amaga la clau de l'API"
+  },
+  "toastSaved": {
+    "message": "Desat."
+  },
+  "toastFailedToSave": {
+    "message": "No s'ha pogut desar."
+  },
+  "toastDefaultProvidersRestored": {
+    "message": "Proveïdors predeterminats restaurats."
+  },
+  "toastAllSettingsRestored": {
+    "message": "Tota la configuració restaurada."
+  },
+  "toastSaveApiKeyFirst": {
+    "message": "Desa una clau d'API vàlida abans d'activar aquesta integració."
+  },
+  "toastFailedToUpdateState": {
+    "message": "No s'ha pogut actualitzar l'estat del proveïdor."
+  },
+  "statusHeadingSecure": {
+    "message": "Esteu segur"
+  },
+  "statusHeadingNoProviders": {
+    "message": "Cap proveïdor activat"
+  },
+  "statusIconAltProtected": {
+    "message": "Protegit"
+  },
+  "providersEnabledCount": {
+    "message": "___ de ___ proveïdors activats"
+  },
+  "openSettings": {
+    "message": "Obre la configuració"
+  },
+  "unknownOrigin": {
+    "message": "Desconegut"
+  },
+  "urlUnavailable": {
+    "message": "No disponible"
+  },
+  "contextVerifyFailed": {
+    "message": "Aquesta pàgina d'advertència no ha pogut verificar un context d'acció segura. Les accions de continuar i permetre estan desactivades."
+  },
+  "providerLogoAlt": {
+    "message": "Logotip de $1"
+  },
+  "providerNameFallback": {
+    "message": "Proveïdor"
   }
 }

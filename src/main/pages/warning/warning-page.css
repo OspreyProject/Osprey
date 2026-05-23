@@ -1,0 +1,359 @@
+/*
+ * Osprey - a browser extension that protects you from malicious websites.
+ * Copyright (C) 2026 Osprey Project (https://github.com/OspreyProject)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+/* --------------------------------------------------
+   General Styles
+-------------------------------------------------- */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    font-weight: 400;
+    background-color: #282828;
+    color: #ffffff;
+    min-height: 100%;
+}
+
+.gray {
+    background-color: #282828;
+}
+
+@supports (zoom: 1.25) {
+    body {
+        zoom: 1.25;
+    }
+}
+
+@supports not (zoom: 1.25) {
+    body {
+        transform: scale(1.25);
+        transform-origin: top left;
+        width: 80%;
+    }
+}
+
+/* --------------------------------------------------
+   Banner
+-------------------------------------------------- */
+.banner {
+    display: flex;
+    align-items: stretch;
+    background-color: #f3ba22;
+    color: #ffffff;
+    position: relative;
+}
+
+.logo {
+    width: 50px;
+    display: block;
+    object-fit: cover;
+    user-select: none;
+    -webkit-user-select: none;
+    flex-shrink: 0;
+}
+
+.banner-text-group {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.bannerText {
+    font-size: 16px;
+    font-weight: 700;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+    padding: 8px 0;
+}
+
+/* --------------------------------------------------
+   Page layout
+-------------------------------------------------- */
+.warning-page-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #b1b5b8;
+    padding: 14px 0 0 16px;
+    max-width: 860px;
+    margin: 0 auto;
+}
+
+.warning-main {
+    padding: 16px;
+    max-width: 860px;
+    margin: 0 auto;
+}
+
+.warning-card {
+    background-color: #323232;
+    border-radius: 6px;
+    overflow: hidden;
+    padding: 22px 22px 20px;
+    border: 1px solid #3e3e3e;
+}
+
+/* --------------------------------------------------
+   Hero
+-------------------------------------------------- */
+.warning-hero {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+}
+
+.warning-icon-wrap {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    background-color: #3c3c3c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.warning-icon {
+    width: 46px;
+    height: 46px;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.warning-hero-copy {
+    min-width: 0;
+    flex: 1;
+}
+
+.warning-title {
+    margin: 0;
+    font-size: 28px;
+    line-height: 1.15;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.warning-lead {
+    margin: 12px 0 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #ffffff;
+}
+
+.warning-text {
+    margin: 10px 0 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #b1b5b8;
+}
+
+/* --------------------------------------------------
+   Details panel
+-------------------------------------------------- */
+.warning-details {
+    margin-top: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.detail-row {
+    background-color: #2d2d2d;
+    border: 1px solid #3e3e3e;
+    border-radius: 6px;
+    padding: 10px 12px;
+}
+
+.detail-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #8c8c8c;
+    margin-bottom: 5px;
+}
+
+.detail-value {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #ebebeb;
+}
+
+.url-value,
+#url {
+    word-break: break-all;
+}
+
+/* --------------------------------------------------
+   Inline actions
+-------------------------------------------------- */
+.warning-links {
+    margin-top: 18px;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.inline-action {
+    color: #f3ba22;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(243, 186, 34, 0.5);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.inline-action:hover {
+    color: #ffcd4a;
+    border-bottom-color: #ffcd4a;
+}
+
+/* --------------------------------------------------
+   Buttons
+-------------------------------------------------- */
+.button-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 22px;
+}
+
+.action-btn {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 18px;
+    border-radius: 5px;
+    border: none;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.primary-btn {
+    background-color: #f3ba22;
+    color: #ffffff;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+.primary-btn:hover {
+    background-color: #dca81c;
+}
+
+.primary-btn:active {
+    background-color: #c89814;
+}
+
+.secondary-btn {
+    background-color: transparent;
+    color: #f3ba22;
+    border: 1px solid rgba(243, 186, 34, 0.6);
+    cursor: pointer;
+}
+
+.secondary-btn:hover {
+    background-color: rgba(243, 186, 34, 0.1);
+    border-color: #f3ba22;
+}
+
+.secondary-btn:active {
+    background-color: rgba(243, 186, 34, 0.18);
+}
+
+/* --------------------------------------------------
+   Hidden state
+-------------------------------------------------- */
+.hidden {
+    display: none;
+}
+
+/* --------------------------------------------------
+   Responsive
+-------------------------------------------------- */
+@media screen and (max-width: 720px) {
+    .warning-main {
+        padding: 14px;
+    }
+
+    .warning-card {
+        padding: 18px 16px 16px;
+    }
+
+    .warning-hero {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+    }
+
+    .warning-title {
+        font-size: 24px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .warning-page-title {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .button-row {
+        flex-direction: column;
+    }
+
+    .action-btn {
+        width: 100%;
+    }
+}
+
+/* --------------------------------------------------
+   Button-based inline actions
+-------------------------------------------------- */
+.inline-action-btn {
+    appearance: none;
+    -webkit-appearance: none;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: #f3ba22;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(243, 186, 34, 0.5);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.inline-action-btn:hover:not(:disabled) {
+    color: #ffcd4a;
+    border-bottom-color: #ffcd4a;
+}
+
+.inline-action-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

@@ -3,31 +3,34 @@
     "message": "Osprey: Protección del navegador"
   },
   "extensionDescription": {
-    "message": "Protéjase contra las amenazas en línea en tiempo real utilizando múltiples proveedores de protección para navegadores."
+    "message": "Protéjase contra amenazas en línea en tiempo real utilizando múltiples proveedores de protección del navegador."
   },
   "logoAlt": {
-    "message": "Logotipo de Osprey"
+    "message": "Logo de Osprey"
+  },
+  "unsafeWebsiteTitle": {
+    "message": "Sitio web inseguro bloqueado"
   },
   "warningTitle": {
-    "message": "Advertencia: este sitio web no es seguro"
+    "message": "Advertencia: Este sitio web es inseguro"
   },
   "recommendation": {
     "message": "Osprey ha bloqueado el acceso a este sitio web. No es seguro continuar."
   },
   "details": {
-    "message": "Si usted es el propietario de este sitio web, comuníquese con el proveedor de seguridad para resolver el problema."
+    "message": "Si usted es el propietario de este sitio web, póngase en contacto con el proveedor de seguridad para resolver el problema."
   },
   "urlLabel": {
     "message": "URL: "
   },
   "reportedByLabel": {
-    "message": "Informado por: "
+    "message": "Reportado por: "
   },
   "reportedByOthers": {
-    "message": "(y ___ otros)"
+    "message": "(y ___ más)"
   },
   "reportedByAlso": {
-    "message": "También informado por: "
+    "message": "También reportado por: "
   },
   "reasonLabel": {
     "message": "Motivo: "
@@ -39,43 +42,31 @@
     "message": "Ignorar siempre este sitio web"
   },
   "backButton": {
-    "message": "Volver a estar seguro"
+    "message": "Volver a la seguridad"
   },
   "continueButton": {
-    "message": "Continuar de todos modos"
-  },
-  "popupTitle": {
-    "message": "Opciones de protección"
-  },
-  "githubLink": {
-    "message": "Ver en GitHub"
+    "message": "Continuar de todas formas"
   },
   "version": {
     "message": "Versión: "
   },
+  "websiteLink": {
+    "message": "Sitio web"
+  },
   "privacyPolicy": {
     "message": "Política de privacidad"
   },
-  "onText": {
-    "message": "Activado"
-  },
-  "offText": {
-    "message": "Desactivado"
-  },
-  "onLockedText": {
-    "message": "Activado (bloqueado)"
-  },
-  "offLockedText": {
-    "message": "Desactivado (bloqueado)"
+  "termsLink": {
+    "message": "Términos"
   },
   "knownSafe": {
-    "message": "Confiable"
+    "message": "Conocido seguro"
   },
   "failed": {
     "message": "Fallido"
   },
   "waiting": {
-    "message": "En espera"
+    "message": "Esperando"
   },
   "allowed": {
     "message": "Permitido"
@@ -86,43 +77,109 @@
   "phishing": {
     "message": "Phishing"
   },
-  "untrusted": {
-    "message": "No confiable"
-  },
   "adultContent": {
     "message": "Contenido para adultos"
   },
-  "toggleNotificationsContext": {
-    "message": "Habilitar notificaciones"
-  },
   "toggleFrameNavigationContext": {
-    "message": "Ignorar la navegación en marcos"
+    "message": "Ignorar navegación de marcos"
   },
   "clearAllowedWebsitesContext": {
     "message": "Borrar lista de sitios web permitidos"
   },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Reportar sitio web como malicioso"
+  },
   "clearAllowedWebsitesTitle": {
-    "message": "Lista de sitios web permitidos borrada"
+    "message": "Sitios web permitidos borrados"
   },
   "clearAllowedWebsitesMessage": {
-    "message": "Se han borrado todos los sitios web permitidos."
+    "message": "Todos los sitios web permitidos han sido borrados."
   },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "Denunciar sitio web como malicioso"
+  "settingsTitle": {
+    "message": "Configuración"
   },
-  "restoreDefaultsContext": {
-    "message": "Restaurar la configuración predeterminada"
+  "providersSection": {
+    "message": "Proveedores"
   },
-  "restoreDefaultsTitle": {
-    "message": "Configuración predeterminada restaurada"
+  "thirdPartySection": {
+    "message": "Integraciones de terceros"
   },
-  "restoreDefaultsMessage": {
-    "message": "Se ha restaurado la configuración predeterminada."
+  "resetDefaultProviders": {
+    "message": "Restablecer proveedores predeterminados"
   },
-  "unsafeWebsiteTitle": {
-    "message": "Sitio web inseguro bloqueado"
+  "resetAll": {
+    "message": "Restablecer todo"
+  },
+  "fieldLabelApiUrl": {
+    "message": "URL de API"
+  },
+  "fieldLabelApiKey": {
+    "message": "Clave de API"
+  },
+  "applyButton": {
+    "message": "Aplicar"
+  },
+  "indicatorAdultContent": {
+    "message": "Filtro de contenido para adultos"
   },
   "officialPartnerTitle": {
     "message": "Socio oficial"
+  },
+  "indicatorIpProtected": {
+    "message": "Dirección IP protegida"
+  },
+  "showApiKey": {
+    "message": "Mostrar clave de API"
+  },
+  "hideApiKey": {
+    "message": "Ocultar clave de API"
+  },
+  "toastSaved": {
+    "message": "Guardado."
+  },
+  "toastFailedToSave": {
+    "message": "Error al guardar."
+  },
+  "toastDefaultProvidersRestored": {
+    "message": "Proveedores predeterminados restaurados."
+  },
+  "toastAllSettingsRestored": {
+    "message": "Toda la configuración restaurada."
+  },
+  "toastSaveApiKeyFirst": {
+    "message": "Guarde una clave de API válida antes de habilitar esta integración."
+  },
+  "toastFailedToUpdateState": {
+    "message": "Error al actualizar el estado del proveedor."
+  },
+  "statusHeadingSecure": {
+    "message": "Estás seguro"
+  },
+  "statusHeadingNoProviders": {
+    "message": "No hay proveedores habilitados"
+  },
+  "statusIconAltProtected": {
+    "message": "Protegido"
+  },
+  "providersEnabledCount": {
+    "message": "___ de ___ proveedores habilitados"
+  },
+  "openSettings": {
+    "message": "Abrir configuración"
+  },
+  "unknownOrigin": {
+    "message": "Desconocido"
+  },
+  "urlUnavailable": {
+    "message": "No disponible"
+  },
+  "contextVerifyFailed": {
+    "message": "Esta página de advertencia no pudo verificar un contexto de acción segura. Continuar y permitir están deshabilitados."
+  },
+  "providerLogoAlt": {
+    "message": "Logo de $1"
+  },
+  "providerNameFallback": {
+    "message": "Proveedor"
   }
 }

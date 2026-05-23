@@ -21,20 +21,31 @@
 <!-- This is the background page for the Firefox extension. -->
 
 <head>
-    <!-- Util -->
-    <script src="util/Validate.js"></script>
-    <script src="util/StorageUtil.js"></script>
-    <script src="util/Settings.js"></script>
-    <script src="util/UrlHelpers.js"></script>
-    <script src="util/CacheManager.js"></script>
-    <script src="util/MessageType.js"></script>
-    <script src="util/LangUtil.js"></script>
-
-    <!-- Protection -->
-    <script src="protection/ProtectionResult.js"></script>
-    <script src="protection/BrowserProtection.js"></script>
-
-    <!-- The main script -->
+    <script src="shared/browser-api.js"></script>
+    <script src="shared/i18n.js"></script>
+    <script src="shared/timed-signal.js"></script>
+    <script src="providers/provider-groups.js"></script>
+    <script src="providers/proxy-builtins.js"></script>
+    <script src="providers/direct-integrations.js"></script>
+    <script src="catalog/catalog-validator.js"></script>
+    <script src="platform/protection-result.js"></script>
+    <script src="platform/url-service.js"></script>
+    <script src="platform/report-link-builder.js"></script>
+    <script src="providers/provider-catalog.js"></script>
+    <script src="state/provider-state-store.js"></script>
+    <script src="state/policy-service.js"></script>
+    <script src="platform/request-builder.js"></script>
+    <script src="platform/response-rule-engine.js"></script>
+    <script src="state/cache-service.js"></script>
+    <script src="platform/message-bus.js"></script>
+    <script src="providers/provider-runtime-factory.js"></script>
+    <script src="platform/dns-validator.js"></script>
+    <script src="providers/provider-engine.js"></script>
+    <script src="background/result-aggregation-service.js"></script>
+    <script src="background/badge-service.js"></script>
+    <script src="background/blocking-service.js"></script>
+    <script src="background/navigation-service.js"></script>
+    <script src="background/context-menu-service.js"></script>
     <script src="background.js"></script>
     <title></title>
 </head>

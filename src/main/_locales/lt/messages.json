@@ -3,19 +3,22 @@
     "message": "Osprey: Naršyklės apsauga"
   },
   "extensionDescription": {
-    "message": "Apsaugokite save nuo internetinių grėsmių realiuoju laiku naudodami kelis naršyklės apsaugos teikėjus."
+    "message": "Apsisaugokite nuo internetinių grėsmių realiuoju laiku naudodami kelis naršyklės apsaugos teikėjus."
   },
   "logoAlt": {
     "message": "Osprey logotipas"
   },
+  "unsafeWebsiteTitle": {
+    "message": "Nesaugi svetainė užblokuota"
+  },
   "warningTitle": {
-    "message": "Įspėjimas: Ši svetainė yra nesaugi"
+    "message": "Įspėjimas: ši svetainė yra nesaugi"
   },
   "recommendation": {
-    "message": "„Osprey“ užblokavo prieigą prie šios svetainės. Tęsti yra nesaugu."
+    "message": "Osprey užblokavo prieigą prie šios svetainės. Tęsti nėra saugu."
   },
   "details": {
-    "message": "Jei esate šios svetainės savininkas, susisiekite su saugumo paslaugų teikėju, kad išspręstumėte problemą."
+    "message": "Jei esate šios svetainės savininkas, kreipkitės į saugos teikėją, kad išspręstumėte problemą."
   },
   "urlLabel": {
     "message": "URL: "
@@ -24,7 +27,7 @@
     "message": "Pranešė: "
   },
   "reportedByOthers": {
-    "message": "(ir ___ kiti)"
+    "message": "(ir ___ kitų)"
   },
   "reportedByAlso": {
     "message": "Taip pat pranešė: "
@@ -33,43 +36,31 @@
     "message": "Priežastis: "
   },
   "reportWebsite": {
-    "message": "Pranešti, kad ši svetainė yra saugi"
+    "message": "Pranešti apie šią svetainę kaip saugią"
   },
   "allowWebsite": {
     "message": "Visada ignoruoti šią svetainę"
   },
   "backButton": {
-    "message": "Grįžti į saugumą"
+    "message": "Grįžti į saugią vietą"
   },
   "continueButton": {
-    "message": "Tęsti vis tiek"
-  },
-  "popupTitle": {
-    "message": "Apsaugos parinktys"
-  },
-  "githubLink": {
-    "message": "Peržiūrėti GitHub"
+    "message": "Tęsti bet kuriuo atveju"
   },
   "version": {
     "message": "Versija: "
   },
+  "websiteLink": {
+    "message": "Svetainė"
+  },
   "privacyPolicy": {
     "message": "Privatumo politika"
   },
-  "onText": {
-    "message": "Įjungta"
-  },
-  "offText": {
-    "message": "Išjungta"
-  },
-  "onLockedText": {
-    "message": "Įjungta (užrakinta)"
-  },
-  "offLockedText": {
-    "message": "Išjungta (užrakinta)"
+  "termsLink": {
+    "message": "Sąlygos"
   },
   "knownSafe": {
-    "message": "Žinoma kaip saugi"
+    "message": "Žinoma saugi"
   },
   "failed": {
     "message": "Nepavyko"
@@ -81,48 +72,114 @@
     "message": "Leidžiama"
   },
   "malicious": {
-    "message": "Kenksminga"
+    "message": "Kenkėjiška"
   },
   "phishing": {
-    "message": "Phishing"
-  },
-  "untrusted": {
-    "message": "Nepatikima"
+    "message": "Sukčiavimas apsimetant"
   },
   "adultContent": {
-    "message": "Suaugusiųjų turinys"
-  },
-  "toggleNotificationsContext": {
-    "message": "Įjungti pranešimus"
+    "message": "Suaugusiems skirtas turinys"
   },
   "toggleFrameNavigationContext": {
     "message": "Ignoruoti kadrų naršymą"
   },
   "clearAllowedWebsitesContext": {
-    "message": "Išvalyti leistinų svetainių sąrašą"
+    "message": "Išvalyti leidžiamų svetainių sąrašą"
+  },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Pranešti apie svetainę kaip kenkėjišką"
   },
   "clearAllowedWebsitesTitle": {
     "message": "Leidžiamos svetainės išvalytos"
   },
   "clearAllowedWebsitesMessage": {
-    "message": "Visos leistos svetainės buvo išvalytos."
+    "message": "Visos leidžiamos svetainės buvo išvalytos."
   },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "Pranešti apie kenkėjišką svetainę"
+  "settingsTitle": {
+    "message": "Nustatymai"
   },
-  "restoreDefaultsContext": {
-    "message": "Atkurti numatytuosius nustatymus"
+  "providersSection": {
+    "message": "Teikėjai"
   },
-  "restoreDefaultsTitle": {
-    "message": "Numatytieji nustatymai atkurti"
+  "thirdPartySection": {
+    "message": "Trečiųjų šalių integracijos"
   },
-  "restoreDefaultsMessage": {
-    "message": "Numatytieji nustatymai buvo atkurti."
+  "resetDefaultProviders": {
+    "message": "Atkurti numatytuosius teikėjus"
   },
-  "unsafeWebsiteTitle": {
-    "message": "Nesaugi svetainė užblokuota"
+  "resetAll": {
+    "message": "Atkurti viską"
+  },
+  "fieldLabelApiUrl": {
+    "message": "API URL"
+  },
+  "fieldLabelApiKey": {
+    "message": "API raktas"
+  },
+  "applyButton": {
+    "message": "Taikyti"
+  },
+  "indicatorAdultContent": {
+    "message": "Suaugusiems skirto turinio filtras"
   },
   "officialPartnerTitle": {
     "message": "Oficialus partneris"
+  },
+  "indicatorIpProtected": {
+    "message": "IP adresas apsaugotas"
+  },
+  "showApiKey": {
+    "message": "Rodyti API raktą"
+  },
+  "hideApiKey": {
+    "message": "Slėpti API raktą"
+  },
+  "toastSaved": {
+    "message": "Išsaugota."
+  },
+  "toastFailedToSave": {
+    "message": "Nepavyko išsaugoti."
+  },
+  "toastDefaultProvidersRestored": {
+    "message": "Numatytieji teikėjai atkurti."
+  },
+  "toastAllSettingsRestored": {
+    "message": "Visi nustatymai atkurti."
+  },
+  "toastSaveApiKeyFirst": {
+    "message": "Prieš įgalindami šią integraciją išsaugokite galiojantį API raktą."
+  },
+  "toastFailedToUpdateState": {
+    "message": "Nepavyko atnaujinti teikėjo būsenos."
+  },
+  "statusHeadingSecure": {
+    "message": "Esate saugūs"
+  },
+  "statusHeadingNoProviders": {
+    "message": "Nėra įgalintų teikėjų"
+  },
+  "statusIconAltProtected": {
+    "message": "Apsaugota"
+  },
+  "providersEnabledCount": {
+    "message": "___ iš ___ teikėjų įgalinta"
+  },
+  "openSettings": {
+    "message": "Atidaryti nustatymus"
+  },
+  "unknownOrigin": {
+    "message": "Nežinoma"
+  },
+  "urlUnavailable": {
+    "message": "Nepasiekiama"
+  },
+  "contextVerifyFailed": {
+    "message": "Šis įspėjimo puslapis negalėjo patvirtinti saugaus veiksmo konteksto. Tęsti ir leisti yra išjungti."
+  },
+  "providerLogoAlt": {
+    "message": "$1 logotipas"
+  },
+  "providerNameFallback": {
+    "message": "Teikėjas"
   }
 }

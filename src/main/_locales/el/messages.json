@@ -1,21 +1,24 @@
 {
   "extensionName": {
-    "message": "Osprey: Προστασία προγράμματος περιήγησης"
+    "message": "Osprey: Προστασία Προγράμματος Περιήγησης"
   },
   "extensionDescription": {
-    "message": "Προστατευτείτε από τις διαδικτυακές απειλές σε πραγματικό χρόνο χρησιμοποιώντας πολλαπλούς παρόχους προστασίας του προγράμματος περιήγησης."
+    "message": "Προστατευτείτε από διαδικτυακές απειλές σε πραγματικό χρόνο χρησιμοποιώντας πολλούς παρόχους προστασίας προγράμματος περιήγησης."
   },
   "logoAlt": {
     "message": "Λογότυπο Osprey"
+  },
+  "unsafeWebsiteTitle": {
+    "message": "Αποκλεισμός μη ασφαλούς ιστοτόπου"
   },
   "warningTitle": {
     "message": "Προειδοποίηση: Αυτός ο ιστότοπος δεν είναι ασφαλής"
   },
   "recommendation": {
-    "message": "Ο Osprey έχει αποκλείσει την πρόσβαση σε αυτόν τον ιστότοπο. Δεν είναι ασφαλές να συνεχίσετε."
+    "message": "Το Osprey απέκλεισε την πρόσβαση σε αυτόν τον ιστότοπο. Δεν είναι ασφαλές να συνεχίσετε."
   },
   "details": {
-    "message": "Εάν είστε ο κάτοχος αυτού του ιστότοπου, επικοινωνήστε με τον πάροχο ασφάλειας για να επιλύσετε το πρόβλημα."
+    "message": "Εάν είστε ο ιδιοκτήτης αυτού του ιστοτόπου, επικοινωνήστε με τον πάροχο ασφαλείας για να επιλύσετε το ζήτημα."
   },
   "urlLabel": {
     "message": "URL: "
@@ -30,46 +33,34 @@
     "message": "Αναφέρθηκε επίσης από: "
   },
   "reasonLabel": {
-    "message": "Αιτία: "
+    "message": "Λόγος: "
   },
   "reportWebsite": {
-    "message": "Αναφορά αυτού του ιστότοπου ως ασφαλούς"
+    "message": "Αναφορά αυτού του ιστοτόπου ως ασφαλούς"
   },
   "allowWebsite": {
-    "message": "Να αγνοείται πάντα αυτός ο ιστότοπος"
+    "message": "Πάντα να αγνοείται αυτός ο ιστότοπος"
   },
   "backButton": {
-    "message": "Επιστροφή σε ασφαλή σελίδα"
+    "message": "Επιστροφή στην ασφάλεια"
   },
   "continueButton": {
     "message": "Συνέχεια ούτως ή άλλως"
   },
-  "popupTitle": {
-    "message": "Επιλογές προστασίας"
-  },
-  "githubLink": {
-    "message": "Προβολή στο GitHub"
-  },
   "version": {
     "message": "Έκδοση: "
   },
+  "websiteLink": {
+    "message": "Ιστότοπος"
+  },
   "privacyPolicy": {
-    "message": "Πολιτική απορρήτου"
+    "message": "Πολιτική Απορρήτου"
   },
-  "onText": {
-    "message": "Ενεργό"
-  },
-  "offText": {
-    "message": "Ανενεργό"
-  },
-  "onLockedText": {
-    "message": "Ενεργό (Κλειδωμένο)"
-  },
-  "offLockedText": {
-    "message": "Ανενεργό (Κλειδωμένο)"
+  "termsLink": {
+    "message": "Όροι"
   },
   "knownSafe": {
-    "message": "Αξιόπιστο"
+    "message": "Γνωστά Ασφαλές"
   },
   "failed": {
     "message": "Αποτυχία"
@@ -84,45 +75,111 @@
     "message": "Κακόβουλο"
   },
   "phishing": {
-    "message": "Phishing"
-  },
-  "untrusted": {
-    "message": "Μη αξιόπιστο"
+    "message": "Ηλεκτρονικό ψάρεμα"
   },
   "adultContent": {
-    "message": "Περιεχόμενο ενηλίκων"
-  },
-  "toggleNotificationsContext": {
-    "message": "Ενεργοποίηση ειδοποιήσεων"
+    "message": "Περιεχόμενο για ενήλικες"
   },
   "toggleFrameNavigationContext": {
-    "message": "Παράβλεψη πλοήγησης σε πλαίσια"
+    "message": "Αγνόηση πλοήγησης πλαισίου"
   },
   "clearAllowedWebsitesContext": {
-    "message": "Εκκαθάριση λίστας επιτρεπόμενων ιστότοπων"
-  },
-  "clearAllowedWebsitesTitle": {
-    "message": "Η λίστα επιτρεπόμενων ιστότοπων διαγράφηκε"
-  },
-  "clearAllowedWebsitesMessage": {
-    "message": "Όλοι οι επιτρεπόμενοι ιστότοποι έχουν διαγραφεί."
+    "message": "Εκκαθάριση λίστας επιτρεπόμενων ιστοτόπων"
   },
   "reportWebsiteAsMaliciousContext": {
-    "message": "Αναφορά ιστότοπου ως κακόβουλου"
+    "message": "Αναφορά ιστοτόπου ως κακόβουλου"
   },
-  "restoreDefaultsContext": {
-    "message": "Επαναφορά προεπιλεγμένων ρυθμίσεων"
+  "clearAllowedWebsitesTitle": {
+    "message": "Εκκαθαρίστηκαν οι επιτρεπόμενοι ιστότοποι"
   },
-  "restoreDefaultsTitle": {
-    "message": "Οι προεπιλεγμένες ρυθμίσεις επαναφέρθηκαν"
+  "clearAllowedWebsitesMessage": {
+    "message": "Όλοι οι επιτρεπόμενοι ιστότοποι έχουν εκκαθαριστεί."
   },
-  "restoreDefaultsMessage": {
-    "message": "Οι προεπιλεγμένες ρυθμίσεις έχουν επαναφερθεί."
+  "settingsTitle": {
+    "message": "Ρυθμίσεις"
   },
-  "unsafeWebsiteTitle": {
-    "message": "Μη ασφαλής ιστότοπος αποκλείστηκε"
+  "providersSection": {
+    "message": "Πάροχοι"
+  },
+  "thirdPartySection": {
+    "message": "Ενσωματώσεις τρίτων"
+  },
+  "resetDefaultProviders": {
+    "message": "Επαναφορά προεπιλεγμένων παρόχων"
+  },
+  "resetAll": {
+    "message": "Επαναφορά όλων"
+  },
+  "fieldLabelApiUrl": {
+    "message": "URL API"
+  },
+  "fieldLabelApiKey": {
+    "message": "Κλειδί API"
+  },
+  "applyButton": {
+    "message": "Εφαρμογή"
+  },
+  "indicatorAdultContent": {
+    "message": "Φίλτρο περιεχομένου για ενήλικες"
   },
   "officialPartnerTitle": {
-    "message": "Επίσημος συνεργάτης"
+    "message": "Επίσημος εταίρος"
+  },
+  "indicatorIpProtected": {
+    "message": "Διεύθυνση IP προστατευμένη"
+  },
+  "showApiKey": {
+    "message": "Εμφάνιση κλειδιού API"
+  },
+  "hideApiKey": {
+    "message": "Απόκρυψη κλειδιού API"
+  },
+  "toastSaved": {
+    "message": "Αποθηκεύτηκε."
+  },
+  "toastFailedToSave": {
+    "message": "Αποτυχία αποθήκευσης."
+  },
+  "toastDefaultProvidersRestored": {
+    "message": "Προεπιλεγμένοι πάροχοι αποκαταστάθηκαν."
+  },
+  "toastAllSettingsRestored": {
+    "message": "Όλες οι ρυθμίσεις αποκαταστάθηκαν."
+  },
+  "toastSaveApiKeyFirst": {
+    "message": "Αποθηκεύστε ένα έγκυρο κλειδί API πριν ενεργοποιήσετε αυτή την ενσωμάτωση."
+  },
+  "toastFailedToUpdateState": {
+    "message": "Αποτυχία ενημέρωσης κατάστασης παρόχου."
+  },
+  "statusHeadingSecure": {
+    "message": "Είστε ασφαλείς"
+  },
+  "statusHeadingNoProviders": {
+    "message": "Δεν υπάρχουν ενεργοποιημένοι πάροχοι"
+  },
+  "statusIconAltProtected": {
+    "message": "Προστατευμένο"
+  },
+  "providersEnabledCount": {
+    "message": "___ από ___ παρόχους ενεργοποιημένοι"
+  },
+  "openSettings": {
+    "message": "Άνοιγμα ρυθμίσεων"
+  },
+  "unknownOrigin": {
+    "message": "Άγνωστο"
+  },
+  "urlUnavailable": {
+    "message": "Μη διαθέσιμο"
+  },
+  "contextVerifyFailed": {
+    "message": "Αυτή η σελίδα προειδοποίησης δεν μπόρεσε να επαληθεύσει ένα ασφαλές πλαίσιο ενέργειας. Η συνέχεια και η άδεια είναι απενεργοποιημένες."
+  },
+  "providerLogoAlt": {
+    "message": "Λογότυπο $1"
+  },
+  "providerNameFallback": {
+    "message": "Πάροχος"
   }
 }
