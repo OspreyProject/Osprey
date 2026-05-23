@@ -55,12 +55,14 @@ locally maintained blocklists found below, all queried through the proxy server 
 
 ## Endorsed By
 
+Osprey is also endorsed by the following companies, who have reviewed and approved our privacy and security practices.
+
 ###
 
 <p align="center">
   <a href="https://joindns4.eu/?utm_source=osprey" title="DNS4EU"><img src="https://i.imgur.com/g6bTuVS.png" alt="DNS4EU"></a>
   <a href="https://concourse-cloud.com/?utm_source=osprey" title="Concourse Cloud"><img src="https://i.imgur.com/pfAZVvp.png" alt="Concourse Cloud"></a>
-</p>
+</p>~~
 
 ## Mission
 
