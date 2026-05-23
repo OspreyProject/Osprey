@@ -25,13 +25,6 @@ No data collection, no accounts needed; just free, effective protection for ever
 
 ![Osprey Banner](https://i.imgur.com/zzv8QYh.png)
 
-Osprey's goal is to be the most trusted, transparent, and effective browser protection extension for home users and
-businesses, while being **free, forever.** Unlike other free extensions, Osprey will **never** collect, profile, or sell
-your browsing data. Your IP address is **never** shared with any third party, and URL checks are routed through our
-privacy-respecting [proxy server](https://github.com/Foulest/OspreyProxy).
-
-## Protection Providers
-
 Osprey checks URLs against a combination of industry-leading threat intelligence APIs, DNS filtering services, and
 locally maintained blocklists found below, all queried through
 our [proxy server](https://github.com/Foulest/OspreyProxy) on your behalf.
@@ -56,6 +49,13 @@ our [proxy server](https://github.com/Foulest/OspreyProxy) on your behalf.
   <a href="https://seclookup.com/?utm_source=osprey" title="Seclookup"><img src="https://i.imgur.com/2g2Zmf0.png" alt="Seclookup"></a>
   <a href="https://metadefender.com/?utm_source=osprey" title="MetaDefender"><img src="https://i.imgur.com/GYWXDM8.png" alt="MetaDefender"></a>
 </p>
+
+## About Osprey
+
+Osprey's goal is to be the most trusted, transparent, and effective browser protection extension for home users and
+businesses, while being **free, forever.** Unlike other free extensions, Osprey will **never** collect, profile, or sell
+your browsing data. Your IP address is **never** shared with any third party, and URL checks are routed through our
+privacy-respecting [proxy server](https://github.com/Foulest/OspreyProxy).
 
 ## Contact Us
 
