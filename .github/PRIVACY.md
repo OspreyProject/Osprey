@@ -1,6 +1,6 @@
 # Privacy Policy
 
-**Effective Date:** 04/07/2026
+**Effective Date:** 05/22/2026
 
 Osprey: Browser Protection and the team behind [OspreyProject](https://github.com/OspreyProject) is committed to
 protecting your privacy. This Privacy Policy explains what data is processed when you use the current browser
@@ -12,9 +12,7 @@ The current Osprey service described in this Privacy Policy consists of two comp
 - The **proxy server** (OspreyProxy), which runs on a VPS hosted in New York, NY
   at [api.osprey.ac](https://api.osprey.ac).
 
-This Privacy Policy applies to the current free browser extension and the OspreyProxy service described below. If Osprey
-introduces additional products or an enterprise plan in the future, we may provide a separate privacy policy or a
-supplemental notice describing the data practices for those services.
+This Privacy Policy applies to the Osprey browser extension and the OspreyProxy service described below.
 
 Understanding which component does what is important for understanding how your data is handled.
 
@@ -27,8 +25,8 @@ services, and local threat intelligence lists to determine whether the URL is un
 The browser extension sends the full URL to the proxy server for all checks. How the proxy server handles it depends
 on the provider type:
 
-- **DNS-based providers** (AdGuard DNS, CERT-EE, CleanBrowsing, Cloudflare, Control D, Quad9, and Switch.ch): the proxy server
-  extracts only the hostname and submits it as a DNS-over-HTTPS query.
+- **DNS-based providers** (AdGuard DNS, CERT-EE, CleanBrowsing, Cloudflare, Control D, Quad9, and Switch.ch): the proxy
+  server extracts only the hostname and submits it as a DNS-over-HTTPS query.
 - **API-based providers** (AlphaMountain, ChainPatrol, and PrecisionSec): the proxy server forwards the full URL,
   including path.
 - **Local threat intelligence lists**: the proxy server checks the hostname against its own in-memory domain sets.

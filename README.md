@@ -77,13 +77,12 @@ home users and businesses by empowering open-source intelligence to combat malwa
 globe. The best protection is **free protection**, and building a privacy-first, open-source tool that IT teams,
 security researchers, and end-users can trust to secure their browsing, wherever they go, is the best way to provide it.
 
-Osprey is committed to keeping the free version non-commercial, privacy-first, and open-source, **forever**. We may
-introduce a paid enterprise tier in the future, but the free version of Osprey will remain non-commercial and will not
-be monetized in any way. Unlike other free browser extensions, Osprey doesn't collect, profile,
+Osprey is committed to remaining non-commercial, privacy-first, and open-source, **forever**. Unlike other free browser
+extensions, Osprey doesn't collect, profile,
 or [sell your browsing data](https://ftc.gov/news-events/news/press-releases/2024/02/ftc-order-will-ban-avast-selling-browsing-data-advertising-purposes-require-it-pay-165-million-over/?utm_source=osprey)
 behind your back. URL checks are routed through Osprey's privacy-respecting proxy server
 at [api.osprey.ac](https://api.osprey.ac), which forwards requests to our protection partners without transmitting any
-personally identifiable information. No user accounts are required for the free version. Check out
+personally identifiable information. No user accounts are required. Check out
 our [Privacy Policy here](https://osprey.ac/privacy) for more info.
 
 The more protection providers join the project, the better the Osprey threat intelligence platform becomes. If you're

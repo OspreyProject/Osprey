@@ -1,6 +1,6 @@
 # Terms of Service
 
-**Effective Date:** 04/07/2026
+**Effective Date:** 05/22/2026
 
 These Terms of Service ("Terms") govern your use of the Osprey website, the hosted Osprey proxy service at
 [api.osprey.ac](https://api.osprey.ac), and related hosted materials or services made available by the Osprey project
@@ -32,26 +32,15 @@ under that license, the open-source license will control for that software.
 Project source code, releases, issue tracking, and related materials may be hosted or distributed through GitHub. Your
 use of GitHub is governed by GitHub's own terms, policies, and privacy practices, not by these Terms.
 
-## 4. The Free Version
+## 4. Non-Commercial Use
 
-The current free version of Osprey is made available on a non-commercial basis for end users, researchers, and
-organizations using it for their own internal purposes.
-
-We may introduce a separate paid or enterprise offering in the future. If we do, that offering may be subject to
-separate or additional terms.
+Osprey is made available on a non-commercial basis for end users, researchers, and organizations using it for their own
+internal purposes.
 
 ## 5. Commercial Use of the Hosted Service
 
-The hosted Osprey proxy service and any public APIs made available through it are provided for the project's free
-version and related non-commercial use.
-
-You may not use the hosted Service or its APIs to operate, power, resell, redistribute, or provide a commercial
-product or service without prior written permission from the Osprey project. This includes using the hosted Service as
-part of a paid offering, charging others for access to Osprey-backed lookups, or offering Osprey-derived API results
-as a commercial service.
-
-This restriction applies to the hosted Service and APIs, not to any source code made available under GPLv3 or later.
-Rights in GPLv3-or-later-licensed code remain governed by the applicable open-source license.
+The hosted Osprey proxy service and any public APIs made available through it are provided for the project's
+non-commercial use.
 
 ## 6. No Guarantee of Detection
 
@@ -85,11 +74,8 @@ third-party services.
 
 ## 9. Privacy
 
-Our [Privacy Policy](./PRIVACY.md) describes how the current Osprey service processes data, including limited
-operational monitoring and service telemetry used to run, secure, and maintain the service.
-
-If we introduce additional products or an enterprise offering in the future, those services may be governed by a
-separate privacy policy or supplemental notice.
+Our [Privacy Policy](./PRIVACY.md) describes how Osprey processes data, including limited operational monitoring and
+service telemetry used to run, secure, and maintain the service.
 
 ## 10. Project Name and Branding
 
