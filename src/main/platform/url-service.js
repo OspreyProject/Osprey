@@ -118,6 +118,32 @@ globalThis.OspreyUrlService = (() => {
         );
     };
 
+    const isIpv4Literal = hostname => {
+        const value = typeof hostname === 'string' ? hostname.trim() : '';
+        const parts = value.split('.');
+
+        if (parts.length !== 4) {
+            return false;
+        }
+
+        return parts.every(part => {
+            if (!/^[0-9]{1,3}$/.test(part)) {
+                return false;
+            }
+
+            const octet = Number(part);
+            return Number.isInteger(octet) && octet >= 0 && octet <= 255;
+        });
+    };
+
+    const isIpv6Literal = hostname => {
+        const value = typeof hostname === 'string' ? hostname.trim() : '';
+        const compact = value.replaceAll(/^\[|]$/g, '');
+        return compact.includes(':') && /^[0-9a-f:]+$/i.test(compact);
+    };
+
+    const isIpLiteral = hostname => isIpv4Literal(hostname) || isIpv6Literal(hostname);
+
     const hostnameIsValid = hostname => {
         const canonical = canonicalizeHostname(hostname);
 
@@ -178,6 +204,7 @@ globalThis.OspreyUrlService = (() => {
         lookupValueForTarget,
         canonicalizeHostname,
         isInternalHostname,
+        isIpLiteral,
         hostnameIsValid,
         buildWarningPageUrl,
         extractWarningContext,

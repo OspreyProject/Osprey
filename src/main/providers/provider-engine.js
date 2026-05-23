@@ -296,7 +296,14 @@ globalThis.OspreyProviderEngine = (() => {
     const scanUrl = async ({tabId, url, providers, expirationSeconds, onResult}) => {
         const parsedUrl = urlService.parseHttpUrl(url);
 
-        if (!parsedUrl || urlService.isInternalHostname(parsedUrl.hostname)) {
+        if (!parsedUrl) {
+            console.debug(`OspreyProviderEngine skipping invalid URL: ${url}`);
+            return;
+        }
+
+        const hostname = parsedUrl.hostname;
+
+        if (urlService.isInternalHostname(hostname)) {
             return;
         }
 
@@ -311,7 +318,10 @@ globalThis.OspreyProviderEngine = (() => {
         const controller = new AbortController();
         abortControllers.set(tabId, controller);
 
-        if (!await dnsValidator.isResolvable(parsedUrl.hostname, controller.signal, tabId)) {
+        const isIpLiteral = urlService.isIpLiteral(hostname);
+
+        if (!isIpLiteral && !await dnsValidator.isResolvable(hostname, controller.signal, tabId)) {
+            console.debug(`OspreyProviderEngine skipping unresolvable hostname: ${hostname}`);
             abortControllers.delete(tabId);
             return;
         }
