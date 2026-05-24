@@ -42,7 +42,7 @@ globalThis.OspreyDnsValidator = (() => {
         }
 
         cacheService.markProcessing(providerId, lookupKey, tabId);
-        const timed = timedSignal.create(parentSignal, 5000);
+        const timed = timedSignal.create(parentSignal, 1500);
 
         try {
             const response = await fetch(`https://cloudflare-dns.com/dns-query?name=${encodeURIComponent(hostname)}`, {
