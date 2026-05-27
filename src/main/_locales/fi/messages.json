@@ -1,0 +1,185 @@
+{
+  "extensionName": {
+    "message": "Osprey: Selaimen suojaus"
+  },
+  "extensionDescription": {
+    "message": "Suojaa verkkouhilta reaaliajassa useiden selaimen suojauspalveluntarjoajien avulla."
+  },
+  "logoAlt": {
+    "message": "Osprey-logo"
+  },
+  "unsafeWebsiteTitle": {
+    "message": "Vaarallinen verkkosivusto estetty"
+  },
+  "warningTitle": {
+    "message": "Varoitus: Tämä verkkosivusto ei ole turvallinen"
+  },
+  "recommendation": {
+    "message": "Osprey on estänyt pääsyn tälle verkkosivustolle. Jatkaminen ei ole turvallista."
+  },
+  "details": {
+    "message": "Jos olet tämän verkkosivuston omistaja, ota yhteyttä suojauspalveluntarjoajaan ongelman ratkaisemiseksi."
+  },
+  "urlLabel": {
+    "message": "URL-osoite: "
+  },
+  "reportedByLabel": {
+    "message": "Ilmoittaja: "
+  },
+  "reportedByOthers": {
+    "message": "(ja ___ muuta)"
+  },
+  "reportedByAlso": {
+    "message": "Ilmoittanut myös: "
+  },
+  "reasonLabel": {
+    "message": "Syy: "
+  },
+  "reportWebsite": {
+    "message": "Ilmoita tämä verkkosivusto turvalliseksi"
+  },
+  "allowWebsite": {
+    "message": "Ohita tämä verkkosivusto aina"
+  },
+  "backButton": {
+    "message": "Takaisin turvaan"
+  },
+  "continueButton": {
+    "message": "Jatka silti"
+  },
+  "version": {
+    "message": "Versio: "
+  },
+  "websiteLink": {
+    "message": "Verkkosivusto"
+  },
+  "privacyPolicy": {
+    "message": "Tietosuojakäytäntö"
+  },
+  "termsLink": {
+    "message": "Ehdot"
+  },
+  "knownSafe": {
+    "message": "Tunnetusti turvallinen"
+  },
+  "failed": {
+    "message": "Epäonnistui"
+  },
+  "waiting": {
+    "message": "Odottaa"
+  },
+  "allowed": {
+    "message": "Sallittu"
+  },
+  "malicious": {
+    "message": "Haitallinen"
+  },
+  "phishing": {
+    "message": "Tietojenkalastelu"
+  },
+  "adultContent": {
+    "message": "Aikuisille tarkoitettu sisältö"
+  },
+  "toggleFrameNavigationContext": {
+    "message": "Ohita kehyksen navigointi"
+  },
+  "clearAllowedWebsitesContext": {
+    "message": "Tyhjennä sallittujen verkkosivustojen luettelo"
+  },
+  "reportWebsiteAsMaliciousContext": {
+    "message": "Ilmoita verkkosivusto haitalliseksi"
+  },
+  "clearAllowedWebsitesTitle": {
+    "message": "Sallitut verkkosivustot tyhjennetty"
+  },
+  "clearAllowedWebsitesMessage": {
+    "message": "Kaikki sallitut verkkosivustot on tyhjennetty."
+  },
+  "settingsTitle": {
+    "message": "Asetukset"
+  },
+  "providersSection": {
+    "message": "Palveluntarjoajat"
+  },
+  "thirdPartySection": {
+    "message": "Kolmannen osapuolen integraatiot"
+  },
+  "resetDefaultProviders": {
+    "message": "Palauta oletuspalveluntarjoajat"
+  },
+  "resetAll": {
+    "message": "Palauta kaikki"
+  },
+  "fieldLabelApiUrl": {
+    "message": "API-URL"
+  },
+  "fieldLabelApiKey": {
+    "message": "API-avain"
+  },
+  "applyButton": {
+    "message": "Käytä"
+  },
+  "indicatorAdultContent": {
+    "message": "Aikuisille tarkoitetun sisällön suodatin"
+  },
+  "officialPartnerTitle": {
+    "message": "Virallinen kumppani"
+  },
+  "indicatorIpProtected": {
+    "message": "IP-osoite suojattu"
+  },
+  "showApiKey": {
+    "message": "Näytä API-avain"
+  },
+  "hideApiKey": {
+    "message": "Piilota API-avain"
+  },
+  "toastSaved": {
+    "message": "Tallennettu."
+  },
+  "toastFailedToSave": {
+    "message": "Tallennus epäonnistui."
+  },
+  "toastDefaultProvidersRestored": {
+    "message": "Oletuspalveluntarjoajat palautettu."
+  },
+  "toastAllSettingsRestored": {
+    "message": "Kaikki asetukset palautettu."
+  },
+  "toastSaveApiKeyFirst": {
+    "message": "Tallenna kelvollinen API-avain ennen tämän integraation käyttöönottoa."
+  },
+  "toastFailedToUpdateState": {
+    "message": "Palveluntarjoajan tilan päivittäminen epäonnistui."
+  },
+  "statusHeadingSecure": {
+    "message": "Olet suojattu"
+  },
+  "statusHeadingNoProviders": {
+    "message": "Palveluntarjoajia ei ole käytössä"
+  },
+  "statusIconAltProtected": {
+    "message": "Suojattu"
+  },
+  "providersEnabledCount": {
+    "message": "___/___ palveluntarjoajaa käytössä"
+  },
+  "openSettings": {
+    "message": "Avaa asetukset"
+  },
+  "unknownOrigin": {
+    "message": "Tuntematon"
+  },
+  "urlUnavailable": {
+    "message": "Ei saatavilla"
+  },
+  "contextVerifyFailed": {
+    "message": "Tämä varoitussivu ei voinut vahvistaa turvallisen toiminnon kontekstia. Jatkaminen ja sallimistoiminnot on poistettu käytöstä."
+  },
+  "providerLogoAlt": {
+    "message": "$1-logo"
+  },
+  "providerNameFallback": {
+    "message": "Palveluntarjoaja"
+  }
+}
