@@ -295,6 +295,19 @@ globalThis.OspreyProxyBuiltins = (() => {
         }),
 
         hostnameBuiltin({
+            id: 'threatfox',
+            aliases: ['threatfox'],
+            displayName: 'THREATfox Feed',
+            group: providerGroups.feeds.id,
+            icon: 'assets/providers/urlhaus.avif',
+            enabledByDefault: true,
+            bypassBlockingThreshold: false,
+            endpoint: 'threatfox',
+            policyKey: 'THREATfoxEnabled',
+            report: externalUrlReport('https://www.spamhaus.com/abuse-ch/#contact-us'),
+        }),
+
+        hostnameBuiltin({
             id: 'urlhaus',
             aliases: ['urlhaus'],
             displayName: 'URLhaus Feed',

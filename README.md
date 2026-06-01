@@ -91,6 +91,7 @@ personally identifiable information.
   <a href="https://github.com/Phishing-Database/Phishing.Database?utm_source=osprey" title="Phishing.Database"><img src="https://i.imgur.com/J9pmfGU.png" alt="Phishing.Database"></a>
   <a href="https://quad9.net/?utm_source=osprey" title="Quad9"><img src="https://i.imgur.com/HUrIKS9.png" alt="Quad9"></a>
   <a href="https://switch.ch/?utm_source=osprey" title="Switch.ch"><img src="https://i.imgur.com/tsoJSZu.png" alt="Switch.ch"></a>
+  <a href="https://threatfox.abuse.ch/?utm_source=osprey" title="THREATfox"><img src="https://i.imgur.com/LKmRnJD.png" alt="THREATfox"></a>
   <a href="https://urlhaus.abuse.ch/?utm_source=osprey" title="URLhaus"><img src="https://i.imgur.com/FqgBU5k.png" alt="URLhaus"></a>
   <a href="https://seclookup.com/?utm_source=osprey" title="Seclookup"><img src="https://i.imgur.com/2g2Zmf0.png" alt="Seclookup"></a>
   <a href="https://metadefender.com/?utm_source=osprey" title="MetaDefender"><img src="https://i.imgur.com/GYWXDM8.png" alt="MetaDefender"></a>

@@ -191,6 +191,12 @@
       "type": "boolean",
       "default": true
     },
+    "THREATfoxEnabled": {
+      "title": "THREATfox Feed Enabled",
+      "description": "Managed enabled state for THREATfox Feed.",
+      "type": "boolean",
+      "default": true
+    },
     "URLhausEnabled": {
       "title": "URLhaus Feed Enabled",
       "description": "Managed enabled state for URLhaus Feed.",
