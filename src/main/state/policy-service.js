@@ -143,6 +143,5 @@ globalThis.OspreyPolicyService = (() => {
     // Public API
     return Object.freeze({
         applyToState,
-        invalidate,
     });
 })();

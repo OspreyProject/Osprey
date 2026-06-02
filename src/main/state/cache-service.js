@@ -330,6 +330,5 @@ globalThis.OspreyCacheService = (() => {
         clearProcessing,
         clearProcessingByTab,
         storeOutcomes,
-        flush,
     });
 })();

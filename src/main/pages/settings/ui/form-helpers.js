@@ -203,7 +203,6 @@ globalThis.OspreyFormHelpers = (() => {
         normalizeApiKey,
         createFieldGroup,
         createReadOnlyInput,
-        createEditableInput,
         createPasswordField,
     });
 })();

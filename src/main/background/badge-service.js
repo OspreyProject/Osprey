@@ -21,7 +21,9 @@ globalThis.OspreyBadgeService = (() => {
     // Global variables
     const browserAPI = globalThis.OspreyBrowserAPI;
 
+    // TODO: This seems redundant along with its catch blocks
     const ignore = () => undefined;
+
     const badgeCounts = new Map();
     const setColor = (tabId, method, color) => browserAPI[method]({color, tabId});
 
@@ -61,7 +63,6 @@ globalThis.OspreyBadgeService = (() => {
     // Public API
     return Object.freeze({
         clear,
-        set,
         syncWithContext,
     });
 })();

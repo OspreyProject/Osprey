@@ -212,15 +212,6 @@ globalThis.OspreyProviderStateStore = (() => {
         return setState(typeof updater === 'function' ? updater(draft) || draft : draft);
     };
 
-    const setAppSettings = patch => updateState(state => {
-        for (const key of Object.keys(state.app)) {
-            if (Object.hasOwn(patch || {}, key)) {
-                state.app[key] = patch[key];
-            }
-        }
-        return state;
-    });
-
     const withUnlockedState = (state, action) => {
         if (!state.app.lockSettings) {
             action(state);
@@ -288,17 +279,11 @@ globalThis.OspreyProviderStateStore = (() => {
     return Object.freeze({
         stateKey,
         getState,
-        setState,
-        updateState,
-        setAppSettings,
         setProviderEnabled,
         setProviderApiKey,
         resetDefaultProviders,
         resetAll,
         countEnabledProviders,
         countTotalProviders,
-        invalidateCache,
-        normalizeState,
-        buildDefaultState: defaultState,
     });
 })();

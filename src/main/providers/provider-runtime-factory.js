@@ -97,6 +97,5 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
     // Public API
     return Object.freeze({
         createRuntime,
-        invalidate,
     });
 })();
