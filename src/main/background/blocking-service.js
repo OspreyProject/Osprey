@@ -225,7 +225,6 @@ globalThis.OspreyBlockingService = (() => {
 
         const warningUrl = urlService.buildWarningPageUrl({
             url: navigationUrl,
-            continueUrl: navigationUrl,
             origin: protectionResult.origin,
             result: protectionResult.result,
             tabId,
@@ -319,7 +318,7 @@ globalThis.OspreyBlockingService = (() => {
         }
     };
 
-    const allowWebsite = async (tabId, blockedUrl, continueUrl) => {
+    const allowWebsite = async (tabId, blockedUrl) => {
         const parsed = urlService.parseHttpUrl(blockedUrl);
 
         if (!parsed) {
@@ -352,8 +351,8 @@ globalThis.OspreyBlockingService = (() => {
 
         const navigationSucceeded = await navigateWithSafetyFallback(
             tabId,
-            continueUrl || blockedUrl,
-            `Failed to navigate to ${continueUrl || blockedUrl} for tabId ${tabId} after allowing website`
+            blockedUrl,
+            `Failed to navigate to ${blockedUrl} for tabId ${tabId} after allowing website`
         );
 
         if (navigationSucceeded) {
@@ -369,29 +368,28 @@ globalThis.OspreyBlockingService = (() => {
         };
     };
 
-    const continueToWebsite = async (tabId, blockedUrl, origin, continueUrl) => {
-        const lookupSourceUrl = blockedUrl || continueUrl;
-        const parsed = urlService.parseHttpUrl(lookupSourceUrl);
+    const continueToWebsite = async (tabId, blockedUrl, origin) => {
+        const parsed = urlService.parseHttpUrl(blockedUrl);
 
         if (!parsed) {
-            return failClosed("continue to website", lookupSourceUrl, "invalid URL", tabId);
+            return failClosed("continue to website", blockedUrl, "invalid URL", tabId);
         }
 
         if (typeof origin !== "string" || origin.length === 0) {
-            return failClosed("continue to website", lookupSourceUrl, "missing provider origin", tabId);
+            return failClosed("continue to website", parsed, "missing provider origin", tabId);
         }
 
         const runtime = await providerRuntimeFactory.createRuntime();
         const provider = runtime.providers.find(item => item.id === origin);
 
         if (!provider) {
-            return failClosed("continue to website", lookupSourceUrl, `unknown provider '${origin}'`, tabId);
+            return failClosed("continue to website", parsed, `unknown provider '${origin}'`, tabId);
         }
 
-        const lookupKey = urlService.lookupValueForTarget(lookupSourceUrl, provider.lookupTarget || "url");
+        const lookupKey = urlService.lookupValueForTarget(parsed, provider.lookupTarget || "url");
 
         if (!lookupKey) {
-            return failClosed("continue to website", lookupSourceUrl, "failed to derive lookup key", tabId);
+            return failClosed("continue to website", parsed, "failed to derive lookup key", tabId);
         }
 
         await cacheService.markAllowed(
@@ -422,8 +420,8 @@ globalThis.OspreyBlockingService = (() => {
 
         const navigationSucceeded = await navigateWithSafetyFallback(
             tabId,
-            continueUrl || blockedUrl,
-            `Failed to navigate to ${continueUrl || blockedUrl} for tabId ${tabId} after continuing to website`
+            blockedUrl,
+            `Failed to navigate to ${blockedUrl} for tabId ${tabId} after continuing to website`
         );
 
         if (navigationSucceeded) {

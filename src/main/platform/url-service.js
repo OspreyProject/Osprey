@@ -27,7 +27,6 @@ globalThis.OspreyUrlService = (() => {
 
     const warningContextFallback = Object.freeze({
         blockedUrl: '',
-        continueUrl: '',
         origin: 'unknown',
         result: 'failed'
     });
@@ -157,10 +156,9 @@ globalThis.OspreyUrlService = (() => {
             labels.every(label => /^[a-z0-9]([a-z0-9-]*[a-z0-9])?$/i.test(label));
     };
 
-    const buildWarningPageUrl = ({url, continueUrl, origin, result, tabId}) => {
+    const buildWarningPageUrl = ({url, origin, result, tabId}) => {
         const page = new URL(blockPageUrl());
         page.searchParams.set('url', url);
-        page.searchParams.set('curl', continueUrl || url);
         page.searchParams.set('or', origin || 'unknown');
         page.searchParams.set('rs', result);
 
@@ -180,7 +178,6 @@ globalThis.OspreyUrlService = (() => {
 
             return Object.freeze({
                 blockedUrl: url.searchParams.get('url') || '',
-                continueUrl: url.searchParams.get('curl') || '',
                 origin: url.searchParams.get('or') || 'unknown',
                 result: url.searchParams.get('rs') || 'failed',
                 tabId: Number.isFinite(parsedTabId) ? parsedTabId : null

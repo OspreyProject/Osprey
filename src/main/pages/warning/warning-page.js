@@ -142,18 +142,15 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         const result = protectionResult.normalize(fields.result);
         const origin = parseOriginParam(fields.origin);
         const blockedUrl = typeof fields.blockedUrl === 'string' && fields.blockedUrl.length > 0 ? fields.blockedUrl : null;
-        const continueUrl = typeof fields.continueUrl === 'string' && fields.continueUrl.length > 0 ? fields.continueUrl : null;
 
         return Object.freeze({
             result,
             resultText: resultName(result),
             resultTextEN: resultNameEnglish(result),
             blockedUrl,
-            continueUrl,
             origin,
             tabId: typeof fields.tabId === 'number' && Number.isFinite(fields.tabId) ? fields.tabId : null,
             actionable: fields.actionable ?? Boolean(blockedUrl),
-            continueMatchesBlocked: fields.continueMatchesBlocked ?? true,
             reportable: origin !== protectionResult.Origin.UNKNOWN,
         });
     }
@@ -228,15 +225,12 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         const warningContext = urlService.extractWarningContext(pageUrl);
         const result = isKnownResult(warningContext.result) ? warningContext.result : protectionResult.resultTypes.FAILED;
         const blockedUrlParsed = parseSafeHttpUrl(warningContext.blockedUrl);
-        const continueUrlParsed = parseSafeHttpUrl(warningContext.continueUrl);
 
         return buildContext({
             blockedUrl: blockedUrlParsed?.toString() ?? null,
-            continueUrl: continueUrlParsed?.toString() ?? null,
             origin: warningContext.origin,
             result,
             actionable: Boolean(blockedUrlParsed),
-            continueMatchesBlocked: blockedUrlParsed && continueUrlParsed ? continueUrlParsed.toString() === blockedUrlParsed.toString() : true,
             tabId: warningContext.tabId,
         });
     }
@@ -343,9 +337,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         setTextContent(domElements.url, context.blockedUrl ?? LangUtil.URL_UNAVAILABLE);
 
         if (domElements.details) {
-            domElements.details.textContent = !context.actionable || !context.continueMatchesBlocked ?
-                LangUtil.CONTEXT_VERIFY_FAILED :
-                LangUtil.DETAILS;
+            domElements.details.textContent = context.actionable ? LangUtil.DETAILS : LangUtil.CONTEXT_VERIFY_FAILED;
         }
     }
 
@@ -356,7 +348,6 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
 
         const canContinue = Boolean(
             currentContext.actionable &&
-            currentContext.continueMatchesBlocked &&
             !currentState.app?.hideContinueButtons
         );
 
@@ -395,7 +386,6 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
             messageType,
             blockedUrl: currentContext.blockedUrl,
             origin: currentContext.origin,
-            continueUrl: currentContext.continueUrl,
         });
     }
 

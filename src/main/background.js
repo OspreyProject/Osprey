@@ -173,7 +173,7 @@ try {
         },
 
         [messages.CONTINUE_TO_WEBSITE]: ({message, tabId, sendResponse}) => {
-            if (typeof message.continueUrl !== 'string') {
+            if (typeof message.blockedUrl !== 'string') {
                 console.warn('OspreyBackground rejected CONTINUE_TO_WEBSITE because the message payload was incomplete');
                 return respond(sendResponse, {ok: false});
             }
@@ -184,8 +184,8 @@ try {
                 sendResponse,
                 validTabId => respondAsync(
                     sendResponse,
-                    blockingService.continueToWebsite(validTabId, message.blockedUrl || message.continueUrl, message.origin, message.continueUrl),
-                    `Failed CONTINUE_TO_WEBSITE for tab ${validTabId} and URL ${message.continueUrl}`
+                    blockingService.continueToWebsite(validTabId, message.blockedUrl, message.origin),
+                    `Failed CONTINUE_TO_WEBSITE for tab ${validTabId} and URL ${message.blockedUrl}`
                 )
             );
         },
@@ -202,7 +202,7 @@ try {
                 sendResponse,
                 validTabId => respondAsync(
                     sendResponse,
-                    blockingService.allowWebsite(validTabId, message.blockedUrl, message.continueUrl || message.blockedUrl),
+                    blockingService.allowWebsite(validTabId, message.blockedUrl),
                     `Failed ALLOW_WEBSITE for tab ${validTabId}`
                 )
             );
