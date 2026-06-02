@@ -65,8 +65,6 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         providers: {},
     };
 
-    const sendRuntimeMessage = message => browserAPI.runtimeSendMessage(message);
-
     const withCurrentTabId = message => ({
         ...message,
         tabId: typeof currentContext?.tabId === 'number' ? currentContext.tabId : message?.tabId,
@@ -80,7 +78,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
 
     const sendNavigationMessage = async message => {
         try {
-            return await sendRuntimeMessage(message);
+            return await browserAPI.runtimeSendMessage(message);
         } catch (error) {
             if (isExpectedPortClosureError(error)) {
                 return {ok: true, navigated: true, disconnected: true};
@@ -199,7 +197,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
     }
 
     function refreshBlockedCounter() {
-        return sendRuntimeMessage(withCurrentTabId({messageType: messages.BLOCKED_COUNTER_PING}))
+        return browserAPI.runtimeSendMessage(withCurrentTabId({messageType: messages.BLOCKED_COUNTER_PING}))
             .then(updateBlockedCounter)
             .catch(error => {
                 console.warn('WarningPage failed to refresh blocked-counter state', error);
@@ -407,7 +405,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
                     return;
                 }
 
-                await sendRuntimeMessage({...buildActionMessage(messages.REPORT_WEBSITE), reportUrl});
+                await browserAPI.runtimeSendMessage({...buildActionMessage(messages.REPORT_WEBSITE), reportUrl});
             }],
 
             [domElements.allowWebsite, () => sendNavigationMessage(buildActionMessage(messages.ALLOW_WEBSITE))],

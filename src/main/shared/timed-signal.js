@@ -23,11 +23,7 @@ globalThis.OspreyTimedSignal = (() => {
         let timerId = null;
 
         const abort = reason => {
-            try {
-                controller.abort(reason);
-            } catch {
-                controller.abort();
-            }
+            controller.abort(reason);
         };
 
         if (parentSignal?.aborted) {

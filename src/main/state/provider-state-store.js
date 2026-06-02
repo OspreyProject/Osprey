@@ -188,7 +188,7 @@ globalThis.OspreyProviderStateStore = (() => {
         }
 
         loadingPromise = readStoredState().then(state => {
-            cachedState = normalizeState(state);
+            cachedState = state;
             loadingPromise = null;
             return cachedState;
         }).catch(error => {
@@ -253,12 +253,7 @@ globalThis.OspreyProviderStateStore = (() => {
 
         for (const definition of providerCatalog.getAllDefinitions()) {
             const providerState = ensureProviderState(state, definition.id, definition.enabledByDefault, '');
-
             providerState.enabled = definition.enabledByDefault;
-
-            if (definition.kind !== 'direct_static') {
-                providerState.apiKey = providerState.apiKey || '';
-            }
         }
         return state;
     });

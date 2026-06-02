@@ -118,7 +118,7 @@ globalThis.OspreyCacheService = (() => {
 
         flushTimer = setTimeout(() => {
             flushTimer = null;
-            flush().then(r => r).catch(error => {
+            flush().catch(error => {
                 console.error("OspreyCacheService failed to flush cache snapshot", error);
             });
         }, delayMs);

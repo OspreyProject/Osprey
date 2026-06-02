@@ -33,10 +33,8 @@ globalThis.OspreyBlockingService = (() => {
     const suppressedNavigations = new Map();
     const suppressedNavDuration = 2500;
     const lastBlockedPayloadByTab = new Map();
-    const verboseResultLogging = false;
 
-    const buildNavigationKey = (tabId, frameId, normalizedUrl) => `${tabId}::${frameId}::${normalizedUrl}`;
-    const buildSuppressedNavigationKey = (tabId, normalizedUrl) => `${tabId}::${normalizedUrl}`;
+    const buildNavigationKey = (tabId, normalizedUrl) => `${tabId}::${normalizedUrl}`;
 
     // TODO: Turn the '2' into a variable on the settings page
     const getBlockingThreshold = enabledCount => enabledCount >= 4 ? 2 : 1;
@@ -47,21 +45,17 @@ globalThis.OspreyBlockingService = (() => {
         provider.state.enabled && providerCatalog.supportsBlockingResult(provider, result)
     );
 
-    const getBlockedCount = (runtime, blockedContext, result) => {
-        if (!runtime || !Array.isArray(blockedContext?.origins) || blockedContext.origins.length === 0) {
+    const getBlockedCount = (providersById, blockedContext, result) => {
+        if (!providersById || !Array.isArray(blockedContext?.origins) || blockedContext.origins.length === 0) {
             return 0;
         }
-
-        const providersById = getProvidersById(runtime);
         return blockedContext.origins.filter(origin => providerCatalog.supportsBlockingResult(providersById.get(origin), result)).length;
     };
 
-    const shouldBypassBlockingThreshold = (runtime, blockedContext, result) => {
-        if (!runtime || !Array.isArray(blockedContext?.origins) || blockedContext.origins.length === 0) {
+    const shouldBypassBlockingThreshold = (providersById, blockedContext, result) => {
+        if (!providersById || !Array.isArray(blockedContext?.origins) || blockedContext.origins.length === 0) {
             return false;
         }
-
-        const providersById = getProvidersById(runtime);
 
         return blockedContext.origins.some(origin => {
             const provider = providersById.get(origin);
@@ -87,13 +81,13 @@ globalThis.OspreyBlockingService = (() => {
             return;
         }
 
-        suppressedNavigations.set(buildSuppressedNavigationKey(tabId, normalizedUrl), Date.now());
+        suppressedNavigations.set(buildNavigationKey(tabId, normalizedUrl), Date.now());
     };
 
-    const shouldSkipSuppressedNavigation = (tabId, frameId, normalizedUrl) => {
+    const shouldSkipSuppressedNavigation = (tabId, normalizedUrl) => {
         pruneSuppressedNavigations();
 
-        const key = buildSuppressedNavigationKey(tabId, normalizedUrl);
+        const key = buildNavigationKey(tabId, normalizedUrl);
 
         if (!suppressedNavigations.has(key)) {
             return false;
@@ -202,16 +196,20 @@ globalThis.OspreyBlockingService = (() => {
             return;
         }
 
+        // Records the blocking result and retrieves the updated blocked context for the tab
         resultAggregationService.recordBlockingResult(tabId, navigationUrl, protectionResult.origin, protectionResult.result);
         const blockedContext = resultAggregationService.getBlockedContext(tabId);
 
+        // Syncs the badge with the blocked context before checking the blocking threshold
         await badgeService.syncWithContext(tabId, blockedContext);
 
+        const providersById = getProvidersById(runtime);
         const applicableEnabledProviders = getApplicableEnabledProviders(runtime, protectionResult.result);
-        const thresholdBypassed = shouldBypassBlockingThreshold(runtime, blockedContext, protectionResult.result);
+        const thresholdBypassed = shouldBypassBlockingThreshold(providersById, blockedContext, protectionResult.result);
         const requiredBlockedCount = thresholdBypassed ? 1 : getBlockingThreshold(applicableEnabledProviders.length);
 
-        if (getBlockedCount(runtime, blockedContext, protectionResult.result) < requiredBlockedCount) {
+        // If the number of providers that have blocked the URL is below the required blocking threshold, do not show the warning page
+        if (getBlockedCount(providersById, blockedContext, protectionResult.result) < requiredBlockedCount) {
             return;
         }
 
@@ -250,10 +248,9 @@ globalThis.OspreyBlockingService = (() => {
         }
 
         const normalizedUrl = urlService.normalizeUrl(parsed);
-        const frameId = typeof details?.frameId === "number" ? details.frameId : 0;
-        const navigationKey = buildNavigationKey(details.tabId, frameId, normalizedUrl);
+        const navigationKey = buildNavigationKey(details.tabId, normalizedUrl);
 
-        if (shouldSkipSuppressedNavigation(details.tabId, frameId, normalizedUrl) || inFlightNavigations.has(navigationKey)) {
+        if (shouldSkipSuppressedNavigation(details.tabId, normalizedUrl) || inFlightNavigations.has(navigationKey)) {
             return;
         }
 
@@ -263,7 +260,6 @@ globalThis.OspreyBlockingService = (() => {
         try {
             const runtime = await providerRuntimeFactory.createRuntime();
             const enabledProviders = runtime.providers.filter(provider => provider.state.enabled);
-            const startTime = Date.now();
 
             if (enabledProviders.length === 0) {
                 return;
@@ -283,10 +279,6 @@ globalThis.OspreyBlockingService = (() => {
             // Clears the badge immediately on navigation
             await badgeService.clear(details.tabId);
 
-            if (verboseResultLogging) {
-                console.info("Checking URL:", normalizedUrl);
-            }
-
             await providerEngine.scanUrl({
                 tabId: details.tabId,
                 url: normalizedUrl,
@@ -294,13 +286,6 @@ globalThis.OspreyBlockingService = (() => {
                 expirationSeconds: runtime.effectiveState.app.cacheExpirationSeconds,
 
                 onResult: protectionResult => {
-                    if (verboseResultLogging) {
-                        const duration = Date.now() - startTime;
-                        const providerName = protectionResult.providerName || protectionResult.origin || 'unknown';
-                        const resultName = String(protectionResult.result || 'failed').toUpperCase();
-                        console.info(`[${providerName}] Result for ${normalizedUrl}: ${resultName} (${duration}ms)`);
-                    }
-
                     handleProtectionResult(details.tabId, normalizedUrl, runtime, protectionResult).catch(error => {
                         console.error(`Failed to handle protection result for URL ${details.url} in tabId ${details.tabId}`, error);
                     });
@@ -371,20 +356,20 @@ globalThis.OspreyBlockingService = (() => {
         }
 
         if (typeof origin !== "string" || origin.length === 0) {
-            return failClosed("continue to website", parsed, "missing provider origin", tabId);
+            return failClosed("continue to website", blockedUrl, "missing provider origin", tabId);
         }
 
         const runtime = await providerRuntimeFactory.createRuntime();
         const provider = runtime.providers.find(item => item.id === origin);
 
         if (!provider) {
-            return failClosed("continue to website", parsed, `unknown provider '${origin}'`, tabId);
+            return failClosed("continue to website", blockedUrl, `unknown provider '${origin}'`, tabId);
         }
 
         const lookupKey = urlService.lookupValueForTarget(parsed, provider.lookupTarget || "url");
 
         if (!lookupKey) {
-            return failClosed("continue to website", parsed, "failed to derive lookup key", tabId);
+            return failClosed("continue to website", blockedUrl, "failed to derive lookup key", tabId);
         }
 
         await cacheService.markAllowed(

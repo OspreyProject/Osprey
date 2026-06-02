@@ -297,12 +297,7 @@ globalThis.OspreyProviderEngine = (() => {
         const controller = abortControllers.get(tabId);
 
         if (controller) {
-            try {
-                controller.abort('navigation-replaced');
-            } catch {
-                controller.abort();
-            }
-
+            controller.abort('navigation-replaced');
             abortControllers.delete(tabId);
         }
 

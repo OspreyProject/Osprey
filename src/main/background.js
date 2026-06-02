@@ -108,7 +108,7 @@ try {
     };
 
     const openReportUrlForOrigin = async ({origin, blockedUrl, result}) => {
-        const definition = providerCatalog.getDefinition(origin, await providerStateStore.getState());
+        const definition = providerCatalog.getDefinition(origin);
 
         if (!definition) {
             console.warn(`No provider definition found for origin ${origin} when building report URL`);
