@@ -80,9 +80,6 @@
   "adultContent": {
     "message": "Vuxeninnehåll"
   },
-  "toggleFrameNavigationContext": {
-    "message": "Ignorera ramnavigering"
-  },
   "clearAllowedWebsitesContext": {
     "message": "Rensa lista över tillåtna webbplatser"
   },

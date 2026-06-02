@@ -80,9 +80,6 @@
   "adultContent": {
     "message": "Obsah pro dospělé"
   },
-  "toggleFrameNavigationContext": {
-    "message": "Ignorovat navigaci rámců"
-  },
   "clearAllowedWebsitesContext": {
     "message": "Vymazat seznam povolených stránek"
   },

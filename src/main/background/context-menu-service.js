@@ -23,10 +23,8 @@ globalThis.OspreyContextMenuService = (() => {
     const cacheService = globalThis.OspreyCacheService;
     const i18n = globalThis.OspreyI18n;
     const providerRuntimeFactory = globalThis.OspreyProviderRuntimeFactory;
-    const providerStateStore = globalThis.OspreyProviderStateStore;
 
     const menuIds = Object.freeze({
-        TOGGLE_FRAME_NAVIGATION: 'toggleFrameNavigation',
         CLEAR_ALLOWED_WEBSITES: 'clearAllowedWebsites',
         REPORT_MALICIOUS: 'reportWebsiteAsMalicious',
     });
@@ -54,14 +52,6 @@ globalThis.OspreyContextMenuService = (() => {
         if (!app.contextMenuEnabled) {
             return;
         }
-
-        await createItem({
-            id: menuIds.TOGGLE_FRAME_NAVIGATION,
-            title: i18n.translate('toggleFrameNavigationContext'),
-            type: 'checkbox',
-            checked: app.ignoreFrameNavigation,
-            contexts: ['action'],
-        });
 
         if (!app.disableClearAllowedWebsites) {
             await createItem({
@@ -92,10 +82,6 @@ globalThis.OspreyContextMenuService = (() => {
     }));
 
     const clickHandlers = Object.freeze({
-        [menuIds.TOGGLE_FRAME_NAVIGATION]: info => providerStateStore.setAppSettings({
-            ignoreFrameNavigation: Boolean(info.checked)
-        }).catch(logError('Failed to update ignoreFrameNavigation setting from context menu')),
-
         [menuIds.CLEAR_ALLOWED_WEBSITES]: () => clearAllowedWebsites().catch(logError('Failed to clear allowed websites from context menu')),
 
         [menuIds.REPORT_MALICIOUS]: () => browserAPI.tabsCreate({

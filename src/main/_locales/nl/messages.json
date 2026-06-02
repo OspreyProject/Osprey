@@ -80,9 +80,6 @@
   "adultContent": {
     "message": "Inhoud voor volwassenen"
   },
-  "toggleFrameNavigationContext": {
-    "message": "Frame-navigatie negeren"
-  },
   "clearAllowedWebsitesContext": {
     "message": "Lijst met toegestane websites wissen"
   },

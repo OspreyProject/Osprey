@@ -46,7 +46,6 @@
         UNSAFE_WEBSITE_TITLE: 'unsafeWebsiteTitle',
         CLEAR_ALLOWED_WEBSITES_TITLE: 'clearAllowedWebsitesTitle',
         CLEAR_ALLOWED_WEBSITES_MESSAGE: 'clearAllowedWebsitesMessage',
-        TOGGLE_FRAME_NAVIGATION_CONTEXT: 'toggleFrameNavigationContext',
         CLEAR_ALLOWED_WEBSITES_CONTEXT: 'clearAllowedWebsitesContext',
         REPORT_WEBSITE_AS_MALICIOUS_CONTEXT: 'reportWebsiteAsMaliciousContext',
 

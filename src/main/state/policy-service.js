@@ -28,7 +28,6 @@ globalThis.OspreyPolicyService = (() => {
         ['DisableContextMenu', 'boolean', 'contextMenuEnabled', value => !value],
         ['HideContinueButtons', 'boolean', 'hideContinueButtons'],
         ['HideReportButton', 'boolean', 'hideReportButton'],
-        ['IgnoreFrameNavigation', 'boolean', 'ignoreFrameNavigation'],
         ['CacheExpirationSeconds', 'number', 'cacheExpirationSeconds'],
         ['DisableClearAllowedWebsites', 'boolean', 'disableClearAllowedWebsites'],
         ['LockProtectionOptions', 'boolean', 'lockSettings'],

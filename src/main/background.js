@@ -78,7 +78,6 @@ try {
 
     const getMenuRelevantAppState = stateValue => ({
         contextMenuEnabled: Boolean(stateValue?.app?.contextMenuEnabled),
-        ignoreFrameNavigation: Boolean(stateValue?.app?.ignoreFrameNavigation),
         disableClearAllowedWebsites: Boolean(stateValue?.app?.disableClearAllowedWebsites),
     });
 
@@ -127,7 +126,6 @@ try {
         const nextApp = getMenuRelevantAppState(nextStateValue);
 
         return previousApp.contextMenuEnabled !== nextApp.contextMenuEnabled ||
-            previousApp.ignoreFrameNavigation !== nextApp.ignoreFrameNavigation ||
             previousApp.disableClearAllowedWebsites !== nextApp.disableClearAllowedWebsites;
     };
 

@@ -80,9 +80,6 @@
   "adultContent": {
     "message": "Contingut per a adults"
   },
-  "toggleFrameNavigationContext": {
-    "message": "Ignora la navegació de marcs"
-  },
   "clearAllowedWebsitesContext": {
     "message": "Esborra la llista de llocs web permesos"
   },

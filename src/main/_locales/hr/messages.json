@@ -80,9 +80,6 @@
   "adultContent": {
     "message": "Sadržaj za odrasle"
   },
-  "toggleFrameNavigationContext": {
-    "message": "Zanemari navigaciju okvira"
-  },
   "clearAllowedWebsitesContext": {
     "message": "Obriši popis dopuštenih web-stranica"
   },

@@ -80,9 +80,6 @@
   "adultContent": {
     "message": "Контент для взрослых"
   },
-  "toggleFrameNavigationContext": {
-    "message": "Игнорировать навигацию фреймов"
-  },
   "clearAllowedWebsitesContext": {
     "message": "Очистить список разрешённых сайтов"
   },

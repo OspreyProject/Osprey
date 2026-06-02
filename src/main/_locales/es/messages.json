@@ -80,9 +80,6 @@
   "adultContent": {
     "message": "Contenido para adultos"
   },
-  "toggleFrameNavigationContext": {
-    "message": "Ignorar navegación de marcos"
-  },
   "clearAllowedWebsitesContext": {
     "message": "Borrar lista de sitios web permitidos"
   },

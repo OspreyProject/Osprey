@@ -80,9 +80,6 @@
   "adultContent": {
     "message": "成人内容"
   },
-  "toggleFrameNavigationContext": {
-    "message": "忽略框架导航"
-  },
   "clearAllowedWebsitesContext": {
     "message": "清除允许网站列表"
   },

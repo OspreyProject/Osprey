@@ -27,12 +27,6 @@
       "type": "boolean",
       "default": false
     },
-    "IgnoreFrameNavigation": {
-      "title": "Ignore Frame Navigation",
-      "description": "If true, frame navigation events are ignored.",
-      "type": "boolean",
-      "default": true
-    },
     "CacheExpirationSeconds": {
       "title": "Cache Expiration Seconds",
       "description": "Cache entry lifetime in seconds.",

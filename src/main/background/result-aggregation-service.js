@@ -33,11 +33,9 @@ globalThis.OspreyResultAggregationService = (() => {
         } : null;
     };
 
-    const beginNavigation = (tabId, url, frameId = 0) => {
-        if (frameId === 0) {
-            frameZeroUrlByTab.set(tabId, url);
-            blockedByTab.delete(tabId);
-        }
+    const beginNavigation = (tabId, url) => {
+        frameZeroUrlByTab.set(tabId, url);
+        blockedByTab.delete(tabId);
     };
 
     const getFrameZeroUrl = tabId => frameZeroUrlByTab.get(tabId) || "";

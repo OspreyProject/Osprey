@@ -80,9 +80,6 @@
   "adultContent": {
     "message": "Conținut pentru adulți"
   },
-  "toggleFrameNavigationContext": {
-    "message": "Ignorați navigarea cadrelor"
-  },
   "clearAllowedWebsitesContext": {
     "message": "Ștergeți lista site-urilor permise"
   },

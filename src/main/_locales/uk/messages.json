@@ -80,9 +80,6 @@
   "adultContent": {
     "message": "Контент для дорослих"
   },
-  "toggleFrameNavigationContext": {
-    "message": "Ігнорувати навігацію фреймів"
-  },
   "clearAllowedWebsitesContext": {
     "message": "Очистити список дозволених сайтів"
   },

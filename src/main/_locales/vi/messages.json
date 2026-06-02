@@ -80,9 +80,6 @@
   "adultContent": {
     "message": "Nội dung người lớn"
   },
-  "toggleFrameNavigationContext": {
-    "message": "Bỏ qua điều hướng khung"
-  },
   "clearAllowedWebsitesContext": {
     "message": "Xóa danh sách trang web được phép"
   },

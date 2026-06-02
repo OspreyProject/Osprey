@@ -80,9 +80,6 @@
   "adultContent": {
     "message": "Aikuisille tarkoitettu sisältö"
   },
-  "toggleFrameNavigationContext": {
-    "message": "Ohita kehyksen navigointi"
-  },
   "clearAllowedWebsitesContext": {
     "message": "Tyhjennä sallittujen verkkosivustojen luettelo"
   },

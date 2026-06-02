@@ -75,7 +75,6 @@ globalThis.OspreyProviderStateStore = (() => {
 
         app: {
             contextMenuEnabled: true,
-            ignoreFrameNavigation: true,
             hideContinueButtons: false,
             hideReportButton: false,
             lockSettings: false,
@@ -91,7 +90,6 @@ globalThis.OspreyProviderStateStore = (() => {
 
     const boolAppKeys = [
         'contextMenuEnabled',
-        'ignoreFrameNavigation',
         'hideContinueButtons',
         'hideReportButton',
         'lockSettings',

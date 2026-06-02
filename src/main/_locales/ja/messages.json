@@ -80,9 +80,6 @@
   "adultContent": {
     "message": "アダルトコンテンツ"
   },
-  "toggleFrameNavigationContext": {
-    "message": "フレームナビゲーションを無視"
-  },
   "clearAllowedWebsitesContext": {
     "message": "許可済みウェブサイトリストをクリア"
   },

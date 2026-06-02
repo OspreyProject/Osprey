@@ -80,9 +80,6 @@
   "adultContent": {
     "message": "เนื้อหาสำหรับผู้ใหญ่"
   },
-  "toggleFrameNavigationContext": {
-    "message": "ละเว้นการนำทางเฟรม"
-  },
   "clearAllowedWebsitesContext": {
     "message": "ล้างรายการเว็บไซต์ที่อนุญาต"
   },

@@ -80,9 +80,6 @@
   "adultContent": {
     "message": "محتوای بزرگسالان"
   },
-  "toggleFrameNavigationContext": {
-    "message": "نادیده گرفتن ناوبری فریم"
-  },
   "clearAllowedWebsitesContext": {
     "message": "پاک کردن لیست وب‌سایت‌های مجاز"
   },

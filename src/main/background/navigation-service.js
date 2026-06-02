@@ -77,7 +77,11 @@ globalThis.OspreyNavigationService = (() => {
     const handleNavigation = (eventName, details, source) => {
         pruneRecentNavigations();
 
-        if (details?.frameId === 0 && isRecentNavigationDuplicate(details.tabId, details.url, source)) {
+        if (details?.frameId !== 0) {
+            return;
+        }
+
+        if (isRecentNavigationDuplicate(details.tabId, details.url, source)) {
             return;
         }
 

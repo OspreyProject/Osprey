@@ -80,9 +80,6 @@
   "adultContent": {
     "message": "Περιεχόμενο για ενήλικες"
   },
-  "toggleFrameNavigationContext": {
-    "message": "Αγνόηση πλοήγησης πλαισίου"
-  },
   "clearAllowedWebsitesContext": {
     "message": "Εκκαθάριση λίστας επιτρεπόμενων ιστοτόπων"
   },

@@ -80,9 +80,6 @@
   "adultContent": {
     "message": "성인 콘텐츠"
   },
-  "toggleFrameNavigationContext": {
-    "message": "프레임 탐색 무시"
-  },
   "clearAllowedWebsitesContext": {
     "message": "허용된 웹사이트 목록 지우기"
   },

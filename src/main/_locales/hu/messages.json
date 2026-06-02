@@ -80,9 +80,6 @@
   "adultContent": {
     "message": "Felnőtt tartalom"
   },
-  "toggleFrameNavigationContext": {
-    "message": "Képkeret-navigáció figyelmen kívül hagyása"
-  },
   "clearAllowedWebsitesContext": {
     "message": "Engedélyezett weboldalak listájának törlése"
   },

@@ -91,10 +91,6 @@ globalThis.OspreyBlockingService = (() => {
     };
 
     const shouldSkipSuppressedNavigation = (tabId, frameId, normalizedUrl) => {
-        if (frameId !== 0) {
-            return false;
-        }
-
         pruneSuppressedNavigations();
 
         const key = buildSuppressedNavigationKey(tabId, normalizedUrl);
@@ -283,16 +279,14 @@ globalThis.OspreyBlockingService = (() => {
                 return;
             }
 
-            if (frameId !== 0 && runtime.effectiveState.app.ignoreFrameNavigation) {
-                console.debug(`Ignoring navigation for ${details.url} (tabId: ${details.tabId} frameId: ${frameId})`);
-                return;
-            }
+            // Records the navigation URL for the tab in the result aggregation service
+            resultAggregationService.beginNavigation(details.tabId, normalizedUrl);
 
-            if (frameId === 0) {
-                resultAggregationService.beginNavigation(details.tabId, normalizedUrl, 0);
-                lastBlockedPayloadByTab.delete(details.tabId);
-                await badgeService.clear(details.tabId);
-            }
+            // Clears any existing blocked context for the tab
+            lastBlockedPayloadByTab.delete(details.tabId);
+
+            // Clears the badge immediately on navigation
+            await badgeService.clear(details.tabId);
 
             const startTime = Date.now();
             if (verboseResultLogging) {

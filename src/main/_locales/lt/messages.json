@@ -80,9 +80,6 @@
   "adultContent": {
     "message": "Suaugusiems skirtas turinys"
   },
-  "toggleFrameNavigationContext": {
-    "message": "Ignoruoti kadrų naršymą"
-  },
   "clearAllowedWebsitesContext": {
     "message": "Išvalyti leidžiamų svetainių sąrašą"
   },
