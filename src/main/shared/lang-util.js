@@ -126,14 +126,7 @@
         format: {
             value: msg,
             enumerable: true,
-        },
-
-        resultLabel: {
-            value(resultType) {
-                return langUtil[String(resultType ?? '').toUpperCase()] || resultType;
-            },
-            enumerable: true,
-        },
+        }
     });
 
     Object.freeze(langUtil);

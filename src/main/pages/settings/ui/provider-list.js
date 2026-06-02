@@ -128,12 +128,12 @@ globalThis.OspreyProviderList = (() => {
 
         fragment.appendChild(createSection(
             LangUtil.PROVIDERS_SECTION,
-            builtIns.map(def => providerCard.buildProviderCard(def, getProviderState(def.id), state, runtime))
+            builtIns.map(def => providerCard.buildProviderCard(def, getProviderState(def.id), runtime))
         ).section);
 
         const thirdPartySection = createSection(
             LangUtil.THIRD_PARTY_SECTION,
-            thirdParty.length > 0 ? thirdParty.map(def => providerCard.buildProviderCard(def, getProviderState(def.id), state, runtime)) : []
+            thirdParty.length > 0 ? thirdParty.map(def => providerCard.buildProviderCard(def, getProviderState(def.id), runtime)) : []
         );
 
         thirdPartySection.section.classList.add('integrations-section');

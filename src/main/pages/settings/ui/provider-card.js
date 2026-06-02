@@ -379,7 +379,7 @@ globalThis.OspreyProviderCard = (() => {
         return item;
     }
 
-    function buildProviderCard(definition, providerState, state, runtime = null) {
+    function buildProviderCard(definition, providerState, runtime = null) {
         const iconUrl = providerCatalog.resolveIconUrl(definition, 2);
 
         switch (definition.kind) {
