@@ -59,12 +59,6 @@
       "type": "boolean",
       "default": false
     },
-    "SecLookupApiKey": {
-      "title": "SecLookup API Key",
-      "description": "Managed API key for the SecLookup integration.",
-      "type": "string",
-      "default": ""
-    },
     "XcitiumApiKey": {
       "title": "Xcitium API Key",
       "description": "Managed API key for the Xcitium Verdict Cloud integration.",

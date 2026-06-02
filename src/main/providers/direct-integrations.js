@@ -74,42 +74,6 @@ globalThis.OspreyDirectIntegrations = (() => {
 
     return Object.freeze([
         integration({
-            id: 'seclookup',
-            aliases: ['secLookup'],
-            displayName: 'SecLookup',
-            group: providerGroups.direct_integrations.id,
-            icon: 'assets/providers/seclookup.avif',
-            enabledByDefault: false,
-            lookupTarget: 'hostname',
-            tags: ['api_key_required', 'hostname_only'],
-            apiKeyUrl: 'https://seclookup.com/',
-
-            request: Object.freeze({
-                urlTemplate: 'https://api.seclookup.com/api/v1/scan/api?api_key={api_key}&domain={lookupValue}',
-                method: 'GET',
-                headers: [],
-                bodyTemplate: '',
-                contentType: 'application/json',
-                timeoutMs: 7000,
-            }),
-
-            responseRules: Object.freeze([
-                Object.freeze({
-                    path: 'data.is_malicious',
-                    operator: 'equals',
-                    value: true,
-                    result: 'MALICIOUS'
-                }),
-            ]),
-
-            report: Object.freeze({
-                type: 'mailto_false_positive',
-                email: 'info@seclookup.com',
-                productName: 'SecLookup API'
-            }),
-        }),
-
-        integration({
             id: 'xcitium',
             aliases: ['xcitium'],
             displayName: 'Xcitium Verdict Cloud',

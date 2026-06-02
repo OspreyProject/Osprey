@@ -34,9 +34,13 @@ globalThis.OspreyBlockingService = (() => {
     const suppressedNavDuration = 2500;
     const lastBlockedPayloadByTab = new Map();
     const verboseResultLogging = false;
+
     const buildNavigationKey = (tabId, frameId, normalizedUrl) => `${tabId}::${frameId}::${normalizedUrl}`;
     const buildSuppressedNavigationKey = (tabId, normalizedUrl) => `${tabId}::${normalizedUrl}`;
+
+    // TODO: Turn the '2' into a variable on the settings page
     const getBlockingThreshold = enabledCount => enabledCount >= 4 ? 2 : 1;
+
     const getProvidersById = runtime => new Map((runtime?.providers || []).map(provider => [provider.id, provider]));
 
     const getApplicableEnabledProviders = (runtime, result) => (runtime?.providers || []).filter(provider =>

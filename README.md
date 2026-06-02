@@ -93,7 +93,6 @@ personally identifiable information.
   <a href="https://switch.ch/?utm_source=osprey" title="Switch.ch"><img src="https://i.imgur.com/tsoJSZu.png" alt="Switch.ch"></a>
   <a href="https://threatfox.abuse.ch/?utm_source=osprey" title="THREATfox"><img src="https://i.imgur.com/LKmRnJD.png" alt="THREATfox"></a>
   <a href="https://urlhaus.abuse.ch/?utm_source=osprey" title="URLhaus"><img src="https://i.imgur.com/FqgBU5k.png" alt="URLhaus"></a>
-  <a href="https://seclookup.com/?utm_source=osprey" title="Seclookup"><img src="https://i.imgur.com/2g2Zmf0.png" alt="Seclookup"></a>
   <a href="https://metadefender.com/?utm_source=osprey" title="MetaDefender"><img src="https://i.imgur.com/GYWXDM8.png" alt="MetaDefender"></a>
 </p>
 
