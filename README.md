@@ -65,7 +65,7 @@ From there, you can choose to go back to safety or proceed to the site if you be
 You can open the context menu by right-clicking the ![Icon](https://i.imgur.com/E1SM8OJ.png) extension
 icon. From there, you can clear the list of allowed websites, report a website as malicious, and more.
 
-![Context Menu](https://i.imgur.com/mamxWB9.png)
+![Context Menu](https://i.imgur.com/Gj7wCwL.png)
 
 ###
 
