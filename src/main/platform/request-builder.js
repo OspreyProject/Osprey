@@ -49,7 +49,7 @@ globalThis.OspreyRequestBuilder = (() => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                url: urlService.normalizeUrl(url) || String(url)
+                url: urlService.normalizeUrl(url)
             }),
         },
         timeoutMs: 7000,
@@ -67,7 +67,7 @@ globalThis.OspreyRequestBuilder = (() => {
         const request = provider.request || {};
 
         const values = {
-            url: urlService.normalizeUrl(parsed) || parsed.toString(),
+            url: urlService.normalizeUrl(parsed),
             hostname: parsed.hostname,
             lookupValue: urlService.lookupValueForTarget(parsed, provider.lookupTarget || 'url'),
             apiKey

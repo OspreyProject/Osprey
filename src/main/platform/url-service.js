@@ -88,7 +88,7 @@ globalThis.OspreyUrlService = (() => {
         if (target === 'hostname') {
             return parsed ? canonicalizeHostname(parsed.hostname) : '';
         } else {
-            return parsed ? normalizeUrl(parsed) || parsed.toString() : '';
+            return parsed ? normalizeUrl(parsed) : '';
         }
     };
 

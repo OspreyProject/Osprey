@@ -39,7 +39,7 @@ globalThis.OspreyNavigationService = (() => {
         }
 
         const parsed = urlService.parseHttpUrl(url);
-        return parsed ? `${tabId}::${urlService.normalizeUrl(parsed) || parsed}` : "";
+        return parsed ? `${tabId}::${urlService.normalizeUrl(parsed)}` : "";
     };
 
     const isRecentNavigationDuplicate = (tabId, url, source) => {

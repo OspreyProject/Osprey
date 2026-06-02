@@ -250,11 +250,6 @@ globalThis.OspreyBlockingService = (() => {
         }
 
         const normalizedUrl = urlService.normalizeUrl(parsed);
-
-        if (!normalizedUrl) {
-            return;
-        }
-
         const frameId = typeof details?.frameId === "number" ? details.frameId : 0;
         const navigationKey = buildNavigationKey(details.tabId, frameId, normalizedUrl);
 
@@ -268,6 +263,7 @@ globalThis.OspreyBlockingService = (() => {
         try {
             const runtime = await providerRuntimeFactory.createRuntime();
             const enabledProviders = runtime.providers.filter(provider => provider.state.enabled);
+            const startTime = Date.now();
 
             if (enabledProviders.length === 0) {
                 return;
@@ -287,7 +283,6 @@ globalThis.OspreyBlockingService = (() => {
             // Clears the badge immediately on navigation
             await badgeService.clear(details.tabId);
 
-            const startTime = Date.now();
             if (verboseResultLogging) {
                 console.info("Checking URL:", normalizedUrl);
             }
@@ -329,7 +324,7 @@ globalThis.OspreyBlockingService = (() => {
         const hostname = parsed.hostname;
         const labels = hostname.split(".");
         const allowPattern = labels.length >= 3 ? `*.${labels.slice(1).join(".")}` : `*.${hostname}`;
-        const normalizedUrl = urlService.normalizeUrl(blockedUrl) || blockedUrl;
+        const normalizedUrl = urlService.normalizeUrl(parsed);
         const normalizedHostname = urlService.canonicalizeHostname(parsed.hostname);
 
         await cacheService.allowPattern(allowPattern);
@@ -415,7 +410,7 @@ globalThis.OspreyBlockingService = (() => {
             };
         }
 
-        const resumeUrl = urlService.normalizeUrl(continueUrl || blockedUrl) || continueUrl || blockedUrl;
+        const resumeUrl = urlService.normalizeUrl(parsed);
         rememberSuppressedNavigation(tabId, resumeUrl);
 
         const navigationSucceeded = await navigateWithSafetyFallback(
