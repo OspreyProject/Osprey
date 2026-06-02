@@ -156,6 +156,14 @@ globalThis.OspreyProviderEngine = (() => {
             return;
         }
 
+        const allowedEntry = await cacheService.getAllowedEntry(provider.id, lookupKey);
+
+        if (allowedEntry) {
+            console.debug(`[${provider.displayName}] URL is already allowed: ${targetUrl}`);
+            emitResult(provider, targetUrl, protectionResult.resultTypes.ALLOWED, onResult);
+            return;
+        }
+
         if (cacheService.isProcessing(provider.id, lookupKey)) {
             console.debug(`[${provider.displayName}] URL is already processing: ${targetUrl}`);
             emitResult(provider, targetUrl, protectionResult.resultTypes.WAITING, onResult);
@@ -209,6 +217,14 @@ globalThis.OspreyProviderEngine = (() => {
                 console.debug(`[${provider.displayName}] URL is already blocked: ${targetUrl}`);
                 emitResult(provider, targetUrl, blockedEntry.result, onResult);
                 continue;
+            }
+
+            const allowedEntry = await cacheService.getAllowedEntry(provider.id, lookupKey);
+
+            if (allowedEntry) {
+                console.debug(`[${provider.displayName}] URL is already allowed: ${targetUrl}`);
+                emitResult(provider, targetUrl, protectionResult.resultTypes.ALLOWED, onResult);
+                return;
             }
 
             if (cacheService.isProcessing(provider.id, lookupKey)) {
