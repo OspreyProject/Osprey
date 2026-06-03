@@ -38,6 +38,10 @@ globalThis.OspreyUrlService = (() => {
         hostname.trim().toLowerCase().replaceAll(/\.+$/g, '').replace(/^www\./i, '');
 
     const parseHttpUrl = value => {
+        if (value instanceof URL) {
+            return allowedSchemes.includes(value.protocol) ? value : null;
+        }
+
         try {
             const url = new URL(String(value));
             return allowedSchemes.includes(url.protocol) ? url : null;
@@ -83,7 +87,7 @@ globalThis.OspreyUrlService = (() => {
     };
 
     const lookupValueForTarget = (url, target) => {
-        const parsed = url instanceof URL ? url : parseHttpUrl(url);
+        const parsed = parseHttpUrl(url);
 
         if (target === 'hostname') {
             return parsed ? canonicalizeHostname(parsed.hostname) : '';

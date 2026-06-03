@@ -22,7 +22,7 @@ globalThis.OspreyDirectIntegrations = (() => {
     const providerGroups = globalThis.OspreyProviderGroups;
 
     const metaDefenderApiRequest = Object.freeze({
-        urlTemplate: 'https://api.metadefender.com/v4/url/',
+        urlTemplate: 'https://api.metadefender.com/v4/url',
         method: 'POST',
         headers: Object.freeze([
             Object.freeze({

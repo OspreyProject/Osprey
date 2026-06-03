@@ -57,7 +57,7 @@ globalThis.OspreyRequestBuilder = (() => {
     });
 
     const buildDirectRequest = (provider, url, apiKey = '') => {
-        const parsed = url instanceof URL ? url : urlService.parseHttpUrl(url);
+        const parsed = urlService.parseHttpUrl(url);
 
         if (!parsed) {
             console.warn(`OspreyRequestBuilder rejected an invalid direct request URL for provider '${provider?.id || 'unknown'}'`);

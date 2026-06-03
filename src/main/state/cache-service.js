@@ -187,7 +187,7 @@ globalThis.OspreyCacheService = (() => {
 
     const matchesGlobalPattern = async url => {
         const snapshot = await getSnapshot();
-        const parsed = url instanceof URL ? url : urlService.parseHttpUrl(url);
+        const parsed = urlService.parseHttpUrl(url);
 
         if (!parsed) {
             return false;
