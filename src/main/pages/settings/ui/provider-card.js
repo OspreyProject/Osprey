@@ -153,6 +153,14 @@ globalThis.OspreyProviderCard = (() => {
         header.setAttribute('aria-expanded', String(expanded));
     }
 
+    const makeKeyHandler = callback => event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            event.stopPropagation();
+            callback();
+        }
+    };
+
     function wireProviderInteractions(item, header, toggleSwitch, providerId, {
         isThirdParty = false,
         getApiKey = () => '',
@@ -213,13 +221,7 @@ globalThis.OspreyProviderCard = (() => {
                 handleToggleClick();
             }],
 
-            ['keydown', event => {
-                if (event.key === 'Enter' || event.key === ' ') {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    handleToggleClick();
-                }
-            }]
+            ['keydown', makeKeyHandler(handleToggleClick)]
         ]) {
             toggleSwitch.addEventListener(type, handler);
         }
@@ -312,13 +314,7 @@ globalThis.OspreyProviderCard = (() => {
                 openApiKeyUrl();
             });
 
-            apiKeyLink.addEventListener('keydown', event => {
-                if (event.key === 'Enter' || event.key === ' ') {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    openApiKeyUrl();
-                }
-            });
+            apiKeyLink.addEventListener('keydown', makeKeyHandler(openApiKeyUrl));
         }
 
         passwordField.input.disabled = fieldsLocked;

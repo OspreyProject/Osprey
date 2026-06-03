@@ -68,9 +68,7 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
         setLink(domElements.privacyPolicy, LangUtil.PRIVACY_POLICY, privacyURL);
         setLink(domElements.termsFooterLink, LangUtil.TERMS_LINK, termsURL);
 
-        if (domElements.logo) {
-            domElements.logo.alt = LangUtil.LOGO_ALT;
-        }
+        LangUtil.applyLogoAlt(domElements.logo);
 
         if (domElements.settingsButton) {
             domElements.settingsButton.textContent = LangUtil.OPEN_SETTINGS;

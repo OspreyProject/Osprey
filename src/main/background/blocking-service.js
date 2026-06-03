@@ -45,15 +45,20 @@ globalThis.OspreyBlockingService = (() => {
         provider.state.enabled && providerCatalog.supportsBlockingResult(provider, result)
     );
 
+    const hasOrigins = (providersById, blockedContext) =>
+        Boolean(providersById) &&
+        Array.isArray(blockedContext?.origins) &&
+        blockedContext.origins.length > 0;
+
     const getBlockedCount = (providersById, blockedContext, result) => {
-        if (!providersById || !Array.isArray(blockedContext?.origins) || blockedContext.origins.length === 0) {
+        if (!hasOrigins(providersById, blockedContext)) {
             return 0;
         }
         return blockedContext.origins.filter(origin => providerCatalog.supportsBlockingResult(providersById.get(origin), result)).length;
     };
 
     const shouldBypassBlockingThreshold = (providersById, blockedContext, result) => {
-        if (!providersById || !Array.isArray(blockedContext?.origins) || blockedContext.origins.length === 0) {
+        if (!hasOrigins(providersById, blockedContext)) {
             return false;
         }
 
@@ -150,6 +155,14 @@ globalThis.OspreyBlockingService = (() => {
         resultAggregationService.clear(tabId);
         lastBlockedPayloadByTab.delete(tabId);
         await badgeService.clear(tabId);
+    };
+
+    const cleanupAfterNavigation = tabId => {
+        providerEngine.abortTab(tabId).catch(() => {
+        });
+
+        clearBlockedUI(tabId).catch(() => {
+        });
     };
 
     const sendToSafety = async tabId => {
@@ -336,10 +349,7 @@ globalThis.OspreyBlockingService = (() => {
         );
 
         if (navigationSucceeded) {
-            providerEngine.abortTab(tabId).catch(() => {
-            });
-            clearBlockedUI(tabId).catch(() => {
-            });
+            cleanupAfterNavigation(tabId);
         }
 
         return {
@@ -405,10 +415,7 @@ globalThis.OspreyBlockingService = (() => {
         );
 
         if (navigationSucceeded) {
-            providerEngine.abortTab(tabId).catch(() => {
-            });
-            clearBlockedUI(tabId).catch(() => {
-            });
+            cleanupAfterNavigation(tabId);
         }
 
         return {

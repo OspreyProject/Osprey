@@ -214,9 +214,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
             setTextContent(domElements[id], value);
         }
 
-        if (domElements.logo) {
-            domElements.logo.alt = LangUtil.LOGO_ALT;
-        }
+        LangUtil.applyLogoAlt(domElements.logo);
     }
 
     function parsePageContext(pageUrl) {

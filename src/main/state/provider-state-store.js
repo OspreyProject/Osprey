@@ -55,12 +55,6 @@ globalThis.OspreyProviderStateStore = (() => {
         return providerState;
     };
 
-    const getSharedApiKeyGroupMembers = providerId => {
-        const definition = providerCatalog.getDefinition(providerId);
-        const groupId = String(definition?.sharedApiKeyGroup || '');
-        return groupId ? providerCatalog.getSharedApiKeyGroupMembers(groupId) : [];
-    };
-
     const buildDefaultProviders = () => {
         const providers = Object.create(null);
 
@@ -225,7 +219,7 @@ globalThis.OspreyProviderStateStore = (() => {
 
     const setProviderApiKey = (providerId, apiKey) => updateState(state => withUnlockedState(state, current => {
         const normalizedApiKey = String(apiKey ?? '');
-        const sharedMembers = getSharedApiKeyGroupMembers(providerId);
+        const sharedMembers = providerCatalog.getSharedGroupMembersById(providerId);
 
         if (sharedMembers.length > 0) {
             for (const memberId of sharedMembers) {

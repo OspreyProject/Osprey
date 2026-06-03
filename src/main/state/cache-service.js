@@ -88,17 +88,22 @@ globalThis.OspreyCacheService = (() => {
     const createEntryMarker = (type, createRecord) => async (providerId, lookupKey, ...args) => setRecord(providerId, type, lookupKey, createRecord(...args));
     const processingKey = (providerId, lookupKey) => `${providerId}::${lookupKey}`;
 
+    const ensureFlushPromise = () => {
+        if (!flushPromise) {
+            flushPromise = new Promise(resolve => {
+                flushResolver = resolve;
+            });
+        }
+        return flushPromise;
+    };
+
     const flush = async () => {
         if (flushTimer) {
             clearTimeout(flushTimer);
             flushTimer = null;
         }
 
-        if (!flushPromise) {
-            flushPromise = new Promise(resolve => {
-                flushResolver = resolve;
-            });
-        }
+        ensureFlushPromise();
 
         try {
             await browserAPI.storageSet("local", {[cacheKey]: cacheSnapshot});
@@ -122,13 +127,7 @@ globalThis.OspreyCacheService = (() => {
                 console.error("OspreyCacheService failed to flush cache snapshot", error);
             });
         }, delayMs);
-
-        if (!flushPromise) {
-            flushPromise = new Promise(resolve => {
-                flushResolver = resolve;
-            });
-        }
-        return flushPromise;
+        return ensureFlushPromise();
     };
 
     const loadSnapshot = async () => {

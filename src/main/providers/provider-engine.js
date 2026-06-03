@@ -134,6 +134,37 @@ globalThis.OspreyProviderEngine = (() => {
         emitResult(provider, targetUrl, outcome, onResult);
     };
 
+    const checkProviderCache = async (provider, lookupKey, targetUrl, expirationSeconds, onResult, options) => {
+        if (options.globalAllowMatched && !provider.bypassBlockingThreshold) {
+            await cacheService.markAllowed(provider.id, lookupKey, expirationSeconds);
+            emitResult(provider, targetUrl, protectionResult.resultTypes.ALLOWED, onResult);
+            return false;
+        }
+
+        const blockedEntry = await cacheService.getBlockedEntry(provider.id, lookupKey);
+
+        if (blockedEntry?.result) {
+            console.debug(`[${provider.displayName}] URL is already blocked: ${targetUrl}`);
+            emitResult(provider, targetUrl, blockedEntry.result, onResult);
+            return false;
+        }
+
+        const allowedEntry = await cacheService.getAllowedEntry(provider.id, lookupKey);
+
+        if (allowedEntry) {
+            console.debug(`[${provider.displayName}] URL is already allowed: ${targetUrl}`);
+            emitResult(provider, targetUrl, protectionResult.resultTypes.ALLOWED, onResult);
+            return false;
+        }
+
+        if (cacheService.isProcessing(provider.id, lookupKey)) {
+            console.debug(`[${provider.displayName}] URL is already processing: ${targetUrl}`);
+            emitResult(provider, targetUrl, protectionResult.resultTypes.WAITING, onResult);
+            return false;
+        }
+        return true;
+    };
+
     const fetchProviderResult = async (provider, targetUrl, parentSignal, expirationSeconds, onResult, tabId = 0, options = {}) => {
         const lookupKey = urlService.lookupValueForTarget(targetUrl, provider.lookupTarget || 'url');
 
@@ -142,31 +173,7 @@ globalThis.OspreyProviderEngine = (() => {
             return;
         }
 
-        if (options.globalAllowMatched && !provider.bypassBlockingThreshold) {
-            await cacheService.markAllowed(provider.id, lookupKey, expirationSeconds);
-            emitResult(provider, targetUrl, protectionResult.resultTypes.ALLOWED, onResult);
-            return;
-        }
-
-        const blockedEntry = await cacheService.getBlockedEntry(provider.id, lookupKey);
-
-        if (blockedEntry?.result) {
-            console.debug(`[${provider.displayName}] URL is already blocked: ${targetUrl}`);
-            emitResult(provider, targetUrl, blockedEntry.result, onResult);
-            return;
-        }
-
-        const allowedEntry = await cacheService.getAllowedEntry(provider.id, lookupKey);
-
-        if (allowedEntry) {
-            console.debug(`[${provider.displayName}] URL is already allowed: ${targetUrl}`);
-            emitResult(provider, targetUrl, protectionResult.resultTypes.ALLOWED, onResult);
-            return;
-        }
-
-        if (cacheService.isProcessing(provider.id, lookupKey)) {
-            console.debug(`[${provider.displayName}] URL is already processing: ${targetUrl}`);
-            emitResult(provider, targetUrl, protectionResult.resultTypes.WAITING, onResult);
+        if (!await checkProviderCache(provider, lookupKey, targetUrl, expirationSeconds, onResult, options)) {
             return;
         }
 
@@ -205,31 +212,7 @@ globalThis.OspreyProviderEngine = (() => {
 
             lookupKeys.set(provider.id, lookupKey);
 
-            if (options.globalAllowMatched && !provider.bypassBlockingThreshold) {
-                await cacheService.markAllowed(provider.id, lookupKey, expirationSeconds);
-                emitResult(provider, targetUrl, protectionResult.resultTypes.ALLOWED, onResult);
-                continue;
-            }
-
-            const blockedEntry = await cacheService.getBlockedEntry(provider.id, lookupKey);
-
-            if (blockedEntry?.result) {
-                console.debug(`[${provider.displayName}] URL is already blocked: ${targetUrl}`);
-                emitResult(provider, targetUrl, blockedEntry.result, onResult);
-                continue;
-            }
-
-            const allowedEntry = await cacheService.getAllowedEntry(provider.id, lookupKey);
-
-            if (allowedEntry) {
-                console.debug(`[${provider.displayName}] URL is already allowed: ${targetUrl}`);
-                emitResult(provider, targetUrl, protectionResult.resultTypes.ALLOWED, onResult);
-                return;
-            }
-
-            if (cacheService.isProcessing(provider.id, lookupKey)) {
-                console.debug(`[${provider.displayName}] URL is already processing: ${targetUrl}`);
-                emitResult(provider, targetUrl, protectionResult.resultTypes.WAITING, onResult);
+            if (!await checkProviderCache(provider, lookupKey, targetUrl, expirationSeconds, onResult, options)) {
                 continue;
             }
 

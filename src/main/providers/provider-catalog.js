@@ -108,11 +108,18 @@ globalThis.OspreyProviderCatalog = (() => {
         .filter(definition => String(definition?.sharedApiKeyGroup || '') === String(groupId || ''))
         .map(definition => definition.id);
 
+    const getSharedGroupMembersById = providerId => {
+        const definition = getDefinition(providerId);
+        const groupId = String(definition?.sharedApiKeyGroup || '');
+        return groupId ? getSharedApiKeyGroupMembers(groupId) : [];
+    };
+
     // Public API
     return Object.freeze({
         getBuiltins,
         getDirectIntegrations,
         getSharedApiKeyGroupMembers,
+        getSharedGroupMembersById,
         getAllDefinitions,
         getDefinition,
         requiresApiKey,

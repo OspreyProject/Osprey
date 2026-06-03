@@ -42,12 +42,6 @@ globalThis.OspreyPolicyService = (() => {
 
     const getApiKeyPolicyKey = id => `${id.charAt(0).toUpperCase()}${id.slice(1)}ApiKey`;
 
-    const getSharedApiKeyGroupMembers = providerId => {
-        const definition = providerCatalog.getDefinition(providerId);
-        const groupId = String(definition?.sharedApiKeyGroup || '');
-        return groupId ? providerCatalog.getSharedApiKeyGroupMembers(groupId) : [];
-    };
-
     const getPolicies = async ({fresh = false} = {}) => {
         if (!fresh && cachedPolicies) {
             return {...cachedPolicies};
@@ -103,8 +97,7 @@ globalThis.OspreyPolicyService = (() => {
 
             if (typeof policies[apiKeyPolicyKey] === 'string') {
                 providerState.apiKey = policies[apiKeyPolicyKey];
-
-                const sharedMembers = getSharedApiKeyGroupMembers(definition.id);
+                const sharedMembers = providerCatalog.getSharedGroupMembersById(definition.id);
 
                 if (sharedMembers.length > 0) {
                     for (const memberId of sharedMembers) {

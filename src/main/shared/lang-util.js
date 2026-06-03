@@ -126,7 +126,16 @@
         format: {
             value: msg,
             enumerable: true,
-        }
+        },
+
+        applyLogoAlt: {
+            value(element) {
+                if (element) {
+                    element.alt = msg('logoAlt');
+                }
+            },
+            enumerable: true,
+        },
     });
 
     Object.freeze(langUtil);

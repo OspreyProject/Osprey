@@ -117,8 +117,10 @@ globalThis.OspreyUrlService = (() => {
         );
     };
 
+    const normalizeHostnameInput = hostname => typeof hostname === 'string' ? hostname.trim() : '';
+
     const isIpv4Literal = hostname => {
-        const value = typeof hostname === 'string' ? hostname.trim() : '';
+        const value = normalizeHostnameInput(hostname);
         const parts = value.split('.');
 
         if (parts.length !== 4) {
@@ -136,7 +138,7 @@ globalThis.OspreyUrlService = (() => {
     };
 
     const isIpv6Literal = hostname => {
-        const value = typeof hostname === 'string' ? hostname.trim() : '';
+        const value = normalizeHostnameInput(hostname);
         const compact = value.replaceAll(/^\[|]$/g, '');
         return compact.includes(':') && /^[0-9a-f:]+$/i.test(compact);
     };

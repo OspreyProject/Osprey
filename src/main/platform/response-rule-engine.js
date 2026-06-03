@@ -328,6 +328,8 @@ globalThis.OspreyResponseRuleEngine = (() => {
         return false;
     };
 
+    const resolveResult = rule => String(rule.result || defaultResult).toUpperCase();
+
     const evaluateRules = (responseBody, rules) => {
         if (!Array.isArray(rules) || rules.length === 0) {
             return defaultResult;
@@ -348,13 +350,13 @@ globalThis.OspreyResponseRuleEngine = (() => {
                 }
 
                 if (evaluateConditionExpression(responseBody, expression)) {
-                    return String(rule.result || defaultResult).toUpperCase();
+                    return resolveResult(rule);
                 }
                 continue;
             }
 
             if (compare(getPathValue(responseBody, rule.path), String(rule.operator || 'equals'), rule.value)) {
-                return String(rule.result || defaultResult).toUpperCase();
+                return resolveResult(rule);
             }
         }
         return defaultResult;
