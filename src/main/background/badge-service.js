@@ -21,9 +21,6 @@ globalThis.OspreyBadgeService = (() => {
     // Global variables
     const browserAPI = globalThis.OspreyBrowserAPI;
 
-    // TODO: This seems redundant along with its catch blocks
-    const ignore = () => undefined;
-
     const badgeCounts = new Map();
     const setColor = (tabId, method, color) => browserAPI[method]({color, tabId});
 
@@ -33,7 +30,10 @@ globalThis.OspreyBadgeService = (() => {
         }
 
         badgeCounts.set(tabId, 0);
-        return browserAPI.actionSetBadgeText({tabId, text: ""}).catch(ignore);
+
+        return browserAPI.actionSetBadgeText({tabId, text: ""}).catch(() => {
+            // ignored
+        });
     };
 
     const set = (tabId, count) => {
@@ -51,7 +51,9 @@ globalThis.OspreyBadgeService = (() => {
 
             // Sets the badge text color to white
             setColor(tabId, "actionSetBadgeTextColor", "#ffffff")
-        ]).catch(ignore);
+        ]).catch(() => {
+            // ignored
+        });
     };
 
     const syncWithContext = (tabId, context) => {

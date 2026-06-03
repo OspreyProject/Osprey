@@ -147,7 +147,9 @@ globalThis.OspreyBlockingService = (() => {
         }
 
         lastBlockedPayloadByTab.set(tabId, payloadKey);
+
         await browserAPI.runtimeSendMessage(payload).catch(() => {
+            // ignored
         });
     };
 
@@ -159,9 +161,11 @@ globalThis.OspreyBlockingService = (() => {
 
     const cleanupAfterNavigation = tabId => {
         providerEngine.abortTab(tabId).catch(() => {
+            // ignored
         });
 
         clearBlockedUI(tabId).catch(() => {
+            // ignored
         });
     };
 

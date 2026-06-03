@@ -279,7 +279,9 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
 
         globalThis.addEventListener('pageshow', () => {
             applyOriginVisuals(currentOrigin);
+
             refreshBlockedCounter().catch(() => {
+                // ignored
             });
         });
     }
@@ -390,8 +392,11 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         providerNameMap = new Map(providerCatalog.getAllDefinitions().map(def => [def.id, def.displayName]));
 
         applyOriginVisuals(currentOrigin);
+
         refreshBlockedCounter().catch(() => {
+            // ignored
         });
+
         syncActionVisibility();
 
         const actionBindings = [
