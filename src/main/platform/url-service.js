@@ -53,7 +53,16 @@ globalThis.OspreyUrlService = (() => {
         }
     };
 
-    const stripTrailingSlash = value => value === '/' ? '' : value.endsWith('/') ? value.slice(0, -1) : value;
+    const stripTrailingSlash = value => {
+        if (value === '/') {
+            return '/';
+        }
+
+        while (value.endsWith('/')) {
+            value = value.slice(0, -1);
+        }
+        return value;
+    };
 
     const toComparableUrl = value => {
         const url = value instanceof URL ? new URL(value.toString()) : parseHttpUrl(value);
@@ -132,7 +141,7 @@ globalThis.OspreyUrlService = (() => {
         }
 
         return parts.every(part => {
-            if (!/^[0-9]{1,3}$/.test(part)) {
+            if (!/^\d{1,3}$/.test(part)) {
                 return false;
             }
 
@@ -171,7 +180,6 @@ globalThis.OspreyUrlService = (() => {
         if (typeof tabId === 'number' && Number.isFinite(tabId)) {
             page.searchParams.set('tid', String(tabId));
         }
-
         return page.toString();
     };
 
