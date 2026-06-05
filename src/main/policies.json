@@ -53,12 +53,6 @@
       "type": "boolean",
       "default": false
     },
-    "XcitiumApiKey": {
-      "title": "Xcitium API Key",
-      "description": "Managed API key for the Xcitium Verdict Cloud integration.",
-      "type": "string",
-      "default": ""
-    },
     "MetaDefenderApiKey": {
       "title": "MetaDefender API Key",
       "description": "Managed API key for the MetaDefender integrations.",
@@ -155,18 +149,6 @@
       "type": "boolean",
       "default": false
     },
-    "PhishDestroyEnabled": {
-      "title": "PhishDestroy Feed Enabled",
-      "description": "Managed enabled state for PhishDestroy Feed.",
-      "type": "boolean",
-      "default": true
-    },
-    "PhishingDatabaseEnabled": {
-      "title": "Phishing.Database Feed Enabled",
-      "description": "Managed enabled state for Phishing.Database Feed.",
-      "type": "boolean",
-      "default": true
-    },
     "Quad9Enabled": {
       "title": "Quad9 Security DNS Enabled",
       "description": "Managed enabled state for Quad9 Security DNS.",
@@ -179,15 +161,33 @@
       "type": "boolean",
       "default": true
     },
+    "PhishDestroyEnabled": {
+      "title": "PhishDestroy List Enabled",
+      "description": "Managed enabled state for PhishDestroy List.",
+      "type": "boolean",
+      "default": true
+    },
+    "PhishingDatabaseEnabled": {
+      "title": "Phishing.Database List Enabled",
+      "description": "Managed enabled state for Phishing.Database List.",
+      "type": "boolean",
+      "default": true
+    },
+    "PhishuntIOEnabled": {
+      "title": "Phishunt.io List Enabled",
+      "description": "Managed enabled state for Phishunt.io List.",
+      "type": "boolean",
+      "default": true
+    },
     "THREATfoxEnabled": {
-      "title": "THREATfox Feed Enabled",
-      "description": "Managed enabled state for THREATfox Feed.",
+      "title": "THREATfox List Enabled",
+      "description": "Managed enabled state for THREATfox List.",
       "type": "boolean",
       "default": true
     },
     "URLhausEnabled": {
-      "title": "URLhaus Feed Enabled",
-      "description": "Managed enabled state for URLhaus Feed.",
+      "title": "URLhaus List Enabled",
+      "description": "Managed enabled state for URLhaus List.",
       "type": "boolean",
       "default": true
     }

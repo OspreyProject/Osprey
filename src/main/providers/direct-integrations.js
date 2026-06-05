@@ -73,54 +73,6 @@ globalThis.OspreyDirectIntegrations = (() => {
     });
 
     return Object.freeze([
-        integration({
-            id: 'xcitium',
-            aliases: ['xcitium'],
-            displayName: 'Xcitium Verdict Cloud',
-            group: providerGroups.direct_integrations.id,
-            icon: 'assets/providers/xcitium.avif',
-            enabledByDefault: false,
-            lookupTarget: 'hostname',
-            tags: ['api_key_required', 'hostname_only'],
-            apiKeyUrl: 'https://lookup.verdict.xcitium.com/auth/profile',
-
-            request: Object.freeze({
-                urlTemplate: 'https://lookup.verdict.xcitium.com/api/v1/url/category/query?url={lookupValue}',
-                method: 'GET',
-                headers: Object.freeze([
-                    Object.freeze({
-                        name: 'X-Api-Key',
-                        value: '{api_key}'
-                    }),
-                ]),
-                bodyTemplate: '',
-                contentType: 'application/json',
-                timeoutMs: 7000,
-            }),
-
-            responseRules: Object.freeze([
-                Object.freeze({
-                    path: 'categories[*].category_id',
-                    operator: 'contains',
-                    value: 72,
-                    result: 'MALICIOUS'
-                }),
-
-                Object.freeze({
-                    path: 'categories[*].category_id',
-                    operator: 'contains',
-                    value: 6,
-                    result: 'MALICIOUS'
-                }),
-            ]),
-
-            report: Object.freeze({
-                type: 'mailto_false_positive',
-                email: 'support@xcitium.com',
-                productName: 'Xcitium Verdict Cloud'
-            }),
-        }),
-
         metadefenderIntegration({
             id: 'metadefender-reputation',
             aliases: ['metadefender'],
