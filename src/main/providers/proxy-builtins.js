@@ -243,32 +243,6 @@ globalThis.OspreyProxyBuiltins = (() => {
         }),
 
         hostnameBuiltin({
-            id: 'phishdestroy',
-            aliases: ['phishDestroy'],
-            displayName: 'PhishDestroy Feed',
-            group: providerGroups.feeds.id,
-            icon: 'assets/providers/phishdestroy.avif',
-            enabledByDefault: true,
-            bypassBlockingThreshold: false,
-            endpoint: 'phishdestroy',
-            policyKey: 'PhishDestroyEnabled',
-            report: externalUrlReport('https://phishdestroy.io/appeals'),
-        }),
-
-        hostnameBuiltin({
-            id: 'phishing-database',
-            aliases: ['phishingDatabase'],
-            displayName: 'Phishing.Database Feed',
-            group: providerGroups.feeds.id,
-            icon: 'assets/providers/phishingdatabase.avif',
-            enabledByDefault: true,
-            bypassBlockingThreshold: false,
-            endpoint: 'phishing-database',
-            policyKey: 'PhishingDatabaseEnabled',
-            report: mailtoFalsePositiveReport('support@phish.co.za', 'Phishing.Database'),
-        }),
-
-        hostnameBuiltin({
             id: 'quad9',
             aliases: ['quad9'],
             displayName: 'Quad9 Security DNS',
@@ -295,9 +269,48 @@ globalThis.OspreyProxyBuiltins = (() => {
         }),
 
         hostnameBuiltin({
+            id: 'phishdestroy',
+            aliases: ['phishDestroy'],
+            displayName: 'PhishDestroy List',
+            group: providerGroups.feeds.id,
+            icon: 'assets/providers/phishdestroy.avif',
+            enabledByDefault: true,
+            bypassBlockingThreshold: false,
+            endpoint: 'phishdestroy',
+            policyKey: 'PhishDestroyEnabled',
+            report: externalUrlReport('https://phishdestroy.io/appeals'),
+        }),
+
+        hostnameBuiltin({
+            id: 'phishing-database',
+            aliases: ['phishingDatabase'],
+            displayName: 'Phishing.Database List',
+            group: providerGroups.feeds.id,
+            icon: 'assets/providers/phishingdatabase.avif',
+            enabledByDefault: true,
+            bypassBlockingThreshold: false,
+            endpoint: 'phishing-database',
+            policyKey: 'PhishingDatabaseEnabled',
+            report: mailtoFalsePositiveReport('support@phish.co.za', 'Phishing.Database'),
+        }),
+
+        hostnameBuiltin({
+            id: 'phishunt-io',
+            aliases: ['phishuntIO'],
+            displayName: 'Phishunt.io List',
+            group: providerGroups.feeds.id,
+            icon: 'assets/providers/phishuntio.avif',
+            enabledByDefault: true,
+            bypassBlockingThreshold: false,
+            endpoint: 'phishunt-io',
+            policyKey: 'PhishuntIOEnabled',
+            report: mailtoFalsePositiveReport('info@phishunt.io', 'Phishunt.io API'),
+        }),
+
+        hostnameBuiltin({
             id: 'threatfox',
             aliases: ['threatfox'],
-            displayName: 'THREATfox Feed',
+            displayName: 'THREATfox List',
             group: providerGroups.feeds.id,
             icon: 'assets/providers/urlhaus.avif',
             enabledByDefault: true,
@@ -310,7 +323,7 @@ globalThis.OspreyProxyBuiltins = (() => {
         hostnameBuiltin({
             id: 'urlhaus',
             aliases: ['urlhaus'],
-            displayName: 'URLhaus Feed',
+            displayName: 'URLhaus List',
             group: providerGroups.feeds.id,
             icon: 'assets/providers/urlhaus.avif',
             enabledByDefault: true,
