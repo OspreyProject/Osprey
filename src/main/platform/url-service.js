@@ -197,8 +197,28 @@ globalThis.OspreyUrlService = (() => {
     const areEquivalentURLs = (leftUrl, rightUrl) => leftUrl === rightUrl || (() => {
         const left = toComparableUrl(leftUrl);
         const right = toComparableUrl(rightUrl);
-        return !!left && !!right && left.toString() === right.toString();
+
+        if (!left || !right) {
+            return false;
+        }
+
+        // Upgrade http to https for comparison
+        if (left.protocol === 'http:') {
+            left.protocol = 'https';
+        }
+        if (right.protocol === 'http:') {
+            right.protocol = 'https';
+        }
+        return left.toString() === right.toString();
     })();
+
+    // Returns true when two URLs share the same host and port, regardless of path,
+    // query, or scheme (http vs https is treated as same origin).
+    const haveSameOrigin = (leftUrl, rightUrl) => {
+        const left = toComparableUrl(leftUrl);
+        const right = toComparableUrl(rightUrl);
+        return !!left && !!right && left.hostname === right.hostname && left.port === right.port;
+    };
 
     // Public API
     return Object.freeze({
@@ -212,6 +232,7 @@ globalThis.OspreyUrlService = (() => {
         buildWarningPageUrl,
         extractWarningContext,
         areEquivalentURLs,
+        haveSameOrigin,
         isWarningPageUrl,
         blockPageUrl,
     });

@@ -33,9 +33,13 @@ globalThis.OspreyResultAggregationService = (() => {
         } : null;
     };
 
-    const beginNavigation = (tabId, url) => {
-        frameZeroUrlByTab.set(tabId, url);
+    const beginNavigation = tabId => {
+        // Intentionally does NOT update frameZeroUrl here
         blockedByTab.delete(tabId);
+    };
+
+    const setFrameZeroUrl = (tabId, url) => {
+        frameZeroUrlByTab.set(tabId, url);
     };
 
     const getFrameZeroUrl = tabId => frameZeroUrlByTab.get(tabId) || "";
@@ -93,6 +97,7 @@ globalThis.OspreyResultAggregationService = (() => {
     // Public API
     return Object.freeze({
         beginNavigation,
+        setFrameZeroUrl,
         getFrameZeroUrl,
         recordBlockingResult,
         markRedirected,

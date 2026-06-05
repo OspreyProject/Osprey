@@ -208,7 +208,7 @@ globalThis.OspreyBlockingService = (() => {
 
         const frameZeroUrl = resultAggregationService.getFrameZeroUrl(tabId);
 
-        if (frameZeroUrl && !urlService.areEquivalentURLs(frameZeroUrl, navigationUrl)) {
+        if (frameZeroUrl && !urlService.haveSameOrigin(frameZeroUrl, navigationUrl)) {
             console.debug(`Ignoring stale blocking result for URL ${navigationUrl} in tabId ${tabId} because frame zero URL is different: ${frameZeroUrl}`);
             return;
         }
@@ -301,6 +301,13 @@ globalThis.OspreyBlockingService = (() => {
                 url: normalizedUrl,
                 providers: runtime.providers,
                 expirationSeconds: runtime.effectiveState.app.cacheExpirationSeconds,
+
+                // Both frameZeroUrl and badge clear happen here, after DNS passes,
+                // so neither fires for navigations that are skipped nor aborted.
+                onScanBegin: async () => {
+                    resultAggregationService.setFrameZeroUrl(details.tabId, normalizedUrl);
+                    await badgeService.clear(details.tabId);
+                },
 
                 onResult: protectionResult => {
                     handleProtectionResult(details.tabId, normalizedUrl, runtime, protectionResult).catch(error => {
