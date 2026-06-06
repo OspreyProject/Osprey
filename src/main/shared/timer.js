@@ -18,17 +18,13 @@
 "use strict";
 
 globalThis.OspreyTimer = (() => {
-    // Instrumentation can be silenced globally without unwrapping any call site.
-    let enabled = true;
-
     const hasHighResClock = typeof performance !== 'undefined' && typeof performance.now === 'function';
     const readClock = () => hasHighResClock ? performance.now() : Date.now();
     const formatDuration = elapsedMs => `${elapsedMs.toFixed(2)}ms`;
-
-    // Each timed run is tagged with its own random id, so a 'started' line can be
-    // matched to its 'finished' line even when async work from many calls
-    // interleaves in the console. Always three digits, e.g. '#274 | '.
     const nextPrefix = () => `#${Math.floor(100 + Math.random() * 900)} | `;
+
+    // Whether the timer is enabled
+    let enabled = false;
 
     const logStart = (prefix, label) => {
         console.debug(`${prefix}'${label}' started at ${new Date().toISOString()}`);
@@ -41,15 +37,12 @@ globalThis.OspreyTimer = (() => {
     };
 
     /**
-     * Runs fn immediately, logging when it started and how long it took to finish.
-     * Transparent to callers: the original return value is passed through, thrown
-     * errors are re-thrown, and Promise results are awaited so the reported
-     * duration reflects full settlement (resolve or reject).
+     * Runs fn with the given args and logs the time taken to complete.
      *
      * @param {string} label Human-readable name for the work being timed.
-     * @param {Function} fn The function to execute and measure.
-     * @param {...*} args Arguments forwarded to fn.
-     * @returns {*} Whatever fn returns (a Promise stays a Promise).
+     * @param {Function} fn The function to run and time.
+     * @param {...*} args Arguments to forward to fn.
+     * @returns {*} The return value of fn, if any.
      */
     const time = (label, fn, ...args) => {
         const prefix = nextPrefix();
@@ -92,12 +85,11 @@ globalThis.OspreyTimer = (() => {
     };
 
     /**
-     * Wraps fn in a timed equivalent. The returned function preserves `this` and
-     * forwards every argument, so it is a drop-in replacement for the original.
+     * Returns a wrapper around fn that behaves the same but logs the time taken for each invocation.
      *
      * @param {string} label Human-readable name for the work being timed.
-     * @param {Function} fn The function to wrap.
-     * @returns {Function} A function that times each invocation of fn.
+     * @param {Function} fn The function to wrap and time.
+     * @returns {Function} A wrapped version of fn that logs its execution time.
      */
     const wrap = (label, fn) => {
         if (typeof fn !== 'function') {
@@ -112,9 +104,7 @@ globalThis.OspreyTimer = (() => {
 
     /**
      * Returns a frozen copy of apiObject in which every function-valued property
-     * is replaced by a timed wrapper (labeled `${namespace}.${key}`). Non-function
-     * properties are carried across untouched. This lets a module instrument its
-     * entire public surface in a single call at its return site.
+     * is replaced by a timed wrapper (labeled `${namespace}.${key}`).
      *
      * @param {string} namespace Label prefix for the wrapped methods.
      * @param {Object} apiObject The public API object to instrument.
