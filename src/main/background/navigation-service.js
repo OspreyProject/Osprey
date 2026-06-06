@@ -29,6 +29,7 @@ globalThis.OspreyNavigationService = (() => {
 
     const webNavigationEvents = [
         "onBeforeNavigate",
+        "onCompleted",
         "onHistoryStateUpdated",
         "onReferenceFragmentUpdated",
         "onCreatedNavigationTarget",
@@ -79,6 +80,13 @@ globalThis.OspreyNavigationService = (() => {
         pruneRecentNavigations();
 
         if (details?.frameId !== 0) {
+            return;
+        }
+
+        if (urlService.isWarningPageUrl(details?.url)) {
+            blockingService.pushBlockedContextUpdate(details.tabId).catch(error => {
+                console.error(`${eventName} warning-page update failed`, error);
+            });
             return;
         }
 

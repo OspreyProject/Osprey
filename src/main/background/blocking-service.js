@@ -147,6 +147,7 @@ globalThis.OspreyBlockingService = (() => {
             return;
         }
 
+        badgeService.syncWithContext(tabId, resultAggregationService.getBlockedContext(tabId));
         lastBlockedPayloadByTab.set(tabId, payloadKey);
 
         await browserAPI.runtimeSendMessage(payload).catch(() => {
@@ -157,7 +158,7 @@ globalThis.OspreyBlockingService = (() => {
     const clearBlockedUI = async tabId => timer.wrap("OspreyBlockingService.clearBlockedUI", async () => {
         resultAggregationService.clear(tabId);
         lastBlockedPayloadByTab.delete(tabId);
-        await badgeService.clear(tabId);
+        badgeService.clear(tabId);
     });
 
     const cleanupAfterNavigation = tabId => {
@@ -218,9 +219,6 @@ globalThis.OspreyBlockingService = (() => {
         resultAggregationService.recordBlockingResult(tabId, navigationUrl, protectionResult.origin, protectionResult.result);
         const blockedContext = resultAggregationService.getBlockedContext(tabId);
 
-        // Syncs the badge with the blocked context before checking the blocking threshold
-        await badgeService.syncWithContext(tabId, blockedContext);
-
         const providersById = getProvidersById(runtime);
         const applicableEnabledProviders = getApplicableEnabledProviders(runtime, protectionResult.result);
         const thresholdBypassed = shouldBypassBlockingThreshold(providersById, blockedContext, protectionResult.result);
@@ -228,8 +226,11 @@ globalThis.OspreyBlockingService = (() => {
 
         // If the number of providers that have blocked the URL is below the required blocking threshold, do not show the warning page
         if (getBlockedCount(providersById, blockedContext, protectionResult.result) < requiredBlockedCount) {
+            badgeService.syncWithContext(tabId, blockedContext);
             return;
         }
+
+        badgeService.clear(tabId);
 
         if (resultAggregationService.isRedirected(tabId)) {
             await pushBlockedContextUpdate(tabId);
@@ -296,7 +297,7 @@ globalThis.OspreyBlockingService = (() => {
             lastBlockedPayloadByTab.delete(details.tabId);
 
             // Clears the badge immediately on navigation
-            await badgeService.clear(details.tabId);
+            badgeService.clear(details.tabId);
 
             await providerEngine.scanUrl({
                 tabId: details.tabId,
@@ -308,7 +309,7 @@ globalThis.OspreyBlockingService = (() => {
                 // so neither fires for navigations that are skipped nor aborted.
                 onScanBegin: async () => {
                     resultAggregationService.setFrameZeroUrl(details.tabId, normalizedUrl);
-                    await badgeService.clear(details.tabId);
+                    badgeService.clear(details.tabId);
                 },
 
                 onResult: protectionResult => {
@@ -421,7 +422,7 @@ globalThis.OspreyBlockingService = (() => {
         if (nextContext) {
             resultAggregationService.markRedirected(tabId);
             lastBlockedPayloadByTab.delete(tabId);
-            await badgeService.syncWithContext(tabId, nextContext);
+            badgeService.syncWithContext(tabId, nextContext);
             await pushBlockedContextUpdate(tabId);
 
             return {
