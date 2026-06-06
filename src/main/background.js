@@ -61,7 +61,6 @@ try {
     const contextMenuService = globalThis.OspreyContextMenuService;
     const messages = globalThis.OspreyMessageBus.Messages;
     const navigationService = globalThis.OspreyNavigationService;
-    const protectionResult = globalThis.OspreyProtectionResult;
     const providerCatalog = globalThis.OspreyProviderCatalog;
     const providerEngine = globalThis.OspreyProviderEngine;
     const providerStateStore = globalThis.OspreyProviderStateStore;
@@ -106,7 +105,7 @@ try {
         };
     };
 
-    const openReportUrlForOrigin = async ({origin, blockedUrl, result}) => {
+    const openReportUrlForOrigin = async ({origin, blockedUrl}) => {
         const definition = providerCatalog.getDefinition(origin);
 
         if (!definition) {
@@ -116,7 +115,6 @@ try {
 
         return reportLinkBuilder.build(definition.report, {
             blockedUrl,
-            resultLabelEnglish: i18n.translate(protectionResult.messageKeys[protectionResult.normalize(result)] || 'failed'),
         });
     };
 
@@ -217,8 +215,7 @@ try {
                     sendResponse,
                     openReportUrlForOrigin({
                         origin: message.origin,
-                        blockedUrl: message.blockedUrl,
-                        result: message.result
+                        blockedUrl: message.blockedUrl
                     }).then(reportUrl => reportUrl ? blockingService.reportWebsite(reportUrl) : {ok: false}),
                     `Failed REPORT_WEBSITE for tab ${tabId}`
                 );

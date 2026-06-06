@@ -26,7 +26,6 @@ globalThis.OspreyReportLinkBuilder = (() => {
 
         const blockedUrl = context?.blockedUrl || '';
         const encodedUrl = encodeURIComponent(blockedUrl);
-        const encodedResult = encodeURIComponent(context?.resultLabelEnglish || '');
 
         switch (template.type) {
             case 'none':
@@ -40,8 +39,7 @@ globalThis.OspreyReportLinkBuilder = (() => {
 
             case 'url_template':
                 return String(template.template || '')
-                    .replaceAll('{url}', encodedUrl)
-                    .replaceAll('{result}', encodedResult);
+                    .replaceAll('{url}', encodedUrl);
 
             case 'mailto_false_positive':
                 return `mailto:${template.email}?subject=False%20Positive&body=Hello%2C%0A%0AI%20would%20like%20to%20report%20a%20false%20positive.%0A%0AProduct%3A%20${encodeURIComponent(template.productName || 'Osprey Provider')}%0AURL%3A%20${encodedUrl}%20%28or%20the%20hostname%20itself%29%0A%0AI%20believe%20this%20website%20is%20legitimate.%0A%0ASent%20with%20Osprey%20Browser%20Protection%0AWebsite%3A%20https%3A%2F%2Fosprey.ac`;
