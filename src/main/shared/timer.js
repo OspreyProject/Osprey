@@ -35,8 +35,9 @@ globalThis.OspreyTimer = (() => {
     };
 
     const logFinish = (prefix, label, elapsedMs, failed) => {
-        const outcome = failed ? 'failed after' : 'finished in';
-        console.debug(`${prefix}'${label}' ${outcome} ${formatDuration(elapsedMs)}`);
+        failed ?
+            console.warn(`${prefix}'${label}' failed after ${formatDuration(elapsedMs)}`) :
+            console.debug(`${prefix}'${label}' finished in ${formatDuration(elapsedMs)}`);
     };
 
     /**
