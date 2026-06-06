@@ -25,6 +25,8 @@ globalThis.OspreyCacheService = (() => {
     const timer = globalThis.OspreyTimer;
 
     const cacheKey = "osprey_cache";
+    const flushDelay = 500;
+
     let cacheSnapshot = null;
     let loadingPromise = null;
     let flushTimer = null;
@@ -117,7 +119,7 @@ globalThis.OspreyCacheService = (() => {
         }
     };
 
-    const scheduleFlush = (delayMs = 150) => {
+    const scheduleFlush = (delayMs = flushDelay) => {
         if (flushTimer) {
             clearTimeout(flushTimer);
         }
