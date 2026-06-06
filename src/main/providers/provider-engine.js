@@ -128,8 +128,11 @@ globalThis.OspreyProviderEngine = (() => {
 
     const finalizeProviderResult = async (provider, lookupKey, targetUrl, expirationSeconds, onResult, outcome) => {
         protectionResult.blockingResults.has(outcome) ?
-            await cacheService.markBlocked(provider.id, lookupKey, outcome, expirationSeconds) :
-            await cacheService.markAllowed(provider.id, lookupKey, expirationSeconds);
+            cacheService.markBlocked(provider.id, lookupKey, outcome, expirationSeconds).then(() => {
+                // ignoring await
+            }) : cacheService.markAllowed(provider.id, lookupKey, expirationSeconds).then(() => {
+                // ignoring await
+            });
 
         console.info(`[${provider.displayName}] URL result: ${outcome} for ${targetUrl}`);
         emitResult(provider, targetUrl, outcome, onResult);
@@ -137,7 +140,10 @@ globalThis.OspreyProviderEngine = (() => {
 
     const checkProviderCache = async (provider, lookupKey, targetUrl, expirationSeconds, onResult, options) => {
         if (options.globalAllowMatched && !provider.bypassBlockingThreshold) {
-            await cacheService.markAllowed(provider.id, lookupKey, expirationSeconds);
+            cacheService.markAllowed(provider.id, lookupKey, expirationSeconds).then(() => {
+                // ignoring await
+            });
+
             emitResult(provider, targetUrl, protectionResult.resultTypes.ALLOWED, onResult);
             return false;
         }
@@ -248,14 +254,16 @@ globalThis.OspreyProviderEngine = (() => {
                 }
             }
 
-            await cacheService.storeOutcomes(
+            cacheService.storeOutcomes(
                 computedOutcomes.filter(entry => !entry.skipCache).map(entry => ({
                     providerId: entry.provider.id,
                     lookupKey: entry.lookupKey,
                     outcome: entry.outcome,
                 })),
                 expirationSeconds
-            );
+            ).then(() => {
+                // ignoring await
+            });
 
             for (const entry of computedOutcomes) {
                 console.info(`[${entry.provider.displayName}] URL result: ${entry.outcome} for ${targetUrl}`);

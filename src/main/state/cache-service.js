@@ -70,7 +70,7 @@ globalThis.OspreyCacheService = (() => {
     const setRecord = async (providerId, type, lookupKey, record) => {
         const snapshot = await getSnapshot();
         ensureProvider(snapshot, providerId)[type][lookupKey] = record;
-        await scheduleFlush();
+        scheduleFlush();
     };
 
     const deleteRecord = async (providerId, type, lookupKey) => {
@@ -82,7 +82,7 @@ globalThis.OspreyCacheService = (() => {
         }
 
         delete records[lookupKey];
-        await scheduleFlush();
+        scheduleFlush();
     };
 
     const createEntryGetter = type => async (providerId, lookupKey) => getRecord(await getSnapshot(), providerId, type, lookupKey);
@@ -216,13 +216,13 @@ globalThis.OspreyCacheService = (() => {
 
         if (!snapshot.globalAllowPatterns.includes(pattern)) {
             snapshot.globalAllowPatterns.push(pattern);
-            await scheduleFlush();
+            scheduleFlush();
         }
     };
 
     const clearAll = async () => {
-        const alreadyClear =
-            cacheSnapshot?.version === 2 &&
+        const alreadyClear = Boolean(cacheSnapshot) &&
+            cacheSnapshot.version === 2 &&
             cacheSnapshot.globalAllowPatterns.length === 0 &&
             Object.keys(cacheSnapshot.providers).length === 0 &&
             processing.size === 0;
@@ -230,7 +230,7 @@ globalThis.OspreyCacheService = (() => {
         if (!alreadyClear) {
             cacheSnapshot = defaultSnapshot();
             processing.clear();
-            await flush();
+            scheduleFlush(0);
         }
     };
 
@@ -248,7 +248,8 @@ globalThis.OspreyCacheService = (() => {
         if (!removed) {
             return;
         }
-        await scheduleFlush();
+
+        scheduleFlush();
     };
 
     const clearBlockedForProviderLookup = (providerId, lookupKey) => deleteRecord(providerId, "blocked", lookupKey);
@@ -310,7 +311,8 @@ globalThis.OspreyCacheService = (() => {
                 providerRecord.allowed[lookupKey] = {exp: expiry};
             }
         }
-        await scheduleFlush();
+
+        scheduleFlush();
     };
 
     // Run cache cleanup on a 5-minute interval rather than on every read

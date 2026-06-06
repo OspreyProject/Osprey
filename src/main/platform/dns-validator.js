@@ -63,7 +63,9 @@ globalThis.OspreyDnsValidator = (() => {
             const resolvable = data?.Status === 0 && Array.isArray(data?.Answer) && data.Answer.length > 0;
 
             if (resolvable) {
-                await cacheService.markAllowed(providerId, lookupKey, 86400);
+                cacheService.markAllowed(providerId, lookupKey, 86400).then(() => {
+                    // ignoring await
+                });
             }
             return resolvable;
         } catch (error) {

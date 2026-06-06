@@ -338,19 +338,28 @@ globalThis.OspreyBlockingService = (() => {
         const normalizedUrl = urlService.normalizeUrl(parsed);
         const normalizedHostname = urlService.canonicalizeHostname(parsed.hostname);
 
-        await cacheService.allowPattern(allowPattern);
-        await cacheService.clearBlockedForLookup(normalizedUrl);
+        cacheService.allowPattern(allowPattern).then(() => {
+            // ignoring await
+        });
+
+        cacheService.clearBlockedForLookup(normalizedUrl).then(() => {
+            // ignoring await
+        });
 
         for (const provider of runtime.providers) {
             const lookupKey = urlService.lookupValueForTarget(blockedUrl, provider.lookupTarget || "url");
 
             if (lookupKey && lookupKey !== normalizedUrl) {
-                await cacheService.clearBlockedForProviderLookup(provider.id, lookupKey);
+                cacheService.clearBlockedForProviderLookup(provider.id, lookupKey).then(() => {
+                    // ignoring await
+                });
             }
         }
 
         if (normalizedHostname) {
-            await cacheService.clearBlockedForLookup(normalizedHostname);
+            cacheService.clearBlockedForLookup(normalizedHostname).then(() => {
+                // ignoring await
+            });
         }
 
         rememberSuppressedNavigation(tabId, normalizedUrl);
@@ -395,13 +404,17 @@ globalThis.OspreyBlockingService = (() => {
             return failClosed("continue to website", blockedUrl, "failed to derive lookup key", tabId);
         }
 
-        await cacheService.markAllowed(
+        cacheService.markAllowed(
             provider.id,
             lookupKey,
             runtime.effectiveState.app.cacheExpirationSeconds
-        );
+        ).then(() => {
+            // ignoring await
+        });
 
-        await cacheService.clearBlockedForProviderLookup(provider.id, lookupKey);
+        cacheService.clearBlockedForProviderLookup(provider.id, lookupKey).then(() => {
+            // ignoring await
+        });
 
         const nextContext = resultAggregationService.removeOrigin(tabId, origin);
 
