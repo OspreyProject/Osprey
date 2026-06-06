@@ -278,7 +278,7 @@ globalThis.OspreyProxyBuiltins = (() => {
             bypassBlockingThreshold: false,
             endpoint: 'openphish',
             policyKey: 'OpenPhishEnabled',
-            report: mailtoFalsePositiveReport('support@openphish.com', 'OpenPhish Free List'),
+            report: mailtoFalsePositiveReport('support@openphish.com', 'OpenPhish Public List'),
         }),
 
         hostnameBuiltin({
@@ -304,7 +304,7 @@ globalThis.OspreyProxyBuiltins = (() => {
             bypassBlockingThreshold: false,
             endpoint: 'phishing-database',
             policyKey: 'PhishingDatabaseEnabled',
-            report: mailtoFalsePositiveReport('support@phish.co.za', 'Phishing.Database'),
+            report: mailtoFalsePositiveReport('support@phish.co.za', 'Phishing.Database (ACTIVE list)'),
         }),
 
         hostnameBuiltin({
@@ -317,7 +317,7 @@ globalThis.OspreyProxyBuiltins = (() => {
             bypassBlockingThreshold: false,
             endpoint: 'phishunt-io',
             policyKey: 'PhishuntIOEnabled',
-            report: mailtoFalsePositiveReport('info@phishunt.io', 'Phishunt.io API'),
+            report: mailtoFalsePositiveReport('info@phishunt.io', 'Phishunt.io Feed'),
         }),
 
         hostnameBuiltin({
