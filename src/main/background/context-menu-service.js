@@ -21,13 +21,14 @@ globalThis.OspreyContextMenuService = (() => {
     // Global variables
     const browserAPI = globalThis.OspreyBrowserAPI;
     const cacheService = globalThis.OspreyCacheService;
-    const i18n = globalThis.OspreyI18n;
     const providerRuntimeFactory = globalThis.OspreyProviderRuntimeFactory;
 
     const menuIds = Object.freeze({
         CLEAR_ALLOWED_WEBSITES: 'clearAllowedWebsites',
         REPORT_MALICIOUS: 'reportWebsiteAsMalicious',
     });
+
+    const safeIconURL = browserAPI.safeRuntimeURL('assets/osprey/icon128.png');
 
     let rebuildPromise = Promise.resolve();
     let clickListenerRegistered = false;
@@ -56,14 +57,14 @@ globalThis.OspreyContextMenuService = (() => {
         if (!app.disableClearAllowedWebsites) {
             await createItem({
                 id: menuIds.CLEAR_ALLOWED_WEBSITES,
-                title: i18n.translate('clearAllowedWebsitesContext'),
+                title: LangUtil.CLEAR_ALLOWED_WEBSITES_CONTEXT,
                 contexts: ['action'],
             });
         }
 
         await createItem({
             id: menuIds.REPORT_MALICIOUS,
-            title: i18n.translate('reportWebsiteAsMaliciousContext'),
+            title: LangUtil.REPORT_WEBSITE_AS_MALICIOUS_CONTEXT,
             contexts: ['action'],
         });
     };
@@ -75,9 +76,9 @@ globalThis.OspreyContextMenuService = (() => {
 
     const clearAllowedWebsites = () => cacheService.clearAll().then(() => browserAPI.notificationsCreate({
         type: 'basic',
-        iconUrl: browserAPI.safeRuntimeURL('assets/osprey/icon128.png'),
-        title: i18n.translate('clearAllowedWebsitesTitle'),
-        message: i18n.translate('clearAllowedWebsitesMessage'),
+        iconUrl: safeIconURL,
+        title: LangUtil.CLEAR_ALLOWED_WEBSITES_TITLE,
+        message: LangUtil.CLEAR_ALLOWED_WEBSITES_MESSAGE,
         priority: 2,
     }));
 

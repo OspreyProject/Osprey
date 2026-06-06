@@ -19,7 +19,7 @@
 
 const bootstrapScripts = [
     'shared/browser-api.js',
-    'shared/i18n.js',
+    'shared/lang-util.js',
     'shared/timed-signal.js',
     'providers/provider-groups.js',
     'providers/proxy-builtins.js',
@@ -59,7 +59,6 @@ try {
     const browserAPI = globalThis.OspreyBrowserAPI;
     const cacheService = globalThis.OspreyCacheService;
     const contextMenuService = globalThis.OspreyContextMenuService;
-    const i18n = globalThis.OspreyI18n;
     const messages = globalThis.OspreyMessageBus.Messages;
     const navigationService = globalThis.OspreyNavigationService;
     const protectionResult = globalThis.OspreyProtectionResult;

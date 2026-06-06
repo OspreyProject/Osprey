@@ -20,7 +20,6 @@
 (() => {
     // Global variables
     const browserAPI = globalThis.OspreyBrowserAPI;
-    const i18n = globalThis.OspreyI18n;
 
     const msg = (key, substitutions) => {
         if (typeof key !== 'string' || key.length === 0) {
@@ -29,7 +28,7 @@
         }
 
         try {
-            return i18n?.translate?.(key, substitutions) || browserAPI.api?.i18n?.getMessage?.(key, substitutions) || key;
+            return browserAPI.api?.i18n?.getMessage?.(key, substitutions) || key;
         } catch (error) {
             console.error(`LangUtil: failed to resolve key '${key}'`, error);
             return key;
@@ -108,12 +107,16 @@
         PROVIDER_NAME_FALLBACK: 'providerNameFallback',
     });
 
+    const translations = Object.freeze(Object.fromEntries(
+        Object.entries(messageMap).map(([prop, key]) => [prop, msg(key)])
+    ));
+
     const langUtil = Object.create(null);
 
     Object.defineProperties(langUtil, {
         ...Object.fromEntries(
-            Object.entries(messageMap).map(([prop, key]) => [prop, {
-                get: () => msg(key),
+            Object.entries(translations).map(([prop, value]) => [prop, {
+                value,
                 enumerable: true,
             }])
         ),
@@ -131,7 +134,7 @@
         applyLogoAlt: {
             value(element) {
                 if (element) {
-                    element.alt = msg('logoAlt');
+                    element.alt = translations.LOGO_ALT;
                 }
             },
             enumerable: true,
