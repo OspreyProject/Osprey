@@ -129,19 +129,5 @@ globalThis.OspreyDirectIntegrations = (() => {
                 }),
             ]),
         }),
-
-        metadefenderIntegration({
-            id: 'metadefender-openphish',
-            displayName: 'OpenPhish (MetaDefender)',
-            providerNames: ['openphish.com'],
-            responseRules: Object.freeze([
-                Object.freeze({
-                    path: 'assessment',
-                    operator: 'equals',
-                    value: 'phishing',
-                    result: 'PHISHING'
-                }),
-            ]),
-        }),
     ]);
 })();
