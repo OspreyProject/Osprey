@@ -18,6 +18,10 @@
 "use strict";
 
 globalThis.OspreyMessageBus = Object.freeze({
+    Ports: Object.freeze({
+        BLOCKED_COUNTER: 'blockedCounterPort',
+    }),
+
     Messages: Object.freeze({
         BLOCKED_COUNTER_PING: 'blockedCounterPing',
         BLOCKED_COUNTER_PONG: 'blockedCounterPong',

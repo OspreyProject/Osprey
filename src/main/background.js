@@ -60,19 +60,13 @@ try {
     const cacheService = globalThis.OspreyCacheService;
     const contextMenuService = globalThis.OspreyContextMenuService;
     const messages = globalThis.OspreyMessageBus.Messages;
+    const ports = globalThis.OspreyMessageBus.Ports;
     const navigationService = globalThis.OspreyNavigationService;
     const providerCatalog = globalThis.OspreyProviderCatalog;
     const providerEngine = globalThis.OspreyProviderEngine;
     const providerStateStore = globalThis.OspreyProviderStateStore;
     const reportLinkBuilder = globalThis.OspreyReportLinkBuilder;
     const resultAggregationService = globalThis.OspreyResultAggregationService;
-
-    const emptyBlockedCounterResponse = Object.freeze({
-        count: 0,
-        systems: [],
-        primaryOrigin: null,
-        primaryResult: null
-    });
 
     const getMenuRelevantAppState = stateValue => ({
         contextMenuEnabled: Boolean(stateValue?.app?.contextMenuEnabled),
@@ -87,23 +81,6 @@ try {
     const refreshContextMenus = errorMessage => contextMenuService.create().catch(error => {
         console.error(errorMessage, error);
     });
-
-    const buildBlockedCounterResponse = tabId => {
-        const context = resultAggregationService.getBlockedContext(tabId);
-
-        if (!context) {
-            return emptyBlockedCounterResponse;
-        }
-
-        const systems = context.origins.filter(origin => origin !== context.primaryOrigin);
-
-        return {
-            count: systems.length,
-            systems,
-            primaryOrigin: context.primaryOrigin,
-            primaryResult: context.primaryResult
-        };
-    };
 
     const openReportUrlForOrigin = async ({origin, blockedUrl}) => {
         const definition = providerCatalog.getDefinition(origin);
@@ -152,10 +129,6 @@ try {
     };
 
     const messageHandlers = {
-        [messages.BLOCKED_COUNTER_PING]: ({tabId, sendResponse}) => {
-            respond(sendResponse, typeof tabId === 'number' ? buildBlockedCounterResponse(tabId) : emptyBlockedCounterResponse);
-        },
-
         [messages.CONTINUE_TO_SAFETY]: ({tabId, sendResponse}) => {
             withTabId(
                 tabId,
@@ -251,6 +224,12 @@ try {
         }
 
         browserAPI.api?.runtime.onMessage.addListener(handleMessage);
+
+        browserAPI.api?.runtime.onConnect?.addListener(port => {
+            if (port?.name === ports.BLOCKED_COUNTER) {
+                blockingService.connectWarningPort(port);
+            }
+        });
 
         browserAPI.api?.tabs.onRemoved?.addListener(tabId => {
             resultAggregationService.clear(tabId);

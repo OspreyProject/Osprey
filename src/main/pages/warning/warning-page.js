@@ -21,6 +21,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
     // Global variables
     const browserAPI = globalThis.OspreyBrowserAPI;
     const messages = globalThis.OspreyMessageBus.Messages;
+    const ports = globalThis.OspreyMessageBus.Ports;
     const protectionResult = globalThis.OspreyProtectionResult;
     const providerCatalog = globalThis.OspreyProviderCatalog;
     const providerStateStore = globalThis.OspreyProviderStateStore;
@@ -34,7 +35,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
     let currentState = null;
     let domElements = {};
     let pageshowListenerRegistered = false;
-    let runtimeListenerRegistered = false;
+    let counterPort = null;
     let actionInFlight = false;
     let isInitialized = false;
     let providerNameMap = null;
@@ -197,13 +198,54 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
             .replaceAll(/[^\p{L}\p{N}\p{Z}\p{P}]/gu, '');
     }
 
+    function handleCounterMessage(message) {
+        if (!message || message.messageType !== messages.BLOCKED_COUNTER_PONG) {
+            return;
+        }
+
+        if (typeof currentContext?.tabId === 'number' && typeof message?.tabId === 'number' && message.tabId !== currentContext.tabId) {
+            return;
+        }
+
+        updateBlockedCounter(message);
+    }
+
+    function ensureCounterPort() {
+        if (counterPort) {
+            return counterPort;
+        }
+
+        const port = browserAPI.api?.runtime?.connect?.({name: ports.BLOCKED_COUNTER});
+
+        if (!port) {
+            return null;
+        }
+
+        counterPort = port;
+
+        port.onMessage.addListener(handleCounterMessage);
+
+        port.onDisconnect.addListener(() => {
+            counterPort = null;
+        });
+        return port;
+    }
+
     function refreshBlockedCounter() {
-        return browserAPI.runtimeSendMessage(withCurrentTabId({messageType: messages.BLOCKED_COUNTER_PING}))
-            .then(updateBlockedCounter)
-            .catch(error => {
-                console.warn('WarningPage failed to refresh blocked-counter state', error);
-                resetReportedBy();
-            });
+        const port = ensureCounterPort();
+
+        if (!port) {
+            resetReportedBy();
+            return;
+        }
+
+        try {
+            port.postMessage(withCurrentTabId({messageType: messages.BLOCKED_COUNTER_PING}));
+        } catch (error) {
+            counterPort = null;
+            console.warn('WarningPage failed to refresh blocked-counter state', error);
+            resetReportedBy();
+        }
     }
 
     function localizePage() {
@@ -280,31 +322,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
 
         globalThis.addEventListener('pageshow', () => {
             applyOriginVisuals(currentOrigin);
-
-            refreshBlockedCounter().catch(() => {
-                // ignored
-            });
-        });
-    }
-
-    function registerRuntimeListener() {
-        if (runtimeListenerRegistered) {
-            return;
-        }
-
-        runtimeListenerRegistered = true;
-
-        browserAPI.api?.runtime?.onMessage?.addListener(message => {
-            if (!message || message.messageType !== messages.BLOCKED_COUNTER_PONG) {
-                return false;
-            }
-
-            if (typeof currentContext?.tabId === 'number' && typeof message?.tabId === 'number' && message.tabId !== currentContext.tabId) {
-                return false;
-            }
-
-            updateBlockedCounter(message);
-            return false;
+            refreshBlockedCounter();
         });
     }
 
@@ -393,11 +411,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         providerNameMap = new Map(providerCatalog.getAllDefinitions().map(def => [def.id, def.displayName]));
 
         applyOriginVisuals(currentOrigin);
-
-        refreshBlockedCounter().catch(() => {
-            // ignored
-        });
-
+        refreshBlockedCounter();
         syncActionVisibility();
 
         const actionBindings = [
@@ -444,7 +458,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         localizePage();
         showContext(currentContext);
         registerPageshowListener();
-        registerRuntimeListener();
+        ensureCounterPort();
 
         providerStateStore.getState().then(wireActions).catch(error => {
             console.warn('WarningPage failed to load stored settings; applying fallback restrictions', error);

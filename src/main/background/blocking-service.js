@@ -34,6 +34,7 @@ globalThis.OspreyBlockingService = (() => {
     const suppressedNavDuration = 2500;
     const lastBlockedPayloadByTab = new Map();
     const pendingBlockedPayloadByTab = new Map();
+    const warningPortsByTab = new Map();
 
     const buildNavigationKey = (tabId, normalizedUrl) => `${tabId}::${normalizedUrl}`;
 
@@ -131,6 +132,24 @@ globalThis.OspreyBlockingService = (() => {
         };
     };
 
+    const buildBlockedPayload = tabId => ({
+        ...getBlockedContextPayload(resultAggregationService.getBlockedContext(tabId)),
+        tabId,
+    });
+
+    const sendCurrentBlockedContext = (tabId, port) => {
+        const payload = buildBlockedPayload(tabId);
+
+        try {
+            port.postMessage(payload);
+            lastBlockedPayloadByTab.set(tabId, JSON.stringify(payload));
+        } catch {
+            if (warningPortsByTab.get(tabId) === port) {
+                warningPortsByTab.delete(tabId);
+            }
+        }
+    };
+
     const pushBlockedContextUpdate = async tabId => {
         if (!resultAggregationService.isRedirected(tabId)) {
             pendingBlockedPayloadByTab.delete(tabId);
@@ -138,14 +157,11 @@ globalThis.OspreyBlockingService = (() => {
             return;
         }
 
-        const payload = {
-            ...getBlockedContextPayload(resultAggregationService.getBlockedContext(tabId)),
-            tabId,
-        };
-
+        const payload = buildBlockedPayload(tabId);
         const payloadKey = JSON.stringify(payload);
+        const port = warningPortsByTab.get(tabId);
 
-        if (!resultAggregationService.isWarningPageReady(tabId)) {
+        if (!port || !resultAggregationService.isWarningPageReady(tabId)) {
             pendingBlockedPayloadByTab.set(tabId, payloadKey);
             return;
         }
@@ -154,13 +170,46 @@ globalThis.OspreyBlockingService = (() => {
             return;
         }
 
-        badgeService.syncWithContext(tabId, resultAggregationService.getBlockedContext(tabId));
+        badgeService.syncWithContext(tabId, resultAggregationService.getBlockedContext(tabId)).then(() => {
+            // ignoring await
+        });
+
         lastBlockedPayloadByTab.set(tabId, payloadKey);
         pendingBlockedPayloadByTab.delete(tabId);
 
-        await browserAPI.runtimeSendMessage(payload).catch(() => {
-            // ignored
+        try {
+            port.postMessage(payload);
+        } catch {
+            if (warningPortsByTab.get(tabId) === port) {
+                warningPortsByTab.delete(tabId);
+            }
+        }
+    };
+
+    const connectWarningPort = port => {
+        const tabId = port?.sender?.tab?.id;
+
+        if (typeof tabId !== "number") {
+            return;
+        }
+
+        warningPortsByTab.set(tabId, port);
+        resultAggregationService.markWarningPageReady(tabId);
+
+        port.onMessage.addListener(message => {
+            if (message?.messageType === messages.BLOCKED_COUNTER_PING && warningPortsByTab.get(tabId) === port) {
+                sendCurrentBlockedContext(tabId, port);
+            }
         });
+
+        port.onDisconnect.addListener(() => {
+            if (warningPortsByTab.get(tabId) === port) {
+                warningPortsByTab.delete(tabId);
+            }
+        });
+
+        sendCurrentBlockedContext(tabId, port);
+        pendingBlockedPayloadByTab.delete(tabId);
     };
 
     const clearBlockedUI = async tabId => timer.wrap("OspreyBlockingService.clearBlockedUI", async () => {
@@ -271,7 +320,6 @@ globalThis.OspreyBlockingService = (() => {
     };
 
     const handleNavigation = async details => {
-        console.debug(details);
         const parsed = urlService.parseHttpUrl(details?.url);
 
         if (!parsed || typeof details?.tabId !== "number") {
@@ -493,5 +541,6 @@ globalThis.OspreyBlockingService = (() => {
         sendToSafety,
         pushBlockedContextUpdate,
         markWarningPageReady,
+        connectWarningPort,
     });
 })();
