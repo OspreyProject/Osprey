@@ -27,6 +27,9 @@ globalThis.OspreyNavigationService = (() => {
     const recentNavigations = new Map();
     const tapsUpdatedDedupeDuration = 2000;
 
+    const recentWarningReady = new Map();
+    const warningReadyDedupeDuration = 1500;
+
     const webNavigationEvents = [
         "onBeforeNavigate",
         "onCompleted",
@@ -74,6 +77,29 @@ globalThis.OspreyNavigationService = (() => {
                 recentNavigations.delete(key);
             }
         }
+
+        for (const [key, timestamp] of recentWarningReady) {
+            if (now - timestamp > warningReadyDedupeDuration) {
+                recentWarningReady.delete(key);
+            }
+        }
+    };
+
+    const isWarningReadyDuplicate = (tabId, url) => {
+        if (typeof tabId !== "number") {
+            return false;
+        }
+
+        const key = `${tabId}::${url}`;
+        const now = Date.now();
+        const last = recentWarningReady.get(key);
+
+        if (last && now - last <= warningReadyDedupeDuration) {
+            return true;
+        }
+
+        recentWarningReady.set(key, now);
+        return false;
     };
 
     const handleNavigation = (eventName, details, source) => {
@@ -84,6 +110,10 @@ globalThis.OspreyNavigationService = (() => {
         }
 
         if (urlService.isWarningPageUrl(details?.url)) {
+            if (isWarningReadyDuplicate(details.tabId, details.url)) {
+                return;
+            }
+
             blockingService.markWarningPageReady(details.tabId).catch(error => {
                 console.error(`${eventName} warning-page update failed`, error);
             });
@@ -124,6 +154,12 @@ globalThis.OspreyNavigationService = (() => {
             for (const key of recentNavigations.keys()) {
                 if (key.startsWith(`${tabId}::`)) {
                     recentNavigations.delete(key);
+                }
+            }
+
+            for (const key of recentWarningReady.keys()) {
+                if (key.startsWith(`${tabId}::`)) {
+                    recentWarningReady.delete(key);
                 }
             }
         });
