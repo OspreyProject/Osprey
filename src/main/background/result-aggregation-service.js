@@ -23,6 +23,7 @@ globalThis.OspreyResultAggregationService = (() => {
 
     const blockedByTab = new Map();
     const frameZeroUrlByTab = new Map();
+    const warningPageReadyByTab = new Map();
 
     const cloneContext = current => {
         const primary = current?.entries?.[0];
@@ -39,6 +40,7 @@ globalThis.OspreyResultAggregationService = (() => {
     const beginNavigation = tabId => {
         // Intentionally does NOT update frameZeroUrl here
         blockedByTab.delete(tabId);
+        warningPageReadyByTab.set(tabId, false);
     };
 
     const setFrameZeroUrl = (tabId, url) => {
@@ -95,7 +97,14 @@ globalThis.OspreyResultAggregationService = (() => {
     const clear = tabId => {
         blockedByTab.delete(tabId);
         frameZeroUrlByTab.delete(tabId);
+        warningPageReadyByTab.delete(tabId);
     };
+
+    const markWarningPageReady = tabId => {
+        warningPageReadyByTab.set(tabId, true);
+    };
+
+    const isWarningPageReady = tabId => warningPageReadyByTab.get(tabId) === true;
 
     // Public API
     return timer.instrument('OspreyResultAggregationService', {
@@ -108,5 +117,7 @@ globalThis.OspreyResultAggregationService = (() => {
         getBlockedContext,
         removeOrigin,
         clear,
+        markWarningPageReady,
+        isWarningPageReady,
     });
 })();

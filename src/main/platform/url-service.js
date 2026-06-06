@@ -22,6 +22,9 @@ globalThis.OspreyUrlService = (() => {
     const browserAPI = globalThis.OspreyBrowserAPI;
     const timer = globalThis.OspreyTimer;
 
+    const canonicalizeHostnameCache = new Map();
+    const normalizeUrlCache = new Map();
+
     const allowedSchemes = Object.freeze([
         'http:', 'https:'
     ]);
@@ -35,8 +38,19 @@ globalThis.OspreyUrlService = (() => {
     const blockPageUrl = () => browserAPI.safeRuntimeURL('pages/warning/warning-page.html');
     const isWarningPageUrl = value => typeof value === 'string' && value.startsWith(blockPageUrl());
 
-    const canonicalizeHostname = hostname => typeof hostname !== 'string' || hostname.length === 0 ? '' :
-        hostname.trim().toLowerCase().replaceAll(/\.+$/g, '').replace(/^www\./i, '');
+    const canonicalizeHostname = hostname => {
+        if (typeof hostname !== 'string' || hostname.length === 0) {
+            return '';
+        }
+
+        if (canonicalizeHostnameCache.has(hostname)) {
+            return canonicalizeHostnameCache.get(hostname);
+        }
+
+        const result = hostname.trim().toLowerCase().replaceAll(/\.+$/g, '').replace(/^www\./i, '');
+        canonicalizeHostnameCache.set(hostname, result);
+        return result;
+    };
 
     const parseHttpUrl = value => {
         if (value instanceof URL) {
@@ -84,16 +98,26 @@ globalThis.OspreyUrlService = (() => {
     };
 
     const normalizeUrl = value => {
+        const cacheKey = String(value);
+
+        if (normalizeUrlCache.has(cacheKey)) {
+            return normalizeUrlCache.get(cacheKey);
+        }
+
         const normalized = toComparableUrl(value);
 
         if (!normalized) {
+            normalizeUrlCache.set(cacheKey, null);
             return null;
         }
 
         normalized.search = '';
         normalized.hash = '';
         normalized.port = '';
-        return normalized.toString();
+
+        const result = normalized.toString();
+        normalizeUrlCache.set(cacheKey, result);
+        return result;
     };
 
     const lookupValueForTarget = (url, target) => {

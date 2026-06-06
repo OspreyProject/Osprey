@@ -94,7 +94,6 @@ globalThis.OspreyBrowserAPI = (() => {
 
         storageGet: (area, keys = null) => call(["storage", area, "get"], keys),
         storageSet: (area, value) => call(["storage", area, "set"], value),
-        tabsGet: tabId => call(["tabs", "get"], tabId),
         tabsUpdate: (tabId, updateProperties) => call(["tabs", "update"], tabId, updateProperties),
         tabsCreate: createProperties => call(["tabs", "create"], createProperties),
 

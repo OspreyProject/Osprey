@@ -23,6 +23,7 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
     const providerCatalog = globalThis.OspreyProviderCatalog;
     const providerGroups = globalThis.OspreyProviderGroups;
     const providerStateStore = globalThis.OspreyProviderStateStore;
+    const protectionResult = globalThis.OspreyProtectionResult;
     const timer = globalThis.OspreyTimer;
 
     let cachedRuntime = null;
@@ -35,6 +36,13 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
         const policyResult = await policyService.applyToState(persistedState);
         const {effectiveState, policies, appManagedKeys, providerManagedIds, providerManagedApiKeyIds} = policyResult;
         const definitions = providerCatalog.getAllDefinitions();
+        const providersById = new Map();
+
+        const blockingProviderIdsByResult = {
+            [protectionResult.resultTypes.MALICIOUS]: new Set(),
+            [protectionResult.resultTypes.PHISHING]: new Set(),
+            [protectionResult.resultTypes.ADULT_CONTENT]: new Set(),
+        };
 
         const providers = definitions.map(definition => {
             const providerState = effectiveState.providers?.[definition.id] ?? {
@@ -57,6 +65,20 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
             a.displayName.localeCompare(b.displayName)
         );
 
+        for (const provider of providers) {
+            providersById.set(provider.id, provider);
+
+            if (!provider.state.enabled) {
+                continue;
+            }
+
+            for (const [resultType, supportSet] of Object.entries(blockingProviderIdsByResult)) {
+                if (providerCatalog.supportsBlockingResult(provider, resultType)) {
+                    supportSet.add(provider.id);
+                }
+            }
+        }
+
         return Object.freeze({
             persistedState,
             effectiveState,
@@ -65,6 +87,8 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
             providerManagedIds,
             providerManagedApiKeyIds,
             providers,
+            providersById,
+            blockingProviderIdsByResult: Object.freeze(blockingProviderIdsByResult),
         });
     };
 

@@ -23,7 +23,6 @@ globalThis.OspreyBlockingService = (() => {
     const browserAPI = globalThis.OspreyBrowserAPI;
     const cacheService = globalThis.OspreyCacheService;
     const messages = globalThis.OspreyMessageBus.Messages;
-    const providerCatalog = globalThis.OspreyProviderCatalog;
     const providerEngine = globalThis.OspreyProviderEngine;
     const providerRuntimeFactory = globalThis.OspreyProviderRuntimeFactory;
     const resultAggregationService = globalThis.OspreyResultAggregationService;
@@ -34,39 +33,46 @@ globalThis.OspreyBlockingService = (() => {
     const suppressedNavigations = new Map();
     const suppressedNavDuration = 2500;
     const lastBlockedPayloadByTab = new Map();
+    const pendingBlockedPayloadByTab = new Map();
 
     const buildNavigationKey = (tabId, normalizedUrl) => `${tabId}::${normalizedUrl}`;
 
     // TODO: Turn the '2' into a variable on the settings page
     const getBlockingThreshold = enabledCount => enabledCount >= 4 ? 2 : 1;
 
-    const getProvidersById = runtime => new Map((runtime?.providers || []).map(provider => [provider.id, provider]));
+    const getBlockingAnalysis = (runtime, blockedContext, result) => {
+        const blockedOrigins = Array.isArray(blockedContext?.origins) ? blockedContext.origins : [];
+        const supportedOrigins = runtime?.blockingProviderIdsByResult?.[result] || null;
+        const providersById = runtime?.providersById || null;
 
-    const getApplicableEnabledProviders = (runtime, result) => (runtime?.providers || []).filter(provider =>
-        provider.state.enabled && providerCatalog.supportsBlockingResult(provider, result)
-    );
+        let blockedCount = 0;
+        let thresholdBypassed = false;
 
-    const hasOrigins = (providersById, blockedContext) =>
-        Boolean(providersById) &&
-        Array.isArray(blockedContext?.origins) &&
-        blockedContext.origins.length > 0;
-
-    const getBlockedCount = (providersById, blockedContext, result) => {
-        if (!hasOrigins(providersById, blockedContext)) {
-            return 0;
-        }
-        return blockedContext.origins.filter(origin => providerCatalog.supportsBlockingResult(providersById.get(origin), result)).length;
-    };
-
-    const shouldBypassBlockingThreshold = (providersById, blockedContext, result) => {
-        if (!hasOrigins(providersById, blockedContext)) {
-            return false;
+        if (!supportedOrigins || supportedOrigins.size === 0 || blockedOrigins.length === 0) {
+            return {
+                blockedCount: 0,
+                thresholdBypassed: false,
+                requiredBlockedCount: 0,
+            };
         }
 
-        return blockedContext.origins.some(origin => {
-            const provider = providersById.get(origin);
-            return providerCatalog.supportsBlockingResult(provider, result) && provider?.bypassBlockingThreshold === true;
-        });
+        for (const origin of blockedOrigins) {
+            if (!supportedOrigins.has(origin)) {
+                continue;
+            }
+
+            blockedCount += 1;
+
+            if (!thresholdBypassed && providersById?.get(origin)?.bypassBlockingThreshold === true) {
+                thresholdBypassed = true;
+            }
+        }
+
+        return {
+            blockedCount,
+            thresholdBypassed,
+            requiredBlockedCount: thresholdBypassed ? 1 : getBlockingThreshold(supportedOrigins.size),
+        };
     };
 
     const failureResult = Object.freeze({ok: false});
@@ -127,6 +133,7 @@ globalThis.OspreyBlockingService = (() => {
 
     const pushBlockedContextUpdate = async tabId => {
         if (!resultAggregationService.isRedirected(tabId)) {
+            pendingBlockedPayloadByTab.delete(tabId);
             lastBlockedPayloadByTab.delete(tabId);
             return;
         }
@@ -135,20 +142,21 @@ globalThis.OspreyBlockingService = (() => {
             ...getBlockedContextPayload(resultAggregationService.getBlockedContext(tabId)),
             tabId,
         };
+
         const payloadKey = JSON.stringify(payload);
 
-        if (lastBlockedPayloadByTab.get(tabId) === payloadKey) {
+        if (!resultAggregationService.isWarningPageReady(tabId)) {
+            pendingBlockedPayloadByTab.set(tabId, payloadKey);
             return;
         }
 
-        const tab = await browserAPI.tabsGet(tabId).catch(() => null);
-
-        if (!tab?.url || !urlService.isWarningPageUrl(tab.url)) {
+        if (lastBlockedPayloadByTab.get(tabId) === payloadKey && !pendingBlockedPayloadByTab.has(tabId)) {
             return;
         }
 
         badgeService.syncWithContext(tabId, resultAggregationService.getBlockedContext(tabId));
         lastBlockedPayloadByTab.set(tabId, payloadKey);
+        pendingBlockedPayloadByTab.delete(tabId);
 
         await browserAPI.runtimeSendMessage(payload).catch(() => {
             // ignored
@@ -158,8 +166,14 @@ globalThis.OspreyBlockingService = (() => {
     const clearBlockedUI = async tabId => timer.wrap("OspreyBlockingService.clearBlockedUI", async () => {
         resultAggregationService.clear(tabId);
         lastBlockedPayloadByTab.delete(tabId);
+        pendingBlockedPayloadByTab.delete(tabId);
         badgeService.clear(tabId);
     });
+
+    const markWarningPageReady = tabId => {
+        resultAggregationService.markWarningPageReady(tabId);
+        return pushBlockedContextUpdate(tabId);
+    };
 
     const cleanupAfterNavigation = tabId => {
         providerEngine.abortTab(tabId).catch(() => {
@@ -219,13 +233,10 @@ globalThis.OspreyBlockingService = (() => {
         resultAggregationService.recordBlockingResult(tabId, navigationUrl, protectionResult.origin, protectionResult.result);
         const blockedContext = resultAggregationService.getBlockedContext(tabId);
 
-        const providersById = getProvidersById(runtime);
-        const applicableEnabledProviders = getApplicableEnabledProviders(runtime, protectionResult.result);
-        const thresholdBypassed = shouldBypassBlockingThreshold(providersById, blockedContext, protectionResult.result);
-        const requiredBlockedCount = thresholdBypassed ? 1 : getBlockingThreshold(applicableEnabledProviders.length);
+        const blockingAnalysis = getBlockingAnalysis(runtime, blockedContext, protectionResult.result);
 
         // If the number of providers that have blocked the URL is below the required blocking threshold, do not show the warning page
-        if (getBlockedCount(providersById, blockedContext, protectionResult.result) < requiredBlockedCount) {
+        if (blockingAnalysis.blockedCount < blockingAnalysis.requiredBlockedCount) {
             badgeService.syncWithContext(tabId, blockedContext);
             return;
         }
@@ -481,5 +492,6 @@ globalThis.OspreyBlockingService = (() => {
         reportWebsite,
         sendToSafety,
         pushBlockedContextUpdate,
+        markWarningPageReady,
     });
 })();

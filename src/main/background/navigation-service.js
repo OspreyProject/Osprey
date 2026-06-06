@@ -84,7 +84,7 @@ globalThis.OspreyNavigationService = (() => {
         }
 
         if (urlService.isWarningPageUrl(details?.url)) {
-            blockingService.pushBlockedContextUpdate(details.tabId).catch(error => {
+            blockingService.markWarningPageReady(details.tabId).catch(error => {
                 console.error(`${eventName} warning-page update failed`, error);
             });
             return;
