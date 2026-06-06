@@ -25,6 +25,9 @@ globalThis.OspreyCacheService = (() => {
     const timer = globalThis.OspreyTimer;
 
     const cacheKey = "osprey_cache";
+    const metaKey = cacheKey;
+    const shardPrefix = `${cacheKey}::p::`;
+    const shardKey = providerId => `${shardPrefix}${providerId}`;
     const flushDelay = 500;
 
     let cacheSnapshot = null;
@@ -33,8 +36,21 @@ globalThis.OspreyCacheService = (() => {
     let flushPromise = null;
     let flushResolver = null;
 
+    const dirtyProviders = new Set();
+    let metaDirty = false;
+
     const processing = new Map();
     const defaultSnapshot = () => ({version: 2, globalAllowPatterns: [], providers: {}});
+
+    const markProviderDirty = providerId => {
+        if (providerId) {
+            dirtyProviders.add(providerId);
+        }
+    };
+
+    const markMetaDirty = () => {
+        metaDirty = true;
+    };
 
     const normalizeEntryMap = value => !value || typeof value !== "object" ? {} : Object.fromEntries(
         Object.entries(value).filter(([, entry]) => entry && typeof entry === "object")
@@ -63,6 +79,7 @@ globalThis.OspreyCacheService = (() => {
     const ensureProvider = (snapshot, providerId) => {
         if (!snapshot.providers[providerId]) {
             snapshot.providers[providerId] = normalizeProvider();
+            markMetaDirty();
         }
         return snapshot.providers[providerId];
     };
@@ -72,6 +89,7 @@ globalThis.OspreyCacheService = (() => {
     const setRecord = async (providerId, type, lookupKey, record) => {
         const snapshot = await getSnapshot();
         ensureProvider(snapshot, providerId)[type][lookupKey] = record;
+        markProviderDirty(providerId);
         scheduleFlush();
     };
 
@@ -84,6 +102,7 @@ globalThis.OspreyCacheService = (() => {
         }
 
         delete records[lookupKey];
+        markProviderDirty(providerId);
         scheduleFlush();
     };
 
@@ -100,6 +119,12 @@ globalThis.OspreyCacheService = (() => {
         return flushPromise;
     };
 
+    const buildMetaRecord = () => ({
+        version: cacheSnapshot.version,
+        globalAllowPatterns: cacheSnapshot.globalAllowPatterns,
+        providerIds: Object.keys(cacheSnapshot.providers),
+    });
+
     const flush = async () => {
         if (flushTimer) {
             clearTimeout(flushTimer);
@@ -108,10 +133,47 @@ globalThis.OspreyCacheService = (() => {
 
         ensureFlushPromise();
 
+        const providersToWrite = [...dirtyProviders];
+        const writeMeta = metaDirty;
+
+        dirtyProviders.clear();
+        metaDirty = false;
+
+        const payload = {};
+        const removeKeys = [];
+
+        if (writeMeta) {
+            payload[metaKey] = buildMetaRecord();
+        }
+
+        for (const providerId of providersToWrite) {
+            const record = cacheSnapshot?.providers?.[providerId];
+
+            if (record) {
+                payload[shardKey(providerId)] = record;
+            } else {
+                removeKeys.push(shardKey(providerId));
+            }
+        }
+
         try {
-            await browserAPI.storageSet("local", {[cacheKey]: cacheSnapshot});
+            if (Object.keys(payload).length > 0) {
+                await browserAPI.storageSet("local", payload);
+            }
+
+            if (removeKeys.length > 0) {
+                await browserAPI.storageRemove("local", removeKeys);
+            }
         } catch (error) {
             console.error("OspreyCacheService failed to persist cache snapshot", error);
+
+            if (writeMeta) {
+                metaDirty = true;
+            }
+
+            for (const providerId of providersToWrite) {
+                dirtyProviders.add(providerId);
+            }
         } finally {
             flushResolver?.();
             flushResolver = null;
@@ -134,8 +196,41 @@ globalThis.OspreyCacheService = (() => {
     };
 
     const loadSnapshot = async () => {
-        const stored = await browserAPI.storageGet("local", cacheKey).catch(() => ({}));
-        return normalizeSnapshot(stored?.[cacheKey]);
+        const metaStored = await browserAPI.storageGet("local", metaKey).catch(() => ({}));
+        const meta = metaStored?.[metaKey];
+
+        if (meta && typeof meta === "object" && meta.providers && typeof meta.providers === "object") {
+            const migrated = normalizeSnapshot(meta);
+
+            markMetaDirty();
+
+            for (const providerId of Object.keys(migrated.providers)) {
+                markProviderDirty(providerId);
+            }
+
+            scheduleFlush();
+            return migrated;
+        }
+
+        const providerIds = meta && Array.isArray(meta.providerIds) ?
+            meta.providerIds.filter(id => typeof id === "string" && id.length > 0) : [];
+
+        const keys = providerIds.map(shardKey);
+
+        const shardStored = keys.length > 0 ?
+            await browserAPI.storageGet("local", keys).catch(() => ({})) : {};
+
+        const providers = {};
+
+        for (const providerId of providerIds) {
+            providers[providerId] = normalizeProvider(shardStored?.[shardKey(providerId)]);
+        }
+
+        return {
+            ...defaultSnapshot(),
+            globalAllowPatterns: normalizePatterns(meta?.globalAllowPatterns),
+            providers,
+        };
     };
 
     const resolveLoadingSnapshot = () => loadSnapshot()
@@ -178,9 +273,14 @@ globalThis.OspreyCacheService = (() => {
         const now = Date.now();
         let dirty = false;
 
-        for (const provider of Object.values(snapshot.providers)) {
-            dirty = pruneExpiredEntries(provider.allowed, now) || dirty;
-            dirty = pruneExpiredEntries(provider.blocked, now) || dirty;
+        for (const [providerId, provider] of Object.entries(snapshot.providers)) {
+            const providerDirty = pruneExpiredEntries(provider.allowed, now) ||
+                pruneExpiredEntries(provider.blocked, now);
+
+            if (providerDirty) {
+                markProviderDirty(providerId);
+                dirty = true;
+            }
         }
 
         if (dirty) {
@@ -218,6 +318,7 @@ globalThis.OspreyCacheService = (() => {
 
         if (!snapshot.globalAllowPatterns.includes(pattern)) {
             snapshot.globalAllowPatterns.push(pattern);
+            markMetaDirty();
             scheduleFlush();
         }
     };
@@ -230,8 +331,17 @@ globalThis.OspreyCacheService = (() => {
             processing.size === 0;
 
         if (!alreadyClear) {
+            const previousProviderIds = cacheSnapshot ? Object.keys(cacheSnapshot.providers) : [];
+
             cacheSnapshot = defaultSnapshot();
             processing.clear();
+
+            markMetaDirty();
+
+            for (const providerId of previousProviderIds) {
+                markProviderDirty(providerId);
+            }
+
             scheduleFlush(0);
         }
     };
@@ -240,9 +350,10 @@ globalThis.OspreyCacheService = (() => {
         const snapshot = await getSnapshot();
         let removed = 0;
 
-        for (const provider of Object.values(snapshot.providers)) {
+        for (const [providerId, provider] of Object.entries(snapshot.providers)) {
             if (provider?.blocked && Object.hasOwn(provider.blocked, lookupKey)) {
                 delete provider.blocked[lookupKey];
+                markProviderDirty(providerId);
                 removed += 1;
             }
         }
@@ -312,6 +423,8 @@ globalThis.OspreyCacheService = (() => {
             } else {
                 providerRecord.allowed[lookupKey] = {exp: expiry};
             }
+
+            markProviderDirty(providerId);
         }
 
         scheduleFlush();
