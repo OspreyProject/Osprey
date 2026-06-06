@@ -269,6 +269,19 @@ globalThis.OspreyProxyBuiltins = (() => {
         }),
 
         hostnameBuiltin({
+            id: 'openphish',
+            aliases: ['openPhish'],
+            displayName: 'OpenPhish List',
+            group: providerGroups.feeds.id,
+            icon: 'assets/providers/openphish.avif',
+            enabledByDefault: true,
+            bypassBlockingThreshold: false,
+            endpoint: 'openphish',
+            policyKey: 'OpenPhishEnabled',
+            report: mailtoFalsePositiveReport('support@openphish.com', 'OpenPhish Free List'),
+        }),
+
+        hostnameBuiltin({
             id: 'phishdestroy',
             aliases: ['phishDestroy'],
             displayName: 'PhishDestroy List',
