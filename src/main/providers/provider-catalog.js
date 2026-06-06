@@ -34,8 +34,10 @@ globalThis.OspreyProviderCatalog = (() => {
     const staticDefinitions = Object.freeze([...proxyBuiltins, ...directIntegrations]);
     catalogValidator.validate(staticDefinitions);
 
-    const byId = new Map(staticDefinitions.map(definition => [definition.id, definition]));
+    const allDefinitions = Object.freeze([...staticDefinitions]);
+    const byId = new Map(allDefinitions.map(definition => [definition.id, definition]));
     const staticAliasMap = new Map();
+    const sharedApiKeyGroupMembers = new Map();
 
     for (const {id, aliases = []} of staticDefinitions) {
         staticAliasMap.set(id, id);
@@ -45,7 +47,19 @@ globalThis.OspreyProviderCatalog = (() => {
         }
     }
 
-    const getAllDefinitions = () => Object.freeze([...staticDefinitions]);
+    for (const definition of directIntegrations) {
+        const groupId = String(definition?.sharedApiKeyGroup || '');
+
+        if (!groupId) {
+            continue;
+        }
+
+        const members = sharedApiKeyGroupMembers.get(groupId) || [];
+        members.push(definition.id);
+        sharedApiKeyGroupMembers.set(groupId, members);
+    }
+
+    const getAllDefinitions = () => allDefinitions;
     const resolveId = (idOrAlias) => staticAliasMap.get(idOrAlias);
 
     const getDefinition = (idOrAlias) => {
@@ -105,14 +119,12 @@ globalThis.OspreyProviderCatalog = (() => {
     const getBuiltins = () => proxyBuiltins.slice();
     const getDirectIntegrations = () => directIntegrations.slice();
 
-    const getSharedApiKeyGroupMembers = groupId => directIntegrations
-        .filter(definition => String(definition?.sharedApiKeyGroup || '') === String(groupId || ''))
-        .map(definition => definition.id);
+    const getSharedApiKeyGroupMembers = groupId => sharedApiKeyGroupMembers.get(String(groupId || '')) || [];
 
     const getSharedGroupMembersById = providerId => {
         const definition = getDefinition(providerId);
         const groupId = String(definition?.sharedApiKeyGroup || '');
-        return groupId ? getSharedApiKeyGroupMembers(groupId) : [];
+        return groupId ? sharedApiKeyGroupMembers.get(groupId) || [] : [];
     };
 
     // Public API

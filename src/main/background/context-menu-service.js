@@ -46,7 +46,7 @@ globalThis.OspreyContextMenuService = (() => {
     });
 
     const doCreate = async () => {
-        const runtime = await providerRuntimeFactory.createRuntime();
+        const runtime = await providerRuntimeFactory.createAppRuntime();
         const {app} = runtime.effectiveState;
 
         await removeAll();

@@ -43,6 +43,52 @@ globalThis.OspreyPolicyService = (() => {
 
     const getApiKeyPolicyKey = id => `${id.charAt(0).toUpperCase()}${id.slice(1)}ApiKey`;
 
+    const applyAppPolicies = (app, policies, appManagedKeys) => {
+        for (const [policyKey, type, stateKey, mapValue = value => value] of appPolicyMappings) {
+            if (typeof policies[policyKey] === type) {
+                app[stateKey] = mapValue(policies[policyKey]);
+                appManagedKeys?.add(stateKey);
+            }
+        }
+    };
+
+    const applyProviderPolicies = (providers, policies, providerManagedIds, providerManagedApiKeyIds, disableThirdPartyIntegrations) => {
+        for (const definition of providerCatalog.getBuiltins()) {
+            if (definition.policyKey && typeof policies[definition.policyKey] === 'boolean') {
+                ensureProviderState(providers, definition).enabled = policies[definition.policyKey];
+                providerManagedIds.add(definition.id);
+            }
+        }
+
+        for (const definition of providerCatalog.getDirectIntegrations()) {
+            const providerState = ensureProviderState(providers, definition);
+            const apiKeyPolicyKey = getApiKeyPolicyKey(definition.id);
+
+            if (disableThirdPartyIntegrations) {
+                providerState.enabled = false;
+                providerManagedIds.add(definition.id);
+            }
+
+            if (typeof policies[apiKeyPolicyKey] === 'string') {
+                providerState.apiKey = policies[apiKeyPolicyKey];
+                const sharedMembers = providerCatalog.getSharedGroupMembersById(definition.id);
+
+                if (sharedMembers.length > 0) {
+                    for (const memberId of sharedMembers) {
+                        ensureProviderState(providers, providerCatalog.getDefinition(memberId) || {
+                            id: memberId,
+                            enabledByDefault: false
+                        }).apiKey = policies[apiKeyPolicyKey];
+
+                        providerManagedApiKeyIds.add(memberId);
+                    }
+                } else {
+                    providerManagedApiKeyIds.add(definition.id);
+                }
+            }
+        }
+    };
+
     const getPolicies = async ({fresh = false} = {}) => {
         if (!fresh && cachedPolicies) {
             return {...cachedPolicies};
@@ -68,52 +114,14 @@ globalThis.OspreyPolicyService = (() => {
         const appManagedKeys = new Set();
         const providerManagedIds = new Set();
         const providerManagedApiKeyIds = new Set();
-
-        const setManaged = (key, value) => {
-            effective.app[key] = value;
-            appManagedKeys.add(key);
-        };
-
-        for (const [policyKey, type, stateKey, mapValue = value => value] of appPolicyMappings) {
-            if (typeof policies[policyKey] === type) {
-                setManaged(stateKey, mapValue(policies[policyKey]));
-            }
-        }
-
-        for (const definition of providerCatalog.getBuiltins()) {
-            if (definition.policyKey && typeof policies[definition.policyKey] === 'boolean') {
-                ensureProviderState(effective.providers, definition).enabled = policies[definition.policyKey];
-                providerManagedIds.add(definition.id);
-            }
-        }
-
-        for (const definition of providerCatalog.getDirectIntegrations()) {
-            const providerState = ensureProviderState(effective.providers, definition);
-            const apiKeyPolicyKey = getApiKeyPolicyKey(definition.id);
-
-            if (effective.app.disableThirdPartyIntegrations) {
-                providerState.enabled = false;
-                providerManagedIds.add(definition.id);
-            }
-
-            if (typeof policies[apiKeyPolicyKey] === 'string') {
-                providerState.apiKey = policies[apiKeyPolicyKey];
-                const sharedMembers = providerCatalog.getSharedGroupMembersById(definition.id);
-
-                if (sharedMembers.length > 0) {
-                    for (const memberId of sharedMembers) {
-                        ensureProviderState(effective.providers, providerCatalog.getDefinition(memberId) || {
-                            id: memberId,
-                            enabledByDefault: false
-                        }).apiKey = policies[apiKeyPolicyKey];
-
-                        providerManagedApiKeyIds.add(memberId);
-                    }
-                } else {
-                    providerManagedApiKeyIds.add(definition.id);
-                }
-            }
-        }
+        applyAppPolicies(effective.app, policies, appManagedKeys);
+        applyProviderPolicies(
+            effective.providers,
+            policies,
+            providerManagedIds,
+            providerManagedApiKeyIds,
+            effective.app.disableThirdPartyIntegrations
+        );
 
         return Object.freeze({
             policies,
@@ -121,6 +129,20 @@ globalThis.OspreyPolicyService = (() => {
             appManagedKeys,
             providerManagedIds,
             providerManagedApiKeyIds,
+        });
+    };
+
+    const applyToAppState = async state => {
+        const policies = await getPolicies();
+        const effectiveApp = structuredClone(state.app);
+        const appManagedKeys = new Set();
+
+        applyAppPolicies(effectiveApp, policies, appManagedKeys);
+
+        return Object.freeze({
+            policies,
+            effectiveApp,
+            appManagedKeys,
         });
     };
 
@@ -137,5 +159,6 @@ globalThis.OspreyPolicyService = (() => {
     // Public API
     return timer.instrument('OspreyPolicyService', {
         applyToState,
+        applyToAppState,
     });
 })();

@@ -27,6 +27,8 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
 
     let cachedRuntime = null;
     let loadingRuntime = null;
+    let cachedAppRuntime = null;
+    let loadingAppRuntime = null;
 
     const buildRuntime = async () => {
         const persistedState = await providerStateStore.getState();
@@ -66,6 +68,20 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
         });
     };
 
+    const buildAppRuntime = async () => {
+        const persistedState = await providerStateStore.getState();
+        const policyResult = await policyService.applyToAppState(persistedState);
+
+        return Object.freeze({
+            persistedState,
+            effectiveState: Object.freeze({
+                app: policyResult.effectiveApp,
+            }),
+            policies: policyResult.policies,
+            appManagedKeys: policyResult.appManagedKeys,
+        });
+    };
+
     const createRuntime = async ({fresh = false} = {}) => {
         if (!fresh && cachedRuntime) {
             return cachedRuntime;
@@ -84,9 +100,29 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
         return loadingRuntime;
     };
 
+    const createAppRuntime = async ({fresh = false} = {}) => {
+        if (!fresh && cachedAppRuntime) {
+            return cachedAppRuntime;
+        }
+
+        if (fresh || !loadingAppRuntime) {
+            loadingAppRuntime = buildAppRuntime().then(runtime => {
+                cachedAppRuntime = runtime;
+                loadingAppRuntime = null;
+                return runtime;
+            }).catch(error => {
+                loadingAppRuntime = null;
+                throw error;
+            });
+        }
+        return loadingAppRuntime;
+    };
+
     const invalidate = () => {
         cachedRuntime = null;
         loadingRuntime = null;
+        cachedAppRuntime = null;
+        loadingAppRuntime = null;
     };
 
     globalThis.OspreyBrowserAPI.api?.storage?.onChanged?.addListener((changes, area) => {
@@ -98,5 +134,6 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
     // Public API
     return timer.instrument('OspreyProviderRuntimeFactory', {
         createRuntime,
+        createAppRuntime,
     });
 })();
