@@ -22,46 +22,83 @@ globalThis.OspreyBadgeService = (() => {
     const browserAPI = globalThis.OspreyBrowserAPI;
     const timer = globalThis.OspreyTimer;
 
-    const badgeCounts = new Map();
+    const coalesceMs = 50;
+
+    const appliedCountByTab = new Map();
+    const desiredCountByTab = new Map();
+    const pendingTimerByTab = new Map();
+
     const setColor = (tabId, method, color) => browserAPI[method]({color, tabId});
 
-    const clear = tabId => {
-        if (badgeCounts.get(tabId) === 0) {
+    const applyState = tabId => {
+        pendingTimerByTab.delete(tabId);
+
+        if (!desiredCountByTab.has(tabId)) {
             return Promise.resolve();
         }
 
-        badgeCounts.set(tabId, 0);
+        const count = desiredCountByTab.get(tabId);
+        desiredCountByTab.delete(tabId);
 
-        return browserAPI.actionSetBadgeText({tabId, text: ""}).catch(() => {
-            // ignored
-        });
-    };
-
-    const set = (tabId, count) => {
-        if (badgeCounts.get(tabId) === count) {
+        if (appliedCountByTab.get(tabId) === count) {
             return Promise.resolve();
         }
 
-        badgeCounts.set(tabId, count);
+        appliedCountByTab.set(tabId, count);
 
-        return Promise.all([
-            // Sets the badge text to the block count
-            browserAPI.actionSetBadgeText({tabId, text: String(count)}),
+        if (count === 0) {
+            return browserAPI.actionSetBadgeText({tabId, text: ""}).catch(() => {
+                // ignored
+            });
+        }
 
-            // Sets the badge background color to red
-            setColor(tabId, "actionSetBadgeBackgroundColor", "#ff4b4b"),
+        if (count === 1) {
+            return Promise.all([
+                // Sets the badge text to the block count
+                browserAPI.actionSetBadgeText({tabId, text: String(count)}),
 
-            // Sets the badge text color to white
-            setColor(tabId, "actionSetBadgeTextColor", "#ffffff")
-        ]).catch(() => {
-            // ignored
-        });
+                // Sets the badge background color to red
+                setColor(tabId, "actionSetBadgeBackgroundColor", "#ff4b4b"),
+
+                // Sets the badge text color to white
+                setColor(tabId, "actionSetBadgeTextColor", "#ffffff")
+            ]).catch(() => {
+                // ignored
+            });
+        } else {
+            return browserAPI.actionSetBadgeText({tabId, text: String(count)}).catch(() => {
+                // ignored
+            });
+        }
     };
+
+    const scheduleApply = tabId => {
+        if (pendingTimerByTab.has(tabId)) {
+            return;
+        }
+
+        pendingTimerByTab.set(tabId, setTimeout(() => {
+            applyState(tabId).catch(() => {
+                // ignored
+            });
+        }, coalesceMs));
+    };
+
+    const request = (tabId, count) => {
+        if (typeof tabId !== "number") {
+            return Promise.resolve();
+        }
+
+        desiredCountByTab.set(tabId, count);
+        scheduleApply(tabId);
+        return Promise.resolve();
+    };
+
+    const clear = tabId => request(tabId, 0);
 
     const syncWithContext = (tabId, context) => {
-        // Sets the count on the badge if there are blocked origins, otherwise clears the badge
         const count = Array.isArray(context?.origins) ? context.origins.length : 0;
-        return (count > 0 ? set : clear)(tabId, count);
+        return request(tabId, count);
     };
 
     // Public API
