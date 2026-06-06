@@ -304,7 +304,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
             }
 
             updateBlockedCounter(message);
-            return true;
+            return false;
         });
     }
 
