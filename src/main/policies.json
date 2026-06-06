@@ -27,14 +27,6 @@
       "type": "boolean",
       "default": false
     },
-    "CacheExpirationSeconds": {
-      "title": "Cache Expiration Seconds",
-      "description": "Cache entry lifetime in seconds.",
-      "type": "integer",
-      "minimum": 60,
-      "maximum": 2592000,
-      "default": 604800
-    },
     "LockProtectionOptions": {
       "title": "Lock Protection Options",
       "description": "If true, provider toggles and provider settings are locked in the options page.",
@@ -52,6 +44,14 @@
       "description": "If true, third-party direct integrations are disabled and cannot be enabled from settings.",
       "type": "boolean",
       "default": false
+    },
+    "CacheExpirationSeconds": {
+      "title": "Cache Expiration Seconds",
+      "description": "Cache entry lifetime in seconds.",
+      "type": "integer",
+      "minimum": 60,
+      "maximum": 2592000,
+      "default": 604800
     },
     "MetaDefenderApiKey": {
       "title": "MetaDefender API Key",
@@ -158,6 +158,12 @@
     "SwitchCHEnabled": {
       "title": "Switch.ch Security DNS Enabled",
       "description": "Managed enabled state for Switch.ch Security DNS.",
+      "type": "boolean",
+      "default": true
+    },
+    "OpenPhishEnabled": {
+      "title": "OpenPhish List Enabled",
+      "description": "Managed enabled state for OpenPhish List.",
       "type": "boolean",
       "default": true
     },
