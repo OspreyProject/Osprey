@@ -221,9 +221,17 @@ globalThis.OspreyCacheService = (() => {
     };
 
     const clearAll = async () => {
-        cacheSnapshot = defaultSnapshot();
-        processing.clear();
-        await flush();
+        const alreadyClear =
+            cacheSnapshot?.version === 2 &&
+            cacheSnapshot.globalAllowPatterns.length === 0 &&
+            Object.keys(cacheSnapshot.providers).length === 0 &&
+            processing.size === 0;
+
+        if (!alreadyClear) {
+            cacheSnapshot = defaultSnapshot();
+            processing.clear();
+            await flush();
+        }
     };
 
     const clearBlockedForLookup = async lookupKey => {
