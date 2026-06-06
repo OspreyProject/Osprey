@@ -124,18 +124,10 @@ globalThis.OspreyTimer = (() => {
         return Object.freeze(instrumented);
     };
 
-    const setEnabled = value => {
-        enabled = Boolean(value);
-    };
-
-    const isEnabled = () => enabled;
-
     // Public API
     return Object.freeze({
         time,
         wrap,
         instrument,
-        setEnabled,
-        isEnabled,
     });
 })();

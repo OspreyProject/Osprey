@@ -155,19 +155,6 @@ globalThis.OspreyUrlService = (() => {
         );
     };
 
-    const hostnameIsValid = hostname => {
-        const canonical = canonicalizeHostname(hostname);
-
-        if (!canonical || isInternalHostname(canonical) || canonical.length > 253) {
-            return false;
-        }
-
-        const labels = canonical.split('.');
-
-        return !labels.some(label => label.length === 0 || label.length > 63) &&
-            labels.every(label => /^[a-z0-9]([a-z0-9-]*[a-z0-9])?$/i.test(label));
-    };
-
     const buildWarningPageUrl = ({url, origin, result, tabId}) => {
         const page = new URL(blockPageUrl());
         page.searchParams.set('url', url);
@@ -199,24 +186,6 @@ globalThis.OspreyUrlService = (() => {
         }
     };
 
-    const areEquivalentURLs = (leftUrl, rightUrl) => leftUrl === rightUrl || (() => {
-        const left = toComparableUrl(leftUrl);
-        const right = toComparableUrl(rightUrl);
-
-        if (!left || !right) {
-            return false;
-        }
-
-        // Upgrade http to https for comparison
-        if (left.protocol === 'http:') {
-            left.protocol = 'https';
-        }
-        if (right.protocol === 'http:') {
-            right.protocol = 'https';
-        }
-        return left.toString() === right.toString();
-    })();
-
     // Returns true when two URLs share the same host and port, regardless of path,
     // query, or scheme (http vs https is treated as same origin).
     const haveSameOrigin = (leftUrl, rightUrl) => {
@@ -232,10 +201,8 @@ globalThis.OspreyUrlService = (() => {
         lookupValueForTarget,
         canonicalizeHostname,
         isInternalHostname,
-        hostnameIsValid,
         buildWarningPageUrl,
         extractWarningContext,
-        areEquivalentURLs,
         haveSameOrigin,
         isWarningPageUrl,
         blockPageUrl,

@@ -119,8 +119,6 @@ globalThis.OspreyProviderCatalog = (() => {
     const getBuiltins = () => proxyBuiltins.slice();
     const getDirectIntegrations = () => directIntegrations.slice();
 
-    const getSharedApiKeyGroupMembers = groupId => sharedApiKeyGroupMembers.get(String(groupId || '')) || [];
-
     const getSharedGroupMembersById = providerId => {
         const definition = getDefinition(providerId);
         const groupId = String(definition?.sharedApiKeyGroup || '');
@@ -131,7 +129,6 @@ globalThis.OspreyProviderCatalog = (() => {
     return timer.instrument('OspreyProviderCatalog', {
         getBuiltins,
         getDirectIntegrations,
-        getSharedApiKeyGroupMembers,
         getSharedGroupMembersById,
         getAllDefinitions,
         getDefinition,

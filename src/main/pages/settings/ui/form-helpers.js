@@ -200,7 +200,6 @@ globalThis.OspreyFormHelpers = (() => {
     return timer.instrument('OspreyFormHelpers', {
         maxAPIKeyLength,
         createElement,
-        sanitizeSingleLine,
         sanitizeMultiline,
         normalizeProviderName,
         normalizeApiKey,
