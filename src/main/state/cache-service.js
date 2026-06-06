@@ -103,7 +103,7 @@ globalThis.OspreyCacheService = (() => {
             flushTimer = null;
         }
 
-        await ensureFlushPromise();
+        ensureFlushPromise();
 
         try {
             await browserAPI.storageSet("local", {[cacheKey]: cacheSnapshot});
