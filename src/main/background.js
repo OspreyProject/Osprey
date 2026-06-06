@@ -37,7 +37,6 @@ const bootstrapScripts = [
     'state/cache-service.js',
     'platform/message-bus.js',
     'providers/provider-runtime-factory.js',
-    'platform/dns-validator.js',
     'providers/provider-engine.js',
     'background/result-aggregation-service.js',
     'background/badge-service.js',

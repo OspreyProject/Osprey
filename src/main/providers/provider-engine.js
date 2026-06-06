@@ -20,7 +20,6 @@
 globalThis.OspreyProviderEngine = (() => {
     // Global variables
     const cacheService = globalThis.OspreyCacheService;
-    const dnsValidator = globalThis.OspreyDnsValidator;
     const protectionResult = globalThis.OspreyProtectionResult;
     const requestBuilder = globalThis.OspreyRequestBuilder;
     const responseRuleEngine = globalThis.OspreyResponseRuleEngine;
@@ -320,14 +319,6 @@ globalThis.OspreyProviderEngine = (() => {
 
         const controller = new AbortController();
         abortControllers.set(tabId, controller);
-
-        const isIpLiteral = urlService.isIpLiteral(hostname);
-
-        if (!isIpLiteral && !await dnsValidator.isResolvable(hostname, controller.signal, tabId)) {
-            console.debug(`OspreyProviderEngine skipping unresolvable hostname: ${hostname}`);
-            abortControllers.delete(tabId);
-            return;
-        }
 
         const targetUrl = parsedUrl.toString();
         const globalAllowMatched = await cacheService.matchesGlobalPattern(parsedUrl);
