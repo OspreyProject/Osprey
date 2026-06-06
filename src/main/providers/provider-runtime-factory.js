@@ -23,6 +23,7 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
     const providerCatalog = globalThis.OspreyProviderCatalog;
     const providerGroups = globalThis.OspreyProviderGroups;
     const providerStateStore = globalThis.OspreyProviderStateStore;
+    const timer = globalThis.OspreyTimer;
 
     let cachedRuntime = null;
     let loadingRuntime = null;
@@ -95,7 +96,7 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
     });
 
     // Public API
-    return Object.freeze({
+    return timer.instrument('OspreyProviderRuntimeFactory', {
         createRuntime,
     });
 })();

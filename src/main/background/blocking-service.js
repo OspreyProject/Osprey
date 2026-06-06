@@ -28,6 +28,7 @@ globalThis.OspreyBlockingService = (() => {
     const providerRuntimeFactory = globalThis.OspreyProviderRuntimeFactory;
     const resultAggregationService = globalThis.OspreyResultAggregationService;
     const urlService = globalThis.OspreyUrlService;
+    const timer = globalThis.OspreyTimer;
 
     const inFlightNavigations = new Map();
     const suppressedNavigations = new Map();
@@ -153,11 +154,11 @@ globalThis.OspreyBlockingService = (() => {
         });
     };
 
-    const clearBlockedUI = async tabId => {
+    const clearBlockedUI = async tabId => timer.wrap("OspreyBlockingService.clearBlockedUI", async () => {
         resultAggregationService.clear(tabId);
         lastBlockedPayloadByTab.delete(tabId);
         await badgeService.clear(tabId);
-    };
+    });
 
     const cleanupAfterNavigation = tabId => {
         providerEngine.abortTab(tabId).catch(() => {
@@ -258,6 +259,7 @@ globalThis.OspreyBlockingService = (() => {
     };
 
     const handleNavigation = async details => {
+        console.debug(details);
         const parsed = urlService.parseHttpUrl(details?.url);
 
         if (!parsed || typeof details?.tabId !== "number") {
@@ -458,7 +460,7 @@ globalThis.OspreyBlockingService = (() => {
     };
 
     // Public API
-    return Object.freeze({
+    return timer.instrument('OspreyBlockingService', {
         handleNavigation,
         allowWebsite,
         continueToWebsite,

@@ -18,6 +18,9 @@
 "use strict";
 
 globalThis.OspreyResponseRuleEngine = (() => {
+    // Global variables
+    const timer = globalThis.OspreyTimer;
+
     const defaultResult = 'ALLOWED';
 
     const numberOperators = {
@@ -363,7 +366,7 @@ globalThis.OspreyResponseRuleEngine = (() => {
     };
 
     // Public API
-    return Object.freeze({
+    return timer.instrument('OspreyResponseRuleEngine', {
         evaluateRules,
     });
 })();

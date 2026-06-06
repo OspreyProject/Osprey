@@ -22,6 +22,7 @@ globalThis.OspreyContextMenuService = (() => {
     const browserAPI = globalThis.OspreyBrowserAPI;
     const cacheService = globalThis.OspreyCacheService;
     const providerRuntimeFactory = globalThis.OspreyProviderRuntimeFactory;
+    const timer = globalThis.OspreyTimer;
 
     const menuIds = Object.freeze({
         CLEAR_ALLOWED_WEBSITES: 'clearAllowedWebsites',
@@ -112,7 +113,7 @@ globalThis.OspreyContextMenuService = (() => {
     };
 
     // Public API
-    return Object.freeze({
+    return timer.instrument('OspreyContextMenuService', {
         create,
         register
     });

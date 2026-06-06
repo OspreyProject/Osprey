@@ -22,6 +22,7 @@ globalThis.OspreyCacheService = (() => {
     const browserAPI = globalThis.OspreyBrowserAPI;
     const urlService = globalThis.OspreyUrlService;
     const protectionResult = globalThis.OspreyProtectionResult;
+    const timer = globalThis.OspreyTimer;
 
     const cacheKey = "osprey_cache";
     let cacheSnapshot = null;
@@ -314,7 +315,7 @@ globalThis.OspreyCacheService = (() => {
     });
 
     // Public API
-    return Object.freeze({
+    return timer.instrument('OspreyCacheService', {
         matchesGlobalPattern,
         getAllowedEntry,
         getBlockedEntry,

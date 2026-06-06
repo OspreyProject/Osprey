@@ -26,6 +26,7 @@ globalThis.OspreyProviderEngine = (() => {
     const responseRuleEngine = globalThis.OspreyResponseRuleEngine;
     const timedSignal = globalThis.OspreyTimedSignal;
     const urlService = globalThis.OspreyUrlService;
+    const timer = globalThis.OspreyTimer;
 
     const abortControllers = new Map();
 
@@ -369,7 +370,7 @@ globalThis.OspreyProviderEngine = (() => {
     };
 
     // Public API
-    return Object.freeze({
+    return timer.instrument('OspreyProviderEngine', {
         scanUrl,
         abortTab,
     });

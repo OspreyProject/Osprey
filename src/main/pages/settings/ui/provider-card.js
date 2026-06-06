@@ -24,6 +24,7 @@ globalThis.OspreyProviderCard = (() => {
     const providerStateStore = globalThis.OspreyProviderStateStore;
     const browserAPI = globalThis.OspreyBrowserAPI;
     const toast = globalThis.OspreyToast;
+    const timer = globalThis.OspreyTimer;
 
     const createDiv = (className, ...children) => formHelpers.createElement('div', {className}, ...children);
 
@@ -391,7 +392,7 @@ globalThis.OspreyProviderCard = (() => {
     }
 
     // Public API
-    return Object.freeze({
+    return timer.instrument('OspreyProviderCard', {
         buildProviderCard
     });
 })();

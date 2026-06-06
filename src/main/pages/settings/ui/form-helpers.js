@@ -18,6 +18,9 @@
 "use strict";
 
 globalThis.OspreyFormHelpers = (() => {
+    // Global variables
+    const timer = globalThis.OspreyTimer;
+
     const maxProviderNameLength = 64;
     const maxAPIKeyLength = 2048;
 
@@ -194,7 +197,7 @@ globalThis.OspreyFormHelpers = (() => {
     }
 
     // Public API
-    return Object.freeze({
+    return timer.instrument('OspreyFormHelpers', {
         maxAPIKeyLength,
         createElement,
         sanitizeSingleLine,

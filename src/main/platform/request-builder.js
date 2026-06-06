@@ -20,6 +20,7 @@
 globalThis.OspreyRequestBuilder = (() => {
     // Global variables
     const urlService = globalThis.OspreyUrlService;
+    const timer = globalThis.OspreyTimer;
 
     const templateAliases = Object.freeze({
         apiKey: ['apiKey', 'api_key'],
@@ -103,7 +104,7 @@ globalThis.OspreyRequestBuilder = (() => {
             buildDirectRequest(provider, url, providerState.apiKey || '');
 
     // Public API
-    return Object.freeze({
+    return timer.instrument('OspreyRequestBuilder', {
         buildRequest,
     });
 })();

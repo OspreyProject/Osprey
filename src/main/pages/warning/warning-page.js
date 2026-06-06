@@ -26,6 +26,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
     const providerStateStore = globalThis.OspreyProviderStateStore;
     const reportLinkBuilder = globalThis.OspreyReportLinkBuilder;
     const urlService = globalThis.OspreyUrlService;
+    const timer = globalThis.OspreyTimer;
 
     let currentOrigin = protectionResult.Origin.UNKNOWN;
     let reportedByText = LangUtil.UNKNOWN_ORIGIN;
@@ -452,7 +453,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
     }
 
     // Public API
-    return Object.freeze({
+    return timer.instrument('WarningSingleton', {
         initialize
     });
 })();

@@ -20,6 +20,7 @@
 globalThis.OspreyCatalogValidator = (() => {
     // Global variables
     const providerGroups = globalThis.OspreyProviderGroups;
+    const timer = globalThis.OspreyTimer;
 
     const validKinds = Object.freeze(['proxy_builtin', 'direct_static']);
     const validLookupTargets = Object.freeze(['hostname', 'url']);
@@ -199,7 +200,7 @@ globalThis.OspreyCatalogValidator = (() => {
     };
 
     // Public API
-    return Object.freeze({
+    return timer.instrument('OspreyCatalogValidator', {
         validate
     });
 })();

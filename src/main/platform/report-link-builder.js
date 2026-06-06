@@ -18,6 +18,9 @@
 "use strict";
 
 globalThis.OspreyReportLinkBuilder = (() => {
+    // Global variables
+    const timer = globalThis.OspreyTimer;
+
     const build = (template, context) => {
         if (!template || typeof template !== 'object') {
             console.warn('OspreyReportLinkBuilder.build received an invalid report template');
@@ -51,7 +54,7 @@ globalThis.OspreyReportLinkBuilder = (() => {
     };
 
     // Public API
-    return Object.freeze({
+    return timer.instrument('OspreyReportLinkBuilder', {
         build
     });
 })();

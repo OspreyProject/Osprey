@@ -20,12 +20,14 @@
 globalThis.OspreyBadgeService = (() => {
     // Global variables
     const browserAPI = globalThis.OspreyBrowserAPI;
+    const timer = globalThis.OspreyTimer;
 
     const badgeCounts = new Map();
     const setColor = (tabId, method, color) => browserAPI[method]({color, tabId});
 
     const clear = tabId => {
         if (badgeCounts.get(tabId) === 0) {
+            console.debug('NOTHING TO CLEAR');
             return Promise.resolve();
         }
 
@@ -63,7 +65,7 @@ globalThis.OspreyBadgeService = (() => {
     };
 
     // Public API
-    return Object.freeze({
+    return timer.instrument('OspreyBadgeService', {
         clear,
         syncWithContext,
     });

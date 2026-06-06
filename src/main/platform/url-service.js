@@ -20,6 +20,7 @@
 globalThis.OspreyUrlService = (() => {
     // Global variables
     const browserAPI = globalThis.OspreyBrowserAPI;
+    const timer = globalThis.OspreyTimer;
 
     const allowedSchemes = Object.freeze([
         'http:', 'https:'
@@ -229,7 +230,7 @@ globalThis.OspreyUrlService = (() => {
     };
 
     // Public API
-    return Object.freeze({
+    return timer.instrument('OspreyUrlService', {
         parseHttpUrl,
         normalizeUrl,
         lookupValueForTarget,

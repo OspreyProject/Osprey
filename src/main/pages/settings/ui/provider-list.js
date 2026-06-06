@@ -24,6 +24,7 @@ globalThis.OspreyProviderList = (() => {
     const providerCatalog = globalThis.OspreyProviderCatalog;
     const providerStateStore = globalThis.OspreyProviderStateStore;
     const toast = globalThis.OspreyToast;
+    const timer = globalThis.OspreyTimer;
 
     const emitSettingsChanged = () => document.dispatchEvent(new CustomEvent('osprey:settings-changed'));
 
@@ -143,7 +144,7 @@ globalThis.OspreyProviderList = (() => {
     }
 
     // Public API
-    return Object.freeze({
+    return timer.instrument('OspreyProviderList', {
         render
     });
 })();

@@ -20,6 +20,7 @@
 globalThis.OspreyToast = (() => {
     // Global variables
     const formHelpers = globalThis.OspreyFormHelpers;
+    const timer = globalThis.OspreyTimer;
 
     const maxToasts = 5;
     const durationMs = 5000;
@@ -70,7 +71,7 @@ globalThis.OspreyToast = (() => {
     }
 
     // Public API
-    return Object.freeze({
+    return timer.instrument('OspreyToast', {
         show
     });
 })();

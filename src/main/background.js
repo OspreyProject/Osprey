@@ -18,6 +18,7 @@
 "use strict";
 
 const bootstrapScripts = [
+    'shared/timer.js',
     'shared/browser-api.js',
     'shared/lang-util.js',
     'shared/timed-signal.js',
@@ -238,6 +239,7 @@ try {
             console.warn(`No message for ${message?.id}`);
             return false;
         }
+
         const messageTabId = typeof message?.tabId === 'number' ? message.tabId : null;
         return handler({message, sender, sendResponse, tabId: sender.tab?.id ?? messageTabId});
     };

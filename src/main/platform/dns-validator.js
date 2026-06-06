@@ -22,6 +22,7 @@ globalThis.OspreyDnsValidator = (() => {
     const cacheService = globalThis.OspreyCacheService;
     const timedSignal = globalThis.OspreyTimedSignal;
     const urlService = globalThis.OspreyUrlService;
+    const timer = globalThis.OspreyTimer;
 
     const providerId = 'cloudflare-resolver';
 
@@ -75,7 +76,7 @@ globalThis.OspreyDnsValidator = (() => {
     };
 
     // Public API
-    return Object.freeze({
+    return timer.instrument('OspreyDnsValidator', {
         isResolvable,
     });
 })();

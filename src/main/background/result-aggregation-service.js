@@ -18,6 +18,9 @@
 "use strict";
 
 globalThis.OspreyResultAggregationService = (() => {
+    // Global variables
+    const timer = globalThis.OspreyTimer;
+
     const blockedByTab = new Map();
     const frameZeroUrlByTab = new Map();
 
@@ -95,7 +98,7 @@ globalThis.OspreyResultAggregationService = (() => {
     };
 
     // Public API
-    return Object.freeze({
+    return timer.instrument('OspreyResultAggregationService', {
         beginNavigation,
         setFrameZeroUrl,
         getFrameZeroUrl,
