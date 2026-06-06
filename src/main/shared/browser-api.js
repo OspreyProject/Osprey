@@ -94,6 +94,8 @@ globalThis.OspreyBrowserAPI = (() => {
 
         storageGet: (area, keys = null) => call(["storage", area, "get"], keys),
         storageSet: (area, value) => call(["storage", area, "set"], value),
+        storageRemove: (area, keys) => call(["storage", area, "remove"], keys),
+
         tabsUpdate: (tabId, updateProperties) => call(["tabs", "update"], tabId, updateProperties),
         tabsCreate: createProperties => call(["tabs", "create"], createProperties),
 
@@ -104,6 +106,7 @@ globalThis.OspreyBrowserAPI = (() => {
         actionSetBadgeText: details => call(["action", "setBadgeText"], details),
         actionSetBadgeBackgroundColor: details => call(["action", "setBadgeBackgroundColor"], details),
         actionSetBadgeTextColor: details => call(["action", "setBadgeTextColor"], details),
+
         runtimeSendMessage: message => call(["runtime", "sendMessage"], message),
         runtimeOpenOptionsPage: () => call(["runtime", "openOptionsPage"]),
 
