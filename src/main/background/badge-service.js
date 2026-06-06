@@ -27,7 +27,6 @@ globalThis.OspreyBadgeService = (() => {
 
     const clear = tabId => {
         if (badgeCounts.get(tabId) === 0) {
-            console.debug('NOTHING TO CLEAR');
             return Promise.resolve();
         }
 
@@ -44,6 +43,7 @@ globalThis.OspreyBadgeService = (() => {
         }
 
         badgeCounts.set(tabId, count);
+
         return Promise.all([
             // Sets the badge text to the block count
             browserAPI.actionSetBadgeText({tabId, text: String(count)}),
