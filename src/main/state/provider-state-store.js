@@ -21,7 +21,6 @@ globalThis.OspreyProviderStateStore = (() => {
     // Global variables
     const browserAPI = globalThis.OspreyBrowserAPI;
     const providerCatalog = globalThis.OspreyProviderCatalog;
-    const timer = globalThis.OspreyTimer;
 
     const stateKey = 'osprey_state';
     const legacyKey = 'Settings';
@@ -271,7 +270,7 @@ globalThis.OspreyProviderStateStore = (() => {
     });
 
     // Public API
-    return timer.instrument('OspreyProviderStateStore', {
+    return Object.freeze({
         stateKey,
         getState,
         setProviderEnabled,

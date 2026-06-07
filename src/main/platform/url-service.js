@@ -20,7 +20,6 @@
 globalThis.OspreyUrlService = (() => {
     // Global variables
     const browserAPI = globalThis.OspreyBrowserAPI;
-    const timer = globalThis.OspreyTimer;
 
     const canonicalizeHostnameCache = new Map();
     const normalizeUrlCache = new Map();
@@ -28,12 +27,6 @@ globalThis.OspreyUrlService = (() => {
     const allowedSchemes = Object.freeze([
         'http:', 'https:'
     ]);
-
-    const warningContextFallback = Object.freeze({
-        blockedUrl: '',
-        origin: 'unknown',
-        result: 'failed'
-    });
 
     const blockPageUrl = () => browserAPI.safeRuntimeURL('pages/warning/warning-page.html');
     const isWarningPageUrl = value => typeof value === 'string' && value.startsWith(blockPageUrl());
@@ -167,25 +160,6 @@ globalThis.OspreyUrlService = (() => {
         return page.toString();
     };
 
-    const extractWarningContext = pageUrl => {
-        try {
-            const url = new URL(pageUrl);
-
-            const rawTabId = url.searchParams.get('tid');
-            const parsedTabId = Number.parseInt(String(rawTabId || ''), 10);
-
-            return Object.freeze({
-                blockedUrl: url.searchParams.get('url') || '',
-                origin: url.searchParams.get('or') || 'unknown',
-                result: url.searchParams.get('rs') || 'failed',
-                tabId: Number.isFinite(parsedTabId) ? parsedTabId : null
-            });
-        } catch (error) {
-            console.warn(`OspreyUrlService failed to extract warning context from '${pageUrl}'`, error);
-            return warningContextFallback;
-        }
-    };
-
     // Returns true when two URLs share the same host and port, regardless of path,
     // query, or scheme (http vs https is treated as same origin).
     const haveSameOrigin = (leftUrl, rightUrl) => {
@@ -195,14 +169,13 @@ globalThis.OspreyUrlService = (() => {
     };
 
     // Public API
-    return timer.instrument('OspreyUrlService', {
+    return Object.freeze({
         parseHttpUrl,
         normalizeUrl,
         lookupValueForTarget,
         canonicalizeHostname,
         isInternalHostname,
         buildWarningPageUrl,
-        extractWarningContext,
         haveSameOrigin,
         isWarningPageUrl,
         blockPageUrl,

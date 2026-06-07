@@ -18,9 +18,6 @@
 "use strict";
 
 globalThis.OspreyResultAggregationService = (() => {
-    // Global variables
-    const timer = globalThis.OspreyTimer;
-
     const blockedByTab = new Map();
     const frameZeroUrlByTab = new Map();
     const warningPageReadyByTab = new Map();
@@ -107,7 +104,7 @@ globalThis.OspreyResultAggregationService = (() => {
     const isWarningPageReady = tabId => warningPageReadyByTab.get(tabId) === true;
 
     // Public API
-    return timer.instrument('OspreyResultAggregationService', {
+    return Object.freeze({
         beginNavigation,
         setFrameZeroUrl,
         getFrameZeroUrl,

@@ -18,7 +18,6 @@
 "use strict";
 
 const bootstrapScripts = [
-    'shared/timer.js',
     'shared/browser-api.js',
     'shared/lang-util.js',
     'shared/timed-signal.js',

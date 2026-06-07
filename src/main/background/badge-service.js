@@ -20,7 +20,6 @@
 globalThis.OspreyBadgeService = (() => {
     // Global variables
     const browserAPI = globalThis.OspreyBrowserAPI;
-    const timer = globalThis.OspreyTimer;
 
     const coalesceMs = 50;
 
@@ -52,24 +51,18 @@ globalThis.OspreyBadgeService = (() => {
             });
         }
 
-        if (count === 1) {
-            return Promise.all([
-                // Sets the badge text to the block count
-                browserAPI.actionSetBadgeText({tabId, text: String(count)}),
+        return Promise.all([
+            // Sets the badge text to the block count
+            browserAPI.actionSetBadgeText({tabId, text: String(count)}),
 
-                // Sets the badge background color to red
-                setColor(tabId, "actionSetBadgeBackgroundColor", "#ff4b4b"),
+            // Sets the badge background color to red
+            setColor(tabId, "actionSetBadgeBackgroundColor", "#ff4b4b"),
 
-                // Sets the badge text color to white
-                setColor(tabId, "actionSetBadgeTextColor", "#ffffff")
-            ]).catch(() => {
-                // ignored
-            });
-        } else {
-            return browserAPI.actionSetBadgeText({tabId, text: String(count)}).catch(() => {
-                // ignored
-            });
-        }
+            // Sets the badge text color to white
+            setColor(tabId, "actionSetBadgeTextColor", "#ffffff")
+        ]).catch(() => {
+            // ignored
+        });
     };
 
     const scheduleApply = tabId => {
@@ -102,7 +95,7 @@ globalThis.OspreyBadgeService = (() => {
     };
 
     // Public API
-    return timer.instrument('OspreyBadgeService', {
+    return Object.freeze({
         clear,
         syncWithContext,
     });

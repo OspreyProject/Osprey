@@ -18,9 +18,6 @@
 "use strict";
 
 globalThis.OspreyTimedSignal = (() => {
-    // Global variables
-    const timer = globalThis.OspreyTimer;
-
     const create = (parentSignal, timeoutMs) => {
         const controller = new AbortController();
         let timerId = null;
@@ -48,7 +45,7 @@ globalThis.OspreyTimedSignal = (() => {
     };
 
     // Public API
-    return timer.instrument('OspreyTimedSignal', {
+    return Object.freeze({
         create
     });
 })();

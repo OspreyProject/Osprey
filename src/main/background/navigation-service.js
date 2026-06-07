@@ -22,7 +22,6 @@ globalThis.OspreyNavigationService = (() => {
     const blockingService = globalThis.OspreyBlockingService;
     const browserAPI = globalThis.OspreyBrowserAPI;
     const urlService = globalThis.OspreyUrlService;
-    const timer = globalThis.OspreyTimer;
 
     const recentNavigations = new Map();
     const tapsUpdatedDedupeDuration = 2000;
@@ -166,7 +165,7 @@ globalThis.OspreyNavigationService = (() => {
     };
 
     // Public API
-    return timer.instrument('OspreyNavigationService', {
+    return Object.freeze({
         register
     });
 })();

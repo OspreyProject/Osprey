@@ -18,9 +18,6 @@
 "use strict";
 
 globalThis.OspreyBrowserAPI = (() => {
-    // Global variables
-    const timer = globalThis.OspreyTimer;
-
     const api = globalThis.browser ?? globalThis.chrome;
 
     const withCallback = (fn, context, args = []) => new Promise((resolve, reject) => {
@@ -88,7 +85,7 @@ globalThis.OspreyBrowserAPI = (() => {
     };
 
     // Public API
-    return timer.instrument('OspreyBrowserAPI', {
+    return Object.freeze({
         api,
         withCallback,
 

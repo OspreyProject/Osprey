@@ -21,7 +21,6 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
     // Global variables
     const browserAPI = globalThis.OspreyBrowserAPI;
     const providerStateStore = globalThis.OspreyProviderStateStore;
-    const timer = globalThis.OspreyTimer;
 
     const termsURL = 'https://github.com/OspreyProject/Osprey/blob/main/.github/TERMS.md';
     const privacyURL = 'https://github.com/OspreyProject/Osprey/blob/main/.github/PRIVACY.md';
@@ -97,7 +96,7 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
     };
 
     // Public API
-    return timer.instrument('PopupSingleton', {
+    return Object.freeze({
         initialize
     });
 })();

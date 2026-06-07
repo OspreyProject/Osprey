@@ -23,7 +23,6 @@ globalThis.OspreyProviderCatalog = (() => {
     const directIntegrations = globalThis.OspreyDirectIntegrations || [];
     const protectionResult = globalThis.OspreyProtectionResult;
     const proxyBuiltins = globalThis.OspreyProxyBuiltins || [];
-    const timer = globalThis.OspreyTimer;
 
     const cloneArray = value => Array.isArray(value) ? value.slice() : [];
 
@@ -126,7 +125,7 @@ globalThis.OspreyProviderCatalog = (() => {
     };
 
     // Public API
-    return timer.instrument('OspreyProviderCatalog', {
+    return Object.freeze({
         getBuiltins,
         getDirectIntegrations,
         getSharedGroupMembersById,

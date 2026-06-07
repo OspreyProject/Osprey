@@ -18,9 +18,6 @@
 "use strict";
 
 globalThis.OspreyProtectionResult = (() => {
-    // Global variables
-    const timer = globalThis.OspreyTimer;
-
     const definitions = Object.freeze([
         {key: 'KNOWN_SAFE', value: 'known_safe', messageKey: 'knownSafe'},
         {key: 'FAILED', value: 'failed', messageKey: 'failed'},
@@ -101,7 +98,7 @@ globalThis.OspreyProtectionResult = (() => {
     };
 
     // Public API
-    return timer.instrument('OspreyProtectionResult', {
+    return Object.freeze({
         resultTypes,
         messageKeys,
         blockingResults,

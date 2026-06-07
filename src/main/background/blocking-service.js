@@ -27,7 +27,6 @@ globalThis.OspreyBlockingService = (() => {
     const providerRuntimeFactory = globalThis.OspreyProviderRuntimeFactory;
     const resultAggregationService = globalThis.OspreyResultAggregationService;
     const urlService = globalThis.OspreyUrlService;
-    const timer = globalThis.OspreyTimer;
 
     const inFlightNavigations = new Map();
     const suppressedNavigations = new Map();
@@ -212,12 +211,15 @@ globalThis.OspreyBlockingService = (() => {
         pendingBlockedPayloadByTab.delete(tabId);
     };
 
-    const clearBlockedUI = async tabId => timer.wrap("OspreyBlockingService.clearBlockedUI", async () => {
+    const clearBlockedUI = async tabId => {
         resultAggregationService.clear(tabId);
         lastBlockedPayloadByTab.delete(tabId);
         pendingBlockedPayloadByTab.delete(tabId);
-        badgeService.clear(tabId);
-    });
+
+        badgeService.clear(tabId).then(() => {
+            // ignoring await
+        });
+    };
 
     const markWarningPageReady = tabId => {
         resultAggregationService.markWarningPageReady(tabId);
@@ -533,7 +535,7 @@ globalThis.OspreyBlockingService = (() => {
     };
 
     // Public API
-    return timer.instrument('OspreyBlockingService', {
+    return Object.freeze({
         handleNavigation,
         allowWebsite,
         continueToWebsite,

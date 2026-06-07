@@ -22,7 +22,6 @@ globalThis.SettingsSingleton = globalThis.SettingsSingleton || (() => {
     const browserAPI = globalThis.OspreyBrowserAPI;
     const providerList = globalThis.OspreyProviderList;
     const providerRuntimeFactory = globalThis.OspreyProviderRuntimeFactory;
-    const timer = globalThis.OspreyTimer;
 
     let isInitialized = false;
 
@@ -64,7 +63,7 @@ globalThis.SettingsSingleton = globalThis.SettingsSingleton || (() => {
     }
 
     // Public API
-    return timer.instrument('SettingsSingleton', {
+    return Object.freeze({
         initialize
     });
 })();

@@ -21,7 +21,6 @@ globalThis.OspreyPolicyService = (() => {
     // Global variables
     const browserAPI = globalThis.OspreyBrowserAPI;
     const providerCatalog = globalThis.OspreyProviderCatalog;
-    const timer = globalThis.OspreyTimer;
 
     let cachedPolicies = null;
 
@@ -157,7 +156,7 @@ globalThis.OspreyPolicyService = (() => {
     });
 
     // Public API
-    return timer.instrument('OspreyPolicyService', {
+    return Object.freeze({
         applyToState,
         applyToAppState,
     });

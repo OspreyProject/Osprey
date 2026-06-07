@@ -22,12 +22,12 @@ globalThis.OspreyCacheService = (() => {
     const browserAPI = globalThis.OspreyBrowserAPI;
     const urlService = globalThis.OspreyUrlService;
     const protectionResult = globalThis.OspreyProtectionResult;
-    const timer = globalThis.OspreyTimer;
 
     const cacheKey = "osprey_cache";
     const metaKey = cacheKey;
     const shardPrefix = `${cacheKey}::p::`;
     const shardKey = providerId => `${shardPrefix}${providerId}`;
+
     const flushDelay = 500;
 
     let cacheSnapshot = null;
@@ -440,7 +440,7 @@ globalThis.OspreyCacheService = (() => {
     });
 
     // Public API
-    return timer.instrument('OspreyCacheService', {
+    return Object.freeze({
         matchesGlobalPattern,
         getAllowedEntry,
         getBlockedEntry,

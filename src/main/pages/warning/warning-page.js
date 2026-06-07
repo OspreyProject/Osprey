@@ -26,11 +26,10 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
     const providerCatalog = globalThis.OspreyProviderCatalog;
     const providerStateStore = globalThis.OspreyProviderStateStore;
     const reportLinkBuilder = globalThis.OspreyReportLinkBuilder;
-    const urlService = globalThis.OspreyUrlService;
-    const timer = globalThis.OspreyTimer;
 
-    let currentOrigin = protectionResult.Origin.UNKNOWN;
     let reportedByText = LangUtil.UNKNOWN_ORIGIN;
+    let currentOrigin = protectionResult.Origin.UNKNOWN;
+
     let currentContext = null;
     let currentState = null;
     let domElements = {};
@@ -261,7 +260,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
     }
 
     function parsePageContext(pageUrl) {
-        const warningContext = urlService.extractWarningContext(pageUrl);
+        const warningContext = extractWarningContext(pageUrl);
         const result = isKnownResult(warningContext.result) ? warningContext.result : protectionResult.resultTypes.FAILED;
         const blockedUrlParsed = parseSafeHttpUrl(warningContext.blockedUrl);
 
@@ -273,6 +272,25 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
             tabId: warningContext.tabId,
         });
     }
+
+    const extractWarningContext = pageUrl => {
+        try {
+            const url = new URL(pageUrl);
+
+            const rawTabId = url.searchParams.get('tid');
+            const parsedTabId = Number.parseInt(String(rawTabId || ''), 10);
+
+            return Object.freeze({
+                blockedUrl: url.searchParams.get('url') || '',
+                origin: url.searchParams.get('or') || 'unknown',
+                result: url.searchParams.get('rs') || 'failed',
+                tabId: Number.isFinite(parsedTabId) ? parsedTabId : null
+            });
+        } catch (error) {
+            console.warn(`OspreyUrlService failed to extract warning context from '${pageUrl}'`, error);
+            return warningContextFallback;
+        }
+    };
 
     function setElementVisibility(element, isVisible) {
         if (!element) {
@@ -467,7 +485,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
     }
 
     // Public API
-    return timer.instrument('WarningSingleton', {
+    return Object.freeze({
         initialize
     });
 })();
