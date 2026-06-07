@@ -89,6 +89,22 @@ globalThis.OspreyBadgeService = (() => {
 
     const clear = tabId => request(tabId, 0);
 
+    const clearTab = tabId => {
+        if (typeof tabId !== "number") {
+            return;
+        }
+
+        const pendingTimer = pendingTimerByTab.get(tabId);
+
+        if (pendingTimer) {
+            clearTimeout(pendingTimer);
+        }
+
+        pendingTimerByTab.delete(tabId);
+        desiredCountByTab.delete(tabId);
+        appliedCountByTab.delete(tabId);
+    };
+
     const syncWithContext = (tabId, context) => {
         const count = Array.isArray(context?.origins) ? context.origins.length : 0;
         return request(tabId, count);
@@ -97,6 +113,7 @@ globalThis.OspreyBadgeService = (() => {
     // Public API
     return Object.freeze({
         clear,
+        clearTab,
         syncWithContext,
     });
 })();

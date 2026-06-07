@@ -54,6 +54,7 @@ try {
 
 (() => {
     // Global variables
+    const badgeService = globalThis.OspreyBadgeService;
     const blockingService = globalThis.OspreyBlockingService;
     const browserAPI = globalThis.OspreyBrowserAPI;
     const cacheService = globalThis.OspreyCacheService;
@@ -234,6 +235,7 @@ try {
             resultAggregationService.clear(tabId);
             providerEngine.abortTab(tabId);
             cacheService.clearProcessingByTab(tabId);
+            badgeService.clearTab(tabId);
         });
 
         browserAPI.api?.storage.onChanged?.addListener((changes, area) => {
