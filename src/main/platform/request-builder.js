@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-"use strict";
+'use strict';
 
 globalThis.OspreyRequestBuilder = (() => {
     const urlService = globalThis.OspreyUrlService;
@@ -23,7 +23,7 @@ globalThis.OspreyRequestBuilder = (() => {
     const templateRegex = /\{(url|hostname|lookupValue|lookup_value|apiKey|api_key)}/g;
 
     const proxyHeaders = Object.freeze({
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
     });
 
     const replaceTemplate = (template, urlVal, hostnameVal, lookupVal, apiKeyVal, encoded = false) => {
@@ -33,7 +33,7 @@ globalThis.OspreyRequestBuilder = (() => {
 
         const strTemp = String(template);
 
-        if (strTemp.indexOf('{') === -1) {
+        if (!strTemp.includes('{')) {
             return strTemp;
         }
 
@@ -80,8 +80,7 @@ globalThis.OspreyRequestBuilder = (() => {
             endStart++;
         }
 
-        const proxyUrl = (baseLen === base.length ? base : base.slice(0, baseLen)) + '/' +
-            (endStart === 0 ? end : end.slice(endStart));
+        const proxyUrl = `${baseLen === base.length ? base : base.slice(0, baseLen)}/${endStart === 0 ? end : end.slice(endStart)}`;
 
         return {
             url: proxyUrl,
@@ -89,7 +88,7 @@ globalThis.OspreyRequestBuilder = (() => {
                 method: 'POST',
                 headers: proxyHeaders,
                 body: JSON.stringify({
-                    url: urlService.normalizeUrl(url)
+                    url: urlService.normalizeUrl(url),
                 }),
             },
             timeoutMs: 7000,

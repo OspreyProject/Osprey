@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-"use strict";
+'use strict';
 
 globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
     const browserAPI = globalThis.OspreyBrowserAPI;
@@ -49,7 +49,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
     const warningContextFallback = {
         blockedUrl: '',
         origin: 'unknown',
-        result: 'failed'
+        result: 'failed',
     };
 
     const pageTextByID = {
@@ -68,7 +68,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
     const fallbackState = {
         app: {
             hideContinueButtons: true,
-            hideReportButton: true
+            hideReportButton: true,
         },
         providers: {},
     };
@@ -141,8 +141,9 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         }
 
         const rawValue = typeof value === 'string' ? value.trim() : String(value).trim();
+        const httpLength = 7;
 
-        if (rawValue.length < 7) {
+        if (rawValue.length < httpLength) {
             return null;
         }
 
@@ -196,7 +197,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
             tabId: typeof fields.tabId === 'number' && Number.isFinite(fields.tabId) ? fields.tabId : null,
             actionable,
             reportable,
-            cachedReportUrl
+            cachedReportUrl,
         };
     }
 
@@ -382,7 +383,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
                 blockedUrl: params.get('url') || '',
                 origin: params.get('or') || 'unknown',
                 result: params.get('rs') || 'failed',
-                tabId: Number.isFinite(parsedTabId) ? parsedTabId : null
+                tabId: Number.isFinite(parsedTabId) ? parsedTabId : null,
             };
         } catch {
             return warningContextFallback;
@@ -591,7 +592,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
     }
 
     return {
-        initialize
+        initialize,
     };
 })();
 

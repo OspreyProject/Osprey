@@ -15,17 +15,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-"use strict";
+'use strict';
 
 (() => {
     Object.defineProperty(globalThis, 'OspreyProxyBuiltins', {
         configurable: true,
         enumerable: true,
 
-        get: function () {
+        get() {
             const providerGroups = globalThis.OspreyProviderGroups;
 
-            const buildMonomorphicShape = (def) => Object.freeze({
+            const buildMonomorphicShape = def => Object.freeze({
                 kind: 'proxy_builtin',
                 proxyBaseUrl: 'https://api.osprey.ac',
                 id: def.id,
@@ -40,7 +40,7 @@
                 policyKey: def.policyKey,
                 report: def.report,
                 lookupTarget: def.lookupTarget || 'url',
-                website: def.website || ''
+                website: def.website || '',
             });
 
             const builtin = def => buildMonomorphicShape(def);
@@ -59,26 +59,26 @@
 
             const cloudflareReport = Object.freeze({
                 type: 'url_template',
-                template: 'https://radar.cloudflare.com/domains/feedback/{url}'
+                template: 'https://radar.cloudflare.com/domains/feedback/{url}',
             });
 
             const openDnsReport = Object.freeze({
                 type: 'external_url',
-                url: 'https://talosintelligence.com/reputation_center/web_reputation'
+                url: 'https://talosintelligence.com/reputation_center/web_reputation',
             });
 
             const spamhausReport = Object.freeze({
                 type: 'external_url',
-                url: 'https://www.spamhaus.com/abuse-ch/#contact-us'
+                url: 'https://www.spamhaus.com/abuse-ch/#contact-us',
             });
 
             const mailtoReport = (email, productName) => Object.freeze({
                 type: 'mailto_false_positive',
                 email,
-                productName
+                productName,
             });
 
-            const externalUrlReport = (url) => Object.freeze({type: 'external_url', url});
+            const externalUrlReport = url => Object.freeze({type: 'external_url', url});
 
             const builtins = Object.freeze([
                 builtin({
@@ -401,9 +401,9 @@
                 value: builtins,
                 configurable: false,
                 writable: false,
-                enumerable: true
+                enumerable: true,
             });
             return builtins;
-        }
+        },
     });
 })();

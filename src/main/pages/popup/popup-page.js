@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-"use strict";
+'use strict';
 
 globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
     const browserAPI = globalThis.OspreyBrowserAPI;
@@ -38,7 +38,7 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
         }
     };
 
-    const initialize = (state) => {
+    const initialize = state => {
         if (isInitialized) {
             return;
         }
@@ -107,12 +107,12 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
         browserAPI.runtimeOpenOptionsPage().catch(onSettingsError);
     };
 
-    const onSettingsError = (error) => {
+    const onSettingsError = error => {
         console.error('PopupSingleton failed to open the settings page', error);
     };
 
     return Object.freeze({
-        initialize: initialize
+        initialize,
     });
 })();
 
@@ -128,7 +128,7 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
             .catch(handleBootFallback);
     };
 
-    const processStateAndBoot = (state) => {
+    const processStateAndBoot = state => {
         if (state !== null && typeof state === 'object' && state.app?.hidePopupPanel) {
             if (typeof globalThis.close === 'function') {
                 globalThis.close();
@@ -138,7 +138,7 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
         }
     };
 
-    const handleBootFallback = (error) => {
+    const handleBootFallback = error => {
         console.warn('PopupPage failed to load settings before initialization; continuing with fallback boot path', error);
 
         if (popupSingleton) {

@@ -15,19 +15,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-"use strict";
+'use strict';
 
 globalThis.OspreyReportLinkBuilder = (() => {
-    const mailtoPrefix = "mailto:";
-    const mailtoSubject = "?subject=False%20Positive&body=Hello%2C%0A%0AI%20would%20like%20to%20report%20a%20false%20positive.%0A%0AProduct%3A%20";
-    const mailtoURL = "%0AURL%3A%20";
-    const mailtoSuffix = "%20%28or%20the%20hostname%20itself%29%0A%0AI%20believe%20this%20website%20is%20legitimate.%0A%0ASent%20with%20Osprey%20Browser%20Protection%0AWebsite%3A%20https%3A%2F%2Fosprey.ac";
-    const defaultProviderName = "Osprey%20Provider";
+    const mailtoPrefix = 'mailto:';
+    const mailtoSubject = '?subject=False%20Positive&body=Hello%2C%0A%0AI%20would%20like%20to%20report%20a%20false%20positive.%0A%0AProduct%3A%20';
+    const mailtoURL = '%0AURL%3A%20';
+    const mailtoSuffix = '%20%28or%20the%20hostname%20itself%29%0A%0AI%20believe%20this%20website%20is%20legitimate.%0A%0ASent%20with%20Osprey%20Browser%20Protection%0AWebsite%3A%20https%3A%2F%2Fosprey.ac';
+    const defaultProviderName = 'Osprey%20Provider';
 
     let cachedRawUrl = '';
     let cachedEncodedUrl = '';
 
-    const getEncodedUrl = (rawUrl) => {
+    const getEncodedUrl = rawUrl => {
         if (!rawUrl) {
             return '';
         }
@@ -58,7 +58,7 @@ globalThis.OspreyReportLinkBuilder = (() => {
                     return '';
                 }
 
-                if (tmpl.indexOf('{url}') === -1) {
+                if (!tmpl.includes('{url}')) {
                     return tmpl;
                 }
                 return tmpl.replaceAll('{url}', getEncodedUrl(context?.blockedUrl || ''));
@@ -79,6 +79,6 @@ globalThis.OspreyReportLinkBuilder = (() => {
     };
 
     return Object.freeze({
-        build
+        build,
     });
 })();

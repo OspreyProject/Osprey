@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-"use strict";
+'use strict';
 
 globalThis.OspreyProviderCatalog = (() => {
     const catalogValidator = globalThis.OspreyCatalogValidator;
@@ -29,7 +29,7 @@ globalThis.OspreyProviderCatalog = (() => {
     const directLen = directIntegrations.length;
 
     const emptyArray = Object.freeze([]);
-    const allDefinitions = new Array(builtinsLen + directLen);
+    const allDefinitions = Array.from({length: builtinsLen + directLen});
 
     const byId = new Map();
     const staticAliasMap = new Map();
@@ -37,7 +37,7 @@ globalThis.OspreyProviderCatalog = (() => {
 
     let defIdx = 0;
 
-    const processDefinition = (definition) => {
+    const processDefinition = definition => {
         if (!definition) {
             return;
         }
@@ -97,7 +97,7 @@ globalThis.OspreyProviderCatalog = (() => {
 
     const getAllDefinitions = () => allDefinitions;
 
-    const getDefinition = (idOrAlias) => {
+    const getDefinition = idOrAlias => {
         if (!idOrAlias) {
             return null;
         }

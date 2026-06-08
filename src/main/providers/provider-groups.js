@@ -15,36 +15,36 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-"use strict";
+'use strict';
 
 globalThis.OspreyProviderGroups = Object.freeze({
     official_partners: Object.freeze({
         id: 'official_partners',
         title: 'Official Partners',
-        order: 10
+        order: 10,
     }),
 
     security_filters: Object.freeze({
         id: 'security_filters',
         title: 'Security Filters',
-        order: 20
+        order: 20,
     }),
 
     adult_content_filters: Object.freeze({
         id: 'adult_content_filters',
         title: 'Adult Content Filters',
-        order: 30
+        order: 30,
     }),
 
     feeds: Object.freeze({
         id: 'feeds',
         title: 'Feeds',
-        order: 40
+        order: 40,
     }),
 
     direct_integrations: Object.freeze({
         id: 'direct_integrations',
         title: 'Direct Integrations',
-        order: 50
+        order: 50,
     }),
 });

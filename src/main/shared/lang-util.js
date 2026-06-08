@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-"use strict";
+'use strict';
 
 (() => {
     const browserAPI = globalThis.OspreyBrowserAPI;
@@ -97,7 +97,7 @@
         TOAST_SAVE_API_KEY_FIRST: 'toastSaveApiKeyFirst',
         TOAST_FAILED_TO_UPDATE_STATE: 'toastFailedToUpdateState',
         WARNING_PAGE_TITLE: 'unsafeWebsiteTitle',
-        PROVIDER_NAME_FALLBACK: 'providerNameFallback'
+        PROVIDER_NAME_FALLBACK: 'providerNameFallback',
     };
 
     const resolvedKeys = {};
@@ -116,7 +116,7 @@
                 element.alt = langUtil.LOGO_ALT;
             }
         },
-        ...resolvedKeys
+        ...resolvedKeys,
     });
 
     globalThis.LangUtil = langUtil;

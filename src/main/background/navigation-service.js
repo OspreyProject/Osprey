@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-"use strict";
+'use strict';
 
 globalThis.OspreyNavigationService = (() => {
     const blockingService = globalThis.OspreyBlockingService;
@@ -30,11 +30,11 @@ globalThis.OspreyNavigationService = (() => {
     const warnMap = new Map();
 
     const webNavigationEvents = [
-        "onBeforeNavigate",
-        "onCompleted",
-        "onHistoryStateUpdated",
-        "onReferenceFragmentUpdated",
-        "onCreatedNavigationTarget",
+        'onBeforeNavigate',
+        'onCompleted',
+        'onHistoryStateUpdated',
+        'onReferenceFragmentUpdated',
+        'onCreatedNavigationTarget',
     ];
 
     const setCache = (map, tabId, data) => {
@@ -45,7 +45,7 @@ globalThis.OspreyNavigationService = (() => {
     };
 
     const isRecentNavigationDuplicate = (tabId, url, source) => {
-        if (typeof tabId !== "number") {
+        if (typeof tabId !== 'number') {
             return false;
         }
 
@@ -55,14 +55,12 @@ globalThis.OspreyNavigationService = (() => {
         if (state && state.url === url && now - state.timestamp <= tapsUpdatedDedupeDuration) {
             const prevSource = state.source;
 
-            if (source === "tabs.onUpdated") {
-                if (prevSource === "webNavigation") {
+            if (source === 'tabs.onUpdated') {
+                if (prevSource === 'webNavigation') {
                     return true;
                 }
-            } else if (source === "webNavigation") {
-                if (prevSource === "tabs.onUpdated" || prevSource === "webNavigation") {
-                    return true;
-                }
+            } else if (source === 'webNavigation' && (prevSource === 'tabs.onUpdated' || prevSource === 'webNavigation')) {
+                return true;
             }
         }
 
@@ -77,7 +75,7 @@ globalThis.OspreyNavigationService = (() => {
     };
 
     const isWarningReadyDuplicate = (tabId, url) => {
-        if (typeof tabId !== "number") {
+        if (typeof tabId !== 'number') {
             return false;
         }
 
@@ -138,9 +136,9 @@ globalThis.OspreyNavigationService = (() => {
             for (const eventName of webNavigationEvents) {
                 const eventObj = webNavigation[eventName];
 
-                if (eventObj && typeof eventObj.addListener === "function") {
+                if (eventObj && typeof eventObj.addListener === 'function') {
                     eventObj.addListener(details => {
-                        handleNavigation(eventName, details, "webNavigation");
+                        handleNavigation(eventName, details, 'webNavigation');
                     });
                 }
             }
@@ -148,25 +146,25 @@ globalThis.OspreyNavigationService = (() => {
 
         const tabs = api.tabs;
 
-        if (tabs?.onUpdated && typeof tabs.onUpdated.addListener === "function") {
+        if (tabs?.onUpdated && typeof tabs.onUpdated.addListener === 'function') {
             tabs.onUpdated.addListener((tabId, changeInfo) => {
                 if (!changeInfo?.url) {
                     return;
                 }
 
                 handleNavigation(
-                    "tabs.onUpdated",
-                    {tabId: tabId, frameId: 0, url: changeInfo.url},
-                    "tabs.onUpdated"
+                    'tabs.onUpdated',
+                    {tabId, frameId: 0, url: changeInfo.url},
+                    'tabs.onUpdated',
                 );
             });
         }
 
-        if (tabs?.onRemoved && typeof tabs.onRemoved.addListener === "function") {
+        if (tabs?.onRemoved && typeof tabs.onRemoved.addListener === 'function') {
             tabs.onRemoved.addListener(tabObject => {
-                const tabId = tabObject && typeof tabObject === "object" ? tabObject.tabId : tabObject;
+                const tabId = tabObject && typeof tabObject === 'object' ? tabObject.tabId : tabObject;
 
-                if (typeof tabId !== "number") {
+                if (typeof tabId !== 'number') {
                     return;
                 }
 
@@ -177,6 +175,6 @@ globalThis.OspreyNavigationService = (() => {
     };
 
     return Object.freeze({
-        register
+        register,
     });
 })();

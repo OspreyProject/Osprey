@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-"use strict";
+'use strict';
 
 globalThis.OspreyBadgeService = (() => {
     const browserAPI = globalThis.OspreyBrowserAPI;
@@ -29,7 +29,7 @@ globalThis.OspreyBadgeService = (() => {
     const coalesceMs = 50;
 
     const maxCachedStrings = 1024;
-    const cachedStrings = new Array(maxCachedStrings);
+    const cachedStrings = Array.from({length: maxCachedStrings});
 
     for (let i = 0; i < maxCachedStrings; i++) {
         cachedStrings[i] = String(i);
@@ -37,9 +37,9 @@ globalThis.OspreyBadgeService = (() => {
 
     const getString = val => val < maxCachedStrings ? cachedStrings[val] : String(val);
 
-    const badgeTextPacket = {tabId: 0, text: ""};
-    const badgeBgColorPacket = {color: "#ff4b4b", tabId: 0};
-    const badgeTextColorPacket = {color: "#ffffff", tabId: 0};
+    const badgeTextPacket = {tabId: 0, text: ''};
+    const badgeBgColorPacket = {color: '#ff4b4b', tabId: 0};
+    const badgeTextColorPacket = {color: '#ffffff', tabId: 0};
 
     const processDirtyTabs = () => {
         globalTimer = null;
@@ -62,7 +62,7 @@ globalThis.OspreyBadgeService = (() => {
 
             if (desired === 0) {
                 colorsSetTabs.delete(tabId);
-                badgeTextPacket.text = "";
+                badgeTextPacket.text = '';
                 browserAPI.actionSetBadgeText(badgeTextPacket).catch(globalThis.console.error);
                 continue;
             }
@@ -93,7 +93,7 @@ globalThis.OspreyBadgeService = (() => {
     };
 
     const request = (tabId, count) => {
-        if (typeof tabId !== "number") {
+        if (typeof tabId !== 'number') {
             return;
         }
 
@@ -113,7 +113,7 @@ globalThis.OspreyBadgeService = (() => {
     };
 
     const clearTab = tabId => {
-        if (typeof tabId !== "number") {
+        if (typeof tabId !== 'number') {
             return;
         }
 
@@ -129,7 +129,7 @@ globalThis.OspreyBadgeService = (() => {
     };
 
     const reapply = tabId => {
-        if (typeof tabId !== "number") {
+        if (typeof tabId !== 'number') {
             return;
         }
 

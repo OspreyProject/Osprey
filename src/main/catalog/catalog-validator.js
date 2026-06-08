@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-"use strict";
+'use strict';
 
 globalThis.OspreyCatalogValidator = (() => {
     const providerGroups = globalThis.OspreyProviderGroups;
@@ -93,7 +93,7 @@ globalThis.OspreyCatalogValidator = (() => {
 
         switch (report.type) {
             case 'mailto_false_positive':
-                if (typeof report.email !== 'string' || report.email.indexOf('@') === -1) {
+                if (typeof report.email !== 'string' || !report.email.includes('@')) {
                     fail(`Invalid report email for ${definition.id}`);
                 }
 
@@ -105,7 +105,7 @@ globalThis.OspreyCatalogValidator = (() => {
                 break;
 
             case 'url_template':
-                if (typeof report.template !== 'string' || report.template.indexOf('{url}') === -1) {
+                if (typeof report.template !== 'string' || !report.template.includes('{url}')) {
                     fail(`URL-template report for ${definition.id} must include {url}`);
                 }
 
@@ -125,9 +125,11 @@ globalThis.OspreyCatalogValidator = (() => {
         switch (match) {
             case '{url}':
                 return 'https://example.com';
+
             case '{apiKey}':
             case '{api_key}':
                 return 'sample';
+
             default:
                 return 'example.com';
         }
@@ -253,6 +255,6 @@ globalThis.OspreyCatalogValidator = (() => {
     };
 
     return Object.freeze({
-        validate
+        validate,
     });
 })();

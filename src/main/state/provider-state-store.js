@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-"use strict";
+'use strict';
 
 globalThis.OspreyProviderStateStore = (() => {
     const browserAPI = globalThis.OspreyBrowserAPI;
@@ -29,9 +29,9 @@ globalThis.OspreyProviderStateStore = (() => {
     let writeLock = Promise.resolve();
 
     const unsafeProviderKeys = new Set(['__proto__', 'prototype', 'constructor']);
-    const isUnsafeProviderId = (providerId) => typeof providerId !== 'string' || unsafeProviderKeys.has(providerId);
+    const isUnsafeProviderId = providerId => typeof providerId !== 'string' || unsafeProviderKeys.has(providerId);
 
-    const cloneState = (state) => {
+    const cloneState = state => {
         if (!state) {
             return null;
         }
@@ -39,7 +39,7 @@ globalThis.OspreyProviderStateStore = (() => {
         const cloned = {
             version: state.version,
             app: {...state.app},
-            providers: Object.create(null)
+            providers: Object.create(null),
         };
 
         const pKeys = Object.keys(state.providers);
@@ -51,7 +51,7 @@ globalThis.OspreyProviderStateStore = (() => {
         return cloned;
     };
 
-    const normalizeState = (input) => {
+    const normalizeState = input => {
         const state = input && typeof input === 'object' ? input : {};
         const app = state.app && typeof state.app === 'object' ? state.app : {};
 
@@ -66,9 +66,9 @@ globalThis.OspreyProviderStateStore = (() => {
                 disableClearAllowedWebsites: typeof app.disableClearAllowedWebsites === 'boolean' ? app.disableClearAllowedWebsites : false,
                 disableResetButtons: typeof app.disableResetButtons === 'boolean' ? app.disableResetButtons : false,
                 disableThirdPartyIntegrations: typeof app.disableThirdPartyIntegrations === 'boolean' ? app.disableThirdPartyIntegrations : false,
-                cacheExpirationSeconds: 604800
+                cacheExpirationSeconds: 604800,
             },
-            providers: Object.create(null)
+            providers: Object.create(null),
         };
 
         const exp = Number(app.cacheExpirationSeconds);
@@ -86,7 +86,7 @@ globalThis.OspreyProviderStateStore = (() => {
 
             base.providers[id] = {
                 enabled: src && typeof src.enabled === 'boolean' ? src.enabled : Boolean(element.enabledByDefault),
-                apiKey: src && typeof src.apiKey === 'string' ? src.apiKey : ''
+                apiKey: src && typeof src.apiKey === 'string' ? src.apiKey : '',
             };
 
             Object.freeze(base.providers[id]);
@@ -97,7 +97,7 @@ globalThis.OspreyProviderStateStore = (() => {
         return Object.freeze(base);
     };
 
-    const migrateLegacyState = (legacySettings) => {
+    const migrateLegacyState = legacySettings => {
         const source = legacySettings && typeof legacySettings === 'object' ? legacySettings : {};
 
         const draft = {
@@ -110,9 +110,9 @@ globalThis.OspreyProviderStateStore = (() => {
                 disableClearAllowedWebsites: source.disableClearAllowedWebsites,
                 disableResetButtons: source.disableResetButtons,
                 disableThirdPartyIntegrations: source.disableThirdPartyIntegrations,
-                cacheExpirationSeconds: source.cacheExpirationSeconds
+                cacheExpirationSeconds: source.cacheExpirationSeconds,
             },
-            providers: {}
+            providers: {},
         };
 
         const defs = providerCatalog.getAllDefinitions();
@@ -123,7 +123,7 @@ globalThis.OspreyProviderStateStore = (() => {
 
             draft.providers[def.id] = {
                 enabled: source[aliasKey + 'Enabled'],
-                apiKey: source[aliasKey + 'ApiKey']
+                apiKey: source[aliasKey + 'ApiKey'],
             };
         }
         return normalizeState(draft);
@@ -183,7 +183,7 @@ globalThis.OspreyProviderStateStore = (() => {
         return promise;
     };
 
-    const enqueueWrite = (taskFn) => {
+    const enqueueWrite = taskFn => {
         const taskPromise = writeLock.then(taskFn);
 
         writeLock = taskPromise.catch(() => {
@@ -192,7 +192,7 @@ globalThis.OspreyProviderStateStore = (() => {
         return taskPromise;
     };
 
-    const updateState = (updater) => enqueueWrite(async () => {
+    const updateState = updater => enqueueWrite(async () => {
         const current = await getState();
         const draft = cloneState(current);
         const modifiedDraft = typeof updater === 'function' ? updater(draft) || draft : draft;
@@ -211,7 +211,7 @@ globalThis.OspreyProviderStateStore = (() => {
 
         const provider = state.providers[providerId] || (state.providers[providerId] = {
             enabled: false,
-            apiKey: ''
+            apiKey: '',
         });
 
         provider.enabled = Boolean(enabled);
@@ -231,7 +231,7 @@ globalThis.OspreyProviderStateStore = (() => {
 
                 const provider = state.providers[memberId] || (state.providers[memberId] = {
                     enabled: false,
-                    apiKey: ''
+                    apiKey: '',
                 });
 
                 provider.apiKey = normalizedApiKey;
@@ -239,7 +239,7 @@ globalThis.OspreyProviderStateStore = (() => {
         } else {
             const provider = state.providers[providerId] || (state.providers[providerId] = {
                 enabled: false,
-                apiKey: ''
+                apiKey: '',
             });
 
             provider.apiKey = normalizedApiKey;
@@ -267,7 +267,7 @@ globalThis.OspreyProviderStateStore = (() => {
         return {};
     });
 
-    const countEnabledProviders = (state) => {
+    const countEnabledProviders = state => {
         if (!state?.providers) {
             return 0;
         }

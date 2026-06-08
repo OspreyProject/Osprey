@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-"use strict";
+'use strict';
 
 globalThis.OspreyProviderCard = (() => {
     const formHelpers = globalThis.OspreyFormHelpers;
@@ -79,7 +79,7 @@ globalThis.OspreyProviderCard = (() => {
             className,
             textContent: label,
             role: 'link',
-            tabIndex: 0
+            tabIndex: 0,
         });
 
         const open = () => openExternalUrl(safeUrl, providerId);
@@ -128,8 +128,8 @@ globalThis.OspreyProviderCard = (() => {
     const createFallbackLogo = () => formHelpers.createElement('span', {
         className: 'provider-logo-fallback',
         attributes: {
-            'aria-hidden': 'true'
-        }
+            'aria-hidden': 'true',
+        },
     });
 
     function setActionButtonState(button, isActive, activeClassName) {
@@ -170,7 +170,7 @@ globalThis.OspreyProviderCard = (() => {
                 attributes: {
                     loading: 'lazy',
                     decoding: 'async',
-                    referrerpolicy: 'no-referrer'
+                    referrerpolicy: 'no-referrer',
                 },
             });
         }
@@ -194,7 +194,7 @@ globalThis.OspreyProviderCard = (() => {
                 attributes: {
                     loading: 'lazy',
                     decoding: 'async',
-                    referrerpolicy: 'no-referrer'
+                    referrerpolicy: 'no-referrer',
                 },
             });
         } catch {
@@ -210,7 +210,7 @@ globalThis.OspreyProviderCard = (() => {
             tabIndex: 0,
             ariaLabel: label,
             attributes: {
-                'data-tooltip': tooltip
+                'data-tooltip': tooltip,
             },
         });
     }
@@ -268,8 +268,8 @@ globalThis.OspreyProviderCard = (() => {
 
             formHelpers.createElement('span', {
                 className: 'expand-arrow',
-                textContent: '▼'
-            })
+                textContent: '▼',
+            }),
         );
         return {header, toggleSwitch};
     }
@@ -346,7 +346,7 @@ globalThis.OspreyProviderCard = (() => {
     function createCardShell(className, id, definition, iconUrl, isEnabled, indicators = []) {
         const item = formHelpers.createElement('div', {
             className: `provider-item ${className}`,
-            dataset: {id}
+            dataset: {id},
         });
 
         const {header, toggleSwitch} = createProviderHeader(definition, iconUrl, isEnabled, indicators);
@@ -361,7 +361,7 @@ globalThis.OspreyProviderCard = (() => {
             definition,
             iconUrl,
             Boolean(providerState?.enabled),
-            buildIndicators(definition)
+            buildIndicators(definition),
         );
 
         const websiteLink = createExternalLinkText(definition?.website, LangUtil.WEBSITE_LINK + ' ↗', 'provider-website-link', definition?.id);
@@ -371,17 +371,17 @@ globalThis.OspreyProviderCard = (() => {
                 LangUtil.FIELD_LABEL_API_URL,
                 formHelpers.createReadOnlyInput(providerCatalog.proxyEndpointUrl(definition)),
                 null,
-                websiteLink
-            )
+                websiteLink,
+            ),
         ].filter(node => node !== null));
 
         const isDisabled = Boolean(
             runtime?.effectiveState?.app?.lockSettings ||
-            runtime?.providerManagedIds?.has(definition.id)
+            runtime?.providerManagedIds?.has(definition.id),
         );
 
         wireProviderInteractions(item, header, toggleSwitch, definition.id, {
-            disabled: isDisabled
+            disabled: isDisabled,
         });
 
         item.append(header, body);
@@ -397,19 +397,19 @@ globalThis.OspreyProviderCard = (() => {
             definition.id,
             definition,
             iconUrl,
-            isEnabled
+            isEnabled,
         );
 
         const fieldsLocked = Boolean(
             runtime?.effectiveState?.app?.lockSettings ||
             runtime?.effectiveState?.app?.disableThirdPartyIntegrations ||
-            runtime?.providerManagedApiKeyIds?.has(definition.id)
+            runtime?.providerManagedApiKeyIds?.has(definition.id),
         );
 
         const toggleLocked = Boolean(
             runtime?.effectiveState?.app?.lockSettings ||
             runtime?.effectiveState?.app?.disableThirdPartyIntegrations ||
-            runtime?.providerManagedIds?.has(definition.id)
+            runtime?.providerManagedIds?.has(definition.id),
         );
 
         const passwordField = formHelpers.createPasswordField({
@@ -475,7 +475,7 @@ globalThis.OspreyProviderCard = (() => {
             LangUtil.FIELD_LABEL_API_KEY,
             passwordField.wrapper,
             null,
-            apiKeyLink
+            apiKeyLink,
         );
 
         const urlFieldGroup = formHelpers.createFieldGroup(
@@ -487,7 +487,7 @@ globalThis.OspreyProviderCard = (() => {
         body.append(...[
             urlFieldGroup,
             apiKeyFieldGroup,
-            createDiv('provider-actions', applyButton)
+            createDiv('provider-actions', applyButton),
         ].filter(node => node !== null));
 
         const getSavedKeyField = () => String(providerState?.apiKey || '');
@@ -520,6 +520,6 @@ globalThis.OspreyProviderCard = (() => {
     }
 
     return Object.freeze({
-        buildProviderCard
+        buildProviderCard,
     });
 })();

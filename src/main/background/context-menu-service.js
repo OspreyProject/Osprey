@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-"use strict";
+'use strict';
 
 globalThis.OspreyContextMenuService = (() => {
     const browserAPI = globalThis.OspreyBrowserAPI;
@@ -47,7 +47,7 @@ globalThis.OspreyContextMenuService = (() => {
     };
 
     const tabCreationOptions = {
-        url: 'https://phish.report/analysis'
+        url: 'https://phish.report/analysis',
     };
 
     const notificationOptions = {
@@ -77,7 +77,7 @@ globalThis.OspreyContextMenuService = (() => {
 
             const enabledBit = app.contextMenuEnabled ? 1 : 0;
             const disabledBit = app.disableClearAllowedWebsites ? 1 : 0;
-            const currentSignature = (enabledBit << 1) | disabledBit;
+            const currentSignature = enabledBit << 1 | disabledBit;
 
             if (lastMenuSignature === currentSignature) {
                 return;
@@ -158,6 +158,6 @@ globalThis.OspreyContextMenuService = (() => {
 
     return Object.freeze({
         create,
-        register
+        register,
     });
 })();

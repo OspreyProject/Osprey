@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-"use strict";
+'use strict';
 
 globalThis.OspreyResultAggregationService = (() => {
     const blockedByTab = new Map();
@@ -34,9 +34,9 @@ globalThis.OspreyResultAggregationService = (() => {
             return null;
         }
 
-        let primaryOrigin = "";
+        let primaryOrigin = '';
         let primaryResult = null;
-        const origins = new Array(length);
+        const origins = Array.from({length});
         let idx = 0;
 
         for (const [origin, result] of entries.entries()) {
@@ -50,10 +50,10 @@ globalThis.OspreyResultAggregationService = (() => {
 
         return {
             url: current.url,
-            primaryOrigin: primaryOrigin,
-            primaryResult: primaryResult,
-            origins: origins,
-            redirected: current.redirected
+            primaryOrigin,
+            primaryResult,
+            origins,
+            redirected: current.redirected,
         };
     };
 
@@ -66,7 +66,7 @@ globalThis.OspreyResultAggregationService = (() => {
         frameZeroUrlByTab.set(tabId, url);
     };
 
-    const getFrameZeroUrl = tabId => frameZeroUrlByTab.get(tabId) || "";
+    const getFrameZeroUrl = tabId => frameZeroUrlByTab.get(tabId) || '';
 
     const recordBlockingResult = (tabId, url, origin, result) => {
         let context = blockedByTab.get(tabId);
@@ -77,9 +77,9 @@ globalThis.OspreyResultAggregationService = (() => {
             entriesMap.set(origin, result);
 
             context = {
-                url: url,
+                url,
                 entries: entriesMap,
-                redirected: false
+                redirected: false,
             };
 
             blockedByTab.set(tabId, context);
@@ -93,7 +93,7 @@ globalThis.OspreyResultAggregationService = (() => {
 
         return {
             context: cloneContext(context),
-            firstForUrl: firstForUrl
+            firstForUrl,
         };
     };
 

@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-"use strict";
+'use strict';
 
 globalThis.OspreyTimedSignal = (() => {
     class TimedSignalCoordinator {
@@ -32,7 +32,7 @@ globalThis.OspreyTimedSignal = (() => {
 
             if (this.parentSignal !== null) {
                 this.parentSignal.addEventListener('abort', this, {
-                    once: true
+                    once: true,
                 });
             }
 
@@ -47,6 +47,7 @@ globalThis.OspreyTimedSignal = (() => {
             }, timeoutMs);
         }
 
+        // noinspection JSUnusedGlobalSymbols
         handleEvent() {
             if (!this.controller.signal.aborted) {
                 this.controller.abort(this.parentSignal?.reason ?? 'parent-aborted');
@@ -73,11 +74,11 @@ globalThis.OspreyTimedSignal = (() => {
 
         return {
             signal: coordinator.controller.signal,
-            cleanup: () => coordinator.cleanup()
+            cleanup: () => coordinator.cleanup(),
         };
     };
 
     return Object.freeze({
-        create
+        create,
     });
 })();

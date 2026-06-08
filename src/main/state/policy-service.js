@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-"use strict";
+'use strict';
 
 globalThis.OspreyPolicyService = (() => {
     const browserAPI = globalThis.OspreyBrowserAPI;
@@ -32,62 +32,62 @@ globalThis.OspreyPolicyService = (() => {
             policyKey: 'DisableContextMenu',
             type: 'boolean',
             stateKey: 'contextMenuEnabled',
-            mapValue: negateMap
+            mapValue: negateMap,
         },
         {
             policyKey: 'HideContinueButtons',
             type: 'boolean',
             stateKey: 'hideContinueButtons',
-            mapValue: identityMap
+            mapValue: identityMap,
         },
         {
             policyKey: 'HideReportButton',
             type: 'boolean',
             stateKey: 'hideReportButton',
-            mapValue: identityMap
+            mapValue: identityMap,
         },
         {
             policyKey: 'CacheExpirationSeconds',
             type: 'number',
             stateKey: 'cacheExpirationSeconds',
-            mapValue: identityMap
+            mapValue: identityMap,
         },
         {
             policyKey: 'DisableClearAllowedWebsites',
             type: 'boolean',
             stateKey: 'disableClearAllowedWebsites',
-            mapValue: identityMap
+            mapValue: identityMap,
         },
         {
             policyKey: 'LockProtectionOptions',
             type: 'boolean',
             stateKey: 'lockSettings',
-            mapValue: identityMap
+            mapValue: identityMap,
         },
         {
             policyKey: 'HideProtectionOptions',
             type: 'boolean',
             stateKey: 'hidePopupPanel',
-            mapValue: identityMap
+            mapValue: identityMap,
         },
         {
             policyKey: 'DisableResetButtons',
             type: 'boolean',
             stateKey: 'disableResetButtons',
-            mapValue: identityMap
+            mapValue: identityMap,
         },
         {
             policyKey: 'DisableThirdPartyIntegrations',
             type: 'boolean',
             stateKey: 'disableThirdPartyIntegrations',
-            mapValue: identityMap
+            mapValue: identityMap,
         },
     ];
 
     const apiKeyKeyCache = Object.create(null);
 
     const getApiKeyPolicyKey = id => {
-        let cached = apiKeyKeyCache[id];
+        const cached = apiKeyKeyCache[id];
 
         if (cached !== undefined) {
             return cached;
@@ -168,8 +168,8 @@ globalThis.OspreyPolicyService = (() => {
                 const sharedMembers = providerCatalog.getSharedGroupMembersById(definition.id);
 
                 if (sharedMembers !== undefined && sharedMembers.length > 0) {
-                    for (const element of sharedMembers) {
-                        const memberId = element;
+                    for (const sharedId of sharedMembers) {
+                        const memberId = sharedId;
                         let def = providerCatalog.getDefinition(memberId);
 
                         if (def === undefined) {
@@ -225,7 +225,7 @@ globalThis.OspreyPolicyService = (() => {
         const effective = {
             ...state,
             app: effectiveApp,
-            providers: effectiveProviders
+            providers: effectiveProviders,
         };
 
         const appManagedKeys = new Set();
@@ -239,7 +239,7 @@ globalThis.OspreyPolicyService = (() => {
             policies,
             providerManagedIds,
             providerManagedApiKeyIds,
-            effective.app.disableThirdPartyIntegrations
+            effective.app.disableThirdPartyIntegrations,
         );
 
         return Object.freeze({
@@ -273,7 +273,7 @@ globalThis.OspreyPolicyService = (() => {
     const storageApi = browserAPI.api?.storage;
 
     if (storageApi?.onChanged?.addListener !== undefined) {
-        storageApi.onChanged.addListener((changes, area) => {
+        storageApi.onChanged.addListener((_changes, area) => {
             if (area === 'managed') {
                 invalidate();
             }

@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-"use strict";
+'use strict';
 
 globalThis.OspreyBlockingService = (() => {
     const badgeService = globalThis.OspreyBadgeService;
@@ -35,12 +35,11 @@ globalThis.OspreyBlockingService = (() => {
     const pendingBlockedPayloadByTab = new Map();
     const warningPortsByTab = new Map();
 
-    const buildNavigationKey = (tabId, normalizedUrl) => tabId + "::" + normalizedUrl;
+    const buildNavigationKey = (tabId, normalizedUrl) => `${tabId}::${normalizedUrl}`;
 
     const getBlockingThreshold = enabledCount => enabledCount >= 4 ? 2 : 1;
 
-    const getPayloadSignature = p =>
-        p.count + "|" + p.primaryOrigin + "|" + p.primaryResult + "|" + p.systems.join(',');
+    const getPayloadSignature = p => `${p.count}|${p.primaryOrigin}|${p.primaryResult}|${p.systems.join(',')}`;
 
     const getBlockingAnalysis = (runtime, blockedContext, result) => {
         const blockedOrigins = blockedContext?.origins;
@@ -50,7 +49,7 @@ globalThis.OspreyBlockingService = (() => {
             return {
                 blockedCount: 0,
                 thresholdBypassed: false,
-                requiredBlockedCount: 0
+                requiredBlockedCount: 0,
             };
         }
 
@@ -78,7 +77,7 @@ globalThis.OspreyBlockingService = (() => {
     };
 
     const failureResult = Object.freeze({
-        ok: false
+        ok: false,
     });
 
     const pruneSuppressedNavigations = () => {
@@ -122,7 +121,7 @@ globalThis.OspreyBlockingService = (() => {
                 count: 0,
                 systems: [],
                 primaryOrigin: null,
-                primaryResult: null
+                primaryResult: null,
             };
         }
 
@@ -134,7 +133,7 @@ globalThis.OspreyBlockingService = (() => {
             count: systems.length,
             systems,
             primaryOrigin,
-            primaryResult
+            primaryResult,
         };
     };
 
@@ -194,7 +193,8 @@ globalThis.OspreyBlockingService = (() => {
 
     const connectWarningPort = port => {
         const tabId = port?.sender?.tab?.id;
-        if (typeof tabId !== "number") {
+
+        if (typeof tabId !== 'number') {
             return;
         }
 
@@ -250,15 +250,15 @@ globalThis.OspreyBlockingService = (() => {
         await clearBlockedUI(tabId);
 
         try {
-            await browserAPI.tabsUpdate(tabId, {url: "about:newtab"});
+            await browserAPI.tabsUpdate(tabId, {url: 'about:newtab'});
         } catch {
-            await browserAPI.tabsUpdate(tabId, {url: "https://www.google.com"}).then(() => {
+            await browserAPI.tabsUpdate(tabId, {url: 'https://www.google.com'}).then(() => {
                 // ignored
             });
         }
     };
 
-    const failClosed = async (a, blockedUrl, r, tabId) => {
+    const failClosed = async tabId => {
         await sendToSafety(tabId);
         return failureResult;
     };
@@ -308,7 +308,7 @@ globalThis.OspreyBlockingService = (() => {
             url: navigationUrl,
             origin: protectionResult.origin,
             result: protectionResult.result,
-            tabId
+            tabId,
         });
 
         await browserAPI.tabsUpdate(tabId, {url: warningUrl}).then(() => pushBlockedContextUpdate(tabId)).then(() => {
@@ -319,7 +319,7 @@ globalThis.OspreyBlockingService = (() => {
     const handleNavigation = async details => {
         const parsed = urlService.parseHttpUrl(details?.url);
 
-        if (!parsed || typeof details?.tabId !== "number") {
+        if (!parsed || typeof details?.tabId !== 'number') {
             return;
         }
 
@@ -340,7 +340,7 @@ globalThis.OspreyBlockingService = (() => {
                 return;
             }
 
-            if (runtime.effectiveState.app.hidePopupPanel && details.url.includes("/pages/popup/popup-page.html")) {
+            if (runtime.effectiveState.app.hidePopupPanel && details.url.includes('/pages/popup/popup-page.html')) {
                 return;
             }
 
@@ -356,7 +356,7 @@ globalThis.OspreyBlockingService = (() => {
                 expirationSeconds: runtime.effectiveState.app.cacheExpirationSeconds,
                 onResult: res => handleProtectionResult(details.tabId, normalizedUrl, runtime, res).then(() => {
                     // ignored
-                })
+                }),
             });
         } finally {
             if (inFlightNavigations.get(navKey) === token) {
@@ -369,14 +369,15 @@ globalThis.OspreyBlockingService = (() => {
         const parsed = urlService.parseHttpUrl(blockedUrl);
 
         if (!parsed) {
-            return failClosed("allow", blockedUrl, "invalid", tabId);
+            return failClosed(tabId);
         }
 
         const runtime = await providerRuntimeFactory.createRuntime();
         const normalizedUrl = urlService.normalizeUrl(parsed);
         const hostname = parsed.hostname;
-        const labels = hostname.split(".");
-        const pattern = labels.length >= 3 ? "*." + labels.slice(1).join(".") : "*." + hostname;
+        const labels = hostname.split('.');
+
+        const pattern = labels.length >= 3 ? '*.' + labels.slice(1).join('.') : '*.' + hostname;
 
         cacheService.allowPattern(pattern).then(() => {
             // ignored
@@ -389,7 +390,7 @@ globalThis.OspreyBlockingService = (() => {
         const providers = runtime.providers;
 
         for (const element of providers) {
-            const key = urlService.lookupValueForTarget(blockedUrl, element.lookupTarget || "url");
+            const key = urlService.lookupValueForTarget(blockedUrl, element.lookupTarget || 'url');
 
             if (key && key !== normalizedUrl) {
                 cacheService.clearBlockedForProviderLookup(element.id, key).then(() => {
@@ -406,7 +407,7 @@ globalThis.OspreyBlockingService = (() => {
 
         return {
             ok: true,
-            navigated: success
+            navigated: success,
         };
     };
 
@@ -414,20 +415,20 @@ globalThis.OspreyBlockingService = (() => {
         const parsed = urlService.parseHttpUrl(blockedUrl);
 
         if (!parsed || !origin) {
-            return failClosed("continue", blockedUrl, "invalid", tabId);
+            return failClosed(tabId);
         }
 
         const runtime = await providerRuntimeFactory.createRuntime();
         const provider = runtime.providers.find(p => p.id === origin);
 
         if (!provider) {
-            return failClosed("continue", blockedUrl, "unknown", tabId);
+            return failClosed(tabId);
         }
 
-        const lookupKey = urlService.lookupValueForTarget(parsed, provider.lookupTarget || "url");
+        const lookupKey = urlService.lookupValueForTarget(parsed, provider.lookupTarget || 'url');
 
         if (!lookupKey) {
-            return failClosed("continue", blockedUrl, "lookup fail", tabId);
+            return failClosed(tabId);
         }
 
         cacheService.markAllowed(provider.id, lookupKey, runtime.effectiveState.app.cacheExpirationSeconds).then(() => {
@@ -451,7 +452,7 @@ globalThis.OspreyBlockingService = (() => {
             return {
                 ok: true,
                 navigated: false,
-                context: nextContext
+                context: nextContext,
             };
         }
 
@@ -467,7 +468,7 @@ globalThis.OspreyBlockingService = (() => {
         return {
             ok: true,
             navigated: success,
-            context: null
+            context: null,
         };
     };
 
@@ -493,6 +494,6 @@ globalThis.OspreyBlockingService = (() => {
         pushBlockedContextUpdate,
         markWarningPageReady,
         connectWarningPort,
-        clearTab
+        clearTab,
     });
 })();

@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-"use strict";
+'use strict';
 
 globalThis.OspreyDirectIntegrations = (() => {
     const providerGroups = globalThis.OspreyProviderGroups;
@@ -26,7 +26,7 @@ globalThis.OspreyDirectIntegrations = (() => {
         headers: Object.freeze([
             Object.freeze({
                 name: 'apikey',
-                value: '{api_key}'
+                value: '{api_key}',
             }),
         ]),
         bodyTemplate: '{"url": ["{url}"]}',
@@ -70,12 +70,12 @@ globalThis.OspreyDirectIntegrations = (() => {
             Object.freeze({
                 path: 'provider',
                 operator: 'exists',
-                result: 'ALLOWED'
+                result: 'ALLOWED',
             }),
         ]).map(rule => Object.freeze({...rule}))),
 
         report: Object.freeze({
-            type: 'none'
+            type: 'none',
         }),
     });
 
@@ -91,28 +91,28 @@ globalThis.OspreyDirectIntegrations = (() => {
                     path: 'assessment',
                     operator: 'equals',
                     value: 'benign',
-                    result: 'ALLOWED'
+                    result: 'ALLOWED',
                 }),
 
                 Object.freeze({
                     path: 'assessment',
                     operator: 'equals',
                     value: 'unknown',
-                    result: 'ALLOWED'
+                    result: 'ALLOWED',
                 }),
 
                 Object.freeze({
                     path: 'assessment',
                     operator: 'equals',
                     value: 'suspicious',
-                    result: 'ALLOWED'
+                    result: 'ALLOWED',
                 }),
 
                 Object.freeze({
                     path: 'assessment',
                     operator: 'not_equals',
                     value: '',
-                    result: 'MALICIOUS'
+                    result: 'MALICIOUS',
                 }),
             ]),
         }),
@@ -127,14 +127,14 @@ globalThis.OspreyDirectIntegrations = (() => {
                     path: 'category',
                     operator: 'equals',
                     value: 'Phishing and Other Frauds',
-                    result: 'PHISHING'
+                    result: 'PHISHING',
                 }),
 
                 Object.freeze({
                     path: 'category',
                     operator: 'equals',
                     value: 'Malware Sites',
-                    result: 'MALICIOUS'
+                    result: 'MALICIOUS',
                 }),
             ]),
         }),

@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-"use strict";
+'use strict';
 
 globalThis.SettingsSingleton = globalThis.SettingsSingleton || (() => {
     const browserAPI = globalThis.OspreyBrowserAPI;
@@ -43,7 +43,7 @@ globalThis.SettingsSingleton = globalThis.SettingsSingleton || (() => {
 
     function initFooter() {
         if (cachedExtensionVersion === null) {
-            cachedExtensionVersion = browserAPI.api?.runtime.getManifest().version || "";
+            cachedExtensionVersion = browserAPI.api?.runtime.getManifest().version || '';
         }
 
         document.title = LangUtil.SETTINGS_TITLE;
@@ -52,11 +52,11 @@ globalThis.SettingsSingleton = globalThis.SettingsSingleton || (() => {
         setTextBySelector('.bannerText', LangUtil.TITLE);
     }
 
-    const onRefreshError = (error) => {
+    const onRefreshError = error => {
         console.error('SettingsPage: failed to refresh state', error);
     };
 
-    const onInitError = (error) => {
+    const onInitError = error => {
         console.error('SettingsPage: initialization failed', error);
     };
 
@@ -91,6 +91,6 @@ globalThis.SettingsSingleton = globalThis.SettingsSingleton || (() => {
 
     return Object.freeze({
         initialize,
-        dispose
+        dispose,
     });
 })();

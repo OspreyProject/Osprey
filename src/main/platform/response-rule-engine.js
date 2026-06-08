@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-"use strict";
+'use strict';
 
 globalThis.OspreyResponseRuleEngine = (() => {
     const defaultResult = 'ALLOWED';
@@ -37,7 +37,7 @@ globalThis.OspreyResponseRuleEngine = (() => {
                 return actual.includes(expected);
             }
             return String(actual ?? '').includes(String(expected ?? ''));
-        }
+        },
     }));
 
     const logicOperatorMap = Object.freeze(Object.assign(Object.create(null), {

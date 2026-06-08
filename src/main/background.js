@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-"use strict";
+'use strict';
 
 const bootstrapScripts = [
     'shared/browser-api.js',
@@ -115,7 +115,7 @@ if (typeof importScripts === 'function') {
     };
 
     const messageHandlers = {
-        [messages.CONTINUE_TO_SAFETY]: (message, tabId, sendResponse) => {
+        [messages.CONTINUE_TO_SAFETY]: (_message, tabId, sendResponse) => {
             if (typeof tabId !== 'number') {
                 console.warn('OspreyBackground rejected CONTINUE_TO_SAFETY because the sender had no tab id');
                 return respond(sendResponse, {ok: false});
@@ -124,7 +124,7 @@ if (typeof importScripts === 'function') {
             return respondAsync(
                 sendResponse,
                 blockingService.sendToSafety(tabId).then(() => ({ok: true})),
-                `Failed CONTINUE_TO_SAFETY for tab ${tabId}`
+                `Failed CONTINUE_TO_SAFETY for tab ${tabId}`,
             );
         },
 
@@ -142,7 +142,7 @@ if (typeof importScripts === 'function') {
             return respondAsync(
                 sendResponse,
                 blockingService.continueToWebsite(tabId, message.blockedUrl, message.origin),
-                `Failed CONTINUE_TO_WEBSITE for tab ${tabId} and URL ${message.blockedUrl}`
+                `Failed CONTINUE_TO_WEBSITE for tab ${tabId} and URL ${message.blockedUrl}`,
             );
         },
 
@@ -160,7 +160,7 @@ if (typeof importScripts === 'function') {
             return respondAsync(
                 sendResponse,
                 blockingService.allowWebsite(tabId, message.blockedUrl),
-                `Failed ALLOW_WEBSITE for tab ${tabId}`
+                `Failed ALLOW_WEBSITE for tab ${tabId}`,
             );
         },
 
@@ -169,7 +169,7 @@ if (typeof importScripts === 'function') {
                 return respondAsync(
                     sendResponse,
                     blockingService.reportWebsite(message.reportUrl),
-                    `Failed REPORT_WEBSITE for tab ${tabId}`
+                    `Failed REPORT_WEBSITE for tab ${tabId}`,
                 );
             }
 
@@ -178,7 +178,7 @@ if (typeof importScripts === 'function') {
                     sendResponse,
                     openReportUrlForOrigin(message.origin, message.blockedUrl)
                         .then(reportUrl => reportUrl ? blockingService.reportWebsite(reportUrl) : {ok: false}),
-                    `Failed REPORT_WEBSITE for tab ${tabId}`
+                    `Failed REPORT_WEBSITE for tab ${tabId}`,
                 );
             }
 

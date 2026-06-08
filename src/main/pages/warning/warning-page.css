@@ -348,12 +348,12 @@ html, body {
     -webkit-user-select: none;
 }
 
-.inline-action-btn:hover:not(:disabled) {
-    color: #ffcd4a;
-    border-bottom-color: #ffcd4a;
-}
-
 .inline-action-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+}
+
+.inline-action-btn:hover:not(:disabled) {
+    color: #ffcd4a;
+    border-bottom-color: #ffcd4a;
 }

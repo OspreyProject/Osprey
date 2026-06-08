@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-"use strict";
+'use strict';
 
 globalThis.OspreyUrlService = (() => {
     const browserAPI = globalThis.OspreyBrowserAPI;
@@ -55,9 +55,7 @@ globalThis.OspreyUrlService = (() => {
         return cachedBlockPageUrl;
     };
 
-    const isWarningPageUrl = value => {
-        return typeof value === 'string' && value.startsWith(blockPageUrl());
-    };
+    const isWarningPageUrl = value => typeof value === 'string' && value.startsWith(blockPageUrl());
 
     const canonicalizeHostname = hostname => {
         if (typeof hostname !== 'string' || hostname.length === 0) {
@@ -98,7 +96,7 @@ globalThis.OspreyUrlService = (() => {
             return p === 'http:' || p === 'https:' ? url : null;
         } catch (error) {
             if (strVal.trim()) {
-                console.warn("OspreyUrlService failed to parse URL", error);
+                console.warn('OspreyUrlService failed to parse URL', error);
             }
             return null;
         }
@@ -209,7 +207,7 @@ globalThis.OspreyUrlService = (() => {
                 first === 192 && second === 168;
         }
 
-        if (lower.indexOf(':') !== -1) {
+        if (lower.includes(':')) {
             const compact = lower.replace(regexIPvSix, '');
             return compact === '::1' || compact.startsWith('fc') || compact.startsWith('fd') || compact.startsWith('fe80');
         }
@@ -217,9 +215,10 @@ globalThis.OspreyUrlService = (() => {
     };
 
     const buildWarningPageUrl = ({url, origin, result, tabId}) => {
-        let page = blockPageUrl() + '?url=' + encodeURIComponent(url) +
-            '&or=' + encodeURIComponent(origin || 'unknown') +
-            '&rs=' + encodeURIComponent(result);
+        let page = `${blockPageUrl()}
+        ?url=${encodeURIComponent(url)}
+        &or=${encodeURIComponent(origin || 'unknown')}
+        &rs=${encodeURIComponent(result)}`;
 
         if (typeof tabId === 'number' && Number.isFinite(tabId)) {
             page += '&tid=' + tabId;

@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-"use strict";
+'use strict';
 
 globalThis.OspreyToast = (() => {
     const formHelpers = globalThis.OspreyFormHelpers;
@@ -24,7 +24,7 @@ globalThis.OspreyToast = (() => {
     const durationMs = 5000;
     let container = null;
 
-    const nodes = new Array(maxToasts);
+    const nodes = Array.from({length: maxToasts});
     const timers = new Int32Array(maxToasts);
     const sequenceIds = new Float64Array(maxToasts);
     const activeStates = new Uint8Array(maxToasts);
@@ -36,10 +36,10 @@ globalThis.OspreyToast = (() => {
         }
 
         container = formHelpers.createElement('div', {
-            className: 'toast-container'
+            className: 'toast-container',
         });
 
-        container.addEventListener('click', (e) => {
+        container.addEventListener('click', e => {
             const card = e.target.closest('.toast-notification');
 
             if (card?._poolIndex !== undefined) {
@@ -51,7 +51,7 @@ globalThis.OspreyToast = (() => {
             }
         });
 
-        container.addEventListener('transitionend', (e) => {
+        container.addEventListener('transitionend', e => {
             const card = e.target;
 
             if (card.classList?.contains('toast-notification') && !card.classList.contains('toast-visible')) {
@@ -107,7 +107,7 @@ globalThis.OspreyToast = (() => {
 
         if (!card) {
             card = formHelpers.createElement('div', {
-                className: 'toast-notification'
+                className: 'toast-notification',
             });
 
             card._poolIndex = targetIndex;
@@ -136,6 +136,6 @@ globalThis.OspreyToast = (() => {
     }
 
     return Object.freeze({
-        show
+        show,
     });
 })();

@@ -126,8 +126,22 @@ html, body {
     overflow: visible;
 }
 
+.expand-arrow {
+    font-size: 10px;
+    color: #787878;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
 .provider-item.expanded .expand-arrow {
     transform: rotate(180deg);
+}
+
+.provider-body {
+    display: none;
+    padding: 0 12px 14px;
+    border-top: 1px solid #3e3e3e;
 }
 
 .provider-item.expanded .provider-body {
@@ -417,14 +431,6 @@ html, body {
     gap: 8px;
 }
 
-.expand-arrow {
-    font-size: 10px;
-    color: #787878;
-    transition: transform 0.2s ease;
-    flex-shrink: 0;
-    line-height: 1;
-}
-
 /* --------------------------------------------------
    Toggle switch
 -------------------------------------------------- */
@@ -444,15 +450,6 @@ html, body {
 
 .toggle-switch.off {
     background-image: url(../../assets/misc/switch_off.avif);
-}
-
-/* --------------------------------------------------
-   Provider body (expanded content)
--------------------------------------------------- */
-.provider-body {
-    display: none;
-    padding: 0 12px 14px;
-    border-top: 1px solid #3e3e3e;
 }
 
 /* --------------------------------------------------
@@ -709,6 +706,14 @@ html, body {
 /* --------------------------------------------------
    Custom provider items (fields are editable)
 -------------------------------------------------- */
+.field-input:disabled {
+    cursor: not-allowed;
+}
+
+.password-field-wrap .field-input {
+    padding-right: 34px;
+}
+
 .provider-item.custom .field-input,
 .provider-item.custom .field-select,
 .provider-item.custom .field-textarea {
@@ -773,10 +778,6 @@ html, body {
     position: relative;
     display: flex;
     align-items: center;
-}
-
-.password-field-wrap .field-input {
-    padding-right: 34px;
 }
 
 .password-reveal-btn {
@@ -1089,10 +1090,6 @@ html, body {
 .reset-btn:disabled {
     cursor: not-allowed;
     opacity: 0.45;
-}
-
-.field-input:disabled {
-    cursor: not-allowed;
 }
 
 .security-note {

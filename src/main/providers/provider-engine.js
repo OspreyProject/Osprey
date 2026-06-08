@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-"use strict";
+'use strict';
 
 globalThis.OspreyProviderEngine = (() => {
     const cacheService = globalThis.OspreyCacheService;
@@ -403,7 +403,7 @@ globalThis.OspreyProviderEngine = (() => {
                 expirationSeconds,
                 onResult,
                 tabId,
-                globalAllowMatched
+                globalAllowMatched,
             ));
         }
 
@@ -415,7 +415,7 @@ globalThis.OspreyProviderEngine = (() => {
                 expirationSeconds,
                 onResult,
                 tabId,
-                globalAllowMatched
+                globalAllowMatched,
             ));
         }
 

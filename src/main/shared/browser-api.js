@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-"use strict";
+'use strict';
 
 globalThis.OspreyBrowserAPI = (() => {
     const api = globalThis.browser ?? globalThis.chrome;
@@ -23,7 +23,7 @@ globalThis.OspreyBrowserAPI = (() => {
     const noOpResolve = Promise.resolve(undefined);
 
     const invoke = (context, fn, argCount, arg1, arg2) => {
-        if (typeof fn !== "function") {
+        if (typeof fn !== 'function') {
             return noOpResolve;
         }
 
@@ -44,7 +44,7 @@ globalThis.OspreyBrowserAPI = (() => {
                 }
             };
 
-            const cb = (result) => {
+            const cb = result => {
                 if (settled) {
                     return;
                 }
@@ -69,10 +69,10 @@ globalThis.OspreyBrowserAPI = (() => {
                     result = fn.call(context, cb);
                 }
 
-                if (result != null && typeof result.then === "function") {
+                if (result != null && typeof result.then === 'function') {
                     result.then(
-                        (res) => settle(false, res),
-                        (err) => settle(true, err)
+                        res => settle(false, res),
+                        err => settle(true, err),
                     );
                 }
             } catch (error) {
@@ -82,8 +82,8 @@ globalThis.OspreyBrowserAPI = (() => {
     };
 
     const withCallback = (fn, context, args = []) => {
-        if (typeof fn !== "function") {
-            console.warn("OspreyBrowserAPI.withCallback called with an unavailable API function");
+        if (typeof fn !== 'function') {
+            console.warn('OspreyBrowserAPI.withCallback called with an unavailable API function');
             return noOpResolve;
         }
 
@@ -104,7 +104,7 @@ globalThis.OspreyBrowserAPI = (() => {
                 }
             };
 
-            const cb = (result) => {
+            const cb = result => {
                 if (settled) {
                     return;
                 }
@@ -120,7 +120,7 @@ globalThis.OspreyBrowserAPI = (() => {
 
             try {
                 const len = args.length;
-                const callArgs = new Array(len + 1);
+                const callArgs = Array.from({length: len + 1});
 
                 for (let i = 0; i < len; i++) {
                     callArgs[i] = args[i];
@@ -129,14 +129,14 @@ globalThis.OspreyBrowserAPI = (() => {
                 callArgs[len] = cb;
                 const result = fn.apply(context, callArgs);
 
-                if (result != null && typeof result.then === "function") {
+                if (result != null && typeof result.then === 'function') {
                     result.then(
-                        (res) => settle(false, res),
-                        (err) => settle(true, err)
+                        res => settle(false, res),
+                        err => settle(true, err),
                     );
                 }
             } catch (error) {
-                console.error("Browser API call threw before completion", error);
+                console.error('Browser API call threw before completion', error);
                 settle(true, error);
             }
         });
@@ -144,14 +144,14 @@ globalThis.OspreyBrowserAPI = (() => {
 
     let cachedGetURL;
 
-    const safeRuntimeURL = (path) => {
+    const safeRuntimeURL = path => {
         try {
             if (cachedGetURL === undefined) {
                 cachedGetURL = api?.runtime?.getURL || null;
             }
             return cachedGetURL ? cachedGetURL.call(api.runtime, path) : path;
         } catch (error) {
-            console.warn("Failed to resolve runtime URL", error);
+            console.warn('Failed to resolve runtime URL', error);
             return path;
         }
     };
@@ -176,17 +176,17 @@ globalThis.OspreyBrowserAPI = (() => {
         },
 
         tabsUpdate: (tabId, updateProperties) => invoke(api?.tabs, api?.tabs?.update, 2, tabId, updateProperties),
-        tabsCreate: (createProperties) => invoke(api?.tabs, api?.tabs?.create, 1, createProperties),
+        tabsCreate: createProperties => invoke(api?.tabs, api?.tabs?.create, 1, createProperties),
 
         notificationsCreate: (options, notificationId = undefined) => notificationId === undefined ?
             invoke(api?.notifications, api?.notifications?.create, 1, options) :
             invoke(api?.notifications, api?.notifications?.create, 2, notificationId, options),
 
-        actionSetBadgeText: (details) => invoke(api?.action, api?.action?.setBadgeText, 1, details),
-        actionSetBadgeBackgroundColor: (details) => invoke(api?.action, api?.action?.setBadgeBackgroundColor, 1, details),
-        actionSetBadgeTextColor: (details) => invoke(api?.action, api?.action?.setBadgeTextColor, 1, details),
+        actionSetBadgeText: details => invoke(api?.action, api?.action?.setBadgeText, 1, details),
+        actionSetBadgeBackgroundColor: details => invoke(api?.action, api?.action?.setBadgeBackgroundColor, 1, details),
+        actionSetBadgeTextColor: details => invoke(api?.action, api?.action?.setBadgeTextColor, 1, details),
 
-        runtimeSendMessage: (message) => invoke(api?.runtime, api?.runtime?.sendMessage, 1, message),
+        runtimeSendMessage: message => invoke(api?.runtime, api?.runtime?.sendMessage, 1, message),
         runtimeOpenOptionsPage: () => invoke(api?.runtime, api?.runtime?.openOptionsPage, 0),
 
         safeRuntimeURL,

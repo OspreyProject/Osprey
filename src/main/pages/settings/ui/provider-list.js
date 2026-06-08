@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-"use strict";
+'use strict';
 
 globalThis.OspreyProviderList = (() => {
     const formHelpers = globalThis.OspreyFormHelpers;
@@ -26,7 +26,7 @@ globalThis.OspreyProviderList = (() => {
 
     const defaultProviderState = Object.freeze({
         enabled: false,
-        apiKey: ''
+        apiKey: '',
     });
 
     let cachedContainer = null;
@@ -55,29 +55,29 @@ globalThis.OspreyProviderList = (() => {
             runStoreAction(
                 providerStateStore.resetDefaultProviders(),
                 LangUtil.TOAST_DEFAULT_PROVIDERS_RESTORED,
-                'ProviderList failed to reset default providers'
+                'ProviderList failed to reset default providers',
             );
         } else if (target.id === 'resetAllBtn') {
             runStoreAction(
                 providerStateStore.resetAll(),
                 LangUtil.TOAST_ALL_SETTINGS_RESTORED,
-                'ProviderList failed to reset all settings'
+                'ProviderList failed to reset all settings',
             );
         }
     }
 
     function createSection(title, items, extraHeaderControl = null) {
         const section = formHelpers.createElement('div', {
-            className: 'provider-section'
+            className: 'provider-section',
         });
 
         section.appendChild(extraHeaderControl || formHelpers.createElement('p', {
             className: 'section-label providers-label',
-            textContent: title
+            textContent: title,
         }));
 
         const inner = formHelpers.createElement('div', {
-            className: 'provider-list-inner'
+            className: 'provider-list-inner',
         });
 
         for (let i = 0, len = items.length; i < len; i++) {
@@ -88,13 +88,13 @@ globalThis.OspreyProviderList = (() => {
 
         return {
             section,
-            inner
+            inner,
         };
     }
 
     function createResetFooter(runtime = null) {
         const footer = formHelpers.createElement('div', {
-            className: 'reset-footer'
+            className: 'reset-footer',
         });
 
         const appState = runtime?.effectiveState?.app;
@@ -105,7 +105,7 @@ globalThis.OspreyProviderList = (() => {
             type: 'button',
             className: 'reset-btn reset-providers-btn',
             textContent: LangUtil.RESET_DEFAULT_PROVIDERS,
-            disabled: resetProvidersDisabled
+            disabled: resetProvidersDisabled,
         });
 
         const resetAllButton = formHelpers.createElement('button', {
@@ -113,7 +113,7 @@ globalThis.OspreyProviderList = (() => {
             type: 'button',
             className: 'reset-btn reset-all-btn',
             textContent: LangUtil.RESET_ALL,
-            disabled: resetProvidersDisabled
+            disabled: resetProvidersDisabled,
         });
 
         footer.append(resetProvidersButton, resetAllButton);
@@ -157,7 +157,7 @@ globalThis.OspreyProviderList = (() => {
 
         const fragment = document.createDocumentFragment();
         const builtInLength = builtIns.length;
-        const builtInItems = new Array(builtInLength);
+        const builtInItems = Array.from({length: builtInLength});
 
         for (let i = 0; i < builtInLength; i++) {
             const def = builtIns[i];
@@ -167,11 +167,11 @@ globalThis.OspreyProviderList = (() => {
 
         fragment.appendChild(createSection(
             LangUtil.PROVIDERS_SECTION,
-            builtInItems
+            builtInItems,
         ).section);
 
         const thirdPartyLength = thirdParty.length;
-        const thirdPartyItems = new Array(thirdPartyLength);
+        const thirdPartyItems = Array.from({length: thirdPartyLength});
 
         if (thirdPartyLength > 0) {
             for (let i = 0; i < thirdPartyLength; i++) {
@@ -183,7 +183,7 @@ globalThis.OspreyProviderList = (() => {
 
         const thirdPartySection = createSection(
             LangUtil.THIRD_PARTY_SECTION,
-            thirdPartyItems
+            thirdPartyItems,
         );
 
         thirdPartySection.section.classList.add('integrations-section');
@@ -194,6 +194,6 @@ globalThis.OspreyProviderList = (() => {
     }
 
     return Object.freeze({
-        render
+        render,
     });
 })();

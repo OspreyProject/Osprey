@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-"use strict";
+'use strict';
 
 globalThis.OspreyProviderRuntimeFactory = (() => {
     const policyService = globalThis.OspreyPolicyService;
@@ -42,14 +42,14 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
             policies,
             appManagedKeys,
             providerManagedIds,
-            providerManagedApiKeyIds
+            providerManagedApiKeyIds,
         } = policyResult;
 
         const definitions = providerCatalog.getAllDefinitions();
         const definitionsLength = definitions.length;
 
         const providersById = new Map();
-        const providers = new Array(definitionsLength);
+        const providers = Array.from({length: definitionsLength});
 
         const blockingProviderIdsByResult = {
             [malicious]: new Set(),

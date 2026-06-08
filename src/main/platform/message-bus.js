@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-"use strict";
+'use strict';
 
 globalThis.OspreyMessageBus = Object.freeze({
     Ports: Object.freeze({
@@ -29,5 +29,5 @@ globalThis.OspreyMessageBus = Object.freeze({
         CONTINUE_TO_WEBSITE: 'continueToWebsite',
         REPORT_WEBSITE: 'reportWebsite',
         ALLOW_WEBSITE: 'allowWebsite',
-    })
+    }),
 });

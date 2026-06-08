@@ -15,14 +15,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-"use strict";
+'use strict';
 
 globalThis.OspreyCacheService = (() => {
     const browserAPI = globalThis.OspreyBrowserAPI;
     const urlService = globalThis.OspreyUrlService;
     const protectionResult = globalThis.OspreyProtectionResult;
 
-    const cacheKey = "osprey_cache";
+    const cacheKey = 'osprey_cache';
     const metaKey = cacheKey;
     const shardPrefix = `${cacheKey}::p::`;
     const shardKey = providerId => `${shardPrefix}${providerId}`;
@@ -60,15 +60,15 @@ globalThis.OspreyCacheService = (() => {
     const normalizeEntryMap = value => {
         const map = new Map();
 
-        if (!value || typeof value !== "object" || Array.isArray(value)) {
+        if (!value || typeof value !== 'object' || Array.isArray(value)) {
             return map;
         }
 
         for (const [key, entry] of Object.entries(value)) {
-            if (entry && typeof entry === "object") {
+            if (entry && typeof entry === 'object') {
                 map.set(key, {
                     exp: Number(entry.exp) || 0,
-                    result: entry.result
+                    result: entry.result,
                 });
             }
         }
@@ -84,14 +84,14 @@ globalThis.OspreyCacheService = (() => {
         if (!Array.isArray(value)) {
             return [];
         }
-        return value.filter(pattern => typeof pattern === "string" && pattern.startsWith("*."));
+        return value.filter(pattern => typeof pattern === 'string' && pattern.startsWith('*.'));
     };
 
     const normalizeSnapshot = input => {
-        const value = input && typeof input === "object" ? input : {};
+        const value = input && typeof input === 'object' ? input : {};
         const providers = new Map();
 
-        if (value.providers && typeof value.providers === "object" && !Array.isArray(value.providers)) {
+        if (value.providers && typeof value.providers === 'object' && !Array.isArray(value.providers)) {
             for (const [providerId, providerData] of Object.entries(value.providers)) {
                 providers.set(providerId, normalizeProvider(providerData));
             }
@@ -100,7 +100,7 @@ globalThis.OspreyCacheService = (() => {
         return {
             version: 2,
             globalAllowPatterns: normalizePatterns(value.globalAllowPatterns),
-            providers
+            providers,
         };
     };
 
@@ -230,7 +230,7 @@ globalThis.OspreyCacheService = (() => {
             if (record) {
                 payload[shardKey(providerId)] = {
                     allowed: Object.fromEntries(record.allowed),
-                    blocked: Object.fromEntries(record.blocked)
+                    blocked: Object.fromEntries(record.blocked),
                 };
             } else {
                 removeKeys.push(shardKey(providerId));
@@ -239,14 +239,14 @@ globalThis.OspreyCacheService = (() => {
 
         try {
             if (Object.keys(payload).length > 0) {
-                await browserAPI.storageSet("local", payload);
+                await browserAPI.storageSet('local', payload);
             }
 
             if (removeKeys.length > 0) {
-                await browserAPI.storageRemove("local", removeKeys);
+                await browserAPI.storageRemove('local', removeKeys);
             }
         } catch (error) {
-            console.error("OspreyCacheService failed to persist cache snapshot", error);
+            console.error('OspreyCacheService failed to persist cache snapshot', error);
 
             if (writeMeta) {
                 metaDirty = true;
@@ -274,17 +274,17 @@ globalThis.OspreyCacheService = (() => {
             flushTimer = null;
 
             flush().catch(error => {
-                console.error("OspreyCacheService failed to flush cache snapshot", error);
+                console.error('OspreyCacheService failed to flush cache snapshot', error);
             });
         }, delayMs);
         return ensureFlushPromise();
     };
 
     const loadSnapshot = async () => {
-        const metaStored = await browserAPI.storageGet("local", metaKey).catch(() => ({}));
+        const metaStored = await browserAPI.storageGet('local', metaKey).catch(() => ({}));
         const meta = metaStored?.[metaKey];
 
-        if (meta && typeof meta === "object" && meta.providers && typeof meta.providers === "object") {
+        if (meta && typeof meta === 'object' && meta.providers && typeof meta.providers === 'object') {
             const migrated = normalizeSnapshot(meta);
             markMetaDirty();
 
@@ -297,10 +297,10 @@ globalThis.OspreyCacheService = (() => {
         }
 
         const providerIds = meta && Array.isArray(meta.providerIds) ?
-            meta.providerIds.filter(id => typeof id === "string" && id.length > 0) : [];
+            meta.providerIds.filter(id => typeof id === 'string' && id.length > 0) : [];
 
         const keys = providerIds.map(shardKey);
-        const shardStored = keys.length > 0 ? await browserAPI.storageGet("local", keys).catch(() => ({})) : {};
+        const shardStored = keys.length > 0 ? await browserAPI.storageGet('local', keys).catch(() => ({})) : {};
         const providers = new Map();
 
         for (const providerId of providerIds) {
@@ -328,7 +328,7 @@ globalThis.OspreyCacheService = (() => {
                     loadingPromise = null;
                 }
 
-                console.error("OspreyCacheService failed to load cache snapshot", error);
+                console.error('OspreyCacheService failed to load cache snapshot', error);
                 throw error;
             });
         return currentPromise;
@@ -416,7 +416,7 @@ globalThis.OspreyCacheService = (() => {
                 return true;
             }
 
-            const nextDot = hostname.indexOf(".");
+            const nextDot = hostname.indexOf('.');
 
             if (nextDot === -1) {
                 break;
@@ -427,11 +427,11 @@ globalThis.OspreyCacheService = (() => {
         return false;
     };
 
-    const getAllowedEntry = createEntryGetter("allowed");
-    const getBlockedEntry = createEntryGetter("blocked");
-    const markAllowed = createEntryMarker("allowed", expirationSeconds => ({exp: Date.now() + expirationSeconds * 1000}));
+    const getAllowedEntry = createEntryGetter('allowed');
+    const getBlockedEntry = createEntryGetter('blocked');
+    const markAllowed = createEntryMarker('allowed', expirationSeconds => ({exp: Date.now() + expirationSeconds * 1000}));
 
-    const markBlocked = createEntryMarker("blocked", (result, expirationSeconds) => ({
+    const markBlocked = createEntryMarker('blocked', (result, expirationSeconds) => ({
         exp: Date.now() + expirationSeconds * 1000,
         result,
     }));
@@ -488,7 +488,7 @@ globalThis.OspreyCacheService = (() => {
         }
     };
 
-    const clearBlockedForProviderLookup = (providerId, lookupKey) => deleteRecord(providerId, "blocked", lookupKey);
+    const clearBlockedForProviderLookup = (providerId, lookupKey) => deleteRecord(providerId, 'blocked', lookupKey);
 
     const isProcessing = (providerId, lookupKey) => {
         const key = processingKey(providerId, lookupKey);
@@ -576,8 +576,8 @@ globalThis.OspreyCacheService = (() => {
         const expiry = now + Number(expirationSeconds || 0) * 1000;
 
         for (const entry of entries) {
-            const providerId = String(entry?.providerId || "");
-            const lookupKey = String(entry?.lookupKey || "");
+            const providerId = String(entry?.providerId || '');
+            const lookupKey = String(entry?.lookupKey || '');
 
             if (!providerId || !lookupKey) {
                 continue;
@@ -605,7 +605,7 @@ globalThis.OspreyCacheService = (() => {
     setInterval(cleanupExpired, 5 * 60 * 1000);
 
     cleanupExpired().catch(error => {
-        console.warn("OspreyCacheService failed to cleanup on startup", error);
+        console.warn('OspreyCacheService failed to cleanup on startup', error);
     });
 
     return Object.freeze({

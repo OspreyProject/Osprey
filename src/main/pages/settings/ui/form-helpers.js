@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-"use strict";
+'use strict';
 
 globalThis.OspreyFormHelpers = (() => {
     const maxProviderNameLength = 64;
@@ -24,11 +24,11 @@ globalThis.OspreyFormHelpers = (() => {
     const directProps = Object.freeze([
         'id', 'className', 'type', 'textContent', 'value',
         'placeholder', 'rows', 'title', 'href', 'target', 'rel', 'src', 'alt',
-        'tabIndex', 'autocomplete'
+        'tabIndex', 'autocomplete',
     ]);
 
     const boolProps = Object.freeze([
-        'disabled', 'hidden', 'spellcheck', 'readOnly'
+        'disabled', 'hidden', 'spellcheck', 'readOnly',
     ]);
 
     const ariaMap = Object.freeze({
@@ -175,7 +175,7 @@ globalThis.OspreyFormHelpers = (() => {
     function createEditableInput(options) {
         return createEditableField('input', options, {
             className: 'field-input field-enabled',
-            type: options.type ?? 'text'
+            type: options.type ?? 'text',
         });
     }
 
@@ -184,7 +184,7 @@ globalThis.OspreyFormHelpers = (() => {
 
         const inputOpts = {
             ...inputOptions, type: 'password',
-            autocomplete: 'new-password'
+            autocomplete: 'new-password',
         };
 
         const input = createEditableInput(inputOpts);
@@ -199,7 +199,7 @@ globalThis.OspreyFormHelpers = (() => {
             ariaPressed: false,
         }, createClassElement('span', 'eye-icon eye-closed'));
 
-        const onRevealClick = (event) => {
+        const onRevealClick = event => {
             event.stopPropagation();
 
             const isHidden = input.type === 'password';
