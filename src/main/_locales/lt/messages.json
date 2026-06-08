@@ -131,6 +131,9 @@
   "hideApiKey": {
     "message": "Slėpti API raktą"
   },
+  "getApiKey": {
+    "message": "Gauti API raktą"
+  },
   "toastSaved": {
     "message": "Išsaugota."
   },

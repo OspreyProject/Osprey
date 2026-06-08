@@ -131,6 +131,9 @@
   "hideApiKey": {
     "message": "إخفاء مفتاح API"
   },
+  "getApiKey": {
+    "message": "الحصول على مفتاح API"
+  },
   "toastSaved": {
     "message": "تم الحفظ."
   },

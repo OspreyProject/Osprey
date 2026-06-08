@@ -131,6 +131,9 @@
   "hideApiKey": {
     "message": "Ascundeți cheia API"
   },
+  "getApiKey": {
+    "message": "Obține cheia API"
+  },
   "toastSaved": {
     "message": "Salvat."
   },

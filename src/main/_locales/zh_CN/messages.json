@@ -131,6 +131,9 @@
   "hideApiKey": {
     "message": "隐藏 API 密钥"
   },
+  "getApiKey": {
+    "message": "获取 API 密钥"
+  },
   "toastSaved": {
     "message": "已保存。"
   },

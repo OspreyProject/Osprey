@@ -131,6 +131,9 @@
   "hideApiKey": {
     "message": "APIキーを非表示"
   },
+  "getApiKey": {
+    "message": "APIキーを取得"
+  },
   "toastSaved": {
     "message": "保存しました。"
   },

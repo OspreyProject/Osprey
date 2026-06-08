@@ -131,6 +131,9 @@
   "hideApiKey": {
     "message": "Skrýt klíč API"
   },
+  "getApiKey": {
+    "message": "Získat klíč API"
+  },
   "toastSaved": {
     "message": "Uloženo."
   },

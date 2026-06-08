@@ -131,6 +131,9 @@
   "hideApiKey": {
     "message": "API-Schlüssel ausblenden"
   },
+  "getApiKey": {
+    "message": "API-Schlüssel abrufen"
+  },
   "toastSaved": {
     "message": "Gespeichert."
   },

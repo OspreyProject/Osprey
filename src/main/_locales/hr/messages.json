@@ -131,6 +131,9 @@
   "hideApiKey": {
     "message": "Sakrij API ključ"
   },
+  "getApiKey": {
+    "message": "Dohvati API ključ"
+  },
   "toastSaved": {
     "message": "Spremljeno."
   },

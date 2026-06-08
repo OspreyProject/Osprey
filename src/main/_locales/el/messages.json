@@ -131,6 +131,9 @@
   "hideApiKey": {
     "message": "Απόκρυψη κλειδιού API"
   },
+  "getApiKey": {
+    "message": "Λήψη κλειδιού API"
+  },
   "toastSaved": {
     "message": "Αποθηκεύτηκε."
   },

@@ -131,6 +131,9 @@
   "hideApiKey": {
     "message": "پنهان کردن کلید API"
   },
+  "getApiKey": {
+    "message": "دریافت کلید API"
+  },
   "toastSaved": {
     "message": "ذخیره شد."
   },

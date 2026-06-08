@@ -131,6 +131,9 @@
   "hideApiKey": {
     "message": "Hide API key"
   },
+  "getApiKey": {
+    "message": "Get API Key"
+  },
   "toastSaved": {
     "message": "Saved."
   },

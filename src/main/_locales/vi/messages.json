@@ -131,6 +131,9 @@
   "hideApiKey": {
     "message": "Ẩn khóa API"
   },
+  "getApiKey": {
+    "message": "Nhận khóa API"
+  },
   "toastSaved": {
     "message": "Đã lưu."
   },

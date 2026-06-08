@@ -131,6 +131,9 @@
   "hideApiKey": {
     "message": "Piilota API-avain"
   },
+  "getApiKey": {
+    "message": "Hae API-avain"
+  },
   "toastSaved": {
     "message": "Tallennettu."
   },

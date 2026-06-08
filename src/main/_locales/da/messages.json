@@ -131,6 +131,9 @@
   "hideApiKey": {
     "message": "Skjul API-nøgle"
   },
+  "getApiKey": {
+    "message": "Hent API-nøgle"
+  },
   "toastSaved": {
     "message": "Gemt."
   },

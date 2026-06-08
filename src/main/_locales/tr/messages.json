@@ -131,6 +131,9 @@
   "hideApiKey": {
     "message": "API anahtarını gizle"
   },
+  "getApiKey": {
+    "message": "API Anahtarı Al"
+  },
   "toastSaved": {
     "message": "Kaydedildi."
   },

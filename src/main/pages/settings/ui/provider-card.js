@@ -292,30 +292,7 @@ globalThis.OspreyProviderCard = (() => {
         });
 
         const requestUrl = String(definition.request?.urlTemplate || '');
-        const apiKeyUrl = String(definition?.apiKeyUrl || '').trim();
-        const apiKeyLink = apiKeyUrl ? formHelpers.createElement('div', {
-            className: 'api-key-link-text',
-            textContent: 'Get API Key ↗',
-            role: 'link',
-            tabIndex: 0
-        }) : null;
-
-        if (apiKeyLink) {
-            const openApiKeyUrl = () => {
-                browserAPI?.tabsCreate?.({url: apiKeyUrl}).catch(error => {
-                    console.error(`ProviderCard failed to open API key URL for provider '${definition?.id || 'unknown'}'`, error);
-                    globalThis.open(apiKeyUrl, '_blank', 'noopener');
-                });
-            };
-
-            apiKeyLink.addEventListener('click', event => {
-                event.preventDefault();
-                event.stopPropagation();
-                openApiKeyUrl();
-            });
-
-            apiKeyLink.addEventListener('keydown', makeKeyHandler(openApiKeyUrl));
-        }
+        const apiKeyLink = createExternalLinkText(definition?.apiKeyUrl, LangUtil.GET_API_KEY + ' ↗', 'api-key-link-text', definition?.id);
 
         passwordField.input.disabled = fieldsLocked;
 

@@ -131,6 +131,9 @@
   "hideApiKey": {
     "message": "Приховати ключ API"
   },
+  "getApiKey": {
+    "message": "Отримати ключ API"
+  },
   "toastSaved": {
     "message": "Збережено."
   },
