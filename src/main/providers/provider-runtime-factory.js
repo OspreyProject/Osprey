@@ -18,12 +18,15 @@
 "use strict";
 
 globalThis.OspreyProviderRuntimeFactory = (() => {
-    // Global variables
     const policyService = globalThis.OspreyPolicyService;
     const providerCatalog = globalThis.OspreyProviderCatalog;
     const providerGroups = globalThis.OspreyProviderGroups;
     const providerStateStore = globalThis.OspreyProviderStateStore;
     const protectionResult = globalThis.OspreyProtectionResult;
+
+    const malicious = protectionResult.resultTypes.MALICIOUS;
+    const phishing = protectionResult.resultTypes.PHISHING;
+    const adultContent = protectionResult.resultTypes.ADULT_CONTENT;
 
     let cachedRuntime = null;
     let loadingRuntime = null;
@@ -33,50 +36,63 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
     const buildRuntime = async () => {
         const persistedState = await providerStateStore.getState();
         const policyResult = await policyService.applyToState(persistedState);
-        const {effectiveState, policies, appManagedKeys, providerManagedIds, providerManagedApiKeyIds} = policyResult;
+
+        const {
+            effectiveState,
+            policies,
+            appManagedKeys,
+            providerManagedIds,
+            providerManagedApiKeyIds
+        } = policyResult;
+
         const definitions = providerCatalog.getAllDefinitions();
+        const definitionsLength = definitions.length;
+
         const providersById = new Map();
+        const providers = new Array(definitionsLength);
 
         const blockingProviderIdsByResult = {
-            [protectionResult.resultTypes.MALICIOUS]: new Set(),
-            [protectionResult.resultTypes.PHISHING]: new Set(),
-            [protectionResult.resultTypes.ADULT_CONTENT]: new Set(),
+            [malicious]: new Set(),
+            [phishing]: new Set(),
+            [adultContent]: new Set(),
         };
 
-        const providers = definitions.map(definition => {
-            const providerState = effectiveState.providers?.[definition.id] ?? {
-                enabled: definition.enabledByDefault,
-                apiKey: ''
-            };
+        for (let i = 0; i < definitionsLength; i++) {
+            const definition = definitions[i];
+            const rawState = effectiveState.providers?.[definition.id];
 
-            const state = Object.freeze({
-                enabled: Boolean(providerState.enabled),
-                apiKey: String(providerState.apiKey || ''),
-            });
+            const enabled = rawState === undefined ? definition.enabledByDefault : Boolean(rawState.enabled);
+            const apiKey = rawState === undefined ? '' : String(rawState.apiKey || '');
 
-            return Object.freeze({
+            const provider = Object.freeze({
                 ...definition,
-                state,
+                state: Object.freeze({enabled, apiKey}),
                 managed: providerManagedIds.has(definition.id),
             });
-        }).sort((a, b) =>
-            (providerGroups[a.group]?.order ?? 999) - (providerGroups[b.group]?.order ?? 999) ||
-            a.displayName.localeCompare(b.displayName)
-        );
 
-        for (const provider of providers) {
+            providers[i] = provider;
             providersById.set(provider.id, provider);
 
-            if (!provider.state.enabled) {
-                continue;
-            }
+            if (enabled) {
+                if (providerCatalog.supportsBlockingResult(provider, malicious)) {
+                    blockingProviderIdsByResult[malicious].add(provider.id);
+                }
 
-            for (const [resultType, supportSet] of Object.entries(blockingProviderIdsByResult)) {
-                if (providerCatalog.supportsBlockingResult(provider, resultType)) {
-                    supportSet.add(provider.id);
+                if (providerCatalog.supportsBlockingResult(provider, phishing)) {
+                    blockingProviderIdsByResult[phishing].add(provider.id);
+                }
+
+                if (providerCatalog.supportsBlockingResult(provider, adultContent)) {
+                    blockingProviderIdsByResult[adultContent].add(provider.id);
                 }
             }
         }
+
+        providers.sort((a, b) => {
+            const orderA = providerGroups[a.group]?.order ?? 999;
+            const orderB = providerGroups[b.group]?.order ?? 999;
+            return orderA - orderB || a.displayName.localeCompare(b.displayName);
+        });
 
         return Object.freeze({
             persistedState,
@@ -110,17 +126,21 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
             return cachedRuntime;
         }
 
-        if (fresh || !loadingRuntime) {
-            loadingRuntime = buildRuntime().then(runtime => {
-                cachedRuntime = runtime;
-                loadingRuntime = null;
-                return runtime;
-            }).catch(error => {
-                loadingRuntime = null;
-                throw error;
-            });
+        if (!fresh && loadingRuntime) {
+            return loadingRuntime;
         }
-        return loadingRuntime;
+
+        const loadPromise = buildRuntime();
+        loadingRuntime = loadPromise;
+
+        try {
+            cachedRuntime = await loadPromise;
+            return cachedRuntime;
+        } finally {
+            if (loadingRuntime === loadPromise) {
+                loadingRuntime = null;
+            }
+        }
     };
 
     const createAppRuntime = async ({fresh = false} = {}) => {
@@ -128,24 +148,26 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
             return cachedAppRuntime;
         }
 
-        if (fresh || !loadingAppRuntime) {
-            loadingAppRuntime = buildAppRuntime().then(runtime => {
-                cachedAppRuntime = runtime;
-                loadingAppRuntime = null;
-                return runtime;
-            }).catch(error => {
-                loadingAppRuntime = null;
-                throw error;
-            });
+        if (!fresh && loadingAppRuntime) {
+            return loadingAppRuntime;
         }
-        return loadingAppRuntime;
+
+        const loadPromise = buildAppRuntime();
+        loadingAppRuntime = loadPromise;
+
+        try {
+            cachedAppRuntime = await loadPromise;
+            return cachedAppRuntime;
+        } finally {
+            if (loadingAppRuntime === loadPromise) {
+                loadingAppRuntime = null;
+            }
+        }
     };
 
     const invalidate = () => {
         cachedRuntime = null;
-        loadingRuntime = null;
         cachedAppRuntime = null;
-        loadingAppRuntime = null;
     };
 
     globalThis.OspreyBrowserAPI.api?.storage?.onChanged?.addListener((changes, area) => {
@@ -154,7 +176,6 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
         }
     });
 
-    // Public API
     return Object.freeze({
         createRuntime,
         createAppRuntime,

@@ -18,7 +18,6 @@
 "use strict";
 
 globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
-    // Global variables
     const browserAPI = globalThis.OspreyBrowserAPI;
     const providerStateStore = globalThis.OspreyProviderStateStore;
 
@@ -26,96 +25,127 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
     const privacyURL = 'https://github.com/OspreyProject/Osprey/blob/main/.github/PRIVACY.md';
     let isInitialized = false;
 
-    const setText = (element, value) => element && (element.textContent = value);
+    const setText = (element, value) => {
+        if (element !== null) {
+            element.textContent = value;
+        }
+    };
 
     const setLink = (element, text, href) => {
-        if (element) {
+        if (element !== null) {
             element.textContent = text;
             element.href = href;
         }
     };
 
-    const initialize = () => {
+    const initialize = (state) => {
         if (isInitialized) {
             return;
         }
 
         isInitialized = true;
 
-        const domElements = {
-            logo: document.getElementById('logo'),
-            bannerText: document.querySelector('.bannerText'),
-            statusIcon: document.getElementById('statusIcon'),
-            statusHeading: document.getElementById('statusHeading'),
-            providerCount: document.getElementById('providerCount'),
-            settingsButton: document.getElementById('settingsButton'),
-            websiteLink: document.getElementById('websiteLink'),
-            version: document.getElementById('version'),
-            privacyPolicy: document.getElementById('privacyPolicy'),
-            termsFooterLink: document.getElementById('termsFooterLink'),
-        };
-
-        const textBindings = [
-            ['bannerText', LangUtil.TITLE],
-            ['websiteLink', LangUtil.WEBSITE_LINK],
-            ['version', LangUtil.VERSION + browserAPI.api?.runtime.getManifest().version],
-        ];
-
-        const noProvidersText = LangUtil.STATUS_HEADING_NO_PROVIDERS;
+        const logo = document.getElementById('logo');
+        const bannerText = document.querySelector('.bannerText');
+        const statusIcon = document.getElementById('statusIcon');
+        const statusHeading = document.getElementById('statusHeading');
+        const providerCount = document.getElementById('providerCount');
+        const settingsButton = document.getElementById('settingsButton');
+        const websiteLink = document.getElementById('websiteLink');
+        const version = document.getElementById('version');
+        const privacyPolicy = document.getElementById('privacyPolicy');
+        const termsFooterLink = document.getElementById('termsFooterLink');
 
         document.title = LangUtil.TITLE;
-        textBindings.forEach(([key, value]) => setText(domElements[key], value));
-        setLink(domElements.privacyPolicy, LangUtil.PRIVACY_POLICY, privacyURL);
-        setLink(domElements.termsFooterLink, LangUtil.TERMS_LINK, termsURL);
+        setText(bannerText, LangUtil.TITLE);
+        setText(websiteLink, LangUtil.WEBSITE_LINK);
 
-        LangUtil.applyLogoAlt(domElements.logo);
+        const manifestVersion = browserAPI.api?.runtime.getManifest().version || '';
+        setText(version, LangUtil.VERSION + manifestVersion);
 
-        if (domElements.settingsButton) {
-            domElements.settingsButton.textContent = LangUtil.OPEN_SETTINGS;
+        setLink(privacyPolicy, LangUtil.PRIVACY_POLICY, privacyURL);
+        setLink(termsFooterLink, LangUtil.TERMS_LINK, termsURL);
 
-            domElements.settingsButton.onclick = () => {
-                browserAPI.runtimeOpenOptionsPage().catch(error => {
-                    console.error('PopupSingleton failed to open the settings page', error);
-                });
-            };
+        LangUtil.applyLogoAlt(logo);
+
+        if (settingsButton !== null) {
+            settingsButton.textContent = LangUtil.OPEN_SETTINGS;
+            settingsButton.onclick = onSettingsButtonClick;
         }
 
-        providerStateStore.getState().then(state => {
-            const enabledCount = providerStateStore.countEnabledProviders(state);
-            const total = providerStateStore.countTotalProviders();
-            const noProviders = enabledCount === 0;
+        const noProvidersText = LangUtil.STATUS_HEADING_NO_PROVIDERS;
+        const enabledCount = providerStateStore.countEnabledProviders(state);
+        const total = providerStateStore.countTotalProviders();
+        const noProviders = enabledCount === 0;
 
-            if (domElements.statusIcon) {
-                domElements.statusIcon.src = noProviders ? '../../assets/misc/warning.avif' : '../../assets/misc/checkmark.avif';
-                domElements.statusIcon.alt = noProviders ? noProvidersText : LangUtil.STATUS_ICON_ALT_PROTECTED;
+        if (statusIcon !== null) {
+            statusIcon.src = noProviders ? '../../assets/misc/warning.avif' : '../../assets/misc/checkmark.avif';
+            statusIcon.alt = noProviders ? noProvidersText : LangUtil.STATUS_ICON_ALT_PROTECTED;
+        }
+
+        setText(statusHeading, noProviders ? noProvidersText : LangUtil.STATUS_HEADING_SECURE);
+
+        const localizedTemplate = LangUtil.PROVIDERS_ENABLED_COUNT;
+        const blankText = localizedTemplate.indexOf('___');
+
+        if (blankText === -1) {
+            setText(providerCount, localizedTemplate);
+        } else {
+            const textCount = localizedTemplate.slice(0, blankText) + enabledCount;
+            const remainder = localizedTemplate.slice(blankText + 3);
+            const blankRemainder = remainder.indexOf('___');
+
+            if (blankRemainder === -1) {
+                setText(providerCount, textCount + remainder);
+            } else {
+                setText(providerCount, textCount + remainder.slice(0, blankRemainder) + total + remainder.slice(blankRemainder + 3));
             }
-
-            setText(domElements.statusHeading, noProviders ? noProvidersText : LangUtil.STATUS_HEADING_SECURE);
-            setText(domElements.providerCount, LangUtil.PROVIDERS_ENABLED_COUNT.replace('___', String(enabledCount)).replace('___', String(total)));
-        }).catch(err => console.error('PopupPage: OspreyProviderStateStore.getState failed:', err));
+        }
     };
 
-    // Public API
+    const onSettingsButtonClick = () => {
+        browserAPI.runtimeOpenOptionsPage().catch(onSettingsError);
+    };
+
+    const onSettingsError = (error) => {
+        console.error('PopupSingleton failed to open the settings page', error);
+    };
+
     return Object.freeze({
-        initialize
+        initialize: initialize
     });
 })();
 
 (() => {
-    // Global variables
     const providerStateStore = globalThis.OspreyProviderStateStore;
+    const policyService = globalThis.OspreyPolicyService;
     const popupSingleton = globalThis.PopupSingleton;
 
     const boot = () => {
         providerStateStore.getState()
-            .then(state => !state || typeof state !== 'object' || state.app?.hidePopupPanel ? globalThis.close?.() : popupSingleton?.initialize?.())
-            .catch(error => {
-                console.warn('PopupPage failed to load settings before initialization; continuing with fallback boot path', error);
-                popupSingleton?.initialize?.();
-            });
+            .then(state => policyService.applyToState(state))
+            .then(result => processStateAndBoot(result.effectiveState))
+            .catch(handleBootFallback);
     };
 
-    // Defers initialization until DOM is ready
+    const processStateAndBoot = (state) => {
+        if (state !== null && typeof state === 'object' && state.app?.hidePopupPanel) {
+            if (typeof globalThis.close === 'function') {
+                globalThis.close();
+            }
+        } else if (popupSingleton) {
+            popupSingleton.initialize(state);
+        }
+    };
+
+    const handleBootFallback = (error) => {
+        console.warn('PopupPage failed to load settings before initialization; continuing with fallback boot path', error);
+
+        if (popupSingleton) {
+            popupSingleton.initialize(null);
+        }
+    };
+
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', boot, {once: true});
     } else {

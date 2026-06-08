@@ -18,16 +18,16 @@
 "use strict";
 
 globalThis.OspreyNavigationService = (() => {
-    // Global variables
     const blockingService = globalThis.OspreyBlockingService;
     const browserAPI = globalThis.OspreyBrowserAPI;
     const urlService = globalThis.OspreyUrlService;
 
-    const recentNavigations = new Map();
     const tapsUpdatedDedupeDuration = 2000;
-
-    const recentWarningReady = new Map();
     const warningReadyDedupeDuration = 1500;
+    const maxCacheSize = 1000;
+
+    const navMap = new Map();
+    const warnMap = new Map();
 
     const webNavigationEvents = [
         "onBeforeNavigate",
@@ -37,51 +37,43 @@ globalThis.OspreyNavigationService = (() => {
         "onCreatedNavigationTarget",
     ];
 
-    const getNavigationKey = (tabId, url) => {
-        if (typeof tabId !== "number") {
-            return "";
+    const setCache = (map, tabId, data) => {
+        if (!map.has(tabId) && map.size >= maxCacheSize) {
+            map.delete(map.keys().next().value);
         }
-
-        const parsed = urlService.parseHttpUrl(url);
-        return parsed ? `${tabId}::${urlService.normalizeUrl(parsed)}` : "";
+        map.set(tabId, data);
     };
 
     const isRecentNavigationDuplicate = (tabId, url, source) => {
-        const key = getNavigationKey(tabId, url);
-        const recent = key && recentNavigations.get(key);
-
-        if (!key) {
+        if (typeof tabId !== "number") {
             return false;
         }
 
-        if (recent) {
-            if (Date.now() - recent.timestamp > tapsUpdatedDedupeDuration) {
-                recentNavigations.delete(key);
-            } else if (source === "tabs.onUpdated") {
-                return recent.source === "webNavigation";
-            } else if (source === "webNavigation") {
-                return recent.source === "tabs.onUpdated" || recent.source === "webNavigation";
-            }
-        }
-
-        recentNavigations.set(key, {source, timestamp: Date.now()});
-        return false;
-    };
-
-    const pruneRecentNavigations = () => {
         const now = Date.now();
+        const state = navMap.get(tabId);
 
-        for (const [key, recent] of recentNavigations) {
-            if (now - recent.timestamp > tapsUpdatedDedupeDuration) {
-                recentNavigations.delete(key);
+        if (state && state.url === url && now - state.timestamp <= tapsUpdatedDedupeDuration) {
+            const prevSource = state.source;
+
+            if (source === "tabs.onUpdated") {
+                if (prevSource === "webNavigation") {
+                    return true;
+                }
+            } else if (source === "webNavigation") {
+                if (prevSource === "tabs.onUpdated" || prevSource === "webNavigation") {
+                    return true;
+                }
             }
         }
 
-        for (const [key, timestamp] of recentWarningReady) {
-            if (now - timestamp > warningReadyDedupeDuration) {
-                recentWarningReady.delete(key);
-            }
+        if (state) {
+            state.url = url;
+            state.source = source;
+            state.timestamp = now;
+        } else {
+            setCache(navMap, tabId, {url, source, timestamp: now});
         }
+        return false;
     };
 
     const isWarningReadyDuplicate = (tabId, url) => {
@@ -89,37 +81,42 @@ globalThis.OspreyNavigationService = (() => {
             return false;
         }
 
-        const key = `${tabId}::${url}`;
         const now = Date.now();
-        const last = recentWarningReady.get(key);
+        const state = warnMap.get(tabId);
 
-        if (last && now - last <= warningReadyDedupeDuration) {
+        if (state && state.url === url && now - state.timestamp <= warningReadyDedupeDuration) {
             return true;
         }
 
-        recentWarningReady.set(key, now);
+        if (state) {
+            state.url = url;
+            state.timestamp = now;
+        } else {
+            setCache(warnMap, tabId, {url, timestamp: now});
+        }
         return false;
     };
 
     const handleNavigation = (eventName, details, source) => {
-        pruneRecentNavigations();
-
         if (details?.frameId !== 0) {
             return;
         }
 
-        if (urlService.isWarningPageUrl(details?.url)) {
-            if (isWarningReadyDuplicate(details.tabId, details.url)) {
+        const tabId = details.tabId;
+        const url = details.url;
+
+        if (urlService.isWarningPageUrl(url)) {
+            if (isWarningReadyDuplicate(tabId, url)) {
                 return;
             }
 
-            blockingService.markWarningPageReady(details.tabId).catch(error => {
+            blockingService.markWarningPageReady(tabId).catch(error => {
                 console.error(`${eventName} warning-page update failed`, error);
             });
             return;
         }
 
-        if (isRecentNavigationDuplicate(details.tabId, details.url, source)) {
+        if (isRecentNavigationDuplicate(tabId, url, source)) {
             return;
         }
 
@@ -129,42 +126,56 @@ globalThis.OspreyNavigationService = (() => {
     };
 
     const register = () => {
-        const tabs = browserAPI.api?.tabs;
+        const api = browserAPI.api;
 
-        for (const eventName of webNavigationEvents) {
-            browserAPI.api?.webNavigation?.[eventName]?.addListener(details => {
-                handleNavigation(eventName, details, "webNavigation");
+        if (!api) {
+            return;
+        }
+
+        const webNavigation = api.webNavigation;
+
+        if (webNavigation) {
+            for (const eventName of webNavigationEvents) {
+                const eventObj = webNavigation[eventName];
+
+                if (eventObj && typeof eventObj.addListener === "function") {
+                    eventObj.addListener(details => {
+                        handleNavigation(eventName, details, "webNavigation");
+                    });
+                }
+            }
+        }
+
+        const tabs = api.tabs;
+
+        if (tabs?.onUpdated && typeof tabs.onUpdated.addListener === "function") {
+            tabs.onUpdated.addListener((tabId, changeInfo) => {
+                if (!changeInfo?.url) {
+                    return;
+                }
+
+                handleNavigation(
+                    "tabs.onUpdated",
+                    {tabId: tabId, frameId: 0, url: changeInfo.url},
+                    "tabs.onUpdated"
+                );
             });
         }
 
-        tabs?.onUpdated?.addListener((tabId, changeInfo) => {
-            if (!changeInfo?.url) {
-                return;
-            }
+        if (tabs?.onRemoved && typeof tabs.onRemoved.addListener === "function") {
+            tabs.onRemoved.addListener(tabObject => {
+                const tabId = tabObject && typeof tabObject === "object" ? tabObject.tabId : tabObject;
 
-            handleNavigation(
-                `tabs.onUpdated for tab ${tabId}`,
-                {tabId, frameId: 0, url: changeInfo.url},
-                "tabs.onUpdated"
-            );
-        });
-
-        tabs?.onRemoved?.addListener(tabId => {
-            for (const key of recentNavigations.keys()) {
-                if (key.startsWith(`${tabId}::`)) {
-                    recentNavigations.delete(key);
+                if (typeof tabId !== "number") {
+                    return;
                 }
-            }
 
-            for (const key of recentWarningReady.keys()) {
-                if (key.startsWith(`${tabId}::`)) {
-                    recentWarningReady.delete(key);
-                }
-            }
-        });
+                navMap.delete(tabId);
+                warnMap.delete(tabId);
+            });
+        }
     };
 
-    // Public API
     return Object.freeze({
         register
     });

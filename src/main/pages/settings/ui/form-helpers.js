@@ -38,6 +38,8 @@ globalThis.OspreyFormHelpers = (() => {
         ariaPressed: 'aria-pressed',
     });
 
+    const ariaKeys = Object.freeze(Object.keys(ariaMap));
+
     function createElement(tagName, options, ...children) {
         options = options || {};
         const element = document.createElement(tagName);
@@ -58,30 +60,44 @@ globalThis.OspreyFormHelpers = (() => {
             element.setAttribute('role', options.role);
         }
 
-        for (const [prop, attr] of Object.entries(ariaMap)) {
+        for (const prop of ariaKeys) {
             if (options[prop] !== undefined) {
-                element.setAttribute(attr, String(options[prop]));
+                element.setAttribute(ariaMap[prop], String(options[prop]));
             }
         }
 
-        for (const [name, value] of Object.entries(options.dataset || {})) {
-            if (value !== undefined && value !== null) {
-                element.dataset[name] = String(value);
+        if (options.dataset !== undefined) {
+            const datasetKeys = Object.keys(options.dataset);
+
+            for (const name of datasetKeys) {
+                const value = options.dataset[name];
+
+                if (value !== undefined && value !== null) {
+                    element.dataset[name] = String(value);
+                }
             }
         }
 
-        for (const [name, value] of Object.entries(options.attributes || {})) {
-            if (value !== undefined && value !== null) {
-                element.setAttribute(name, String(value));
+        if (options.attributes !== undefined) {
+            const attrKeys = Object.keys(options.attributes);
+
+            for (const name of attrKeys) {
+                const value = options.attributes[name];
+
+                if (value !== undefined && value !== null) {
+                    element.setAttribute(name, String(value));
+                }
             }
         }
 
-        for (const child of children.flat(Infinity)) {
-            if (child === null || child === undefined || child === false) {
-                continue;
-            }
+        if (children.length > 0) {
+            const flatChildren = children.flat(Infinity);
 
-            element.append(child instanceof Node ? child : document.createTextNode(String(child)));
+            for (const child of flatChildren) {
+                if (child !== null && child !== undefined && child !== false) {
+                    element.append(child instanceof Node ? child : document.createTextNode(String(child)));
+                }
+            }
         }
         return element;
     }
@@ -94,18 +110,26 @@ globalThis.OspreyFormHelpers = (() => {
         return createElement(tagName, {className, textContent});
     }
 
+    const singleLineRegex = /[\u0000-\u001F\u007F]+/g;
+    const multiSpaceRegex = /\s+/g;
+
     function sanitizeSingleLine(value, maxLength = 256) {
         return String(value ?? '')
-            .replaceAll(/[\u0000-\u001F\u007F]+/g, ' ')
-            .replaceAll(/\s+/g, ' ')
+            .slice(0, Math.max(maxLength * 5, 8192))
+            .replace(singleLineRegex, ' ')
+            .replace(multiSpaceRegex, ' ')
             .trim()
             .slice(0, maxLength);
     }
 
+    const lineBreakRegex = /\r\n?/g;
+    const nullCharRegex = /\u0000/g;
+
     function sanitizeMultiline(value, maxLength = 4096) {
         return String(value ?? '')
-            .replaceAll(/\r\n?/g, '\n')
-            .replaceAll('\u0000', '')
+            .slice(0, Math.max(maxLength * 5, 8192))
+            .replace(lineBreakRegex, '\n')
+            .replaceAll(nullCharRegex, '')
             .trim()
             .slice(0, maxLength);
     }
@@ -139,15 +163,13 @@ globalThis.OspreyFormHelpers = (() => {
     }
 
     function createEditableField(tagName, options, defaults) {
-        return createElement(tagName, {
-            ...defaults,
-            ...options,
-            value: options.value ?? '',
-            placeholder: options.placeholder,
-            spellcheck: false,
-            autocomplete: options.autocomplete ?? 'off',
-            dataset: options.dataset,
-        });
+        const combinedOptions = {...defaults, ...options};
+        combinedOptions.value = options.value ?? '';
+        combinedOptions.placeholder = options.placeholder;
+        combinedOptions.spellcheck = false;
+        combinedOptions.autocomplete = options.autocomplete ?? 'off';
+        combinedOptions.dataset = options.dataset;
+        return createElement(tagName, combinedOptions);
     }
 
     function createEditableInput(options) {
@@ -160,25 +182,30 @@ globalThis.OspreyFormHelpers = (() => {
     function createPasswordField(inputOptions) {
         const wrapper = createClassElement('div', 'password-field-wrap');
 
-        const input = createEditableInput({
-            ...inputOptions,
-            type: 'password',
+        const inputOpts = {
+            ...inputOptions, type: 'password',
             autocomplete: 'new-password'
-        });
+        };
+
+        const input = createEditableInput(inputOpts);
+
+        const showKey = typeof LangUtil === 'undefined' ? 'Show' : LangUtil.SHOW_API_KEY;
+        const hideKey = typeof LangUtil === 'undefined' ? 'Hide' : LangUtil.HIDE_API_KEY;
 
         const revealButton = createElement('button', {
             type: 'button',
             className: 'password-reveal-btn',
-            ariaLabel: LangUtil.SHOW_API_KEY,
+            ariaLabel: showKey,
             ariaPressed: false,
         }, createClassElement('span', 'eye-icon eye-closed'));
 
-        revealButton.addEventListener('click', event => {
+        const onRevealClick = (event) => {
             event.stopPropagation();
 
             const isHidden = input.type === 'password';
             input.type = isHidden ? 'text' : 'password';
-            revealButton.setAttribute('aria-label', isHidden ? LangUtil.HIDE_API_KEY : LangUtil.SHOW_API_KEY);
+
+            revealButton.setAttribute('aria-label', isHidden ? hideKey : showKey);
             revealButton.setAttribute('aria-pressed', String(isHidden));
 
             const icon = revealButton.querySelector('.eye-icon');
@@ -187,13 +214,14 @@ globalThis.OspreyFormHelpers = (() => {
                 icon.classList.toggle('eye-closed', !isHidden);
                 icon.classList.toggle('eye-open', isHidden);
             }
-        });
+        };
+
+        revealButton.addEventListener('click', onRevealClick);
 
         wrapper.append(input, revealButton);
         return {wrapper, input};
     }
 
-    // Public API
     return Object.freeze({
         maxAPIKeyLength,
         createElement,

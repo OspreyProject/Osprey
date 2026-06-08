@@ -18,34 +18,59 @@
 "use strict";
 
 globalThis.OspreyReportLinkBuilder = (() => {
-    // Global variables
-    const timer = globalThis.OspreyTimer;
+    const mailtoPrefix = "mailto:";
+    const mailtoSubject = "?subject=False%20Positive&body=Hello%2C%0A%0AI%20would%20like%20to%20report%20a%20false%20positive.%0A%0AProduct%3A%20";
+    const mailtoURL = "%0AURL%3A%20";
+    const mailtoSuffix = "%20%28or%20the%20hostname%20itself%29%0A%0AI%20believe%20this%20website%20is%20legitimate.%0A%0ASent%20with%20Osprey%20Browser%20Protection%0AWebsite%3A%20https%3A%2F%2Fosprey.ac";
+    const defaultProviderName = "Osprey%20Provider";
+
+    let cachedRawUrl = '';
+    let cachedEncodedUrl = '';
+
+    const getEncodedUrl = (rawUrl) => {
+        if (!rawUrl) {
+            return '';
+        }
+
+        if (rawUrl === cachedRawUrl) {
+            return cachedEncodedUrl;
+        }
+
+        cachedRawUrl = rawUrl;
+        cachedEncodedUrl = encodeURIComponent(rawUrl);
+        return cachedEncodedUrl;
+    };
 
     const build = (template, context) => {
-        if (!template || typeof template !== 'object') {
+        if (!template || typeof template !== 'object' || !template.type) {
             console.warn('OspreyReportLinkBuilder.build received an invalid report template');
             return null;
         }
 
-        const blockedUrl = context?.blockedUrl || '';
-        const encodedUrl = encodeURIComponent(blockedUrl);
-
         switch (template.type) {
-            case 'none':
-            case '':
-            case null:
-            case undefined:
-                return null;
-
             case 'external_url':
                 return template.url || null;
 
             case 'url_template':
-                return String(template.template || '')
-                    .replaceAll('{url}', encodedUrl);
+                const tmpl = template.template || '';
+
+                if (!tmpl) {
+                    return '';
+                }
+
+                if (tmpl.indexOf('{url}') === -1) {
+                    return tmpl;
+                }
+                return tmpl.replaceAll('{url}', getEncodedUrl(context?.blockedUrl || ''));
 
             case 'mailto_false_positive':
-                return `mailto:${template.email}?subject=False%20Positive&body=Hello%2C%0A%0AI%20would%20like%20to%20report%20a%20false%20positive.%0A%0AProduct%3A%20${encodeURIComponent(template.productName || 'Osprey Provider')}%0AURL%3A%20${encodedUrl}%20%28or%20the%20hostname%20itself%29%0A%0AI%20believe%20this%20website%20is%20legitimate.%0A%0ASent%20with%20Osprey%20Browser%20Protection%0AWebsite%3A%20https%3A%2F%2Fosprey.ac`;
+                const encodedUrl = getEncodedUrl(context?.blockedUrl || '');
+                let prodName = defaultProviderName;
+
+                if (template.productName && template.productName !== 'Osprey Provider') {
+                    prodName = encodeURIComponent(template.productName);
+                }
+                return mailtoPrefix + (template.email || '') + mailtoSubject + prodName + mailtoURL + encodedUrl + mailtoSuffix;
 
             default:
                 console.warn(`OspreyReportLinkBuilder encountered unsupported template type '${template.type}'`);
@@ -53,8 +78,7 @@ globalThis.OspreyReportLinkBuilder = (() => {
         }
     };
 
-    // Public API
-    return timer.instrument('OspreyReportLinkBuilder', {
+    return Object.freeze({
         build
     });
 })();

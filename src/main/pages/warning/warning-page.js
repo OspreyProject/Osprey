@@ -18,32 +18,39 @@
 "use strict";
 
 globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
-    // Global variables
     const browserAPI = globalThis.OspreyBrowserAPI;
     const messages = globalThis.OspreyMessageBus.Messages;
     const ports = globalThis.OspreyMessageBus.Ports;
     const protectionResult = globalThis.OspreyProtectionResult;
     const providerCatalog = globalThis.OspreyProviderCatalog;
     const providerStateStore = globalThis.OspreyProviderStateStore;
+    const policyService = globalThis.OspreyPolicyService;
     const reportLinkBuilder = globalThis.OspreyReportLinkBuilder;
+
+    const safeTitleRegex = /[^\p{L}\p{N}\p{Z}\p{P}]/gu;
 
     let reportedByText = LangUtil.UNKNOWN_ORIGIN;
     let currentOrigin = protectionResult.Origin.UNKNOWN;
-
     let currentContext = null;
     let currentState = null;
-    let domElements = {};
+    const domElements = {};
+
     let pageshowListenerRegistered = false;
     let counterPort = null;
     let actionInFlight = false;
     let isInitialized = false;
-    let providerNameMap = null;
 
     const domElementIDs = [
         'reason', 'url', 'reportedBy', 'reportWebsite', 'allowWebsite',
         'backButton', 'continueButton', 'warningTitle', 'recommendation',
         'details', 'urlLabel', 'reportedByLabel', 'reasonLabel', 'logo', 'reportBreakpoint',
     ];
+
+    const warningContextFallback = {
+        blockedUrl: '',
+        origin: 'unknown',
+        result: 'failed'
+    };
 
     const pageTextByID = {
         warningTitle: LangUtil.WARNING_TITLE,
@@ -66,15 +73,24 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         providers: {},
     };
 
-    const withCurrentTabId = message => ({
-        ...message,
-        tabId: typeof currentContext?.tabId === 'number' ? currentContext.tabId : message?.tabId,
-    });
+    const withCurrentTabId = message => {
+        message.tabId = typeof currentContext?.tabId === 'number' ? currentContext.tabId : message.tabId;
+        return message;
+    };
 
     const isExpectedPortClosureError = error => {
-        const message = String(error?.message || error || '');
+        if (!error) {
+            return false;
+        }
+
+        const message = error.message || error;
+
+        if (typeof message !== 'string') {
+            return false;
+        }
+
         return message.includes('The message port closed before a response was received') ||
-            message.includes('A listener indicated an asynchronous response by returning true, but the message channel closed before a response was received');
+            message.includes('A listener indicated an asynchronous response by returning true');
     };
 
     const sendNavigationMessage = async message => {
@@ -94,18 +110,21 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
     const parseOriginParam = raw => typeof raw === 'string' && /^[A-Za-z0-9_-]+$/.test(raw) ? raw : protectionResult.Origin.UNKNOWN;
 
     function setTextContent(element, value) {
-        if (element) {
+        if (element && element.textContent !== value) {
             element.textContent = value;
         }
     }
 
     const resetReportedBy = () => {
-        if (!domElements.reportedBy) {
-            return;
-        }
+        const el = domElements.reportedBy;
 
-        domElements.reportedBy.textContent = reportedByText;
-        domElements.reportedBy.title = '';
+        if (el) {
+            setTextContent(el, reportedByText);
+
+            if (el.title !== '') {
+                el.title = '';
+            }
+        }
     };
 
     const syncPrimaryContext = (origin, result) => {
@@ -117,16 +136,24 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
     };
 
     function parseSafeHttpUrl(value) {
-        const rawValue = String(value ?? '').trim();
+        if (!value) {
+            return null;
+        }
 
-        if (!rawValue) {
+        const rawValue = typeof value === 'string' ? value.trim() : String(value).trim();
+
+        if (rawValue.length < 7) {
+            return null;
+        }
+
+        if (!rawValue.startsWith('http:') && !rawValue.startsWith('https:')) {
             return null;
         }
 
         try {
             const parsed = new URL(rawValue);
 
-            if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:' || !parsed.hostname) {
+            if (!parsed.hostname) {
                 return null;
             }
 
@@ -137,64 +164,100 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         }
     }
 
-    function buildContext(fields = {}) {
+    function buildContext(fields) {
         const result = protectionResult.normalize(fields.result);
         const origin = parseOriginParam(fields.origin);
         const blockedUrl = typeof fields.blockedUrl === 'string' && fields.blockedUrl.length > 0 ? fields.blockedUrl : null;
+        const actionable = fields.actionable ?? Boolean(blockedUrl);
+        const reportable = origin !== protectionResult.Origin.UNKNOWN;
+        const resultTextEN = resultNameEnglish(result);
 
-        return Object.freeze({
+        let cachedReportUrl = null;
+
+        if (blockedUrl && reportable) {
+            const definition = providerCatalog.getDefinition(origin);
+
+            if (definition?.report && definition.report.type !== 'none') {
+                const rUrl = reportLinkBuilder.build(definition.report, {
+                    blockedUrl,
+                    resultLabelEnglish: resultTextEN,
+                });
+
+                cachedReportUrl = rUrl ? new URL(rUrl).toString() : null;
+            }
+        }
+
+        return {
             result,
             resultText: resultName(result),
-            resultTextEN: resultNameEnglish(result),
+            resultTextEN,
             blockedUrl,
             origin,
             tabId: typeof fields.tabId === 'number' && Number.isFinite(fields.tabId) ? fields.tabId : null,
-            actionable: fields.actionable ?? Boolean(blockedUrl),
-            reportable: origin !== protectionResult.Origin.UNKNOWN,
-        });
+            actionable,
+            reportable,
+            cachedReportUrl
+        };
     }
 
     function resolveProviderName(id) {
-        if (typeof id !== 'string') {
-            return LangUtil.UNKNOWN_ORIGIN;
-        }
-        return providerNameMap?.get(id) ?? providerCatalog.getDefinition(id)?.displayName ?? id;
+        return typeof id === 'string' ? providerCatalog.getDefinition(id)?.displayName ?? id : LangUtil.UNKNOWN_ORIGIN;
     }
 
     function applyOriginVisuals(origin) {
         const systemName = typeof origin === 'string' ? resolveProviderName(origin) : LangUtil.UNKNOWN_ORIGIN;
+        const el = domElements.reportedBy;
 
-        if (domElements.reportedBy) {
-            domElements.reportedBy.textContent = systemName;
-            reportedByText = domElements.reportedBy.textContent;
+        if (el && el.textContent !== systemName) {
+            el.textContent = systemName;
+            reportedByText = systemName;
         }
     }
 
     function updateBlockedCounter(response) {
-        if (!domElements.reportedBy) {
+        const el = domElements.reportedBy;
+
+        if (!el) {
             return;
         }
 
         const nextPrimaryOrigin = typeof response?.primaryOrigin === 'string' ? response.primaryOrigin : null;
-        const nextPrimaryResult = typeof response?.primaryResult === 'string' ?
-            protectionResult.normalize(response.primaryResult) : null;
+        const nextPrimaryResult = typeof response?.primaryResult === 'string' ? protectionResult.normalize(response.primaryResult) : null;
 
-        if (nextPrimaryOrigin && nextPrimaryResult && currentContext && nextPrimaryOrigin !== currentContext.origin &&
-            isKnownResult(nextPrimaryResult)) {
+        if (nextPrimaryOrigin && nextPrimaryResult && currentContext && nextPrimaryOrigin !== currentContext.origin && isKnownResult(nextPrimaryResult)) {
             syncPrimaryContext(nextPrimaryOrigin, nextPrimaryResult);
         }
 
-        if (typeof response?.count !== 'number' || !Array.isArray(response?.systems) || response.count <= 0) {
+        const count = response?.count;
+        const systemsArr = response?.systems;
+
+        if (typeof count !== 'number' || !Array.isArray(systemsArr) || count <= 0) {
             resetReportedBy();
             return;
         }
 
-        const othersText = LangUtil.REPORTED_BY_OTHERS.replace('___', response.count.toString());
-        const systems = response.systems.map(system => resolveProviderName(String(system))).filter(Boolean);
+        const othersText = LangUtil.REPORTED_BY_OTHERS.replace('___', count.toString());
+        let systemsStr = '';
 
-        domElements.reportedBy.textContent = `${reportedByText} ${othersText}`;
-        domElements.reportedBy.title = `${LangUtil.REPORTED_BY_ALSO}${systems.join(', ')}`
-            .replaceAll(/[^\p{L}\p{N}\p{Z}\p{P}]/gu, '');
+        for (let i = 0, len = systemsArr.length; i < len; i++) {
+            const name = resolveProviderName(String(systemsArr[i]));
+
+            if (name) {
+                if (systemsStr.length > 0) {
+                    systemsStr += ', ';
+                }
+
+                systemsStr += name;
+            }
+        }
+
+        setTextContent(el, `${reportedByText} ${othersText}`);
+
+        const newTitle = `${LangUtil.REPORTED_BY_ALSO}${systemsStr}`.replace(safeTitleRegex, '');
+
+        if (el.title !== newTitle) {
+            el.title = newTitle;
+        }
     }
 
     function handleCounterMessage(message) {
@@ -202,7 +265,9 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
             return;
         }
 
-        if (typeof currentContext?.tabId === 'number' && typeof message?.tabId === 'number' && message.tabId !== currentContext.tabId) {
+        if (typeof currentContext?.tabId === 'number' &&
+            typeof message?.tabId === 'number' &&
+            message.tabId !== currentContext.tabId) {
             return;
         }
 
@@ -221,7 +286,6 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         }
 
         counterPort = port;
-
         port.onMessage.addListener(handleCounterMessage);
 
         port.onDisconnect.addListener(() => {
@@ -247,13 +311,41 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         }
     }
 
+    function disconnectCounterPort() {
+        if (counterPort) {
+            try {
+                counterPort.disconnect();
+            } catch {
+                // ignored
+            }
+
+            counterPort = null;
+        }
+    }
+
+    function syncCounterForVisibility() {
+        if (document.visibilityState === 'visible') {
+            refreshBlockedCounter();
+        } else {
+            disconnectCounterPort();
+        }
+    }
+
     function localizePage() {
-        document.title = LangUtil.WARNING_PAGE_TITLE;
+        if (document.title !== LangUtil.WARNING_PAGE_TITLE) {
+            document.title = LangUtil.WARNING_PAGE_TITLE;
+        }
+
         setTextContent(document.querySelector('.bannerText'), LangUtil.TITLE);
         setTextContent(document.querySelector('.warning-page-title'), LangUtil.WARNING_PAGE_TITLE);
 
-        for (const [id, value] of Object.entries(pageTextByID)) {
-            setTextContent(domElements[id], value);
+        for (let i = 0, len = domElementIDs.length; i < len; i++) {
+            const id = domElementIDs[i];
+            const value = pageTextByID[id];
+
+            if (value) {
+                setTextContent(domElements[id], value);
+            }
         }
 
         LangUtil.applyLogoAlt(domElements.logo);
@@ -265,29 +357,34 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         const blockedUrlParsed = parseSafeHttpUrl(warningContext.blockedUrl);
 
         return buildContext({
-            blockedUrl: blockedUrlParsed?.toString() ?? null,
+            blockedUrl: blockedUrlParsed ? blockedUrlParsed.toString() : null,
             origin: warningContext.origin,
             result,
-            actionable: Boolean(blockedUrlParsed),
+            actionable: blockedUrlParsed !== null,
             tabId: warningContext.tabId,
         });
     }
 
     const extractWarningContext = pageUrl => {
         try {
-            const url = new URL(pageUrl);
+            let params;
 
-            const rawTabId = url.searchParams.get('tid');
-            const parsedTabId = Number.parseInt(String(rawTabId || ''), 10);
+            if (globalThis.window !== undefined && globalThis.location && globalThis.location.href === pageUrl) {
+                params = new URLSearchParams(globalThis.location.search);
+            } else {
+                params = new URL(pageUrl).searchParams;
+            }
 
-            return Object.freeze({
-                blockedUrl: url.searchParams.get('url') || '',
-                origin: url.searchParams.get('or') || 'unknown',
-                result: url.searchParams.get('rs') || 'failed',
+            const rawTabId = params.get('tid');
+            const parsedTabId = rawTabId ? Number.parseInt(rawTabId, 10) : Number.NaN;
+
+            return {
+                blockedUrl: params.get('url') || '',
+                origin: params.get('or') || 'unknown',
+                result: params.get('rs') || 'failed',
                 tabId: Number.isFinite(parsedTabId) ? parsedTabId : null
-            });
-        } catch (error) {
-            console.warn(`OspreyUrlService failed to extract warning context from '${pageUrl}'`, error);
+            };
+        } catch {
             return warningContextFallback;
         }
     };
@@ -297,21 +394,39 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
             return;
         }
 
-        element.hidden = !isVisible;
-        element.classList.toggle('hidden', !isVisible);
-        element.setAttribute('aria-hidden', String(!isVisible));
+        const hidden = !isVisible;
+
+        if (element.hidden !== hidden) {
+            element.hidden = hidden;
+        }
+
+        if (element.classList.contains('hidden') !== hidden) {
+            element.classList.toggle('hidden', hidden);
+        }
+
+        const ariaHidden = String(hidden);
+
+        if (element.getAttribute('aria-hidden') !== ariaHidden) {
+            element.setAttribute('aria-hidden', ariaHidden);
+        }
     }
 
     function setButtonState(button, isVisible, isEnabled) {
         if (button) {
             setElementVisibility(button, isVisible);
-            button.disabled = !isEnabled;
+            const disabled = !isEnabled;
+
+            if (button.disabled !== disabled) {
+                button.disabled = disabled;
+            }
         }
     }
 
     function createActionHandler(handler) {
         return async event => {
-            event?.preventDefault?.();
+            if (event?.preventDefault) {
+                event.preventDefault();
+            }
 
             if (actionInFlight) {
                 return;
@@ -331,7 +446,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         };
     }
 
-    function registerPageshowListener() {
+    function registerVisibilityListeners() {
         if (pageshowListenerRegistered) {
             return;
         }
@@ -340,39 +455,18 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
 
         globalThis.addEventListener('pageshow', () => {
             applyOriginVisuals(currentOrigin);
-            refreshBlockedCounter();
+            syncCounterForVisibility();
         });
-    }
 
-    function getReportUrl(context) {
-        try {
-            if (!context?.blockedUrl) {
-                return null;
-            }
-
-            const definition = providerCatalog.getDefinition(context.origin);
-
-            if (!definition?.report || definition.report.type === 'none') {
-                return null;
-            }
-
-            const url = reportLinkBuilder.build(definition.report, {
-                blockedUrl: context.blockedUrl,
-                resultLabelEnglish: context.resultTextEN,
-            });
-            return url ? new URL(url).toString() : null;
-        } catch (error) {
-            console.error('Failed to construct report URL:', error);
-            return null;
-        }
+        document.addEventListener('visibilitychange', syncCounterForVisibility);
     }
 
     function showContext(context) {
         setTextContent(domElements.reason, context.resultText);
-        setTextContent(domElements.url, context.blockedUrl ?? LangUtil.URL_UNAVAILABLE);
+        setTextContent(domElements.url, context.blockedUrl || LangUtil.URL_UNAVAILABLE);
 
         if (domElements.details) {
-            domElements.details.textContent = context.actionable ? LangUtil.DETAILS : LangUtil.CONTEXT_VERIFY_FAILED;
+            setTextContent(domElements.details, context.actionable ? LangUtil.DETAILS : LangUtil.CONTEXT_VERIFY_FAILED);
         }
     }
 
@@ -381,17 +475,11 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
             return;
         }
 
-        const canContinue = Boolean(
-            currentContext.actionable &&
-            !currentState.app?.hideContinueButtons
-        );
+        const appState = currentState.app;
+        const canContinue = currentContext.actionable === true && !appState?.hideContinueButtons;
 
-        const canReport = Boolean(
-            canContinue &&
-            currentContext.reportable &&
-            !currentState.app?.hideReportButton &&
-            getReportUrl(currentContext)
-        );
+        const canReport = canContinue === true && currentContext.reportable === true &&
+            !appState?.hideReportButton && currentContext.cachedReportUrl !== null;
 
         setButtonState(domElements.reportWebsite, canReport, canReport);
         setButtonState(domElements.allowWebsite, canContinue, canContinue);
@@ -408,9 +496,17 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         const origins = Array.isArray(nextContext.origins) ? nextContext.origins : [];
         syncPrimaryContext(nextContext.primaryOrigin, nextContext.primaryResult);
 
+        const systems = [];
+
+        for (let i = 0, len = origins.length; i < len; i++) {
+            if (origins[i] !== nextContext.primaryOrigin) {
+                systems.push(origins[i]);
+            }
+        }
+
         updateBlockedCounter({
             count: Math.max(0, origins.length - 1),
-            systems: origins.filter(origin => origin !== nextContext.primaryOrigin),
+            systems,
             primaryOrigin: nextContext.primaryOrigin,
             primaryResult: nextContext.primaryResult,
         });
@@ -426,22 +522,20 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
 
     function wireActions(state) {
         currentState = state;
-        providerNameMap = new Map(providerCatalog.getAllDefinitions().map(def => [def.id, def.displayName]));
 
         applyOriginVisuals(currentOrigin);
-        refreshBlockedCounter();
+        syncCounterForVisibility();
         syncActionVisibility();
 
         const actionBindings = [
             [domElements.reportWebsite, async () => {
-                const reportUrl = getReportUrl(currentContext);
+                const reportUrl = currentContext.cachedReportUrl;
 
                 if (!reportUrl) {
                     console.warn('WarningPage could not resolve a report URL for the current warning context');
                     return;
                 }
-
-                await browserAPI.runtimeSendMessage({...buildActionMessage(messages.REPORT_WEBSITE), reportUrl});
+                await browserAPI.runtimeSendMessage(Object.assign(buildActionMessage(messages.REPORT_WEBSITE), {reportUrl}));
             }],
 
             [domElements.allowWebsite, () => sendNavigationMessage(buildActionMessage(messages.ALLOW_WEBSITE))],
@@ -457,8 +551,13 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
             [domElements.backButton, () => sendNavigationMessage(buildActionMessage(messages.CONTINUE_TO_SAFETY))],
         ];
 
-        for (const [button, handler] of actionBindings) {
-            button?.addEventListener('click', createActionHandler(handler));
+        for (let i = 0, len = actionBindings.length; i < len; i++) {
+            const button = actionBindings[i][0];
+            const handler = actionBindings[i][1];
+
+            if (button) {
+                button.addEventListener('click', createActionHandler(handler));
+            }
         }
     }
 
@@ -469,32 +568,37 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
 
         isInitialized = true;
 
-        domElements = Object.fromEntries(domElementIDs.map(id => [id, document.getElementById(id)]));
+        for (let i = 0, len = domElementIDs.length; i < len; i++) {
+            const id = domElementIDs[i];
+            domElements[id] = document.getElementById(id);
+        }
+
         currentContext = parsePageContext(document.URL);
         currentOrigin = currentContext.origin;
 
         localizePage();
         showContext(currentContext);
-        registerPageshowListener();
-        ensureCounterPort();
+        registerVisibilityListeners();
+        syncCounterForVisibility();
 
-        providerStateStore.getState().then(wireActions).catch(error => {
-            console.warn('WarningPage failed to load stored settings; applying fallback restrictions', error);
-            wireActions(fallbackState);
-        });
+        providerStateStore.getState()
+            .then(state => policyService.applyToAppState(state))
+            .then(result => wireActions({app: result.effectiveApp}))
+            .catch(error => {
+                console.warn('WarningPage failed to resolve effective settings; applying fallback restrictions', error);
+                wireActions(fallbackState);
+            });
     }
 
-    // Public API
-    return Object.freeze({
+    return {
         initialize
-    });
+    };
 })();
 
 (() => {
-    // Defers initialization until DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => globalThis.WarningSingleton?.initialize?.(), {once: true});
-    } else {
-        globalThis.WarningSingleton?.initialize?.();
+    } else if (globalThis.WarningSingleton?.initialize) {
+        globalThis.WarningSingleton.initialize();
     }
 })();

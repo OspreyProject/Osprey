@@ -18,12 +18,17 @@
 "use strict";
 
 globalThis.OspreyToast = (() => {
-    // Global variables
     const formHelpers = globalThis.OspreyFormHelpers;
 
     const maxToasts = 5;
     const durationMs = 5000;
     let container = null;
+
+    const nodes = new Array(maxToasts);
+    const timers = new Int32Array(maxToasts);
+    const sequenceIds = new Float64Array(maxToasts);
+    const activeStates = new Uint8Array(maxToasts);
+    let sequenceCounter = 0;
 
     function getContainer() {
         if (container) {
@@ -34,42 +39,102 @@ globalThis.OspreyToast = (() => {
             className: 'toast-container'
         });
 
-        // Append to documentElement rather than body for consistent behavior
+        container.addEventListener('click', (e) => {
+            const card = e.target.closest('.toast-notification');
+
+            if (card?._poolIndex !== undefined) {
+                const idx = card._poolIndex;
+
+                if (activeStates[idx] === 1) {
+                    dismiss(idx);
+                }
+            }
+        });
+
+        container.addEventListener('transitionend', (e) => {
+            const card = e.target;
+
+            if (card.classList?.contains('toast-notification') && !card.classList.contains('toast-visible')) {
+                card.style.display = 'none';
+            }
+        });
+
         (document.body ?? document.documentElement).appendChild(container);
         return container;
     }
 
-    function dismiss(card) {
+    function dismiss(index) {
+        if (activeStates[index] === 0) {
+            return;
+        }
+
+        const card = nodes[index];
         card.classList.remove('toast-visible');
-        card.addEventListener('transitionend', () => card.remove(), {once: true});
+
+        if (timers[index] !== 0) {
+            globalThis.clearTimeout(timers[index]);
+            timers[index] = 0;
+        }
+
+        activeStates[index] = 0;
     }
 
     function show(message, isError = false) {
         const toastContainer = getContainer();
 
-        if (toastContainer.childElementCount >= maxToasts) {
-            dismiss(toastContainer.querySelector('.toast-notification'));
+        let targetIndex = -1;
+        let oldestIndex = -1;
+        let oldestSeq = Infinity;
+
+        for (let i = 0; i < maxToasts; i++) {
+            if (activeStates[i] === 0) {
+                targetIndex = i;
+                break;
+            }
+
+            if (sequenceIds[i] < oldestSeq) {
+                oldestSeq = sequenceIds[i];
+                oldestIndex = i;
+            }
         }
 
-        const card = formHelpers.createElement('div', {
-            className: `toast-notification ${isError ? 'toast-error' : 'toast-success'}`,
-            textContent: message,
-        });
+        if (targetIndex === -1) {
+            targetIndex = oldestIndex;
+            dismiss(targetIndex);
+        }
 
-        toastContainer.appendChild(card);
-        card.getBoundingClientRect();
-        card.classList.add('toast-visible');
+        let card = nodes[targetIndex];
 
-        const timer = globalThis.setTimeout(() => dismiss(card), durationMs);
+        if (!card) {
+            card = formHelpers.createElement('div', {
+                className: 'toast-notification'
+            });
+
+            card._poolIndex = targetIndex;
+            card.style.display = 'none';
+            toastContainer.appendChild(card);
+            nodes[targetIndex] = card;
+        }
+
+        sequenceIds[targetIndex] = ++sequenceCounter;
+        activeStates[targetIndex] = 1;
+
+        card.textContent = message;
+        card.className = `toast-notification ${isError ? 'toast-error' : 'toast-success'}`;
+        card.style.display = '';
         card.style.pointerEvents = 'auto';
 
-        card.addEventListener('click', () => {
-            globalThis.clearTimeout(timer);
-            dismiss(card);
-        }, {once: true});
+        globalThis.requestAnimationFrame(() => {
+            globalThis.requestAnimationFrame(() => {
+                if (activeStates[targetIndex] === 1) {
+                    card.classList.add('toast-visible');
+                }
+            });
+        });
+
+        timers[targetIndex] = globalThis.setTimeout(() => dismiss(targetIndex), durationMs);
     }
 
-    // Public API
     return Object.freeze({
         show
     });

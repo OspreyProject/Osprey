@@ -20,24 +20,46 @@
 globalThis.OspreyResultAggregationService = (() => {
     const blockedByTab = new Map();
     const frameZeroUrlByTab = new Map();
-    const warningPageReadyByTab = new Map();
+    const warningPageReadyTabs = new Set();
 
     const cloneContext = current => {
-        const primary = current?.entries?.[0];
+        if (!current) {
+            return null;
+        }
 
-        return primary ? {
+        const entries = current.entries;
+        const length = entries.size;
+
+        if (length === 0) {
+            return null;
+        }
+
+        let primaryOrigin = "";
+        let primaryResult = null;
+        const origins = new Array(length);
+        let idx = 0;
+
+        for (const [origin, result] of entries.entries()) {
+            if (idx === 0) {
+                primaryOrigin = origin;
+                primaryResult = result;
+            }
+
+            origins[idx++] = origin;
+        }
+
+        return {
             url: current.url,
-            primaryOrigin: primary.origin,
-            primaryResult: primary.result,
-            origins: current.entries.map(entry => entry.origin),
-            redirected: current.redirected,
-        } : null;
+            primaryOrigin: primaryOrigin,
+            primaryResult: primaryResult,
+            origins: origins,
+            redirected: current.redirected
+        };
     };
 
     const beginNavigation = tabId => {
-        // Intentionally does NOT update frameZeroUrl here
         blockedByTab.delete(tabId);
-        warningPageReadyByTab.set(tabId, false);
+        warningPageReadyTabs.delete(tabId);
     };
 
     const setFrameZeroUrl = (tabId, url) => {
@@ -51,15 +73,27 @@ globalThis.OspreyResultAggregationService = (() => {
         const firstForUrl = !context || context.url !== url;
 
         if (firstForUrl) {
-            context = {url, entries: [{origin, result}], redirected: false};
+            const entriesMap = new Map();
+            entriesMap.set(origin, result);
+
+            context = {
+                url: url,
+                entries: entriesMap,
+                redirected: false
+            };
+
             blockedByTab.set(tabId, context);
-        } else if (!context.entries.some(entry => entry.origin === origin)) {
-            context.entries.push({origin, result});
+        } else {
+            const entries = context.entries;
+
+            if (!entries.has(origin)) {
+                entries.set(origin, result);
+            }
         }
 
         return {
             context: cloneContext(context),
-            firstForUrl
+            firstForUrl: firstForUrl
         };
     };
 
@@ -71,8 +105,15 @@ globalThis.OspreyResultAggregationService = (() => {
         }
     };
 
-    const isRedirected = tabId => Boolean(blockedByTab.get(tabId)?.redirected);
-    const getBlockedContext = tabId => cloneContext(blockedByTab.get(tabId));
+    const isRedirected = tabId => {
+        const context = blockedByTab.get(tabId);
+        return context === undefined ? false : context.redirected;
+    };
+
+    const getBlockedContext = tabId => {
+        const context = blockedByTab.get(tabId);
+        return context === undefined ? null : cloneContext(context);
+    };
 
     const removeOrigin = (tabId, origin) => {
         const current = blockedByTab.get(tabId);
@@ -81,9 +122,10 @@ globalThis.OspreyResultAggregationService = (() => {
             return null;
         }
 
-        current.entries = current.entries.filter(entry => entry.origin !== origin);
+        const entries = current.entries;
+        entries.delete(origin);
 
-        if (current.entries.length > 0) {
+        if (entries.size > 0) {
             return cloneContext(current);
         }
 
@@ -94,16 +136,15 @@ globalThis.OspreyResultAggregationService = (() => {
     const clear = tabId => {
         blockedByTab.delete(tabId);
         frameZeroUrlByTab.delete(tabId);
-        warningPageReadyByTab.delete(tabId);
+        warningPageReadyTabs.delete(tabId);
     };
 
     const markWarningPageReady = tabId => {
-        warningPageReadyByTab.set(tabId, true);
+        warningPageReadyTabs.add(tabId);
     };
 
-    const isWarningPageReady = tabId => warningPageReadyByTab.get(tabId) === true;
+    const isWarningPageReady = tabId => warningPageReadyTabs.has(tabId);
 
-    // Public API
     return Object.freeze({
         beginNavigation,
         setFrameZeroUrl,

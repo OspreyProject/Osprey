@@ -18,7 +18,6 @@
 "use strict";
 
 globalThis.OspreyDirectIntegrations = (() => {
-    // Global variables
     const providerGroups = globalThis.OspreyProviderGroups;
 
     const metaDefenderApiRequest = Object.freeze({
@@ -44,7 +43,14 @@ globalThis.OspreyDirectIntegrations = (() => {
         ...definition,
     });
 
-    const metadefenderIntegration = ({id, displayName, aliases = [], providerNames, responseRules}) => integration({
+    const metadefenderIntegration = ({
+                                         id,
+                                         displayName,
+                                         aliases = [],
+                                         providerNames,
+                                         responseRules,
+                                         website = 'https://www.metadefender.com/?utm_source=osprey',
+                                     }) => integration({
         id,
         aliases,
         displayName,
@@ -54,6 +60,7 @@ globalThis.OspreyDirectIntegrations = (() => {
         lookupTarget: 'url',
         tags: ['api_key_required'],
         apiKeyUrl: 'https://metadefender.com/',
+        website,
         request: metaDefenderApiRequest,
         sharedApiKeyGroup: 'metadefender',
         sharedRequestGroup: 'metadefender-url-reputation',
@@ -75,6 +82,7 @@ globalThis.OspreyDirectIntegrations = (() => {
     return Object.freeze([
         metadefenderIntegration({
             id: 'metadefender-reputation',
+            website: 'https://www.metadefender.com/?utm_source=osprey',
             aliases: ['metadefender'],
             displayName: 'MetaDefender Reputation',
             providerNames: ['Offline Reputation'],
@@ -111,8 +119,9 @@ globalThis.OspreyDirectIntegrations = (() => {
 
         metadefenderIntegration({
             id: 'metadefender-webroot',
+            website: 'https://www.metadefender.com/?utm_source=osprey',
             displayName: 'Webroot (MetaDefender)',
-            providerNames: ['webroot.com'],
+            providerNames: ['Webroot'],
             responseRules: Object.freeze([
                 Object.freeze({
                     path: 'category',

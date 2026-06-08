@@ -44,16 +44,18 @@ const bootstrapScripts = [
     'background/context-menu-service.js',
 ];
 
-try {
-    importScripts(...bootstrapScripts);
-} catch (error) {
-    // In Firefox-based browsers, importScripts is not available; scripts are loaded via background.html
-    console.debug("Running in Firefox or another environment without importScripts");
-    console.debug(`Error: ${error}`);
+if (typeof importScripts === 'function') {
+    try {
+        importScripts(...bootstrapScripts);
+    } catch (error) {
+        console.error('Script injection failed; halting runtime to prevent corrupted state', error);
+        throw error;
+    }
+} else {
+    console.debug('Environment lacks importScripts; relying on HTML document script loading');
 }
 
 (() => {
-    // Global variables
     const badgeService = globalThis.OspreyBadgeService;
     const blockingService = globalThis.OspreyBlockingService;
     const browserAPI = globalThis.OspreyBrowserAPI;
@@ -68,128 +70,114 @@ try {
     const reportLinkBuilder = globalThis.OspreyReportLinkBuilder;
     const resultAggregationService = globalThis.OspreyResultAggregationService;
 
-    const getMenuRelevantAppState = stateValue => ({
-        contextMenuEnabled: Boolean(stateValue?.app?.contextMenuEnabled),
-        disableClearAllowedWebsites: Boolean(stateValue?.app?.disableClearAllowedWebsites),
-    });
-
     const respond = (sendResponse, payload) => {
-        sendResponse?.(payload);
+        if (sendResponse) {
+            sendResponse(payload);
+        }
         return false;
+    };
+
+    const respondAsync = (sendResponse, promise, errorMessage) => {
+        promise.then(response => {
+            if (sendResponse) {
+                sendResponse(response || {ok: true});
+            }
+        }).catch(error => {
+            console.error(errorMessage, error);
+
+            if (sendResponse) {
+                sendResponse({ok: false});
+            }
+        });
+        return true;
     };
 
     const refreshContextMenus = errorMessage => contextMenuService.create().catch(error => {
         console.error(errorMessage, error);
     });
 
-    const openReportUrlForOrigin = async ({origin, blockedUrl}) => {
+    const openReportUrlForOrigin = async (origin, blockedUrl) => {
         const definition = providerCatalog.getDefinition(origin);
 
         if (!definition) {
             console.warn(`No provider definition found for origin ${origin} when building report URL`);
             return null;
         }
-
-        return reportLinkBuilder.build(definition.report, {
-            blockedUrl,
-        });
+        return reportLinkBuilder.build(definition.report, {blockedUrl});
     };
 
     const didMenuRelevantAppStateChange = (previousStateValue, nextStateValue) => {
-        const previousApp = getMenuRelevantAppState(previousStateValue);
-        const nextApp = getMenuRelevantAppState(nextStateValue);
+        const prevApp = previousStateValue?.app;
+        const nextApp = nextStateValue?.app;
 
-        return previousApp.contextMenuEnabled !== nextApp.contextMenuEnabled ||
-            previousApp.disableClearAllowedWebsites !== nextApp.disableClearAllowedWebsites;
-    };
-
-    const respondAsync = (sendResponse, promise, errorMessage) => {
-        promise.then(response => {
-            sendResponse?.(response || {
-                ok: true
-            });
-        }).catch(error => {
-            console.error(errorMessage, error);
-            sendResponse?.({
-                ok: false
-            });
-        });
-        return true;
-    };
-
-    const withTabId = (tabId, warningMessage, sendResponse, callback) => {
-        if (typeof tabId === 'number') {
-            callback(tabId);
-        } else {
-            console.warn(warningMessage);
-            respond(sendResponse, {
-                ok: false
-            });
-        }
+        return Boolean(prevApp?.contextMenuEnabled) !== Boolean(nextApp?.contextMenuEnabled) ||
+            Boolean(prevApp?.disableClearAllowedWebsites) !== Boolean(nextApp?.disableClearAllowedWebsites);
     };
 
     const messageHandlers = {
-        [messages.CONTINUE_TO_SAFETY]: ({tabId, sendResponse}) => {
-            withTabId(
-                tabId,
-                'OspreyBackground rejected CONTINUE_TO_SAFETY because the sender had no tab id',
+        [messages.CONTINUE_TO_SAFETY]: (message, tabId, sendResponse) => {
+            if (typeof tabId !== 'number') {
+                console.warn('OspreyBackground rejected CONTINUE_TO_SAFETY because the sender had no tab id');
+                return respond(sendResponse, {ok: false});
+            }
+
+            return respondAsync(
                 sendResponse,
-                validTabId => respondAsync(
-                    sendResponse,
-                    blockingService.sendToSafety(validTabId).then(() => ({ok: true})),
-                    `Failed CONTINUE_TO_SAFETY for tab ${validTabId}`
-                )
+                blockingService.sendToSafety(tabId).then(() => ({ok: true})),
+                `Failed CONTINUE_TO_SAFETY for tab ${tabId}`
             );
         },
 
-        [messages.CONTINUE_TO_WEBSITE]: ({message, tabId, sendResponse}) => {
+        [messages.CONTINUE_TO_WEBSITE]: (message, tabId, sendResponse) => {
             if (typeof message.blockedUrl !== 'string') {
                 console.warn('OspreyBackground rejected CONTINUE_TO_WEBSITE because the message payload was incomplete');
                 return respond(sendResponse, {ok: false});
             }
 
-            return withTabId(
-                tabId,
-                'OspreyBackground rejected CONTINUE_TO_WEBSITE because the sender had no tab id',
+            if (typeof tabId !== 'number') {
+                console.warn('OspreyBackground rejected CONTINUE_TO_WEBSITE because the sender had no tab id');
+                return respond(sendResponse, {ok: false});
+            }
+
+            return respondAsync(
                 sendResponse,
-                validTabId => respondAsync(
-                    sendResponse,
-                    blockingService.continueToWebsite(validTabId, message.blockedUrl, message.origin),
-                    `Failed CONTINUE_TO_WEBSITE for tab ${validTabId} and URL ${message.blockedUrl}`
-                )
+                blockingService.continueToWebsite(tabId, message.blockedUrl, message.origin),
+                `Failed CONTINUE_TO_WEBSITE for tab ${tabId} and URL ${message.blockedUrl}`
             );
         },
 
-        [messages.ALLOW_WEBSITE]: ({message, tabId, sendResponse}) => {
+        [messages.ALLOW_WEBSITE]: (message, tabId, sendResponse) => {
             if (typeof message.blockedUrl !== 'string') {
                 console.warn('OspreyBackground rejected ALLOW_WEBSITE because the message payload was incomplete');
                 return respond(sendResponse, {ok: false});
             }
 
-            return withTabId(
-                tabId,
-                'OspreyBackground rejected ALLOW_WEBSITE because the sender had no tab id',
+            if (typeof tabId !== 'number') {
+                console.warn('OspreyBackground rejected ALLOW_WEBSITE because the sender had no tab id');
+                return respond(sendResponse, {ok: false});
+            }
+
+            return respondAsync(
                 sendResponse,
-                validTabId => respondAsync(
-                    sendResponse,
-                    blockingService.allowWebsite(validTabId, message.blockedUrl),
-                    `Failed ALLOW_WEBSITE for tab ${validTabId}`
-                )
+                blockingService.allowWebsite(tabId, message.blockedUrl),
+                `Failed ALLOW_WEBSITE for tab ${tabId}`
             );
         },
 
-        [messages.REPORT_WEBSITE]: ({message, tabId, sendResponse}) => {
+        [messages.REPORT_WEBSITE]: (message, tabId, sendResponse) => {
             if (typeof message.reportUrl === 'string') {
-                return respondAsync(sendResponse, blockingService.reportWebsite(message.reportUrl), `Failed REPORT_WEBSITE for tab ${tabId}`);
+                return respondAsync(
+                    sendResponse,
+                    blockingService.reportWebsite(message.reportUrl),
+                    `Failed REPORT_WEBSITE for tab ${tabId}`
+                );
             }
 
             if (typeof message.origin === 'string' && typeof message.blockedUrl === 'string') {
                 return respondAsync(
                     sendResponse,
-                    openReportUrlForOrigin({
-                        origin: message.origin,
-                        blockedUrl: message.blockedUrl
-                    }).then(reportUrl => reportUrl ? blockingService.reportWebsite(reportUrl) : {ok: false}),
+                    openReportUrlForOrigin(message.origin, message.blockedUrl)
+                        .then(reportUrl => reportUrl ? blockingService.reportWebsite(reportUrl) : {ok: false}),
                     `Failed REPORT_WEBSITE for tab ${tabId}`
                 );
             }
@@ -200,7 +188,9 @@ try {
     };
 
     const handleMessage = (message, sender, sendResponse) => {
-        if (!message || sender?.id !== browserAPI.api?.runtime.id) {
+        const apiId = browserAPI.api?.runtime.id;
+
+        if (!message || sender?.id !== apiId) {
             console.warn(`No message for ${message?.id} for ${sender?.id}`);
             return false;
         }
@@ -212,33 +202,41 @@ try {
             return false;
         }
 
-        const messageTabId = typeof message?.tabId === 'number' ? message.tabId : null;
-        return handler({message, sender, sendResponse, tabId: sender.tab?.id ?? messageTabId});
+        const tabId = typeof message.tabId === 'number' ? message.tabId : sender.tab?.id ?? null;
+        return handler(message, tabId, sendResponse, sender);
     };
 
     const init = async () => {
+        const api = browserAPI.api;
+
+        if (!api) {
+            console.error('Browser API not available during background init');
+            return;
+        }
+
         try {
-            browserAPI.api?.runtime.setUninstallURL?.('https://osprey.ac/uninstall');
+            api.runtime.setUninstallURL?.('https://osprey.ac/uninstall');
         } catch {
             console.error('Failed to set uninstall URL, browser API may not be available');
         }
 
-        browserAPI.api?.runtime.onMessage.addListener(handleMessage);
+        api.runtime.onMessage?.addListener(handleMessage);
 
-        browserAPI.api?.runtime.onConnect?.addListener(port => {
+        api.runtime.onConnect?.addListener(port => {
             if (port?.name === ports.BLOCKED_COUNTER) {
                 blockingService.connectWarningPort(port);
             }
         });
 
-        browserAPI.api?.tabs.onRemoved?.addListener(tabId => {
+        api.tabs?.onRemoved?.addListener(tabId => {
             resultAggregationService.clear(tabId);
             providerEngine.abortTab(tabId);
             cacheService.clearProcessingByTab(tabId);
             badgeService.clearTab(tabId);
+            blockingService.clearTab(tabId);
         });
 
-        browserAPI.api?.storage.onChanged?.addListener((changes, area) => {
+        api.storage?.onChanged?.addListener((changes, area) => {
             if (area === 'managed') {
                 refreshContextMenus('Failed to update context menus after managed storage change');
                 return;

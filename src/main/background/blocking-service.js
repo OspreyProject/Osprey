@@ -18,7 +18,6 @@
 "use strict";
 
 globalThis.OspreyBlockingService = (() => {
-    // Global variables
     const badgeService = globalThis.OspreyBadgeService;
     const browserAPI = globalThis.OspreyBrowserAPI;
     const cacheService = globalThis.OspreyCacheService;
@@ -31,40 +30,43 @@ globalThis.OspreyBlockingService = (() => {
     const inFlightNavigations = new Map();
     const suppressedNavigations = new Map();
     const suppressedNavDuration = 2500;
-    const lastBlockedPayloadByTab = new Map();
+
+    const lastBlockedSignatureByTab = new Map();
     const pendingBlockedPayloadByTab = new Map();
     const warningPortsByTab = new Map();
 
-    const buildNavigationKey = (tabId, normalizedUrl) => `${tabId}::${normalizedUrl}`;
+    const buildNavigationKey = (tabId, normalizedUrl) => tabId + "::" + normalizedUrl;
 
-    // TODO: Turn the '2' into a variable on the settings page
     const getBlockingThreshold = enabledCount => enabledCount >= 4 ? 2 : 1;
 
+    const getPayloadSignature = p =>
+        p.count + "|" + p.primaryOrigin + "|" + p.primaryResult + "|" + p.systems.join(',');
+
     const getBlockingAnalysis = (runtime, blockedContext, result) => {
-        const blockedOrigins = Array.isArray(blockedContext?.origins) ? blockedContext.origins : [];
-        const supportedOrigins = runtime?.blockingProviderIdsByResult?.[result] || null;
-        const providersById = runtime?.providersById || null;
+        const blockedOrigins = blockedContext?.origins;
+        const supportedOrigins = runtime?.blockingProviderIdsByResult?.[result];
 
-        let blockedCount = 0;
-        let thresholdBypassed = false;
-
-        if (!supportedOrigins || supportedOrigins.size === 0 || blockedOrigins.length === 0) {
+        if (!supportedOrigins?.size || !blockedOrigins?.length) {
             return {
                 blockedCount: 0,
                 thresholdBypassed: false,
-                requiredBlockedCount: 0,
+                requiredBlockedCount: 0
             };
         }
 
-        for (const origin of blockedOrigins) {
-            if (!supportedOrigins.has(origin)) {
-                continue;
-            }
+        let blockedCount = 0;
+        let thresholdBypassed = false;
+        const providersById = runtime.providersById;
 
-            blockedCount += 1;
+        for (let i = 0, len = blockedOrigins.length; i < len; i++) {
+            const origin = blockedOrigins[i];
 
-            if (!thresholdBypassed && providersById?.get(origin)?.bypassBlockingThreshold === true) {
-                thresholdBypassed = true;
+            if (supportedOrigins.has(origin)) {
+                blockedCount++;
+
+                if (!thresholdBypassed && providersById.get(origin)?.bypassBlockingThreshold) {
+                    thresholdBypassed = true;
+                }
             }
         }
 
@@ -75,38 +77,42 @@ globalThis.OspreyBlockingService = (() => {
         };
     };
 
-    const failureResult = Object.freeze({ok: false});
-    const isMissingTabError = error => /No tab with id/i.test(String(error?.message || error || ''));
+    const failureResult = Object.freeze({
+        ok: false
+    });
 
     const pruneSuppressedNavigations = () => {
-        const now = Date.now();
+        const threshold = Date.now() - suppressedNavDuration;
 
-        for (const [key, timestamp] of suppressedNavigations.entries()) {
-            if (now - timestamp > suppressedNavDuration) {
+        for (const [key, timestamp] of suppressedNavigations) {
+            if (timestamp < threshold) {
                 suppressedNavigations.delete(key);
             }
         }
     };
 
     const rememberSuppressedNavigation = (tabId, normalizedUrl) => {
-        if (typeof tabId !== "number" || typeof normalizedUrl !== "string" || normalizedUrl.length === 0) {
+        if (!tabId || !normalizedUrl) {
             return;
+        }
+
+        if (suppressedNavigations.size > 50) {
+            pruneSuppressedNavigations();
         }
 
         suppressedNavigations.set(buildNavigationKey(tabId, normalizedUrl), Date.now());
     };
 
     const shouldSkipSuppressedNavigation = (tabId, normalizedUrl) => {
-        pruneSuppressedNavigations();
-
         const key = buildNavigationKey(tabId, normalizedUrl);
+        const timestamp = suppressedNavigations.get(key);
 
-        if (!suppressedNavigations.has(key)) {
+        if (!timestamp) {
             return false;
         }
 
         suppressedNavigations.delete(key);
-        return true;
+        return Date.now() - timestamp <= suppressedNavDuration;
     };
 
     const getBlockedContextPayload = context => {
@@ -116,32 +122,35 @@ globalThis.OspreyBlockingService = (() => {
                 count: 0,
                 systems: [],
                 primaryOrigin: null,
-                primaryResult: null,
+                primaryResult: null
             };
         }
 
-        const systems = context.origins.filter(origin => origin !== context.primaryOrigin);
+        const {origins, primaryOrigin, primaryResult} = context;
+        const systems = origins.filter(o => o !== primaryOrigin);
 
         return {
             messageType: messages.BLOCKED_COUNTER_PONG,
             count: systems.length,
             systems,
-            primaryOrigin: context.primaryOrigin,
-            primaryResult: context.primaryResult,
+            primaryOrigin,
+            primaryResult
         };
     };
 
-    const buildBlockedPayload = tabId => ({
-        ...getBlockedContextPayload(resultAggregationService.getBlockedContext(tabId)),
-        tabId,
-    });
+    const buildBlockedPayload = tabId => {
+        const payload = getBlockedContextPayload(resultAggregationService.getBlockedContext(tabId));
+        payload.tabId = tabId;
+        return payload;
+    };
 
     const sendCurrentBlockedContext = (tabId, port) => {
-        const payload = buildBlockedPayload(tabId);
-
         try {
+            const payload = buildBlockedPayload(tabId);
             port.postMessage(payload);
-            lastBlockedPayloadByTab.set(tabId, JSON.stringify(payload));
+            lastBlockedSignatureByTab.set(tabId, getPayloadSignature(payload));
+            badgeService.syncWithContext(tabId, resultAggregationService.getBlockedContext(tabId));
+            badgeService.reapply(tabId);
         } catch {
             if (warningPortsByTab.get(tabId) === port) {
                 warningPortsByTab.delete(tabId);
@@ -152,28 +161,26 @@ globalThis.OspreyBlockingService = (() => {
     const pushBlockedContextUpdate = async tabId => {
         if (!resultAggregationService.isRedirected(tabId)) {
             pendingBlockedPayloadByTab.delete(tabId);
-            lastBlockedPayloadByTab.delete(tabId);
+            lastBlockedSignatureByTab.delete(tabId);
             return;
         }
 
         const payload = buildBlockedPayload(tabId);
-        const payloadKey = JSON.stringify(payload);
+        const signature = getPayloadSignature(payload);
         const port = warningPortsByTab.get(tabId);
 
         if (!port || !resultAggregationService.isWarningPageReady(tabId)) {
-            pendingBlockedPayloadByTab.set(tabId, payloadKey);
+            pendingBlockedPayloadByTab.set(tabId, signature);
             return;
         }
 
-        if (lastBlockedPayloadByTab.get(tabId) === payloadKey && !pendingBlockedPayloadByTab.has(tabId)) {
+        badgeService.syncWithContext(tabId, resultAggregationService.getBlockedContext(tabId));
+
+        if (lastBlockedSignatureByTab.get(tabId) === signature && !pendingBlockedPayloadByTab.has(tabId)) {
             return;
         }
 
-        badgeService.syncWithContext(tabId, resultAggregationService.getBlockedContext(tabId)).then(() => {
-            // ignoring await
-        });
-
-        lastBlockedPayloadByTab.set(tabId, payloadKey);
+        lastBlockedSignatureByTab.set(tabId, signature);
         pendingBlockedPayloadByTab.delete(tabId);
 
         try {
@@ -187,7 +194,6 @@ globalThis.OspreyBlockingService = (() => {
 
     const connectWarningPort = port => {
         const tabId = port?.sender?.tab?.id;
-
         if (typeof tabId !== "number") {
             return;
         }
@@ -195,8 +201,8 @@ globalThis.OspreyBlockingService = (() => {
         warningPortsByTab.set(tabId, port);
         resultAggregationService.markWarningPageReady(tabId);
 
-        port.onMessage.addListener(message => {
-            if (message?.messageType === messages.BLOCKED_COUNTER_PING && warningPortsByTab.get(tabId) === port) {
+        port.onMessage.addListener(msg => {
+            if (msg?.messageType === messages.BLOCKED_COUNTER_PING && warningPortsByTab.get(tabId) === port) {
                 sendCurrentBlockedContext(tabId, port);
             }
         });
@@ -213,12 +219,15 @@ globalThis.OspreyBlockingService = (() => {
 
     const clearBlockedUI = async tabId => {
         resultAggregationService.clear(tabId);
-        lastBlockedPayloadByTab.delete(tabId);
+        lastBlockedSignatureByTab.delete(tabId);
         pendingBlockedPayloadByTab.delete(tabId);
+        badgeService.clear(tabId);
+    };
 
-        badgeService.clear(tabId).then(() => {
-            // ignoring await
-        });
+    const clearTab = tabId => {
+        warningPortsByTab.delete(tabId);
+        lastBlockedSignatureByTab.delete(tabId);
+        pendingBlockedPayloadByTab.delete(tabId);
     };
 
     const markWarningPageReady = tabId => {
@@ -227,11 +236,11 @@ globalThis.OspreyBlockingService = (() => {
     };
 
     const cleanupAfterNavigation = tabId => {
-        providerEngine.abortTab(tabId).catch(() => {
+        providerEngine.abortTab(tabId).then(() => {
             // ignored
         });
 
-        clearBlockedUI(tabId).catch(() => {
+        clearBlockedUI(tabId).then(() => {
             // ignored
         });
     };
@@ -243,26 +252,22 @@ globalThis.OspreyBlockingService = (() => {
         try {
             await browserAPI.tabsUpdate(tabId, {url: "about:newtab"});
         } catch {
-            console.warn(`Failed to navigate to about:newtab for tabId ${tabId}, navigating to fallback URL instead`);
-
-            await browserAPI.tabsUpdate(tabId, {url: "https://www.google.com"}).catch(error => {
-                console.error(`Failed to navigate to fallback URL for tabId ${tabId}`, error);
+            await browserAPI.tabsUpdate(tabId, {url: "https://www.google.com"}).then(() => {
+                // ignored
             });
         }
     };
 
-    const failClosed = async (action, value, reason, tabId) => {
-        console.warn(`Failed to ${action} for URL ${value} (Reason: ${reason})`);
+    const failClosed = async (a, blockedUrl, r, tabId) => {
         await sendToSafety(tabId);
         return failureResult;
     };
 
-    const navigateWithSafetyFallback = async (tabId, targetUrl, failureMessage) => {
+    const navigateWithSafetyFallback = async (tabId, targetUrl) => {
         try {
             await browserAPI.tabsUpdate(tabId, {url: targetUrl});
             return true;
-        } catch (error) {
-            console.error(failureMessage, error);
+        } catch {
             await sendToSafety(tabId);
             return false;
         }
@@ -276,18 +281,15 @@ globalThis.OspreyBlockingService = (() => {
         const frameZeroUrl = resultAggregationService.getFrameZeroUrl(tabId);
 
         if (frameZeroUrl && !urlService.haveSameOrigin(frameZeroUrl, navigationUrl)) {
-            console.debug(`Ignoring stale blocking result for URL ${navigationUrl} in tabId ${tabId} because frame zero URL is different: ${frameZeroUrl}`);
             return;
         }
 
-        // Records the blocking result and retrieves the updated blocked context for the tab
         resultAggregationService.recordBlockingResult(tabId, navigationUrl, protectionResult.origin, protectionResult.result);
+
         const blockedContext = resultAggregationService.getBlockedContext(tabId);
+        const analysis = getBlockingAnalysis(runtime, blockedContext, protectionResult.result);
 
-        const blockingAnalysis = getBlockingAnalysis(runtime, blockedContext, protectionResult.result);
-
-        // If the number of providers that have blocked the URL is below the required blocking threshold, do not show the warning page
-        if (blockingAnalysis.blockedCount < blockingAnalysis.requiredBlockedCount) {
+        if (analysis.blockedCount < analysis.requiredBlockedCount) {
             badgeService.syncWithContext(tabId, blockedContext);
             return;
         }
@@ -300,24 +302,17 @@ globalThis.OspreyBlockingService = (() => {
         }
 
         resultAggregationService.markRedirected(tabId);
-        lastBlockedPayloadByTab.delete(tabId);
+        lastBlockedSignatureByTab.delete(tabId);
 
         const warningUrl = urlService.buildWarningPageUrl({
             url: navigationUrl,
             origin: protectionResult.origin,
             result: protectionResult.result,
-            tabId,
+            tabId
         });
 
-        await browserAPI.tabsUpdate(tabId, {
-            url: warningUrl
-        }).then(() => pushBlockedContextUpdate(tabId)).catch(error => {
-            if (isMissingTabError(error)) {
-                console.debug(`Skipping warning-page navigation because tabId ${tabId} no longer exists`);
-                return;
-            }
-
-            console.error(`Failed to navigate to recorded warning page for URL ${navigationUrl} in tabId ${tabId}`, error);
+        await browserAPI.tabsUpdate(tabId, {url: warningUrl}).then(() => pushBlockedContextUpdate(tabId)).then(() => {
+            // ignored
         });
     };
 
@@ -329,35 +324,29 @@ globalThis.OspreyBlockingService = (() => {
         }
 
         const normalizedUrl = urlService.normalizeUrl(parsed);
-        const navigationKey = buildNavigationKey(details.tabId, normalizedUrl);
+        const navKey = buildNavigationKey(details.tabId, normalizedUrl);
 
-        if (shouldSkipSuppressedNavigation(details.tabId, normalizedUrl) || inFlightNavigations.has(navigationKey)) {
+        if (shouldSkipSuppressedNavigation(details.tabId, normalizedUrl) || inFlightNavigations.has(navKey)) {
             return;
         }
 
-        const navigationToken = Symbol(navigationKey);
-        inFlightNavigations.set(navigationKey, navigationToken);
+        const token = {};
+        inFlightNavigations.set(navKey, token);
 
         try {
             const runtime = await providerRuntimeFactory.createRuntime();
-            const enabledProviders = runtime.providers.filter(provider => provider.state.enabled);
 
-            if (enabledProviders.length === 0) {
+            if (!runtime.providers.some(p => p.state.enabled)) {
                 return;
             }
 
             if (runtime.effectiveState.app.hidePopupPanel && details.url.includes("/pages/popup/popup-page.html")) {
-                console.debug(`Failed to navigate to record ${details.url} (Reason: protection options are hidden)`);
                 return;
             }
 
-            // Records the navigation URL for the tab in the result aggregation service
-            resultAggregationService.beginNavigation(details.tabId, normalizedUrl);
+            resultAggregationService.beginNavigation(details.tabId);
+            lastBlockedSignatureByTab.delete(details.tabId);
 
-            // Clears any existing blocked context for the tab
-            lastBlockedPayloadByTab.delete(details.tabId);
-
-            // Clears the badge immediately on navigation
             badgeService.clear(details.tabId);
 
             await providerEngine.scanUrl({
@@ -365,23 +354,13 @@ globalThis.OspreyBlockingService = (() => {
                 url: normalizedUrl,
                 providers: runtime.providers,
                 expirationSeconds: runtime.effectiveState.app.cacheExpirationSeconds,
-
-                // Both frameZeroUrl and badge clear happen here, after DNS passes,
-                // so neither fires for navigations that are skipped nor aborted.
-                onScanBegin: async () => {
-                    resultAggregationService.setFrameZeroUrl(details.tabId, normalizedUrl);
-                    badgeService.clear(details.tabId);
-                },
-
-                onResult: protectionResult => {
-                    handleProtectionResult(details.tabId, normalizedUrl, runtime, protectionResult).catch(error => {
-                        console.error(`Failed to handle protection result for URL ${details.url} in tabId ${details.tabId}`, error);
-                    });
-                },
+                onResult: res => handleProtectionResult(details.tabId, normalizedUrl, runtime, res).then(() => {
+                    // ignored
+                })
             });
         } finally {
-            if (inFlightNavigations.get(navigationKey) === navigationToken) {
-                inFlightNavigations.delete(navigationKey);
+            if (inFlightNavigations.get(navKey) === token) {
+                inFlightNavigations.delete(navKey);
             }
         }
     };
@@ -390,100 +369,83 @@ globalThis.OspreyBlockingService = (() => {
         const parsed = urlService.parseHttpUrl(blockedUrl);
 
         if (!parsed) {
-            return failClosed("allow website", blockedUrl, "invalid URL", tabId);
+            return failClosed("allow", blockedUrl, "invalid", tabId);
         }
 
         const runtime = await providerRuntimeFactory.createRuntime();
+        const normalizedUrl = urlService.normalizeUrl(parsed);
         const hostname = parsed.hostname;
         const labels = hostname.split(".");
-        const allowPattern = labels.length >= 3 ? `*.${labels.slice(1).join(".")}` : `*.${hostname}`;
-        const normalizedUrl = urlService.normalizeUrl(parsed);
-        const normalizedHostname = urlService.canonicalizeHostname(parsed.hostname);
+        const pattern = labels.length >= 3 ? "*." + labels.slice(1).join(".") : "*." + hostname;
 
-        cacheService.allowPattern(allowPattern).then(() => {
-            // ignoring await
+        cacheService.allowPattern(pattern).then(() => {
+            // ignored
         });
 
         cacheService.clearBlockedForLookup(normalizedUrl).then(() => {
-            // ignoring await
+            // ignored
         });
 
-        for (const provider of runtime.providers) {
-            const lookupKey = urlService.lookupValueForTarget(blockedUrl, provider.lookupTarget || "url");
+        const providers = runtime.providers;
 
-            if (lookupKey && lookupKey !== normalizedUrl) {
-                cacheService.clearBlockedForProviderLookup(provider.id, lookupKey).then(() => {
-                    // ignoring await
+        for (const element of providers) {
+            const key = urlService.lookupValueForTarget(blockedUrl, element.lookupTarget || "url");
+
+            if (key && key !== normalizedUrl) {
+                cacheService.clearBlockedForProviderLookup(element.id, key).then(() => {
                 });
             }
         }
 
-        if (normalizedHostname) {
-            cacheService.clearBlockedForLookup(normalizedHostname).then(() => {
-                // ignoring await
-            });
-        }
-
         rememberSuppressedNavigation(tabId, normalizedUrl);
+        const success = await navigateWithSafetyFallback(tabId, blockedUrl);
 
-        const navigationSucceeded = await navigateWithSafetyFallback(
-            tabId,
-            blockedUrl,
-            `Failed to navigate to ${blockedUrl} for tabId ${tabId} after allowing website`
-        );
-
-        if (navigationSucceeded) {
+        if (success) {
             cleanupAfterNavigation(tabId);
         }
 
         return {
             ok: true,
-            navigated: navigationSucceeded
+            navigated: success
         };
     };
 
     const continueToWebsite = async (tabId, blockedUrl, origin) => {
         const parsed = urlService.parseHttpUrl(blockedUrl);
 
-        if (!parsed) {
-            return failClosed("continue to website", blockedUrl, "invalid URL", tabId);
-        }
-
-        if (typeof origin !== "string" || origin.length === 0) {
-            return failClosed("continue to website", blockedUrl, "missing provider origin", tabId);
+        if (!parsed || !origin) {
+            return failClosed("continue", blockedUrl, "invalid", tabId);
         }
 
         const runtime = await providerRuntimeFactory.createRuntime();
-        const provider = runtime.providers.find(item => item.id === origin);
+        const provider = runtime.providers.find(p => p.id === origin);
 
         if (!provider) {
-            return failClosed("continue to website", blockedUrl, `unknown provider '${origin}'`, tabId);
+            return failClosed("continue", blockedUrl, "unknown", tabId);
         }
 
         const lookupKey = urlService.lookupValueForTarget(parsed, provider.lookupTarget || "url");
 
         if (!lookupKey) {
-            return failClosed("continue to website", blockedUrl, "failed to derive lookup key", tabId);
+            return failClosed("continue", blockedUrl, "lookup fail", tabId);
         }
 
-        cacheService.markAllowed(
-            provider.id,
-            lookupKey,
-            runtime.effectiveState.app.cacheExpirationSeconds
-        ).then(() => {
-            // ignoring await
+        cacheService.markAllowed(provider.id, lookupKey, runtime.effectiveState.app.cacheExpirationSeconds).then(() => {
+            // ignored
         });
 
         cacheService.clearBlockedForProviderLookup(provider.id, lookupKey).then(() => {
-            // ignoring await
+            // ignored
         });
 
         const nextContext = resultAggregationService.removeOrigin(tabId, origin);
 
         if (nextContext) {
             resultAggregationService.markRedirected(tabId);
-            lastBlockedPayloadByTab.delete(tabId);
+            lastBlockedSignatureByTab.delete(tabId);
+
             badgeService.syncWithContext(tabId, nextContext);
+
             await pushBlockedContextUpdate(tabId);
 
             return {
@@ -496,45 +458,32 @@ globalThis.OspreyBlockingService = (() => {
         const resumeUrl = urlService.normalizeUrl(parsed);
         rememberSuppressedNavigation(tabId, resumeUrl);
 
-        const navigationSucceeded = await navigateWithSafetyFallback(
-            tabId,
-            blockedUrl,
-            `Failed to navigate to ${blockedUrl} for tabId ${tabId} after continuing to website`
-        );
+        const success = await navigateWithSafetyFallback(tabId, blockedUrl);
 
-        if (navigationSucceeded) {
+        if (success) {
             cleanupAfterNavigation(tabId);
         }
 
         return {
             ok: true,
-            navigated: navigationSucceeded,
+            navigated: success,
             context: null
         };
     };
 
     const reportWebsite = async reportUrl => {
-        if (typeof reportUrl !== "string" || reportUrl.length === 0) {
-            console.warn(`Failed to report website for URL ${reportUrl} (Reason: invalid URL)`);
-            return failureResult;
-        }
-
         try {
-            const parsed = new URL(reportUrl);
+            const reportUrlObject = new URL(reportUrl);
 
-            if (parsed.protocol === "http:" || parsed.protocol === "https:" || parsed.protocol === "mailto:") {
+            if (/^(http|https|mailto):$/.test(reportUrlObject.protocol)) {
                 await browserAPI.tabsCreate({url: reportUrl});
-            } else {
-                console.warn(`OspreyBlockingService ignored unsupported report protocol '${parsed.protocol}'`);
             }
             return {ok: true};
         } catch {
-            console.warn(`Failed to report website for URL ${reportUrl} (Reason: URL parsing failed)`);
             return failureResult;
         }
     };
 
-    // Public API
     return Object.freeze({
         handleNavigation,
         allowWebsite,
@@ -544,5 +493,6 @@ globalThis.OspreyBlockingService = (() => {
         pushBlockedContextUpdate,
         markWarningPageReady,
         connectWarningPort,
+        clearTab
     });
 })();

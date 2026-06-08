@@ -18,102 +18,138 @@
 "use strict";
 
 globalThis.OspreyBadgeService = (() => {
-    // Global variables
     const browserAPI = globalThis.OspreyBrowserAPI;
 
+    const desiredCounts = new Map();
+    const appliedCounts = new Map();
+    const colorsSetTabs = new Set();
+    const dirtyTabs = new Set();
+
+    let globalTimer = null;
     const coalesceMs = 50;
 
-    const appliedCountByTab = new Map();
-    const desiredCountByTab = new Map();
-    const pendingTimerByTab = new Map();
+    const maxCachedStrings = 1024;
+    const cachedStrings = new Array(maxCachedStrings);
 
-    const setColor = (tabId, method, color) => browserAPI[method]({color, tabId});
+    for (let i = 0; i < maxCachedStrings; i++) {
+        cachedStrings[i] = String(i);
+    }
 
-    const applyState = tabId => {
-        pendingTimerByTab.delete(tabId);
+    const getString = val => val < maxCachedStrings ? cachedStrings[val] : String(val);
 
-        if (!desiredCountByTab.has(tabId)) {
-            return Promise.resolve();
+    const badgeTextPacket = {tabId: 0, text: ""};
+    const badgeBgColorPacket = {color: "#ff4b4b", tabId: 0};
+    const badgeTextColorPacket = {color: "#ffffff", tabId: 0};
+
+    const processDirtyTabs = () => {
+        globalTimer = null;
+
+        for (const tabId of dirtyTabs) {
+            const desired = desiredCounts.get(tabId);
+
+            if (desired === undefined) {
+                continue;
+            }
+
+            const applied = appliedCounts.get(tabId) ?? -1;
+
+            if (applied === desired) {
+                continue;
+            }
+
+            appliedCounts.set(tabId, desired);
+            badgeTextPacket.tabId = tabId;
+
+            if (desired === 0) {
+                colorsSetTabs.delete(tabId);
+                badgeTextPacket.text = "";
+                browserAPI.actionSetBadgeText(badgeTextPacket).catch(globalThis.console.error);
+                continue;
+            }
+
+            badgeTextPacket.text = getString(desired);
+            browserAPI.actionSetBadgeText(badgeTextPacket).catch(globalThis.console.error);
+
+            if (!colorsSetTabs.has(tabId)) {
+                badgeBgColorPacket.tabId = tabId;
+                browserAPI.actionSetBadgeBackgroundColor(badgeBgColorPacket).catch(globalThis.console.error);
+
+                badgeTextColorPacket.tabId = tabId;
+                browserAPI.actionSetBadgeTextColor(badgeTextColorPacket).catch(globalThis.console.error);
+
+                colorsSetTabs.add(tabId);
+            }
         }
 
-        const count = desiredCountByTab.get(tabId);
-        desiredCountByTab.delete(tabId);
-
-        if (appliedCountByTab.get(tabId) === count) {
-            return Promise.resolve();
-        }
-
-        appliedCountByTab.set(tabId, count);
-
-        if (count === 0) {
-            return browserAPI.actionSetBadgeText({tabId, text: ""}).catch(() => {
-                // ignored
-            });
-        }
-
-        return Promise.all([
-            // Sets the badge text to the block count
-            browserAPI.actionSetBadgeText({tabId, text: String(count)}),
-
-            // Sets the badge background color to red
-            setColor(tabId, "actionSetBadgeBackgroundColor", "#ff4b4b"),
-
-            // Sets the badge text color to white
-            setColor(tabId, "actionSetBadgeTextColor", "#ffffff")
-        ]).catch(() => {
-            // ignored
-        });
+        dirtyTabs.clear();
     };
 
     const scheduleApply = tabId => {
-        if (pendingTimerByTab.has(tabId)) {
-            return;
-        }
+        dirtyTabs.add(tabId);
 
-        pendingTimerByTab.set(tabId, setTimeout(() => {
-            applyState(tabId).catch(() => {
-                // ignored
-            });
-        }, coalesceMs));
+        if (globalTimer === null) {
+            globalTimer = setTimeout(processDirtyTabs, coalesceMs);
+        }
     };
 
     const request = (tabId, count) => {
         if (typeof tabId !== "number") {
-            return Promise.resolve();
+            return;
         }
 
-        desiredCountByTab.set(tabId, count);
+        const desired = Math.trunc(count);
+        const currentDesired = desiredCounts.get(tabId) ?? 0;
+
+        if (currentDesired === desired) {
+            return;
+        }
+
+        desiredCounts.set(tabId, desired);
         scheduleApply(tabId);
-        return Promise.resolve();
     };
 
-    const clear = tabId => request(tabId, 0);
+    const clear = tabId => {
+        request(tabId, 0);
+    };
 
     const clearTab = tabId => {
         if (typeof tabId !== "number") {
             return;
         }
 
-        const pendingTimer = pendingTimerByTab.get(tabId);
+        desiredCounts.delete(tabId);
+        appliedCounts.delete(tabId);
+        colorsSetTabs.delete(tabId);
+        dirtyTabs.delete(tabId);
 
-        if (pendingTimer) {
-            clearTimeout(pendingTimer);
+        if (dirtyTabs.size === 0 && globalTimer !== null) {
+            clearTimeout(globalTimer);
+            globalTimer = null;
+        }
+    };
+
+    const reapply = tabId => {
+        if (typeof tabId !== "number") {
+            return;
         }
 
-        pendingTimerByTab.delete(tabId);
-        desiredCountByTab.delete(tabId);
-        appliedCountByTab.delete(tabId);
+        appliedCounts.delete(tabId);
+        colorsSetTabs.delete(tabId);
+
+        if (desiredCounts.has(tabId)) {
+            scheduleApply(tabId);
+        }
     };
 
     const syncWithContext = (tabId, context) => {
-        const count = Array.isArray(context?.origins) ? context.origins.length : 0;
-        return request(tabId, count);
+        const count = context && Array.isArray(context.origins) ? context.origins.length : 0;
+        request(tabId, count);
     };
 
-    // Public API
     return Object.freeze({
         clear,
         clearTab,
+        reapply,
         syncWithContext,
     });
 })();

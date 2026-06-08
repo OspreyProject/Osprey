@@ -18,7 +18,6 @@
 "use strict";
 
 globalThis.OspreyProviderStateStore = (() => {
-    // Global variables
     const browserAPI = globalThis.OspreyBrowserAPI;
     const providerCatalog = globalThis.OspreyProviderCatalog;
 
@@ -27,234 +26,262 @@ globalThis.OspreyProviderStateStore = (() => {
 
     let cachedState = null;
     let loadingPromise = null;
+    let writeLock = Promise.resolve();
 
-    const asObject = value => value && typeof value === 'object' ? value : {};
-    const coerceBoolean = (value, fallback) => typeof value === 'boolean' ? value : fallback;
-    const coerceString = (value, fallback = '') => typeof value === 'string' ? value : fallback;
-    const clone = value => structuredClone(value);
+    const unsafeProviderKeys = new Set(['__proto__', 'prototype', 'constructor']);
+    const isUnsafeProviderId = (providerId) => typeof providerId !== 'string' || unsafeProviderKeys.has(providerId);
 
-    const coerceNumber = (value, fallback, min = null, max = null) => {
-        const num = Number(value);
-
-        if (!Number.isFinite(num) || min !== null && num < min || max !== null && num > max) {
-            return fallback;
+    const cloneState = (state) => {
+        if (!state) {
+            return null;
         }
-        return num;
-    };
 
-    const ensureProviderState = (state, providerId, enabled = false, apiKey = '') =>
-        state.providers[providerId] || (state.providers[providerId] = {enabled, apiKey});
-
-    const applyProviderState = (target, source, providerId, enabledFallback, apiKeyFallback = '') => {
-        const providerState = {
-            enabled: coerceBoolean(source?.enabled, enabledFallback),
-            apiKey: coerceString(source?.apiKey, apiKeyFallback),
+        const cloned = {
+            version: state.version,
+            app: {...state.app},
+            providers: Object.create(null)
         };
 
-        target.providers[providerId] = providerState;
-        return providerState;
-    };
+        const pKeys = Object.keys(state.providers);
 
-    const buildDefaultProviders = () => {
-        const providers = Object.create(null);
-
-        for (const {id, enabledByDefault} of providerCatalog.getAllDefinitions()) {
-            providers[id] = {enabled: Boolean(enabledByDefault)};
+        for (const element of pKeys) {
+            const k = element;
+            cloned.providers[k] = {...state.providers[k]};
         }
-        return providers;
+        return cloned;
     };
 
-    const defaultState = () => ({
-        version: 2,
+    const normalizeState = (input) => {
+        const state = input && typeof input === 'object' ? input : {};
+        const app = state.app && typeof state.app === 'object' ? state.app : {};
 
-        app: {
-            contextMenuEnabled: true,
-            hideContinueButtons: false,
-            hideReportButton: false,
-            lockSettings: false,
-            hidePopupPanel: false,
-            disableClearAllowedWebsites: false,
-            disableResetButtons: false,
-            disableThirdPartyIntegrations: false,
-            cacheExpirationSeconds: 604800,
-        },
+        const base = {
+            version: 2,
+            app: {
+                contextMenuEnabled: typeof app.contextMenuEnabled === 'boolean' ? app.contextMenuEnabled : true,
+                hideContinueButtons: typeof app.hideContinueButtons === 'boolean' ? app.hideContinueButtons : false,
+                hideReportButton: typeof app.hideReportButton === 'boolean' ? app.hideReportButton : false,
+                lockSettings: typeof app.lockSettings === 'boolean' ? app.lockSettings : typeof app.lockProtectionOptions === 'boolean' ? app.lockProtectionOptions : false,
+                hidePopupPanel: typeof app.hidePopupPanel === 'boolean' ? app.hidePopupPanel : typeof app.hideProtectionOptions === 'boolean' ? app.hideProtectionOptions : false,
+                disableClearAllowedWebsites: typeof app.disableClearAllowedWebsites === 'boolean' ? app.disableClearAllowedWebsites : false,
+                disableResetButtons: typeof app.disableResetButtons === 'boolean' ? app.disableResetButtons : false,
+                disableThirdPartyIntegrations: typeof app.disableThirdPartyIntegrations === 'boolean' ? app.disableThirdPartyIntegrations : false,
+                cacheExpirationSeconds: 604800
+            },
+            providers: Object.create(null)
+        };
 
-        providers: buildDefaultProviders(),
-    });
+        const exp = Number(app.cacheExpirationSeconds);
 
-    const boolAppKeys = [
-        'contextMenuEnabled',
-        'hideContinueButtons',
-        'hideReportButton',
-        'lockSettings',
-        'hidePopupPanel',
-        'disableClearAllowedWebsites',
-        'disableResetButtons',
-        'disableThirdPartyIntegrations',
-    ];
-
-    const appAliases = {
-        lockSettings: 'lockProtectionOptions',
-        hidePopupPanel: 'hideProtectionOptions',
-    };
-
-    const applyAppSettings = (target, source) => {
-        const app = asObject(source);
-
-        for (const key of boolAppKeys) {
-            const alias = appAliases[key];
-            let value;
-
-            if (Object.hasOwn(app, key)) {
-                value = app[key];
-            } else if (alias) {
-                value = app[alias];
-            } else {
-                value = undefined;
-            }
-
-            target[key] = coerceBoolean(value, target[key]);
+        if (Number.isFinite(exp) && exp >= 60 && exp <= 2592000) {
+            base.app.cacheExpirationSeconds = exp;
         }
 
-        target.cacheExpirationSeconds = coerceNumber(
-            app.cacheExpirationSeconds,
-            target.cacheExpirationSeconds,
-            60,
-            2592000
-        );
-    };
+        const providersInput = state.providers && typeof state.providers === 'object' ? state.providers : {};
+        const defs = providerCatalog.getAllDefinitions();
 
-    const normalizeState = input => {
-        const base = defaultState();
-        const state = asObject(input);
+        for (const element of defs) {
+            const id = element.id;
+            const src = providersInput[id];
 
-        applyAppSettings(base.app, state.app);
+            base.providers[id] = {
+                enabled: src && typeof src.enabled === 'boolean' ? src.enabled : Boolean(element.enabledByDefault),
+                apiKey: src && typeof src.apiKey === 'string' ? src.apiKey : ''
+            };
 
-        for (const {id, enabledByDefault} of providerCatalog.getAllDefinitions()) {
-            applyProviderState(base, state.providers?.[id] || {}, id, enabledByDefault);
+            Object.freeze(base.providers[id]);
         }
-        return base;
-    };
 
-    const legacyFieldKeyFor = (definition, suffix) => `${definition.aliases?.[0] || definition.id}${suffix}`;
+        Object.freeze(base.app);
+        Object.freeze(base.providers);
+        return Object.freeze(base);
+    };
 
     const migrateLegacyState = (legacySettings) => {
-        const migrated = defaultState();
-        const source = asObject(legacySettings);
+        const source = legacySettings && typeof legacySettings === 'object' ? legacySettings : {};
 
-        applyAppSettings(migrated.app, source);
+        const draft = {
+            app: {
+                contextMenuEnabled: source.contextMenuEnabled,
+                hideContinueButtons: source.hideContinueButtons,
+                hideReportButton: source.hideReportButton,
+                lockSettings: source.lockSettings ?? source.lockProtectionOptions,
+                hidePopupPanel: source.hidePopupPanel ?? source.hideProtectionOptions,
+                disableClearAllowedWebsites: source.disableClearAllowedWebsites,
+                disableResetButtons: source.disableResetButtons,
+                disableThirdPartyIntegrations: source.disableThirdPartyIntegrations,
+                cacheExpirationSeconds: source.cacheExpirationSeconds
+            },
+            providers: {}
+        };
 
-        for (const definition of providerCatalog.getAllDefinitions()) {
-            applyProviderState(migrated, {
-                enabled: source[legacyFieldKeyFor(definition, 'Enabled')],
-                apiKey: source[legacyFieldKeyFor(definition, 'ApiKey')],
-            }, definition.id, definition.enabledByDefault);
+        const defs = providerCatalog.getAllDefinitions();
+
+        for (const element of defs) {
+            const def = element;
+            const aliasKey = def.aliases && def.aliases.length > 0 ? def.aliases[0] : def.id;
+
+            draft.providers[def.id] = {
+                enabled: source[aliasKey + 'Enabled'],
+                apiKey: source[aliasKey + 'ApiKey']
+            };
         }
-        return migrated;
+        return normalizeState(draft);
     };
 
     const readStoredState = async () => {
-        const stored = await browserAPI.storageGet('local', stateKey).catch(() => ({}));
-        const next = stored?.[stateKey];
+        try {
+            const stored = await browserAPI.storageGet('local', stateKey);
 
-        if (next) {
-            return normalizeState(next);
+            if (stored?.[stateKey]) {
+                return normalizeState(stored[stateKey]);
+            }
+        } catch {
+            // ignored
         }
 
-        const legacy = await browserAPI.storageGet('local', [legacyKey]).catch(() => ({}));
-        const migrated = migrateLegacyState(legacy?.[legacyKey]);
+        try {
+            const legacy = await browserAPI.storageGet('local', [legacyKey]);
+            const migrated = migrateLegacyState(legacy?.[legacyKey]);
 
-        await browserAPI.storageSet('local', {[stateKey]: migrated}).catch(() => {
-            console.error('OspreyProviderStateStore failed to persist migrated legacy state');
-        });
-        return migrated;
+            browserAPI.storageSet('local', {[stateKey]: migrated}).catch(error => {
+                console.error('OspreyProviderStateStore failed to persist migrated legacy state', error);
+            });
+            return migrated;
+        } catch (error) {
+            console.error('OspreyProviderStateStore failed to load legacy state', error);
+            return normalizeState({});
+        }
     };
 
-    const getState = async ({fresh = false} = {}) => {
+    const getState = ({fresh = false} = {}) => {
         if (!fresh) {
             if (cachedState) {
-                return clone(cachedState);
+                return Promise.resolve(cachedState);
             }
 
             if (loadingPromise) {
-                return clone(await loadingPromise);
+                return loadingPromise;
             }
         }
 
-        loadingPromise = readStoredState().then(state => {
+        const promise = readStoredState().then(state => {
             cachedState = state;
-            loadingPromise = null;
+
+            if (loadingPromise === promise) {
+                loadingPromise = null;
+            }
             return cachedState;
         }).catch(error => {
-            loadingPromise = null;
-            console.error('OspreyProviderStateStore failed to load state', error);
+            if (loadingPromise === promise) {
+                loadingPromise = null;
+            }
             throw error;
         });
-        return clone(await loadingPromise);
+
+        loadingPromise = promise;
+        return promise;
     };
 
-    const setState = async nextState => {
-        const normalized = normalizeState(nextState);
+    const enqueueWrite = (taskFn) => {
+        const taskPromise = writeLock.then(taskFn);
+
+        writeLock = taskPromise.catch(() => {
+            // ignored
+        });
+        return taskPromise;
+    };
+
+    const updateState = (updater) => enqueueWrite(async () => {
+        const current = await getState();
+        const draft = cloneState(current);
+        const modifiedDraft = typeof updater === 'function' ? updater(draft) || draft : draft;
+
+        const normalized = normalizeState(modifiedDraft);
         cachedState = normalized;
 
         await browserAPI.storageSet('local', {[stateKey]: normalized});
-        return clone(normalized);
-    };
+        return normalized;
+    });
 
-    const updateState = async updater => {
-        const draft = clone(await getState());
-        return setState(typeof updater === 'function' ? updater(draft) || draft : draft);
-    };
-
-    const withUnlockedState = (state, action) => {
-        if (!state.app.lockSettings) {
-            action(state);
-        }
-        return state;
-    };
-
-    const setProviderEnabled = (providerId, enabled) => updateState(state => withUnlockedState(state, current => {
-        ensureProviderState(current, providerId).enabled = Boolean(enabled);
-    }));
-
-    const setProviderApiKey = (providerId, apiKey) => updateState(state => withUnlockedState(state, current => {
-        const normalizedApiKey = String(apiKey ?? '');
-        const sharedMembers = providerCatalog.getSharedGroupMembersById(providerId);
-
-        if (sharedMembers.length > 0) {
-            for (const memberId of sharedMembers) {
-                ensureProviderState(current, memberId).apiKey = normalizedApiKey;
-            }
+    const setProviderEnabled = (providerId, enabled) => updateState(state => {
+        if (isUnsafeProviderId(providerId) || state.app.lockSettings) {
             return;
         }
 
-        ensureProviderState(current, providerId).apiKey = normalizedApiKey;
-    }));
+        const provider = state.providers[providerId] || (state.providers[providerId] = {
+            enabled: false,
+            apiKey: ''
+        });
+
+        provider.enabled = Boolean(enabled);
+    });
+
+    const setProviderApiKey = (providerId, apiKey) => updateState(state => {
+        if (isUnsafeProviderId(providerId) || state.app.lockSettings) {
+            return;
+        }
+
+        const normalizedApiKey = String(apiKey ?? '');
+        const sharedMembers = providerCatalog.getSharedGroupMembersById(providerId);
+
+        if (sharedMembers && sharedMembers.length > 0) {
+            for (const element of sharedMembers) {
+                const memberId = element;
+
+                const provider = state.providers[memberId] || (state.providers[memberId] = {
+                    enabled: false,
+                    apiKey: ''
+                });
+
+                provider.apiKey = normalizedApiKey;
+            }
+        } else {
+            const provider = state.providers[providerId] || (state.providers[providerId] = {
+                enabled: false,
+                apiKey: ''
+            });
+
+            provider.apiKey = normalizedApiKey;
+        }
+    });
 
     const resetDefaultProviders = () => updateState(state => {
         if (state.app.disableResetButtons) {
-            return state;
+            return;
         }
 
-        for (const definition of providerCatalog.getAllDefinitions()) {
-            const providerState = ensureProviderState(state, definition.id, definition.enabledByDefault, '');
-            providerState.enabled = definition.enabledByDefault;
+        const defs = providerCatalog.getAllDefinitions();
+
+        for (const element of defs) {
+            const def = element;
+            const p = state.providers[def.id] || (state.providers[def.id] = {enabled: false, apiKey: ''});
+            p.enabled = Boolean(def.enabledByDefault);
         }
-        return state;
     });
 
-    const resetAll = async () => {
-        const current = await getState();
-
-        if (current.app.disableResetButtons) {
-            return clone(current);
+    const resetAll = () => updateState(state => {
+        if (state.app.disableResetButtons) {
+            return state;
         }
-        return setState(defaultState());
-    };
+        return {};
+    });
 
-    const countEnabledProviders = state => providerCatalog.getAllDefinitions().reduce(
-        (count, definition) => count + (state?.providers?.[definition.id]?.enabled ? 1 : 0), 0
-    );
+    const countEnabledProviders = (state) => {
+        if (!state?.providers) {
+            return 0;
+        }
+
+        let count = 0;
+        const keys = Object.keys(state.providers);
+
+        for (const element of keys) {
+            if (state.providers[element].enabled) {
+                count++;
+            }
+        }
+        return count;
+    };
 
     const countTotalProviders = () => providerCatalog.getAllDefinitions().length;
 
@@ -263,13 +290,14 @@ globalThis.OspreyProviderStateStore = (() => {
         loadingPromise = null;
     };
 
-    browserAPI.api?.storage?.onChanged?.addListener((changes, area) => {
-        if (area === 'local' && changes?.[stateKey]) {
-            invalidateCache();
-        }
-    });
+    if (browserAPI.api?.storage?.onChanged?.addListener) {
+        browserAPI.api.storage.onChanged.addListener((changes, area) => {
+            if (area === 'local' && changes?.[stateKey]) {
+                invalidateCache();
+            }
+        });
+    }
 
-    // Public API
     return Object.freeze({
         stateKey,
         getState,

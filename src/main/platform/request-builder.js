@@ -18,43 +18,84 @@
 "use strict";
 
 globalThis.OspreyRequestBuilder = (() => {
-    // Global variables
     const urlService = globalThis.OspreyUrlService;
 
-    const templateAliases = Object.freeze({
-        apiKey: ['apiKey', 'api_key'],
-        lookupValue: ['lookupValue', 'lookup_value'],
+    const templateRegex = /\{(url|hostname|lookupValue|lookup_value|apiKey|api_key)}/g;
+
+    const proxyHeaders = Object.freeze({
+        'Content-Type': 'application/json'
     });
 
-    const replaceTemplate = (template, values, encoded = false) => {
-        let result = String(template || '');
-        const format = encoded ? encodeURIComponent : String;
-
-        for (const [key, value] of Object.entries(values)) {
-            const formattedValue = format(value ?? '');
-            const aliases = templateAliases[key] || [key];
-
-            for (const alias of aliases) {
-                result = result.replaceAll(`{${alias}}`, formattedValue);
-            }
+    const replaceTemplate = (template, urlVal, hostnameVal, lookupVal, apiKeyVal, encoded = false) => {
+        if (!template) {
+            return '';
         }
-        return result;
+
+        const strTemp = String(template);
+
+        if (strTemp.indexOf('{') === -1) {
+            return strTemp;
+        }
+
+        return strTemp.replace(templateRegex, (_, key) => {
+            let val;
+
+            switch (key) {
+                case 'url':
+                    val = urlVal;
+                    break;
+
+                case 'hostname':
+                    val = hostnameVal;
+                    break;
+
+                case 'lookupValue':
+                case 'lookup_value':
+                    val = lookupVal;
+                    break;
+
+                case 'apiKey':
+                case 'api_key':
+                    val = apiKeyVal;
+                    break;
+            }
+            return encoded ? encodeURIComponent(val) : String(val);
+        });
     };
 
-    const buildProxyRequest = (provider, url) => ({
-        url: `${provider.proxyBaseUrl}`.replace(/\/+$/, '') + `/` + `${provider.endpoint}`.replace(/^\/+/, ''),
-        options: {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
+    const buildProxyRequest = (provider, url) => {
+        const base = String(provider.proxyBaseUrl || '');
+        const end = String(provider.endpoint || '');
+
+        let baseLen = base.length;
+
+        while (baseLen > 0 && base.codePointAt(baseLen - 1) === 47) {
+            baseLen--;
+        }
+
+        let endStart = 0;
+        const endLen = end.length;
+
+        while (endStart < endLen && end.codePointAt(endStart) === 47) {
+            endStart++;
+        }
+
+        const proxyUrl = (baseLen === base.length ? base : base.slice(0, baseLen)) + '/' +
+            (endStart === 0 ? end : end.slice(endStart));
+
+        return {
+            url: proxyUrl,
+            options: {
+                method: 'POST',
+                headers: proxyHeaders,
+                body: JSON.stringify({
+                    url: urlService.normalizeUrl(url)
+                }),
             },
-            body: JSON.stringify({
-                url: urlService.normalizeUrl(url)
-            }),
-        },
-        timeoutMs: 7000,
-        lookupKey: urlService.lookupValueForTarget(url, provider.lookupTarget),
-    });
+            timeoutMs: 7000,
+            lookupKey: urlService.lookupValueForTarget(url, provider.lookupTarget),
+        };
+    };
 
     const buildDirectRequest = (provider, url, apiKey = '') => {
         const parsed = urlService.parseHttpUrl(url);
@@ -65,35 +106,52 @@ globalThis.OspreyRequestBuilder = (() => {
         }
 
         const request = provider.request || {};
+        const normUrl = urlService.normalizeUrl(parsed);
+        const hostname = parsed.hostname;
+        const lookupValue = urlService.lookupValueForTarget(parsed, provider.lookupTarget || 'url');
 
-        const values = {
-            url: urlService.normalizeUrl(parsed),
-            hostname: parsed.hostname,
-            lookupValue: urlService.lookupValueForTarget(parsed, provider.lookupTarget || 'url'),
-            apiKey
-        };
+        const reqHeaders = request.headers;
+        const headers = {};
 
-        const headers = Object.fromEntries(
-            (request.headers || [])
-                .filter((header) => header?.name)
-                .map((header) => [header.name, replaceTemplate(header.value, values)])
-        );
+        if (reqHeaders) {
+            for (const element of reqHeaders) {
+                const header = element;
 
-        const method = String(request.method || 'GET').toUpperCase() === 'POST' ? 'POST' : 'GET';
+                if (header?.name) {
+                    headers[header.name] = replaceTemplate(header.value, normUrl, hostname, lookupValue, apiKey, false);
+                }
+            }
+        }
 
-        if (!headers['Content-Type'] && method === 'POST') {
+        let method = 'GET';
+
+        if (request.method) {
+            const m = String(request.method);
+
+            if (m === 'POST' || m === 'post' || m.toUpperCase() === 'POST') {
+                method = 'POST';
+            }
+        }
+
+        if (method === 'POST' && !headers['Content-Type']) {
             headers['Content-Type'] = request.contentType || 'application/json';
         }
 
+        let timeoutMs = Number(request.timeoutMs);
+
+        if (!(timeoutMs > 0)) {
+            timeoutMs = 7000;
+        }
+
         return {
-            url: replaceTemplate(request.urlTemplate, values, true),
+            url: replaceTemplate(request.urlTemplate, normUrl, hostname, lookupValue, apiKey, true),
             options: {
                 method,
                 headers,
-                body: method === 'POST' ? replaceTemplate(request.bodyTemplate, values) : undefined,
+                body: method === 'POST' ? replaceTemplate(request.bodyTemplate, normUrl, hostname, lookupValue, apiKey, false) : undefined,
             },
-            timeoutMs: Number(request.timeoutMs) > 0 ? Number(request.timeoutMs) : 7000,
-            lookupKey: values.lookupValue,
+            timeoutMs,
+            lookupKey: lookupValue,
         };
     };
 
@@ -102,7 +160,6 @@ globalThis.OspreyRequestBuilder = (() => {
             buildProxyRequest(provider, url) :
             buildDirectRequest(provider, url, providerState.apiKey || '');
 
-    // Public API
     return Object.freeze({
         buildRequest,
     });

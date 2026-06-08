@@ -18,33 +18,65 @@
 "use strict";
 
 globalThis.OspreyTimedSignal = (() => {
-    const create = (parentSignal, timeoutMs) => {
-        const controller = new AbortController();
-        let timerId = null;
+    class TimedSignalCoordinator {
+        constructor(parentSignal, timeoutMs) {
+            this.controller = new AbortController();
+            this.parentSignal = parentSignal || null;
+            this.timerId = null;
 
-        const abort = reason => {
-            controller.abort(reason);
-        };
+            if (this.parentSignal !== null && this.parentSignal.aborted) {
+                this.controller.abort(this.parentSignal.reason ?? 'parent-aborted');
+                this.parentSignal = null;
+                return;
+            }
 
-        if (parentSignal?.aborted) {
-            abort(parentSignal.reason || 'parent-aborted');
-        } else {
-            parentSignal?.addEventListener('abort', () => abort(parentSignal.reason || 'parent-aborted'), {once: true});
+            if (this.parentSignal !== null) {
+                this.parentSignal.addEventListener('abort', this, {
+                    once: true
+                });
+            }
+
+            this.timerId = setTimeout(() => {
+                this.timerId = null;
+
+                if (!this.controller.signal.aborted) {
+                    this.controller.abort('timeout');
+                }
+
+                this.cleanup();
+            }, timeoutMs);
         }
 
-        timerId = setTimeout(() => abort('timeout'), timeoutMs);
+        handleEvent() {
+            if (!this.controller.signal.aborted) {
+                this.controller.abort(this.parentSignal?.reason ?? 'parent-aborted');
+            }
+
+            this.cleanup();
+        }
+
+        cleanup() {
+            if (this.timerId !== null) {
+                clearTimeout(this.timerId);
+                this.timerId = null;
+            }
+
+            if (this.parentSignal !== null) {
+                this.parentSignal.removeEventListener('abort', this);
+                this.parentSignal = null;
+            }
+        }
+    }
+
+    const create = (parentSignal, timeoutMs) => {
+        const coordinator = new TimedSignalCoordinator(parentSignal, timeoutMs);
 
         return {
-            signal: controller.signal,
-
-            cleanup() {
-                timerId && clearTimeout(timerId);
-                timerId = null;
-            },
+            signal: coordinator.controller.signal,
+            cleanup: () => coordinator.cleanup()
         };
     };
 
-    // Public API
     return Object.freeze({
         create
     });

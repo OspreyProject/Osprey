@@ -18,31 +18,33 @@
 "use strict";
 
 globalThis.OspreyCatalogValidator = (() => {
-    // Global variables
     const providerGroups = globalThis.OspreyProviderGroups;
 
-    const validKinds = Object.freeze(['proxy_builtin', 'direct_static']);
-    const validLookupTargets = Object.freeze(['hostname', 'url']);
-    const validReportTypes = Object.freeze(['mailto_false_positive', 'external_url', 'url_template', 'none']);
-    const validProtocols = Object.freeze(['http:', 'https:', 'mailto:']);
-    const validRequestMethods = Object.freeze(['GET', 'POST']);
+    const validKinds = new Set(['proxy_builtin', 'direct_static']);
+    const validLookupTargets = new Set(['hostname', 'url']);
+    const validReportTypes = new Set(['mailto_false_positive', 'external_url', 'url_template', 'none']);
+    const validProtocols = new Set(['http:', 'https:', 'mailto:']);
+    const validRequestMethods = new Set(['GET', 'POST']);
 
-    const validRuleOperators = Object.freeze([
+    const validRuleOperators = new Set([
         'exists', 'not_exists', 'truthy', 'falsy', 'equals', 'not_equals',
         'contains', 'greater_than', 'less_than', 'greater_or_equal', 'less_or_equal', 'regex',
     ]);
 
     const idPattern = /^[a-z0-9-]+$/;
+    const templateRegex = /{lookupValue}|{hostname}|{url}|{apiKey}|{api_key}/g;
+
+    const urlValidationCache = new Map();
 
     const fail = (message, ErrorType = Error) => {
         throw new ErrorType(message);
     };
 
-    const requireObject = (value, message) => value && typeof value === 'object' || fail(message);
-    const requireString = (value, message) => typeof value === 'string' && value.trim() || fail(message);
+    const requireObject = (value, message) => value !== null && typeof value === 'object' && !Array.isArray(value) || fail(message);
+    const requireString = (value, message) => typeof value === 'string' && value.trim().length > 0 || fail(message);
     const requireArray = (value, message) => Array.isArray(value) || fail(message, TypeError);
     const requireBoolean = (value, message) => typeof value === 'boolean' || fail(message, TypeError);
-    const requireOneOf = (value, validValues, message) => validValues.includes(value) || fail(message);
+    const requireOneOf = (value, validSet, message) => validSet.has(value) || fail(message);
     const requirePattern = (value, pattern, message) => typeof value === 'string' && pattern.test(value) || fail(message);
 
     const addUnique = (set, value, message) => {
@@ -53,14 +55,34 @@ globalThis.OspreyCatalogValidator = (() => {
         set.add(value);
     };
 
-    const ensureUrl = (label, value) => {
-        try {
-            const parsed = new URL(String(value || ''));
+    const cacheUrlResult = (strValue, isValid) => {
+        if (urlValidationCache.size >= 2048) {
+            urlValidationCache.clear();
+        }
+        urlValidationCache.set(strValue, isValid);
+    };
 
-            if (!validProtocols.includes(parsed.protocol)) {
+    const ensureUrl = (label, value) => {
+        const strValue = String(value || '');
+
+        if (urlValidationCache.has(strValue)) {
+            if (!urlValidationCache.get(strValue)) {
+                fail(`${label} must be a valid URL`);
+            }
+            return;
+        }
+
+        try {
+            const parsed = new URL(strValue);
+
+            if (!validProtocols.has(parsed.protocol)) {
+                cacheUrlResult(strValue, false);
                 fail('unsupported protocol');
             }
+
+            cacheUrlResult(strValue, true);
         } catch {
+            cacheUrlResult(strValue, false);
             fail(`${label} must be a valid URL`);
         }
     };
@@ -71,7 +93,7 @@ globalThis.OspreyCatalogValidator = (() => {
 
         switch (report.type) {
             case 'mailto_false_positive':
-                if (typeof report.email !== 'string' || !report.email.includes('@')) {
+                if (typeof report.email !== 'string' || report.email.indexOf('@') === -1) {
                     fail(`Invalid report email for ${definition.id}`);
                 }
 
@@ -83,11 +105,11 @@ globalThis.OspreyCatalogValidator = (() => {
                 break;
 
             case 'url_template':
-                if (typeof report.template !== 'string' || !report.template.includes('{url}')) {
+                if (typeof report.template !== 'string' || report.template.indexOf('{url}') === -1) {
                     fail(`URL-template report for ${definition.id} must include {url}`);
                 }
 
-                ensureUrl(`Template report URL for ${definition.id}`, report.template.replace('{url}', 'https%3A%2F%2Fexample.test'));
+                ensureUrl(`Template report URL for ${definition.id}`, report.template.replaceAll('{url}', 'https%3A%2F%2Fexample.com'));
                 break;
         }
     };
@@ -99,49 +121,69 @@ globalThis.OspreyCatalogValidator = (() => {
         requireString(rule.result, `Response rule result missing for ${definition.id}`);
     };
 
+    const templateReplacer = match => {
+        switch (match) {
+            case '{url}':
+                return 'https://example.com';
+            case '{apiKey}':
+            case '{api_key}':
+                return 'sample';
+            default:
+                return 'example.com';
+        }
+    };
+
     const validateDirectRequest = definition => {
-        const {request, responseRules} = definition;
+        const request = definition.request;
+        const responseRules = definition.responseRules;
 
         requireObject(request, `Missing request definition for ${definition.id}`);
         requireString(request.urlTemplate, `Missing request URL template for ${definition.id}`);
 
-        ensureUrl(
-            `Request URL for ${definition.id}`,
-            request.urlTemplate
-                .replaceAll('{lookupValue}', 'example.test')
-                .replaceAll('{hostname}', 'example.test')
-                .replaceAll('{url}', 'https://example.test')
-                .replaceAll('{apiKey}', 'sample')
-                .replaceAll('{api_key}', 'sample')
-        );
+        const template = request.urlTemplate.replace(templateRegex, templateReplacer);
 
-        requireOneOf(String(request.method || 'GET').toUpperCase(), validRequestMethods, `Invalid request method for ${definition.id}`);
+        ensureUrl(`Request URL for ${definition.id}`, template);
+
+        const method = String(request.method || 'GET').toUpperCase();
+        requireOneOf(method, validRequestMethods, `Invalid request method for ${definition.id}`);
         requireArray(request.headers, `Headers must be an array for ${definition.id}`);
         requireArray(responseRules, `Direct provider ${definition.id} must declare response rules`);
 
-        if (responseRules.length === 0) {
+        const rulesLength = responseRules.length;
+
+        if (rulesLength === 0) {
             fail(`Direct provider ${definition.id} must declare response rules`);
         }
 
-        for (const rule of responseRules) {
-            validateDirectRequestRule(definition, rule);
+        for (let i = 0; i < rulesLength; i++) {
+            validateDirectRequestRule(definition, responseRules[i]);
         }
     };
 
     const validateAliases = (definition, aliases) => {
         addUnique(aliases, definition.id, `Alias collision on provider id: ${definition.id}`);
 
-        for (const alias of definition.aliases || []) {
-            requireString(alias, `Invalid alias on ${definition.id}`);
+        const definitionAliases = definition.aliases;
 
-            if (alias !== definition.id) {
-                addUnique(aliases, alias, `Duplicate alias: ${alias}`);
+        if (definitionAliases !== undefined && definitionAliases !== null) {
+            requireArray(definitionAliases, `Aliases must be an array on ${definition.id}`);
+            const aliasLength = definitionAliases.length;
+
+            for (let i = 0; i < aliasLength; i++) {
+                const alias = definitionAliases[i];
+                requireString(alias, `Invalid alias on ${definition.id}`);
+
+                if (alias !== definition.id) {
+                    addUnique(aliases, alias, `Duplicate alias: ${alias}`);
+                }
             }
         }
     };
 
     const validateProxyBuiltin = (definition, proxyEndpoints) => {
-        if (typeof definition.proxyBaseUrl !== 'string' || !definition.proxyBaseUrl.startsWith('http')) {
+        const proxyBaseUrl = definition.proxyBaseUrl;
+
+        if (typeof proxyBaseUrl !== 'string' || !proxyBaseUrl.startsWith('http')) {
             fail(`Invalid proxy base URL for ${definition.id}`);
         }
 
@@ -151,40 +193,50 @@ globalThis.OspreyCatalogValidator = (() => {
 
     const validateDefinition = (definition, state) => {
         requireObject(definition, 'Catalog entry must be an object');
-        requireOneOf(definition.kind, validKinds, `Invalid provider kind for ${definition?.id}: ${definition?.kind}`);
-        requirePattern(definition.id, idPattern, `Invalid provider id: ${definition?.id}`);
 
-        addUnique(state.ids, definition.id, `Duplicate provider id: ${definition.id}`);
+        const id = definition.id;
+        const kind = definition.kind;
+
+        requireOneOf(kind, validKinds, `Invalid provider kind for ${id}: ${kind}`);
+        requirePattern(id, idPattern, `Invalid provider id: ${id}`);
+
+        addUnique(state.ids, id, `Duplicate provider id: ${id}`);
         validateAliases(definition, state.aliases);
 
         if (!state.groups.has(definition.group)) {
-            fail(`Unknown provider group for ${definition.id}: ${definition.group}`);
+            fail(`Unknown provider group for ${id}: ${definition.group}`);
         }
 
-        requireString(definition.displayName, `Missing displayName for ${definition.id}`);
-        requireBoolean(definition.enabledByDefault, `Missing enabledByDefault boolean for ${definition.id}`);
-        requireOneOf(definition.lookupTarget, validLookupTargets, `Invalid lookup target for ${definition.id}: ${definition.lookupTarget}`);
+        requireString(definition.displayName, `Missing displayName for ${id}`);
+        requireBoolean(definition.enabledByDefault, `Missing enabledByDefault boolean for ${id}`);
+        requireOneOf(definition.lookupTarget, validLookupTargets, `Invalid lookup target for ${id}: ${definition.lookupTarget}`);
 
-        if (definition.bypassBlockingThreshold != null) {
-            requireBoolean(definition.bypassBlockingThreshold, `Invalid bypassBlockingThreshold flag for ${definition.id}`);
+        if (definition.bypassBlockingThreshold !== undefined && definition.bypassBlockingThreshold !== null) {
+            requireBoolean(definition.bypassBlockingThreshold, `Invalid bypassBlockingThreshold flag for ${id}`);
         }
 
-        requireString(definition.icon, `Icon path must be a string for ${definition.id}`);
-        requireArray(definition.tags, `Tags must be an array for ${definition.id}`);
+        requireString(definition.icon, `Icon path must be a string for ${id}`);
+        requireArray(definition.tags, `Tags must be an array for ${id}`);
         validateReport(definition, definition.report);
 
-        if (definition.policyKey) {
-            addUnique(state.policyKeys, definition.policyKey, `Duplicate policy key: ${definition.policyKey}`);
+        const policyKey = definition.policyKey;
+
+        if (policyKey) {
+            addUnique(state.policyKeys, policyKey, `Duplicate policy key: ${policyKey}`);
         }
 
-        if (definition.kind === 'proxy_builtin') {
+        if (kind === 'proxy_builtin') {
             validateProxyBuiltin(definition, state.proxyEndpoints);
-        } else if (definition.kind === 'direct_static') {
+        } else if (kind === 'direct_static') {
             validateDirectRequest(definition);
         }
     };
 
     const validate = definitions => {
+        if (!Array.isArray(definitions)) {
+            return;
+        }
+
         const state = {
             ids: new Set(),
             aliases: new Set(),
@@ -193,12 +245,13 @@ globalThis.OspreyCatalogValidator = (() => {
             groups: new Set(Object.keys(providerGroups || {})),
         };
 
-        for (const definition of definitions) {
-            validateDefinition(definition, state);
+        const len = definitions.length;
+
+        for (let i = 0; i < len; i++) {
+            validateDefinition(definitions[i], state);
         }
     };
 
-    // Public API
     return Object.freeze({
         validate
     });

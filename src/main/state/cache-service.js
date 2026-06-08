@@ -18,7 +18,6 @@
 "use strict";
 
 globalThis.OspreyCacheService = (() => {
-    // Global variables
     const browserAPI = globalThis.OspreyBrowserAPI;
     const urlService = globalThis.OspreyUrlService;
     const protectionResult = globalThis.OspreyProtectionResult;
@@ -30,6 +29,9 @@ globalThis.OspreyCacheService = (() => {
 
     const flushDelay = 500;
 
+    const maxEntriesPerMap = 500;
+    const pruneThreshold = Math.floor(maxEntriesPerMap * 0.9);
+
     let cacheSnapshot = null;
     let loadingPromise = null;
     let flushTimer = null;
@@ -40,7 +42,10 @@ globalThis.OspreyCacheService = (() => {
     let metaDirty = false;
 
     const processing = new Map();
-    const defaultSnapshot = () => ({version: 2, globalAllowPatterns: [], providers: {}});
+    const processingTabs = new Map();
+    let parsedAllowPatternsCache = null;
+
+    const defaultSnapshot = () => ({version: 2, globalAllowPatterns: [], providers: new Map()});
 
     const markProviderDirty = providerId => {
         if (providerId) {
@@ -52,58 +57,131 @@ globalThis.OspreyCacheService = (() => {
         metaDirty = true;
     };
 
-    const normalizeEntryMap = value => !value || typeof value !== "object" ? {} : Object.fromEntries(
-        Object.entries(value).filter(([, entry]) => entry && typeof entry === "object")
-    );
+    const normalizeEntryMap = value => {
+        const map = new Map();
+
+        if (!value || typeof value !== "object" || Array.isArray(value)) {
+            return map;
+        }
+
+        for (const [key, entry] of Object.entries(value)) {
+            if (entry && typeof entry === "object") {
+                map.set(key, {
+                    exp: Number(entry.exp) || 0,
+                    result: entry.result
+                });
+            }
+        }
+        return map;
+    };
 
     const normalizeProvider = record => ({
         allowed: normalizeEntryMap(record?.allowed),
         blocked: normalizeEntryMap(record?.blocked),
     });
 
-    const normalizePatterns = value => Array.isArray(value) ?
-        value.filter(pattern => typeof pattern === "string" && pattern.startsWith("*.")) : [];
+    const normalizePatterns = value => {
+        if (!Array.isArray(value)) {
+            return [];
+        }
+        return value.filter(pattern => typeof pattern === "string" && pattern.startsWith("*."));
+    };
 
     const normalizeSnapshot = input => {
         const value = input && typeof input === "object" ? input : {};
-        const providers = value.providers && typeof value.providers === "object" ?
-            Object.fromEntries(Object.entries(value.providers).map(([providerId, record]) => [providerId, normalizeProvider(record)])) : {};
+        const providers = new Map();
+
+        if (value.providers && typeof value.providers === "object" && !Array.isArray(value.providers)) {
+            for (const [providerId, providerData] of Object.entries(value.providers)) {
+                providers.set(providerId, normalizeProvider(providerData));
+            }
+        }
 
         return {
-            ...defaultSnapshot(),
+            version: 2,
             globalAllowPatterns: normalizePatterns(value.globalAllowPatterns),
             providers
         };
     };
 
     const ensureProvider = (snapshot, providerId) => {
-        if (!snapshot.providers[providerId]) {
-            snapshot.providers[providerId] = normalizeProvider();
+        let provider = snapshot.providers.get(providerId);
+
+        if (!provider) {
+            provider = {allowed: new Map(), blocked: new Map()};
+            snapshot.providers.set(providerId, provider);
             markMetaDirty();
         }
-        return snapshot.providers[providerId];
+        return provider;
     };
 
-    const getRecord = (snapshot, providerId, type, lookupKey) => snapshot.providers?.[providerId]?.[type]?.[lookupKey] || null;
+    const getRecord = (snapshot, providerId, type, lookupKey) => {
+        const provider = snapshot.providers.get(providerId);
+        return provider ? provider[type].get(lookupKey) || null : null;
+    };
 
     const setRecord = async (providerId, type, lookupKey, record) => {
         const snapshot = await getSnapshot();
-        ensureProvider(snapshot, providerId)[type][lookupKey] = record;
+        const entries = ensureProvider(snapshot, providerId)[type];
+
+        entries.set(lookupKey, record);
+        boundEntryMap(entries, Date.now());
         markProviderDirty(providerId);
         scheduleFlush();
     };
 
     const deleteRecord = async (providerId, type, lookupKey) => {
         const snapshot = await getSnapshot();
-        const records = snapshot.providers?.[providerId]?.[type];
+        const provider = snapshot.providers.get(providerId);
 
-        if (!records?.[lookupKey]) {
+        if (!provider?.[type].has(lookupKey)) {
             return;
         }
 
-        delete records[lookupKey];
+        provider[type].delete(lookupKey);
         markProviderDirty(providerId);
         scheduleFlush();
+    };
+
+    const pruneExpiredEntries = (entriesMap, now) => {
+        if (!entriesMap || entriesMap.size === 0) {
+            return false;
+        }
+
+        let removed = false;
+
+        for (const [key, entry] of entriesMap.entries()) {
+            if (!entry || entry.exp < now) {
+                entriesMap.delete(key);
+                removed = true;
+            }
+        }
+        return removed;
+    };
+
+    const boundEntryMap = (entriesMap, now) => {
+        if (!entriesMap || entriesMap.size < pruneThreshold) {
+            return false;
+        }
+
+        let changed = pruneExpiredEntries(entriesMap, now);
+        const overflow = entriesMap.size - maxEntriesPerMap;
+
+        if (overflow > 0) {
+            let deleted = 0;
+
+            for (const key of entriesMap.keys()) {
+                entriesMap.delete(key);
+                deleted++;
+
+                if (deleted >= overflow) {
+                    break;
+                }
+            }
+
+            changed = true;
+        }
+        return changed;
     };
 
     const createEntryGetter = type => async (providerId, lookupKey) => getRecord(await getSnapshot(), providerId, type, lookupKey);
@@ -122,7 +200,7 @@ globalThis.OspreyCacheService = (() => {
     const buildMetaRecord = () => ({
         version: cacheSnapshot.version,
         globalAllowPatterns: cacheSnapshot.globalAllowPatterns,
-        providerIds: Object.keys(cacheSnapshot.providers),
+        providerIds: Array.from(cacheSnapshot.providers.keys()),
     });
 
     const flush = async () => {
@@ -133,7 +211,7 @@ globalThis.OspreyCacheService = (() => {
 
         ensureFlushPromise();
 
-        const providersToWrite = [...dirtyProviders];
+        const providersToWrite = Array.from(dirtyProviders);
         const writeMeta = metaDirty;
 
         dirtyProviders.clear();
@@ -147,10 +225,13 @@ globalThis.OspreyCacheService = (() => {
         }
 
         for (const providerId of providersToWrite) {
-            const record = cacheSnapshot?.providers?.[providerId];
+            const record = cacheSnapshot?.providers.get(providerId);
 
             if (record) {
-                payload[shardKey(providerId)] = record;
+                payload[shardKey(providerId)] = {
+                    allowed: Object.fromEntries(record.allowed),
+                    blocked: Object.fromEntries(record.blocked)
+                };
             } else {
                 removeKeys.push(shardKey(providerId));
             }
@@ -171,11 +252,14 @@ globalThis.OspreyCacheService = (() => {
                 metaDirty = true;
             }
 
-            for (const providerId of providersToWrite) {
-                dirtyProviders.add(providerId);
+            for (const element of providersToWrite) {
+                dirtyProviders.add(element);
             }
         } finally {
-            flushResolver?.();
+            if (flushResolver) {
+                flushResolver();
+            }
+
             flushResolver = null;
             flushPromise = null;
         }
@@ -188,6 +272,7 @@ globalThis.OspreyCacheService = (() => {
 
         flushTimer = setTimeout(() => {
             flushTimer = null;
+
             flush().catch(error => {
                 console.error("OspreyCacheService failed to flush cache snapshot", error);
             });
@@ -201,10 +286,9 @@ globalThis.OspreyCacheService = (() => {
 
         if (meta && typeof meta === "object" && meta.providers && typeof meta.providers === "object") {
             const migrated = normalizeSnapshot(meta);
-
             markMetaDirty();
 
-            for (const providerId of Object.keys(migrated.providers)) {
+            for (const providerId of migrated.providers.keys()) {
                 markProviderDirty(providerId);
             }
 
@@ -216,34 +300,39 @@ globalThis.OspreyCacheService = (() => {
             meta.providerIds.filter(id => typeof id === "string" && id.length > 0) : [];
 
         const keys = providerIds.map(shardKey);
-
-        const shardStored = keys.length > 0 ?
-            await browserAPI.storageGet("local", keys).catch(() => ({})) : {};
-
-        const providers = {};
+        const shardStored = keys.length > 0 ? await browserAPI.storageGet("local", keys).catch(() => ({})) : {};
+        const providers = new Map();
 
         for (const providerId of providerIds) {
-            providers[providerId] = normalizeProvider(shardStored?.[shardKey(providerId)]);
+            providers.set(providerId, normalizeProvider(shardStored?.[shardKey(providerId)]));
         }
 
         return {
-            ...defaultSnapshot(),
+            version: 2,
             globalAllowPatterns: normalizePatterns(meta?.globalAllowPatterns),
             providers,
         };
     };
 
-    const resolveLoadingSnapshot = () => loadSnapshot()
-        .then(snapshot => {
-            cacheSnapshot = snapshot;
-            loadingPromise = null;
-            return snapshot;
-        })
-        .catch(error => {
-            loadingPromise = null;
-            console.error("OspreyCacheService failed to load cache snapshot", error);
-            throw error;
-        });
+    const resolveLoadingSnapshot = () => {
+        const currentPromise = loadSnapshot()
+            .then(snapshot => {
+                cacheSnapshot = snapshot;
+
+                if (loadingPromise === currentPromise) {
+                    loadingPromise = null;
+                }
+                return snapshot;
+            }).catch(error => {
+                if (loadingPromise === currentPromise) {
+                    loadingPromise = null;
+                }
+
+                console.error("OspreyCacheService failed to load cache snapshot", error);
+                throw error;
+            });
+        return currentPromise;
+    };
 
     const getSnapshot = async ({fresh = false} = {}) => {
         if (!fresh && cacheSnapshot) {
@@ -256,30 +345,36 @@ globalThis.OspreyCacheService = (() => {
         return loadingPromise;
     };
 
-    const pruneExpiredEntries = (entries, now) => {
-        let removed = false;
-
-        for (const [key, entry] of Object.entries(entries || {})) {
-            if (!entry || Number(entry.exp) < now) {
-                delete entries[key];
-                removed = true;
-            }
-        }
-        return removed;
-    };
-
     const cleanupExpired = async () => {
         const snapshot = await getSnapshot();
         const now = Date.now();
         let dirty = false;
 
-        for (const [providerId, provider] of Object.entries(snapshot.providers)) {
-            const providerDirty = pruneExpiredEntries(provider.allowed, now) ||
-                pruneExpiredEntries(provider.blocked, now);
+        for (const [providerId, provider] of snapshot.providers.entries()) {
+            const allowedDirty = pruneExpiredEntries(provider.allowed, now);
+            const blockedDirty = pruneExpiredEntries(provider.blocked, now);
 
-            if (providerDirty) {
+            if (allowedDirty || blockedDirty) {
                 markProviderDirty(providerId);
                 dirty = true;
+            }
+        }
+
+        for (const [key, entry] of processing.entries()) {
+            if (entry.exp < now) {
+                processing.delete(key);
+
+                if (entry.tabId) {
+                    const tabKeys = processingTabs.get(entry.tabId);
+
+                    if (tabKeys) {
+                        tabKeys.delete(key);
+
+                        if (tabKeys.size === 0) {
+                            processingTabs.delete(entry.tabId);
+                        }
+                    }
+                }
             }
         }
 
@@ -288,20 +383,48 @@ globalThis.OspreyCacheService = (() => {
         }
     };
 
-    const matchesGlobalPattern = async url => {
+    const getParsedGlobalPatterns = async () => {
         const snapshot = await getSnapshot();
+        const currentVersion = snapshot.globalAllowPatterns.length;
+
+        if (parsedAllowPatternsCache && parsedAllowPatternsCache.version === currentVersion) {
+            return parsedAllowPatternsCache.patternsSet;
+        }
+
+        const patternsSet = new Set();
+
+        for (let i = 0; i < currentVersion; i++) {
+            patternsSet.add(urlService.canonicalizeHostname(snapshot.globalAllowPatterns[i].slice(2)));
+        }
+
+        parsedAllowPatternsCache = {version: currentVersion, patternsSet};
+        return patternsSet;
+    };
+
+    const matchesGlobalPattern = async url => {
         const parsed = urlService.parseHttpUrl(url);
 
         if (!parsed) {
             return false;
         }
 
-        const hostname = urlService.canonicalizeHostname(parsed.hostname);
+        let hostname = urlService.canonicalizeHostname(parsed.hostname);
+        const patternsSet = await getParsedGlobalPatterns();
 
-        return snapshot.globalAllowPatterns.some(pattern => {
-            const canonicalPattern = urlService.canonicalizeHostname(pattern.slice(2));
-            return hostname === canonicalPattern || hostname.endsWith(`.${canonicalPattern}`);
-        });
+        while (hostname) {
+            if (patternsSet.has(hostname)) {
+                return true;
+            }
+
+            const nextDot = hostname.indexOf(".");
+
+            if (nextDot === -1) {
+                break;
+            }
+
+            hostname = hostname.slice(nextDot + 1);
+        }
+        return false;
     };
 
     const getAllowedEntry = createEntryGetter("allowed");
@@ -327,19 +450,21 @@ globalThis.OspreyCacheService = (() => {
         const alreadyClear = Boolean(cacheSnapshot) &&
             cacheSnapshot.version === 2 &&
             cacheSnapshot.globalAllowPatterns.length === 0 &&
-            Object.keys(cacheSnapshot.providers).length === 0 &&
+            cacheSnapshot.providers.size === 0 &&
             processing.size === 0;
 
         if (!alreadyClear) {
-            const previousProviderIds = cacheSnapshot ? Object.keys(cacheSnapshot.providers) : [];
+            const previousProviderIds = cacheSnapshot ? Array.from(cacheSnapshot.providers.keys()) : [];
 
             cacheSnapshot = defaultSnapshot();
             processing.clear();
+            processingTabs.clear();
+            parsedAllowPatternsCache = null;
 
             markMetaDirty();
 
-            for (const providerId of previousProviderIds) {
-                markProviderDirty(providerId);
+            for (const element of previousProviderIds) {
+                markProviderDirty(element);
             }
 
             scheduleFlush(0);
@@ -350,19 +475,17 @@ globalThis.OspreyCacheService = (() => {
         const snapshot = await getSnapshot();
         let removed = 0;
 
-        for (const [providerId, provider] of Object.entries(snapshot.providers)) {
-            if (provider?.blocked && Object.hasOwn(provider.blocked, lookupKey)) {
-                delete provider.blocked[lookupKey];
+        for (const [providerId, provider] of snapshot.providers.entries()) {
+            if (provider?.blocked?.has(lookupKey)) {
+                provider.blocked.delete(lookupKey);
                 markProviderDirty(providerId);
-                removed += 1;
+                removed++;
             }
         }
 
-        if (!removed) {
-            return;
+        if (removed > 0) {
+            scheduleFlush();
         }
-
-        scheduleFlush();
     };
 
     const clearBlockedForProviderLookup = (providerId, lookupKey) => deleteRecord(providerId, "blocked", lookupKey);
@@ -377,24 +500,69 @@ globalThis.OspreyCacheService = (() => {
 
         if (entry.exp < Date.now()) {
             processing.delete(key);
+
+            if (entry.tabId) {
+                const tabSet = processingTabs.get(entry.tabId);
+
+                if (tabSet) {
+                    tabSet.delete(key);
+
+                    if (tabSet.size === 0) {
+                        processingTabs.delete(entry.tabId);
+                    }
+                }
+            }
             return false;
         }
         return true;
     };
 
     const markProcessing = (providerId, lookupKey, tabId = 0) => {
-        processing.set(processingKey(providerId, lookupKey), {exp: Date.now() + 60000, tabId});
+        const key = processingKey(providerId, lookupKey);
+        processing.set(key, {exp: Date.now() + 60000, tabId});
+
+        if (tabId) {
+            let tabKeys = processingTabs.get(tabId);
+
+            if (!tabKeys) {
+                tabKeys = new Set();
+                processingTabs.set(tabId, tabKeys);
+            }
+
+            tabKeys.add(key);
+        }
     };
 
     const clearProcessing = (providerId, lookupKey) => {
-        processing.delete(processingKey(providerId, lookupKey));
+        const key = processingKey(providerId, lookupKey);
+        const entry = processing.get(key);
+
+        if (entry) {
+            processing.delete(key);
+
+            if (entry.tabId) {
+                const tabKeys = processingTabs.get(entry.tabId);
+
+                if (tabKeys) {
+                    tabKeys.delete(key);
+
+                    if (tabKeys.size === 0) {
+                        processingTabs.delete(entry.tabId);
+                    }
+                }
+            }
+        }
     };
 
     const clearProcessingByTab = tabId => {
-        for (const [key, entry] of processing.entries()) {
-            if (entry.tabId === tabId) {
+        const tabKeys = processingTabs.get(tabId);
+
+        if (tabKeys) {
+            for (const key of tabKeys) {
                 processing.delete(key);
             }
+
+            processingTabs.delete(tabId);
         }
     };
 
@@ -404,24 +572,28 @@ globalThis.OspreyCacheService = (() => {
         }
 
         const snapshot = await getSnapshot();
-        const expiry = Date.now() + Number(expirationSeconds || 0) * 1000;
+        const now = Date.now();
+        const expiry = now + Number(expirationSeconds || 0) * 1000;
 
         for (const entry of entries) {
-            const providerId = String(entry?.providerId || '');
-            const lookupKey = String(entry?.lookupKey || '');
+            const providerId = String(entry?.providerId || "");
+            const lookupKey = String(entry?.lookupKey || "");
 
             if (!providerId || !lookupKey) {
                 continue;
             }
 
             const providerRecord = ensureProvider(snapshot, providerId);
-            delete providerRecord.allowed[lookupKey];
-            delete providerRecord.blocked[lookupKey];
+
+            providerRecord.allowed.delete(lookupKey);
+            providerRecord.blocked.delete(lookupKey);
 
             if (protectionResult.blockingResults.has(entry?.outcome)) {
-                providerRecord.blocked[lookupKey] = {exp: expiry, result: entry.outcome};
+                providerRecord.blocked.set(lookupKey, {exp: expiry, result: entry.outcome});
+                boundEntryMap(providerRecord.blocked, now);
             } else {
-                providerRecord.allowed[lookupKey] = {exp: expiry};
+                providerRecord.allowed.set(lookupKey, {exp: expiry});
+                boundEntryMap(providerRecord.allowed, now);
             }
 
             markProviderDirty(providerId);
@@ -430,16 +602,12 @@ globalThis.OspreyCacheService = (() => {
         scheduleFlush();
     };
 
-    // Run cache cleanup on a 5-minute interval rather than on every read
     setInterval(cleanupExpired, 5 * 60 * 1000);
 
-    // Perform an initial cleanup on startup to remove any entries that
-    // may have expired while the extension was not running
     cleanupExpired().catch(error => {
         console.warn("OspreyCacheService failed to cleanup on startup", error);
     });
 
-    // Public API
     return Object.freeze({
         matchesGlobalPattern,
         getAllowedEntry,

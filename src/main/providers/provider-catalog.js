@@ -18,57 +18,106 @@
 "use strict";
 
 globalThis.OspreyProviderCatalog = (() => {
-    // Global variables
     const catalogValidator = globalThis.OspreyCatalogValidator;
     const directIntegrations = globalThis.OspreyDirectIntegrations || [];
     const protectionResult = globalThis.OspreyProtectionResult;
     const proxyBuiltins = globalThis.OspreyProxyBuiltins || [];
 
-    const cloneArray = value => Array.isArray(value) ? value.slice() : [];
+    const apiKeyPattern = /\{api_?key}/;
 
-    const normalizeHeaders = headers => Array.isArray(headers) ? headers.map(({name = '', value = ''} = {}) => ({
-        name, value
-    })) : [];
+    const builtinsLen = proxyBuiltins.length;
+    const directLen = directIntegrations.length;
 
-    const staticDefinitions = Object.freeze([...proxyBuiltins, ...directIntegrations]);
-    catalogValidator.validate(staticDefinitions);
+    const emptyArray = Object.freeze([]);
+    const allDefinitions = new Array(builtinsLen + directLen);
 
-    const allDefinitions = Object.freeze([...staticDefinitions]);
-    const byId = new Map(allDefinitions.map(definition => [definition.id, definition]));
+    const byId = new Map();
     const staticAliasMap = new Map();
     const sharedApiKeyGroupMembers = new Map();
 
-    for (const {id, aliases = []} of staticDefinitions) {
-        staticAliasMap.set(id, id);
+    let defIdx = 0;
 
-        for (const alias of aliases) {
-            staticAliasMap.set(alias, id);
+    const processDefinition = (definition) => {
+        if (!definition) {
+            return;
         }
+
+        allDefinitions[defIdx++] = definition;
+
+        const id = definition.id;
+
+        if (id !== undefined) {
+            byId.set(id, definition);
+            staticAliasMap.set(id, id);
+        }
+
+        const aliases = definition.aliases;
+
+        if (Array.isArray(aliases)) {
+            const aliasLen = aliases.length;
+            for (let i = 0; i < aliasLen; i++) {
+                staticAliasMap.set(aliases[i], id);
+            }
+        }
+    };
+
+    for (let i = 0; i < builtinsLen; i++) {
+        processDefinition(proxyBuiltins[i]);
     }
 
-    for (const definition of directIntegrations) {
-        const groupId = String(definition?.sharedApiKeyGroup || '');
+    for (let i = 0; i < directLen; i++) {
+        const definition = directIntegrations[i];
+        processDefinition(definition);
 
-        if (!groupId) {
+        if (!definition) {
             continue;
         }
 
-        const members = sharedApiKeyGroupMembers.get(groupId) || [];
-        members.push(definition.id);
-        sharedApiKeyGroupMembers.set(groupId, members);
+        const groupId = definition.sharedApiKeyGroup;
+
+        if (groupId) {
+            const strGroupId = String(groupId);
+            let members = sharedApiKeyGroupMembers.get(strGroupId);
+
+            if (!members) {
+                members = [];
+                sharedApiKeyGroupMembers.set(strGroupId, members);
+            }
+
+            members.push(definition.id);
+        }
+    }
+
+    allDefinitions.length = defIdx;
+    Object.freeze(allDefinitions);
+
+    if (catalogValidator && typeof catalogValidator.validate === 'function') {
+        catalogValidator.validate(allDefinitions);
     }
 
     const getAllDefinitions = () => allDefinitions;
-    const resolveId = (idOrAlias) => staticAliasMap.get(idOrAlias);
 
     const getDefinition = (idOrAlias) => {
-        const resolvedId = resolveId(idOrAlias);
-        const definition = byId.get(resolvedId) || null;
-
-        if (!definition && String(idOrAlias || '').trim()) {
-            console.warn(`OspreyProviderCatalog could not resolve provider '${idOrAlias}'`);
+        if (!idOrAlias) {
+            return null;
         }
-        return definition;
+
+        const resolvedId = staticAliasMap.get(idOrAlias);
+
+        if (resolvedId !== undefined) {
+            const definition = byId.get(resolvedId);
+
+            if (definition !== undefined) {
+                return definition;
+            }
+        }
+
+        const strId = String(idOrAlias).trim();
+
+        if (strId) {
+            console.warn(`OspreyProviderCatalog could not resolve provider '${strId}'`);
+        }
+        return null;
     };
 
     const requiresApiKey = definition => {
@@ -76,12 +125,41 @@ globalThis.OspreyProviderCatalog = (() => {
             return false;
         }
 
-        const request = definition.request || {};
+        if (Array.isArray(definition.tags) && definition.tags.includes('api_key_required')) {
+            return true;
+        }
 
-        return cloneArray(definition.tags).includes('api_key_required') ||
-            /\{api(?:_|)key}/.test(String(request.urlTemplate || '')) ||
-            /\{api(?:_|)key}/.test(String(request.bodyTemplate || '')) ||
-            normalizeHeaders(request.headers).some(({value}) => /\{api(?:_|)key}/.test(String(value)));
+        const request = definition.request;
+
+        if (!request) {
+            return false;
+        }
+
+        const urlTpl = request.urlTemplate;
+
+        if (urlTpl && typeof urlTpl === 'string' && apiKeyPattern.test(urlTpl)) {
+            return true;
+        }
+
+        const bodyTpl = request.bodyTemplate;
+
+        if (bodyTpl && typeof bodyTpl === 'string' && apiKeyPattern.test(bodyTpl)) {
+            return true;
+        }
+
+        const headers = request.headers;
+
+        if (Array.isArray(headers)) {
+            const headersLen = headers.length;
+            for (let i = 0; i < headersLen; i++) {
+                const header = headers[i];
+
+                if (header && typeof header.value === 'string' && apiKeyPattern.test(header.value)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     };
 
     const proxyEndpointUrl = definition => {
@@ -89,30 +167,69 @@ globalThis.OspreyProviderCatalog = (() => {
             return '';
         }
 
-        const base = String(definition.proxyBaseUrl || 'https://api.osprey.ac').replace(/\/+$/u, '');
-        const endpoint = String(definition.endpoint || definition.id).replace(/^\/+/, '');
+        let base = definition.proxyBaseUrl || 'https://api.osprey.ac';
+
+        if (base.endsWith('/')) {
+            base = base.replace(/\/+$/, '');
+        }
+
+        let endpoint = definition.endpoint || definition.id || '';
+
+        if (endpoint.startsWith('/')) {
+            endpoint = endpoint.replace(/^\/+/, '');
+        }
         return `${base}/${endpoint}`;
     };
 
-    const hasAdultFilter = definition => cloneArray(definition?.tags).includes('adult_filter') ||
-        definition?.group === 'adult_content_filters';
+    const hasAdultFilter = definition => {
+        if (!definition) {
+            return false;
+        }
+
+        if (definition.group === 'adult_content_filters') {
+            return true;
+        }
+        return Array.isArray(definition.tags) && definition.tags.includes('adult_filter');
+    };
 
     const supportsBlockingResult = (definition, result) => {
-        const normalizedResult = String(result || '');
+        if (!result) {
+            return false;
+        }
 
-        if (normalizedResult === protectionResult?.resultTypes?.ADULT_CONTENT) {
+        const normalizedResult = String(result);
+        const isAdultContent = normalizedResult === protectionResult?.resultTypes?.ADULT_CONTENT;
+
+        if (isAdultContent) {
             return hasAdultFilter(definition);
         }
 
-        if (protectionResult?.blockingResults?.has(normalizedResult)) {
+        const isBlocking = protectionResult?.blockingResults?.has(normalizedResult);
+
+        if (isBlocking) {
             return !hasAdultFilter(definition);
         }
         return false;
     };
 
     const resolveIconUrl = (definition, depth = 2) => {
-        const value = String(definition?.icon || '').replace(/^\/+/, '');
-        return value ? `${'../'.repeat(depth)}${value}` : '';
+        const rawIcon = definition?.icon;
+
+        if (!rawIcon || typeof rawIcon !== 'string') {
+            return '';
+        }
+
+        let value = rawIcon;
+
+        if (value.startsWith('/')) {
+            value = value.replace(/^\/+/, '');
+        }
+
+        if (depth > 0) {
+            return value ? '../'.repeat(depth) + value : '';
+        } else {
+            return value ? '' + value : '';
+        }
     };
 
     const getBuiltins = () => proxyBuiltins.slice();
@@ -120,11 +237,13 @@ globalThis.OspreyProviderCatalog = (() => {
 
     const getSharedGroupMembersById = providerId => {
         const definition = getDefinition(providerId);
-        const groupId = String(definition?.sharedApiKeyGroup || '');
-        return groupId ? sharedApiKeyGroupMembers.get(groupId) || [] : [];
+
+        if (!definition?.sharedApiKeyGroup) {
+            return emptyArray;
+        }
+        return sharedApiKeyGroupMembers.get(String(definition.sharedApiKeyGroup)) || emptyArray;
     };
 
-    // Public API
     return Object.freeze({
         getBuiltins,
         getDirectIntegrations,

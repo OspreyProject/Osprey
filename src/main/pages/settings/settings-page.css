@@ -390,6 +390,26 @@ html, body {
     outline: none;
 }
 
+.provider-website-link {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    color: #a6a6a6;
+    cursor: pointer;
+    width: fit-content;
+    margin: 4px 0 8px 0;
+    text-decoration: none;
+}
+
+.provider-website-link:hover,
+.provider-website-link:focus-visible {
+    text-decoration: underline;
+}
+
+.provider-website-link:focus-visible {
+    outline: none;
+}
+
 .provider-toggle-wrap {
     flex-shrink: 0;
     display: flex;
@@ -1037,7 +1057,7 @@ html, body {
     border: 1px solid #4b4b4b;
 }
 
-.reset-providers-btn:hover {
+.reset-providers-btn:not(:disabled):hover {
     background-color: #464646;
     color: #e6e6e6;
 }
@@ -1048,7 +1068,7 @@ html, body {
     border: 1px solid #5a3232;
 }
 
-.reset-all-btn:hover {
+.reset-all-btn:not(:disabled):hover {
     background-color: #502828;
     color: #ffaaaa;
 }
@@ -1059,6 +1079,20 @@ html, body {
 .action-btn:disabled {
     cursor: not-allowed;
     opacity: 0.4;
+}
+
+.toggle-switch.disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+}
+
+.reset-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+}
+
+.field-input:disabled {
+    cursor: not-allowed;
 }
 
 .security-note {

@@ -18,7 +18,6 @@
 "use strict";
 
 globalThis.OspreyProviderEngine = (() => {
-    // Global variables
     const cacheService = globalThis.OspreyCacheService;
     const protectionResult = globalThis.OspreyProtectionResult;
     const requestBuilder = globalThis.OspreyRequestBuilder;
@@ -27,39 +26,72 @@ globalThis.OspreyProviderEngine = (() => {
     const urlService = globalThis.OspreyUrlService;
 
     const abortControllers = new Map();
+    const providerNamesCache = new WeakMap();
 
-    const normalizeCandidateNames = names => Array.isArray(names) ?
-        names.map(value => String(value || '').trim().toLowerCase()).filter(Boolean) : [];
+    const normalizeLookupName = value => typeof value === 'string' ? value.trim().toLowerCase() : String(value || '').trim().toLowerCase();
 
-    const normalizeLookupName = value => String(value || '').trim().toLowerCase();
+    const getCachedProviderNames = provider => {
+        let names = providerNamesCache.get(provider);
 
-    const createSharedResponseIndexes = responseBody => {
-        const metaDefenderByProvider = new Map();
-        const metaDefenderSources = responseBody?.data?.[0]?.lookup_results?.sources;
+        if (!names) {
+            const raw = provider?.metaDefenderProviderNames;
 
-        if (Array.isArray(metaDefenderSources)) {
-            for (const source of metaDefenderSources) {
-                const key = normalizeLookupName(source?.provider);
+            if (Array.isArray(raw)) {
+                names = [];
 
-                if (key) {
-                    metaDefenderByProvider.set(key, source);
+                for (const element of raw) {
+                    const val = element;
+
+                    if (val) {
+                        names.push(normalizeLookupName(val));
+                    }
                 }
+            } else {
+                names = [];
             }
+
+            providerNamesCache.set(provider, names);
         }
-        return Object.freeze({metaDefenderByProvider});
+        return names;
     };
 
-    const getMetaDefenderProviderBlock = (provider, responseBody, indexes = null) => {
-        const providerNames = normalizeCandidateNames(provider?.metaDefenderProviderNames);
+    const createSharedResponseIndexes = responseBody => {
+        const sources = responseBody?.data?.[0]?.lookup_results?.sources;
 
-        if (providerNames.length === 0) {
+        if (!Array.isArray(sources) || sources.length === 0) {
             return null;
         }
 
-        if (indexes?.metaDefenderByProvider instanceof Map) {
-            for (const providerName of providerNames) {
-                if (indexes.metaDefenderByProvider.has(providerName)) {
-                    return indexes.metaDefenderByProvider.get(providerName) || null;
+        const metaDefenderMap = new Map();
+
+        for (const element of sources) {
+            const source = element;
+
+            if (source?.provider) {
+                const key = normalizeLookupName(source.provider);
+
+                if (key) {
+                    metaDefenderMap.set(key, source);
+                }
+            }
+        }
+        return metaDefenderMap;
+    };
+
+    const getMetaDefenderProviderBlock = (provider, responseBody, metaDefenderMap = null) => {
+        const providerNames = getCachedProviderNames(provider);
+        const len = providerNames.length;
+
+        if (len === 0) {
+            return null;
+        }
+
+        if (metaDefenderMap instanceof Map) {
+            for (let i = 0; i < len; i++) {
+                const match = metaDefenderMap.get(providerNames[i]);
+
+                if (match) {
+                    return match;
                 }
             }
             return null;
@@ -70,35 +102,47 @@ globalThis.OspreyProviderEngine = (() => {
         if (!Array.isArray(sources)) {
             return null;
         }
-        return sources.find(source => providerNames.includes(normalizeLookupName(source?.provider))) || null;
+
+        for (const element of sources) {
+            const source = element;
+
+            if (source?.provider && providerNames.includes(normalizeLookupName(source.provider))) {
+                return source;
+            }
+        }
+        return null;
     };
 
-    const getRuleEvaluationBody = (provider, responseBody, indexes = null) => {
+    const getRuleEvaluationBody = (provider, responseBody, metaDefenderMap = null) => {
         if (provider?.responseRuleScope === 'metadefender_provider_block') {
-            return getMetaDefenderProviderBlock(provider, responseBody, indexes);
+            return getMetaDefenderProviderBlock(provider, responseBody, metaDefenderMap);
         }
         return responseBody;
     };
 
-    const evaluateDirectResponse = (provider, responseBody, indexes = null) => {
-        const evaluationBody = getRuleEvaluationBody(provider, responseBody, indexes);
+    const evaluateDirectResponse = (provider, responseBody, metaDefenderMap = null) => {
+        const evaluationBody = getRuleEvaluationBody(provider, responseBody, metaDefenderMap);
 
-        if (evaluationBody === null || evaluationBody === undefined) {
+        if (evaluationBody == null) {
             return protectionResult.resultTypes.ALLOWED;
         }
 
         const matched = responseRuleEngine.evaluateRules(evaluationBody, provider.responseRules || []);
-        const normalized = String(matched || 'KNOWN_SAFE').toUpperCase();
-        let result;
 
-        if (normalized === 'KNOWN_SAFE') {
-            result = protectionResult.resultTypes.KNOWN_SAFE;
-        } else if (normalized === 'ALLOWED') {
-            result = protectionResult.resultTypes.ALLOWED;
-        } else {
-            result = protectionResult.fromProviderString(normalized.toLowerCase());
+        if (!matched || matched === 'KNOWN_SAFE') {
+            return protectionResult.resultTypes.KNOWN_SAFE;
         }
-        return result;
+
+        const normalized = typeof matched === 'string' ? matched.toLowerCase() : String(matched).toLowerCase();
+
+        if (normalized === 'known_safe') {
+            return protectionResult.resultTypes.KNOWN_SAFE;
+        }
+
+        if (normalized === 'allowed') {
+            return protectionResult.resultTypes.ALLOWED;
+        }
+        return protectionResult.fromProviderString(normalized);
     };
 
     const emitResult = (provider, targetUrl, result, onResult) => onResult(protectionResult.create({
@@ -125,21 +169,24 @@ globalThis.OspreyProviderEngine = (() => {
     };
 
     const finalizeProviderResult = async (provider, lookupKey, targetUrl, expirationSeconds, onResult, outcome) => {
-        protectionResult.blockingResults.has(outcome) ?
-            cacheService.markBlocked(provider.id, lookupKey, outcome, expirationSeconds).then(() => {
-                // ignoring await
-            }) : cacheService.markAllowed(provider.id, lookupKey, expirationSeconds).then(() => {
-                // ignoring await
+        if (protectionResult.blockingResults.has(outcome)) {
+            cacheService.markBlocked(provider.id, lookupKey, outcome, expirationSeconds).catch(() => {
+                // ignored
             });
+        } else {
+            cacheService.markAllowed(provider.id, lookupKey, expirationSeconds).catch(() => {
+                // ignored
+            });
+        }
 
         console.info(`[${provider.displayName}] URL result: ${outcome} for ${targetUrl}`);
         emitResult(provider, targetUrl, outcome, onResult);
     };
 
-    const checkProviderCache = async (provider, lookupKey, targetUrl, expirationSeconds, onResult, options) => {
-        if (options.globalAllowMatched && !provider.bypassBlockingThreshold) {
-            cacheService.markAllowed(provider.id, lookupKey, expirationSeconds).then(() => {
-                // ignoring await
+    const checkProviderCache = async (provider, lookupKey, targetUrl, expirationSeconds, onResult, globalAllowMatched) => {
+        if (globalAllowMatched && !provider.bypassBlockingThreshold) {
+            cacheService.markAllowed(provider.id, lookupKey, expirationSeconds).catch(() => {
+                // ignored
             });
 
             emitResult(provider, targetUrl, protectionResult.resultTypes.ALLOWED, onResult);
@@ -170,7 +217,7 @@ globalThis.OspreyProviderEngine = (() => {
         return true;
     };
 
-    const fetchProviderResult = async (provider, targetUrl, parentSignal, expirationSeconds, onResult, tabId = 0, options = {}) => {
+    const fetchProviderResult = async (provider, targetUrl, parentSignal, expirationSeconds, onResult, tabId, globalAllowMatched) => {
         const lookupKey = urlService.lookupValueForTarget(targetUrl, provider.lookupTarget || 'url');
 
         if (!lookupKey) {
@@ -178,7 +225,7 @@ globalThis.OspreyProviderEngine = (() => {
             return;
         }
 
-        if (!await checkProviderCache(provider, lookupKey, targetUrl, expirationSeconds, onResult, options)) {
+        if (!await checkProviderCache(provider, lookupKey, targetUrl, expirationSeconds, onResult, globalAllowMatched)) {
             return;
         }
 
@@ -186,6 +233,7 @@ globalThis.OspreyProviderEngine = (() => {
 
         try {
             const data = await fetchJsonResponse(provider, targetUrl, parentSignal);
+
             const outcome = provider.kind === 'proxy_builtin' ?
                 protectionResult.fromProviderString(data?.result) :
                 evaluateDirectResponse(provider, data);
@@ -199,15 +247,18 @@ globalThis.OspreyProviderEngine = (() => {
         }
     };
 
-    const fetchSharedProviderResults = async (providers, targetUrl, parentSignal, expirationSeconds, onResult, tabId = 0, options = {}) => {
-        if (!Array.isArray(providers) || providers.length === 0) {
+    const fetchSharedProviderResults = async (providers, targetUrl, parentSignal, expirationSeconds, onResult, tabId, globalAllowMatched) => {
+        const providersLen = providers.length;
+
+        if (providersLen === 0) {
             return;
         }
 
         const lookupKeys = new Map();
         const activeProviders = [];
 
-        for (const provider of providers) {
+        for (let i = 0; i < providersLen; i++) {
+            const provider = providers[i];
             const lookupKey = urlService.lookupValueForTarget(targetUrl, provider.lookupTarget || 'url');
 
             if (!lookupKey) {
@@ -217,7 +268,7 @@ globalThis.OspreyProviderEngine = (() => {
 
             lookupKeys.set(provider.id, lookupKey);
 
-            if (!await checkProviderCache(provider, lookupKey, targetUrl, expirationSeconds, onResult, options)) {
+            if (!await checkProviderCache(provider, lookupKey, targetUrl, expirationSeconds, onResult, globalAllowMatched)) {
                 continue;
             }
 
@@ -225,59 +276,56 @@ globalThis.OspreyProviderEngine = (() => {
             activeProviders.push(provider);
         }
 
-        if (activeProviders.length === 0) {
+        const activeLen = activeProviders.length;
+
+        if (activeLen === 0) {
             return;
         }
 
         try {
             const data = await fetchJsonResponse(activeProviders[0], targetUrl, parentSignal);
-            const indexes = createSharedResponseIndexes(data);
-            const computedOutcomes = [];
+            const metaDefenderMap = createSharedResponseIndexes(data);
 
-            for (const provider of activeProviders) {
+            const computedOutcomes = [];
+            const cacheStorePayload = [];
+
+            for (let i = 0; i < activeLen; i++) {
+                const provider = activeProviders[i];
+                const lookupKey = lookupKeys.get(provider.id);
+
                 try {
-                    computedOutcomes.push({
-                        provider,
-                        lookupKey: lookupKeys.get(provider.id),
-                        outcome: evaluateDirectResponse(provider, data, indexes),
-                    });
+                    const outcome = evaluateDirectResponse(provider, data, metaDefenderMap);
+                    computedOutcomes.push({provider, outcome});
+                    cacheStorePayload.push({providerId: provider.id, lookupKey, outcome});
                 } catch (error) {
                     console.warn(`[${provider.displayName}] Failed to evaluate shared response: ${error}`);
-                    computedOutcomes.push({
-                        provider,
-                        lookupKey: lookupKeys.get(provider.id),
-                        outcome: protectionResult.resultTypes.FAILED,
-                        skipCache: true,
-                    });
+                    computedOutcomes.push({provider, outcome: protectionResult.resultTypes.FAILED});
                 }
             }
 
-            cacheService.storeOutcomes(
-                computedOutcomes.filter(entry => !entry.skipCache).map(entry => ({
-                    providerId: entry.provider.id,
-                    lookupKey: entry.lookupKey,
-                    outcome: entry.outcome,
-                })),
-                expirationSeconds
-            ).then(() => {
-                // ignoring await
-            });
+            if (cacheStorePayload.length > 0) {
+                cacheService.storeOutcomes(cacheStorePayload, expirationSeconds).catch(() => {
+                });
+            }
 
-            for (const entry of computedOutcomes) {
+            for (const element of computedOutcomes) {
+                const entry = element;
                 console.info(`[${entry.provider.displayName}] URL result: ${entry.outcome} for ${targetUrl}`);
                 emitResult(entry.provider, targetUrl, entry.outcome, onResult);
             }
         } catch (error) {
-            for (const provider of activeProviders) {
+            for (let i = 0; i < activeLen; i++) {
+                const provider = activeProviders[i];
                 console.warn(`[${provider.displayName}] Failed to check URL: ${error}`);
                 emitResult(provider, targetUrl, protectionResult.resultTypes.FAILED, onResult);
             }
         } finally {
-            for (const provider of activeProviders) {
-                const lookupKey = lookupKeys.get(provider.id);
+            for (let i = 0; i < activeLen; i++) {
+                const id = activeProviders[i].id;
+                const lookupKey = lookupKeys.get(id);
 
                 if (lookupKey) {
-                    cacheService.clearProcessing(provider.id, lookupKey);
+                    cacheService.clearProcessing(id, lookupKey);
                 }
             }
         }
@@ -302,15 +350,39 @@ globalThis.OspreyProviderEngine = (() => {
             return;
         }
 
-        const hostname = parsedUrl.hostname;
-
-        if (urlService.isInternalHostname(hostname)) {
+        if (urlService.isInternalHostname(parsedUrl.hostname)) {
             return;
         }
 
-        const enabledProviders = providers.filter(provider => provider.state.enabled);
+        const individualProviders = [];
+        const sharedGroups = new Map();
+        let hasEnabled = false;
 
-        if (enabledProviders.length === 0) {
+        for (const element of providers) {
+            const provider = element;
+
+            if (!provider.state.enabled) {
+                continue;
+            }
+
+            hasEnabled = true;
+            const groupId = provider.sharedRequestGroup;
+
+            if (groupId) {
+                let group = sharedGroups.get(groupId);
+
+                if (!group) {
+                    group = [];
+                    sharedGroups.set(groupId, group);
+                }
+
+                group.push(provider);
+            } else {
+                individualProviders.push(provider);
+            }
+        }
+
+        if (!hasEnabled) {
             return;
         }
 
@@ -321,44 +393,31 @@ globalThis.OspreyProviderEngine = (() => {
 
         const targetUrl = parsedUrl.toString();
         const globalAllowMatched = await cacheService.matchesGlobalPattern(parsedUrl);
-        const sharedGroups = new Map();
-        const individualProviders = [];
+        const tasks = [];
 
-        for (const provider of enabledProviders) {
-            const groupId = String(provider?.sharedRequestGroup || '');
-
-            if (!groupId) {
-                individualProviders.push(provider);
-                continue;
-            }
-
-            if (!sharedGroups.has(groupId)) {
-                sharedGroups.set(groupId, []);
-            }
-
-            sharedGroups.get(groupId).push(provider);
-        }
-
-        const tasks = [
-            ...individualProviders.map(provider => fetchProviderResult(
-                provider,
+        for (const element of individualProviders) {
+            tasks.push(fetchProviderResult(
+                element,
                 targetUrl,
                 controller.signal,
                 expirationSeconds,
                 onResult,
                 tabId,
-                {globalAllowMatched}
-            )),
-            ...Array.from(sharedGroups.values()).map(group => fetchSharedProviderResults(
+                globalAllowMatched
+            ));
+        }
+
+        for (const group of sharedGroups.values()) {
+            tasks.push(fetchSharedProviderResults(
                 group,
                 targetUrl,
                 controller.signal,
                 expirationSeconds,
                 onResult,
                 tabId,
-                {globalAllowMatched}
-            )),
-        ];
+                globalAllowMatched
+            ));
+        }
 
         await Promise.allSettled(tasks);
 
@@ -367,7 +426,6 @@ globalThis.OspreyProviderEngine = (() => {
         }
     };
 
-    // Public API
     return Object.freeze({
         scanUrl,
         abortTab,

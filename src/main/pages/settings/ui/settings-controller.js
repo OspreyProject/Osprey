@@ -18,34 +18,54 @@
 "use strict";
 
 globalThis.SettingsSingleton = globalThis.SettingsSingleton || (() => {
-    // Global variables
     const browserAPI = globalThis.OspreyBrowserAPI;
     const providerList = globalThis.OspreyProviderList;
     const providerRuntimeFactory = globalThis.OspreyProviderRuntimeFactory;
 
+    let cachedExtensionVersion = null;
     let isInitialized = false;
 
-    function setText(selector, text, method = 'querySelector') {
-        const element = document[method](selector);
+    function setTextById(id, text) {
+        const element = document.getElementById(id);
 
-        if (element) {
+        if (element !== null) {
+            element.textContent = text;
+        }
+    }
+
+    function setTextBySelector(selector, text) {
+        const element = document.querySelector(selector);
+
+        if (element !== null) {
             element.textContent = text;
         }
     }
 
     function initFooter() {
-        setText('version', LangUtil.VERSION + browserAPI.api?.runtime.getManifest().version, 'getElementById');
+        if (cachedExtensionVersion === null) {
+            cachedExtensionVersion = browserAPI.api?.runtime.getManifest().version || "";
+        }
+
         document.title = LangUtil.SETTINGS_TITLE;
-        setText('.settings-page-title', LangUtil.SETTINGS_TITLE);
-        setText('.bannerText', LangUtil.TITLE);
+        setTextById('version', LangUtil.VERSION + cachedExtensionVersion);
+        setTextBySelector('.settings-page-title', LangUtil.SETTINGS_TITLE);
+        setTextBySelector('.bannerText', LangUtil.TITLE);
     }
+
+    const onRefreshError = (error) => {
+        console.error('SettingsPage: failed to refresh state', error);
+    };
+
+    const onInitError = (error) => {
+        console.error('SettingsPage: initialization failed', error);
+    };
 
     const refresh = async () => {
         try {
             const runtime = await providerRuntimeFactory.createRuntime();
             providerList.render(runtime.effectiveState, runtime);
         } catch (error) {
-            console.error('SettingsPage: failed to refresh state', error);
+            onRefreshError(error);
         }
     };
 
@@ -57,13 +77,20 @@ globalThis.SettingsSingleton = globalThis.SettingsSingleton || (() => {
         isInitialized = true;
         document.addEventListener('osprey:settings-changed', refresh);
 
-        refresh().then(initFooter, error => {
-            console.error('SettingsPage: initialization failed', error);
-        });
+        refresh().then(initFooter).catch(onInitError);
     }
 
-    // Public API
+    function dispose() {
+        if (!isInitialized) {
+            return;
+        }
+
+        document.removeEventListener('osprey:settings-changed', refresh);
+        isInitialized = false;
+    }
+
     return Object.freeze({
-        initialize
+        initialize,
+        dispose
     });
 })();

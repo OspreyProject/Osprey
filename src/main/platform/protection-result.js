@@ -18,86 +18,121 @@
 "use strict";
 
 globalThis.OspreyProtectionResult = (() => {
-    const definitions = Object.freeze([
-        {key: 'KNOWN_SAFE', value: 'known_safe', messageKey: 'knownSafe'},
-        {key: 'FAILED', value: 'failed', messageKey: 'failed'},
-        {key: 'WAITING', value: 'waiting', messageKey: 'waiting'},
-        {key: 'ALLOWED', value: 'allowed', messageKey: 'allowed'},
-        {key: 'MALICIOUS', value: 'malicious', messageKey: 'malicious', blocking: true},
-        {key: 'PHISHING', value: 'phishing', messageKey: 'phishing', blocking: true},
-        {key: 'ADULT_CONTENT', value: 'adult_content', messageKey: 'adultContent', blocking: true},
-    ]);
+    const resultTypes = Object.freeze(Object.assign(Object.create(null), {
+        KNOWN_SAFE: 'known_safe',
+        FAILED: 'failed',
+        WAITING: 'waiting',
+        ALLOWED: 'allowed',
+        MALICIOUS: 'malicious',
+        PHISHING: 'phishing',
+        ADULT_CONTENT: 'adult_content',
+    }));
 
-    const resultTypes = Object.freeze(Object.fromEntries(definitions.map(item => [item.key, item.value])));
-    const messageKeys = Object.freeze(Object.fromEntries(definitions.map(item => [item.value, item.messageKey])));
-    const blockingResults = new Set(definitions.filter(item => item.blocking).map(item => item.value));
-    const validValues = new Set(definitions.map(item => item.value));
+    const messageKeys = Object.freeze(Object.assign(Object.create(null), {
+        known_safe: 'knownSafe',
+        failed: 'failed',
+        waiting: 'waiting',
+        allowed: 'allowed',
+        malicious: 'malicious',
+        phishing: 'phishing',
+        adult_content: 'adultContent',
+    }));
 
-    const legacyMap = Object.freeze({
-        '0': resultTypes.KNOWN_SAFE,
-        '1': resultTypes.FAILED,
-        '2': resultTypes.WAITING,
-        '3': resultTypes.ALLOWED,
-        '4': resultTypes.MALICIOUS,
-        '5': resultTypes.PHISHING,
-        '6': resultTypes.ADULT_CONTENT,
+    const isBlockingMap = Object.assign(Object.create(null), {
+        malicious: true,
+        phishing: true,
+        adult_content: true,
     });
 
-    const resultAliases = Object.freeze({
-        known_safe: resultTypes.KNOWN_SAFE,
-        safe: resultTypes.KNOWN_SAFE,
-        allowed: resultTypes.ALLOWED,
-        malicious: resultTypes.MALICIOUS,
-        phishing: resultTypes.PHISHING,
-        adult_content: resultTypes.ADULT_CONTENT,
-        adult: resultTypes.ADULT_CONTENT,
-        failed: resultTypes.FAILED,
+    const blockingResults = Object.freeze(new Set(['malicious', 'phishing', 'adult_content']));
+
+    const legacyMap = Object.assign(Object.create(null), {
+        '0': 'known_safe',
+        '1': 'failed',
+        '2': 'waiting',
+        '3': 'allowed',
+        '4': 'malicious',
+        '5': 'phishing',
+        '6': 'adult_content',
+    });
+
+    const resultAliases = Object.assign(Object.create(null), {
+        known_safe: 'known_safe',
+        safe: 'known_safe',
+        allowed: 'allowed',
+        malicious: 'malicious',
+        phishing: 'phishing',
+        adult_content: 'adult_content',
+        adult: 'adult_content',
+        failed: 'failed',
     });
 
     const normalize = value => {
-        if (value === null || value === '') {
-            return resultTypes.FAILED;
+        if (!value) {
+            return 'failed';
         }
 
         if (typeof value !== 'string') {
             console.warn('OspreyProtectionResult.normalize received a non-string result value', value);
-            return resultTypes.FAILED;
+            return 'failed';
         }
 
-        if (validValues.has(value)) {
+        if (messageKeys[value] !== undefined) {
             return value;
         }
 
-        if (!Object.hasOwn(legacyMap, value)) {
-            console.warn(`OspreyProtectionResult.normalize received an unknown result '${value}'`);
+        const legacy = legacyMap[value];
+
+        if (legacy !== undefined) {
+            return legacy;
         }
-        return legacyMap[value] || resultTypes.FAILED;
+
+        console.warn(`OspreyProtectionResult.normalize received an unknown result '${value}'`);
+        return 'failed';
     };
 
     const fromProviderString = value => {
-        const normalized = String(value || '').toLowerCase();
-        const resolved = resultAliases[normalized] || resultTypes.FAILED;
-
-        if (resolved === resultTypes.FAILED && normalized.length > 0 && normalized !== 'failed') {
-            console.warn(`OspreyProtectionResult could not map provider result '${value}', defaulting to FAILED`);
+        if (!value || typeof value !== 'string') {
+            return 'failed';
         }
-        return resolved;
+
+        let resolved = resultAliases[value];
+
+        if (resolved !== undefined) {
+            return resolved;
+        }
+
+        resolved = resultAliases[value.toLowerCase()];
+
+        if (resolved !== undefined) {
+            return resolved;
+        }
+
+        console.warn(`OspreyProtectionResult could not map provider result '${value}', defaulting to FAILED`);
+        return 'failed';
     };
 
-    const create = ({url, result, origin, sourceUrl = '', providerName = ''}) => {
+    class ProtectionResult {
+        constructor(url, result, origin, isBlocking) {
+            this.url = url;
+            this.result = result;
+            this.origin = origin;
+            this.isBlocking = isBlocking;
+            Object.freeze(this);
+        }
+    }
+
+    const create = ({url, result, origin}) => {
         const normalizedResult = normalize(result);
 
-        return Object.freeze({
+        return new ProtectionResult(
             url,
-            result: normalizedResult,
+            normalizedResult,
             origin,
-            sourceUrl,
-            providerName,
-            isBlocking: blockingResults.has(normalizedResult),
-        });
+            isBlockingMap[normalizedResult] === true
+        );
     };
 
-    // Public API
     return Object.freeze({
         resultTypes,
         messageKeys,

@@ -19,26 +19,28 @@
 
 globalThis.OspreyResponseRuleEngine = (() => {
     const defaultResult = 'ALLOWED';
+    const maxCacheSize = 5000;
 
-    const numberOperators = {
+    const operators = Object.freeze(Object.assign(Object.create(null), {
         greater_than: (actual, expected) => Number(actual) > Number(expected),
         less_than: (actual, expected) => Number(actual) < Number(expected),
         greater_or_equal: (actual, expected) => Number(actual) >= Number(expected),
         less_or_equal: (actual, expected) => Number(actual) <= Number(expected),
-    };
-
-    const directOperators = {
         exists: actual => actual !== undefined,
         not_exists: actual => actual === undefined,
         truthy: Boolean,
         falsy: actual => !actual,
         equals: (actual, expected) => actual === expected,
         not_equals: (actual, expected) => actual !== expected,
-        contains: (actual, expected) => Array.isArray(actual) ? actual.includes(expected) :
-            String(actual ?? '').includes(String(expected ?? '')),
-    };
+        contains: (actual, expected) => {
+            if (Array.isArray(actual)) {
+                return actual.includes(expected);
+            }
+            return String(actual ?? '').includes(String(expected ?? ''));
+        }
+    }));
 
-    const logicOperatorMap = Object.freeze({
+    const logicOperatorMap = Object.freeze(Object.assign(Object.create(null), {
         '===': 'equals',
         '!==': 'not_equals',
         '>': 'greater_than',
@@ -50,39 +52,118 @@ globalThis.OspreyResponseRuleEngine = (() => {
         not_exists: 'not_exists',
         truthy: 'truthy',
         falsy: 'falsy',
-    });
+    }));
 
     const unaryOperators = new Set(['exists', 'not_exists', 'truthy', 'falsy']);
 
-    const tokenize = path => String(path || '')
-        .replaceAll(/\[(\d+)]/g, '.$1')
-        .split('.')
-        .map(token => token.trim())
-        .filter(Boolean);
+    const pathCache = new Map();
+    const astCache = new Map();
+    const regexCache = new Map();
+
+    const lruGet = (cache, key) => {
+        const item = cache.get(key);
+
+        if (item !== undefined) {
+            cache.delete(key);
+            cache.set(key, item);
+        }
+        return item;
+    };
+
+    const lruSet = (cache, key, value) => {
+        if (cache.size >= maxCacheSize) {
+            cache.delete(cache.keys().next().value);
+        }
+
+        cache.set(key, value);
+    };
+
+    const regexWhitespace = /\s+/y;
+    const regexLogical = /&&|\|\|/y;
+    const regexParenthesis = /[()]/y;
+    const regexQuoted = /"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'/y;
+    const regexResponsePath = /response\.([A-Za-z0-9_.[\]-]+)/y;
+    const regexOperator = /(===|!==|>=|<=|>|<|contains\b|exists\b|not_exists\b|truthy\b|falsy\b)/y;
+    const regexBare = /(true|false|null|-?\d+(?:\.\d+)?|[A-Za-z0-9_./:-]+)/y;
+    const regexSimpleMatch = /^response\.([A-Za-z0-9_.[\]-]+)\s*(===|!==|>=|<=|>|<|contains|exists|not_exists|truthy|falsy)\s*(.*)$/;
+
+    const getPathTokens = path => {
+        let tokens = lruGet(pathCache, path);
+
+        if (tokens) {
+            return tokens;
+        }
+
+        tokens = [];
+        const str = String(path || '');
+        let start = 0;
+        const len = str.length;
+
+        for (let i = 0; i < len; i++) {
+            const char = str[i];
+
+            if (char === '[' || char === ']' || char === '.') {
+                if (i > start) {
+                    const token = str.slice(start, i).trim();
+
+                    if (token) {
+                        tokens.push(token);
+                    }
+                }
+
+                start = i + 1;
+            }
+        }
+
+        if (start < len) {
+            const token = str.slice(start).trim();
+
+            if (token) {
+                tokens.push(token);
+            }
+        }
+
+        lruSet(pathCache, path, tokens);
+        return tokens;
+    };
 
     const getPathValue = (root, path) => {
+        const tokens = getPathTokens(path);
         let current = root;
+        const len = tokens.length;
 
-        for (const token of tokenize(path)) {
+        for (let i = 0; i < len; i++) {
             if (current === null || current === undefined) {
                 return undefined;
             }
 
-            current = current[token];
+            const key = tokens[i];
+
+            if (key === '__proto__' || key === 'constructor' || key === 'prototype') {
+                return undefined;
+            }
+
+            current = current[key];
         }
         return current;
     };
 
     const compare = (actual, operator, expected) => {
-        const compareValue = directOperators[operator] || numberOperators[operator];
+        const compareFn = operators[operator];
 
-        if (compareValue) {
-            return compareValue(actual, expected);
+        if (typeof compareFn === 'function') {
+            return compareFn(actual, expected);
         }
 
         if (operator === 'regex') {
             try {
-                return new RegExp(String(expected || '')).test(String(actual ?? ''));
+                let rx = lruGet(regexCache, expected);
+
+                if (!rx) {
+                    rx = new RegExp(String(expected || ''));
+                    lruSet(regexCache, expected, rx);
+                }
+                return rx.test(String(actual ?? ''));
             } catch (error) {
                 console.warn(`OspreyResponseRuleEngine rejected regex '${expected}'`, error);
             }
@@ -120,59 +201,70 @@ globalThis.OspreyResponseRuleEngine = (() => {
         let index = 0;
 
         while (index < source.length) {
-            const remaining = source.slice(index);
-            const whitespace = /^\s+/.exec(remaining);
+            let match;
 
-            if (whitespace) {
-                index += whitespace[0].length;
+            regexWhitespace.lastIndex = index;
+            match = regexWhitespace.exec(source);
+
+            if (match) {
+                index = regexWhitespace.lastIndex;
                 continue;
             }
 
-            if (remaining.startsWith('&&') || remaining.startsWith('||')) {
-                tokens.push({type: remaining.slice(0, 2)});
-                index += 2;
+            regexLogical.lastIndex = index;
+            match = regexLogical.exec(source);
+
+            if (match) {
+                tokens.push({type: match[0]});
+                index = regexLogical.lastIndex;
                 continue;
             }
 
-            if (remaining.startsWith('(') || remaining.startsWith(')')) {
-                tokens.push({type: remaining[0]});
-                index += 1;
+            regexParenthesis.lastIndex = index;
+            match = regexParenthesis.exec(source);
+
+            if (match) {
+                tokens.push({type: match[0]});
+                index = regexParenthesis.lastIndex;
                 continue;
             }
 
-            const quoted = /^("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')/.exec(remaining);
+            regexQuoted.lastIndex = index;
+            match = regexQuoted.exec(source);
 
-            if (quoted) {
-                tokens.push({type: 'literal', value: quoted[0]});
-                index += quoted[0].length;
+            if (match) {
+                tokens.push({type: 'literal', value: match[0]});
+                index = regexQuoted.lastIndex;
                 continue;
             }
 
-            const responsePath = /^response\.[A-Za-z0-9_.[\]-]+/.exec(remaining);
+            regexResponsePath.lastIndex = index;
+            match = regexResponsePath.exec(source);
 
-            if (responsePath) {
-                tokens.push({type: 'path', value: responsePath[0].slice('response.'.length)});
-                index += responsePath[0].length;
+            if (match) {
+                tokens.push({type: 'path', value: match[1]});
+                index = regexResponsePath.lastIndex;
                 continue;
             }
 
-            const operator = /^(===|!==|>=|<=|>|<|contains\b|exists\b|not_exists\b|truthy\b|falsy\b)/.exec(remaining);
+            regexOperator.lastIndex = index;
+            match = regexOperator.exec(source);
 
-            if (operator) {
-                tokens.push({type: 'operator', value: operator[1]});
-                index += operator[1].length;
+            if (match) {
+                tokens.push({type: 'operator', value: match[1]});
+                index = regexOperator.lastIndex;
                 continue;
             }
 
-            const bare = /^(true|false|null|-?\d+(?:\.\d+)?|[A-Za-z0-9_./:-]+)/.exec(remaining);
+            regexBare.lastIndex = index;
+            match = regexBare.exec(source);
 
-            if (bare) {
-                tokens.push({type: 'literal', value: bare[1]});
-                index += bare[1].length;
+            if (match) {
+                tokens.push({type: 'literal', value: match[1]});
+                index = regexBare.lastIndex;
                 continue;
             }
-
-            throw new Error(`Unexpected token near '${remaining.slice(0, 16)}'`);
+            throw new Error(`Unexpected token near '${source.slice(index, index + 16)}'`);
         }
         return tokens;
     };
@@ -184,36 +276,38 @@ globalThis.OspreyResponseRuleEngine = (() => {
             return null;
         }
 
-        const simpleMatch = !source.includes('&&') && !source.includes('||') ?
-            /^response\.([A-Za-z0-9_.[\]-]+)\s*(===|!==|>|<|>=|<=|contains|exists|not_exists|truthy|falsy)\s*(.*)$/.exec(source) : null;
+        if (!source.includes('&&') && !source.includes('||')) {
+            const simpleMatch = regexSimpleMatch.exec(source);
 
-        if (simpleMatch) {
-            const [, path, operatorToken, rawValue] = simpleMatch;
+            if (simpleMatch) {
+                const [, path, operatorToken, rawValue] = simpleMatch;
 
-            if (unaryOperators.has(operatorToken)) {
+                if (unaryOperators.has(operatorToken)) {
+                    return {
+                        type: 'condition',
+                        path,
+                        operator: logicOperatorMap[operatorToken],
+                    };
+                }
+
+                if (!String(rawValue || '').trim()) {
+                    return null;
+                }
+
                 return {
                     type: 'condition',
                     path,
-                    operator: logicOperatorMap[operatorToken],
+                    operator: logicOperatorMap[operatorToken] || 'equals',
+                    value: parseConditionValue(rawValue),
                 };
             }
-
-            if (!String(rawValue || '').trim()) {
-                return null;
-            }
-
-            return {
-                type: 'condition',
-                path,
-                operator: logicOperatorMap[operatorToken] || 'equals',
-                value: parseConditionValue(rawValue),
-            };
         }
 
         const tokens = tokenizeLogicExpression(source);
         let index = 0;
 
         const peek = () => tokens[index] || null;
+
         const consume = expectedType => {
             const token = peek();
 
@@ -279,6 +373,7 @@ globalThis.OspreyResponseRuleEngine = (() => {
                 if (!right) {
                     return null;
                 }
+
                 left = {type: 'and', left, right};
             }
             return left;
@@ -298,6 +393,7 @@ globalThis.OspreyResponseRuleEngine = (() => {
                 if (!right) {
                     return null;
                 }
+
                 left = {type: 'or', left, right};
             }
             return left;
@@ -305,6 +401,24 @@ globalThis.OspreyResponseRuleEngine = (() => {
 
         const expression = parseOrExpression();
         return expression && index === tokens.length ? expression : null;
+    };
+
+    const getConditionAST = condition => {
+        let ast = lruGet(astCache, condition);
+
+        if (ast !== undefined) {
+            return ast;
+        }
+
+        try {
+            ast = parseConditionExpression(condition);
+        } catch (error) {
+            console.warn(`OspreyResponseRuleEngine failed to parse condition '${condition}'`, error);
+            ast = null;
+        }
+
+        lruSet(astCache, condition, ast);
+        return ast;
     };
 
     const evaluateConditionExpression = (responseBody, expression) => {
@@ -335,17 +449,21 @@ globalThis.OspreyResponseRuleEngine = (() => {
             return defaultResult;
         }
 
-        for (const [index, rule] of rules.entries()) {
+        const len = rules.length;
+
+        for (let i = 0; i < len; i++) {
+            const rule = rules[i];
+
             if (!rule || typeof rule !== 'object') {
-                console.warn(`OspreyResponseRuleEngine skipped invalid rule at index ${index}`);
+                console.warn(`OspreyResponseRuleEngine skipped invalid rule at index ${i}`);
                 continue;
             }
 
             if (typeof rule.condition === 'string' && rule.condition.trim()) {
-                const expression = parseConditionExpression(rule.condition);
+                const expression = getConditionAST(rule.condition);
 
                 if (!expression) {
-                    console.warn(`OspreyResponseRuleEngine skipped invalid condition rule at index ${index}`);
+                    console.warn(`OspreyResponseRuleEngine skipped invalid condition rule at index ${i}`);
                     continue;
                 }
 
@@ -362,7 +480,6 @@ globalThis.OspreyResponseRuleEngine = (() => {
         return defaultResult;
     };
 
-    // Public API
     return Object.freeze({
         evaluateRules,
     });

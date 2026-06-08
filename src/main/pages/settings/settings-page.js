@@ -18,7 +18,6 @@
 "use strict";
 
 (() => {
-    // Defers initialization until DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => globalThis.SettingsSingleton?.initialize?.(), {once: true});
     } else {

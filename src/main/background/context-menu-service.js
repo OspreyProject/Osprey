@@ -18,87 +18,132 @@
 "use strict";
 
 globalThis.OspreyContextMenuService = (() => {
-    // Global variables
     const browserAPI = globalThis.OspreyBrowserAPI;
     const cacheService = globalThis.OspreyCacheService;
     const providerRuntimeFactory = globalThis.OspreyProviderRuntimeFactory;
 
-    const menuIds = Object.freeze({
+    const menuIds = {
         CLEAR_ALLOWED_WEBSITES: 'clearAllowedWebsites',
         REPORT_MALICIOUS: 'reportWebsiteAsMalicious',
-    });
+    };
 
     const safeIconURL = browserAPI.safeRuntimeURL('assets/osprey/icon128.png');
 
-    let rebuildPromise = Promise.resolve();
+    let isRebuilding = false;
+    let pendingRebuild = false;
     let clickListenerRegistered = false;
+    let lastMenuSignature = 0;
 
-    const logError = message => error => {
-        console.error(message, error);
+    const clearAllowedOptions = {
+        id: menuIds.CLEAR_ALLOWED_WEBSITES,
+        title: null,
+        contexts: ['action'],
     };
 
-    const removeAll = () => browserAPI.withCallback(browserAPI.api?.contextMenus?.removeAll, browserAPI.api?.contextMenus).catch(() => undefined);
+    const reportMaliciousOptions = {
+        id: menuIds.REPORT_MALICIOUS,
+        title: null,
+        contexts: ['action'],
+    };
 
-    const createItem = options => browserAPI.withCallback(browserAPI.api?.contextMenus?.create, browserAPI.api?.contextMenus, [options]).catch(error => {
-        console.error(`Failed to create context menu item with id ${options.id}`, error);
-        return undefined;
-    });
+    const tabCreationOptions = {
+        url: 'https://phish.report/analysis'
+    };
+
+    const notificationOptions = {
+        type: 'basic',
+        iconUrl: safeIconURL,
+        title: null,
+        message: null,
+        priority: 2,
+    };
+
+    const logError = context => error => console.error(context, error);
+    const logCreationError = logError('Failed to create context menu item');
+    const logClearError = logError('Failed to clear allowed websites from context menu');
+    const logPhishError = logError('Failed to open Phish.Report website');
+
+    const swallowError = () => undefined;
+
+    const removeAll = () => browserAPI.withCallback(browserAPI.api?.contextMenus?.removeAll, browserAPI.api?.contextMenus).catch(swallowError);
+
+    const createItem = options => browserAPI.withCallback(browserAPI.api?.contextMenus?.create, browserAPI.api?.contextMenus, [options]).catch(logCreationError);
 
     const doCreate = async () => {
-        const runtime = await providerRuntimeFactory.createAppRuntime();
-        const {app} = runtime.effectiveState;
+        try {
+            isRebuilding = true;
+            const runtime = await providerRuntimeFactory.createAppRuntime();
+            const app = runtime.effectiveState.app;
 
-        await removeAll();
+            const enabledBit = app.contextMenuEnabled ? 1 : 0;
+            const disabledBit = app.disableClearAllowedWebsites ? 1 : 0;
+            const currentSignature = (enabledBit << 1) | disabledBit;
 
-        if (!app.contextMenuEnabled) {
-            return;
+            if (lastMenuSignature === currentSignature) {
+                return;
+            }
+
+            await removeAll();
+
+            if (enabledBit === 0) {
+                lastMenuSignature = currentSignature;
+                return;
+            }
+
+            const creationTasks = [];
+
+            if (disabledBit === 0) {
+                clearAllowedOptions.title = LangUtil.CLEAR_ALLOWED_WEBSITES_CONTEXT;
+                creationTasks.push(createItem(clearAllowedOptions));
+            }
+
+            reportMaliciousOptions.title = LangUtil.REPORT_WEBSITE_AS_MALICIOUS_CONTEXT;
+            creationTasks.push(createItem(reportMaliciousOptions));
+
+            await Promise.all(creationTasks);
+            lastMenuSignature = currentSignature;
+        } catch (error) {
+            console.error('Failed to rebuild context menus', error);
+            lastMenuSignature = 0;
+        } finally {
+            isRebuilding = false;
+
+            if (pendingRebuild) {
+                pendingRebuild = false;
+                doCreate().catch(swallowError);
+            }
         }
-
-        if (!app.disableClearAllowedWebsites) {
-            await createItem({
-                id: menuIds.CLEAR_ALLOWED_WEBSITES,
-                title: LangUtil.CLEAR_ALLOWED_WEBSITES_CONTEXT,
-                contexts: ['action'],
-            });
-        }
-
-        await createItem({
-            id: menuIds.REPORT_MALICIOUS,
-            title: LangUtil.REPORT_WEBSITE_AS_MALICIOUS_CONTEXT,
-            contexts: ['action'],
-        });
     };
 
     const create = () => {
-        rebuildPromise = rebuildPromise.catch(logError('Failed to rebuild context menus, skipping this rebuild to avoid potential infinite loop')).then(doCreate);
-        return rebuildPromise;
+        if (isRebuilding) {
+            pendingRebuild = true;
+            return Promise.resolve();
+        }
+        return doCreate();
     };
 
-    const clearAllowedWebsites = () => cacheService.clearAll().then(() => browserAPI.notificationsCreate({
-        type: 'basic',
-        iconUrl: safeIconURL,
-        title: LangUtil.CLEAR_ALLOWED_WEBSITES_TITLE,
-        message: LangUtil.CLEAR_ALLOWED_WEBSITES_MESSAGE,
-        priority: 2,
-    }));
+    const clearAllowedWebsites = () => {
+        return cacheService.clearAll().then(() => {
+            notificationOptions.title = LangUtil.CLEAR_ALLOWED_WEBSITES_TITLE;
+            notificationOptions.message = LangUtil.CLEAR_ALLOWED_WEBSITES_MESSAGE;
+            return browserAPI.notificationsCreate(notificationOptions);
+        });
+    };
 
-    const clickHandlers = Object.freeze({
-        [menuIds.CLEAR_ALLOWED_WEBSITES]: () => clearAllowedWebsites().catch(logError('Failed to clear allowed websites from context menu')),
-
-        [menuIds.REPORT_MALICIOUS]: () => browserAPI.tabsCreate({
-            url: 'https://phish.report/analysis'
-        }).catch(logError('Failed to open Phish.Report website')),
-    });
+    const clickHandlers = {
+        [menuIds.CLEAR_ALLOWED_WEBSITES]: () => clearAllowedWebsites().catch(logClearError),
+        [menuIds.REPORT_MALICIOUS]: () => browserAPI.tabsCreate(tabCreationOptions).catch(logPhishError),
+    };
 
     const handleClick = info => {
         const handler = clickHandlers[info.menuItemId];
 
-        if (!handler) {
+        if (handler) {
+            handler();
+        } else {
             console.warn(`Clicked context menu item with unrecognized id: ${info.menuItemId}`);
-            return;
         }
-
-        handler(info);
     };
 
     const register = () => {
@@ -111,7 +156,6 @@ globalThis.OspreyContextMenuService = (() => {
         clickListenerRegistered = true;
     };
 
-    // Public API
     return Object.freeze({
         create,
         register

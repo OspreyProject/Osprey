@@ -18,36 +18,36 @@
 "use strict";
 
 (() => {
-    // Global variables
     const browserAPI = globalThis.OspreyBrowserAPI;
+    const i18n = browserAPI?.api?.i18n;
 
     const msg = (key, substitutions) => {
-        if (typeof key !== 'string' || key.length === 0) {
-            console.warn(`LangUtil: msg() called with invalid key: ${key}`);
+        if (!key || typeof key !== 'string') {
             return '';
         }
 
         try {
-            return browserAPI.api?.i18n?.getMessage?.(key, substitutions) || key;
+            if (substitutions !== undefined) {
+                return i18n?.getMessage?.(key, substitutions) || key;
+            }
+            return i18n?.getMessage?.(key) || key;
         } catch (error) {
-            console.error(`LangUtil: failed to resolve key '${key}'`, error);
+            console.error(`Error fetching translation for key "${key}":`, error);
             return key;
         }
     };
 
-    const messageMap = Object.freeze({
+    const staticKeys = {
         TITLE: 'extensionName',
         LOGO_ALT: 'logoAlt',
         URL_LABEL: 'urlLabel',
         REPORTED_BY_LABEL: 'reportedByLabel',
         REASON_LABEL: 'reasonLabel',
-
         UNSAFE_WEBSITE_TITLE: 'unsafeWebsiteTitle',
         CLEAR_ALLOWED_WEBSITES_TITLE: 'clearAllowedWebsitesTitle',
         CLEAR_ALLOWED_WEBSITES_MESSAGE: 'clearAllowedWebsitesMessage',
         CLEAR_ALLOWED_WEBSITES_CONTEXT: 'clearAllowedWebsitesContext',
         REPORT_WEBSITE_AS_MALICIOUS_CONTEXT: 'reportWebsiteAsMaliciousContext',
-
         WEBSITE_LINK: 'websiteLink',
         VERSION: 'version',
         PRIVACY_POLICY: 'privacyPolicy',
@@ -57,7 +57,6 @@
         PROVIDERS_ENABLED_COUNT: 'providersEnabledCount',
         OPEN_SETTINGS: 'openSettings',
         TERMS_LINK: 'termsLink',
-
         WARNING_TITLE: 'warningTitle',
         RECOMMENDATION: 'recommendation',
         DETAILS: 'details',
@@ -70,7 +69,6 @@
         UNKNOWN_ORIGIN: 'unknownOrigin',
         URL_UNAVAILABLE: 'urlUnavailable',
         CONTEXT_VERIFY_FAILED: 'contextVerifyFailed',
-
         KNOWN_SAFE: 'knownSafe',
         FAILED: 'failed',
         WAITING: 'waiting',
@@ -78,69 +76,48 @@
         MALICIOUS: 'malicious',
         PHISHING: 'phishing',
         ADULT_CONTENT: 'adultContent',
-
         SETTINGS_TITLE: 'settingsTitle',
         PROVIDERS_SECTION: 'providersSection',
         THIRD_PARTY_SECTION: 'thirdPartySection',
         RESET_DEFAULT_PROVIDERS: 'resetDefaultProviders',
         RESET_ALL: 'resetAll',
-
         FIELD_LABEL_API_URL: 'fieldLabelApiUrl',
         FIELD_LABEL_API_KEY: 'fieldLabelApiKey',
-
         APPLY_BUTTON: 'applyButton',
-
         INDICATOR_ADULT_CONTENT: 'indicatorAdultContent',
         INDICATOR_IP_PROTECTED: 'indicatorIpProtected',
         OFFICIAL_PARTNER_TITLE: 'officialPartnerTitle',
         SHOW_API_KEY: 'showApiKey',
         HIDE_API_KEY: 'hideApiKey',
-
+        GET_API_KEY: 'getApiKey',
         TOAST_SAVED: 'toastSaved',
         TOAST_FAILED_TO_SAVE: 'toastFailedToSave',
         TOAST_DEFAULT_PROVIDERS_RESTORED: 'toastDefaultProvidersRestored',
         TOAST_ALL_SETTINGS_RESTORED: 'toastAllSettingsRestored',
         TOAST_SAVE_API_KEY_FIRST: 'toastSaveApiKeyFirst',
         TOAST_FAILED_TO_UPDATE_STATE: 'toastFailedToUpdateState',
-
         WARNING_PAGE_TITLE: 'unsafeWebsiteTitle',
-        PROVIDER_NAME_FALLBACK: 'providerNameFallback',
+        PROVIDER_NAME_FALLBACK: 'providerNameFallback'
+    };
+
+    const resolvedKeys = {};
+    const keys = Object.keys(staticKeys);
+
+    for (const element of keys) {
+        const prop = element;
+        resolvedKeys[prop] = msg(staticKeys[prop]);
+    }
+
+    const langUtil = Object.freeze({
+        translate: msg,
+        format: msg,
+        applyLogoAlt: element => {
+            if (element) {
+                element.alt = langUtil.LOGO_ALT;
+            }
+        },
+        ...resolvedKeys
     });
 
-    const translations = Object.freeze(Object.fromEntries(
-        Object.entries(messageMap).map(([prop, key]) => [prop, msg(key)])
-    ));
-
-    const langUtil = Object.create(null);
-
-    Object.defineProperties(langUtil, {
-        ...Object.fromEntries(
-            Object.entries(translations).map(([prop, value]) => [prop, {
-                value,
-                enumerable: true,
-            }])
-        ),
-
-        translate: {
-            value: msg,
-            enumerable: true,
-        },
-
-        format: {
-            value: msg,
-            enumerable: true,
-        },
-
-        applyLogoAlt: {
-            value(element) {
-                if (element) {
-                    element.alt = translations.LOGO_ALT;
-                }
-            },
-            enumerable: true,
-        },
-    });
-
-    Object.freeze(langUtil);
     globalThis.LangUtil = langUtil;
 })();

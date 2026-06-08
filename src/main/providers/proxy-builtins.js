@@ -17,333 +17,393 @@
  */
 "use strict";
 
-globalThis.OspreyProxyBuiltins = (() => {
-    // Global variables
-    const providerGroups = globalThis.OspreyProviderGroups;
+(() => {
+    Object.defineProperty(globalThis, 'OspreyProxyBuiltins', {
+        configurable: true,
+        enumerable: true,
 
-    const builtin = definition => Object.freeze({
-        kind: 'proxy_builtin',
-        proxyBaseUrl: 'https://api.osprey.ac',
-        enabledByDefault: false,
-        aliases: [],
-        tags: ['proxy'],
-        lookupTarget: 'url',
-        icon: '',
-        ...definition,
+        get: function () {
+            const providerGroups = globalThis.OspreyProviderGroups;
+
+            const buildMonomorphicShape = (def) => Object.freeze({
+                kind: 'proxy_builtin',
+                proxyBaseUrl: 'https://api.osprey.ac',
+                id: def.id,
+                aliases: def.aliases || [],
+                displayName: def.displayName,
+                group: def.group,
+                icon: def.icon || '',
+                enabledByDefault: def.enabledByDefault || false,
+                bypassBlockingThreshold: def.bypassBlockingThreshold || false,
+                endpoint: def.endpoint,
+                tags: def.tags || ['proxy'],
+                policyKey: def.policyKey,
+                report: def.report,
+                lookupTarget: def.lookupTarget || 'url',
+                website: def.website || ''
+            });
+
+            const builtin = def => buildMonomorphicShape(def);
+
+            const hostnameBuiltin = def => {
+                def.lookupTarget = 'hostname';
+                def.tags = def.tags || ['proxy', 'hostname_only'];
+                return buildMonomorphicShape(def);
+            };
+
+            const adultFilterHostnameBuiltin = def => {
+                def.lookupTarget = 'hostname';
+                def.tags = def.tags || ['proxy', 'hostname_only', 'adult_filter'];
+                return buildMonomorphicShape(def);
+            };
+
+            const cloudflareReport = Object.freeze({
+                type: 'url_template',
+                template: 'https://radar.cloudflare.com/domains/feedback/{url}'
+            });
+
+            const openDnsReport = Object.freeze({
+                type: 'external_url',
+                url: 'https://talosintelligence.com/reputation_center/web_reputation'
+            });
+
+            const spamhausReport = Object.freeze({
+                type: 'external_url',
+                url: 'https://www.spamhaus.com/abuse-ch/#contact-us'
+            });
+
+            const mailtoReport = (email, productName) => Object.freeze({
+                type: 'mailto_false_positive',
+                email,
+                productName
+            });
+
+            const externalUrlReport = (url) => Object.freeze({type: 'external_url', url});
+
+            const builtins = Object.freeze([
+                builtin({
+                    id: 'alphamountain',
+                    website: 'https://alphamountain.ai/?utm_source=osprey',
+                    aliases: ['alphaMountain'],
+                    displayName: 'AlphaMountain Web Protection',
+                    group: providerGroups.official_partners.id,
+                    icon: 'assets/providers/alphamountain.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: false,
+                    endpoint: 'alphamountain',
+                    tags: ['proxy', 'partner'],
+                    policyKey: 'AlphaMountainEnabled',
+                    report: externalUrlReport('https://alphamountain.freshdesk.com/support/tickets/new'),
+                }),
+
+                builtin({
+                    id: 'chainpatrol',
+                    website: 'https://chainpatrol.io/?utm_source=osprey',
+                    aliases: ['chainPatrol'],
+                    displayName: 'ChainPatrol Web Protection',
+                    group: providerGroups.official_partners.id,
+                    icon: 'assets/providers/chainpatrol.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: false,
+                    endpoint: 'chainpatrol',
+                    tags: ['proxy', 'partner'],
+                    policyKey: 'ChainPatrolEnabled',
+                    report: externalUrlReport('https://app.chainpatrol.io/dispute'),
+                }),
+
+                builtin({
+                    id: 'precisionsec',
+                    website: 'https://precisionsec.com/?utm_source=osprey',
+                    aliases: ['precisionSec'],
+                    displayName: 'PrecisionSec Web Protection',
+                    group: providerGroups.official_partners.id,
+                    icon: 'assets/providers/precisionsec.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: false,
+                    endpoint: 'precisionsec',
+                    tags: ['proxy', 'hostname_only', 'partner'],
+                    policyKey: 'PrecisionSecEnabled',
+                    report: mailtoReport('info@precisionsec.com', 'PrecisionSec Web Protection'),
+                }),
+
+                builtin({
+                    id: 'adguard-security',
+                    website: 'https://adguard-dns.io/?utm_source=osprey',
+                    aliases: ['adGuardSecurity'],
+                    displayName: 'AdGuard Security DNS',
+                    group: providerGroups.official_partners.id,
+                    icon: 'assets/providers/adguard.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: false,
+                    endpoint: 'adguard-security',
+                    lookupTarget: 'hostname',
+                    tags: ['proxy', 'hostname_only'],
+                    policyKey: 'AdGuardSecurityEnabled',
+                    report: mailtoReport('support@adguard.com', 'AdGuard Public DNS'),
+                }),
+
+                builtin({
+                    id: 'adguard-family',
+                    website: 'https://adguard-dns.io/?utm_source=osprey',
+                    aliases: ['adGuardFamily'],
+                    displayName: 'AdGuard Family DNS',
+                    group: providerGroups.adult_content_filters.id,
+                    icon: 'assets/providers/adguard.avif',
+                    enabledByDefault: false,
+                    bypassBlockingThreshold: false,
+                    endpoint: 'adguard-family',
+                    lookupTarget: 'hostname',
+                    tags: ['proxy', 'hostname_only', 'adult_filter'],
+                    policyKey: 'AdGuardFamilyEnabled',
+                    report: mailtoReport('support@adguard.com', 'AdGuard Family DNS'),
+                }),
+
+                hostnameBuiltin({
+                    id: 'certee-security',
+                    website: 'https://cert.ee/?utm_source=osprey',
+                    aliases: ['certEESecurity'],
+                    displayName: 'CERT-EE Security DNS',
+                    group: providerGroups.security_filters.id,
+                    icon: 'assets/providers/cert-ee.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: false,
+                    endpoint: 'cert-ee',
+                    policyKey: 'CERTEEEnabled',
+                    report: mailtoReport('ria@ria.ee', 'CERT-EE DNS'),
+                }),
+
+                hostnameBuiltin({
+                    id: 'cleanbrowsing-security',
+                    website: 'https://cleanbrowsing.org/?utm_source=osprey',
+                    aliases: ['cleanBrowsingSecurity'],
+                    displayName: 'CleanBrowsing Security DNS',
+                    group: providerGroups.security_filters.id,
+                    icon: 'assets/providers/cleanbrowsing.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: false,
+                    endpoint: 'cleanbrowsing-security',
+                    policyKey: 'CleanBrowsingSecurityEnabled',
+                    report: mailtoReport('support@cleanbrowsing.org', 'CleanBrowsing Security Filter'),
+                }),
+
+                adultFilterHostnameBuiltin({
+                    id: 'cleanbrowsing-family',
+                    website: 'https://cleanbrowsing.org/?utm_source=osprey',
+                    aliases: ['cleanBrowsingFamily'],
+                    displayName: 'CleanBrowsing Family DNS',
+                    group: providerGroups.adult_content_filters.id,
+                    icon: 'assets/providers/cleanbrowsing.avif',
+                    enabledByDefault: false,
+                    bypassBlockingThreshold: false,
+                    endpoint: 'cleanbrowsing-family',
+                    policyKey: 'CleanBrowsingFamilyEnabled',
+                    report: mailtoReport('support@cleanbrowsing.org', 'CleanBrowsing Adult Filter'),
+                }),
+
+                hostnameBuiltin({
+                    id: 'cloudflare-security',
+                    website: 'https://one.one.one.one/?utm_source=osprey',
+                    aliases: ['cloudflareSecurity'],
+                    displayName: 'Cloudflare Security DNS',
+                    group: providerGroups.security_filters.id,
+                    icon: 'assets/providers/cloudflare.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: false,
+                    endpoint: 'cloudflare-security',
+                    policyKey: 'CloudflareSecurityEnabled',
+                    report: cloudflareReport,
+                }),
+
+                adultFilterHostnameBuiltin({
+                    id: 'cloudflare-family',
+                    website: 'https://one.one.one.one/?utm_source=osprey',
+                    aliases: ['cloudflareFamily'],
+                    displayName: 'Cloudflare Family DNS',
+                    group: providerGroups.adult_content_filters.id,
+                    icon: 'assets/providers/cloudflare.avif',
+                    enabledByDefault: false,
+                    bypassBlockingThreshold: false,
+                    endpoint: 'cloudflare-family',
+                    policyKey: 'CloudflareFamilyEnabled',
+                    report: cloudflareReport,
+                }),
+
+                hostnameBuiltin({
+                    id: 'controld-security',
+                    website: 'https://controld.com/?utm_source=osprey',
+                    aliases: ['controlDSecurity'],
+                    displayName: 'Control D Security DNS',
+                    group: providerGroups.security_filters.id,
+                    icon: 'assets/providers/controld.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: false,
+                    endpoint: 'controld-security',
+                    policyKey: 'ControlDSecurityEnabled',
+                    report: mailtoReport('help@controld.com', 'Control D Security DNS'),
+                }),
+
+                adultFilterHostnameBuiltin({
+                    id: 'controld-family',
+                    website: 'https://controld.com/?utm_source=osprey',
+                    aliases: ['controlDFamily'],
+                    displayName: 'Control D Family DNS',
+                    group: providerGroups.adult_content_filters.id,
+                    icon: 'assets/providers/controld.avif',
+                    enabledByDefault: false,
+                    bypassBlockingThreshold: false,
+                    endpoint: 'controld-family',
+                    policyKey: 'ControlDFamilyEnabled',
+                    report: mailtoReport('help@controld.com', 'Control D Family DNS'),
+                }),
+
+                hostnameBuiltin({
+                    id: 'opendns-security',
+                    website: 'https://www.opendns.com/?utm_source=osprey',
+                    aliases: ['openDNSSecurity'],
+                    displayName: 'OpenDNS Security DNS',
+                    group: providerGroups.security_filters.id,
+                    icon: 'assets/providers/opendns.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: false,
+                    endpoint: 'opendns-security',
+                    policyKey: 'OpenDNSSecurityEnabled',
+                    report: openDnsReport,
+                }),
+
+                adultFilterHostnameBuiltin({
+                    id: 'opendns-family',
+                    website: 'https://www.opendns.com/?utm_source=osprey',
+                    aliases: ['openDNSFamily'],
+                    displayName: 'OpenDNS Family DNS',
+                    group: providerGroups.adult_content_filters.id,
+                    icon: 'assets/providers/opendns.avif',
+                    enabledByDefault: false,
+                    bypassBlockingThreshold: false,
+                    endpoint: 'opendns-family',
+                    policyKey: 'OpenDNSFamilyEnabled',
+                    report: openDnsReport,
+                }),
+
+                hostnameBuiltin({
+                    id: 'quad9',
+                    website: 'https://quad9.net/?utm_source=osprey',
+                    aliases: ['quad9'],
+                    displayName: 'Quad9 Security DNS',
+                    group: providerGroups.security_filters.id,
+                    icon: 'assets/providers/quad9.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: false,
+                    endpoint: 'quad9',
+                    policyKey: 'Quad9Enabled',
+                    report: externalUrlReport('https://quad9.net/support/contact'),
+                }),
+
+                hostnameBuiltin({
+                    id: 'switch-ch',
+                    website: 'https://www.switch.ch/?utm_source=osprey',
+                    aliases: ['switchCH'],
+                    displayName: 'Switch.ch Security DNS',
+                    group: providerGroups.security_filters.id,
+                    icon: 'assets/providers/switchch.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: false,
+                    endpoint: 'switch-ch',
+                    policyKey: 'SwitchCHEnabled',
+                    report: mailtoReport('dnsfirewall@switch.ch', 'Switch.ch Public DNS'),
+                }),
+
+                hostnameBuiltin({
+                    id: 'openphish',
+                    website: 'https://openphish.com/?utm_source=osprey',
+                    aliases: ['openPhish'],
+                    displayName: 'OpenPhish List',
+                    group: providerGroups.feeds.id,
+                    icon: 'assets/providers/openphish.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: false,
+                    endpoint: 'openphish',
+                    policyKey: 'OpenPhishEnabled',
+                    report: mailtoReport('support@openphish.com', 'OpenPhish Public List'),
+                }),
+
+                hostnameBuiltin({
+                    id: 'phishdestroy',
+                    website: 'https://phishdestroy.io/?utm_source=osprey',
+                    aliases: ['phishDestroy'],
+                    displayName: 'PhishDestroy List',
+                    group: providerGroups.feeds.id,
+                    icon: 'assets/providers/phishdestroy.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: false,
+                    endpoint: 'phishdestroy',
+                    policyKey: 'PhishDestroyEnabled',
+                    report: externalUrlReport('https://phishdestroy.io/appeals'),
+                }),
+
+                hostnameBuiltin({
+                    id: 'phishing-database',
+                    website: 'https://github.com/Phishing-Database/Phishing.Database/?utm_source=osprey',
+                    aliases: ['phishingDatabase'],
+                    displayName: 'Phishing.Database List',
+                    group: providerGroups.feeds.id,
+                    icon: 'assets/providers/phishingdatabase.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: false,
+                    endpoint: 'phishing-database',
+                    policyKey: 'PhishingDatabaseEnabled',
+                    report: mailtoReport('support@phish.co.za', 'Phishing.Database (ACTIVE list)'),
+                }),
+
+                hostnameBuiltin({
+                    id: 'phishunt-io',
+                    website: 'https://phishunt.io/?utm_source=osprey',
+                    aliases: ['phishuntIO'],
+                    displayName: 'Phishunt.io List',
+                    group: providerGroups.feeds.id,
+                    icon: 'assets/providers/phishuntio.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: false,
+                    endpoint: 'phishunt-io',
+                    policyKey: 'PhishuntIOEnabled',
+                    report: mailtoReport('info@phishunt.io', 'Phishunt.io Feed'),
+                }),
+
+                hostnameBuiltin({
+                    id: 'threatfox',
+                    website: 'https://threatfox.abuse.ch/?utm_source=osprey',
+                    aliases: ['threatfox'],
+                    displayName: 'THREATfox List',
+                    group: providerGroups.feeds.id,
+                    icon: 'assets/providers/urlhaus.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: false,
+                    endpoint: 'threatfox',
+                    policyKey: 'THREATfoxEnabled',
+                    report: spamhausReport,
+                }),
+
+                hostnameBuiltin({
+                    id: 'urlhaus',
+                    website: 'https://urlhaus.abuse.ch/?utm_source=osprey',
+                    aliases: ['urlhaus'],
+                    displayName: 'URLhaus List',
+                    group: providerGroups.feeds.id,
+                    icon: 'assets/providers/urlhaus.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: false,
+                    endpoint: 'urlhaus',
+                    policyKey: 'URLhausEnabled',
+                    report: spamhausReport,
+                }),
+            ]);
+
+            Object.defineProperty(globalThis, 'OspreyProxyBuiltins', {
+                value: builtins,
+                configurable: false,
+                writable: false,
+                enumerable: true
+            });
+            return builtins;
+        }
     });
-
-    const hostnameBuiltin = definition => builtin({
-        lookupTarget: 'hostname',
-        tags: ['proxy', 'hostname_only'],
-        ...definition,
-    });
-
-    const adultFilterHostnameBuiltin = definition => hostnameBuiltin({
-        tags: ['proxy', 'hostname_only', 'adult_filter'],
-        ...definition,
-    });
-
-    const mailtoFalsePositiveReport = (email, productName) => Object.freeze({
-        type: 'mailto_false_positive',
-        email,
-        productName,
-    });
-
-    const externalUrlReport = url => Object.freeze({type: 'external_url', url});
-    const urlTemplateReport = template => Object.freeze({type: 'url_template', template});
-
-    return Object.freeze([
-        builtin({
-            id: 'alphamountain',
-            aliases: ['alphaMountain'],
-            displayName: 'AlphaMountain Web Protection',
-            group: providerGroups.official_partners.id,
-            icon: 'assets/providers/alphamountain.avif',
-            enabledByDefault: true,
-            bypassBlockingThreshold: false,
-            endpoint: 'alphamountain',
-            tags: ['proxy', 'partner'],
-            policyKey: 'AlphaMountainEnabled',
-            report: externalUrlReport('https://alphamountain.freshdesk.com/support/tickets/new'),
-        }),
-
-        builtin({
-            id: 'chainpatrol',
-            aliases: ['chainPatrol'],
-            displayName: 'ChainPatrol Web Protection',
-            group: providerGroups.official_partners.id,
-            icon: 'assets/providers/chainpatrol.avif',
-            enabledByDefault: true,
-            bypassBlockingThreshold: false,
-            endpoint: 'chainpatrol',
-            tags: ['proxy', 'partner'],
-            policyKey: 'ChainPatrolEnabled',
-            report: externalUrlReport('https://app.chainpatrol.io/dispute'),
-        }),
-
-        builtin({
-            id: 'precisionsec',
-            aliases: ['precisionSec'],
-            displayName: 'PrecisionSec Web Protection',
-            group: providerGroups.official_partners.id,
-            icon: 'assets/providers/precisionsec.avif',
-            enabledByDefault: true,
-            bypassBlockingThreshold: false,
-            endpoint: 'precisionsec',
-            tags: ['proxy', 'hostname_only', 'partner'],
-            policyKey: 'PrecisionSecEnabled',
-            report: mailtoFalsePositiveReport('info@precisionsec.com', 'PrecisionSec Web Protection'),
-        }),
-
-        builtin({
-            id: 'adguard-security',
-            aliases: ['adGuardSecurity'],
-            displayName: 'AdGuard Security DNS',
-            group: providerGroups.official_partners.id,
-            icon: 'assets/providers/adguard.avif',
-            enabledByDefault: true,
-            bypassBlockingThreshold: false,
-            endpoint: 'adguard-security',
-            lookupTarget: 'hostname',
-            tags: ['proxy', 'hostname_only'],
-            policyKey: 'AdGuardSecurityEnabled',
-            report: mailtoFalsePositiveReport('support@adguard.com', 'AdGuard Public DNS'),
-        }),
-
-        builtin({
-            id: 'adguard-family',
-            aliases: ['adGuardFamily'],
-            displayName: 'AdGuard Family DNS',
-            group: providerGroups.adult_content_filters.id,
-            icon: 'assets/providers/adguard.avif',
-            enabledByDefault: false,
-            bypassBlockingThreshold: false,
-            endpoint: 'adguard-family',
-            lookupTarget: 'hostname',
-            tags: ['proxy', 'hostname_only', 'adult_filter'],
-            policyKey: 'AdGuardFamilyEnabled',
-            report: mailtoFalsePositiveReport('support@adguard.com', 'AdGuard Family DNS'),
-        }),
-
-        hostnameBuiltin({
-            id: 'certee-security',
-            aliases: ['certEESecurity'],
-            displayName: 'CERT-EE Security DNS',
-            group: providerGroups.security_filters.id,
-            icon: 'assets/providers/cert-ee.avif',
-            enabledByDefault: true,
-            bypassBlockingThreshold: false,
-            endpoint: 'cert-ee',
-            policyKey: 'CERTEEEnabled',
-            report: mailtoFalsePositiveReport('ria@ria.ee', 'CERT-EE DNS'),
-        }),
-
-        hostnameBuiltin({
-            id: 'cleanbrowsing-security',
-            aliases: ['cleanBrowsingSecurity'],
-            displayName: 'CleanBrowsing Security DNS',
-            group: providerGroups.security_filters.id,
-            icon: 'assets/providers/cleanbrowsing.avif',
-            enabledByDefault: true,
-            bypassBlockingThreshold: false,
-            endpoint: 'cleanbrowsing-security',
-            policyKey: 'CleanBrowsingSecurityEnabled',
-            report: mailtoFalsePositiveReport('support@cleanbrowsing.org', 'CleanBrowsing Security Filter'),
-        }),
-
-        adultFilterHostnameBuiltin({
-            id: 'cleanbrowsing-family',
-            aliases: ['cleanBrowsingFamily'],
-            displayName: 'CleanBrowsing Family DNS',
-            group: providerGroups.adult_content_filters.id,
-            icon: 'assets/providers/cleanbrowsing.avif',
-            enabledByDefault: false,
-            bypassBlockingThreshold: false,
-            endpoint: 'cleanbrowsing-family',
-            policyKey: 'CleanBrowsingFamilyEnabled',
-            report: mailtoFalsePositiveReport('support@cleanbrowsing.org', 'CleanBrowsing Adult Filter'),
-        }),
-
-        hostnameBuiltin({
-            id: 'cloudflare-security',
-            aliases: ['cloudflareSecurity'],
-            displayName: 'Cloudflare Security DNS',
-            group: providerGroups.security_filters.id,
-            icon: 'assets/providers/cloudflare.avif',
-            enabledByDefault: true,
-            bypassBlockingThreshold: false,
-            endpoint: 'cloudflare-security',
-            policyKey: 'CloudflareSecurityEnabled',
-            report: urlTemplateReport('https://radar.cloudflare.com/domains/feedback/{url}'),
-        }),
-
-        adultFilterHostnameBuiltin({
-            id: 'cloudflare-family',
-            aliases: ['cloudflareFamily'],
-            displayName: 'Cloudflare Family DNS',
-            group: providerGroups.adult_content_filters.id,
-            icon: 'assets/providers/cloudflare.avif',
-            enabledByDefault: false,
-            bypassBlockingThreshold: false,
-            endpoint: 'cloudflare-family',
-            policyKey: 'CloudflareFamilyEnabled',
-            report: urlTemplateReport('https://radar.cloudflare.com/domains/feedback/{url}'),
-        }),
-
-        hostnameBuiltin({
-            id: 'controld-security',
-            aliases: ['controlDSecurity'],
-            displayName: 'Control D Security DNS',
-            group: providerGroups.security_filters.id,
-            icon: 'assets/providers/controld.avif',
-            enabledByDefault: true,
-            bypassBlockingThreshold: false,
-            endpoint: 'controld-security',
-            policyKey: 'ControlDSecurityEnabled',
-            report: mailtoFalsePositiveReport('help@controld.com', 'Control D Security DNS'),
-        }),
-
-        adultFilterHostnameBuiltin({
-            id: 'controld-family',
-            aliases: ['controlDFamily'],
-            displayName: 'Control D Family DNS',
-            group: providerGroups.adult_content_filters.id,
-            icon: 'assets/providers/controld.avif',
-            enabledByDefault: false,
-            bypassBlockingThreshold: false,
-            endpoint: 'controld-family',
-            policyKey: 'ControlDFamilyEnabled',
-            report: mailtoFalsePositiveReport('help@controld.com', 'Control D Family DNS'),
-        }),
-
-        hostnameBuiltin({
-            id: 'opendns-security',
-            aliases: ['openDNSSecurity'],
-            displayName: 'OpenDNS Security DNS',
-            group: providerGroups.security_filters.id,
-            icon: 'assets/providers/opendns.avif',
-            enabledByDefault: true,
-            bypassBlockingThreshold: false,
-            endpoint: 'opendns-security',
-            policyKey: 'OpenDNSSecurityEnabled',
-            report: externalUrlReport('https://talosintelligence.com/reputation_center/web_reputation'),
-        }),
-
-        adultFilterHostnameBuiltin({
-            id: 'opendns-family',
-            aliases: ['openDNSFamily'],
-            displayName: 'OpenDNS Family DNS',
-            group: providerGroups.adult_content_filters.id,
-            icon: 'assets/providers/opendns.avif',
-            enabledByDefault: false,
-            bypassBlockingThreshold: false,
-            endpoint: 'opendns-family',
-            policyKey: 'OpenDNSFamilyEnabled',
-            report: externalUrlReport('https://talosintelligence.com/reputation_center/web_reputation'),
-        }),
-
-        hostnameBuiltin({
-            id: 'quad9',
-            aliases: ['quad9'],
-            displayName: 'Quad9 Security DNS',
-            group: providerGroups.security_filters.id,
-            icon: 'assets/providers/quad9.avif',
-            enabledByDefault: true,
-            bypassBlockingThreshold: false,
-            endpoint: 'quad9',
-            policyKey: 'Quad9Enabled',
-            report: externalUrlReport('https://quad9.net/support/contact'),
-        }),
-
-        hostnameBuiltin({
-            id: 'switch-ch',
-            aliases: ['switchCH'],
-            displayName: 'Switch.ch Security DNS',
-            group: providerGroups.security_filters.id,
-            icon: 'assets/providers/switchch.avif',
-            enabledByDefault: true,
-            bypassBlockingThreshold: false,
-            endpoint: 'switch-ch',
-            policyKey: 'SwitchCHEnabled',
-            report: mailtoFalsePositiveReport('dnsfirewall@switch.ch', 'Switch.ch Public DNS'),
-        }),
-
-        hostnameBuiltin({
-            id: 'openphish',
-            aliases: ['openPhish'],
-            displayName: 'OpenPhish List',
-            group: providerGroups.feeds.id,
-            icon: 'assets/providers/openphish.avif',
-            enabledByDefault: true,
-            bypassBlockingThreshold: false,
-            endpoint: 'openphish',
-            policyKey: 'OpenPhishEnabled',
-            report: mailtoFalsePositiveReport('support@openphish.com', 'OpenPhish Public List'),
-        }),
-
-        hostnameBuiltin({
-            id: 'phishdestroy',
-            aliases: ['phishDestroy'],
-            displayName: 'PhishDestroy List',
-            group: providerGroups.feeds.id,
-            icon: 'assets/providers/phishdestroy.avif',
-            enabledByDefault: true,
-            bypassBlockingThreshold: false,
-            endpoint: 'phishdestroy',
-            policyKey: 'PhishDestroyEnabled',
-            report: externalUrlReport('https://phishdestroy.io/appeals'),
-        }),
-
-        hostnameBuiltin({
-            id: 'phishing-database',
-            aliases: ['phishingDatabase'],
-            displayName: 'Phishing.Database List',
-            group: providerGroups.feeds.id,
-            icon: 'assets/providers/phishingdatabase.avif',
-            enabledByDefault: true,
-            bypassBlockingThreshold: false,
-            endpoint: 'phishing-database',
-            policyKey: 'PhishingDatabaseEnabled',
-            report: mailtoFalsePositiveReport('support@phish.co.za', 'Phishing.Database (ACTIVE list)'),
-        }),
-
-        hostnameBuiltin({
-            id: 'phishunt-io',
-            aliases: ['phishuntIO'],
-            displayName: 'Phishunt.io List',
-            group: providerGroups.feeds.id,
-            icon: 'assets/providers/phishuntio.avif',
-            enabledByDefault: true,
-            bypassBlockingThreshold: false,
-            endpoint: 'phishunt-io',
-            policyKey: 'PhishuntIOEnabled',
-            report: mailtoFalsePositiveReport('info@phishunt.io', 'Phishunt.io Feed'),
-        }),
-
-        hostnameBuiltin({
-            id: 'threatfox',
-            aliases: ['threatfox'],
-            displayName: 'THREATfox List',
-            group: providerGroups.feeds.id,
-            icon: 'assets/providers/urlhaus.avif',
-            enabledByDefault: true,
-            bypassBlockingThreshold: false,
-            endpoint: 'threatfox',
-            policyKey: 'THREATfoxEnabled',
-            report: externalUrlReport('https://www.spamhaus.com/abuse-ch/#contact-us'),
-        }),
-
-        hostnameBuiltin({
-            id: 'urlhaus',
-            aliases: ['urlhaus'],
-            displayName: 'URLhaus List',
-            group: providerGroups.feeds.id,
-            icon: 'assets/providers/urlhaus.avif',
-            enabledByDefault: true,
-            bypassBlockingThreshold: false,
-            endpoint: 'urlhaus',
-            policyKey: 'URLhausEnabled',
-            report: externalUrlReport('https://www.spamhaus.com/abuse-ch/#contact-us'),
-        }),
-    ]);
 })();

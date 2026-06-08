@@ -18,48 +18,141 @@
 "use strict";
 
 globalThis.OspreyPolicyService = (() => {
-    // Global variables
     const browserAPI = globalThis.OspreyBrowserAPI;
     const providerCatalog = globalThis.OspreyProviderCatalog;
 
     let cachedPolicies = null;
+    let cachedPoliciesPromise = null;
+
+    const identityMap = value => value;
+    const negateMap = value => !value;
 
     const appPolicyMappings = [
-        ['DisableContextMenu', 'boolean', 'contextMenuEnabled', value => !value],
-        ['HideContinueButtons', 'boolean', 'hideContinueButtons'],
-        ['HideReportButton', 'boolean', 'hideReportButton'],
-        ['CacheExpirationSeconds', 'number', 'cacheExpirationSeconds'],
-        ['DisableClearAllowedWebsites', 'boolean', 'disableClearAllowedWebsites'],
-        ['LockProtectionOptions', 'boolean', 'lockSettings'],
-        ['HideProtectionOptions', 'boolean', 'hidePopupPanel'],
-        ['DisableResetButtons', 'boolean', 'disableResetButtons'],
-        ['DisableThirdPartyIntegrations', 'boolean', 'disableThirdPartyIntegrations'],
+        {
+            policyKey: 'DisableContextMenu',
+            type: 'boolean',
+            stateKey: 'contextMenuEnabled',
+            mapValue: negateMap
+        },
+        {
+            policyKey: 'HideContinueButtons',
+            type: 'boolean',
+            stateKey: 'hideContinueButtons',
+            mapValue: identityMap
+        },
+        {
+            policyKey: 'HideReportButton',
+            type: 'boolean',
+            stateKey: 'hideReportButton',
+            mapValue: identityMap
+        },
+        {
+            policyKey: 'CacheExpirationSeconds',
+            type: 'number',
+            stateKey: 'cacheExpirationSeconds',
+            mapValue: identityMap
+        },
+        {
+            policyKey: 'DisableClearAllowedWebsites',
+            type: 'boolean',
+            stateKey: 'disableClearAllowedWebsites',
+            mapValue: identityMap
+        },
+        {
+            policyKey: 'LockProtectionOptions',
+            type: 'boolean',
+            stateKey: 'lockSettings',
+            mapValue: identityMap
+        },
+        {
+            policyKey: 'HideProtectionOptions',
+            type: 'boolean',
+            stateKey: 'hidePopupPanel',
+            mapValue: identityMap
+        },
+        {
+            policyKey: 'DisableResetButtons',
+            type: 'boolean',
+            stateKey: 'disableResetButtons',
+            mapValue: identityMap
+        },
+        {
+            policyKey: 'DisableThirdPartyIntegrations',
+            type: 'boolean',
+            stateKey: 'disableThirdPartyIntegrations',
+            mapValue: identityMap
+        },
     ];
 
-    const ensureProviderState = (providers, definition) => providers[definition.id] || (
-        providers[definition.id] = {enabled: definition.enabledByDefault, apiKey: ''}
-    );
+    const apiKeyKeyCache = Object.create(null);
 
-    const getApiKeyPolicyKey = id => `${id.charAt(0).toUpperCase()}${id.slice(1)}ApiKey`;
+    const getApiKeyPolicyKey = id => {
+        let cached = apiKeyKeyCache[id];
+
+        if (cached !== undefined) {
+            return cached;
+        }
+
+        const generated = `${id.charAt(0).toUpperCase()}${id.slice(1)}ApiKey`;
+        apiKeyKeyCache[id] = generated;
+        return generated;
+    };
+
+    const ensureProviderState = (providers, definition) => {
+        let state = providers[definition.id];
+
+        if (state === undefined) {
+            state = {enabled: definition.enabledByDefault, apiKey: ''};
+            providers[definition.id] = state;
+        }
+        return state;
+    };
+
+    const fastCloneApp = app => ({...app});
+
+    const fastCloneProviders = providers => {
+        const cloned = {};
+        const keys = Object.keys(providers);
+
+        for (const element of keys) {
+            const k = element;
+            cloned[k] = {...providers[k]};
+        }
+        return cloned;
+    };
 
     const applyAppPolicies = (app, policies, appManagedKeys) => {
-        for (const [policyKey, type, stateKey, mapValue = value => value] of appPolicyMappings) {
-            if (typeof policies[policyKey] === type) {
-                app[stateKey] = mapValue(policies[policyKey]);
-                appManagedKeys?.add(stateKey);
+        for (const element of appPolicyMappings) {
+            const mapping = element;
+            const policyVal = policies[mapping.policyKey];
+
+            if (typeof policyVal === mapping.type) {
+                app[mapping.stateKey] = mapping.mapValue(policyVal);
+
+                if (appManagedKeys !== undefined) {
+                    appManagedKeys.add(mapping.stateKey);
+                }
             }
         }
     };
 
     const applyProviderPolicies = (providers, policies, providerManagedIds, providerManagedApiKeyIds, disableThirdPartyIntegrations) => {
-        for (const definition of providerCatalog.getBuiltins()) {
-            if (definition.policyKey && typeof policies[definition.policyKey] === 'boolean') {
-                ensureProviderState(providers, definition).enabled = policies[definition.policyKey];
+        const builtins = providerCatalog.getBuiltins();
+
+        for (const element of builtins) {
+            const definition = element;
+            const policyKey = definition.policyKey;
+
+            if (policyKey !== undefined && typeof policies[policyKey] === 'boolean') {
+                ensureProviderState(providers, definition).enabled = policies[policyKey];
                 providerManagedIds.add(definition.id);
             }
         }
 
-        for (const definition of providerCatalog.getDirectIntegrations()) {
+        const directIntegrations = providerCatalog.getDirectIntegrations();
+
+        for (const element of directIntegrations) {
+            const definition = element;
             const providerState = ensureProviderState(providers, definition);
             const apiKeyPolicyKey = getApiKeyPolicyKey(definition.id);
 
@@ -68,17 +161,22 @@ globalThis.OspreyPolicyService = (() => {
                 providerManagedIds.add(definition.id);
             }
 
-            if (typeof policies[apiKeyPolicyKey] === 'string') {
-                providerState.apiKey = policies[apiKeyPolicyKey];
+            const policyApiVal = policies[apiKeyPolicyKey];
+
+            if (typeof policyApiVal === 'string') {
+                providerState.apiKey = policyApiVal;
                 const sharedMembers = providerCatalog.getSharedGroupMembersById(definition.id);
 
-                if (sharedMembers.length > 0) {
-                    for (const memberId of sharedMembers) {
-                        ensureProviderState(providers, providerCatalog.getDefinition(memberId) || {
-                            id: memberId,
-                            enabledByDefault: false
-                        }).apiKey = policies[apiKeyPolicyKey];
+                if (sharedMembers !== undefined && sharedMembers.length > 0) {
+                    for (const element of sharedMembers) {
+                        const memberId = element;
+                        let def = providerCatalog.getDefinition(memberId);
 
+                        if (def === undefined) {
+                            def = {id: memberId, enabledByDefault: false};
+                        }
+
+                        ensureProviderState(providers, def).apiKey = policyApiVal;
                         providerManagedApiKeyIds.add(memberId);
                     }
                 } else {
@@ -89,31 +187,53 @@ globalThis.OspreyPolicyService = (() => {
     };
 
     const getPolicies = async ({fresh = false} = {}) => {
-        if (!fresh && cachedPolicies) {
-            return {...cachedPolicies};
+        if (!fresh && cachedPolicies !== null) {
+            return cachedPolicies;
         }
 
-        if (!browserAPI.api?.storage?.managed?.get) {
-            cachedPolicies = {};
-            return {};
+        if (!fresh && cachedPoliciesPromise !== null) {
+            return cachedPoliciesPromise;
         }
 
-        try {
-            cachedPolicies = await browserAPI.storageGet('managed', null) || {};
-        } catch (error) {
-            console.warn('OspreyPolicyService failed to read managed policies', error);
-            cachedPolicies = {};
+        const managedStorage = browserAPI.api?.storage?.managed;
+
+        if (managedStorage?.get === undefined) {
+            cachedPolicies = Object.freeze({});
+            return cachedPolicies;
         }
-        return {...cachedPolicies};
+
+        cachedPoliciesPromise = (async () => {
+            try {
+                const result = await browserAPI.storageGet('managed', null);
+                cachedPolicies = Object.freeze(result || {});
+            } catch (error) {
+                console.warn('OspreyPolicyService failed to read managed policies', error);
+                cachedPolicies = Object.freeze({});
+            }
+
+            cachedPoliciesPromise = null;
+            return cachedPolicies;
+        })();
+        return cachedPoliciesPromise;
     };
 
     const applyToState = async state => {
         const policies = await getPolicies();
-        const effective = structuredClone(state);
+        const effectiveApp = fastCloneApp(state.app);
+        const effectiveProviders = fastCloneProviders(state.providers);
+
+        const effective = {
+            ...state,
+            app: effectiveApp,
+            providers: effectiveProviders
+        };
+
         const appManagedKeys = new Set();
         const providerManagedIds = new Set();
         const providerManagedApiKeyIds = new Set();
+
         applyAppPolicies(effective.app, policies, appManagedKeys);
+
         applyProviderPolicies(
             effective.providers,
             policies,
@@ -133,7 +253,7 @@ globalThis.OspreyPolicyService = (() => {
 
     const applyToAppState = async state => {
         const policies = await getPolicies();
-        const effectiveApp = structuredClone(state.app);
+        const effectiveApp = fastCloneApp(state.app);
         const appManagedKeys = new Set();
 
         applyAppPolicies(effectiveApp, policies, appManagedKeys);
@@ -147,15 +267,19 @@ globalThis.OspreyPolicyService = (() => {
 
     const invalidate = () => {
         cachedPolicies = null;
+        cachedPoliciesPromise = null;
     };
 
-    browserAPI.api?.storage?.onChanged?.addListener((changes, area) => {
-        if (area === 'managed') {
-            invalidate();
-        }
-    });
+    const storageApi = browserAPI.api?.storage;
 
-    // Public API
+    if (storageApi?.onChanged?.addListener !== undefined) {
+        storageApi.onChanged.addListener((changes, area) => {
+            if (area === 'managed') {
+                invalidate();
+            }
+        });
+    }
+
     return Object.freeze({
         applyToState,
         applyToAppState,

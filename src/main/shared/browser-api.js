@@ -20,92 +20,174 @@
 globalThis.OspreyBrowserAPI = (() => {
     const api = globalThis.browser ?? globalThis.chrome;
 
-    const withCallback = (fn, context, args = []) => new Promise((resolve, reject) => {
+    const noOpResolve = Promise.resolve(undefined);
+
+    const invoke = (context, fn, argCount, arg1, arg2) => {
         if (typeof fn !== "function") {
-            console.warn("OspreyBrowserAPI.withCallback called with an unavailable API function");
-            resolve(undefined);
-            return;
+            return noOpResolve;
         }
 
-        let settled = false;
+        return new Promise((resolve, reject) => {
+            let settled = false;
 
-        const settle = (done, value) => {
-            if (!settled) {
+            const settle = (isErr, val) => {
+                if (settled) {
+                    return;
+                }
+
                 settled = true;
-                done(value);
+
+                if (isErr) {
+                    reject(val);
+                } else {
+                    resolve(val);
+                }
+            };
+
+            const cb = (result) => {
+                if (settled) {
+                    return;
+                }
+
+                const err = api?.runtime?.lastError;
+
+                if (err) {
+                    settle(true, new Error(err.message));
+                } else {
+                    settle(false, result);
+                }
+            };
+
+            try {
+                let result;
+
+                if (argCount === 2) {
+                    result = fn.call(context, arg1, arg2, cb);
+                } else if (argCount === 1) {
+                    result = fn.call(context, arg1, cb);
+                } else {
+                    result = fn.call(context, cb);
+                }
+
+                if (result != null && typeof result.then === "function") {
+                    result.then(
+                        (res) => settle(false, res),
+                        (err) => settle(true, err)
+                    );
+                }
+            } catch (error) {
+                settle(true, error);
             }
-        };
-
-        const callback = result => {
-            const lastError = api?.runtime?.lastError;
-
-            if (lastError) {
-                settle(reject, new Error(lastError.message));
-                return;
-            }
-
-            settle(resolve, result);
-        };
-
-        try {
-            fn.call(context, ...args, callback);
-        } catch (error) {
-            console.error("Browser API call threw before completion", error);
-            settle(reject, error);
-        }
-    });
-
-    const call = (path, ...args) => {
-        const context = path.slice(0, -1).reduce((value, key) => value?.[key], api);
-        const fn = context?.[path[path.length - 1]];
-
-        if (typeof fn !== "function") {
-            return Promise.resolve(undefined);
-        }
-
-        try {
-            const result = fn.call(context, ...args);
-
-            if (result && typeof result.then === "function") {
-                return result;
-            }
-        } catch (error) {
-            return Promise.reject(error);
-        }
-        return withCallback(fn, context, args);
+        });
     };
 
-    const safeRuntimeURL = path => {
+    const withCallback = (fn, context, args = []) => {
+        if (typeof fn !== "function") {
+            console.warn("OspreyBrowserAPI.withCallback called with an unavailable API function");
+            return noOpResolve;
+        }
+
+        return new Promise((resolve, reject) => {
+            let settled = false;
+
+            const settle = (isErr, val) => {
+                if (settled) {
+                    return;
+                }
+
+                settled = true;
+
+                if (isErr) {
+                    reject(val);
+                } else {
+                    resolve(val);
+                }
+            };
+
+            const cb = (result) => {
+                if (settled) {
+                    return;
+                }
+
+                const err = api?.runtime?.lastError;
+
+                if (err) {
+                    settle(true, new Error(err.message));
+                } else {
+                    settle(false, result);
+                }
+            };
+
+            try {
+                const len = args.length;
+                const callArgs = new Array(len + 1);
+
+                for (let i = 0; i < len; i++) {
+                    callArgs[i] = args[i];
+                }
+
+                callArgs[len] = cb;
+                const result = fn.apply(context, callArgs);
+
+                if (result != null && typeof result.then === "function") {
+                    result.then(
+                        (res) => settle(false, res),
+                        (err) => settle(true, err)
+                    );
+                }
+            } catch (error) {
+                console.error("Browser API call threw before completion", error);
+                settle(true, error);
+            }
+        });
+    };
+
+    let cachedGetURL;
+
+    const safeRuntimeURL = (path) => {
         try {
-            return api?.runtime?.getURL ? api.runtime.getURL(path) : path;
+            if (cachedGetURL === undefined) {
+                cachedGetURL = api?.runtime?.getURL || null;
+            }
+            return cachedGetURL ? cachedGetURL.call(api.runtime, path) : path;
         } catch (error) {
-            console.warn(`Failed to resolve runtime URL for path '${path}'`, error);
+            console.warn("Failed to resolve runtime URL", error);
             return path;
         }
     };
 
-    // Public API
     return Object.freeze({
         api,
         withCallback,
 
-        storageGet: (area, keys = null) => call(["storage", area, "get"], keys),
-        storageSet: (area, value) => call(["storage", area, "set"], value),
-        storageRemove: (area, keys) => call(["storage", area, "remove"], keys),
+        storageGet: (area, keys = null) => {
+            const ctx = api?.storage?.[area];
+            return invoke(ctx, ctx?.get, 1, keys);
+        },
 
-        tabsUpdate: (tabId, updateProperties) => call(["tabs", "update"], tabId, updateProperties),
-        tabsCreate: createProperties => call(["tabs", "create"], createProperties),
+        storageSet: (area, value) => {
+            const ctx = api?.storage?.[area];
+            return invoke(ctx, ctx?.set, 1, value);
+        },
 
-        notificationsCreate: (options, notificationId = undefined) => notificationId ?
-            call(["notifications", "create"], notificationId, options) :
-            call(["notifications", "create"], options),
+        storageRemove: (area, keys) => {
+            const ctx = api?.storage?.[area];
+            return invoke(ctx, ctx?.remove, 1, keys);
+        },
 
-        actionSetBadgeText: details => call(["action", "setBadgeText"], details),
-        actionSetBadgeBackgroundColor: details => call(["action", "setBadgeBackgroundColor"], details),
-        actionSetBadgeTextColor: details => call(["action", "setBadgeTextColor"], details),
+        tabsUpdate: (tabId, updateProperties) => invoke(api?.tabs, api?.tabs?.update, 2, tabId, updateProperties),
+        tabsCreate: (createProperties) => invoke(api?.tabs, api?.tabs?.create, 1, createProperties),
 
-        runtimeSendMessage: message => call(["runtime", "sendMessage"], message),
-        runtimeOpenOptionsPage: () => call(["runtime", "openOptionsPage"]),
+        notificationsCreate: (options, notificationId = undefined) => notificationId === undefined ?
+            invoke(api?.notifications, api?.notifications?.create, 1, options) :
+            invoke(api?.notifications, api?.notifications?.create, 2, notificationId, options),
+
+        actionSetBadgeText: (details) => invoke(api?.action, api?.action?.setBadgeText, 1, details),
+        actionSetBadgeBackgroundColor: (details) => invoke(api?.action, api?.action?.setBadgeBackgroundColor, 1, details),
+        actionSetBadgeTextColor: (details) => invoke(api?.action, api?.action?.setBadgeTextColor, 1, details),
+
+        runtimeSendMessage: (message) => invoke(api?.runtime, api?.runtime?.sendMessage, 1, message),
+        runtimeOpenOptionsPage: () => invoke(api?.runtime, api?.runtime?.openOptionsPage, 0),
 
         safeRuntimeURL,
     });
