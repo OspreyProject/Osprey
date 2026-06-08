@@ -262,7 +262,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
     }
 
     function handleCounterMessage(message) {
-        if (!message || message.messageType !== messages.BLOCKED_COUNTER_PONG) {
+        if (message?.messageType !== messages.BLOCKED_COUNTER_PONG) {
             return;
         }
 

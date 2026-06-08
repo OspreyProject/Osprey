@@ -131,7 +131,7 @@
   "hideApiKey": {
     "message": "API kulcs elrejtése"
   },
-  "hideApiKey": {
+  "getApiKey": {
     "message": "API kulcs lekérése"
   },
   "toastSaved": {
