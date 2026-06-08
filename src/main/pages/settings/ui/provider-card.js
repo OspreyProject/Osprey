@@ -364,7 +364,7 @@ globalThis.OspreyProviderCard = (() => {
             buildIndicators(definition),
         );
 
-        const websiteLink = createExternalLinkText(definition?.website, LangUtil.WEBSITE_LINK + ' ↗', 'provider-website-link', definition?.id);
+        const websiteLink = createExternalLinkText(definition.website, LangUtil.WEBSITE_LINK + ' ↗', 'provider-website-link', definition.id);
 
         body.append(...[
             formHelpers.createFieldGroup(
@@ -425,7 +425,7 @@ globalThis.OspreyProviderCard = (() => {
         });
 
         const requestUrl = String(definition.request?.urlTemplate || '');
-        const apiKeyLink = createExternalLinkText(definition?.apiKeyUrl, LangUtil.GET_API_KEY + ' ↗', 'api-key-link-text', definition?.id);
+        const apiKeyLink = createExternalLinkText(definition.apiKeyUrl, LangUtil.GET_API_KEY + ' ↗', 'api-key-link-text', definition.id);
 
         passwordField.input.disabled = fieldsLocked;
 
@@ -447,10 +447,6 @@ globalThis.OspreyProviderCard = (() => {
                 try {
                     await providerStateStore.setProviderApiKey(definition.id, apiKey);
 
-                    // Enforce the "enabled requires a saved key" invariant. setProviderApiKey
-                    // clears the key for every provider sharing it in the backend, so clearing
-                    // must also disable all of them, not just this card. The settings-changed
-                    // event below re-renders sibling cards so their toggles reflect the change.
                     if (apiKey.length === 0) {
                         const sharedMembers = providerCatalog.getSharedGroupMembersById(definition.id);
                         const idsToDisable = sharedMembers.length > 0 ? sharedMembers : [definition.id];
