@@ -290,8 +290,18 @@ globalThis.OspreyPolicyService = (() => {
         });
     }
 
+    const getEffectiveAppLocks = async () => {
+        const policies = await getPolicies();
+
+        return {
+            lockSettings: policies.LockProtectionOptions === true,
+            disableResetButtons: policies.DisableResetButtons === true,
+        };
+    };
+
     return Object.freeze({
         applyToState,
         applyToAppState,
+        getEffectiveAppLocks,
     });
 })();

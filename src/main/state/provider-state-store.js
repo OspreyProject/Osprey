@@ -195,7 +195,8 @@ globalThis.OspreyProviderStateStore = (() => {
     const updateState = updater => enqueueWrite(async () => {
         const current = await getState();
         const draft = cloneState(current);
-        const modifiedDraft = typeof updater === 'function' ? updater(draft) || draft : draft;
+        const result = typeof updater === 'function' ? await updater(draft) : undefined;
+        const modifiedDraft = result || draft;
 
         const normalized = normalizeState(modifiedDraft);
         cachedState = normalized;
@@ -204,8 +205,13 @@ globalThis.OspreyProviderStateStore = (() => {
         return normalized;
     });
 
-    const setProviderEnabled = (providerId, enabled) => updateState(state => {
-        if (isUnsafeProviderId(providerId) || state.app.lockSettings) {
+    const getPolicyLocks = () =>
+        globalThis.OspreyPolicyService?.getEffectiveAppLocks?.() ?? Promise.resolve({});
+
+    const setProviderEnabled = (providerId, enabled) => updateState(async state => {
+        const locks = await getPolicyLocks();
+
+        if (isUnsafeProviderId(providerId) || state.app.lockSettings || locks.lockSettings) {
             return;
         }
 
@@ -217,8 +223,10 @@ globalThis.OspreyProviderStateStore = (() => {
         provider.enabled = Boolean(enabled);
     });
 
-    const setProviderApiKey = (providerId, apiKey) => updateState(state => {
-        if (isUnsafeProviderId(providerId) || state.app.lockSettings) {
+    const setProviderApiKey = (providerId, apiKey) => updateState(async state => {
+        const locks = await getPolicyLocks();
+
+        if (isUnsafeProviderId(providerId) || state.app.lockSettings || locks.lockSettings) {
             return;
         }
 
@@ -246,8 +254,10 @@ globalThis.OspreyProviderStateStore = (() => {
         }
     });
 
-    const resetDefaultProviders = () => updateState(state => {
-        if (state.app.disableResetButtons) {
+    const resetDefaultProviders = () => updateState(async state => {
+        const locks = await getPolicyLocks();
+
+        if (state.app.disableResetButtons || locks.disableResetButtons) {
             return;
         }
 
@@ -260,9 +270,11 @@ globalThis.OspreyProviderStateStore = (() => {
         }
     });
 
-    const resetAll = () => updateState(state => {
-        if (state.app.disableResetButtons) {
-            return state;
+    const resetAll = () => updateState(async state => {
+        const locks = await getPolicyLocks();
+
+        if (state.app.disableResetButtons || locks.disableResetButtons) {
+            return;
         }
         return {};
     });
