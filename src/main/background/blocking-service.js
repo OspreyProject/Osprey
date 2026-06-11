@@ -278,9 +278,9 @@ globalThis.OspreyBlockingService = (() => {
             return;
         }
 
-        const frameZeroUrl = resultAggregationService.getFrameZeroUrl(tabId);
+        const currentUrl = resultAggregationService.getFrameZeroUrl(tabId);
 
-        if (frameZeroUrl && !urlService.haveSameOrigin(frameZeroUrl, navigationUrl)) {
+        if (currentUrl && currentUrl !== navigationUrl) {
             return;
         }
 
@@ -345,6 +345,7 @@ globalThis.OspreyBlockingService = (() => {
             }
 
             resultAggregationService.beginNavigation(details.tabId);
+            resultAggregationService.setFrameZeroUrl(details.tabId, normalizedUrl);
             lastBlockedSignatureByTab.delete(details.tabId);
 
             badgeService.clear(details.tabId);
