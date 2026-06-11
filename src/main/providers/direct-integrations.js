@@ -63,6 +63,7 @@ globalThis.OspreyDirectIntegrations = (() => {
         website,
         request: metaDefenderApiRequest,
         sharedApiKeyGroup: 'metadefender',
+        apiKeyPolicyKey: 'MetaDefenderApiKey',
         sharedRequestGroup: 'metadefender-url-reputation',
         responseRuleScope: 'metadefender_provider_block',
         metaDefenderProviderNames: Object.freeze([providerNames || []].flat().map(value => String(value || '')).filter(Boolean)),

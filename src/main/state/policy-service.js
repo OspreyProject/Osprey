@@ -84,16 +84,26 @@ globalThis.OspreyPolicyService = (() => {
         },
     ];
 
+    const toPascalCase = value => String(value || '')
+        .split(/[-_]+/)
+        .filter(Boolean)
+        .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+        .join('');
+
     const apiKeyKeyCache = Object.create(null);
 
-    const getApiKeyPolicyKey = id => {
+    const getApiKeyPolicyKey = definition => {
+        const id = definition.id;
         const cached = apiKeyKeyCache[id];
 
         if (cached !== undefined) {
             return cached;
         }
 
-        const generated = `${id.charAt(0).toUpperCase()}${id.slice(1)}ApiKey`;
+        const generated = typeof definition.apiKeyPolicyKey === 'string' && definition.apiKeyPolicyKey ?
+            definition.apiKeyPolicyKey :
+            `${toPascalCase(definition.sharedApiKeyGroup || id)}ApiKey`;
+
         apiKeyKeyCache[id] = generated;
         return generated;
     };
@@ -154,7 +164,7 @@ globalThis.OspreyPolicyService = (() => {
         for (const element of directIntegrations) {
             const definition = element;
             const providerState = ensureProviderState(providers, definition);
-            const apiKeyPolicyKey = getApiKeyPolicyKey(definition.id);
+            const apiKeyPolicyKey = getApiKeyPolicyKey(definition);
 
             if (disableThirdPartyIntegrations) {
                 providerState.enabled = false;
