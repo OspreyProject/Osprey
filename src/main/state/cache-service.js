@@ -237,6 +237,8 @@ globalThis.OspreyCacheService = (() => {
             }
         }
 
+        let ok = true;
+
         try {
             if (Object.keys(payload).length > 0) {
                 await browserAPI.storageSet('local', payload);
@@ -246,6 +248,7 @@ globalThis.OspreyCacheService = (() => {
                 await browserAPI.storageRemove('local', removeKeys);
             }
         } catch (error) {
+            ok = false;
             console.error('OspreyCacheService failed to persist cache snapshot', error);
 
             if (writeMeta) {
@@ -255,13 +258,16 @@ globalThis.OspreyCacheService = (() => {
             for (const element of providersToWrite) {
                 dirtyProviders.add(element);
             }
-        } finally {
-            if (flushResolver) {
-                flushResolver();
-            }
 
+            scheduleFlush();
+        } finally {
+            const resolve = flushResolver;
             flushResolver = null;
             flushPromise = null;
+
+            if (resolve) {
+                resolve(ok);
+            }
         }
     };
 
