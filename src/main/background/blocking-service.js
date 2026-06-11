@@ -375,10 +375,7 @@ globalThis.OspreyBlockingService = (() => {
 
         const runtime = await providerRuntimeFactory.createRuntime();
         const normalizedUrl = urlService.normalizeUrl(parsed);
-        const hostname = parsed.hostname;
-        const labels = hostname.split('.');
-
-        const pattern = labels.length >= 3 ? '*.' + labels.slice(1).join('.') : '*.' + hostname;
+        const pattern = '*.' + urlService.canonicalizeHostname(parsed.hostname);
 
         cacheService.allowPattern(pattern).then(() => {
             // ignored
