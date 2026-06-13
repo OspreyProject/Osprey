@@ -89,7 +89,7 @@
                     group: providerGroups.official_partners.id,
                     icon: 'assets/providers/alphamountain.avif',
                     enabledByDefault: true,
-                    bypassBlockingThreshold: false,
+                    bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'alphamountain',
                     tags: ['proxy', 'partner'],
                     policyKey: 'AlphaMountainEnabled',
@@ -104,7 +104,7 @@
                     group: providerGroups.official_partners.id,
                     icon: 'assets/providers/chainpatrol.avif',
                     enabledByDefault: true,
-                    bypassBlockingThreshold: false,
+                    bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'chainpatrol',
                     tags: ['proxy', 'partner'],
                     policyKey: 'ChainPatrolEnabled',
@@ -119,7 +119,7 @@
                     group: providerGroups.official_partners.id,
                     icon: 'assets/providers/precisionsec.avif',
                     enabledByDefault: true,
-                    bypassBlockingThreshold: false,
+                    bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'precisionsec',
                     tags: ['proxy', 'hostname_only', 'partner'],
                     policyKey: 'PrecisionSecEnabled',
@@ -134,7 +134,7 @@
                     group: providerGroups.official_partners.id,
                     icon: 'assets/providers/adguard.avif',
                     enabledByDefault: true,
-                    bypassBlockingThreshold: false,
+                    bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'adguard-security',
                     lookupTarget: 'hostname',
                     tags: ['proxy', 'hostname_only'],
@@ -150,7 +150,7 @@
                     group: providerGroups.adult_content_filters.id,
                     icon: 'assets/providers/adguard.avif',
                     enabledByDefault: false,
-                    bypassBlockingThreshold: false,
+                    bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'adguard-family',
                     lookupTarget: 'hostname',
                     tags: ['proxy', 'hostname_only', 'adult_filter'],
@@ -166,7 +166,7 @@
                     group: providerGroups.security_filters.id,
                     icon: 'assets/providers/cert-ee.avif',
                     enabledByDefault: true,
-                    bypassBlockingThreshold: false,
+                    bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'cert-ee',
                     policyKey: 'CERTEEEnabled',
                     report: mailtoReport('ria@ria.ee', 'CERT-EE DNS'),
@@ -180,7 +180,7 @@
                     group: providerGroups.security_filters.id,
                     icon: 'assets/providers/cleanbrowsing.avif',
                     enabledByDefault: true,
-                    bypassBlockingThreshold: false,
+                    bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'cleanbrowsing-security',
                     policyKey: 'CleanBrowsingSecurityEnabled',
                     report: mailtoReport('support@cleanbrowsing.org', 'CleanBrowsing Security Filter'),
@@ -194,7 +194,7 @@
                     group: providerGroups.adult_content_filters.id,
                     icon: 'assets/providers/cleanbrowsing.avif',
                     enabledByDefault: false,
-                    bypassBlockingThreshold: false,
+                    bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'cleanbrowsing-family',
                     policyKey: 'CleanBrowsingFamilyEnabled',
                     report: mailtoReport('support@cleanbrowsing.org', 'CleanBrowsing Adult Filter'),
@@ -208,7 +208,7 @@
                     group: providerGroups.security_filters.id,
                     icon: 'assets/providers/cloudflare.avif',
                     enabledByDefault: true,
-                    bypassBlockingThreshold: false,
+                    bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'cloudflare-security',
                     policyKey: 'CloudflareSecurityEnabled',
                     report: cloudflareReport,
@@ -222,7 +222,7 @@
                     group: providerGroups.adult_content_filters.id,
                     icon: 'assets/providers/cloudflare.avif',
                     enabledByDefault: false,
-                    bypassBlockingThreshold: false,
+                    bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'cloudflare-family',
                     policyKey: 'CloudflareFamilyEnabled',
                     report: cloudflareReport,
@@ -236,7 +236,7 @@
                     group: providerGroups.security_filters.id,
                     icon: 'assets/providers/controld.avif',
                     enabledByDefault: true,
-                    bypassBlockingThreshold: false,
+                    bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'controld-security',
                     policyKey: 'ControlDSecurityEnabled',
                     report: mailtoReport('help@controld.com', 'Control D Security DNS'),
@@ -250,7 +250,7 @@
                     group: providerGroups.adult_content_filters.id,
                     icon: 'assets/providers/controld.avif',
                     enabledByDefault: false,
-                    bypassBlockingThreshold: false,
+                    bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'controld-family',
                     policyKey: 'ControlDFamilyEnabled',
                     report: mailtoReport('help@controld.com', 'Control D Family DNS'),
@@ -264,7 +264,7 @@
                     group: providerGroups.security_filters.id,
                     icon: 'assets/providers/opendns.avif',
                     enabledByDefault: true,
-                    bypassBlockingThreshold: false,
+                    bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'opendns-security',
                     policyKey: 'OpenDNSSecurityEnabled',
                     report: openDnsReport,
@@ -278,7 +278,7 @@
                     group: providerGroups.adult_content_filters.id,
                     icon: 'assets/providers/opendns.avif',
                     enabledByDefault: false,
-                    bypassBlockingThreshold: false,
+                    bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'opendns-family',
                     policyKey: 'OpenDNSFamilyEnabled',
                     report: openDnsReport,
@@ -292,7 +292,7 @@
                     group: providerGroups.security_filters.id,
                     icon: 'assets/providers/quad9.avif',
                     enabledByDefault: true,
-                    bypassBlockingThreshold: false,
+                    bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'quad9',
                     policyKey: 'Quad9Enabled',
                     report: externalUrlReport('https://quad9.net/support/contact'),
@@ -306,7 +306,7 @@
                     group: providerGroups.security_filters.id,
                     icon: 'assets/providers/switchch.avif',
                     enabledByDefault: true,
-                    bypassBlockingThreshold: false,
+                    bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'switch-ch',
                     policyKey: 'SwitchCHEnabled',
                     report: mailtoReport('dnsfirewall@switch.ch', 'Switch.ch Public DNS'),
@@ -320,7 +320,7 @@
                     group: providerGroups.feeds.id,
                     icon: 'assets/providers/openphish.avif',
                     enabledByDefault: true,
-                    bypassBlockingThreshold: false,
+                    bypassBlockingThreshold: true,
                     endpoint: 'openphish',
                     policyKey: 'OpenPhishEnabled',
                     report: mailtoReport('support@openphish.com', 'OpenPhish Public List'),
@@ -334,7 +334,7 @@
                     group: providerGroups.feeds.id,
                     icon: 'assets/providers/phishdestroy.avif',
                     enabledByDefault: true,
-                    bypassBlockingThreshold: false,
+                    bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'phishdestroy',
                     policyKey: 'PhishDestroyEnabled',
                     report: externalUrlReport('https://phishdestroy.io/appeals'),
