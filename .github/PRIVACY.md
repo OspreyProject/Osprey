@@ -20,7 +20,7 @@ only ever see requests originating from the proxy's IP address, not yours. Thous
 from a single IP, making it practically impossible for any provider to associate a URL lookup with you specifically.
 
 **Most URLs are never sent to providers at all.** The proxy server maintains a cache of previously checked URLs. If a
-URL has already been evaluated, the result is returned from cache without contacting any provider.
+URL has already been recently evaluated, the result is returned from cache without contacting any provider.
 
 When a URL does reach a provider, the data sent depends on the provider type:
 
@@ -31,11 +31,8 @@ When a URL does reach a provider, the data sent depends on the provider type:
 
 ## Your IP Address
 
-Your IP address is never forwarded to any third-party provider. Providers only see the proxy server's IP address.
-
-The proxy server itself uses your IP address solely for abuse protections such as rate limiting. For this purpose, your
-IP is immediately hashed and stored in-memory. Raw IP addresses are not written to disk as part of normal proxy
-operation.
+The proxy server uses your IP address **solely for abuse protections** such as rate limiting. For this purpose, your IP
+is immediately hashed and stored in-memory. Raw IP addresses are not written to disk as part of normal proxy operation.
 
 ## Third-Party Integrations
 
@@ -72,11 +69,9 @@ manually via the context menu.
 The proxy server uses standard operational tooling (Micrometer, Prometheus, Grafana) to monitor service health,
 stability, and capacity. Metrics include aggregated counts such as requests per provider, cache hit/miss rates, and
 system performance indicators. This data is used solely for service reliability and abuse prevention, not for
-advertising or user profiling. Raw client IP addresses are not stored in operational metrics.
+advertising or user profiling.
 
 ## Data Retention
-
-Local extension data is retained until you uninstall the extension or clear it manually.
 
 On the proxy server, rate-limit states, local list snapshots, and transient runtime logs exist only in memory and may be
 lost on restart. Aggregated operational metrics may be retained longer in Prometheus/Grafana subject to those systems'
