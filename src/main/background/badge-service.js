@@ -37,9 +37,20 @@ globalThis.OspreyBadgeService = (() => {
 
     const getString = val => val < maxCachedStrings ? cachedStrings[val] : String(val);
 
-    const badgeTextPacket = {tabId: 0, text: ''};
-    const badgeBgColorPacket = {color: '#ff4b4b', tabId: 0};
-    const badgeTextColorPacket = {color: '#ffffff', tabId: 0};
+    const badgeTextPacket = {
+        tabId: 0,
+        text: ''
+    };
+
+    const backgroundColorPacket = {
+        color: '#ff4b4b',
+        tabId: 0
+    };
+
+    const textColorPacket = {
+        color: '#ffffff',
+        tabId: 0
+    };
 
     const processDirtyTabs = () => {
         globalTimer = null;
@@ -71,11 +82,11 @@ globalThis.OspreyBadgeService = (() => {
             browserAPI.actionSetBadgeText(badgeTextPacket).catch(globalThis.console.error);
 
             if (!colorsSetTabs.has(tabId)) {
-                badgeBgColorPacket.tabId = tabId;
-                browserAPI.actionSetBadgeBackgroundColor(badgeBgColorPacket).catch(globalThis.console.error);
+                backgroundColorPacket.tabId = tabId;
+                textColorPacket.tabId = tabId;
 
-                badgeTextColorPacket.tabId = tabId;
-                browserAPI.actionSetBadgeTextColor(badgeTextColorPacket).catch(globalThis.console.error);
+                browserAPI.actionSetBadgeBackgroundColor(backgroundColorPacket).catch(globalThis.console.error);
+                browserAPI.actionSetBadgeTextColor(textColorPacket).catch(globalThis.console.error);
 
                 colorsSetTabs.add(tabId);
             }

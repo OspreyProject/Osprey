@@ -217,7 +217,10 @@ globalThis.OspreyPolicyService = (() => {
                 const result = await browserAPI.storageGet('managed', null);
                 cachedPolicies = Object.freeze(result || {});
             } catch (error) {
-                console.warn('OspreyPolicyService failed to read managed policies', error);
+                if (error && typeof error.message === 'string' && !error.message.includes('Managed storage manifest not found')) {
+                    console.warn('OspreyPolicyService failed to read managed policies', error);
+                }
+
                 cachedPolicies = Object.freeze({});
             }
 

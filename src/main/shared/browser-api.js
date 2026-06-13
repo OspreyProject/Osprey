@@ -20,126 +20,48 @@
 globalThis.OspreyBrowserAPI = (() => {
     const api = globalThis.browser ?? globalThis.chrome;
 
-    const noOpResolve = Promise.resolve(undefined);
-
     const invoke = (context, fn, argCount, arg1, arg2) => {
         if (typeof fn !== 'function') {
-            return noOpResolve;
+            return Promise.resolve(undefined);
         }
 
-        return new Promise((resolve, reject) => {
-            let settled = false;
+        try {
+            let result;
 
-            const settle = (isErr, val) => {
-                if (settled) {
-                    return;
-                }
-
-                settled = true;
-
-                if (isErr) {
-                    reject(val);
-                } else {
-                    resolve(val);
-                }
-            };
-
-            const cb = result => {
-                if (settled) {
-                    return;
-                }
-
-                const err = api?.runtime?.lastError;
-
-                if (err) {
-                    settle(true, new Error(err.message));
-                } else {
-                    settle(false, result);
-                }
-            };
-
-            try {
-                let result;
-
-                if (argCount === 2) {
-                    result = fn.call(context, arg1, arg2, cb);
-                } else if (argCount === 1) {
-                    result = fn.call(context, arg1, cb);
-                } else {
-                    result = fn.call(context, cb);
-                }
-
-                if (result != null && typeof result.then === 'function') {
-                    result.then(
-                        res => settle(false, res),
-                        err => settle(true, err),
-                    );
-                }
-            } catch (error) {
-                settle(true, error);
+            if (argCount === 2) {
+                result = fn.call(context, arg1, arg2);
+            } else if (argCount === 1) {
+                result = fn.call(context, arg1);
+            } else {
+                result = fn.call(context);
             }
-        });
+
+            if (result != null && typeof result.then === 'function') {
+                return result;
+            }
+            return Promise.resolve(result);
+        } catch (error) {
+            return Promise.reject(error);
+        }
     };
 
     const withCallback = (fn, context, args = []) => {
         if (typeof fn !== 'function') {
             console.warn('OspreyBrowserAPI.withCallback called with an unavailable API function');
-            return noOpResolve;
+            return Promise.resolve(undefined);
         }
 
-        return new Promise((resolve, reject) => {
-            let settled = false;
+        try {
+            const result = fn.apply(context, args);
 
-            const settle = (isErr, val) => {
-                if (settled) {
-                    return;
-                }
-
-                settled = true;
-
-                if (isErr) {
-                    reject(val);
-                } else {
-                    resolve(val);
-                }
-            };
-
-            const cb = result => {
-                if (settled) {
-                    return;
-                }
-
-                const err = api?.runtime?.lastError;
-
-                if (err) {
-                    settle(true, new Error(err.message));
-                } else {
-                    settle(false, result);
-                }
-            };
-
-            try {
-                const len = args.length;
-                const callArgs = Array.from({length: len + 1});
-
-                for (let i = 0; i < len; i++) {
-                    callArgs[i] = args[i];
-                }
-
-                callArgs[len] = cb;
-                const result = fn.apply(context, callArgs);
-
-                if (result != null && typeof result.then === 'function') {
-                    result.then(
-                        res => settle(false, res),
-                        err => settle(true, err),
-                    );
-                }
-            } catch (error) {
-                console.error('Browser API call threw before completion', error);
-                settle(true, error);
+            if (result != null && typeof result.then === 'function') {
+                return result;
             }
-        });
+            return Promise.resolve(result);
+        } catch (error) {
+            console.error('Browser API call threw before completion', error);
+            return Promise.reject(error);
+        }
     };
 
     let cachedGetURL;
