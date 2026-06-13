@@ -8,7 +8,7 @@ when you use the Osprey browser extension and its supporting proxy service, and 
 Osprey consists of two components:
 
 - The **browser extension**, which runs locally on your device
-- The **proxy server** (OspreyProxy), hosted in New York, NY at [api.osprey.ac](https://api.osprey.ac)
+- The **proxy server**, hosted in New York, NY at [api.osprey.ac](https://api.osprey.ac)
 
 ## How URL Checking Works
 
