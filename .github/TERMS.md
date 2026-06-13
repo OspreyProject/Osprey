@@ -35,23 +35,20 @@ use of GitHub is governed by GitHub's own terms, policies, and privacy practices
 ## 4. Non-Commercial Use
 
 Osprey is made available on a non-commercial basis for end users, researchers, and organizations using it for their own
-internal purposes.
+internal purposes. The hosted Osprey proxy service and any public APIs made available through it are likewise provided
+for the project's non-commercial use.
 
-## 5. Commercial Use of the Hosted Service
+Restrictions on commercial use of the hosted Service are described in Section 6 (Acceptable Use).
 
-The hosted Osprey proxy service and any public APIs made available through it are provided for the project's
-non-commercial use.
-
-## 6. No Guarantee of Detection
+## 5. No Guarantee of Detection
 
 Osprey is a security aid only. We do not guarantee that the Service will detect, block, or correctly classify every
 malicious, phishing, scam-related, deceptive, or otherwise unsafe site or URL.
 
-Threat intelligence can be incomplete, delayed, unavailable, or inaccurate, and third-party providers may affect the
-coverage or availability of the Service. You are responsible for your own security decisions and for how you use the
-results provided by Osprey.
+Threat intelligence can be incomplete, delayed, unavailable, or inaccurate. You are responsible for your own security
+decisions and for how you use the results provided by Osprey.
 
-## 7. Acceptable Use
+## 6. Acceptable Use
 
 Please do not use the Service to:
 
@@ -66,18 +63,18 @@ Please do not use the Service to:
 We may rate-limit, restrict, or block access to the hosted Service if necessary to protect the Service, users, or
 third parties.
 
-## 8. Third-Party Services
+## 7. Third-Party Services
 
 The Service may rely on third-party threat intelligence, DNS filtering, hosting, network, security, monitoring,
 or infrastructure providers. We are not responsible for outages, errors, policy changes, or inaccuracies caused by
 third-party services.
 
-## 9. Privacy
+## 8. Privacy
 
 Our [Privacy Policy](./PRIVACY.md) describes how Osprey processes data, including limited operational monitoring and
 service telemetry used to run, secure, and maintain the service.
 
-## 10. Project Name and Branding
+## 9. Project Name and Branding
 
 Except to the extent governed by applicable open-source licenses, the Osprey name, logos, branding, website content,
 and other non-code materials made available by the project may be protected by applicable law.
@@ -85,14 +82,14 @@ and other non-code materials made available by the project may be protected by a
 These Terms do not give you permission to use the Osprey name, logos, branding, or other source identifiers in a way
 that is likely to cause confusion about affiliation, sponsorship, or endorsement.
 
-## 11. Changes to the Service
+## 10. Changes to the Service
 
 The Service may change over time, and we may modify, limit, suspend, or discontinue parts of it at any time.
 
 We may also update these Terms from time to time. The Effective Date above reflects the date of the most recent
 revision. Continued use of the Service after an update means you accept the revised Terms.
 
-## 12. Disclaimer
+## 11. Disclaimer
 
 THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE," WITHOUT WARRANTIES OF ANY KIND, TO THE MAXIMUM EXTENT PERMITTED BY
 APPLICABLE LAW.
@@ -101,16 +98,16 @@ TO THE MAXIMUM EXTENT PERMITTED BY LAW, WE DISCLAIM WARRANTIES OF MERCHANTABILIT
 NON-INFRINGEMENT, AND ANY WARRANTY THAT THE SERVICE WILL BE UNINTERRUPTED, ERROR-FREE, SECURE, ACCURATE, OR EFFECTIVE
 AT DETECTING OR PREVENTING ANY PARTICULAR THREAT.
 
-## 13. Limitation of Liability
+## 12. Limitation of Liability
 
 TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE OSPREY PROJECT AND ITS CONTRIBUTORS, MAINTAINERS, OPERATORS, LICENSORS,
 AND SERVICE PROVIDERS WILL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES
 ARISING OUT OF OR RELATED TO YOUR USE OF, OR INABILITY TO USE, THE SERVICE.
 
-## 14. Governing Law
+## 13. Governing Law
 
 These Terms are governed by the laws of the State of New York, except to the extent applicable law requires otherwise.
 
-## 15. Contact
+## 14. Contact
 
 If you have questions about these Terms, contact **support@osprey.ac**.
