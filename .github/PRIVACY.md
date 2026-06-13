@@ -1,6 +1,6 @@
 # Privacy Policy
 
-**Effective Date:** 05/23/2026
+**Effective Date:** 06/13/2026
 
 Osprey: Browser Protection is committed to protecting your privacy. This Privacy Policy explains what data is processed
 when you use the Osprey browser extension and its supporting proxy service, and how it is handled.
@@ -25,12 +25,9 @@ URL has already been evaluated, the result is returned from cache without contac
 When a URL does reach a provider, the data sent depends on the provider type:
 
 - **DNS-based providers** receive only the hostname (never the full URL or path)
-- **API-based providers** receive the full URL
+- **API-based providers** receive the full URL with query parameters stripped
 - **Local threat intelligence lists** are checked entirely in-memory on the proxy server with no external calls per
   request
-
-Query parameters are stripped from URLs before they are sent to providers, removing an additional source of potentially
-sensitive information.
 
 ## Your IP Address
 
