@@ -165,6 +165,10 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         }
     }
 
+    function stripTrailingSlash(parsed) {
+        return parsed.toString().replace(/\/+$/, '');
+    }
+
     function buildContext(fields) {
         const result = protectionResult.normalize(fields.result);
         const origin = parseOriginParam(fields.origin);
@@ -358,7 +362,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         const blockedUrlParsed = parseSafeHttpUrl(warningContext.blockedUrl);
 
         return buildContext({
-            blockedUrl: blockedUrlParsed ? blockedUrlParsed.toString() : null,
+            blockedUrl: blockedUrlParsed ? stripTrailingSlash(blockedUrlParsed) : null,
             origin: warningContext.origin,
             result,
             actionable: blockedUrlParsed !== null,
