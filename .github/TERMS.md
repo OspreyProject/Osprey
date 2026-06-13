@@ -1,6 +1,6 @@
 # Terms of Service
 
-**Effective Date:** 05/22/2026
+**Effective Date:** 06/13/2026
 
 These Terms of Service ("Terms") govern your use of the Osprey website, the hosted Osprey proxy service at
 [api.osprey.ac](https://api.osprey.ac), and related hosted materials or services made available by the Osprey project
