@@ -47,8 +47,6 @@ The extension requires the following permissions, used strictly for its security
 - `tabs`: detects tab navigation events
 - `webNavigation`: detects web navigation events
 - `storage`: caches results locally and persists your settings
-- `contextMenus`: provides right-click menu options
-- `notifications`: alerts you when allowed websites are cleared
 - `host permissions for all URLs`: inspects navigated URLs across all websites
 
 ## Data Stored Locally
@@ -62,7 +60,7 @@ or any third party.
 - **Your settings**: enabled providers, cache expiration preferences, and other protection settings
 
 All local storage data is cleared when you uninstall the extension, or when you clear the list of allowed websites
-manually via the context menu.
+using the settings page.
 
 ## Operational Monitoring
 
