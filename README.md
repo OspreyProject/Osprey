@@ -42,7 +42,7 @@ extension icon in your browser's toolbar.
 
 ###
 
-The settings page allows you to configure which providers Osprey uses to check websites.
+The settings page allows you to configure which protection providers Osprey uses to check websites.
 
 ![Settings Page](https://i.imgur.com/lQ8KVZ6.png)
 
@@ -58,14 +58,8 @@ When Osprey blocks a website, you'll see a warning page like this:
 
 ![Warning Page](https://i.imgur.com/TBt8oLo.png)
 
-From there, you can choose to go back to safety or proceed to the site if you believe it's a false positive.
-
-###
-
-You can open the context menu by right-clicking the ![Icon](https://i.imgur.com/E1SM8OJ.png) extension
-icon. From there, you can clear the list of allowed websites, report a website as malicious, and more.
-
-![Context Menu](https://i.imgur.com/Gj7wCwL.png)
+From there, you can choose to go back to safety, continue anyway if you believe the warning is a false positive,
+report the website as safe, or always allow the website if the warning page keeps appearing.
 
 ###
 
