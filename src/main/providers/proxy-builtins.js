@@ -159,20 +159,6 @@
                 }),
 
                 hostnameBuiltin({
-                    id: 'certee-security',
-                    website: 'https://cert.ee/?utm_source=osprey',
-                    aliases: ['certEESecurity'],
-                    displayName: 'CERT-EE Security DNS',
-                    group: providerGroups.security_filters.id,
-                    icon: 'assets/providers/cert-ee.avif',
-                    enabledByDefault: true,
-                    bypassBlockingThreshold: false, // keep this 'false'
-                    endpoint: 'cert-ee',
-                    policyKey: 'CERTEEEnabled',
-                    report: mailtoReport('ria@ria.ee', 'CERT-EE DNS'),
-                }),
-
-                hostnameBuiltin({
                     id: 'cleanbrowsing-security',
                     website: 'https://cleanbrowsing.org/?utm_source=osprey',
                     aliases: ['cleanBrowsingSecurity'],

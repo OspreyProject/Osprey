@@ -76,7 +76,6 @@ personally identifiable information.
   <a href="https://chainpatrol.com/?utm_source=osprey" title="ChainPatrol"><img src="https://i.imgur.com/Wv4HQXp.png" alt="ChainPatrol"></a>
   <a href="https://precisionsec.com/?utm_source=osprey" title="PrecisionSec"><img src="https://i.imgur.com/gf9ahFa.png" alt="PrecisionSec"></a>
   <a href="https://adguard-dns.io/?utm_source=osprey" title="AdGuard DNS"><img src="https://i.imgur.com/4AXgbsC.png" alt="AdGuard DNS"></a>
-  <a href="https://ria.ee/en?utm_source=osprey" title="CERT-EE"><img src="https://i.imgur.com/EiOmmHB.png" alt="CERT-EE"></a>
   <a href="https://cleanbrowsing.org/?utm_source=osprey" title="CleanBrowsing"><img src="https://i.imgur.com/8qgGCY8.png" alt="CleanBrowsing"></a>
   <a href="https://cloudflare.com/products/dns/?utm_source=osprey" title="Cloudflare"><img src="https://i.imgur.com/KAT4B40.png" alt="Cloudflare"></a>
   <a href="https://controld.com/?utm_source=osprey" title="Control D"><img src="https://i.imgur.com/xh7qTT8.png" alt="Control D"></a>

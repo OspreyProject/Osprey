@@ -89,12 +89,6 @@
       "type": "boolean",
       "default": false
     },
-    "CERTEEEnabled": {
-      "title": "CERT-EE Security DNS Enabled",
-      "description": "Managed enabled state for CERT-EE Security DNS.",
-      "type": "boolean",
-      "default": true
-    },
     "CleanBrowsingSecurityEnabled": {
       "title": "CleanBrowsing Security DNS Enabled",
       "description": "Managed enabled state for CleanBrowsing Security DNS.",
