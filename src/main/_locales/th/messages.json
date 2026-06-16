@@ -2,6 +2,9 @@
   "extensionName": {
     "message": "Osprey: การป้องกันเบราว์เซอร์"
   },
+  "extensionShortName": {
+    "message": "Osprey"
+  },
   "extensionDescription": {
     "message": "ป้องกันภัยคุกคามออนไลน์แบบเรียลไทม์โดยใช้ผู้ให้บริการป้องกันเบราว์เซอร์หลายราย"
   },
@@ -80,14 +83,8 @@
   "adultContent": {
     "message": "เนื้อหาสำหรับผู้ใหญ่"
   },
-  "clearAllowedWebsitesContext": {
+  "clearAllowedWebsites": {
     "message": "ล้างรายการเว็บไซต์ที่อนุญาต"
-  },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "รายงานเว็บไซต์ว่าเป็นอันตราย"
-  },
-  "clearAllowedWebsitesTitle": {
-    "message": "เว็บไซต์ที่อนุญาตถูกล้างแล้ว"
   },
   "clearAllowedWebsitesMessage": {
     "message": "เว็บไซต์ที่อนุญาตทั้งหมดถูกล้างแล้ว"
@@ -96,7 +93,7 @@
     "message": "การตั้งค่า"
   },
   "providersSection": {
-    "message": "ผู้ให้บริการ"
+    "message": "ผู้ให้บริการการป้องกัน"
   },
   "thirdPartySection": {
     "message": "การรวมระบบบุคคลที่สาม"

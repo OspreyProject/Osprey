@@ -2,6 +2,9 @@
   "extensionName": {
     "message": "Osprey: Proteção do Navegador"
   },
+  "extensionShortName": {
+    "message": "Osprey"
+  },
   "extensionDescription": {
     "message": "Proteja-se contra ameaças online em tempo real utilizando vários fornecedores de proteção do navegador."
   },
@@ -80,14 +83,8 @@
   "adultContent": {
     "message": "Conteúdo para adultos"
   },
-  "clearAllowedWebsitesContext": {
+  "clearAllowedWebsites": {
     "message": "Limpar lista de sites permitidos"
-  },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "Reportar site como malicioso"
-  },
-  "clearAllowedWebsitesTitle": {
-    "message": "Sites permitidos limpos"
   },
   "clearAllowedWebsitesMessage": {
     "message": "Todos os sites permitidos foram limpos."
@@ -96,7 +93,7 @@
     "message": "Definições"
   },
   "providersSection": {
-    "message": "Fornecedores"
+    "message": "Fornecedores de proteção"
   },
   "thirdPartySection": {
     "message": "Integrações de terceiros"

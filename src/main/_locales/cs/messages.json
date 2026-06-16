@@ -2,6 +2,9 @@
   "extensionName": {
     "message": "Osprey: Ochrana prohlížeče"
   },
+  "extensionShortName": {
+    "message": "Osprey"
+  },
   "extensionDescription": {
     "message": "Chraňte se před online hrozbami v reálném čase pomocí více poskytovatelů ochrany prohlížeče."
   },
@@ -80,14 +83,8 @@
   "adultContent": {
     "message": "Obsah pro dospělé"
   },
-  "clearAllowedWebsitesContext": {
+  "clearAllowedWebsites": {
     "message": "Vymazat seznam povolených stránek"
-  },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "Nahlásit stránku jako škodlivou"
-  },
-  "clearAllowedWebsitesTitle": {
-    "message": "Povolené stránky vymazány"
   },
   "clearAllowedWebsitesMessage": {
     "message": "Všechny povolené webové stránky byly vymazány."
@@ -96,7 +93,7 @@
     "message": "Nastavení"
   },
   "providersSection": {
-    "message": "Poskytovatelé"
+    "message": "Poskytovatelé ochrany"
   },
   "thirdPartySection": {
     "message": "Integrace třetích stran"

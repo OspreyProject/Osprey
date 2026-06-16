@@ -2,6 +2,9 @@
   "extensionName": {
     "message": "Osprey: Selaimen suojaus"
   },
+  "extensionShortName": {
+    "message": "Osprey"
+  },
   "extensionDescription": {
     "message": "Suojaa verkkouhilta reaaliajassa useiden selaimen suojauspalveluntarjoajien avulla."
   },
@@ -80,14 +83,8 @@
   "adultContent": {
     "message": "Aikuisille tarkoitettu sisältö"
   },
-  "clearAllowedWebsitesContext": {
+  "clearAllowedWebsites": {
     "message": "Tyhjennä sallittujen verkkosivustojen luettelo"
-  },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "Ilmoita verkkosivusto haitalliseksi"
-  },
-  "clearAllowedWebsitesTitle": {
-    "message": "Sallitut verkkosivustot tyhjennetty"
   },
   "clearAllowedWebsitesMessage": {
     "message": "Kaikki sallitut verkkosivustot on tyhjennetty."
@@ -96,7 +93,7 @@
     "message": "Asetukset"
   },
   "providersSection": {
-    "message": "Palveluntarjoajat"
+    "message": "Suojauksen tarjoajat"
   },
   "thirdPartySection": {
     "message": "Kolmannen osapuolen integraatiot"

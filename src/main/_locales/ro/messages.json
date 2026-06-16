@@ -2,6 +2,9 @@
   "extensionName": {
     "message": "Osprey: Protecție browser"
   },
+  "extensionShortName": {
+    "message": "Osprey"
+  },
   "extensionDescription": {
     "message": "Protejați-vă în timp real împotriva amenințărilor online folosind mai mulți furnizori de protecție pentru browser."
   },
@@ -80,14 +83,8 @@
   "adultContent": {
     "message": "Conținut pentru adulți"
   },
-  "clearAllowedWebsitesContext": {
+  "clearAllowedWebsites": {
     "message": "Ștergeți lista site-urilor permise"
-  },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "Raportați site-ul ca malițios"
-  },
-  "clearAllowedWebsitesTitle": {
-    "message": "Site-uri permise șterse"
   },
   "clearAllowedWebsitesMessage": {
     "message": "Toate site-urile permise au fost șterse."
@@ -96,7 +93,7 @@
     "message": "Setări"
   },
   "providersSection": {
-    "message": "Furnizori"
+    "message": "Furnizori de protecție"
   },
   "thirdPartySection": {
     "message": "Integrări terțe"

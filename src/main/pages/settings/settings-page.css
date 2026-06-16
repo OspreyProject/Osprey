@@ -840,20 +840,6 @@ html, body {
 }
 
 /* --------------------------------------------------
-   Settings page title (below banner)
--------------------------------------------------- */
-.settings-page-title {
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #b1b5b8;
-    padding: 14px 0 0 16px;
-    max-width: 640px;
-    margin: 0 auto;
-}
-
-/* --------------------------------------------------
    Provider sections
 -------------------------------------------------- */
 .provider-section {
@@ -1032,11 +1018,18 @@ html, body {
 -------------------------------------------------- */
 .reset-footer {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
     gap: 10px;
     padding: 14px 2px 20px;
     border-top: 1px solid #373737;
     margin-top: 4px;
+}
+
+.reset-footer-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .reset-btn {

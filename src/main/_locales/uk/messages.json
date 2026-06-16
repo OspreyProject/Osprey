@@ -2,6 +2,9 @@
   "extensionName": {
     "message": "Osprey: Захист браузера"
   },
+  "extensionShortName": {
+    "message": "Osprey"
+  },
   "extensionDescription": {
     "message": "Захист від онлайн-загроз у режимі реального часу з використанням кількох постачальників захисту браузера."
   },
@@ -80,14 +83,8 @@
   "adultContent": {
     "message": "Контент для дорослих"
   },
-  "clearAllowedWebsitesContext": {
+  "clearAllowedWebsites": {
     "message": "Очистити список дозволених сайтів"
-  },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "Повідомити про сайт як шкідливий"
-  },
-  "clearAllowedWebsitesTitle": {
-    "message": "Дозволені сайти очищено"
   },
   "clearAllowedWebsitesMessage": {
     "message": "Усі дозволені сайти було очищено."
@@ -96,7 +93,7 @@
     "message": "Налаштування"
   },
   "providersSection": {
-    "message": "Постачальники"
+    "message": "Постачальники захисту"
   },
   "thirdPartySection": {
     "message": "Інтеграції сторонніх сервісів"

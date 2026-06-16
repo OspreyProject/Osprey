@@ -29,5 +29,6 @@ globalThis.OspreyMessageBus = Object.freeze({
         CONTINUE_TO_WEBSITE: 'continueToWebsite',
         REPORT_WEBSITE: 'reportWebsite',
         ALLOW_WEBSITE: 'allowWebsite',
+        CLEAR_ALLOWED_WEBSITES: 'clearAllowedWebsites',
     }),
 });

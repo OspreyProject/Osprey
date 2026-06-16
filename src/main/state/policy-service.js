@@ -29,12 +29,6 @@ globalThis.OspreyPolicyService = (() => {
 
     const appPolicyMappings = [
         {
-            policyKey: 'DisableContextMenu',
-            type: 'boolean',
-            stateKey: 'contextMenuEnabled',
-            mapValue: negateMap,
-        },
-        {
             policyKey: 'HideContinueButtons',
             type: 'boolean',
             stateKey: 'hideContinueButtons',

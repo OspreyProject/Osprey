@@ -2,6 +2,9 @@
   "extensionName": {
     "message": "Osprey: Browserbeskyttelse"
   },
+  "extensionShortName": {
+    "message": "Osprey"
+  },
   "extensionDescription": {
     "message": "Beskyt mod onlinetrusler i realtid med flere browserbeskyttelsesudbydere."
   },
@@ -80,14 +83,8 @@
   "adultContent": {
     "message": "Voksenindhold"
   },
-  "clearAllowedWebsitesContext": {
+  "clearAllowedWebsites": {
     "message": "Ryd liste over tilladte websteder"
-  },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "Rapportér websted som ondsindet"
-  },
-  "clearAllowedWebsitesTitle": {
-    "message": "Tilladte websteder ryddet"
   },
   "clearAllowedWebsitesMessage": {
     "message": "Alle tilladte websteder er blevet ryddet."
@@ -96,7 +93,7 @@
     "message": "Indstillinger"
   },
   "providersSection": {
-    "message": "Udbydere"
+    "message": "Beskyttelsesudbydere"
   },
   "thirdPartySection": {
     "message": "Tredjepartsintegrationer"

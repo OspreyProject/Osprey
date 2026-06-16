@@ -2,6 +2,9 @@
   "extensionName": {
     "message": "Osprey: Naršyklės apsauga"
   },
+  "extensionShortName": {
+    "message": "Osprey"
+  },
   "extensionDescription": {
     "message": "Apsisaugokite nuo internetinių grėsmių realiuoju laiku naudodami kelis naršyklės apsaugos teikėjus."
   },
@@ -80,14 +83,8 @@
   "adultContent": {
     "message": "Suaugusiems skirtas turinys"
   },
-  "clearAllowedWebsitesContext": {
+  "clearAllowedWebsites": {
     "message": "Išvalyti leidžiamų svetainių sąrašą"
-  },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "Pranešti apie svetainę kaip kenkėjišką"
-  },
-  "clearAllowedWebsitesTitle": {
-    "message": "Leidžiamos svetainės išvalytos"
   },
   "clearAllowedWebsitesMessage": {
     "message": "Visos leidžiamos svetainės buvo išvalytos."
@@ -96,7 +93,7 @@
     "message": "Nustatymai"
   },
   "providersSection": {
-    "message": "Teikėjai"
+    "message": "Apsaugos teikėjai"
   },
   "thirdPartySection": {
     "message": "Trečiųjų šalių integracijos"

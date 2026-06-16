@@ -3,12 +3,6 @@
   "_comment_2": "Windows path: HKLM\\SOFTWARE\\Policies\\Google\\Chrome\\3rdParty\\Extensions\\<extensionID>\\policy",
   "type": "object",
   "properties": {
-    "DisableContextMenu": {
-      "title": "Disable Context Menu",
-      "description": "If true, the toolbar context menu is disabled.",
-      "type": "boolean",
-      "default": false
-    },
     "HideContinueButtons": {
       "title": "Hide Continue Buttons",
       "description": "If true, the warning page continue buttons are hidden.",
@@ -23,7 +17,7 @@
     },
     "DisableClearAllowedWebsites": {
       "title": "Disable Clear Allowed Websites",
-      "description": "If true, the clear-allowed-websites action is disabled.",
+      "description": "If true, the clear allowed websites button is disabled.",
       "type": "boolean",
       "default": false
     },

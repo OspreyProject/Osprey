@@ -48,7 +48,6 @@ globalThis.SettingsSingleton = globalThis.SettingsSingleton || (() => {
 
         document.title = LangUtil.SETTINGS_TITLE;
         setTextById('version', LangUtil.VERSION + cachedExtensionVersion);
-        setTextBySelector('.settings-page-title', LangUtil.SETTINGS_TITLE);
         setTextBySelector('.bannerText', LangUtil.TITLE);
     }
 

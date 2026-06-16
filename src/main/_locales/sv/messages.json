@@ -2,6 +2,9 @@
   "extensionName": {
     "message": "Osprey: Webbläsarskydd"
   },
+  "extensionShortName": {
+    "message": "Osprey"
+  },
   "extensionDescription": {
     "message": "Skydda dig mot onlinehot i realtid med flera leverantörer av webbläsarskydd."
   },
@@ -80,14 +83,8 @@
   "adultContent": {
     "message": "Vuxeninnehåll"
   },
-  "clearAllowedWebsitesContext": {
+  "clearAllowedWebsites": {
     "message": "Rensa lista över tillåtna webbplatser"
-  },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "Rapportera webbplats som skadlig"
-  },
-  "clearAllowedWebsitesTitle": {
-    "message": "Tillåtna webbplatser rensade"
   },
   "clearAllowedWebsitesMessage": {
     "message": "Alla tillåtna webbplatser har rensats."
@@ -96,7 +93,7 @@
     "message": "Inställningar"
   },
   "providersSection": {
-    "message": "Leverantörer"
+    "message": "Skyddsleverantörer"
   },
   "thirdPartySection": {
     "message": "Tredjepartsintegrationer"

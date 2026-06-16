@@ -2,6 +2,9 @@
   "extensionName": {
     "message": "Osprey: حفاظت از مرورگر"
   },
+  "extensionShortName": {
+    "message": "Osprey"
+  },
   "extensionDescription": {
     "message": "با استفاده از چندین ارائه‌دهنده حفاظت مرورگر، در برابر تهدیدات آنلاین به‌صورت بلادرنگ محافظت کنید."
   },
@@ -80,14 +83,8 @@
   "adultContent": {
     "message": "محتوای بزرگسالان"
   },
-  "clearAllowedWebsitesContext": {
+  "clearAllowedWebsites": {
     "message": "پاک کردن لیست وب‌سایت‌های مجاز"
-  },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "گزارش وب‌سایت به‌عنوان مخرب"
-  },
-  "clearAllowedWebsitesTitle": {
-    "message": "وب‌سایت‌های مجاز پاک شدند"
   },
   "clearAllowedWebsitesMessage": {
     "message": "همه وب‌سایت‌های مجاز پاک شدند."
@@ -96,7 +93,7 @@
     "message": "تنظیمات"
   },
   "providersSection": {
-    "message": "ارائه‌دهندگان"
+    "message": "ارائهدهندگان محافظت"
   },
   "thirdPartySection": {
     "message": "یکپارچه‌سازی‌های شخص ثالث"

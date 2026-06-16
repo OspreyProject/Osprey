@@ -2,6 +2,9 @@
   "extensionName": {
     "message": "Osprey：浏览器保护"
   },
+  "extensionShortName": {
+    "message": "Osprey"
+  },
   "extensionDescription": {
     "message": "使用多个浏览器保护提供商，实时防护在线威胁。"
   },
@@ -80,14 +83,8 @@
   "adultContent": {
     "message": "成人内容"
   },
-  "clearAllowedWebsitesContext": {
+  "clearAllowedWebsites": {
     "message": "清除允许网站列表"
-  },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "将网站举报为恶意"
-  },
-  "clearAllowedWebsitesTitle": {
-    "message": "已清除允许的网站"
   },
   "clearAllowedWebsitesMessage": {
     "message": "所有允许的网站已被清除。"
@@ -96,7 +93,7 @@
     "message": "设置"
   },
   "providersSection": {
-    "message": "提供商"
+    "message": "保护提供商"
   },
   "thirdPartySection": {
     "message": "第三方集成"

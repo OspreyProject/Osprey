@@ -2,6 +2,9 @@
   "extensionName": {
     "message": "Osprey: ブラウザ保護"
   },
+  "extensionShortName": {
+    "message": "Osprey"
+  },
   "extensionDescription": {
     "message": "複数のブラウザ保護プロバイダーを使用して、オンラインの脅威からリアルタイムで保護します。"
   },
@@ -80,14 +83,8 @@
   "adultContent": {
     "message": "アダルトコンテンツ"
   },
-  "clearAllowedWebsitesContext": {
+  "clearAllowedWebsites": {
     "message": "許可済みウェブサイトリストをクリア"
-  },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "ウェブサイトを悪意のあるものとして報告"
-  },
-  "clearAllowedWebsitesTitle": {
-    "message": "許可済みウェブサイトをクリアしました"
   },
   "clearAllowedWebsitesMessage": {
     "message": "すべての許可済みウェブサイトがクリアされました。"
@@ -96,7 +93,7 @@
     "message": "設定"
   },
   "providersSection": {
-    "message": "プロバイダー"
+    "message": "保護プロバイダー"
   },
   "thirdPartySection": {
     "message": "サードパーティ統合"

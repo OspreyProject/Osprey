@@ -2,6 +2,9 @@
   "extensionName": {
     "message": "Osprey: Bảo vệ Trình duyệt"
   },
+  "extensionShortName": {
+    "message": "Osprey"
+  },
   "extensionDescription": {
     "message": "Bảo vệ khỏi các mối đe dọa trực tuyến theo thời gian thực bằng nhiều nhà cung cấp bảo vệ trình duyệt."
   },
@@ -80,14 +83,8 @@
   "adultContent": {
     "message": "Nội dung người lớn"
   },
-  "clearAllowedWebsitesContext": {
+  "clearAllowedWebsites": {
     "message": "Xóa danh sách trang web được phép"
-  },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "Báo cáo trang web là độc hại"
-  },
-  "clearAllowedWebsitesTitle": {
-    "message": "Đã xóa trang web được phép"
   },
   "clearAllowedWebsitesMessage": {
     "message": "Tất cả các trang web được phép đã được xóa."
@@ -96,7 +93,7 @@
     "message": "Cài đặt"
   },
   "providersSection": {
-    "message": "Nhà cung cấp"
+    "message": "Nhà cung cấp bảo vệ"
   },
   "thirdPartySection": {
     "message": "Tích hợp bên thứ ba"

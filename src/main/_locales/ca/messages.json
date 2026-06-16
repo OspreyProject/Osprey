@@ -2,6 +2,9 @@
   "extensionName": {
     "message": "Osprey: Protecció del navegador"
   },
+  "extensionShortName": {
+    "message": "Osprey"
+  },
   "extensionDescription": {
     "message": "Protegeix-te de les amenaces en línia en temps real amb múltiples proveïdors de protecció del navegador."
   },
@@ -80,14 +83,8 @@
   "adultContent": {
     "message": "Contingut per a adults"
   },
-  "clearAllowedWebsitesContext": {
+  "clearAllowedWebsites": {
     "message": "Esborra la llista de llocs web permesos"
-  },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "Notifica el lloc web com a maliciós"
-  },
-  "clearAllowedWebsitesTitle": {
-    "message": "Llocs web permesos esborrats"
   },
   "clearAllowedWebsitesMessage": {
     "message": "S'han esborrat tots els llocs web permesos."
@@ -96,7 +93,7 @@
     "message": "Configuració"
   },
   "providersSection": {
-    "message": "Proveïdors"
+    "message": "Proveïdors de protecció"
   },
   "thirdPartySection": {
     "message": "Integracions de tercers"

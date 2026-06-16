@@ -2,6 +2,9 @@
   "extensionName": {
     "message": "Osprey: حماية المتصفح"
   },
+  "extensionShortName": {
+    "message": "Osprey"
+  },
   "extensionDescription": {
     "message": "الحماية من التهديدات الإلكترونية في الوقت الفعلي باستخدام مزودي حماية متعددين للمتصفح."
   },
@@ -80,14 +83,8 @@
   "adultContent": {
     "message": "محتوى للبالغين"
   },
-  "clearAllowedWebsitesContext": {
+  "clearAllowedWebsites": {
     "message": "مسح قائمة المواقع المسموح بها"
-  },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "الإبلاغ عن الموقع بأنه خبيث"
-  },
-  "clearAllowedWebsitesTitle": {
-    "message": "تم مسح المواقع المسموح بها"
   },
   "clearAllowedWebsitesMessage": {
     "message": "تم مسح جميع المواقع المسموح بها."
@@ -96,7 +93,7 @@
     "message": "الإعدادات"
   },
   "providersSection": {
-    "message": "المزودون"
+    "message": "مزودو الحماية"
   },
   "thirdPartySection": {
     "message": "تكاملات الطرف الثالث"

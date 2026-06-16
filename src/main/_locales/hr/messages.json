@@ -2,6 +2,9 @@
   "extensionName": {
     "message": "Osprey: Zaštita preglednika"
   },
+  "extensionShortName": {
+    "message": "Osprey"
+  },
   "extensionDescription": {
     "message": "Zaštitite se od online prijetnji u stvarnom vremenu koristeći više pružatelja zaštite preglednika."
   },
@@ -80,14 +83,8 @@
   "adultContent": {
     "message": "Sadržaj za odrasle"
   },
-  "clearAllowedWebsitesContext": {
+  "clearAllowedWebsites": {
     "message": "Obriši popis dopuštenih web-stranica"
-  },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "Prijavi web-stranicu kao zlonamjernu"
-  },
-  "clearAllowedWebsitesTitle": {
-    "message": "Dopuštene web-stranice obrisane"
   },
   "clearAllowedWebsitesMessage": {
     "message": "Sve dopuštene web-stranice su obrisane."
@@ -96,7 +93,7 @@
     "message": "Postavke"
   },
   "providersSection": {
-    "message": "Pružatelji"
+    "message": "Pružatelji zaštite"
   },
   "thirdPartySection": {
     "message": "Integracije trećih strana"

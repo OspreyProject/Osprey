@@ -2,6 +2,9 @@
   "extensionName": {
     "message": "Osprey: Böngészővédelem"
   },
+  "extensionShortName": {
+    "message": "Osprey"
+  },
   "extensionDescription": {
     "message": "Valós idejű védelmet nyújt az online fenyegetések ellen több böngészővédelmi szolgáltató segítségével."
   },
@@ -80,14 +83,8 @@
   "adultContent": {
     "message": "Felnőtt tartalom"
   },
-  "clearAllowedWebsitesContext": {
+  "clearAllowedWebsites": {
     "message": "Engedélyezett weboldalak listájának törlése"
-  },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "Weboldal jelentése rosszindulatúként"
-  },
-  "clearAllowedWebsitesTitle": {
-    "message": "Engedélyezett weboldalak törölve"
   },
   "clearAllowedWebsitesMessage": {
     "message": "Az összes engedélyezett weboldal törölve lett."
@@ -96,7 +93,7 @@
     "message": "Beállítások"
   },
   "providersSection": {
-    "message": "Szolgáltatók"
+    "message": "Védelmi szolgáltatók"
   },
   "thirdPartySection": {
     "message": "Harmadik féltől származó integrációk"

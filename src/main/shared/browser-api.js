@@ -100,10 +100,6 @@ globalThis.OspreyBrowserAPI = (() => {
         tabsUpdate: (tabId, updateProperties) => invoke(api?.tabs, api?.tabs?.update, 2, tabId, updateProperties),
         tabsCreate: createProperties => invoke(api?.tabs, api?.tabs?.create, 1, createProperties),
 
-        notificationsCreate: (options, notificationId = undefined) => notificationId === undefined ?
-            invoke(api?.notifications, api?.notifications?.create, 1, options) :
-            invoke(api?.notifications, api?.notifications?.create, 2, notificationId, options),
-
         actionSetBadgeText: details => invoke(api?.action, api?.action?.setBadgeText, 1, details),
         actionSetBadgeBackgroundColor: details => invoke(api?.action, api?.action?.setBadgeBackgroundColor, 1, details),
         actionSetBadgeTextColor: details => invoke(api?.action, api?.action?.setBadgeTextColor, 1, details),

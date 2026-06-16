@@ -2,6 +2,9 @@
   "extensionName": {
     "message": "Osprey: Ochrona przeglądarki"
   },
+  "extensionShortName": {
+    "message": "Osprey"
+  },
   "extensionDescription": {
     "message": "Chroń się przed zagrożeniami online w czasie rzeczywistym, korzystając z wielu dostawców ochrony przeglądarki."
   },
@@ -80,14 +83,8 @@
   "adultContent": {
     "message": "Treści dla dorosłych"
   },
-  "clearAllowedWebsitesContext": {
+  "clearAllowedWebsites": {
     "message": "Wyczyść listę dozwolonych stron"
-  },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "Zgłoś stronę jako złośliwą"
-  },
-  "clearAllowedWebsitesTitle": {
-    "message": "Dozwolone strony wyczyszczone"
   },
   "clearAllowedWebsitesMessage": {
     "message": "Wszystkie dozwolone strony zostały wyczyszczone."
@@ -96,7 +93,7 @@
     "message": "Ustawienia"
   },
   "providersSection": {
-    "message": "Dostawcy"
+    "message": "Dostawcy ochrony"
   },
   "thirdPartySection": {
     "message": "Integracje firm trzecich"

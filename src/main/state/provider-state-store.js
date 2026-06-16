@@ -58,7 +58,6 @@ globalThis.OspreyProviderStateStore = (() => {
         const base = {
             version: 2,
             app: {
-                contextMenuEnabled: typeof app.contextMenuEnabled === 'boolean' ? app.contextMenuEnabled : true,
                 hideContinueButtons: typeof app.hideContinueButtons === 'boolean' ? app.hideContinueButtons : false,
                 hideReportButton: typeof app.hideReportButton === 'boolean' ? app.hideReportButton : false,
                 lockSettings: typeof app.lockSettings === 'boolean' ? app.lockSettings : typeof app.lockProtectionOptions === 'boolean' ? app.lockProtectionOptions : false,
@@ -102,7 +101,6 @@ globalThis.OspreyProviderStateStore = (() => {
 
         const draft = {
             app: {
-                contextMenuEnabled: source.contextMenuEnabled,
                 hideContinueButtons: source.hideContinueButtons,
                 hideReportButton: source.hideReportButton,
                 lockSettings: source.lockSettings ?? source.lockProtectionOptions,

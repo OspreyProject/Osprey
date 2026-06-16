@@ -2,6 +2,9 @@
   "extensionName": {
     "message": "Osprey: 브라우저 보호"
   },
+  "extensionShortName": {
+    "message": "Osprey"
+  },
   "extensionDescription": {
     "message": "여러 브라우저 보호 공급자를 사용하여 온라인 위협으로부터 실시간으로 보호합니다."
   },
@@ -80,14 +83,8 @@
   "adultContent": {
     "message": "성인 콘텐츠"
   },
-  "clearAllowedWebsitesContext": {
+  "clearAllowedWebsites": {
     "message": "허용된 웹사이트 목록 지우기"
-  },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "웹사이트를 악성으로 신고"
-  },
-  "clearAllowedWebsitesTitle": {
-    "message": "허용된 웹사이트 지워짐"
   },
   "clearAllowedWebsitesMessage": {
     "message": "허용된 모든 웹사이트가 지워졌습니다."
@@ -96,7 +93,7 @@
     "message": "설정"
   },
   "providersSection": {
-    "message": "공급자"
+    "message": "보호 공급자"
   },
   "thirdPartySection": {
     "message": "서드파티 통합"

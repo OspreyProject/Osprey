@@ -41,7 +41,6 @@ const bootstrapScripts = [
     'background/badge-service.js',
     'background/blocking-service.js',
     'background/navigation-service.js',
-    'background/context-menu-service.js',
 ];
 
 if (typeof importScripts === 'function') {
@@ -60,13 +59,11 @@ if (typeof importScripts === 'function') {
     const blockingService = globalThis.OspreyBlockingService;
     const browserAPI = globalThis.OspreyBrowserAPI;
     const cacheService = globalThis.OspreyCacheService;
-    const contextMenuService = globalThis.OspreyContextMenuService;
     const messages = globalThis.OspreyMessageBus.Messages;
     const ports = globalThis.OspreyMessageBus.Ports;
     const navigationService = globalThis.OspreyNavigationService;
     const providerCatalog = globalThis.OspreyProviderCatalog;
     const providerEngine = globalThis.OspreyProviderEngine;
-    const providerStateStore = globalThis.OspreyProviderStateStore;
     const reportLinkBuilder = globalThis.OspreyReportLinkBuilder;
     const resultAggregationService = globalThis.OspreyResultAggregationService;
 
@@ -92,10 +89,6 @@ if (typeof importScripts === 'function') {
         return true;
     };
 
-    const refreshContextMenus = errorMessage => contextMenuService.create().catch(error => {
-        console.error(errorMessage, error);
-    });
-
     const openReportUrlForOrigin = async (origin, blockedUrl) => {
         const definition = providerCatalog.getDefinition(origin);
 
@@ -104,14 +97,6 @@ if (typeof importScripts === 'function') {
             return null;
         }
         return reportLinkBuilder.build(definition.report, {blockedUrl});
-    };
-
-    const didMenuRelevantAppStateChange = (previousStateValue, nextStateValue) => {
-        const prevApp = previousStateValue?.app;
-        const nextApp = nextStateValue?.app;
-
-        return Boolean(prevApp?.contextMenuEnabled) !== Boolean(nextApp?.contextMenuEnabled) ||
-            Boolean(prevApp?.disableClearAllowedWebsites) !== Boolean(nextApp?.disableClearAllowedWebsites);
     };
 
     const messageHandlers = {
@@ -185,6 +170,12 @@ if (typeof importScripts === 'function') {
             console.warn('OspreyBackground rejected REPORT_WEBSITE because the message payload was incomplete');
             return respond(sendResponse, {ok: false});
         },
+
+        [messages.CLEAR_ALLOWED_WEBSITES]: (_message, _tabId, sendResponse) => respondAsync(
+            sendResponse,
+            cacheService.clearAll().then(() => ({ok: true})),
+            'Failed CLEAR_ALLOWED_WEBSITES',
+        ),
     };
 
     const handleMessage = (message, sender, sendResponse) => {
@@ -236,31 +227,7 @@ if (typeof importScripts === 'function') {
             blockingService.clearTab(tabId);
         });
 
-        api.storage?.onChanged?.addListener((changes, area) => {
-            if (area === 'managed') {
-                refreshContextMenus('Failed to update context menus after managed storage change');
-                return;
-            }
-
-            if (area !== 'local') {
-                return;
-            }
-
-            const stateChange = changes?.[providerStateStore.stateKey];
-
-            if (!stateChange || !didMenuRelevantAppStateChange(stateChange.oldValue, stateChange.newValue)) {
-                return;
-            }
-
-            refreshContextMenus('Failed to update context menus after provider state change');
-        });
-
         navigationService.register();
-        contextMenuService.register();
-
-        await contextMenuService.create().catch(error => {
-            console.error('Failed to create context menus on initialization', error);
-        });
     };
 
     init().catch(error => {

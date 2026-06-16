@@ -2,6 +2,9 @@
   "extensionName": {
     "message": "Osprey: Browserbescherming"
   },
+  "extensionShortName": {
+    "message": "Osprey"
+  },
   "extensionDescription": {
     "message": "Bescherm uzelf in realtime tegen online bedreigingen met meerdere browserbeschermingsproviders."
   },
@@ -80,14 +83,8 @@
   "adultContent": {
     "message": "Inhoud voor volwassenen"
   },
-  "clearAllowedWebsitesContext": {
+  "clearAllowedWebsites": {
     "message": "Lijst met toegestane websites wissen"
-  },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "Website rapporteren als kwaadaardig"
-  },
-  "clearAllowedWebsitesTitle": {
-    "message": "Toegestane websites gewist"
   },
   "clearAllowedWebsitesMessage": {
     "message": "Alle toegestane websites zijn gewist."
@@ -96,7 +93,7 @@
     "message": "Instellingen"
   },
   "providersSection": {
-    "message": "Providers"
+    "message": "Beschermingsproviders"
   },
   "thirdPartySection": {
     "message": "Integraties van derden"

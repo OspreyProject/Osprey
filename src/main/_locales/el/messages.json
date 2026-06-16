@@ -2,6 +2,9 @@
   "extensionName": {
     "message": "Osprey: Προστασία Προγράμματος Περιήγησης"
   },
+  "extensionShortName": {
+    "message": "Osprey"
+  },
   "extensionDescription": {
     "message": "Προστατευτείτε από διαδικτυακές απειλές σε πραγματικό χρόνο χρησιμοποιώντας πολλούς παρόχους προστασίας προγράμματος περιήγησης."
   },
@@ -80,14 +83,8 @@
   "adultContent": {
     "message": "Περιεχόμενο για ενήλικες"
   },
-  "clearAllowedWebsitesContext": {
+  "clearAllowedWebsites": {
     "message": "Εκκαθάριση λίστας επιτρεπόμενων ιστοτόπων"
-  },
-  "reportWebsiteAsMaliciousContext": {
-    "message": "Αναφορά ιστοτόπου ως κακόβουλου"
-  },
-  "clearAllowedWebsitesTitle": {
-    "message": "Εκκαθαρίστηκαν οι επιτρεπόμενοι ιστότοποι"
   },
   "clearAllowedWebsitesMessage": {
     "message": "Όλοι οι επιτρεπόμενοι ιστότοποι έχουν εκκαθαριστεί."
@@ -96,7 +93,7 @@
     "message": "Ρυθμίσεις"
   },
   "providersSection": {
-    "message": "Πάροχοι"
+    "message": "Πάροχοι προστασίας"
   },
   "thirdPartySection": {
     "message": "Ενσωματώσεις τρίτων"
