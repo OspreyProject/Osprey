@@ -1,6 +1,6 @@
 # Privacy Policy
 
-**Effective Date:** 06/13/2026
+**Effective Date:** 06/16/2026
 
 Osprey: Browser Protection is committed to protecting your privacy. This Privacy Policy explains what data is processed
 when you use the Osprey browser extension and its supporting proxy service, and how it is handled.
