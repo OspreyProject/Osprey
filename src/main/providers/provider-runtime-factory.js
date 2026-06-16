@@ -26,7 +26,6 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
 
     const malicious = protectionResult.resultTypes.MALICIOUS;
     const phishing = protectionResult.resultTypes.PHISHING;
-    const adultContent = protectionResult.resultTypes.ADULT_CONTENT;
 
     let cachedRuntime = null;
     let loadingRuntime = null;
@@ -54,7 +53,6 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
         const blockingProviderIdsByResult = {
             [malicious]: new Set(),
             [phishing]: new Set(),
-            [adultContent]: new Set(),
         };
 
         for (let i = 0; i < definitionsLength; i++) {
@@ -80,10 +78,6 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
 
                 if (providerCatalog.supportsBlockingResult(provider, phishing)) {
                     blockingProviderIdsByResult[phishing].add(provider.id);
-                }
-
-                if (providerCatalog.supportsBlockingResult(provider, adultContent)) {
-                    blockingProviderIdsByResult[adultContent].add(provider.id);
                 }
             }
         }

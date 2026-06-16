@@ -80,9 +80,6 @@
   "phishing": {
     "message": "Phishing"
   },
-  "adultContent": {
-    "message": "Inhoud voor volwassenen"
-  },
   "clearAllowedWebsites": {
     "message": "Lijst met toegestane websites wissen"
   },
@@ -112,9 +109,6 @@
   },
   "applyButton": {
     "message": "Toepassen"
-  },
-  "indicatorAdultContent": {
-    "message": "Filter voor inhoud voor volwassenen"
   },
   "officialPartnerTitle": {
     "message": "Officiële partner"

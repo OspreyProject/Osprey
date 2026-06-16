@@ -80,9 +80,6 @@
   "phishing": {
     "message": "Sukčiavimas apsimetant"
   },
-  "adultContent": {
-    "message": "Suaugusiems skirtas turinys"
-  },
   "clearAllowedWebsites": {
     "message": "Išvalyti leidžiamų svetainių sąrašą"
   },
@@ -112,9 +109,6 @@
   },
   "applyButton": {
     "message": "Taikyti"
-  },
-  "indicatorAdultContent": {
-    "message": "Suaugusiems skirto turinio filtras"
   },
   "officialPartnerTitle": {
     "message": "Oficialus partneris"

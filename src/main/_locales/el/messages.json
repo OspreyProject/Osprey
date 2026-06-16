@@ -80,9 +80,6 @@
   "phishing": {
     "message": "Ηλεκτρονικό ψάρεμα"
   },
-  "adultContent": {
-    "message": "Περιεχόμενο για ενήλικες"
-  },
   "clearAllowedWebsites": {
     "message": "Εκκαθάριση λίστας επιτρεπόμενων ιστοτόπων"
   },
@@ -112,9 +109,6 @@
   },
   "applyButton": {
     "message": "Εφαρμογή"
-  },
-  "indicatorAdultContent": {
-    "message": "Φίλτρο περιεχομένου για ενήλικες"
   },
   "officialPartnerTitle": {
     "message": "Επίσημος εταίρος"

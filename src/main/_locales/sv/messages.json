@@ -80,9 +80,6 @@
   "phishing": {
     "message": "Nätfiske"
   },
-  "adultContent": {
-    "message": "Vuxeninnehåll"
-  },
   "clearAllowedWebsites": {
     "message": "Rensa lista över tillåtna webbplatser"
   },
@@ -112,9 +109,6 @@
   },
   "applyButton": {
     "message": "Tillämpa"
-  },
-  "indicatorAdultContent": {
-    "message": "Filter för vuxeninnehåll"
   },
   "officialPartnerTitle": {
     "message": "Officiell partner"

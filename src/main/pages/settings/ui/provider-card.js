@@ -219,11 +219,6 @@ globalThis.OspreyProviderCard = (() => {
         const indicators = [];
         const tags = definition.tags;
 
-        if (providerCatalog.hasAdultFilter(definition)) {
-            indicators.push(createIndicator('provider-adult-content-indicator',
-                LangUtil.INDICATOR_ADULT_CONTENT, LangUtil.INDICATOR_ADULT_CONTENT));
-        }
-
         if (Array.isArray(tags)) {
             if (tags.includes('proxy')) {
                 indicators.push(createIndicator('provider-proxy-indicator',

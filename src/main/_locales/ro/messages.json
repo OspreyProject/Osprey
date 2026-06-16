@@ -80,9 +80,6 @@
   "phishing": {
     "message": "Phishing"
   },
-  "adultContent": {
-    "message": "Conținut pentru adulți"
-  },
   "clearAllowedWebsites": {
     "message": "Ștergeți lista site-urilor permise"
   },
@@ -112,9 +109,6 @@
   },
   "applyButton": {
     "message": "Aplicați"
-  },
-  "indicatorAdultContent": {
-    "message": "Filtru conținut pentru adulți"
   },
   "officialPartnerTitle": {
     "message": "Partener oficial"

@@ -80,9 +80,6 @@
   "phishing": {
     "message": "Phishing"
   },
-  "adultContent": {
-    "message": "Conteúdo adulto"
-  },
   "clearAllowedWebsites": {
     "message": "Limpar lista de sites permitidos"
   },
@@ -112,9 +109,6 @@
   },
   "applyButton": {
     "message": "Aplicar"
-  },
-  "indicatorAdultContent": {
-    "message": "Filtro de conteúdo adulto"
   },
   "officialPartnerTitle": {
     "message": "Parceiro oficial"

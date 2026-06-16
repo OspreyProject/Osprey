@@ -80,9 +80,6 @@
   "phishing": {
     "message": "ฟิชชิง"
   },
-  "adultContent": {
-    "message": "เนื้อหาสำหรับผู้ใหญ่"
-  },
   "clearAllowedWebsites": {
     "message": "ล้างรายการเว็บไซต์ที่อนุญาต"
   },
@@ -112,9 +109,6 @@
   },
   "applyButton": {
     "message": "ใช้งาน"
-  },
-  "indicatorAdultContent": {
-    "message": "ตัวกรองเนื้อหาสำหรับผู้ใหญ่"
   },
   "officialPartnerTitle": {
     "message": "พันธมิตรอย่างเป็นทางการ"

@@ -80,9 +80,6 @@
   "phishing": {
     "message": "Фішинг"
   },
-  "adultContent": {
-    "message": "Контент для дорослих"
-  },
   "clearAllowedWebsites": {
     "message": "Очистити список дозволених сайтів"
   },
@@ -112,9 +109,6 @@
   },
   "applyButton": {
     "message": "Застосувати"
-  },
-  "indicatorAdultContent": {
-    "message": "Фільтр контенту для дорослих"
   },
   "officialPartnerTitle": {
     "message": "Офіційний партнер"

@@ -221,36 +221,6 @@ html, body {
     mask-size: contain;
 }
 
-.provider-adult-content-indicator {
-    position: relative;
-    width: 18px;
-    height: 18px;
-    flex-shrink: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background-color: rgba(140, 140, 140, 0.16);
-    border: 1px solid rgba(170, 170, 170, 0.45);
-    cursor: help;
-    outline: none;
-}
-
-.provider-adult-content-indicator::before {
-    content: "";
-    width: 11px;
-    height: 11px;
-    background-color: #bdbdbd;
-    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='black' d='M8 2l6 4.8V14h-4V9.75H6V14H2V6.8L8 2z'/%3E%3C/svg%3E");
-    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='black' d='M8 2l6 4.8V14h-4V9.75H6V14H2V6.8L8 2z'/%3E%3C/svg%3E");
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-    mask-position: center;
-    -webkit-mask-size: contain;
-    mask-size: contain;
-}
-
 .provider-proxy-indicator {
     position: relative;
     width: 18px;
@@ -344,7 +314,6 @@ html, body {
 /* Shared tooltip ::after for all provider indicator icons */
 /* Shared tooltip ::after for all provider indicator icons */
 .partner-badge::after,
-.provider-adult-content-indicator::after,
 .provider-proxy-indicator::after,
 .provider-slow-support-indicator::after,
 .provider-false-positive-indicator::after {
@@ -372,8 +341,6 @@ html, body {
 
 .partner-badge:hover::after,
 .partner-badge:focus-visible::after,
-.provider-adult-content-indicator:hover::after,
-.provider-adult-content-indicator:focus-visible::after,
 .provider-proxy-indicator:hover::after,
 .provider-proxy-indicator:focus-visible::after,
 .provider-slow-support-indicator:hover::after,

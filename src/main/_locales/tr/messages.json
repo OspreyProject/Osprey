@@ -80,9 +80,6 @@
   "phishing": {
     "message": "Kimlik Avı"
   },
-  "adultContent": {
-    "message": "Yetişkin İçeriği"
-  },
   "clearAllowedWebsites": {
     "message": "İzin verilen web siteleri listesini temizle"
   },
@@ -112,9 +109,6 @@
   },
   "applyButton": {
     "message": "Uygula"
-  },
-  "indicatorAdultContent": {
-    "message": "Yetişkin içerik filtresi"
   },
   "officialPartnerTitle": {
     "message": "Resmi Ortak"

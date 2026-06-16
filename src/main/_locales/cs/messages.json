@@ -80,9 +80,6 @@
   "phishing": {
     "message": "Phishing"
   },
-  "adultContent": {
-    "message": "Obsah pro dospělé"
-  },
   "clearAllowedWebsites": {
     "message": "Vymazat seznam povolených stránek"
   },
@@ -112,9 +109,6 @@
   },
   "applyButton": {
     "message": "Použít"
-  },
-  "indicatorAdultContent": {
-    "message": "Filtr obsahu pro dospělé"
   },
   "officialPartnerTitle": {
     "message": "Oficiální partner"

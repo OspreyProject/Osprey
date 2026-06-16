@@ -80,9 +80,6 @@
   "phishing": {
     "message": "تصيد احتيالي"
   },
-  "adultContent": {
-    "message": "محتوى للبالغين"
-  },
   "clearAllowedWebsites": {
     "message": "مسح قائمة المواقع المسموح بها"
   },
@@ -112,9 +109,6 @@
   },
   "applyButton": {
     "message": "تطبيق"
-  },
-  "indicatorAdultContent": {
-    "message": "فلتر المحتوى للبالغين"
   },
   "officialPartnerTitle": {
     "message": "شريك رسمي"

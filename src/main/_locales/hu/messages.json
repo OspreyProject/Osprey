@@ -80,9 +80,6 @@
   "phishing": {
     "message": "Adathalászat"
   },
-  "adultContent": {
-    "message": "Felnőtt tartalom"
-  },
   "clearAllowedWebsites": {
     "message": "Engedélyezett weboldalak listájának törlése"
   },
@@ -112,9 +109,6 @@
   },
   "applyButton": {
     "message": "Alkalmaz"
-  },
-  "indicatorAdultContent": {
-    "message": "Felnőtt tartalom szűrő"
   },
   "officialPartnerTitle": {
     "message": "Hivatalos partner"

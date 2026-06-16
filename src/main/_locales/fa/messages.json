@@ -80,9 +80,6 @@
   "phishing": {
     "message": "فیشینگ"
   },
-  "adultContent": {
-    "message": "محتوای بزرگسالان"
-  },
   "clearAllowedWebsites": {
     "message": "پاک کردن لیست وب‌سایت‌های مجاز"
   },
@@ -112,9 +109,6 @@
   },
   "applyButton": {
     "message": "اعمال"
-  },
-  "indicatorAdultContent": {
-    "message": "فیلتر محتوای بزرگسالان"
   },
   "officialPartnerTitle": {
     "message": "شریک رسمی"

@@ -80,9 +80,6 @@
   "phishing": {
     "message": "피싱"
   },
-  "adultContent": {
-    "message": "성인 콘텐츠"
-  },
   "clearAllowedWebsites": {
     "message": "허용된 웹사이트 목록 지우기"
   },
@@ -112,9 +109,6 @@
   },
   "applyButton": {
     "message": "적용"
-  },
-  "indicatorAdultContent": {
-    "message": "성인 콘텐츠 필터"
   },
   "officialPartnerTitle": {
     "message": "공식 파트너"

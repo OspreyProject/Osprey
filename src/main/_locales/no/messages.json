@@ -80,9 +80,6 @@
   "phishing": {
     "message": "Phishing"
   },
-  "adultContent": {
-    "message": "Innhold for voksne"
-  },
   "clearAllowedWebsites": {
     "message": "Fjern liste over tillatte nettsteder"
   },
@@ -112,9 +109,6 @@
   },
   "applyButton": {
     "message": "Bruk"
-  },
-  "indicatorAdultContent": {
-    "message": "Filter for innhold for voksne"
   },
   "officialPartnerTitle": {
     "message": "Offisiell partner"

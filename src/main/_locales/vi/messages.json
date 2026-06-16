@@ -80,9 +80,6 @@
   "phishing": {
     "message": "Lừa đảo"
   },
-  "adultContent": {
-    "message": "Nội dung người lớn"
-  },
   "clearAllowedWebsites": {
     "message": "Xóa danh sách trang web được phép"
   },
@@ -112,9 +109,6 @@
   },
   "applyButton": {
     "message": "Áp dụng"
-  },
-  "indicatorAdultContent": {
-    "message": "Bộ lọc nội dung người lớn"
   },
   "officialPartnerTitle": {
     "message": "Đối tác chính thức"

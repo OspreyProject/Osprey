@@ -30,21 +30,15 @@ globalThis.OspreyProviderGroups = Object.freeze({
         order: 20,
     }),
 
-    adult_content_filters: Object.freeze({
-        id: 'adult_content_filters',
-        title: 'Adult Content Filters',
-        order: 30,
-    }),
-
     feeds: Object.freeze({
         id: 'feeds',
         title: 'Feeds',
-        order: 40,
+        order: 30,
     }),
 
     direct_integrations: Object.freeze({
         id: 'direct_integrations',
         title: 'Direct Integrations',
-        order: 50,
+        order: 40,
     }),
 });

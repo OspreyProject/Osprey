@@ -6,7 +6,7 @@
     "message": "Osprey"
   },
   "extensionDescription": {
-    "message": "Protect against online threats in real-time using multiple browser protection providers."
+    "message": "Real-time protection against phishing, malware, fraud, viruses, and malicious websites."
   },
   "logoAlt": {
     "message": "Osprey Logo"
@@ -80,9 +80,6 @@
   "phishing": {
     "message": "Phishing"
   },
-  "adultContent": {
-    "message": "Adult Content"
-  },
   "clearAllowedWebsites": {
     "message": "Clear list of allowed websites"
   },
@@ -112,9 +109,6 @@
   },
   "applyButton": {
     "message": "Apply"
-  },
-  "indicatorAdultContent": {
-    "message": "Adult Content Filter"
   },
   "officialPartnerTitle": {
     "message": "Official Partner"

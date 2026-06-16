@@ -25,7 +25,6 @@ globalThis.OspreyProtectionResult = (() => {
         ALLOWED: 'allowed',
         MALICIOUS: 'malicious',
         PHISHING: 'phishing',
-        ADULT_CONTENT: 'adult_content',
     }));
 
     const messageKeys = Object.freeze(Object.assign(Object.create(null), {
@@ -35,16 +34,14 @@ globalThis.OspreyProtectionResult = (() => {
         allowed: 'allowed',
         malicious: 'malicious',
         phishing: 'phishing',
-        adult_content: 'adultContent',
     }));
 
     const isBlockingMap = Object.assign(Object.create(null), {
         malicious: true,
         phishing: true,
-        adult_content: true,
     });
 
-    const blockingResults = Object.freeze(new Set(['malicious', 'phishing', 'adult_content']));
+    const blockingResults = Object.freeze(new Set(['malicious', 'phishing']));
 
     const legacyMap = Object.assign(Object.create(null), {
         '0': 'known_safe',
@@ -53,7 +50,6 @@ globalThis.OspreyProtectionResult = (() => {
         '3': 'allowed',
         '4': 'malicious',
         '5': 'phishing',
-        '6': 'adult_content',
     });
 
     const resultAliases = Object.assign(Object.create(null), {
@@ -62,8 +58,6 @@ globalThis.OspreyProtectionResult = (() => {
         allowed: 'allowed',
         malicious: 'malicious',
         phishing: 'phishing',
-        adult_content: 'adult_content',
-        adult: 'adult_content',
         failed: 'failed',
     });
 

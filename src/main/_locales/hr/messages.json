@@ -80,9 +80,6 @@
   "phishing": {
     "message": "Krađa identiteta"
   },
-  "adultContent": {
-    "message": "Sadržaj za odrasle"
-  },
   "clearAllowedWebsites": {
     "message": "Obriši popis dopuštenih web-stranica"
   },
@@ -112,9 +109,6 @@
   },
   "applyButton": {
     "message": "Primijeni"
-  },
-  "indicatorAdultContent": {
-    "message": "Filter sadržaja za odrasle"
   },
   "officialPartnerTitle": {
     "message": "Službeni partner"

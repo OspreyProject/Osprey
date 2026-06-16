@@ -80,9 +80,6 @@
   "phishing": {
     "message": "网络钓鱼"
   },
-  "adultContent": {
-    "message": "成人内容"
-  },
   "clearAllowedWebsites": {
     "message": "清除允许网站列表"
   },
@@ -112,9 +109,6 @@
   },
   "applyButton": {
     "message": "应用"
-  },
-  "indicatorAdultContent": {
-    "message": "成人内容过滤器"
   },
   "officialPartnerTitle": {
     "message": "官方合作伙伴"

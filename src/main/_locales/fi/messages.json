@@ -80,9 +80,6 @@
   "phishing": {
     "message": "Tietojenkalastelu"
   },
-  "adultContent": {
-    "message": "Aikuisille tarkoitettu sisältö"
-  },
   "clearAllowedWebsites": {
     "message": "Tyhjennä sallittujen verkkosivustojen luettelo"
   },
@@ -112,9 +109,6 @@
   },
   "applyButton": {
     "message": "Käytä"
-  },
-  "indicatorAdultContent": {
-    "message": "Aikuisille tarkoitetun sisällön suodatin"
   },
   "officialPartnerTitle": {
     "message": "Virallinen kumppani"

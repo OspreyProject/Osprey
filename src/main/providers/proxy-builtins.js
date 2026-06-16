@@ -51,12 +51,6 @@
                 return buildMonomorphicShape(def);
             };
 
-            const adultFilterHostnameBuiltin = def => {
-                def.lookupTarget = 'hostname';
-                def.tags = def.tags || ['proxy', 'hostname_only', 'adult_filter'];
-                return buildMonomorphicShape(def);
-            };
-
             const cloudflareReport = Object.freeze({
                 type: 'url_template',
                 template: 'https://radar.cloudflare.com/domains/feedback/{url}',
@@ -142,22 +136,6 @@
                     report: mailtoReport('support@adguard.com', 'AdGuard Public DNS'),
                 }),
 
-                builtin({
-                    id: 'adguard-family',
-                    website: 'https://adguard-dns.io/?utm_source=osprey',
-                    aliases: ['adGuardFamily'],
-                    displayName: 'AdGuard Family DNS',
-                    group: providerGroups.adult_content_filters.id,
-                    icon: 'assets/providers/adguard.avif',
-                    enabledByDefault: false,
-                    bypassBlockingThreshold: false, // keep this 'false'
-                    endpoint: 'adguard-family',
-                    lookupTarget: 'hostname',
-                    tags: ['proxy', 'hostname_only', 'adult_filter'],
-                    policyKey: 'AdGuardFamilyEnabled',
-                    report: mailtoReport('support@adguard.com', 'AdGuard Family DNS'),
-                }),
-
                 hostnameBuiltin({
                     id: 'cleanbrowsing-security',
                     website: 'https://cleanbrowsing.org/?utm_source=osprey',
@@ -172,20 +150,6 @@
                     report: mailtoReport('support@cleanbrowsing.org', 'CleanBrowsing Security Filter'),
                 }),
 
-                adultFilterHostnameBuiltin({
-                    id: 'cleanbrowsing-family',
-                    website: 'https://cleanbrowsing.org/?utm_source=osprey',
-                    aliases: ['cleanBrowsingFamily'],
-                    displayName: 'CleanBrowsing Family DNS',
-                    group: providerGroups.adult_content_filters.id,
-                    icon: 'assets/providers/cleanbrowsing.avif',
-                    enabledByDefault: false,
-                    bypassBlockingThreshold: false, // keep this 'false'
-                    endpoint: 'cleanbrowsing-family',
-                    policyKey: 'CleanBrowsingFamilyEnabled',
-                    report: mailtoReport('support@cleanbrowsing.org', 'CleanBrowsing Adult Filter'),
-                }),
-
                 hostnameBuiltin({
                     id: 'cloudflare-security',
                     website: 'https://one.one.one.one/?utm_source=osprey',
@@ -197,20 +161,6 @@
                     bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'cloudflare-security',
                     policyKey: 'CloudflareSecurityEnabled',
-                    report: cloudflareReport,
-                }),
-
-                adultFilterHostnameBuiltin({
-                    id: 'cloudflare-family',
-                    website: 'https://one.one.one.one/?utm_source=osprey',
-                    aliases: ['cloudflareFamily'],
-                    displayName: 'Cloudflare Family DNS',
-                    group: providerGroups.adult_content_filters.id,
-                    icon: 'assets/providers/cloudflare.avif',
-                    enabledByDefault: false,
-                    bypassBlockingThreshold: false, // keep this 'false'
-                    endpoint: 'cloudflare-family',
-                    policyKey: 'CloudflareFamilyEnabled',
                     report: cloudflareReport,
                 }),
 
@@ -228,20 +178,6 @@
                     report: mailtoReport('help@controld.com', 'Control D Security DNS'),
                 }),
 
-                adultFilterHostnameBuiltin({
-                    id: 'controld-family',
-                    website: 'https://controld.com/?utm_source=osprey',
-                    aliases: ['controlDFamily'],
-                    displayName: 'Control D Family DNS',
-                    group: providerGroups.adult_content_filters.id,
-                    icon: 'assets/providers/controld.avif',
-                    enabledByDefault: false,
-                    bypassBlockingThreshold: false, // keep this 'false'
-                    endpoint: 'controld-family',
-                    policyKey: 'ControlDFamilyEnabled',
-                    report: mailtoReport('help@controld.com', 'Control D Family DNS'),
-                }),
-
                 hostnameBuiltin({
                     id: 'opendns-security',
                     website: 'https://www.opendns.com/?utm_source=osprey',
@@ -253,20 +189,6 @@
                     bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'opendns-security',
                     policyKey: 'OpenDNSSecurityEnabled',
-                    report: openDnsReport,
-                }),
-
-                adultFilterHostnameBuiltin({
-                    id: 'opendns-family',
-                    website: 'https://www.opendns.com/?utm_source=osprey',
-                    aliases: ['openDNSFamily'],
-                    displayName: 'OpenDNS Family DNS',
-                    group: providerGroups.adult_content_filters.id,
-                    icon: 'assets/providers/opendns.avif',
-                    enabledByDefault: false,
-                    bypassBlockingThreshold: false, // keep this 'false'
-                    endpoint: 'opendns-family',
-                    policyKey: 'OpenDNSFamilyEnabled',
                     report: openDnsReport,
                 }),
 

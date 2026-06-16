@@ -181,35 +181,14 @@ globalThis.OspreyProviderCatalog = (() => {
         return `${base}/${endpoint}`;
     };
 
-    const hasAdultFilter = definition => {
-        if (!definition) {
-            return false;
-        }
-
-        if (definition.group === 'adult_content_filters') {
-            return true;
-        }
-        return Array.isArray(definition.tags) && definition.tags.includes('adult_filter');
-    };
-
     const supportsBlockingResult = (definition, result) => {
         if (!result) {
             return false;
         }
 
         const normalizedResult = String(result);
-        const isAdultContent = normalizedResult === protectionResult?.resultTypes?.ADULT_CONTENT;
-
-        if (isAdultContent) {
-            return hasAdultFilter(definition);
-        }
-
         const isBlocking = protectionResult?.blockingResults?.has(normalizedResult);
-
-        if (isBlocking) {
-            return !hasAdultFilter(definition);
-        }
-        return false;
+        return Boolean(isBlocking) && Array.isArray(definition?.blockingResults) && definition.blockingResults.includes(normalizedResult);
     };
 
     const resolveIconUrl = (definition, depth = 2) => {
@@ -252,7 +231,6 @@ globalThis.OspreyProviderCatalog = (() => {
         getDefinition,
         requiresApiKey,
         proxyEndpointUrl,
-        hasAdultFilter,
         supportsBlockingResult,
         resolveIconUrl,
     });
