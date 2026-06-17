@@ -256,7 +256,7 @@
                     group: providerGroups.feeds.id,
                     icon: 'assets/providers/phishingdatabase.avif',
                     enabledByDefault: true,
-                    bypassBlockingThreshold: false,
+                    bypassBlockingThreshold: true,
                     endpoint: 'phishing-database',
                     policyKey: 'PhishingDatabaseEnabled',
                     report: mailtoReport('support@phish.co.za', 'Phishing.Database (ACTIVE list)'),
@@ -270,7 +270,7 @@
                     group: providerGroups.feeds.id,
                     icon: 'assets/providers/phishuntio.avif',
                     enabledByDefault: true,
-                    bypassBlockingThreshold: false,
+                    bypassBlockingThreshold: true,
                     endpoint: 'phishunt-io',
                     policyKey: 'PhishuntIOEnabled',
                     report: mailtoReport('info@phishunt.io', 'Phishunt.io Feed'),
@@ -302,6 +302,20 @@
                     endpoint: 'urlhaus',
                     policyKey: 'URLhausEnabled',
                     report: spamhausReport,
+                }),
+
+                hostnameBuiltin({
+                    id: 'validin',
+                    website: 'https://validin.com/?utm_source=osprey',
+                    aliases: ['validin'],
+                    displayName: 'Validin List',
+                    group: providerGroups.feeds.id,
+                    icon: 'assets/providers/validin.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: true,
+                    endpoint: 'validin',
+                    policyKey: 'ValidinEnabled',
+                    report: mailtoReport('lets.talk@validin.com', 'Validin Public Phish Feeds'),
                 }),
             ]);
 
