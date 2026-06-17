@@ -277,6 +277,34 @@
                 }),
 
                 hostnameBuiltin({
+                    id: 'red-flag-domains',
+                    website: 'https://red.flag.domains/?utm_source=osprey',
+                    aliases: ['red-flag-domains'],
+                    displayName: 'Red Flag Domains List',
+                    group: providerGroups.feeds.id,
+                    icon: 'assets/providers/red-flag-domains.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: true,
+                    endpoint: 'red-flag-domains',
+                    policyKey: 'RedFlagDomainsEnabled',
+                    report: mailtoReport('hello@red.flag.domains', 'Red Flag Domains List'),
+                }),
+
+                hostnameBuiltin({
+                    id: 'sinking-yachts',
+                    website: 'https://red.flag.domains/?utm_source=osprey',
+                    aliases: ['sinking-yachts'],
+                    displayName: 'SinkingYachts List',
+                    group: providerGroups.feeds.id,
+                    icon: 'assets/providers/sinking-yachts.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: true,
+                    endpoint: 'sinking-yachts',
+                    policyKey: 'SinkingYachtsEnabled',
+                    report: mailtoReport('sinkingyachts@gmail.com', 'SinkingYachts List'),
+                }),
+
+                hostnameBuiltin({
                     id: 'threatfox',
                     website: 'https://threatfox.abuse.ch/?utm_source=osprey',
                     aliases: ['threatfox'],
