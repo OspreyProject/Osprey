@@ -52,6 +52,14 @@ globalThis.OspreyBadgeService = (() => {
         tabId: 0
     };
 
+    const ignoreMissingTab = error => {
+        if (error?.message?.includes('No tab with id')) {
+            return;
+        }
+
+        globalThis.console.error(error);
+    };
+
     const processDirtyTabs = () => {
         globalTimer = null;
 
@@ -74,19 +82,19 @@ globalThis.OspreyBadgeService = (() => {
             if (desired === 0) {
                 colorsSetTabs.delete(tabId);
                 badgeTextPacket.text = '';
-                browserAPI.actionSetBadgeText(badgeTextPacket).catch(globalThis.console.error);
+                browserAPI.actionSetBadgeText(badgeTextPacket).catch(ignoreMissingTab);
                 continue;
             }
 
             badgeTextPacket.text = getString(desired);
-            browserAPI.actionSetBadgeText(badgeTextPacket).catch(globalThis.console.error);
+            browserAPI.actionSetBadgeText(badgeTextPacket).catch(ignoreMissingTab);
 
             if (!colorsSetTabs.has(tabId)) {
                 backgroundColorPacket.tabId = tabId;
                 textColorPacket.tabId = tabId;
 
-                browserAPI.actionSetBadgeBackgroundColor(backgroundColorPacket).catch(globalThis.console.error);
-                browserAPI.actionSetBadgeTextColor(textColorPacket).catch(globalThis.console.error);
+                browserAPI.actionSetBadgeBackgroundColor(backgroundColorPacket).catch(ignoreMissingTab);
+                browserAPI.actionSetBadgeTextColor(textColorPacket).catch(ignoreMissingTab);
 
                 colorsSetTabs.add(tabId);
             }
