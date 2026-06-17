@@ -321,7 +321,13 @@ globalThis.OspreyProviderEngine = (() => {
         } catch (error) {
             for (let i = 0; i < activeLen; i++) {
                 const provider = activeProviders[i];
-                console.warn(`[${provider.displayName}] Failed to check URL: ${error}`);
+
+                if (error.equals('navigation-replaced')) {
+                    console.info(`[${provider.displayName}] Failed to check URL: ${error}`);
+                } else {
+                    console.warn(`[${provider.displayName}] Failed to check URL: ${error}`);
+                }
+
                 emitResult(provider, targetUrl, protectionResult.resultTypes.FAILED, onResult);
             }
         } finally {
