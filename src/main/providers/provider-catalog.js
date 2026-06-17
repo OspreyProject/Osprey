@@ -187,8 +187,15 @@ globalThis.OspreyProviderCatalog = (() => {
         }
 
         const normalizedResult = String(result);
-        const isBlocking = protectionResult?.blockingResults?.has(normalizedResult);
-        return Boolean(isBlocking) && Array.isArray(definition?.blockingResults) && definition.blockingResults.includes(normalizedResult);
+
+        if (!protectionResult?.blockingResults?.has(normalizedResult)) {
+            return false;
+        }
+
+        if (Array.isArray(definition?.blockingResults)) {
+            return definition.blockingResults.includes(normalizedResult);
+        }
+        return Boolean(definition);
     };
 
     const resolveIconUrl = (definition, depth = 2) => {
