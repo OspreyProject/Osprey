@@ -236,6 +236,20 @@
                 }),
 
                 hostnameBuiltin({
+                    id: 'kad-anti-scam',
+                    website: 'https://kadantiscam.netlify.app/?utm_source=osprey',
+                    aliases: ['kad-anti-scam'],
+                    displayName: 'KAD Anti-Scam List',
+                    group: providerGroups.feeds.id,
+                    icon: 'assets/providers/kad-anti-scam.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: true,
+                    endpoint: 'kad',
+                    policyKey: 'KADAntiScamEnabled',
+                    report: mailtoReport('contact-project+filtersheroes-kad-support@incoming.gitlab.com', 'KAD Anti-Scam Domains'),
+                }),
+
+                hostnameBuiltin({
                     id: 'openphish',
                     website: 'https://openphish.com/?utm_source=osprey',
                     aliases: ['openPhish'],
