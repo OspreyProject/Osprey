@@ -240,7 +240,12 @@ globalThis.OspreyProviderEngine = (() => {
 
             await finalizeProviderResult(provider, lookupKey, targetUrl, expirationSeconds, onResult, outcome);
         } catch (error) {
-            console.warn(`[${provider.displayName}] Failed to check URL: ${error}`);
+            if (error.equals('navigation-replaced')) {
+                console.info(`[${provider.displayName}] Failed to check URL: ${error}`);
+            } else {
+                console.warn(`[${provider.displayName}] Failed to check URL: ${error}`);
+            }
+
             emitResult(provider, targetUrl, protectionResult.resultTypes.FAILED, onResult);
         } finally {
             cacheService.clearProcessing(provider.id, lookupKey);
