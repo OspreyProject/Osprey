@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "Logo Osprey"
   },
-  "unsafeWebsiteTitle": {
+  "warningPageTitle": {
     "message": "Nebezpečná webová stránka zablokována"
   },
   "warningTitle": {
@@ -101,11 +101,14 @@
   "resetAll": {
     "message": "Obnovit vše"
   },
-  "fieldLabelApiUrl": {
-    "message": "URL rozhraní API"
-  },
   "fieldLabelApiKey": {
     "message": "Klíč API"
+  },
+  "bypassBlockingThreshold": {
+    "message": "Ignorovat práh blokování"
+  },
+  "bypassBlockingThresholdTooltip": {
+    "message": "Když je zapnuto, jediná detekce od tohoto poskytovatele okamžitě zablokuje web, místo aby se čekalo na obvyklý práh více poskytovatelů v Osprey.\nMěňte toto nastavení pouze tehdy, pokud akceptujete možné riziko zvýšení počtu falešně pozitivních výsledků."
   },
   "applyButton": {
     "message": "Použít"

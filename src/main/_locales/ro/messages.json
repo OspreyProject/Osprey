@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "Logo Osprey"
   },
-  "unsafeWebsiteTitle": {
+  "warningPageTitle": {
     "message": "Site web nesigur blocat"
   },
   "warningTitle": {
@@ -101,11 +101,14 @@
   "resetAll": {
     "message": "Restabiliți totul"
   },
-  "fieldLabelApiUrl": {
-    "message": "URL API"
-  },
   "fieldLabelApiKey": {
     "message": "Cheie API"
+  },
+  "bypassBlockingThreshold": {
+    "message": "Ignoră pragul de blocare"
+  },
+  "bypassBlockingThresholdTooltip": {
+    "message": "Când este activat, o singură detectare de la acest furnizor blochează imediat site-ul, în loc să aștepte pragul obișnuit cu mai mulți furnizori al Osprey.\nModifică această setare doar dacă accepți riscul potențial de creștere a alarmelor false."
   },
   "applyButton": {
     "message": "Aplicați"

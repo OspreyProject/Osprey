@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "Osprey logotipas"
   },
-  "unsafeWebsiteTitle": {
+  "warningPageTitle": {
     "message": "Nesaugi svetainė užblokuota"
   },
   "warningTitle": {
@@ -101,11 +101,14 @@
   "resetAll": {
     "message": "Atkurti viską"
   },
-  "fieldLabelApiUrl": {
-    "message": "API URL"
-  },
   "fieldLabelApiKey": {
     "message": "API raktas"
+  },
+  "bypassBlockingThreshold": {
+    "message": "Nepaisyti blokavimo slenksčio"
+  },
+  "bypassBlockingThresholdTooltip": {
+    "message": "Kai įjungta, vienas šio tiekėjo aptikimas iškart užblokuoja svetainę, užuot laukus įprasto kelių tiekėjų Osprey slenksčio.\nKeiskite tai tik tuo atveju, jei sutinkate su galima padidėjusio klaidingų teigiamų rezultatų skaičiaus rizika."
   },
   "applyButton": {
     "message": "Taikyti"

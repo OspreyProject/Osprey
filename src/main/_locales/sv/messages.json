@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "Osprey-logotyp"
   },
-  "unsafeWebsiteTitle": {
+  "warningPageTitle": {
     "message": "Osäker webbplats blockerad"
   },
   "warningTitle": {
@@ -101,11 +101,14 @@
   "resetAll": {
     "message": "Återställ allt"
   },
-  "fieldLabelApiUrl": {
-    "message": "API-URL"
-  },
   "fieldLabelApiKey": {
     "message": "API-nyckel"
+  },
+  "bypassBlockingThreshold": {
+    "message": "Ignorera blockeringströskel"
+  },
+  "bypassBlockingThresholdTooltip": {
+    "message": "När detta är aktiverat blockerar en enda upptäckt från den här leverantören webbplatsen omedelbart, i stället för att vänta på Ospreys vanliga tröskel med flera leverantörer.\nÄndra detta endast om du accepterar den möjliga risken för fler falska positiva resultat."
   },
   "applyButton": {
     "message": "Tillämpa"

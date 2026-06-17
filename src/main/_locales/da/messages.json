@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "Osprey-logo"
   },
-  "unsafeWebsiteTitle": {
+  "warningPageTitle": {
     "message": "Usikkert websted blokeret"
   },
   "warningTitle": {
@@ -101,11 +101,14 @@
   "resetAll": {
     "message": "Nulstil alt"
   },
-  "fieldLabelApiUrl": {
-    "message": "API URL"
-  },
   "fieldLabelApiKey": {
     "message": "API-nøgle"
+  },
+  "bypassBlockingThreshold": {
+    "message": "Ignorér blokeringsgrænse"
+  },
+  "bypassBlockingThresholdTooltip": {
+    "message": "Når dette er aktiveret, blokerer en enkelt registrering fra denne udbyder straks webstedet i stedet for at vente på Ospreys sædvanlige grænse med flere udbydere.\nÆndr kun dette, hvis du accepterer den mulige risiko for flere falske positiver."
   },
   "applyButton": {
     "message": "Anvend"

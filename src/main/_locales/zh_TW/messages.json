@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "Osprey 標誌"
   },
-  "unsafeWebsiteTitle": {
+  "warningPageTitle": {
     "message": "不安全網站已被封鎖"
   },
   "warningTitle": {
@@ -101,11 +101,14 @@
   "resetAll": {
     "message": "全部重設"
   },
-  "fieldLabelApiUrl": {
-    "message": "API 網址"
-  },
   "fieldLabelApiKey": {
     "message": "API 金鑰"
+  },
+  "bypassBlockingThreshold": {
+    "message": "忽略封鎖閾值"
+  },
+  "bypassBlockingThresholdTooltip": {
+    "message": "啟用後，來自此提供者的單一偵測即可立即封鎖該網站，而無需等待 Osprey 通常的多提供者閾值。\n僅在你接受誤判可能增加的潛在風險時才變更此設定。"
   },
   "applyButton": {
     "message": "套用"

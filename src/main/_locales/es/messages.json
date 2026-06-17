@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "Logo de Osprey"
   },
-  "unsafeWebsiteTitle": {
+  "warningPageTitle": {
     "message": "Sitio web inseguro bloqueado"
   },
   "warningTitle": {
@@ -101,11 +101,14 @@
   "resetAll": {
     "message": "Restablecer todo"
   },
-  "fieldLabelApiUrl": {
-    "message": "URL de API"
-  },
   "fieldLabelApiKey": {
     "message": "Clave de API"
+  },
+  "bypassBlockingThreshold": {
+    "message": "Ignorar el umbral de bloqueo"
+  },
+  "bypassBlockingThresholdTooltip": {
+    "message": "Cuando está activado, una sola detección de este proveedor bloquea el sitio de inmediato, en lugar de esperar el umbral habitual de varios proveedores de Osprey.\nModifica esto solo si aceptas el posible riesgo de un aumento de los falsos positivos."
   },
   "applyButton": {
     "message": "Aplicar"

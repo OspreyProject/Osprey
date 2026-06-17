@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "Osprey 로고"
   },
-  "unsafeWebsiteTitle": {
+  "warningPageTitle": {
     "message": "안전하지 않은 웹사이트 차단됨"
   },
   "warningTitle": {
@@ -101,11 +101,14 @@
   "resetAll": {
     "message": "모두 재설정"
   },
-  "fieldLabelApiUrl": {
-    "message": "API URL"
-  },
   "fieldLabelApiKey": {
     "message": "API 키"
+  },
+  "bypassBlockingThreshold": {
+    "message": "차단 임계값 무시"
+  },
+  "bypassBlockingThresholdTooltip": {
+    "message": "활성화하면 Osprey의 일반적인 다중 공급자 임계값을 기다리지 않고, 이 공급자의 단일 탐지만으로 사이트가 즉시 차단됩니다.\n오탐이 증가할 수 있는 잠재적 위험을 감수할 수 있는 경우에만 변경하세요."
   },
   "applyButton": {
     "message": "적용"

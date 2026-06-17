@@ -43,7 +43,6 @@
         URL_LABEL: 'urlLabel',
         REPORTED_BY_LABEL: 'reportedByLabel',
         REASON_LABEL: 'reasonLabel',
-        UNSAFE_WEBSITE_TITLE: 'unsafeWebsiteTitle',
         CLEAR_ALLOWED_WEBSITES_MESSAGE: 'clearAllowedWebsitesMessage',
         CLEAR_ALLOWED_WEBSITES: 'clearAllowedWebsites',
         REPORT_WEBSITE_AS_MALICIOUS: 'reportWebsiteAsMalicious',
@@ -79,8 +78,9 @@
         THIRD_PARTY_SECTION: 'thirdPartySection',
         RESET_DEFAULT_PROVIDERS: 'resetDefaultProviders',
         RESET_ALL: 'resetAll',
-        FIELD_LABEL_API_URL: 'fieldLabelApiUrl',
         FIELD_LABEL_API_KEY: 'fieldLabelApiKey',
+        BYPASS_BLOCKING_THRESHOLD: 'bypassBlockingThreshold',
+        BYPASS_BLOCKING_THRESHOLD_TOOLTIP: 'bypassBlockingThresholdTooltip',
         APPLY_BUTTON: 'applyButton',
         INDICATOR_IP_PROTECTED: 'indicatorIpProtected',
         OFFICIAL_PARTNER_TITLE: 'officialPartnerTitle',
@@ -93,7 +93,7 @@
         TOAST_ALL_SETTINGS_RESTORED: 'toastAllSettingsRestored',
         TOAST_SAVE_API_KEY_FIRST: 'toastSaveApiKeyFirst',
         TOAST_FAILED_TO_UPDATE_STATE: 'toastFailedToUpdateState',
-        WARNING_PAGE_TITLE: 'unsafeWebsiteTitle',
+        WARNING_PAGE_TITLE: 'warningPageTitle',
         PROVIDER_NAME_FALLBACK: 'providerNameFallback',
     };
 

@@ -338,6 +338,55 @@ globalThis.OspreyProviderCard = (() => {
         }, captureListenerOptions);
     }
 
+    function createBypassThresholdControl(definition, providerState, disabled) {
+        const defaultValue = Boolean(definition.bypassBlockingThreshold);
+
+        const currentValue = typeof providerState?.bypassBlockingThreshold === 'boolean' ?
+            providerState.bypassBlockingThreshold :
+            defaultValue;
+
+        const checkboxId = `bypass-threshold-${definition.id}`;
+
+        const checkbox = formHelpers.createElement('input', {
+            type: 'checkbox',
+            id: checkboxId,
+            className: 'provider-bypass-checkbox',
+            disabled,
+        });
+
+        checkbox.checked = currentValue;
+
+        const labelText = formHelpers.createElement('span', {
+            className: 'provider-bypass-label-text',
+            textContent: LangUtil.BYPASS_BLOCKING_THRESHOLD,
+        });
+
+        const row = formHelpers.createElement('label', {
+            className: 'provider-bypass-row',
+            attributes: {
+                for: checkboxId,
+                title: LangUtil.BYPASS_BLOCKING_THRESHOLD_TOOLTIP,
+            },
+        }, checkbox, labelText);
+
+        if (disabled) {
+            row.classList.add('disabled');
+            return row;
+        }
+
+        checkbox.addEventListener('change', () => {
+            const nextValue = checkbox.checked;
+
+            providerStateStore.setBypassBlockingThreshold(definition.id, nextValue)
+                .catch(error => {
+                    console.error(`ProviderCard failed to persist bypass threshold for provider '${definition.id}'`, error);
+                    checkbox.checked = !nextValue;
+                    toast.show(LangUtil.TOAST_FAILED_TO_SAVE, true);
+                });
+        }, passiveListenerOptions);
+        return row;
+    }
+
     function createCardShell(className, id, definition, iconUrl, isEnabled, indicators = []) {
         const item = formHelpers.createElement('div', {
             className: `provider-item ${className}`,
@@ -361,19 +410,17 @@ globalThis.OspreyProviderCard = (() => {
 
         const websiteLink = createExternalLinkText(definition.website, LangUtil.WEBSITE_LINK + ' ↗', 'provider-website-link', definition.id);
 
-        body.append(...[
-            formHelpers.createFieldGroup(
-                LangUtil.FIELD_LABEL_API_URL,
-                formHelpers.createReadOnlyInput(providerCatalog.proxyEndpointUrl(definition)),
-                null,
-                websiteLink,
-            ),
-        ].filter(node => node !== null));
-
         const isDisabled = Boolean(
             runtime?.effectiveState?.app?.lockSettings ||
             runtime?.providerManagedIds?.has(definition.id),
         );
+
+        const bypassControl = createBypassThresholdControl(definition, providerState, isDisabled);
+
+        body.append(...[
+            websiteLink,
+            bypassControl,
+        ].filter(node => node !== null));
 
         wireProviderInteractions(item, header, toggleSwitch, definition.id, {
             disabled: isDisabled,
@@ -419,7 +466,6 @@ globalThis.OspreyProviderCard = (() => {
             disabled: true,
         });
 
-        const requestUrl = String(definition.request?.urlTemplate || '');
         const apiKeyLink = createExternalLinkText(definition.apiKeyUrl, LangUtil.GET_API_KEY + ' ↗', 'api-key-link-text', definition.id);
 
         passwordField.input.disabled = fieldsLocked;
@@ -469,14 +515,12 @@ globalThis.OspreyProviderCard = (() => {
             apiKeyLink,
         );
 
-        const urlFieldGroup = formHelpers.createFieldGroup(
-            LangUtil.FIELD_LABEL_API_URL,
-            formHelpers.createReadOnlyInput(requestUrl),
-            null,
-        );
+        const websiteLink = createExternalLinkText(definition.website, LangUtil.WEBSITE_LINK + ' ↗', 'provider-website-link', definition.id);
+        const bypassControl = createBypassThresholdControl(definition, providerState, toggleLocked);
 
         body.append(...[
-            urlFieldGroup,
+            websiteLink,
+            bypassControl,
             apiKeyFieldGroup,
             createDiv('provider-actions', applyButton),
         ].filter(node => node !== null));

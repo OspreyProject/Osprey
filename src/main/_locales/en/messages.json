@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "Osprey Logo"
   },
-  "unsafeWebsiteTitle": {
+  "warningPageTitle": {
     "message": "Unsafe Website Blocked"
   },
   "warningTitle": {
@@ -101,11 +101,14 @@
   "resetAll": {
     "message": "Reset All"
   },
-  "fieldLabelApiUrl": {
-    "message": "API URL"
-  },
   "fieldLabelApiKey": {
     "message": "API Key"
+  },
+  "bypassBlockingThreshold": {
+    "message": "Ignore blocking threshold"
+  },
+  "bypassBlockingThresholdTooltip": {
+    "message": "When enabled, a single detection from this provider blocks the site immediately, instead of waiting for Osprey's\nusual multi-provider threshold. Only modify this if you accept the potential risk of increased false positives."
   },
   "applyButton": {
     "message": "Apply"

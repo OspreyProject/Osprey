@@ -311,8 +311,6 @@ html, body {
     mask-size: contain;
 }
 
-/* Shared tooltip ::after for all provider indicator icons */
-/* Shared tooltip ::after for all provider indicator icons */
 .partner-badge::after,
 .provider-proxy-indicator::after,
 .provider-slow-support-indicator::after,
@@ -378,7 +376,7 @@ html, body {
     color: #a6a6a6;
     cursor: pointer;
     width: fit-content;
-    margin: 4px 0 8px 0;
+    margin: 12px 0 0 0;
     text-decoration: none;
 }
 
@@ -389,6 +387,49 @@ html, body {
 
 .provider-website-link:focus-visible {
     outline: none;
+}
+
+.provider-bypass-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: fit-content;
+    margin: 10px 0 0 0;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.provider-bypass-row.disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.provider-bypass-checkbox {
+    width: 12px;
+    height: 12px;
+    margin: 0;
+    flex-shrink: 0;
+    accent-color: #f3ba22;
+    cursor: pointer;
+}
+
+.provider-bypass-checkbox:focus-visible {
+    outline: 1px solid #f3ba22;
+    outline-offset: 1px;
+}
+
+.provider-bypass-row.disabled .provider-bypass-checkbox {
+    cursor: not-allowed;
+}
+
+.provider-bypass-label-text {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    color: #a6a6a6;
+    line-height: 1.3;
+    margin: 0 0 1px 0;
 }
 
 .provider-toggle-wrap {
@@ -512,6 +553,7 @@ html, body {
     background-color: #f3ba22;
     color: #ffffff;
     text-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+    margin: 0 0 3px 0;
 }
 
 .delete-btn {

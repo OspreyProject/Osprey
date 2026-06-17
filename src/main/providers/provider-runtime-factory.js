@@ -62,9 +62,14 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
             const enabled = rawState === undefined ? definition.enabledByDefault : Boolean(rawState.enabled);
             const apiKey = rawState === undefined ? '' : String(rawState.apiKey || '');
 
+            const bypassBlockingThreshold = rawState !== undefined && typeof rawState.bypassBlockingThreshold === 'boolean' ?
+                rawState.bypassBlockingThreshold :
+                Boolean(definition.bypassBlockingThreshold);
+
             const provider = Object.freeze({
                 ...definition,
-                state: Object.freeze({enabled, apiKey}),
+                bypassBlockingThreshold,
+                state: Object.freeze({enabled, apiKey, bypassBlockingThreshold}),
                 managed: providerManagedIds.has(definition.id),
             });
 

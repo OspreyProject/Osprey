@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "Логотип Osprey"
   },
-  "unsafeWebsiteTitle": {
+  "warningPageTitle": {
     "message": "Небезопасный сайт заблокирован"
   },
   "warningTitle": {
@@ -101,11 +101,14 @@
   "resetAll": {
     "message": "Сбросить всё"
   },
-  "fieldLabelApiUrl": {
-    "message": "URL API"
-  },
   "fieldLabelApiKey": {
     "message": "Ключ API"
+  },
+  "bypassBlockingThreshold": {
+    "message": "Игнорировать порог блокировки"
+  },
+  "bypassBlockingThresholdTooltip": {
+    "message": "Когда включено, одно обнаружение от этого поставщика немедленно блокирует сайт, не дожидаясь обычного порога с несколькими поставщиками в Osprey.\nИзменяйте этот параметр только если вы принимаете возможный риск увеличения количества ложных срабатываний."
   },
   "applyButton": {
     "message": "Применить"

@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "โลโก้ Osprey"
   },
-  "unsafeWebsiteTitle": {
+  "warningPageTitle": {
     "message": "เว็บไซต์ที่ไม่ปลอดภัยถูกบล็อก"
   },
   "warningTitle": {
@@ -101,11 +101,14 @@
   "resetAll": {
     "message": "รีเซ็ตทั้งหมด"
   },
-  "fieldLabelApiUrl": {
-    "message": "API URL"
-  },
   "fieldLabelApiKey": {
     "message": "คีย์ API"
+  },
+  "bypassBlockingThreshold": {
+    "message": "ละเว้นเกณฑ์การบล็อก"
+  },
+  "bypassBlockingThresholdTooltip": {
+    "message": "เมื่อเปิดใช้งาน การตรวจพบเพียงครั้งเดียวจากผู้ให้บริการนี้จะบล็อกเว็บไซต์ทันที แทนที่จะรอเกณฑ์แบบหลายผู้ให้บริการตามปกติของ Osprey\nเปลี่ยนการตั้งค่านี้เฉพาะเมื่อคุณยอมรับความเสี่ยงที่อาจทำให้เกิดผลบวกลวงเพิ่มขึ้นเท่านั้น"
   },
   "applyButton": {
     "message": "ใช้งาน"

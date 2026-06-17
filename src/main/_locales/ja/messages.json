@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "Ospreyロゴ"
   },
-  "unsafeWebsiteTitle": {
+  "warningPageTitle": {
     "message": "安全でないウェブサイトをブロックしました"
   },
   "warningTitle": {
@@ -101,11 +101,14 @@
   "resetAll": {
     "message": "すべてリセット"
   },
-  "fieldLabelApiUrl": {
-    "message": "API URL"
-  },
   "fieldLabelApiKey": {
     "message": "APIキー"
+  },
+  "bypassBlockingThreshold": {
+    "message": "ブロックのしきい値を無視"
+  },
+  "bypassBlockingThresholdTooltip": {
+    "message": "有効にすると、Osprey の通常の複数プロバイダーによるしきい値を待たずに、このプロバイダーによる 1 件の検出だけでサイトが即座にブロックされます。\n誤検知が増える可能性のあるリスクを許容できる場合にのみ変更してください。"
   },
   "applyButton": {
     "message": "適用"

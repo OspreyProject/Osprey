@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "Osprey 标志"
   },
-  "unsafeWebsiteTitle": {
+  "warningPageTitle": {
     "message": "不安全网站已被拦截"
   },
   "warningTitle": {
@@ -101,11 +101,14 @@
   "resetAll": {
     "message": "全部重置"
   },
-  "fieldLabelApiUrl": {
-    "message": "API 网址"
-  },
   "fieldLabelApiKey": {
     "message": "API 密钥"
+  },
+  "bypassBlockingThreshold": {
+    "message": "忽略拦截阈值"
+  },
+  "bypassBlockingThresholdTooltip": {
+    "message": "启用后，来自该提供商的一次检测即可立即拦截该网站，而无需等待 Osprey 通常的多提供商阈值。\n仅当你接受误报可能增加的潜在风险时才更改此设置。"
   },
   "applyButton": {
     "message": "应用"

@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "Λογότυπο Osprey"
   },
-  "unsafeWebsiteTitle": {
+  "warningPageTitle": {
     "message": "Αποκλεισμός μη ασφαλούς ιστοτόπου"
   },
   "warningTitle": {
@@ -101,11 +101,14 @@
   "resetAll": {
     "message": "Επαναφορά όλων"
   },
-  "fieldLabelApiUrl": {
-    "message": "URL API"
-  },
   "fieldLabelApiKey": {
     "message": "Κλειδί API"
+  },
+  "bypassBlockingThreshold": {
+    "message": "Παράβλεψη ορίου αποκλεισμού"
+  },
+  "bypassBlockingThresholdTooltip": {
+    "message": "Όταν είναι ενεργό, ένας μόνο εντοπισμός από αυτόν τον πάροχο αποκλείει αμέσως τον ιστότοπο, αντί να περιμένει το συνηθισμένο όριο πολλαπλών παρόχων του Osprey.\nΤροποποιήστε το μόνο αν αποδέχεστε τον πιθανό κίνδυνο αύξησης των ψευδώς θετικών αποτελεσμάτων."
   },
   "applyButton": {
     "message": "Εφαρμογή"

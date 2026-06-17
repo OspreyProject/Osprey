@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "شعار Osprey"
   },
-  "unsafeWebsiteTitle": {
+  "warningPageTitle": {
     "message": "تم حظر موقع ويب غير آمن"
   },
   "warningTitle": {
@@ -101,11 +101,14 @@
   "resetAll": {
     "message": "إعادة تعيين الكل"
   },
-  "fieldLabelApiUrl": {
-    "message": "رابط API"
-  },
   "fieldLabelApiKey": {
     "message": "مفتاح API"
+  },
+  "bypassBlockingThreshold": {
+    "message": "تجاهل عتبة الحظر"
+  },
+  "bypassBlockingThresholdTooltip": {
+    "message": "عند التفعيل، يؤدي اكتشاف واحد من هذا المزوّد إلى حظر الموقع فورًا، بدلاً من انتظار عتبة المزوّدين المتعددة المعتادة في Osprey.\nلا تُغيّر هذا الإعداد إلا إذا كنت تقبل الخطر المحتمل في زيادة الإيجابيات الكاذبة."
   },
   "applyButton": {
     "message": "تطبيق"

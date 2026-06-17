@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "لوگوی Osprey"
   },
-  "unsafeWebsiteTitle": {
+  "warningPageTitle": {
     "message": "وب‌سایت ناامن مسدود شد"
   },
   "warningTitle": {
@@ -101,11 +101,14 @@
   "resetAll": {
     "message": "بازنشانی همه"
   },
-  "fieldLabelApiUrl": {
-    "message": "آدرس API"
-  },
   "fieldLabelApiKey": {
     "message": "کلید API"
+  },
+  "bypassBlockingThreshold": {
+    "message": "نادیده گرفتن آستانهٔ مسدودسازی"
+  },
+  "bypassBlockingThresholdTooltip": {
+    "message": "وقتی فعال باشد، تنها یک تشخیص از این ارائه‌دهنده بلافاصله سایت را مسدود می‌کند، به‌جای انتظار برای آستانهٔ معمول چند ارائه‌دهنده‌ای Osprey.\nفقط در صورتی این را تغییر دهید که خطر احتمالی افزایش هشدارهای نادرست را بپذیرید."
   },
   "applyButton": {
     "message": "اعمال"

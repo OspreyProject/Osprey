@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "Logotip d'Osprey"
   },
-  "unsafeWebsiteTitle": {
+  "warningPageTitle": {
     "message": "Lloc web no segur bloquejat"
   },
   "warningTitle": {
@@ -101,11 +101,14 @@
   "resetAll": {
     "message": "Restableix-ho tot"
   },
-  "fieldLabelApiUrl": {
-    "message": "URL de l'API"
-  },
   "fieldLabelApiKey": {
     "message": "Clau de l'API"
+  },
+  "bypassBlockingThreshold": {
+    "message": "Ignora el llindar de bloqueig"
+  },
+  "bypassBlockingThresholdTooltip": {
+    "message": "Quan està activat, una sola detecció d'aquest proveïdor bloqueja el lloc immediatament, en lloc d'esperar el llindar habitual de múltiples proveïdors d'Osprey.\nModifica-ho només si acceptes el risc potencial d'un augment dels falsos positius."
   },
   "applyButton": {
     "message": "Aplica"

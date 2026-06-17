@@ -86,6 +86,10 @@ globalThis.OspreyProviderStateStore = (() => {
             base.providers[id] = {
                 enabled: src && typeof src.enabled === 'boolean' ? src.enabled : Boolean(element.enabledByDefault),
                 apiKey: src && typeof src.apiKey === 'string' ? src.apiKey : '',
+
+                bypassBlockingThreshold: src && typeof src.bypassBlockingThreshold === 'boolean' ?
+                    src.bypassBlockingThreshold :
+                    Boolean(element.bypassBlockingThreshold),
             };
 
             Object.freeze(base.providers[id]);
@@ -252,6 +256,21 @@ globalThis.OspreyProviderStateStore = (() => {
         }
     });
 
+    const setBypassBlockingThreshold = (providerId, bypass) => updateState(async state => {
+        const locks = await getPolicyLocks();
+
+        if (isUnsafeProviderId(providerId) || state.app.lockSettings || locks.lockSettings) {
+            return;
+        }
+
+        const provider = state.providers[providerId] || (state.providers[providerId] = {
+            enabled: false,
+            apiKey: '',
+        });
+
+        provider.bypassBlockingThreshold = Boolean(bypass);
+    });
+
     const resetDefaultProviders = () => updateState(async state => {
         const locks = await getPolicyLocks();
 
@@ -265,6 +284,7 @@ globalThis.OspreyProviderStateStore = (() => {
             const def = element;
             const p = state.providers[def.id] || (state.providers[def.id] = {enabled: false, apiKey: ''});
             p.enabled = Boolean(def.enabledByDefault);
+            p.bypassBlockingThreshold = Boolean(def.bypassBlockingThreshold);
         }
     });
 
@@ -313,6 +333,7 @@ globalThis.OspreyProviderStateStore = (() => {
         getState,
         setProviderEnabled,
         setProviderApiKey,
+        setBypassBlockingThreshold,
         resetDefaultProviders,
         resetAll,
         countEnabledProviders,

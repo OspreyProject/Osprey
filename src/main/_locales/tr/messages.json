@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "Osprey Logosu"
   },
-  "unsafeWebsiteTitle": {
+  "warningPageTitle": {
     "message": "Güvensiz Web Sitesi Engellendi"
   },
   "warningTitle": {
@@ -101,11 +101,14 @@
   "resetAll": {
     "message": "Tümünü sıfırla"
   },
-  "fieldLabelApiUrl": {
-    "message": "API URL'si"
-  },
   "fieldLabelApiKey": {
     "message": "API Anahtarı"
+  },
+  "bypassBlockingThreshold": {
+    "message": "Engelleme eşiğini yoksay"
+  },
+  "bypassBlockingThresholdTooltip": {
+    "message": "Etkinleştirildiğinde, Osprey'in olağan çoklu sağlayıcı eşiğini beklemek yerine, bu sağlayıcıdan gelen tek bir tespit siteyi anında engeller.\nBunu yalnızca yanlış pozitiflerin artması olasılığını kabul ediyorsanız değiştirin."
   },
   "applyButton": {
     "message": "Uygula"
