@@ -134,6 +134,34 @@ globalThis.OspreyDirectIntegrations = (() => {
                 Object.freeze({
                     path: 'category',
                     operator: 'equals',
+                    value: 'Bot Nets',
+                    result: 'MALICIOUS',
+                }),
+
+                Object.freeze({
+                    path: 'category',
+                    operator: 'equals',
+                    value: 'Confirmed SPAM Sources',
+                    result: 'MALICIOUS',
+                }),
+
+                Object.freeze({
+                    path: 'category',
+                    operator: 'equals',
+                    value: 'SPAM URLs',
+                    result: 'MALICIOUS',
+                }),
+
+                Object.freeze({
+                    path: 'category',
+                    operator: 'equals',
+                    value: 'Spyware and Adware',
+                    result: 'MALICIOUS',
+                }),
+
+                Object.freeze({
+                    path: 'category',
+                    operator: 'equals',
                     value: 'Malware Sites',
                     result: 'MALICIOUS',
                 }),
