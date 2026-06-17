@@ -43,13 +43,26 @@ const bootstrapScripts = [
     'background/navigation-service.js',
 ];
 
-if (typeof importScripts === 'function') {
-    try {
-        importScripts(...bootstrapScripts);
-    } catch (error) {
-        console.error('Script injection failed; halting runtime to prevent corrupted state', error);
-        throw error;
+const maxBootstrapAttempts = 3;
+
+const importWithRetry = scripts => {
+    for (let attempt = 1; ; attempt++) {
+        try {
+            importScripts(...scripts);
+            return;
+        } catch (error) {
+            if (attempt >= maxBootstrapAttempts) {
+                console.error('Script injection failed; stopping runtime to prevent corrupted state', error);
+                throw error;
+            }
+
+            console.warn(`Script injection attempt ${attempt} failed; retrying`, error);
+        }
     }
+};
+
+if (typeof importScripts === 'function') {
+    importWithRetry(bootstrapScripts);
 } else {
     console.debug('Environment lacks importScripts; relying on HTML document script loading');
 }
