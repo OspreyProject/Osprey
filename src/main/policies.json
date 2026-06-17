@@ -83,23 +83,11 @@
       "type": "boolean",
       "default": true
     },
-    "AdGuardFamilyEnabled": {
-      "title": "AdGuard Family DNS Enabled",
-      "description": "Managed enabled state for AdGuard Family DNS.",
-      "type": "boolean",
-      "default": false
-    },
     "CleanBrowsingSecurityEnabled": {
       "title": "CleanBrowsing Security DNS Enabled",
       "description": "Managed enabled state for CleanBrowsing Security DNS.",
       "type": "boolean",
       "default": true
-    },
-    "CleanBrowsingFamilyEnabled": {
-      "title": "CleanBrowsing Family DNS Enabled",
-      "description": "Managed enabled state for CleanBrowsing Family DNS.",
-      "type": "boolean",
-      "default": false
     },
     "CloudflareSecurityEnabled": {
       "title": "Cloudflare Security DNS Enabled",
@@ -107,21 +95,9 @@
       "type": "boolean",
       "default": true
     },
-    "CloudflareFamilyEnabled": {
-      "title": "Cloudflare Family DNS Enabled",
-      "description": "Managed enabled state for Cloudflare Family DNS.",
-      "type": "boolean",
-      "default": false
-    },
     "ControlDSecurityEnabled": {
       "title": "Control D Security DNS Enabled",
       "description": "Managed enabled state for Control D Security DNS.",
-      "type": "boolean",
-      "default": false
-    },
-    "ControlDFamilyEnabled": {
-      "title": "Control D Family DNS Enabled",
-      "description": "Managed enabled state for Control D Family DNS.",
       "type": "boolean",
       "default": false
     },
@@ -130,12 +106,6 @@
       "description": "Managed enabled state for OpenDNS Security DNS.",
       "type": "boolean",
       "default": true
-    },
-    "OpenDNSFamilyEnabled": {
-      "title": "OpenDNS Family DNS Enabled",
-      "description": "Managed enabled state for OpenDNS Family DNS.",
-      "type": "boolean",
-      "default": false
     },
     "Quad9Enabled": {
       "title": "Quad9 Security DNS Enabled",
