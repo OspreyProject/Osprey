@@ -106,6 +106,21 @@
                 }),
 
                 builtin({
+                    id: 'izoologic',
+                    website: 'https://izoologic.com/?utm_source=osprey',
+                    aliases: ['izoologic'],
+                    displayName: 'iZOOlogic Web Protection',
+                    group: providerGroups.official_partners.id,
+                    icon: 'assets/providers/izoologic.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: false,
+                    endpoint: 'izoologic',
+                    tags: ['proxy', 'partner'],
+                    policyKey: 'iZOOlogicEnabled',
+                    report: mailtoReport('info@izoologic.com', 'iZOOlogic Osprey Endpoint'),
+                }),
+
+                builtin({
                     id: 'precisionsec',
                     website: 'https://precisionsec.com/?utm_source=osprey',
                     aliases: ['precisionSec'],
