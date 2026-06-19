@@ -217,6 +217,10 @@ globalThis.OspreyProviderEngine = (() => {
         return true;
     };
 
+    const isNavigationReplaced = (error, parentSignal) =>
+        error === 'navigation-replaced' ||
+        parentSignal?.aborted && parentSignal.reason === 'navigation-replaced';
+
     const fetchProviderResult = async (provider, targetUrl, parentSignal, expirationSeconds, onResult, tabId, globalAllowMatched) => {
         const lookupKey = urlService.lookupValueForTarget(targetUrl, provider.lookupTarget || 'url');
 
@@ -240,7 +244,7 @@ globalThis.OspreyProviderEngine = (() => {
 
             await finalizeProviderResult(provider, lookupKey, targetUrl, expirationSeconds, onResult, outcome);
         } catch (error) {
-            if (error.equals('navigation-replaced')) {
+            if (isNavigationReplaced(error, parentSignal)) {
                 console.info(`[${provider.displayName}] Failed to check URL: ${error}`);
             } else {
                 console.warn(`[${provider.displayName}] Failed to check URL: ${error}`);
@@ -322,7 +326,7 @@ globalThis.OspreyProviderEngine = (() => {
             for (let i = 0; i < activeLen; i++) {
                 const provider = activeProviders[i];
 
-                if (error.equals('navigation-replaced')) {
+                if (isNavigationReplaced(error, parentSignal)) {
                     console.info(`[${provider.displayName}] Failed to check URL: ${error}`);
                 } else {
                     console.warn(`[${provider.displayName}] Failed to check URL: ${error}`);
