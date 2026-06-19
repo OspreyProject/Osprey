@@ -362,6 +362,34 @@
                 }),
 
                 hostnameBuiltin({
+                    id: 'urlabuse',
+                    website: 'https://urlabuse.com/?utm_source=osprey',
+                    aliases: ['urlabuse'],
+                    displayName: 'URLAbuse List',
+                    group: providerGroups.feeds.id,
+                    icon: 'assets/providers/urlabuse.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: false,
+                    endpoint: 'urlabuse',
+                    policyKey: 'URLAbuseEnabled',
+                    report: mailtoReport('info@urlabuse.com', 'URLAbuse List'),
+                }),
+
+                hostnameBuiltin({
+                    id: 'urlquery',
+                    website: 'https://urlquery.net/?utm_source=osprey',
+                    aliases: ['urlquery'],
+                    displayName: 'URLQuery List',
+                    group: providerGroups.feeds.id,
+                    icon: 'assets/providers/urlquery.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: true,
+                    endpoint: 'urlquery',
+                    policyKey: 'URLQueryEnabled',
+                    report: mailtoReport('support@urlquery.net', 'URLQuery List'),
+                }),
+
+                hostnameBuiltin({
                     id: 'validin',
                     website: 'https://validin.com/?utm_source=osprey',
                     aliases: ['validin'],
