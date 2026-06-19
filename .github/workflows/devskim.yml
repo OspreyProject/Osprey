@@ -22,7 +22,7 @@ jobs:
 
     steps:
       - name: 'Checkout Repository'
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: 'Run DevSkim Analysis'
         uses: microsoft/DevSkim-Action@v1
