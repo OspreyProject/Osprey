@@ -108,7 +108,7 @@
     "message": "Engelleme eşiğini yoksay"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Etkinleştirildiğinde, Osprey'in olağan çoklu sağlayıcı eşiğini beklemek yerine, bu sağlayıcıdan gelen tek bir tespit siteyi anında engeller.\nBunu yalnızca yanlış pozitiflerin artması olasılığını kabul ediyorsanız değiştirin."
+    "message": "Etkinleştirildiğinde, Osprey'in olağan çoklu sağlayıcı eşiğini beklemek yerine, bu sağlayıcıdan gelen tek bir tespit siteyi anında engeller. Bunu yalnızca yanlış pozitiflerin artması olasılığını kabul ediyorsanız değiştirin."
   },
   "applyButton": {
     "message": "Uygula"

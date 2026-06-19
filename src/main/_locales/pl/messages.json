@@ -108,7 +108,7 @@
     "message": "Ignoruj próg blokowania"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Gdy ta opcja jest włączona, pojedyncze wykrycie przez tego dostawcę natychmiast blokuje witrynę, zamiast czekać na zwykły próg wielu dostawców w Osprey.\nZmień to ustawienie tylko wtedy, gdy akceptujesz potencjalne ryzyko zwiększenia liczby fałszywych alarmów."
+    "message": "Gdy ta opcja jest włączona, pojedyncze wykrycie przez tego dostawcę natychmiast blokuje witrynę, zamiast czekać na zwykły próg wielu dostawców w Osprey. Zmień to ustawienie tylko wtedy, gdy akceptujesz potencjalne ryzyko zwiększenia liczby fałszywych alarmów."
   },
   "applyButton": {
     "message": "Zastosuj"

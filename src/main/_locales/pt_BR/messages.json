@@ -108,7 +108,7 @@
     "message": "Ignorar limite de bloqueio"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Quando ativado, uma única detecção desse provedor bloqueia o site imediatamente, em vez de esperar pelo limite habitual de vários provedores do Osprey.\nAltere isto apenas se você aceitar o possível risco de aumento de falsos positivos."
+    "message": "Quando ativado, uma única detecção desse provedor bloqueia o site imediatamente, em vez de esperar pelo limite habitual de vários provedores do Osprey. Altere isto apenas se você aceitar o possível risco de aumento de falsos positivos."
   },
   "applyButton": {
     "message": "Aplicar"

@@ -108,7 +108,7 @@
     "message": "Ignore blocking threshold"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "When enabled, a single detection from this provider blocks the site immediately, instead of waiting for Osprey's\nusual multi-provider threshold. Only modify this if you accept the potential risk of increased false positives."
+    "message": "When enabled, a single detection from this provider blocks the site immediately, instead of waiting for Osprey's usual multi-provider threshold. Only modify this if you accept the potential risk of increased false positives."
   },
   "applyButton": {
     "message": "Apply"

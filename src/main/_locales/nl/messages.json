@@ -108,7 +108,7 @@
     "message": "Blokkeringsdrempel negeren"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Wanneer dit is ingeschakeld, blokkeert één enkele detectie van deze provider de site onmiddellijk, in plaats van te wachten op de gebruikelijke drempel met meerdere providers van Osprey.\nWijzig dit alleen als je het mogelijke risico op meer valse positieven accepteert."
+    "message": "Wanneer dit is ingeschakeld, blokkeert één enkele detectie van deze provider de site onmiddellijk, in plaats van te wachten op de gebruikelijke drempel met meerdere providers van Osprey. Wijzig dit alleen als je het mogelijke risico op meer valse positieven accepteert."
   },
   "applyButton": {
     "message": "Toepassen"

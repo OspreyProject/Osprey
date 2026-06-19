@@ -108,7 +108,7 @@
     "message": "Ignora el llindar de bloqueig"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Quan està activat, una sola detecció d'aquest proveïdor bloqueja el lloc immediatament, en lloc d'esperar el llindar habitual de múltiples proveïdors d'Osprey.\nModifica-ho només si acceptes el risc potencial d'un augment dels falsos positius."
+    "message": "Quan està activat, una sola detecció d'aquest proveïdor bloqueja el lloc immediatament, en lloc d'esperar el llindar habitual de múltiples proveïdors d'Osprey. Modifica-ho només si acceptes el risc potencial d'un augment dels falsos positius."
   },
   "applyButton": {
     "message": "Aplica"

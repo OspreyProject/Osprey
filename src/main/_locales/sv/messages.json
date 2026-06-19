@@ -108,7 +108,7 @@
     "message": "Ignorera blockeringströskel"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "När detta är aktiverat blockerar en enda upptäckt från den här leverantören webbplatsen omedelbart, i stället för att vänta på Ospreys vanliga tröskel med flera leverantörer.\nÄndra detta endast om du accepterar den möjliga risken för fler falska positiva resultat."
+    "message": "När detta är aktiverat blockerar en enda upptäckt från den här leverantören webbplatsen omedelbart, i stället för att vänta på Ospreys vanliga tröskel med flera leverantörer. Ändra detta endast om du accepterar den möjliga risken för fler falska positiva resultat."
   },
   "applyButton": {
     "message": "Tillämpa"

@@ -108,7 +108,7 @@
     "message": "Ignorar el umbral de bloqueo"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Cuando está activado, una sola detección de este proveedor bloquea el sitio de inmediato, en lugar de esperar el umbral habitual de varios proveedores de Osprey.\nModifica esto solo si aceptas el posible riesgo de un aumento de los falsos positivos."
+    "message": "Cuando está activado, una sola detección de este proveedor bloquea el sitio de inmediato, en lugar de esperar el umbral habitual de varios proveedores de Osprey. Modifica esto solo si aceptas el posible riesgo de un aumento de los falsos positivos."
   },
   "applyButton": {
     "message": "Aplicar"

@@ -108,7 +108,7 @@
     "message": "Ignorer blokkeringsgrense"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Når dette er aktivert, blokkerer ett enkelt funn fra denne leverandøren nettstedet umiddelbart, i stedet for å vente på Ospreys vanlige grense med flere leverandører.\nEndre dette bare hvis du godtar den mulige risikoen for flere falske positiver."
+    "message": "Når dette er aktivert, blokkerer ett enkelt funn fra denne leverandøren nettstedet umiddelbart, i stedet for å vente på Ospreys vanlige grense med flere leverandører. Endre dette bare hvis du godtar den mulige risikoen for flere falske positiver."
   },
   "applyButton": {
     "message": "Bruk"

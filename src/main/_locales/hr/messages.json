@@ -108,7 +108,7 @@
     "message": "Zanemari prag blokiranja"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Kada je omogućeno, jedno otkrivanje od ovog pružatelja odmah blokira stranicu, umjesto čekanja uobičajenog praga više pružatelja u Ospreyu.\nPromijenite ovo samo ako prihvaćate mogući rizik od povećanja broja lažno pozitivnih rezultata."
+    "message": "Kada je omogućeno, jedno otkrivanje od ovog pružatelja odmah blokira stranicu, umjesto čekanja uobičajenog praga više pružatelja u Ospreyu. Promijenite ovo samo ako prihvaćate mogući rizik od povećanja broja lažno pozitivnih rezultata."
   },
   "applyButton": {
     "message": "Primijeni"

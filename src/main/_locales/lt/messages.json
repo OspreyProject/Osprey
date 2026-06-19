@@ -108,7 +108,7 @@
     "message": "Nepaisyti blokavimo slenksčio"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Kai įjungta, vienas šio tiekėjo aptikimas iškart užblokuoja svetainę, užuot laukus įprasto kelių tiekėjų Osprey slenksčio.\nKeiskite tai tik tuo atveju, jei sutinkate su galima padidėjusio klaidingų teigiamų rezultatų skaičiaus rizika."
+    "message": "Kai įjungta, vienas šio tiekėjo aptikimas iškart užblokuoja svetainę, užuot laukus įprasto kelių tiekėjų Osprey slenksčio. Keiskite tai tik tuo atveju, jei sutinkate su galima padidėjusio klaidingų teigiamų rezultatų skaičiaus rizika."
   },
   "applyButton": {
     "message": "Taikyti"

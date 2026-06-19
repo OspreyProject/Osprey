@@ -108,7 +108,7 @@
     "message": "Blockierungsschwelle ignorieren"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Wenn aktiviert, blockiert eine einzige Erkennung dieses Anbieters die Website sofort, anstatt auf Ospreys übliche Schwelle mehrerer Anbieter zu warten.\nÄndern Sie dies nur, wenn Sie das mögliche Risiko vermehrter Fehlalarme akzeptieren."
+    "message": "Wenn aktiviert, blockiert eine einzige Erkennung dieses Anbieters die Website sofort, anstatt auf Ospreys übliche Schwelle mehrerer Anbieter zu warten. Ändern Sie dies nur, wenn Sie das mögliche Risiko vermehrter Fehlalarme akzeptieren."
   },
   "applyButton": {
     "message": "Anwenden"

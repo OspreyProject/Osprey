@@ -108,7 +108,7 @@
     "message": "Ignora la soglia di blocco"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Se attivata, una singola rilevazione da parte di questo provider blocca immediatamente il sito, invece di attendere la consueta soglia multi-provider di Osprey.\nModifica questa impostazione solo se accetti il potenziale rischio di un aumento dei falsi positivi."
+    "message": "Se attivata, una singola rilevazione da parte di questo provider blocca immediatamente il sito, invece di attendere la consueta soglia multi-provider di Osprey. Modifica questa impostazione solo se accetti il potenziale rischio di un aumento dei falsi positivi."
   },
   "applyButton": {
     "message": "Applica"

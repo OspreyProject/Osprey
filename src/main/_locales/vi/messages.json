@@ -108,7 +108,7 @@
     "message": "Bỏ qua ngưỡng chặn"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Khi được bật, một phát hiện duy nhất từ nhà cung cấp này sẽ chặn trang web ngay lập tức, thay vì chờ ngưỡng nhiều nhà cung cấp thông thường của Osprey.\nChỉ thay đổi tùy chọn này nếu bạn chấp nhận rủi ro tiềm ẩn về việc gia tăng cảnh báo sai."
+    "message": "Khi được bật, một phát hiện duy nhất từ nhà cung cấp này sẽ chặn trang web ngay lập tức, thay vì chờ ngưỡng nhiều nhà cung cấp thông thường của Osprey. Chỉ thay đổi tùy chọn này nếu bạn chấp nhận rủi ro tiềm ẩn về việc gia tăng cảnh báo sai."
   },
   "applyButton": {
     "message": "Áp dụng"

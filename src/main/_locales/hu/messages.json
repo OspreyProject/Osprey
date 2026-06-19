@@ -108,7 +108,7 @@
     "message": "Blokkolási küszöb figyelmen kívül hagyása"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Ha engedélyezve van, ettől a szolgáltatótól származó egyetlen észlelés azonnal blokkolja a webhelyet, ahelyett, hogy megvárná az Osprey szokásos, több szolgáltatós küszöbét.\nCsak akkor módosítsa ezt, ha elfogadja a téves riasztások számának növekedésével járó lehetséges kockázatot."
+    "message": "Ha engedélyezve van, ettől a szolgáltatótól származó egyetlen észlelés azonnal blokkolja a webhelyet, ahelyett, hogy megvárná az Osprey szokásos, több szolgáltatós küszöbét. Csak akkor módosítsa ezt, ha elfogadja a téves riasztások számának növekedésével járó lehetséges kockázatot."
   },
   "applyButton": {
     "message": "Alkalmaz"

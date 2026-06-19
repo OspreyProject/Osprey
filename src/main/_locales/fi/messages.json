@@ -108,7 +108,7 @@
     "message": "Ohita estokynnys"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Kun tämä on käytössä, yksittäinen havainto tältä palveluntarjoajalta estää sivuston välittömästi sen sijaan, että odotettaisiin Ospreyn tavanomaista usean palveluntarjoajan kynnystä.\nMuuta tätä vain, jos hyväksyt mahdollisen riskin väärien hälytysten lisääntymisestä."
+    "message": "Kun tämä on käytössä, yksittäinen havainto tältä palveluntarjoajalta estää sivuston välittömästi sen sijaan, että odotettaisiin Ospreyn tavanomaista usean palveluntarjoajan kynnystä. Muuta tätä vain, jos hyväksyt mahdollisen riskin väärien hälytysten lisääntymisestä."
   },
   "applyButton": {
     "message": "Käytä"
