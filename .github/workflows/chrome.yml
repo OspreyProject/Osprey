@@ -2,12 +2,16 @@ name: 'Compile for Chrome'
 
 on:
   push:
-    branches: [ 'main', '2.0.0' ]
+    branches: [ 'main' ]
   pull_request:
-    branches: [ 'main', '2.0.0' ]
+    branches: [ 'main' ]
 
 permissions:
-  contents: write
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -21,17 +25,40 @@ jobs:
         id: get_version
         run: |
           VERSION=$(jq -r '.version' src/main/manifest.json)
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
 
-      - name: 'Minify CSS and HTML'
+      - name: 'Stage Build Output'
         run: |
-          npm install -g html-minifier terser clean-css-cli
-          find src/main -name '*.html' -exec html-minifier --collapse-whitespace --remove-comments --minify-css true --minify-js true -o {} {} \;
-          find src/main -name '*.css' -exec cleancss -o {} {} \;
-          find src/main -name '*.js' -exec terser {} -o {} \;
+          rm -rf dist
+          cp -r src/main dist
+
+      - name: 'Cache NPM Downloads'
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: npm-tools-${{ runner.os }}-htmlminifierterser7-terser5-cleancss5-svgo3
+
+      - name: 'Install Minifiers'
+        run: |
+          npm install -g \
+            html-minifier-terser@7 \
+            terser@5 \
+            clean-css-cli@5 \
+            svgo@3
+
+      - name: 'Minify HTML, CSS, JS, JSON'
+        run: |
+          find dist -name '*.html' -exec html-minifier-terser \
+            --collapse-whitespace --remove-comments \
+            --minify-css true --minify-js true -o {} {} \;
+          find dist -name '*.css' -exec cleancss -o {} {} \;
+          find dist -name '*.js' -exec terser {} -c -m -o {} \;
+          find dist -name '*.json' -exec sh -c 'jq -c . "$1" > "$1.tmp" && mv "$1.tmp" "$1"' _ {} \;
 
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v7
         with:
           name: Osprey-${{ env.VERSION }}-chrome
-          path: src/main
+          path: dist
+          compression-level: 9
+          if-no-files-found: error

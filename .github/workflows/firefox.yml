@@ -2,9 +2,9 @@ name: 'Compile for Firefox'
 
 on:
   push:
-    branches: [ 'main', '2.0.0' ]
+    branches: [ 'main' ]
   pull_request:
-    branches: [ 'main', '2.0.0' ]
+    branches: [ 'main' ]
 
 permissions:
   contents: write
@@ -35,8 +35,8 @@ jobs:
 
       - name: 'Remove storage from manifest.json'
         run: |
-            jq 'del(.storage)' src/main/manifest.json > src/main/manifest_temp.json
-            mv src/main/manifest_temp.json src/main/manifest.json
+          jq 'del(.storage)' src/main/manifest.json > src/main/manifest_temp.json
+          mv src/main/manifest_temp.json src/main/manifest.json
 
       - name: 'Add menus permission'
         run: |
