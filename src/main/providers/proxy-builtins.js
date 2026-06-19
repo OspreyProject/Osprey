@@ -83,7 +83,7 @@
                     group: providerGroups.official_partners.id,
                     icon: 'assets/providers/alphamountain.avif',
                     enabledByDefault: true,
-                    bypassBlockingThreshold: false, // keep this 'false'
+                    bypassBlockingThreshold: true,
                     endpoint: 'alphamountain',
                     tags: ['proxy', 'partner'],
                     policyKey: 'AlphaMountainEnabled',
@@ -117,7 +117,7 @@
                     endpoint: 'izoologic',
                     tags: ['proxy', 'partner'],
                     policyKey: 'iZOOlogicEnabled',
-                    report: mailtoReport('info@izoologic.com', 'iZOOlogic Osprey Endpoint'),
+                    report: mailtoReport('reporting.cti@izoologic.com', 'iZOOlogic Osprey Endpoint'),
                 }),
 
                 builtin({
@@ -285,7 +285,7 @@
                     group: providerGroups.feeds.id,
                     icon: 'assets/providers/phishingdatabase.avif',
                     enabledByDefault: true,
-                    bypassBlockingThreshold: true,
+                    bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'phishing-database',
                     policyKey: 'PhishingDatabaseEnabled',
                     report: mailtoReport('support@phish.co.za', 'Phishing.Database (ACTIVE list)'),
