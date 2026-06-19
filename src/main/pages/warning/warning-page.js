@@ -39,6 +39,16 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
     let counterPort = null;
     let actionInFlight = false;
     let isInitialized = false;
+    let revealed = false;
+
+    const revealPage = () => {
+        if (revealed) {
+            return;
+        }
+
+        revealed = true;
+        document.documentElement.style.visibility = 'visible';
+    };
 
     const domElementIDs = [
         'reason', 'url', 'reportedBy', 'reportWebsite', 'allowWebsite',
@@ -592,7 +602,9 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
             .catch(error => {
                 console.warn('WarningPage failed to resolve effective settings; applying fallback restrictions', error);
                 wireActions(fallbackState);
-            });
+            }).finally(revealPage);
+
+        setTimeout(revealPage, 1000);
     }
 
     return {
