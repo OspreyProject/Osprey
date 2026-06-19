@@ -23,6 +23,13 @@ jobs:
           VERSION=$(jq -r '.version' src/main/manifest.json)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
+      - name: 'Minify CSS and HTML'
+        run: |
+          npm install -g html-minifier terser clean-css-cli
+          find src/main -name '*.html' -exec html-minifier --collapse-whitespace --remove-comments --minify-css true --minify-js true -o {} {} \;
+          find src/main -name '*.css' -exec cleancss -o {} {} \;
+          find src/main -name '*.js' -exec terser {} -o {} \;
+
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v7
         with:
