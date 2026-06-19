@@ -32,6 +32,98 @@ globalThis.OspreyCacheService = (() => {
     const maxEntriesPerMap = 500;
     const pruneThreshold = Math.floor(maxEntriesPerMap * 0.9);
 
+    const idb = (() => {
+        const dbName = 'osprey_cache';
+        const storeName = 'kv';
+        const dbVersion = 1;
+
+        let dbPromise = null;
+
+        const openDB = () => {
+            if (dbPromise) {
+                return dbPromise;
+            }
+
+            dbPromise = new Promise((resolve, reject) => {
+                const request = globalThis.indexedDB.open(dbName, dbVersion);
+
+                request.onupgradeneeded = () => {
+                    const db = request.result;
+
+                    if (!db.objectStoreNames.contains(storeName)) {
+                        db.createObjectStore(storeName);
+                    }
+                };
+
+                request.onsuccess = () => {
+                    const db = request.result;
+
+                    db.onclose = () => {
+                        dbPromise = null;
+                    };
+
+                    db.onversionchange = () => {
+                        db.close();
+                        dbPromise = null;
+                    };
+
+                    resolve(db);
+                };
+
+                request.onerror = () => reject(request.error);
+                request.onblocked = () => reject(new Error('IndexedDB open blocked'));
+            });
+
+            dbPromise.catch(() => {
+                dbPromise = null;
+            });
+            return dbPromise;
+        };
+
+        const run = (mode, fn) => openDB().then(db => new Promise((resolve, reject) => {
+            const tx = db.transaction(storeName, mode);
+            const store = tx.objectStore(storeName);
+            const result = fn(store);
+
+            tx.oncomplete = () => resolve(result);
+            tx.onabort = () => reject(tx.error || new Error('IndexedDB transaction aborted'));
+            tx.onerror = () => reject(tx.error || new Error('IndexedDB transaction error'));
+        }));
+
+        const getMany = keys => run('readonly', store => {
+            const out = {};
+
+            for (const key of keys) {
+                const request = store.get(key);
+
+                request.onsuccess = () => {
+                    if (request.result !== undefined) {
+                        out[key] = request.result;
+                    }
+                };
+            }
+            return out;
+        });
+
+        const setMany = payload => run('readwrite', store => {
+            for (const key of Object.keys(payload)) {
+                store.put(payload[key], key);
+            }
+        });
+
+        const removeMany = keys => run('readwrite', store => {
+            for (const key of keys) {
+                store.delete(key);
+            }
+        });
+
+        return {
+            getMany,
+            setMany,
+            removeMany,
+        };
+    })();
+
     let cacheSnapshot = null;
     let loadingPromise = null;
     let flushTimer = null;
@@ -241,11 +333,11 @@ globalThis.OspreyCacheService = (() => {
 
         try {
             if (Object.keys(payload).length > 0) {
-                await browserAPI.storageSet('local', payload);
+                await idb.setMany(payload);
             }
 
             if (removeKeys.length > 0) {
-                await browserAPI.storageRemove('local', removeKeys);
+                await idb.removeMany(removeKeys);
             }
         } catch (error) {
             ok = false;
@@ -286,8 +378,65 @@ globalThis.OspreyCacheService = (() => {
         return ensureFlushPromise();
     };
 
+    const migrateLegacyLocalCache = async () => {
+        try {
+            const existing = await idb.getMany([metaKey]);
+
+            if (existing?.[metaKey] !== undefined) {
+                return;
+            }
+        } catch {
+            return;
+        }
+
+        let localMeta;
+
+        try {
+            const metaStored = await browserAPI.storageGet('local', metaKey);
+            localMeta = metaStored?.[metaKey];
+        } catch {
+            return;
+        }
+
+        if (localMeta === undefined) {
+            return;
+        }
+
+        const providerIds = localMeta && Array.isArray(localMeta.providerIds) ?
+            localMeta.providerIds.filter(id => typeof id === 'string' && id.length > 0) : [];
+
+        const legacyShardKeys = providerIds.map(shardKey);
+
+        let shardStored = {};
+
+        if (legacyShardKeys.length > 0) {
+            try {
+                shardStored = await browserAPI.storageGet('local', legacyShardKeys) || {};
+            } catch {
+                shardStored = {};
+            }
+        }
+
+        const payload = {[metaKey]: localMeta};
+
+        for (const key of legacyShardKeys) {
+            if (shardStored[key] !== undefined) {
+                payload[key] = shardStored[key];
+            }
+        }
+
+        try {
+            await idb.setMany(payload);
+            await browserAPI.storageRemove('local', [metaKey, ...legacyShardKeys]);
+        } catch (error) {
+            console.warn('OspreyCacheService failed to migrate legacy local cache to IndexedDB', error);
+        }
+    };
+
     const loadSnapshot = async () => {
-        const metaStored = await browserAPI.storageGet('local', metaKey).catch(() => ({}));
+        await migrateLegacyLocalCache();
+
+        const metaStored = await idb.getMany([metaKey]).catch(() => ({}));
         const meta = metaStored?.[metaKey];
 
         if (meta && typeof meta === 'object' && meta.providers && typeof meta.providers === 'object') {
@@ -306,7 +455,7 @@ globalThis.OspreyCacheService = (() => {
             meta.providerIds.filter(id => typeof id === 'string' && id.length > 0) : [];
 
         const keys = providerIds.map(shardKey);
-        const shardStored = keys.length > 0 ? await browserAPI.storageGet('local', keys).catch(() => ({})) : {};
+        const shardStored = keys.length > 0 ? await idb.getMany(keys).catch(() => ({})) : {};
         const providers = new Map();
 
         for (const providerId of providerIds) {
