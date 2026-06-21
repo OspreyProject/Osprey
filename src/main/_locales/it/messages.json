@@ -110,12 +110,6 @@
   "bypassBlockingThresholdTooltip": {
     "message": "Se attivata, qualsiasi dominio segnalato da questo provider verrà bloccato immediatamente, ignorando la soglia di due provider. Ciò può aumentare i falsi positivi."
   },
-  "blockCsam": {
-    "message": "Blocca i domini che ospitano CSAM"
-  },
-  "blockCsamTooltip": {
-    "message": "Se attivata, questo provider blocca i domini segnalati come host di materiale pedopornografico (CSAM)."
-  },
   "blockNewlyRegistered": {
     "message": "Blocca i domini registrati di recente"
   },

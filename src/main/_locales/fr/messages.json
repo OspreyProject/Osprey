@@ -110,12 +110,6 @@
   "bypassBlockingThresholdTooltip": {
     "message": "Lorsque cette option est activée, tout domaine signalé par ce fournisseur est immédiatement bloqué, contournant le seuil de deux fournisseurs. Cela peut augmenter les faux positifs."
   },
-  "blockCsam": {
-    "message": "Bloquer les domaines hébergeant du CSAM"
-  },
-  "blockCsamTooltip": {
-    "message": "Lorsque cette option est activée, ce fournisseur bloque les domaines signalés comme hébergeant du matériel d'abus sexuel sur mineurs (CSAM)."
-  },
   "blockNewlyRegistered": {
     "message": "Bloquer les domaines récemment enregistrés"
   },

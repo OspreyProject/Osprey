@@ -110,12 +110,6 @@
   "bypassBlockingThresholdTooltip": {
     "message": "有効にすると、このプロバイダーによってフラグが付けられたドメインは、2 つのプロバイダーによるしきい値を経ずに即座にブロックされます。これにより誤検知が増える可能性があります。"
   },
-  "blockCsam": {
-    "message": "CSAM をホストするドメインをブロック"
-  },
-  "blockCsamTooltip": {
-    "message": "有効にすると、このプロバイダーは児童性的虐待コンテンツ（CSAM）をホストするとしてフラグが付けられたドメインをブロックします。"
-  },
   "blockNewlyRegistered": {
     "message": "新規登録されたドメインをブロック"
   },

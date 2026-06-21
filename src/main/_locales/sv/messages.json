@@ -110,12 +110,6 @@
   "bypassBlockingThresholdTooltip": {
     "message": "När detta är aktiverat blockeras varje domän som flaggas av den här leverantören omedelbart, varvid tröskeln med två leverantörer förbigås. Detta kan öka antalet falska positiva resultat."
   },
-  "blockCsam": {
-    "message": "Blockera domäner som är värdar för CSAM"
-  },
-  "blockCsamTooltip": {
-    "message": "När detta är aktiverat blockerar den här leverantören domäner som flaggats som värdar för material med sexuella övergrepp mot barn (CSAM)."
-  },
   "blockNewlyRegistered": {
     "message": "Blockera nyligen registrerade domäner"
   },

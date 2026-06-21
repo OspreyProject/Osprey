@@ -110,12 +110,6 @@
   "bypassBlockingThresholdTooltip": {
     "message": "啟用後，凡是被此提供者標記的網域都會立即被封鎖，從而略過雙提供者閾值。這可能會增加誤判。"
   },
-  "blockCsam": {
-    "message": "封鎖代管 CSAM 的網域"
-  },
-  "blockCsamTooltip": {
-    "message": "啟用後，此提供者會封鎖被標記為代管兒童性虐待內容（CSAM）的網域。"
-  },
   "blockNewlyRegistered": {
     "message": "封鎖近期註冊的網域"
   },

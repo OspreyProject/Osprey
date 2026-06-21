@@ -110,12 +110,6 @@
   "bypassBlockingThresholdTooltip": {
     "message": "활성화하면 이 공급자가 플래그를 지정한 모든 도메인이 두 공급자 임계값을 건너뛰고 즉시 차단됩니다. 이로 인해 오탐이 늘어날 수 있습니다."
   },
-  "blockCsam": {
-    "message": "CSAM을 호스팅하는 도메인 차단"
-  },
-  "blockCsamTooltip": {
-    "message": "활성화하면 이 공급자는 아동 성 착취물(CSAM)을 호스팅하는 것으로 플래그가 지정된 도메인을 차단합니다."
-  },
   "blockNewlyRegistered": {
     "message": "새로 등록된 도메인 차단"
   },

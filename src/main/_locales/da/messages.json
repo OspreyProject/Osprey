@@ -110,12 +110,6 @@
   "bypassBlockingThresholdTooltip": {
     "message": "Når dette er aktiveret, blokeres ethvert domæne, der markeres af denne udbyder, øjeblikkeligt, idet grænsen med to udbydere omgås. Dette kan øge antallet af falske positiver."
   },
-  "blockCsam": {
-    "message": "Bloker domæner, der hoster CSAM"
-  },
-  "blockCsamTooltip": {
-    "message": "Når dette er aktiveret, blokerer denne udbyder domæner, der er markeret som hostende materiale med seksuelt misbrug af børn (CSAM)."
-  },
   "blockNewlyRegistered": {
     "message": "Bloker nyligt registrerede domæner"
   },

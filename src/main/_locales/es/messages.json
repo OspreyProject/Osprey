@@ -110,12 +110,6 @@
   "bypassBlockingThresholdTooltip": {
     "message": "Cuando está activado, cualquier dominio marcado por este proveedor se bloqueará de inmediato, omitiendo el umbral de dos proveedores. Esto puede aumentar los falsos positivos."
   },
-  "blockCsam": {
-    "message": "Bloquear dominios que alojan CSAM"
-  },
-  "blockCsamTooltip": {
-    "message": "Cuando está activado, este proveedor bloquea los dominios marcados como alojadores de material de abuso sexual infantil (CSAM)."
-  },
   "blockNewlyRegistered": {
     "message": "Bloquear dominios registrados recientemente"
   },

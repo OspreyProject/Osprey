@@ -110,12 +110,6 @@
   "bypassBlockingThresholdTooltip": {
     "message": "Když je zapnuto, jakákoli doména označená tímto poskytovatelem bude okamžitě zablokována a obejde práh dvou poskytovatelů. To může zvýšit počet falešně pozitivních výsledků."
   },
-  "blockCsam": {
-    "message": "Blokovat domény hostující CSAM"
-  },
-  "blockCsamTooltip": {
-    "message": "Když je zapnuto, tento poskytovatel blokuje domény označené jako hostující materiál zobrazující sexuální zneužívání dětí (CSAM)."
-  },
   "blockNewlyRegistered": {
     "message": "Blokovat nově registrované domény"
   },

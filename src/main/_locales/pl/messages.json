@@ -110,12 +110,6 @@
   "bypassBlockingThresholdTooltip": {
     "message": "Gdy ta opcja jest włączona, każda domena oznaczona przez tego dostawcę zostanie natychmiast zablokowana z pominięciem progu dwóch dostawców. Może to zwiększyć liczbę fałszywych alarmów."
   },
-  "blockCsam": {
-    "message": "Blokuj domeny hostujące CSAM"
-  },
-  "blockCsamTooltip": {
-    "message": "Gdy ta opcja jest włączona, ten dostawca blokuje domeny oznaczone jako hostujące materiały przedstawiające seksualne wykorzystywanie dzieci (CSAM)."
-  },
   "blockNewlyRegistered": {
     "message": "Blokuj nowo zarejestrowane domeny"
   },

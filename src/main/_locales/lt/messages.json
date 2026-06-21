@@ -110,12 +110,6 @@
   "bypassBlockingThresholdTooltip": {
     "message": "Kai įjungta, bet kuris šio tiekėjo pažymėtas domenas bus nedelsiant užblokuotas, apeinant dviejų tiekėjų slenkstį. Tai gali padidinti klaidingai teigiamų rezultatų skaičių."
   },
-  "blockCsam": {
-    "message": "Blokuoti domenus, kuriuose talpinama CSAM"
-  },
-  "blockCsamTooltip": {
-    "message": "Kai įjungta, šis tiekėjas blokuoja domenus, pažymėtus kaip talpinančius vaikų seksualinio išnaudojimo medžiagą (CSAM)."
-  },
   "blockNewlyRegistered": {
     "message": "Blokuoti neseniai registruotus domenus"
   },

@@ -29,7 +29,6 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
     const suspicious = protectionResult.resultTypes.SUSPICIOUS;
     const newlyRegistered = protectionResult.resultTypes.NEWLY_REGISTERED;
     const dynamicDns = protectionResult.resultTypes.DYNAMIC_DNS;
-    const csam = protectionResult.resultTypes.CSAM;
 
     const emptyCategoryState = Object.freeze(Object.create(null));
 
@@ -78,12 +77,11 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
         const providers = Array.from({length: definitionsLength});
 
         const blockingProviderIdsByResult = {
-            [malicious]: new Set(),
             [phishing]: new Set(),
+            [malicious]: new Set(),
             [suspicious]: new Set(),
             [newlyRegistered]: new Set(),
             [dynamicDns]: new Set(),
-            [csam]: new Set(),
         };
 
         for (let i = 0; i < definitionsLength; i++) {
@@ -111,12 +109,12 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
             providersById.set(provider.id, provider);
 
             if (enabled) {
-                if (providerCatalog.supportsBlockingResult(provider, malicious)) {
-                    blockingProviderIdsByResult[malicious].add(provider.id);
-                }
-
                 if (providerCatalog.supportsBlockingResult(provider, phishing)) {
                     blockingProviderIdsByResult[phishing].add(provider.id);
+                }
+
+                if (providerCatalog.supportsBlockingResult(provider, malicious)) {
+                    blockingProviderIdsByResult[malicious].add(provider.id);
                 }
 
                 if (providerCatalog.supportsBlockingResult(provider, suspicious)) {
@@ -129,10 +127,6 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
 
                 if (providerCatalog.supportsBlockingResult(provider, dynamicDns)) {
                     blockingProviderIdsByResult[dynamicDns].add(provider.id);
-                }
-
-                if (providerCatalog.supportsBlockingResult(provider, csam)) {
-                    blockingProviderIdsByResult[csam].add(provider.id);
                 }
             }
         }

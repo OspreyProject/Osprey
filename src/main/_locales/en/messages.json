@@ -74,9 +74,6 @@
   "allowed": {
     "message": "Allowed"
   },
-  "csam": {
-    "message": "Child Sexual Abuse Material (CSAM)"
-  },
   "phishing": {
     "message": "Phishing"
   },
@@ -121,12 +118,6 @@
   },
   "bypassBlockingThresholdTooltip": {
     "message": "When enabled, any domain flagged by this provider will be immediately blocked, bypassing the two-provider threshold. This may increase false positives."
-  },
-  "blockCsam": {
-    "message": "Block domains hosting CSAM"
-  },
-  "blockCsamTooltip": {
-    "message": "When enabled, this provider blocks domains flagged as hosting child sexual abuse material (CSAM)."
   },
   "blockNewlyRegistered": {
     "message": "Block newly registered domains"

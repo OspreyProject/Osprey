@@ -110,12 +110,6 @@
   "bypassBlockingThresholdTooltip": {
     "message": "Khi được bật, bất kỳ tên miền nào bị nhà cung cấp này gắn cờ sẽ bị chặn ngay lập tức, bỏ qua ngưỡng hai nhà cung cấp. Điều này có thể làm tăng số lượng cảnh báo sai."
   },
-  "blockCsam": {
-    "message": "Chặn các tên miền lưu trữ CSAM"
-  },
-  "blockCsamTooltip": {
-    "message": "Khi được bật, nhà cung cấp này sẽ chặn các tên miền bị gắn cờ là lưu trữ nội dung lạm dụng tình dục trẻ em (CSAM)."
-  },
   "blockNewlyRegistered": {
     "message": "Chặn các tên miền mới đăng ký"
   },

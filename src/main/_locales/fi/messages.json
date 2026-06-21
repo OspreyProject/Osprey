@@ -110,12 +110,6 @@
   "bypassBlockingThresholdTooltip": {
     "message": "Kun tämä on käytössä, mikä tahansa tämän palveluntarjoajan merkitsemä verkkotunnus estetään välittömästi ohittaen kahden palveluntarjoajan kynnyksen. Tämä voi lisätä vääriä hälytyksiä."
   },
-  "blockCsam": {
-    "message": "Estä CSAM-sisältöä isännöivät verkkotunnukset"
-  },
-  "blockCsamTooltip": {
-    "message": "Kun tämä on käytössä, tämä palveluntarjoaja estää verkkotunnukset, jotka on merkitty isännöivän lasten seksuaalista hyväksikäyttöä esittävää materiaalia (CSAM)."
-  },
   "blockNewlyRegistered": {
     "message": "Estä äskettäin rekisteröidyt verkkotunnukset"
   },

@@ -86,12 +86,6 @@
   "bypassBlockingThresholdTooltip": {
     "message": "Quan està activat, qualsevol domini marcat per aquest proveïdor es bloquejarà immediatament, ometent el llindar de dos proveïdors. Això pot augmentar els falsos positius."
   },
-  "blockCsam": {
-    "message": "Bloqueja els dominis que allotgen CSAM"
-  },
-  "blockCsamTooltip": {
-    "message": "Quan està activat, aquest proveïdor bloqueja els dominis marcats com a allotjadors de material d'abús sexual infantil (CSAM)."
-  },
   "blockNewlyRegistered": {
     "message": "Bloqueja els dominis registrats recentment"
   },

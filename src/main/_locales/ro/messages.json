@@ -110,12 +110,6 @@
   "bypassBlockingThresholdTooltip": {
     "message": "Când este activat, orice domeniu semnalat de acest furnizor va fi blocat imediat, ocolind pragul cu doi furnizori. Acest lucru poate crește numărul de alarme false."
   },
-  "blockCsam": {
-    "message": "Blochează domeniile care găzduiesc CSAM"
-  },
-  "blockCsamTooltip": {
-    "message": "Când este activat, acest furnizor blochează domeniile semnalate ca găzduind materiale de abuz sexual asupra copiilor (CSAM)."
-  },
   "blockNewlyRegistered": {
     "message": "Blochează domeniile înregistrate recent"
   },

@@ -71,7 +71,6 @@
         FAILED: 'failed',
         WAITING: 'waiting',
         ALLOWED: 'allowed',
-        CSAM: 'csam',
         PHISHING: 'phishing',
         MALICIOUS: 'malicious',
         SUSPICIOUS: 'suspicious',

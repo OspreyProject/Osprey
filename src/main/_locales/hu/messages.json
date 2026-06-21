@@ -110,12 +110,6 @@
   "bypassBlockingThresholdTooltip": {
     "message": "Ha engedélyezve van, az e szolgáltató által megjelölt bármely domaint azonnal blokkolja, megkerülve a két szolgáltatós küszöböt. Ez növelheti a téves riasztások számát."
   },
-  "blockCsam": {
-    "message": "CSAM-ot tároló domainek blokkolása"
-  },
-  "blockCsamTooltip": {
-    "message": "Ha engedélyezve van, ez a szolgáltató blokkolja azokat a domaineket, amelyeket gyermekek szexuális zaklatását ábrázoló anyag (CSAM) tárolójaként jelöltek meg."
-  },
   "blockNewlyRegistered": {
     "message": "Újonnan regisztrált domainek blokkolása"
   },

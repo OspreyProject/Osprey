@@ -110,12 +110,6 @@
   "bypassBlockingThresholdTooltip": {
     "message": "Wanneer dit is ingeschakeld, wordt elk domein dat door deze provider wordt gemarkeerd onmiddellijk geblokkeerd, waarbij de drempel van twee providers wordt omzeild. Dit kan het aantal valse positieven verhogen."
   },
-  "blockCsam": {
-    "message": "Domeinen blokkeren die CSAM hosten"
-  },
-  "blockCsamTooltip": {
-    "message": "Wanneer dit is ingeschakeld, blokkeert deze provider domeinen die zijn gemarkeerd als hosts van materiaal van seksueel kindermisbruik (CSAM)."
-  },
   "blockNewlyRegistered": {
     "message": "Onlangs geregistreerde domeinen blokkeren"
   },

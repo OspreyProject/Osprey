@@ -110,12 +110,6 @@
   "bypassBlockingThresholdTooltip": {
     "message": "Wenn aktiviert, wird jede von diesem Anbieter gemeldete Domain sofort blockiert, wodurch die Schwelle von zwei Anbietern umgangen wird. Dies kann die Anzahl der Fehlalarme erhöhen."
   },
-  "blockCsam": {
-    "message": "Domains blockieren, die CSAM hosten"
-  },
-  "blockCsamTooltip": {
-    "message": "Wenn aktiviert, blockiert dieser Anbieter Domains, die als Hosts von Darstellungen sexuellen Kindesmissbrauchs (CSAM) gemeldet wurden."
-  },
   "blockNewlyRegistered": {
     "message": "Neu registrierte Domains blockieren"
   },

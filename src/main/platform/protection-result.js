@@ -23,7 +23,6 @@ globalThis.OspreyProtectionResult = (() => {
         FAILED: 'failed',
         WAITING: 'waiting',
         ALLOWED: 'allowed',
-        CSAM: 'csam',
         PHISHING: 'phishing',
         MALICIOUS: 'malicious',
         SUSPICIOUS: 'suspicious',
@@ -36,7 +35,6 @@ globalThis.OspreyProtectionResult = (() => {
         failed: 'failed',
         waiting: 'waiting',
         allowed: 'allowed',
-        csam: 'csam',
         phishing: 'phishing',
         malicious: 'malicious',
         suspicious: 'suspicious',
@@ -45,25 +43,22 @@ globalThis.OspreyProtectionResult = (() => {
     }));
 
     const isBlockingMap = Object.assign(Object.create(null), {
-        malicious: true,
         phishing: true,
+        malicious: true,
         suspicious: true,
         newly_registered: true,
         dynamic_dns: true,
-        csam: true,
     });
 
     const blockingResults = Object.freeze(new Set([
-        'malicious',
         'phishing',
+        'malicious',
         'suspicious',
         'newly_registered',
         'dynamic_dns',
-        'csam',
     ]));
 
     const blockingSeverityOrder = Object.freeze([
-        'csam',
         'phishing',
         'malicious',
         'suspicious',
@@ -109,7 +104,6 @@ globalThis.OspreyProtectionResult = (() => {
         '6': 'suspicious',
         '7': 'newly_registered',
         '8': 'dynamic_dns',
-        '9': 'csam',
     });
 
     const resultAliases = Object.assign(Object.create(null), {
@@ -121,7 +115,6 @@ globalThis.OspreyProtectionResult = (() => {
         suspicious: 'suspicious',
         newly_registered: 'newly_registered',
         dynamic_dns: 'dynamic_dns',
-        csam: 'csam',
     });
 
     const normalize = value => {

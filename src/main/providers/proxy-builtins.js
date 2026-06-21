@@ -34,9 +34,8 @@
             });
 
             const alphaMountainBlockCategories = Object.freeze([
-                blockCategory('csam', 'blockCsam', 'blockCsamTooltip', true),
-                blockCategory('newly_registered', 'blockNewlyRegistered', 'blockNewlyRegisteredTooltip', false),
                 blockCategory('suspicious', 'blockSuspicious', 'blockSuspiciousTooltip', false),
+                blockCategory('newly_registered', 'blockNewlyRegistered', 'blockNewlyRegisteredTooltip', false),
                 blockCategory('dynamic_dns', 'blockDynamicDns', 'blockDynamicDnsTooltip', false),
             ]);
 

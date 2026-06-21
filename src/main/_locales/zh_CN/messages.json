@@ -110,12 +110,6 @@
   "bypassBlockingThresholdTooltip": {
     "message": "启用后，凡是被该提供商标记的域名都会被立即拦截，从而绕过双提供商阈值。这可能会增加误报。"
   },
-  "blockCsam": {
-    "message": "拦截托管 CSAM 的域名"
-  },
-  "blockCsamTooltip": {
-    "message": "启用后，该提供商会拦截被标记为托管儿童性虐待内容（CSAM）的域名。"
-  },
   "blockNewlyRegistered": {
     "message": "拦截新注册的域名"
   },

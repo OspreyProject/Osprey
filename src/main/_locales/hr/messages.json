@@ -110,12 +110,6 @@
   "bypassBlockingThresholdTooltip": {
     "message": "Kada je omogućeno, svaka domena koju ovaj pružatelj označi bit će odmah blokirana, zaobilazeći prag dvaju pružatelja. To može povećati broj lažno pozitivnih rezultata."
   },
-  "blockCsam": {
-    "message": "Blokiraj domene koje udomljuju CSAM"
-  },
-  "blockCsamTooltip": {
-    "message": "Kada je omogućeno, ovaj pružatelj blokira domene označene kao one koje udomljuju materijal o seksualnom zlostavljanju djece (CSAM)."
-  },
   "blockNewlyRegistered": {
     "message": "Blokiraj nedavno registrirane domene"
   },

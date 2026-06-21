@@ -110,12 +110,6 @@
   "bypassBlockingThresholdTooltip": {
     "message": "Etkinleştirildiğinde, bu sağlayıcının işaretlediği herhangi bir alan adı, iki sağlayıcı eşiği atlanarak anında engellenir. Bu, yanlış pozitifleri artırabilir."
   },
-  "blockCsam": {
-    "message": "CSAM barındıran alan adlarını engelle"
-  },
-  "blockCsamTooltip": {
-    "message": "Etkinleştirildiğinde, bu sağlayıcı çocuklara yönelik cinsel istismar materyali (CSAM) barındırdığı işaretlenen alan adlarını engeller."
-  },
   "blockNewlyRegistered": {
     "message": "Yeni kaydedilmiş alan adlarını engelle"
   },
