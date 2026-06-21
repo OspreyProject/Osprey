@@ -26,6 +26,33 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
 
     const malicious = protectionResult.resultTypes.MALICIOUS;
     const phishing = protectionResult.resultTypes.PHISHING;
+    const suspicious = protectionResult.resultTypes.SUSPICIOUS;
+    const newlyRegistered = protectionResult.resultTypes.NEWLY_REGISTERED;
+    const dynamicDns = protectionResult.resultTypes.DYNAMIC_DNS;
+    const csam = protectionResult.resultTypes.CSAM;
+
+    const emptyCategoryState = Object.freeze(Object.create(null));
+
+    const resolveBlockCategoryState = (definition, rawState) => {
+        const declared = Array.isArray(definition.blockCategories) ? definition.blockCategories : null;
+
+        if (!declared || declared.length === 0) {
+            return emptyCategoryState;
+        }
+
+        const stored = rawState && typeof rawState.blockCategories === 'object' && rawState.blockCategories ?
+            rawState.blockCategories :
+            null;
+
+        const out = Object.create(null);
+
+        for (const element of declared) {
+            const key = element.key;
+            const storedValue = stored ? stored[key] : undefined;
+            out[key] = typeof storedValue === 'boolean' ? storedValue : Boolean(element.defaultEnabled);
+        }
+        return Object.freeze(out);
+    };
 
     let cachedRuntime = null;
     let loadingRuntime = null;
@@ -53,6 +80,10 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
         const blockingProviderIdsByResult = {
             [malicious]: new Set(),
             [phishing]: new Set(),
+            [suspicious]: new Set(),
+            [newlyRegistered]: new Set(),
+            [dynamicDns]: new Set(),
+            [csam]: new Set(),
         };
 
         for (let i = 0; i < definitionsLength; i++) {
@@ -66,10 +97,13 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
                 rawState.bypassBlockingThreshold :
                 Boolean(definition.bypassBlockingThreshold);
 
+            const blockCategoryState = resolveBlockCategoryState(definition, rawState);
+
             const provider = Object.freeze({
                 ...definition,
                 bypassBlockingThreshold,
-                state: Object.freeze({enabled, apiKey, bypassBlockingThreshold}),
+                blockCategoryState,
+                state: Object.freeze({enabled, apiKey, bypassBlockingThreshold, blockCategoryState}),
                 managed: providerManagedIds.has(definition.id),
             });
 
@@ -83,6 +117,22 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
 
                 if (providerCatalog.supportsBlockingResult(provider, phishing)) {
                     blockingProviderIdsByResult[phishing].add(provider.id);
+                }
+
+                if (providerCatalog.supportsBlockingResult(provider, suspicious)) {
+                    blockingProviderIdsByResult[suspicious].add(provider.id);
+                }
+
+                if (providerCatalog.supportsBlockingResult(provider, newlyRegistered)) {
+                    blockingProviderIdsByResult[newlyRegistered].add(provider.id);
+                }
+
+                if (providerCatalog.supportsBlockingResult(provider, dynamicDns)) {
+                    blockingProviderIdsByResult[dynamicDns].add(provider.id);
+                }
+
+                if (providerCatalog.supportsBlockingResult(provider, csam)) {
+                    blockingProviderIdsByResult[csam].add(provider.id);
                 }
             }
         }

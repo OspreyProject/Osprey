@@ -108,7 +108,31 @@
     "message": "Blokkolási küszöb figyelmen kívül hagyása"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Ha engedélyezve van, ettől a szolgáltatótól származó egyetlen észlelés azonnal blokkolja a webhelyet, ahelyett, hogy megvárná az Osprey szokásos, több szolgáltatós küszöbét. Csak akkor módosítsa ezt, ha elfogadja a téves riasztások számának növekedésével járó lehetséges kockázatot."
+    "message": "Ha engedélyezve van, az e szolgáltató által megjelölt bármely domaint azonnal blokkolja, megkerülve a két szolgáltatós küszöböt. Ez növelheti a téves riasztások számát."
+  },
+  "blockCsam": {
+    "message": "CSAM-ot tároló domainek blokkolása"
+  },
+  "blockCsamTooltip": {
+    "message": "Ha engedélyezve van, ez a szolgáltató blokkolja azokat a domaineket, amelyeket gyermekek szexuális zaklatását ábrázoló anyag (CSAM) tárolójaként jelöltek meg."
+  },
+  "blockNewlyRegistered": {
+    "message": "Újonnan regisztrált domainek blokkolása"
+  },
+  "blockNewlyRegisteredTooltip": {
+    "message": "Ha engedélyezve van, ez a szolgáltató blokkolja azokat a domaineket, amelyeket az elmúlt 90 napban regisztráltak. Ez növelheti a téves riasztások számát."
+  },
+  "blockSuspicious": {
+    "message": "Gyanús domainek blokkolása"
+  },
+  "blockSuspiciousTooltip": {
+    "message": "Ha engedélyezve van, ez a szolgáltató blokkolja azokat a domaineket, amelyeket gyanúsként jelölt meg, még akkor is, ha nem nyert megerősítést, hogy káros tartalmat tárolnak. Ez növelheti a téves riasztások számát."
+  },
+  "blockDynamicDns": {
+    "message": "Dinamikus DNS-t használó domainek blokkolása"
+  },
+  "blockDynamicDnsTooltip": {
+    "message": "Ha engedélyezve van, ez a szolgáltató blokkolja azokat a domaineket, amelyek dinamikus DNS-szolgáltatásokat használnak, amelyekkel a fenyegető szereplők olykor visszaélnek. Ez növelheti a téves riasztások számát."
   },
   "applyButton": {
     "message": "Alkalmaz"

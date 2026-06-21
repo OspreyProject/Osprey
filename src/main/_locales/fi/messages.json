@@ -108,7 +108,31 @@
     "message": "Ohita estokynnys"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Kun tämä on käytössä, yksittäinen havainto tältä palveluntarjoajalta estää sivuston välittömästi sen sijaan, että odotettaisiin Ospreyn tavanomaista usean palveluntarjoajan kynnystä. Muuta tätä vain, jos hyväksyt mahdollisen riskin väärien hälytysten lisääntymisestä."
+    "message": "Kun tämä on käytössä, mikä tahansa tämän palveluntarjoajan merkitsemä verkkotunnus estetään välittömästi ohittaen kahden palveluntarjoajan kynnyksen. Tämä voi lisätä vääriä hälytyksiä."
+  },
+  "blockCsam": {
+    "message": "Estä CSAM-sisältöä isännöivät verkkotunnukset"
+  },
+  "blockCsamTooltip": {
+    "message": "Kun tämä on käytössä, tämä palveluntarjoaja estää verkkotunnukset, jotka on merkitty isännöivän lasten seksuaalista hyväksikäyttöä esittävää materiaalia (CSAM)."
+  },
+  "blockNewlyRegistered": {
+    "message": "Estä äskettäin rekisteröidyt verkkotunnukset"
+  },
+  "blockNewlyRegisteredTooltip": {
+    "message": "Kun tämä on käytössä, tämä palveluntarjoaja estää verkkotunnukset, jotka on rekisteröity viimeisten 90 päivän aikana. Tämä voi lisätä vääriä hälytyksiä."
+  },
+  "blockSuspicious": {
+    "message": "Estä epäilyttävät verkkotunnukset"
+  },
+  "blockSuspiciousTooltip": {
+    "message": "Kun tämä on käytössä, tämä palveluntarjoaja estää verkkotunnukset, jotka se on merkinnyt epäilyttäviksi, vaikka niiden ei olisi vahvistettu isännöivän haitallista sisältöä. Tämä voi lisätä vääriä hälytyksiä."
+  },
+  "blockDynamicDns": {
+    "message": "Estä dynaamista DNS:ää käyttävät verkkotunnukset"
+  },
+  "blockDynamicDnsTooltip": {
+    "message": "Kun tämä on käytössä, tämä palveluntarjoaja estää verkkotunnukset, jotka käyttävät dynaamisia DNS-palveluja, joita uhkatoimijat joskus käyttävät väärin. Tämä voi lisätä vääriä hälytyksiä."
   },
   "applyButton": {
     "message": "Käytä"

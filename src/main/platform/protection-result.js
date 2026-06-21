@@ -23,8 +23,12 @@ globalThis.OspreyProtectionResult = (() => {
         FAILED: 'failed',
         WAITING: 'waiting',
         ALLOWED: 'allowed',
-        MALICIOUS: 'malicious',
+        CSAM: 'csam',
         PHISHING: 'phishing',
+        MALICIOUS: 'malicious',
+        SUSPICIOUS: 'suspicious',
+        NEWLY_REGISTERED: 'newly_registered',
+        DYNAMIC_DNS: 'dynamic_dns',
     }));
 
     const messageKeys = Object.freeze(Object.assign(Object.create(null), {
@@ -32,16 +36,68 @@ globalThis.OspreyProtectionResult = (() => {
         failed: 'failed',
         waiting: 'waiting',
         allowed: 'allowed',
-        malicious: 'malicious',
+        csam: 'csam',
         phishing: 'phishing',
+        malicious: 'malicious',
+        suspicious: 'suspicious',
+        newly_registered: 'newly_registered',
+        dynamic_dns: 'dynamic_dns',
     }));
 
     const isBlockingMap = Object.assign(Object.create(null), {
         malicious: true,
         phishing: true,
+        suspicious: true,
+        newly_registered: true,
+        dynamic_dns: true,
+        csam: true,
     });
 
-    const blockingResults = Object.freeze(new Set(['malicious', 'phishing']));
+    const blockingResults = Object.freeze(new Set([
+        'malicious',
+        'phishing',
+        'suspicious',
+        'newly_registered',
+        'dynamic_dns',
+        'csam',
+    ]));
+
+    const blockingSeverityOrder = Object.freeze([
+        'csam',
+        'phishing',
+        'malicious',
+        'suspicious',
+        'newly_registered',
+        'dynamic_dns',
+    ]);
+
+    const severityRankByResult = Object.create(null);
+
+    for (let i = 0, len = blockingSeverityOrder.length; i < len; i++) {
+        severityRankByResult[blockingSeverityOrder[i]] = i;
+    }
+
+    const severityRank = value => {
+        const rank = typeof value === 'string' ? severityRankByResult[value] : undefined;
+        return rank === undefined ? Number.MAX_SAFE_INTEGER : rank;
+    };
+
+    const mostSevere = values => {
+        let best = null;
+        let bestRank = Number.MAX_SAFE_INTEGER;
+
+        if (values) {
+            for (const value of values) {
+                const rank = severityRankByResult[value];
+
+                if (rank !== undefined && rank < bestRank) {
+                    bestRank = rank;
+                    best = value;
+                }
+            }
+        }
+        return best;
+    };
 
     const legacyMap = Object.assign(Object.create(null), {
         '0': 'known_safe',
@@ -50,15 +106,22 @@ globalThis.OspreyProtectionResult = (() => {
         '3': 'allowed',
         '4': 'malicious',
         '5': 'phishing',
+        '6': 'suspicious',
+        '7': 'newly_registered',
+        '8': 'dynamic_dns',
+        '9': 'csam',
     });
 
     const resultAliases = Object.assign(Object.create(null), {
         known_safe: 'known_safe',
-        safe: 'known_safe',
+        failed: 'failed',
         allowed: 'allowed',
         malicious: 'malicious',
         phishing: 'phishing',
-        failed: 'failed',
+        suspicious: 'suspicious',
+        newly_registered: 'newly_registered',
+        dynamic_dns: 'dynamic_dns',
+        csam: 'csam',
     });
 
     const normalize = value => {
@@ -131,6 +194,9 @@ globalThis.OspreyProtectionResult = (() => {
         resultTypes,
         messageKeys,
         blockingResults,
+        blockingSeverityOrder,
+        severityRank,
+        mostSevere,
         Origin: Object.freeze({
             UNKNOWN: 'unknown',
         }),

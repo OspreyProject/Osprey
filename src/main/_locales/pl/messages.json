@@ -108,7 +108,31 @@
     "message": "Ignoruj próg blokowania"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Gdy ta opcja jest włączona, pojedyncze wykrycie przez tego dostawcę natychmiast blokuje witrynę, zamiast czekać na zwykły próg wielu dostawców w Osprey. Zmień to ustawienie tylko wtedy, gdy akceptujesz potencjalne ryzyko zwiększenia liczby fałszywych alarmów."
+    "message": "Gdy ta opcja jest włączona, każda domena oznaczona przez tego dostawcę zostanie natychmiast zablokowana z pominięciem progu dwóch dostawców. Może to zwiększyć liczbę fałszywych alarmów."
+  },
+  "blockCsam": {
+    "message": "Blokuj domeny hostujące CSAM"
+  },
+  "blockCsamTooltip": {
+    "message": "Gdy ta opcja jest włączona, ten dostawca blokuje domeny oznaczone jako hostujące materiały przedstawiające seksualne wykorzystywanie dzieci (CSAM)."
+  },
+  "blockNewlyRegistered": {
+    "message": "Blokuj nowo zarejestrowane domeny"
+  },
+  "blockNewlyRegisteredTooltip": {
+    "message": "Gdy ta opcja jest włączona, ten dostawca blokuje domeny zarejestrowane w ciągu ostatnich 90 dni. Może to zwiększyć liczbę fałszywych alarmów."
+  },
+  "blockSuspicious": {
+    "message": "Blokuj podejrzane domeny"
+  },
+  "blockSuspiciousTooltip": {
+    "message": "Gdy ta opcja jest włączona, ten dostawca blokuje domeny, które oznaczył jako podejrzane, nawet jeśli nie potwierdzono, że hostują złośliwą treść. Może to zwiększyć liczbę fałszywych alarmów."
+  },
+  "blockDynamicDns": {
+    "message": "Blokuj domeny z dynamicznym DNS"
+  },
+  "blockDynamicDnsTooltip": {
+    "message": "Gdy ta opcja jest włączona, ten dostawca blokuje domeny korzystające z usług dynamicznego DNS, które bywają nadużywane przez cyberprzestępców. Może to zwiększyć liczbę fałszywych alarmów."
   },
   "applyButton": {
     "message": "Zastosuj"

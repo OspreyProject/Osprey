@@ -108,7 +108,31 @@
     "message": "忽略封鎖閾值"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "啟用後，來自此提供者的單一偵測即可立即封鎖該網站，而無需等待 Osprey 通常的多提供者閾值。 僅在你接受誤判可能增加的潛在風險時才變更此設定。"
+    "message": "啟用後，凡是被此提供者標記的網域都會立即被封鎖，從而略過雙提供者閾值。這可能會增加誤判。"
+  },
+  "blockCsam": {
+    "message": "封鎖代管 CSAM 的網域"
+  },
+  "blockCsamTooltip": {
+    "message": "啟用後，此提供者會封鎖被標記為代管兒童性虐待內容（CSAM）的網域。"
+  },
+  "blockNewlyRegistered": {
+    "message": "封鎖近期註冊的網域"
+  },
+  "blockNewlyRegisteredTooltip": {
+    "message": "啟用後，此提供者會封鎖在過去 90 天內註冊的網域。這可能會增加誤判。"
+  },
+  "blockSuspicious": {
+    "message": "封鎖可疑網域"
+  },
+  "blockSuspiciousTooltip": {
+    "message": "啟用後，即使尚未確認網域代管惡意內容，此提供者也會封鎖其標記為可疑的網域。這可能會增加誤判。"
+  },
+  "blockDynamicDns": {
+    "message": "封鎖動態 DNS 網域"
+  },
+  "blockDynamicDnsTooltip": {
+    "message": "啟用後，此提供者會封鎖使用動態 DNS 服務的網域，這類服務有時會被威脅行為者濫用。這可能會增加誤判。"
   },
   "applyButton": {
     "message": "套用"

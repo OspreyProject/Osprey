@@ -108,7 +108,31 @@
     "message": "Nepaisyti blokavimo slenksčio"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Kai įjungta, vienas šio tiekėjo aptikimas iškart užblokuoja svetainę, užuot laukus įprasto kelių tiekėjų Osprey slenksčio. Keiskite tai tik tuo atveju, jei sutinkate su galima padidėjusio klaidingų teigiamų rezultatų skaičiaus rizika."
+    "message": "Kai įjungta, bet kuris šio tiekėjo pažymėtas domenas bus nedelsiant užblokuotas, apeinant dviejų tiekėjų slenkstį. Tai gali padidinti klaidingai teigiamų rezultatų skaičių."
+  },
+  "blockCsam": {
+    "message": "Blokuoti domenus, kuriuose talpinama CSAM"
+  },
+  "blockCsamTooltip": {
+    "message": "Kai įjungta, šis tiekėjas blokuoja domenus, pažymėtus kaip talpinančius vaikų seksualinio išnaudojimo medžiagą (CSAM)."
+  },
+  "blockNewlyRegistered": {
+    "message": "Blokuoti neseniai registruotus domenus"
+  },
+  "blockNewlyRegisteredTooltip": {
+    "message": "Kai įjungta, šis tiekėjas blokuoja domenus, kurie buvo užregistruoti per pastarąsias 90 dienų. Tai gali padidinti klaidingai teigiamų rezultatų skaičių."
+  },
+  "blockSuspicious": {
+    "message": "Blokuoti įtartinus domenus"
+  },
+  "blockSuspiciousTooltip": {
+    "message": "Kai įjungta, šis tiekėjas blokuoja domenus, kuriuos jis pažymėjo kaip įtartinus, net jei nepatvirtinta, kad juose talpinamas kenkėjiškas turinys. Tai gali padidinti klaidingai teigiamų rezultatų skaičių."
+  },
+  "blockDynamicDns": {
+    "message": "Blokuoti dinaminio DNS domenus"
+  },
+  "blockDynamicDnsTooltip": {
+    "message": "Kai įjungta, šis tiekėjas blokuoja domenus, kurie naudoja dinaminio DNS paslaugas, kuriomis kartais piktnaudžiauja grėsmių vykdytojai. Tai gali padidinti klaidingai teigiamų rezultatų skaičių."
   },
   "applyButton": {
     "message": "Taikyti"

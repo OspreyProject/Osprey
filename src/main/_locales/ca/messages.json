@@ -80,11 +80,35 @@
   "phishing": {
     "message": "Pesca d'identitat"
   },
-  "clearAllowedWebsites": {
-    "message": "Esborra la llista de llocs web permesos"
+  "bypassBlockingThreshold": {
+    "message": "Ignora el llindar de bloqueig"
   },
-  "clearAllowedWebsitesMessage": {
-    "message": "S'han esborrat tots els llocs web permesos."
+  "bypassBlockingThresholdTooltip": {
+    "message": "Quan està activat, qualsevol domini marcat per aquest proveïdor es bloquejarà immediatament, ometent el llindar de dos proveïdors. Això pot augmentar els falsos positius."
+  },
+  "blockCsam": {
+    "message": "Bloqueja els dominis que allotgen CSAM"
+  },
+  "blockCsamTooltip": {
+    "message": "Quan està activat, aquest proveïdor bloqueja els dominis marcats com a allotjadors de material d'abús sexual infantil (CSAM)."
+  },
+  "blockNewlyRegistered": {
+    "message": "Bloqueja els dominis registrats recentment"
+  },
+  "blockNewlyRegisteredTooltip": {
+    "message": "Quan està activat, aquest proveïdor bloqueja els dominis que s'han registrat durant els últims 90 dies. Això pot augmentar els falsos positius."
+  },
+  "blockSuspicious": {
+    "message": "Bloqueja els dominis sospitosos"
+  },
+  "blockSuspiciousTooltip": {
+    "message": "Quan està activat, aquest proveïdor bloqueja els dominis que ha marcat com a sospitosos, encara que no s'hagi confirmat que allotgin contingut maliciós. Això pot augmentar els falsos positius."
+  },
+  "blockDynamicDns": {
+    "message": "Bloqueja els dominis amb DNS dinàmic"
+  },
+  "blockDynamicDnsTooltip": {
+    "message": "Quan està activat, aquest proveïdor bloqueja els dominis que utilitzen serveis de DNS dinàmic, que de vegades són abusats per actors maliciosos. Això pot augmentar els falsos positius."
   },
   "settingsTitle": {
     "message": "Configuració"

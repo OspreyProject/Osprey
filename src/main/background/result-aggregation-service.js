@@ -18,6 +18,8 @@
 'use strict';
 
 globalThis.OspreyResultAggregationService = (() => {
+    const protectionResult = globalThis.OspreyProtectionResult;
+
     const blockedByTab = new Map();
     const frameZeroUrlByTab = new Map();
     const warningPageReadyTabs = new Set();
@@ -36,13 +38,17 @@ globalThis.OspreyResultAggregationService = (() => {
 
         let primaryOrigin = '';
         let primaryResult = null;
+        let primaryRank = Number.MAX_SAFE_INTEGER;
         const origins = Array.from({length});
         let idx = 0;
 
         for (const [origin, result] of entries.entries()) {
-            if (idx === 0) {
+            const rank = protectionResult.severityRank(result);
+
+            if (primaryResult === null || rank < primaryRank) {
                 primaryOrigin = origin;
                 primaryResult = result;
+                primaryRank = rank;
             }
 
             origins[idx++] = origin;

@@ -108,7 +108,31 @@
     "message": "Ignorer blokkeringsgrense"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Når dette er aktivert, blokkerer ett enkelt funn fra denne leverandøren nettstedet umiddelbart, i stedet for å vente på Ospreys vanlige grense med flere leverandører. Endre dette bare hvis du godtar den mulige risikoen for flere falske positiver."
+    "message": "Når dette er aktivert, blokkeres ethvert domene som flagges av denne leverandøren umiddelbart, og grensen med to leverandører omgås. Dette kan øke antallet falske positiver."
+  },
+  "blockCsam": {
+    "message": "Blokker domener som er vert for CSAM"
+  },
+  "blockCsamTooltip": {
+    "message": "Når dette er aktivert, blokkerer denne leverandøren domener som er flagget som vert for materiale om seksuelt misbruk av barn (CSAM)."
+  },
+  "blockNewlyRegistered": {
+    "message": "Blokker nylig registrerte domener"
+  },
+  "blockNewlyRegisteredTooltip": {
+    "message": "Når dette er aktivert, blokkerer denne leverandøren domener som er registrert i løpet av de siste 90 dagene. Dette kan øke antallet falske positiver."
+  },
+  "blockSuspicious": {
+    "message": "Blokker mistenkelige domener"
+  },
+  "blockSuspiciousTooltip": {
+    "message": "Når dette er aktivert, blokkerer denne leverandøren domener som den har flagget som mistenkelige, selv om det ikke er bekreftet at de er vert for skadelig innhold. Dette kan øke antallet falske positiver."
+  },
+  "blockDynamicDns": {
+    "message": "Blokker domener med dynamisk DNS"
+  },
+  "blockDynamicDnsTooltip": {
+    "message": "Når dette er aktivert, blokkerer denne leverandøren domener som bruker dynamiske DNS-tjenester, som noen ganger misbrukes av trusselaktører. Dette kan øke antallet falske positiver."
   },
   "applyButton": {
     "message": "Bruk"

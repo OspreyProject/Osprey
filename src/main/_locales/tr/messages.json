@@ -108,7 +108,31 @@
     "message": "Engelleme eşiğini yoksay"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Etkinleştirildiğinde, Osprey'in olağan çoklu sağlayıcı eşiğini beklemek yerine, bu sağlayıcıdan gelen tek bir tespit siteyi anında engeller. Bunu yalnızca yanlış pozitiflerin artması olasılığını kabul ediyorsanız değiştirin."
+    "message": "Etkinleştirildiğinde, bu sağlayıcının işaretlediği herhangi bir alan adı, iki sağlayıcı eşiği atlanarak anında engellenir. Bu, yanlış pozitifleri artırabilir."
+  },
+  "blockCsam": {
+    "message": "CSAM barındıran alan adlarını engelle"
+  },
+  "blockCsamTooltip": {
+    "message": "Etkinleştirildiğinde, bu sağlayıcı çocuklara yönelik cinsel istismar materyali (CSAM) barındırdığı işaretlenen alan adlarını engeller."
+  },
+  "blockNewlyRegistered": {
+    "message": "Yeni kaydedilmiş alan adlarını engelle"
+  },
+  "blockNewlyRegisteredTooltip": {
+    "message": "Etkinleştirildiğinde, bu sağlayıcı son 90 gün içinde kaydedilmiş alan adlarını engeller. Bu, yanlış pozitifleri artırabilir."
+  },
+  "blockSuspicious": {
+    "message": "Şüpheli alan adlarını engelle"
+  },
+  "blockSuspiciousTooltip": {
+    "message": "Etkinleştirildiğinde, bu sağlayıcı, zararlı içerik barındırdığı doğrulanmamış olsa bile şüpheli olarak işaretlediği alan adlarını engeller. Bu, yanlış pozitifleri artırabilir."
+  },
+  "blockDynamicDns": {
+    "message": "Dinamik DNS alan adlarını engelle"
+  },
+  "blockDynamicDnsTooltip": {
+    "message": "Etkinleştirildiğinde, bu sağlayıcı, bazen tehdit aktörleri tarafından kötüye kullanılan dinamik DNS hizmetlerini kullanan alan adlarını engeller. Bu, yanlış pozitifleri artırabilir."
   },
   "applyButton": {
     "message": "Uygula"

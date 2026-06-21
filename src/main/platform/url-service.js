@@ -45,6 +45,43 @@ globalThis.OspreyUrlService = (() => {
     const regexTrailingDots = /\.+$/;
     const regexIPvFour = /^\d+\.\d+\.\d+\.\d+$/;
     const regexIPvSix = /^\[|]$/g;
+    const regexValidHostChars = /^[a-z0-9.-]+$/;
+    const regexValidIPv6Literal = /^\[[0-9a-f:.]+]$/;
+
+    const isAcceptableHost = hostname => {
+        if (typeof hostname !== 'string' || hostname.length === 0) {
+            return false;
+        }
+
+        const lower = hostname.toLowerCase();
+
+        if (lower.codePointAt(0) === 91) {
+            return regexValidIPv6Literal.test(lower);
+        }
+
+        if (!regexValidHostChars.test(lower)) {
+            return false;
+        }
+
+        const host = lower.codePointAt(lower.length - 1) === 46 ? lower.slice(0, -1) : lower;
+
+        if (host.length === 0) {
+            return false;
+        }
+
+        const labels = host.split('.');
+
+        for (let i = 0, len = labels.length; i < len; i++) {
+            const label = labels[i];
+
+            if (label.length === 0 ||
+                label.codePointAt(0) === 45 ||
+                label.codePointAt(label.length - 1) === 45) {
+                return false;
+            }
+        }
+        return true;
+    };
 
     let cachedBlockPageUrl = null;
 
@@ -85,7 +122,7 @@ globalThis.OspreyUrlService = (() => {
     const parseHttpUrl = value => {
         if (value instanceof URL) {
             const p = value.protocol;
-            return p === 'http:' || p === 'https:' ? value : null;
+            return (p === 'http:' || p === 'https:') && isAcceptableHost(value.hostname) ? value : null;
         }
 
         const strVal = String(value);
@@ -93,7 +130,7 @@ globalThis.OspreyUrlService = (() => {
         try {
             const url = new URL(strVal);
             const p = url.protocol;
-            return p === 'http:' || p === 'https:' ? url : null;
+            return (p === 'http:' || p === 'https:') && isAcceptableHost(url.hostname) ? url : null;
         } catch (error) {
             if (strVal.trim()) {
                 console.warn('OspreyUrlService failed to parse URL', error);
@@ -253,6 +290,7 @@ globalThis.OspreyUrlService = (() => {
         lookupValueForTarget,
         canonicalizeHostname,
         isInternalHostname,
+        isAcceptableHost,
         buildWarningPageUrl,
         haveSameOrigin,
         isWarningPageUrl,

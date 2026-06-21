@@ -108,7 +108,31 @@
     "message": "차단 임계값 무시"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "활성화하면 Osprey의 일반적인 다중 공급자 임계값을 기다리지 않고, 이 공급자의 단일 탐지만으로 사이트가 즉시 차단됩니다. 오탐이 증가할 수 있는 잠재적 위험을 감수할 수 있는 경우에만 변경하세요."
+    "message": "활성화하면 이 공급자가 플래그를 지정한 모든 도메인이 두 공급자 임계값을 건너뛰고 즉시 차단됩니다. 이로 인해 오탐이 늘어날 수 있습니다."
+  },
+  "blockCsam": {
+    "message": "CSAM을 호스팅하는 도메인 차단"
+  },
+  "blockCsamTooltip": {
+    "message": "활성화하면 이 공급자는 아동 성 착취물(CSAM)을 호스팅하는 것으로 플래그가 지정된 도메인을 차단합니다."
+  },
+  "blockNewlyRegistered": {
+    "message": "새로 등록된 도메인 차단"
+  },
+  "blockNewlyRegisteredTooltip": {
+    "message": "활성화하면 이 공급자는 지난 90일 이내에 등록된 도메인을 차단합니다. 이로 인해 오탐이 늘어날 수 있습니다."
+  },
+  "blockSuspicious": {
+    "message": "의심스러운 도메인 차단"
+  },
+  "blockSuspiciousTooltip": {
+    "message": "활성화하면 이 공급자는 악성 콘텐츠를 호스팅한다고 확인되지 않았더라도 의심스러운 것으로 플래그를 지정한 도메인을 차단합니다. 이로 인해 오탐이 늘어날 수 있습니다."
+  },
+  "blockDynamicDns": {
+    "message": "동적 DNS 도메인 차단"
+  },
+  "blockDynamicDnsTooltip": {
+    "message": "활성화하면 이 공급자는 위협 행위자가 때때로 악용하는 동적 DNS 서비스를 사용하는 도메인을 차단합니다. 이로 인해 오탐이 늘어날 수 있습니다."
   },
   "applyButton": {
     "message": "적용"

@@ -108,7 +108,31 @@
     "message": "Bỏ qua ngưỡng chặn"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Khi được bật, một phát hiện duy nhất từ nhà cung cấp này sẽ chặn trang web ngay lập tức, thay vì chờ ngưỡng nhiều nhà cung cấp thông thường của Osprey. Chỉ thay đổi tùy chọn này nếu bạn chấp nhận rủi ro tiềm ẩn về việc gia tăng cảnh báo sai."
+    "message": "Khi được bật, bất kỳ tên miền nào bị nhà cung cấp này gắn cờ sẽ bị chặn ngay lập tức, bỏ qua ngưỡng hai nhà cung cấp. Điều này có thể làm tăng số lượng cảnh báo sai."
+  },
+  "blockCsam": {
+    "message": "Chặn các tên miền lưu trữ CSAM"
+  },
+  "blockCsamTooltip": {
+    "message": "Khi được bật, nhà cung cấp này sẽ chặn các tên miền bị gắn cờ là lưu trữ nội dung lạm dụng tình dục trẻ em (CSAM)."
+  },
+  "blockNewlyRegistered": {
+    "message": "Chặn các tên miền mới đăng ký"
+  },
+  "blockNewlyRegisteredTooltip": {
+    "message": "Khi được bật, nhà cung cấp này sẽ chặn các tên miền đã được đăng ký trong vòng 90 ngày qua. Điều này có thể làm tăng số lượng cảnh báo sai."
+  },
+  "blockSuspicious": {
+    "message": "Chặn các tên miền đáng ngờ"
+  },
+  "blockSuspiciousTooltip": {
+    "message": "Khi được bật, nhà cung cấp này sẽ chặn các tên miền mà họ đã gắn cờ là đáng ngờ, ngay cả khi chưa được xác nhận là lưu trữ nội dung độc hại. Điều này có thể làm tăng số lượng cảnh báo sai."
+  },
+  "blockDynamicDns": {
+    "message": "Chặn các tên miền DNS động"
+  },
+  "blockDynamicDnsTooltip": {
+    "message": "Khi được bật, nhà cung cấp này sẽ chặn các tên miền sử dụng dịch vụ DNS động, đôi khi bị các tác nhân đe dọa lạm dụng. Điều này có thể làm tăng số lượng cảnh báo sai."
   },
   "applyButton": {
     "message": "Áp dụng"

@@ -30,6 +30,25 @@ globalThis.OspreyProviderStateStore = (() => {
 
     const unsafeProviderKeys = new Set(['__proto__', 'prototype', 'constructor']);
     const isUnsafeProviderId = providerId => typeof providerId !== 'string' || unsafeProviderKeys.has(providerId);
+    const emptyCategoryState = Object.freeze(Object.create(null));
+
+    const normalizeBlockCategories = (definition, src) => {
+        const declared = Array.isArray(definition.blockCategories) ? definition.blockCategories : null;
+
+        if (!declared || declared.length === 0) {
+            return emptyCategoryState;
+        }
+
+        const stored = src && typeof src.blockCategories === 'object' && src.blockCategories ? src.blockCategories : null;
+        const out = Object.create(null);
+
+        for (const element of declared) {
+            const key = element.key;
+            const storedValue = stored ? stored[key] : undefined;
+            out[key] = typeof storedValue === 'boolean' ? storedValue : Boolean(element.defaultEnabled);
+        }
+        return Object.freeze(out);
+    };
 
     const cloneState = state => {
         if (!state) {
@@ -90,6 +109,8 @@ globalThis.OspreyProviderStateStore = (() => {
                 bypassBlockingThreshold: src && typeof src.bypassBlockingThreshold === 'boolean' ?
                     src.bypassBlockingThreshold :
                     Boolean(element.bypassBlockingThreshold),
+
+                blockCategories: normalizeBlockCategories(element, src),
             };
 
             Object.freeze(base.providers[id]);
@@ -271,6 +292,41 @@ globalThis.OspreyProviderStateStore = (() => {
         provider.bypassBlockingThreshold = Boolean(bypass);
     });
 
+    const setBlockCategory = (providerId, categoryKey, enabled) => updateState(async state => {
+        const locks = await getPolicyLocks();
+
+        if (isUnsafeProviderId(providerId) || state.app.lockSettings || locks.lockSettings) {
+            return;
+        }
+
+        const definition = providerCatalog.getDefinition(providerId);
+        const declared = definition && Array.isArray(definition.blockCategories) ? definition.blockCategories : null;
+
+        if (!declared?.some(category => category.key === categoryKey)) {
+            return;
+        }
+
+        const provider = state.providers[providerId] || (state.providers[providerId] = {
+            enabled: false,
+            apiKey: '',
+        });
+
+        const current = provider.blockCategories && typeof provider.blockCategories === 'object' ?
+            provider.blockCategories :
+            null;
+
+        const next = Object.create(null);
+
+        if (current) {
+            for (const key of Object.keys(current)) {
+                next[key] = current[key];
+            }
+        }
+
+        next[categoryKey] = Boolean(enabled);
+        provider.blockCategories = next;
+    });
+
     const resetDefaultProviders = () => updateState(async state => {
         const locks = await getPolicyLocks();
 
@@ -282,9 +338,15 @@ globalThis.OspreyProviderStateStore = (() => {
 
         for (const element of defs) {
             const def = element;
-            const p = state.providers[def.id] || (state.providers[def.id] = {enabled: false, apiKey: ''});
-            p.enabled = Boolean(def.enabledByDefault);
-            p.bypassBlockingThreshold = Boolean(def.bypassBlockingThreshold);
+
+            const provider = state.providers[def.id] || (state.providers[def.id] = {
+                enabled: false,
+                apiKey: ''
+            });
+
+            provider.enabled = Boolean(def.enabledByDefault);
+            provider.bypassBlockingThreshold = Boolean(def.bypassBlockingThreshold);
+            provider.blockCategories = Object.create(null);
         }
     });
 
@@ -334,6 +396,7 @@ globalThis.OspreyProviderStateStore = (() => {
         setProviderEnabled,
         setProviderApiKey,
         setBypassBlockingThreshold,
+        setBlockCategory,
         resetDefaultProviders,
         resetAll,
         countEnabledProviders,

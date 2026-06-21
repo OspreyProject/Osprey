@@ -108,7 +108,31 @@
     "message": "Blokkeringsdrempel negeren"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Wanneer dit is ingeschakeld, blokkeert één enkele detectie van deze provider de site onmiddellijk, in plaats van te wachten op de gebruikelijke drempel met meerdere providers van Osprey. Wijzig dit alleen als je het mogelijke risico op meer valse positieven accepteert."
+    "message": "Wanneer dit is ingeschakeld, wordt elk domein dat door deze provider wordt gemarkeerd onmiddellijk geblokkeerd, waarbij de drempel van twee providers wordt omzeild. Dit kan het aantal valse positieven verhogen."
+  },
+  "blockCsam": {
+    "message": "Domeinen blokkeren die CSAM hosten"
+  },
+  "blockCsamTooltip": {
+    "message": "Wanneer dit is ingeschakeld, blokkeert deze provider domeinen die zijn gemarkeerd als hosts van materiaal van seksueel kindermisbruik (CSAM)."
+  },
+  "blockNewlyRegistered": {
+    "message": "Onlangs geregistreerde domeinen blokkeren"
+  },
+  "blockNewlyRegisteredTooltip": {
+    "message": "Wanneer dit is ingeschakeld, blokkeert deze provider domeinen die in de afgelopen 90 dagen zijn geregistreerd. Dit kan het aantal valse positieven verhogen."
+  },
+  "blockSuspicious": {
+    "message": "Verdachte domeinen blokkeren"
+  },
+  "blockSuspiciousTooltip": {
+    "message": "Wanneer dit is ingeschakeld, blokkeert deze provider domeinen die het als verdacht heeft gemarkeerd, zelfs als niet is bevestigd dat ze schadelijke inhoud hosten. Dit kan het aantal valse positieven verhogen."
+  },
+  "blockDynamicDns": {
+    "message": "Domeinen met dynamische DNS blokkeren"
+  },
+  "blockDynamicDnsTooltip": {
+    "message": "Wanneer dit is ingeschakeld, blokkeert deze provider domeinen die gebruikmaken van dynamische DNS-services, die soms worden misbruikt door bedreigingsactoren. Dit kan het aantal valse positieven verhogen."
   },
   "applyButton": {
     "message": "Toepassen"

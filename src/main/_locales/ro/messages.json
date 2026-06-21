@@ -108,7 +108,31 @@
     "message": "Ignoră pragul de blocare"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Când este activat, o singură detectare de la acest furnizor blochează imediat site-ul, în loc să aștepte pragul obișnuit cu mai mulți furnizori al Osprey. Modifică această setare doar dacă accepți riscul potențial de creștere a alarmelor false."
+    "message": "Când este activat, orice domeniu semnalat de acest furnizor va fi blocat imediat, ocolind pragul cu doi furnizori. Acest lucru poate crește numărul de alarme false."
+  },
+  "blockCsam": {
+    "message": "Blochează domeniile care găzduiesc CSAM"
+  },
+  "blockCsamTooltip": {
+    "message": "Când este activat, acest furnizor blochează domeniile semnalate ca găzduind materiale de abuz sexual asupra copiilor (CSAM)."
+  },
+  "blockNewlyRegistered": {
+    "message": "Blochează domeniile înregistrate recent"
+  },
+  "blockNewlyRegisteredTooltip": {
+    "message": "Când este activat, acest furnizor blochează domeniile care au fost înregistrate în ultimele 90 de zile. Acest lucru poate crește numărul de alarme false."
+  },
+  "blockSuspicious": {
+    "message": "Blochează domeniile suspecte"
+  },
+  "blockSuspiciousTooltip": {
+    "message": "Când este activat, acest furnizor blochează domeniile pe care le-a semnalat ca suspecte, chiar dacă nu s-a confirmat că găzduiesc conținut rău intenționat. Acest lucru poate crește numărul de alarme false."
+  },
+  "blockDynamicDns": {
+    "message": "Blochează domeniile cu DNS dinamic"
+  },
+  "blockDynamicDnsTooltip": {
+    "message": "Când este activat, acest furnizor blochează domeniile care folosesc servicii de DNS dinamic, care sunt uneori abuzate de actorii amenințărilor. Acest lucru poate crește numărul de alarme false."
   },
   "applyButton": {
     "message": "Aplicați"

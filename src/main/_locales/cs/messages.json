@@ -108,7 +108,31 @@
     "message": "Ignorovat práh blokování"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Když je zapnuto, jediná detekce od tohoto poskytovatele okamžitě zablokuje web, místo aby se čekalo na obvyklý práh více poskytovatelů v Osprey. Měňte toto nastavení pouze tehdy, pokud akceptujete možné riziko zvýšení počtu falešně pozitivních výsledků."
+    "message": "Když je zapnuto, jakákoli doména označená tímto poskytovatelem bude okamžitě zablokována a obejde práh dvou poskytovatelů. To může zvýšit počet falešně pozitivních výsledků."
+  },
+  "blockCsam": {
+    "message": "Blokovat domény hostující CSAM"
+  },
+  "blockCsamTooltip": {
+    "message": "Když je zapnuto, tento poskytovatel blokuje domény označené jako hostující materiál zobrazující sexuální zneužívání dětí (CSAM)."
+  },
+  "blockNewlyRegistered": {
+    "message": "Blokovat nově registrované domény"
+  },
+  "blockNewlyRegisteredTooltip": {
+    "message": "Když je zapnuto, tento poskytovatel blokuje domény, které byly zaregistrovány během posledních 90 dnů. To může zvýšit počet falešně pozitivních výsledků."
+  },
+  "blockSuspicious": {
+    "message": "Blokovat podezřelé domény"
+  },
+  "blockSuspiciousTooltip": {
+    "message": "Když je zapnuto, tento poskytovatel blokuje domény, které označil jako podezřelé, i když nebylo potvrzeno, že hostují škodlivý obsah. To může zvýšit počet falešně pozitivních výsledků."
+  },
+  "blockDynamicDns": {
+    "message": "Blokovat domény s dynamickým DNS"
+  },
+  "blockDynamicDnsTooltip": {
+    "message": "Když je zapnuto, tento poskytovatel blokuje domény, které využívají služby dynamického DNS, jež jsou někdy zneužívány útočníky. To může zvýšit počet falešně pozitivních výsledků."
   },
   "applyButton": {
     "message": "Použít"

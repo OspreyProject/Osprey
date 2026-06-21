@@ -387,6 +387,70 @@ globalThis.OspreyProviderCard = (() => {
         return row;
     }
 
+    function createBlockCategoryRow(definition, category, providerState, disabled) {
+        const stored = providerState?.blockCategories;
+
+        const currentValue = stored && typeof stored[category.key] === 'boolean' ?
+            stored[category.key] :
+            Boolean(category.defaultEnabled);
+
+        const checkboxId = `block-category-${definition.id}-${category.key}`;
+
+        const checkbox = formHelpers.createElement('input', {
+            type: 'checkbox',
+            id: checkboxId,
+            className: 'provider-bypass-checkbox',
+            disabled,
+        });
+
+        checkbox.checked = currentValue;
+
+        const labelText = formHelpers.createElement('span', {
+            className: 'provider-bypass-label-text',
+            textContent: LangUtil.translate(category.label),
+        });
+
+        const row = formHelpers.createElement('label', {
+            className: 'provider-bypass-row',
+            attributes: {
+                for: checkboxId,
+                title: LangUtil.translate(category.tooltip),
+            },
+        }, checkbox, labelText);
+
+        if (disabled) {
+            row.classList.add('disabled');
+            return row;
+        }
+
+        checkbox.addEventListener('change', () => {
+            const nextValue = checkbox.checked;
+
+            providerStateStore.setBlockCategory(definition.id, category.key, nextValue)
+                .catch(error => {
+                    console.error(`ProviderCard failed to persist block category '${category.key}' for provider '${definition.id}'`, error);
+                    checkbox.checked = !nextValue;
+                    toast.show(LangUtil.TOAST_FAILED_TO_SAVE, true);
+                });
+        }, passiveListenerOptions);
+        return row;
+    }
+
+    function createBlockCategoriesControl(definition, providerState, disabled) {
+        const categories = Array.isArray(definition.blockCategories) ? definition.blockCategories : null;
+
+        if (!categories || categories.length === 0) {
+            return null;
+        }
+
+        const container = createDiv('provider-block-categories');
+
+        for (const category of categories) {
+            container.append(createBlockCategoryRow(definition, category, providerState, disabled));
+        }
+        return container;
+    }
+
     function createCardShell(className, id, definition, iconUrl, isEnabled, indicators = []) {
         const item = formHelpers.createElement('div', {
             className: `provider-item ${className}`,
@@ -416,10 +480,12 @@ globalThis.OspreyProviderCard = (() => {
         );
 
         const bypassControl = createBypassThresholdControl(definition, providerState, isDisabled);
+        const categoriesControl = createBlockCategoriesControl(definition, providerState, isDisabled);
 
         body.append(...[
             websiteLink,
             bypassControl,
+            categoriesControl,
         ].filter(node => node !== null));
 
         wireProviderInteractions(item, header, toggleSwitch, definition.id, {

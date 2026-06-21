@@ -108,7 +108,31 @@
     "message": "Ignorar limite de bloqueio"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Quando ativado, uma única detecção desse provedor bloqueia o site imediatamente, em vez de esperar pelo limite habitual de vários provedores do Osprey. Altere isto apenas se você aceitar o possível risco de aumento de falsos positivos."
+    "message": "Quando ativado, qualquer domínio sinalizado por este provedor será bloqueado imediatamente, ignorando o limite de dois provedores. Isso pode aumentar os falsos positivos."
+  },
+  "blockCsam": {
+    "message": "Bloquear domínios que hospedam CSAM"
+  },
+  "blockCsamTooltip": {
+    "message": "Quando ativado, este provedor bloqueia domínios sinalizados como hospedeiros de material de abuso sexual infantil (CSAM)."
+  },
+  "blockNewlyRegistered": {
+    "message": "Bloquear domínios registrados recentemente"
+  },
+  "blockNewlyRegisteredTooltip": {
+    "message": "Quando ativado, este provedor bloqueia domínios que foram registrados nos últimos 90 dias. Isso pode aumentar os falsos positivos."
+  },
+  "blockSuspicious": {
+    "message": "Bloquear domínios suspeitos"
+  },
+  "blockSuspiciousTooltip": {
+    "message": "Quando ativado, este provedor bloqueia domínios que ele sinalizou como suspeitos, mesmo que não tenha sido confirmado que hospedam conteúdo malicioso. Isso pode aumentar os falsos positivos."
+  },
+  "blockDynamicDns": {
+    "message": "Bloquear domínios com DNS dinâmico"
+  },
+  "blockDynamicDnsTooltip": {
+    "message": "Quando ativado, este provedor bloqueia domínios que usam serviços de DNS dinâmico, que às vezes são abusados por agentes de ameaça. Isso pode aumentar os falsos positivos."
   },
   "applyButton": {
     "message": "Aplicar"

@@ -74,11 +74,23 @@
   "allowed": {
     "message": "Allowed"
   },
-  "malicious": {
-    "message": "Malicious"
+  "csam": {
+    "message": "Child Sexual Abuse Material (CSAM)"
   },
   "phishing": {
     "message": "Phishing"
+  },
+  "malicious": {
+    "message": "Malicious"
+  },
+  "suspicious": {
+    "message": "Suspicious"
+  },
+  "newlyRegistered": {
+    "message": "Newly Registered Domain"
+  },
+  "dynamicDns": {
+    "message": "Dynamic DNS Domain"
   },
   "clearAllowedWebsites": {
     "message": "Clear list of allowed websites"
@@ -108,7 +120,31 @@
     "message": "Ignore blocking threshold"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "When enabled, a single detection from this provider blocks the site immediately, instead of waiting for Osprey's usual multi-provider threshold. Only modify this if you accept the potential risk of increased false positives."
+    "message": "When enabled, any domain flagged by this provider will be immediately blocked, bypassing the two-provider threshold. This may increase false positives."
+  },
+  "blockCsam": {
+    "message": "Block domains hosting CSAM"
+  },
+  "blockCsamTooltip": {
+    "message": "When enabled, this provider blocks domains flagged as hosting child sexual abuse material (CSAM)."
+  },
+  "blockNewlyRegistered": {
+    "message": "Block newly registered domains"
+  },
+  "blockNewlyRegisteredTooltip": {
+    "message": "When enabled, this provider blocks domains that were registered within the past 90 days. This may increase false positives."
+  },
+  "blockSuspicious": {
+    "message": "Block suspicious domains"
+  },
+  "blockSuspiciousTooltip": {
+    "message": "When enabled, this provider blocks domains it has flagged as suspicious, even if they haven't been confirmed as hosting malicious content. This may increase false positives."
+  },
+  "blockDynamicDns": {
+    "message": "Block dynamic DNS domains"
+  },
+  "blockDynamicDnsTooltip": {
+    "message": "When enabled, this provider blocks domains that use dynamic DNS services, which are sometimes abused by threat actors. This may increase false positives."
   },
   "applyButton": {
     "message": "Apply"

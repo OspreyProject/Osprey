@@ -24,6 +24,21 @@
 
         get() {
             const providerGroups = globalThis.OspreyProviderGroups;
+            const emptyBlockCategories = Object.freeze([]);
+
+            const blockCategory = (key, label, tooltip, defaultEnabled) => Object.freeze({
+                key,
+                label,
+                tooltip,
+                defaultEnabled: Boolean(defaultEnabled),
+            });
+
+            const alphaMountainBlockCategories = Object.freeze([
+                blockCategory('csam', 'blockCsam', 'blockCsamTooltip', true),
+                blockCategory('newly_registered', 'blockNewlyRegistered', 'blockNewlyRegisteredTooltip', false),
+                blockCategory('suspicious', 'blockSuspicious', 'blockSuspiciousTooltip', false),
+                blockCategory('dynamic_dns', 'blockDynamicDns', 'blockDynamicDnsTooltip', false),
+            ]);
 
             const buildMonomorphicShape = def => Object.freeze({
                 kind: 'proxy_builtin',
@@ -35,6 +50,7 @@
                 icon: def.icon || '',
                 enabledByDefault: def.enabledByDefault || false,
                 bypassBlockingThreshold: def.bypassBlockingThreshold || false,
+                blockCategories: def.blockCategories || emptyBlockCategories,
                 endpoint: def.endpoint,
                 tags: def.tags || ['proxy'],
                 policyKey: def.policyKey,
@@ -84,6 +100,7 @@
                     icon: 'assets/providers/alphamountain.avif',
                     enabledByDefault: true,
                     bypassBlockingThreshold: true,
+                    blockCategories: alphaMountainBlockCategories,
                     endpoint: 'alphamountain',
                     tags: ['proxy', 'partner'],
                     policyKey: 'AlphaMountainEnabled',

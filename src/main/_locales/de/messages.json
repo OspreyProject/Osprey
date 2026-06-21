@@ -108,7 +108,31 @@
     "message": "Blockierungsschwelle ignorieren"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Wenn aktiviert, blockiert eine einzige Erkennung dieses Anbieters die Website sofort, anstatt auf Ospreys übliche Schwelle mehrerer Anbieter zu warten. Ändern Sie dies nur, wenn Sie das mögliche Risiko vermehrter Fehlalarme akzeptieren."
+    "message": "Wenn aktiviert, wird jede von diesem Anbieter gemeldete Domain sofort blockiert, wodurch die Schwelle von zwei Anbietern umgangen wird. Dies kann die Anzahl der Fehlalarme erhöhen."
+  },
+  "blockCsam": {
+    "message": "Domains blockieren, die CSAM hosten"
+  },
+  "blockCsamTooltip": {
+    "message": "Wenn aktiviert, blockiert dieser Anbieter Domains, die als Hosts von Darstellungen sexuellen Kindesmissbrauchs (CSAM) gemeldet wurden."
+  },
+  "blockNewlyRegistered": {
+    "message": "Neu registrierte Domains blockieren"
+  },
+  "blockNewlyRegisteredTooltip": {
+    "message": "Wenn aktiviert, blockiert dieser Anbieter Domains, die innerhalb der letzten 90 Tage registriert wurden. Dies kann die Anzahl der Fehlalarme erhöhen."
+  },
+  "blockSuspicious": {
+    "message": "Verdächtige Domains blockieren"
+  },
+  "blockSuspiciousTooltip": {
+    "message": "Wenn aktiviert, blockiert dieser Anbieter Domains, die er als verdächtig eingestuft hat, auch wenn nicht bestätigt wurde, dass sie schädliche Inhalte hosten. Dies kann die Anzahl der Fehlalarme erhöhen."
+  },
+  "blockDynamicDns": {
+    "message": "Domains mit dynamischem DNS blockieren"
+  },
+  "blockDynamicDnsTooltip": {
+    "message": "Wenn aktiviert, blockiert dieser Anbieter Domains, die dynamische DNS-Dienste nutzen, welche manchmal von Bedrohungsakteuren missbraucht werden. Dies kann die Anzahl der Fehlalarme erhöhen."
   },
   "applyButton": {
     "message": "Anwenden"

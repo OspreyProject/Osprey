@@ -152,6 +152,79 @@ globalThis.OspreyProviderEngine = (() => {
         providerName: provider.displayName,
     }));
 
+    const allowedResult = protectionResult.resultTypes.ALLOWED;
+    const knownSafeResult = protectionResult.resultTypes.KNOWN_SAFE;
+    const failedResult = protectionResult.resultTypes.FAILED;
+
+    const resolveProxyBuiltinOutcome = (provider, data) => {
+        const categories = provider.blockCategoryState;
+
+        let hasCategories = false;
+
+        if (categories) {
+            for (const _key in categories) {
+                hasCategories = true;
+                break;
+            }
+        }
+
+        if (!hasCategories) {
+            return protectionResult.fromProviderString(data?.result);
+        }
+
+        const list = Array.isArray(data?.results) && data.results.length > 0 ?
+            data.results :
+            typeof data?.result === 'string' && data.result ? [data.result] : null;
+
+        if (!list) {
+            return failedResult;
+        }
+
+        const blockingCandidates = [];
+        let sawSoftCategory = false;
+        let sawAllowSignal = false;
+        let sawFailed = false;
+
+        for (const raw of list) {
+            const value = typeof raw === 'string' ? raw.trim().toLowerCase() : '';
+
+            if (!value) {
+                continue;
+            }
+
+            if (value in categories) {
+                sawSoftCategory = true;
+
+                if (categories[value] === true && protectionResult.blockingResults.has(value)) {
+                    blockingCandidates.push(value);
+                }
+                continue;
+            }
+
+            if (protectionResult.blockingResults.has(value)) {
+                blockingCandidates.push(value);
+                continue;
+            }
+
+            if (value === allowedResult || value === knownSafeResult || value === 'safe') {
+                sawAllowSignal = true;
+            } else if (value === failedResult) {
+                sawFailed = true;
+            }
+        }
+
+        const blockingResult = protectionResult.mostSevere(blockingCandidates);
+
+        if (blockingResult) {
+            return blockingResult;
+        }
+
+        if (sawSoftCategory || sawAllowSignal) {
+            return allowedResult;
+        }
+        return sawFailed ? failedResult : allowedResult;
+    };
+
     const fetchJsonResponse = async (provider, targetUrl, parentSignal) => {
         const built = requestBuilder.buildRequest(provider, targetUrl, provider.state);
         const timed = timedSignal.create(parentSignal, built.timeoutMs);
@@ -239,7 +312,7 @@ globalThis.OspreyProviderEngine = (() => {
             const data = await fetchJsonResponse(provider, targetUrl, parentSignal);
 
             const outcome = provider.kind === 'proxy_builtin' ?
-                protectionResult.fromProviderString(data?.result) :
+                resolveProxyBuiltinOutcome(provider, data) :
                 evaluateDirectResponse(provider, data);
 
             await finalizeProviderResult(provider, lookupKey, targetUrl, expirationSeconds, onResult, outcome);
@@ -365,7 +438,7 @@ globalThis.OspreyProviderEngine = (() => {
             return;
         }
 
-        if (urlService.isInternalHostname(parsedUrl.hostname)) {
+        if (!urlService.isAcceptableHost(parsedUrl.hostname) || urlService.isInternalHostname(parsedUrl.hostname)) {
             return;
         }
 

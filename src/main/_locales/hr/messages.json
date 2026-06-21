@@ -108,7 +108,31 @@
     "message": "Zanemari prag blokiranja"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Kada je omogućeno, jedno otkrivanje od ovog pružatelja odmah blokira stranicu, umjesto čekanja uobičajenog praga više pružatelja u Ospreyu. Promijenite ovo samo ako prihvaćate mogući rizik od povećanja broja lažno pozitivnih rezultata."
+    "message": "Kada je omogućeno, svaka domena koju ovaj pružatelj označi bit će odmah blokirana, zaobilazeći prag dvaju pružatelja. To može povećati broj lažno pozitivnih rezultata."
+  },
+  "blockCsam": {
+    "message": "Blokiraj domene koje udomljuju CSAM"
+  },
+  "blockCsamTooltip": {
+    "message": "Kada je omogućeno, ovaj pružatelj blokira domene označene kao one koje udomljuju materijal o seksualnom zlostavljanju djece (CSAM)."
+  },
+  "blockNewlyRegistered": {
+    "message": "Blokiraj nedavno registrirane domene"
+  },
+  "blockNewlyRegisteredTooltip": {
+    "message": "Kada je omogućeno, ovaj pružatelj blokira domene koje su registrirane unutar posljednjih 90 dana. To može povećati broj lažno pozitivnih rezultata."
+  },
+  "blockSuspicious": {
+    "message": "Blokiraj sumnjive domene"
+  },
+  "blockSuspiciousTooltip": {
+    "message": "Kada je omogućeno, ovaj pružatelj blokira domene koje je označio kao sumnjive, čak i ako nije potvrđeno da udomljuju zlonamjerni sadržaj. To može povećati broj lažno pozitivnih rezultata."
+  },
+  "blockDynamicDns": {
+    "message": "Blokiraj domene s dinamičkim DNS-om"
+  },
+  "blockDynamicDnsTooltip": {
+    "message": "Kada je omogućeno, ovaj pružatelj blokira domene koje koriste usluge dinamičkog DNS-a, koje ponekad zloupotrebljavaju akteri prijetnji. To može povećati broj lažno pozitivnih rezultata."
   },
   "applyButton": {
     "message": "Primijeni"

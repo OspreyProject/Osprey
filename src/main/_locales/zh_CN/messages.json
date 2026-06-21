@@ -108,7 +108,31 @@
     "message": "忽略拦截阈值"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "启用后，来自该提供商的一次检测即可立即拦截该网站，而无需等待 Osprey 通常的多提供商阈值。 仅当你接受误报可能增加的潜在风险时才更改此设置。"
+    "message": "启用后，凡是被该提供商标记的域名都会被立即拦截，从而绕过双提供商阈值。这可能会增加误报。"
+  },
+  "blockCsam": {
+    "message": "拦截托管 CSAM 的域名"
+  },
+  "blockCsamTooltip": {
+    "message": "启用后，该提供商会拦截被标记为托管儿童性虐待内容（CSAM）的域名。"
+  },
+  "blockNewlyRegistered": {
+    "message": "拦截新注册的域名"
+  },
+  "blockNewlyRegisteredTooltip": {
+    "message": "启用后，该提供商会拦截在过去 90 天内注册的域名。这可能会增加误报。"
+  },
+  "blockSuspicious": {
+    "message": "拦截可疑域名"
+  },
+  "blockSuspiciousTooltip": {
+    "message": "启用后，即使尚未确认域名托管恶意内容，该提供商也会拦截其标记为可疑的域名。这可能会增加误报。"
+  },
+  "blockDynamicDns": {
+    "message": "拦截动态 DNS 域名"
+  },
+  "blockDynamicDnsTooltip": {
+    "message": "启用后，该提供商会拦截使用动态 DNS 服务的域名，这类服务有时会被威胁行为者滥用。这可能会增加误报。"
   },
   "applyButton": {
     "message": "应用"
