@@ -151,12 +151,26 @@
                     report: mailtoReport('info@precisionsec.com', 'PrecisionSec Web Protection'),
                 }),
 
+                hostnameBuiltin({
+                    id: 'safe-browsing',
+                    website: 'https://safebrowsing.google.com/?utm_source=osprey',
+                    aliases: ['safe-browsing'],
+                    displayName: 'Google Safe Browsing',
+                    group: providerGroups.security_filters.id,
+                    icon: 'assets/providers/safe-browsing.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: true,
+                    endpoint: 'safebrowsing',
+                    policyKey: 'SafeBrowsingEnabled',
+                    report: externalUrlReport('https://www.google.com/safebrowsing/report_error'),
+                }),
+
                 builtin({
                     id: 'adguard-security',
                     website: 'https://adguard-dns.io/?utm_source=osprey',
                     aliases: ['adGuardSecurity'],
                     displayName: 'AdGuard Security DNS',
-                    group: providerGroups.official_partners.id,
+                    group: providerGroups.security_filters.id,
                     icon: 'assets/providers/adguard.avif',
                     enabledByDefault: true,
                     bypassBlockingThreshold: false, // keep this 'false'
@@ -336,8 +350,22 @@
                 }),
 
                 hostnameBuiltin({
+                    id: 'securefeed',
+                    website: 'https://securefeed.com/?utm_source=osprey',
+                    aliases: ['securefeed'],
+                    displayName: 'SecureFeed List',
+                    group: providerGroups.feeds.id,
+                    icon: 'assets/providers/securefeed.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: true,
+                    endpoint: 'securefeed',
+                    policyKey: 'SecureFeedEnabled',
+                    report: mailtoReport('contact@securefeed.com', 'SecureFeed List'),
+                }),
+
+                hostnameBuiltin({
                     id: 'sinking-yachts',
-                    website: 'https://red.flag.domains/?utm_source=osprey',
+                    website: 'https://sinking.yachts/?utm_source=osprey',
                     aliases: ['sinking-yachts'],
                     displayName: 'SinkingYachts List',
                     group: providerGroups.feeds.id,
