@@ -6,7 +6,7 @@
     "message": "Osprey"
   },
   "extensionDescription": {
-    "message": "Block phishing, malware, scams & malicious sites in real time. Private, safe browsing with 20+ providers. Free & open-source."
+    "message": "Automatically blocks phishing, malware, scams, and dangerous websites while you browse. Free protection for safer browsing."
   },
   "logoAlt": {
     "message": "Osprey Logo"
@@ -202,5 +202,20 @@
   },
   "providerNameFallback": {
     "message": "Provider"
+  },
+  "ratePromptText": {
+    "message": "Love Osprey? Let us know below! Every bit helps."
+  },
+  "ratePromptDismiss": {
+    "message": "Dismiss"
+  },
+  "ratePromptChrome": {
+    "message": "Chrome"
+  },
+  "ratePromptFirefox": {
+    "message": "Firefox"
+  },
+  "ratePromptEdge": {
+    "message": "Edge"
   }
 }
