@@ -151,20 +151,6 @@
                     report: mailtoReport('info@precisionsec.com', 'PrecisionSec Web Protection'),
                 }),
 
-                hostnameBuiltin({
-                    id: 'safe-browsing',
-                    website: 'https://safebrowsing.google.com/?utm_source=osprey',
-                    aliases: ['safe-browsing'],
-                    displayName: 'Google Safe Browsing',
-                    group: providerGroups.security_filters.id,
-                    icon: 'assets/providers/safe-browsing.avif',
-                    enabledByDefault: true,
-                    bypassBlockingThreshold: true,
-                    endpoint: 'safebrowsing',
-                    policyKey: 'SafeBrowsingEnabled',
-                    report: externalUrlReport('https://www.google.com/safebrowsing/report_error'),
-                }),
-
                 builtin({
                     id: 'adguard-security',
                     website: 'https://adguard-dns.io/?utm_source=osprey',
