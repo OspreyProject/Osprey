@@ -77,6 +77,15 @@
   "malicious": {
     "message": "惡意"
   },
+  "suspicious": {
+    "message": "可疑"
+  },
+  "newlyRegistered": {
+    "message": "近期註冊的網域"
+  },
+  "dynamicDns": {
+    "message": "動態 DNS 網域"
+  },
   "phishing": {
     "message": "網路釣魚"
   },

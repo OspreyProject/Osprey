@@ -77,6 +77,15 @@
   "malicious": {
     "message": "Kenkėjiška"
   },
+  "suspicious": {
+    "message": "Įtartina"
+  },
+  "newlyRegistered": {
+    "message": "Neseniai registruotas domenas"
+  },
+  "dynamicDns": {
+    "message": "Dinaminio DNS domenas"
+  },
   "phishing": {
     "message": "Sukčiavimas apsimetant"
   },

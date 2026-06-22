@@ -77,6 +77,15 @@
   "malicious": {
     "message": "Zlonamjerno"
   },
+  "suspicious": {
+    "message": "Sumnjivo"
+  },
+  "newlyRegistered": {
+    "message": "Nedavno registrirana domena"
+  },
+  "dynamicDns": {
+    "message": "Domena s dinamičkim DNS-om"
+  },
   "phishing": {
     "message": "Krađa identiteta"
   },

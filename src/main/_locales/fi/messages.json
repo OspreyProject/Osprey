@@ -77,6 +77,15 @@
   "malicious": {
     "message": "Haitallinen"
   },
+  "suspicious": {
+    "message": "Epäilyttävä"
+  },
+  "newlyRegistered": {
+    "message": "Äskettäin rekisteröity verkkotunnus"
+  },
+  "dynamicDns": {
+    "message": "Dynaamista DNS:ää käyttävä verkkotunnus"
+  },
   "phishing": {
     "message": "Tietojenkalastelu"
   },

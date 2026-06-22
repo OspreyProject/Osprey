@@ -77,6 +77,15 @@
   "malicious": {
     "message": "Rosszindulatú"
   },
+  "suspicious": {
+    "message": "Gyanús"
+  },
+  "newlyRegistered": {
+    "message": "Újonnan regisztrált domain"
+  },
+  "dynamicDns": {
+    "message": "Dinamikus DNS-t használó domain"
+  },
   "phishing": {
     "message": "Adathalászat"
   },

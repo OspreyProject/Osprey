@@ -77,6 +77,15 @@
   "malicious": {
     "message": "Κακόβουλο"
   },
+  "suspicious": {
+    "message": "Ύποπτο"
+  },
+  "newlyRegistered": {
+    "message": "Πρόσφατα καταχωρισμένος τομέας"
+  },
+  "dynamicDns": {
+    "message": "Τομέας με δυναμικό DNS"
+  },
   "phishing": {
     "message": "Ηλεκτρονικό ψάρεμα"
   },

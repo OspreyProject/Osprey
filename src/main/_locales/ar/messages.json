@@ -77,6 +77,15 @@
   "malicious": {
     "message": "خبيث"
   },
+  "suspicious": {
+    "message": "مشبوه"
+  },
+  "newlyRegistered": {
+    "message": "نطاق مُسجَّل حديثًا"
+  },
+  "dynamicDns": {
+    "message": "نطاق DNS ديناميكي"
+  },
   "phishing": {
     "message": "تصيد احتيالي"
   },

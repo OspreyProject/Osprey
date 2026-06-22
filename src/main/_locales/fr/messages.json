@@ -77,6 +77,15 @@
   "malicious": {
     "message": "Malveillant"
   },
+  "suspicious": {
+    "message": "Suspect"
+  },
+  "newlyRegistered": {
+    "message": "Domaine récemment enregistré"
+  },
+  "dynamicDns": {
+    "message": "Domaine à DNS dynamique"
+  },
   "phishing": {
     "message": "Hameçonnage"
   },

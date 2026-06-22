@@ -77,6 +77,15 @@
   "malicious": {
     "message": "Độc hại"
   },
+  "suspicious": {
+    "message": "Đáng ngờ"
+  },
+  "newlyRegistered": {
+    "message": "Tên miền mới đăng ký"
+  },
+  "dynamicDns": {
+    "message": "Tên miền DNS động"
+  },
   "phishing": {
     "message": "Lừa đảo"
   },

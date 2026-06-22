@@ -77,6 +77,15 @@
   "malicious": {
     "message": "مخرب"
   },
+  "suspicious": {
+    "message": "مشکوک"
+  },
+  "newlyRegistered": {
+    "message": "دامنه تازه ثبت‌شده"
+  },
+  "dynamicDns": {
+    "message": "دامنه DNS پویا"
+  },
   "phishing": {
     "message": "فیشینگ"
   },

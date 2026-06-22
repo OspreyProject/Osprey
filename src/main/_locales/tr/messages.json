@@ -77,6 +77,15 @@
   "malicious": {
     "message": "Kötü Amaçlı"
   },
+  "suspicious": {
+    "message": "Şüpheli"
+  },
+  "newlyRegistered": {
+    "message": "Yeni kaydedilmiş alan adı"
+  },
+  "dynamicDns": {
+    "message": "Dinamik DNS alan adı"
+  },
   "phishing": {
     "message": "Kimlik Avı"
   },

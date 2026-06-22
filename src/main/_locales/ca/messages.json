@@ -77,6 +77,21 @@
   "malicious": {
     "message": "Maliciós"
   },
+  "suspicious": {
+    "message": "Sospitós"
+  },
+  "newlyRegistered": {
+    "message": "Domini registrat recentment"
+  },
+  "dynamicDns": {
+    "message": "Domini amb DNS dinàmic"
+  },
+  "clearAllowedWebsites": {
+    "message": "Esborra la llista de llocs web permesos"
+  },
+  "clearAllowedWebsitesMessage": {
+    "message": "S'han esborrat tots els llocs web permesos."
+  },
   "phishing": {
     "message": "Pesca d'identitat"
   },

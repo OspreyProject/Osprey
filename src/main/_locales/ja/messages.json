@@ -77,6 +77,15 @@
   "malicious": {
     "message": "悪意のある"
   },
+  "suspicious": {
+    "message": "不審"
+  },
+  "newlyRegistered": {
+    "message": "新規登録されたドメイン"
+  },
+  "dynamicDns": {
+    "message": "ダイナミック DNS のドメイン"
+  },
   "phishing": {
     "message": "フィッシング"
   },
