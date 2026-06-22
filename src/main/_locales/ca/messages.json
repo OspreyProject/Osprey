@@ -6,7 +6,7 @@
     "message": "Osprey"
   },
   "extensionDescription": {
-    "message": "Protecció en temps real contra la pesca d'identitat, el programari maliciós, el frau, els virus i els llocs web maliciosos."
+    "message": "Bloqueja automàticament phishing, malware, estafes i llocs perillosos mentre navegues. Protecció gratuïta per navegar més segur."
   },
   "logoAlt": {
     "message": "Logotip d'Osprey"
@@ -121,12 +121,6 @@
   },
   "fieldLabelApiKey": {
     "message": "Clau de l'API"
-  },
-  "bypassBlockingThreshold": {
-    "message": "Ignora el llindar de bloqueig"
-  },
-  "bypassBlockingThresholdTooltip": {
-    "message": "Quan està activat, una sola detecció d'aquest proveïdor bloqueja el lloc immediatament, en lloc d'esperar el llindar habitual de múltiples proveïdors d'Osprey. Modifica-ho només si acceptes el risc potencial d'un augment dels falsos positius."
   },
   "applyButton": {
     "message": "Aplica"
