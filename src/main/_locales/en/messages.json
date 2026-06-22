@@ -202,20 +202,5 @@
   },
   "providerNameFallback": {
     "message": "Provider"
-  },
-  "ratePromptText": {
-    "message": "Love Osprey? Let us know below! Every bit helps."
-  },
-  "ratePromptDismiss": {
-    "message": "Dismiss"
-  },
-  "ratePromptChrome": {
-    "message": "Chrome"
-  },
-  "ratePromptFirefox": {
-    "message": "Firefox"
-  },
-  "ratePromptEdge": {
-    "message": "Edge"
   }
 }
