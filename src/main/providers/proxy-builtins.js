@@ -294,20 +294,6 @@
                 }),
 
                 hostnameBuiltin({
-                    id: 'phishing-database',
-                    website: 'https://github.com/Phishing-Database/Phishing.Database/?utm_source=osprey',
-                    aliases: ['phishingDatabase'],
-                    displayName: 'Phishing.Database List',
-                    group: providerGroups.feeds.id,
-                    icon: 'assets/providers/phishingdatabase.avif',
-                    enabledByDefault: true,
-                    bypassBlockingThreshold: false, // keep this 'false'
-                    endpoint: 'phishing-database',
-                    policyKey: 'PhishingDatabaseEnabled',
-                    report: mailtoReport('support@phish.co.za', 'Phishing.Database (ACTIVE list)'),
-                }),
-
-                hostnameBuiltin({
                     id: 'phishunt-io',
                     website: 'https://phishunt.io/?utm_source=osprey',
                     aliases: ['phishuntIO'],
