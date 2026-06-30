@@ -392,20 +392,6 @@
                 }),
 
                 hostnameBuiltin({
-                    id: 'urlquery',
-                    website: 'https://urlquery.net/?utm_source=osprey',
-                    aliases: ['urlquery'],
-                    displayName: 'URLQuery List',
-                    group: providerGroups.feeds.id,
-                    icon: 'assets/providers/urlquery.avif',
-                    enabledByDefault: true,
-                    bypassBlockingThreshold: true,
-                    endpoint: 'urlquery',
-                    policyKey: 'URLQueryEnabled',
-                    report: mailtoReport('support@urlquery.net', 'URLQuery List'),
-                }),
-
-                hostnameBuiltin({
                     id: 'validin',
                     website: 'https://validin.com/?utm_source=osprey',
                     aliases: ['validin'],
