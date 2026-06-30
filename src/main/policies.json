@@ -71,6 +71,12 @@
       "type": "boolean",
       "default": true
     },
+    "iZOOlogicEnabled": {
+      "title": "iZOOlogic Web Protection Enabled",
+      "description": "Managed enabled state for iZOOlogic Web Protection.",
+      "type": "boolean",
+      "default": true
+    },
     "PrecisionSecEnabled": {
       "title": "PrecisionSec Web Protection Enabled",
       "description": "Managed enabled state for PrecisionSec Web Protection.",
@@ -119,6 +125,12 @@
       "type": "boolean",
       "default": true
     },
+    "KADAntiScamEnabled": {
+      "title": "KAD Anti-Scam List Enabled",
+      "description": "Managed enabled state for KAD Anti-Scam List.",
+      "type": "boolean",
+      "default": true
+    },
     "OpenPhishEnabled": {
       "title": "OpenPhish List Enabled",
       "description": "Managed enabled state for OpenPhish List.",
@@ -131,15 +143,27 @@
       "type": "boolean",
       "default": true
     },
-    "PhishingDatabaseEnabled": {
-      "title": "Phishing.Database List Enabled",
-      "description": "Managed enabled state for Phishing.Database List.",
-      "type": "boolean",
-      "default": true
-    },
     "PhishuntIOEnabled": {
       "title": "Phishunt.io List Enabled",
       "description": "Managed enabled state for Phishunt.io List.",
+      "type": "boolean",
+      "default": true
+    },
+    "RedFlagDomainsEnabled": {
+      "title": "Red Flag Domains List Enabled",
+      "description": "Managed enabled state for Red Flag Domains List.",
+      "type": "boolean",
+      "default": true
+    },
+    "SecureFeedEnabled": {
+      "title": "SecureFeed List Enabled",
+      "description": "Managed enabled state for SecureFeed List.",
+      "type": "boolean",
+      "default": true
+    },
+    "SinkingYachtsEnabled": {
+      "title": "SinkingYachts List Enabled",
+      "description": "Managed enabled state for SinkingYachts List.",
       "type": "boolean",
       "default": true
     },
@@ -152,6 +176,18 @@
     "URLhausEnabled": {
       "title": "URLhaus List Enabled",
       "description": "Managed enabled state for URLhaus List.",
+      "type": "boolean",
+      "default": true
+    },
+    "URLAbuseEnabled": {
+      "title": "URLAbuse List Enabled",
+      "description": "Managed enabled state for URLAbuse List.",
+      "type": "boolean",
+      "default": true
+    },
+    "ValidinEnabled": {
+      "title": "Validin List Enabled",
+      "description": "Managed enabled state for Validin List.",
       "type": "boolean",
       "default": true
     }
