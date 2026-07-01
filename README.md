@@ -5,7 +5,7 @@
 [![Edge Users](https://img.shields.io/badge/dynamic/json?label=Edge%20Users&color=00CC00&query=%24.activeInstallCount&url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%2Fnopglhplnghfhpniofkcopmhbjdonlgn)](https://microsoftedge.microsoft.com/addons/detail/osprey-browser-protectio/nopglhplnghfhpniofkcopmhbjdonlgn)
 [![Firefox Users](https://img.shields.io/amo/users/osprey-browser-protection?label=Firefox%20Users&color=00CC00)](https://addons.mozilla.org/en-US/firefox/addon/osprey-browser-protection)
 
-**Osprey** is a free, open-source browser security extension that protects you from phishing, malware, scams, and other malicious websites.
+**Osprey** is a free browser security extension that protects you from phishing, malware, scams, and other malicious websites.
 
 [LinkedIn Page](https://osprey.ac/linkedin)
 • [Privacy Policy](https://osprey.ac/privacy)
