@@ -50,12 +50,13 @@ globalThis.OspreyDirectIntegrations = (() => {
                                          providerNames,
                                          responseRules,
                                          website = 'https://www.metadefender.com/?utm_source=osprey',
+                                         icon = 'assets/providers/metadefender.avif',
                                      }) => integration({
         id,
         aliases,
         displayName,
         group: providerGroups.direct_integrations.id,
-        icon: 'assets/providers/metadefender.png',
+        icon,
         enabledByDefault: false,
         lookupTarget: 'url',
         tags: ['api_key_required'],
@@ -86,7 +87,8 @@ globalThis.OspreyDirectIntegrations = (() => {
             website: 'https://www.metadefender.com/?utm_source=osprey',
             aliases: ['metadefender'],
             displayName: 'MetaDefender Reputation',
-            providerNames: ['Offline Reputation'],
+            providerNames: ['MetaDefender Reputation'],
+            icon: 'assets/providers/metadefender.avif',
             responseRules: Object.freeze([
                 Object.freeze({
                     path: 'assessment',
@@ -121,8 +123,9 @@ globalThis.OspreyDirectIntegrations = (() => {
         metadefenderIntegration({
             id: 'metadefender-webroot',
             website: 'https://www.metadefender.com/?utm_source=osprey',
-            displayName: 'Webroot (MetaDefender)',
+            displayName: 'Webroot',
             providerNames: ['Webroot'],
+            icon: 'assets/providers/webroot.avif',
             responseRules: Object.freeze([
                 Object.freeze({
                     path: 'category',
