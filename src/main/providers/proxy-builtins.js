@@ -267,6 +267,20 @@
                 }),
 
                 hostnameBuiltin({
+                    id: 'apva',
+                    website: 'https://antiphish.org/?utm_source=osprey',
+                    aliases: ['apva'],
+                    displayName: 'APVA',
+                    group: providerGroups.feeds.id,
+                    icon: 'assets/providers/apva.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: true,
+                    endpoint: 'apva',
+                    policyKey: 'APVAEnabled',
+                    report: externalUrlReport('https://antiphish.org/false-positive'),
+                }),
+
+                hostnameBuiltin({
                     id: 'aa419',
                     website: 'https://db.aa419.org/?utm_source=osprey',
                     aliases: ['aa419'],
