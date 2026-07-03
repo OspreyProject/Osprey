@@ -257,7 +257,7 @@ globalThis.OspreyProviderEngine = (() => {
     };
 
     const checkProviderCache = async (provider, lookupKey, targetUrl, expirationSeconds, onResult, globalAllowMatched) => {
-        if (globalAllowMatched && !provider.bypassBlockingThreshold) {
+        if (globalAllowMatched) {
             cacheService.markAllowed(provider.id, lookupKey, expirationSeconds).catch(() => {
                 // ignored
             });
