@@ -209,6 +209,52 @@ html, body {
     word-break: break-all;
 }
 
+.provider-detail {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.provider-inline-logo {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    object-fit: contain;
+    border-radius: 3px;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.provider-inline-text {
+    min-width: 0;
+    word-break: break-word;
+}
+
+.provider-inline-name {
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.provider-inline-name:hover {
+    color: #ffffff;
+    border-bottom-color: #ffffff;
+    text-decoration: underline;
+}
+
+.provider-inline-name:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+.provider-inline-name.is-plain {
+    color: inherit;
+    border-bottom: none;
+    cursor: default;
+    pointer-events: none;
+}
+
 /* --------------------------------------------------
    Inline actions
 -------------------------------------------------- */

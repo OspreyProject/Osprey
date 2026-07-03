@@ -54,6 +54,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         'reason', 'url', 'reportedBy', 'reportWebsite', 'allowWebsite',
         'backButton', 'continueButton', 'warningTitle', 'recommendation',
         'details', 'urlLabel', 'reportedByLabel', 'reasonLabel', 'logo', 'reportBreakpoint',
+        'reportedByLogo', 'reportedByLink', 'reportedBySuffix',
     ];
 
     const warningContextFallback = {
@@ -125,16 +126,18 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         }
     }
 
-    const resetReportedBy = () => {
-        const el = domElements.reportedBy;
+    const clearReportedBySuffix = () => {
+        setTextContent(domElements.reportedBySuffix, '');
 
-        if (el) {
-            setTextContent(el, reportedByText);
+        const container = domElements.reportedBy;
 
-            if (el.title !== '') {
-                el.title = '';
-            }
+        if (container && container.title !== '') {
+            container.title = '';
         }
+    };
+
+    const resetReportedBy = () => {
+        clearReportedBySuffix();
     };
 
     const syncPrimaryContext = (origin, result) => {
@@ -219,14 +222,75 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         return typeof id === 'string' ? providerCatalog.getDefinition(id)?.displayName ?? id : LangUtil.UNKNOWN_ORIGIN;
     }
 
-    function applyOriginVisuals(origin) {
-        const systemName = typeof origin === 'string' ? resolveProviderName(origin) : LangUtil.UNKNOWN_ORIGIN;
-        const el = domElements.reportedBy;
+    function updateProviderLink(definition, name) {
+        const link = domElements.reportedByLink;
 
-        if (el && el.textContent !== systemName) {
-            el.textContent = systemName;
-            reportedByText = systemName;
+        if (!link) {
+            return;
         }
+
+        setTextContent(link, name);
+
+        const parsedWebsite = parseSafeHttpUrl(definition?.website);
+
+        if (parsedWebsite) {
+            const href = parsedWebsite.toString();
+
+            if (link.getAttribute('href') !== href) {
+                link.setAttribute('href', href);
+            }
+
+            link.classList.remove('is-plain');
+        } else {
+            if (link.hasAttribute('href')) {
+                link.removeAttribute('href');
+            }
+
+            link.classList.add('is-plain');
+        }
+    }
+
+    function updateProviderLogo(definition, name) {
+        const logo = domElements.reportedByLogo;
+
+        if (!logo) {
+            return;
+        }
+
+        const iconUrl = definition ? providerCatalog.resolveIconUrl(definition, 2) : '';
+
+        if (iconUrl) {
+            const altText = LangUtil.format('providerLogoAlt', name);
+
+            if (logo.getAttribute('src') !== iconUrl) {
+                logo.setAttribute('src', iconUrl);
+            }
+
+            if (logo.alt !== altText) {
+                logo.alt = altText;
+            }
+
+            setElementVisibility(logo, true);
+        } else {
+            if (logo.hasAttribute('src')) {
+                logo.removeAttribute('src');
+            }
+
+            if (logo.alt !== '') {
+                logo.alt = '';
+            }
+
+            setElementVisibility(logo, false);
+        }
+    }
+
+    function applyOriginVisuals(origin) {
+        const definition = typeof origin === 'string' ? providerCatalog.getDefinition(origin) : null;
+        const systemName = typeof origin === 'string' ? resolveProviderName(origin) : LangUtil.UNKNOWN_ORIGIN;
+
+        updateProviderLink(definition, systemName);
+        updateProviderLogo(definition, systemName);
+        clearReportedBySuffix();
     }
 
     function updateBlockedCounter(response) {
@@ -266,7 +330,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
             }
         }
 
-        setTextContent(el, `${reportedByText} ${othersText}`);
+        setTextContent(domElements.reportedBySuffix, ` ${othersText}`);
 
         const newTitle = `${LangUtil.REPORTED_BY_ALSO}${systemsStr}`.replace(safeTitleRegex, '');
 
@@ -586,6 +650,12 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         for (let i = 0, len = domElementIDs.length; i < len; i++) {
             const id = domElementIDs[i];
             domElements[id] = document.getElementById(id);
+        }
+
+        if (domElements.reportedByLogo) {
+            domElements.reportedByLogo.addEventListener('error', () => {
+                setElementVisibility(domElements.reportedByLogo, false);
+            });
         }
 
         currentContext = parsePageContext(document.URL);
