@@ -65,6 +65,12 @@
       "type": "boolean",
       "default": true
     },
+    "BforeAIPreCrimeEnabled": {
+      "title": "BforeAI PreCrime Enabled",
+      "description": "Managed enabled state for BforeAI PreCrime.",
+      "type": "boolean",
+      "default": true
+    },
     "ChainPatrolEnabled": {
       "title": "ChainPatrol Web Protection Enabled",
       "description": "Managed enabled state for ChainPatrol Web Protection.",

@@ -107,6 +107,21 @@
                 }),
 
                 builtin({
+                    id: 'bforeai',
+                    website: 'https://bfore.ai/?utm_source=osprey',
+                    aliases: ['bforeAI'],
+                    displayName: 'BforeAI PreCrime',
+                    group: providerGroups.official_partners.id,
+                    icon: 'assets/providers/bforeai.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: true,
+                    endpoint: 'bforeai',
+                    tags: ['proxy', 'partner'],
+                    policyKey: 'BforeAIEnabled',
+                    report: externalUrlReport('https://bfore.ai/support'),
+                }),
+
+                builtin({
                     id: 'chainpatrol',
                     website: 'https://chainpatrol.io/?utm_source=osprey',
                     aliases: ['chainPatrol'],
