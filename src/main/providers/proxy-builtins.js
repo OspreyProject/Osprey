@@ -267,6 +267,20 @@
                 }),
 
                 hostnameBuiltin({
+                    id: 'aa419',
+                    website: 'https://db.aa419.org/?utm_source=osprey',
+                    aliases: ['aa419'],
+                    displayName: 'Artists Against 419',
+                    group: providerGroups.feeds.id,
+                    icon: 'assets/providers/aa419.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: true,
+                    endpoint: 'aa419',
+                    policyKey: 'AA419Enabled',
+                    report: externalUrlReport('https://wiki.aa419.org/index.php/Contact_Us'),
+                }),
+
+                hostnameBuiltin({
                     id: 'kad-anti-scam',
                     website: 'https://kadantiscam.netlify.app/?utm_source=osprey',
                     aliases: ['kad-anti-scam'],
