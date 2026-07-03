@@ -221,7 +221,7 @@ globalThis.OspreyProviderCard = (() => {
 
         if (Array.isArray(tags)) {
             if (tags.includes('proxy')) {
-                indicators.push(createIndicator('provider-proxy-indicator',
+                indicators.push(createIndicator('proxy-badge',
                     LangUtil.INDICATOR_IP_PROTECTED, LangUtil.INDICATOR_IP_PROTECTED));
             }
 

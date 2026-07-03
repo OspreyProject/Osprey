@@ -85,11 +85,6 @@ html, body {
     padding: 8px 0;
 }
 
-.banner-spacer {
-    width: 50px;
-    flex-shrink: 0;
-}
-
 /* --------------------------------------------------
    Main content
 -------------------------------------------------- */
@@ -118,7 +113,7 @@ html, body {
 }
 
 /* --------------------------------------------------
-   Provider item
+   Provider items
 -------------------------------------------------- */
 .provider-item {
     background-color: #323232;
@@ -148,9 +143,6 @@ html, body {
     display: block;
 }
 
-/* --------------------------------------------------
-   Provider header (always visible row)
--------------------------------------------------- */
 .provider-header {
     display: flex;
     align-items: center;
@@ -179,6 +171,9 @@ html, body {
     flex: 1;
 }
 
+/* --------------------------------------------------
+   Badges and indicators
+-------------------------------------------------- */
 .provider-badge {
     font-size: 10px;
     font-weight: 600;
@@ -221,7 +216,7 @@ html, body {
     mask-size: contain;
 }
 
-.provider-proxy-indicator {
+.proxy-badge {
     position: relative;
     width: 18px;
     height: 18px;
@@ -236,7 +231,7 @@ html, body {
     outline: none;
 }
 
-.provider-proxy-indicator::before {
+.proxy-badge::before {
     content: "";
     width: 11px;
     height: 11px;
@@ -251,80 +246,17 @@ html, body {
     mask-size: contain;
 }
 
-.provider-slow-support-indicator {
-    position: relative;
-    width: 18px;
-    height: 18px;
-    flex-shrink: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background-color: rgba(220, 120, 30, 0.16);
-    border: 1px solid rgba(220, 120, 30, 0.45);
-    cursor: help;
-    outline: none;
-}
-
-.provider-slow-support-indicator::before {
-    content: "";
-    width: 11px;
-    height: 11px;
-    background-color: #dc781e;
-    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='black' d='M14 3H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zm-1.5 1L8 7.5 3.5 4h9zm1.5 8H2V5.25l5.65 3.54a.75.75 0 0 0 .7 0L14 5.25V12z'/%3E%3C/svg%3E");
-    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='black' d='M14 3H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zm-1.5 1L8 7.5 3.5 4h9zm1.5 8H2V5.25l5.65 3.54a.75.75 0 0 0 .7 0L14 5.25V12z'/%3E%3C/svg%3E");
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-    mask-position: center;
-    -webkit-mask-size: contain;
-    mask-size: contain;
-}
-
-.provider-false-positive-indicator {
-    position: relative;
-    width: 18px;
-    height: 18px;
-    flex-shrink: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background-color: rgba(210, 55, 55, 0.16);
-    border: 1px solid rgba(210, 55, 55, 0.45);
-    cursor: help;
-    outline: none;
-}
-
-.provider-false-positive-indicator::before {
-    content: "";
-    width: 11px;
-    height: 11px;
-    background-color: #d25050;
-    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='black' d='M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 1.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zM7.25 5v4.5h1.5V5h-1.5zm0 5.5V12h1.5v-1.5h-1.5z'/%3E%3C/svg%3E");
-    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='black' d='M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 1.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zM7.25 5v4.5h1.5V5h-1.5zm0 5.5V12h1.5v-1.5h-1.5z'/%3E%3C/svg%3E");
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-    mask-position: center;
-    -webkit-mask-size: contain;
-    mask-size: contain;
-}
-
 .partner-badge::after,
-.provider-proxy-indicator::after,
-.provider-slow-support-indicator::after,
-.provider-false-positive-indicator::after {
+.proxy-badge::after {
     content: attr(data-tooltip);
     position: absolute;
     right: 50%;
     bottom: calc(100% + 8px);
     transform: translateX(50%);
     white-space: nowrap;
-    pointer-events: none;
     opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.15s ease, visibility 0.15s ease;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
     font-size: 11px;
     line-height: 1.25;
     font-weight: 600;
@@ -339,16 +271,14 @@ html, body {
 
 .partner-badge:hover::after,
 .partner-badge:focus-visible::after,
-.provider-proxy-indicator:hover::after,
-.provider-proxy-indicator:focus-visible::after,
-.provider-slow-support-indicator:hover::after,
-.provider-slow-support-indicator:focus-visible::after,
-.provider-false-positive-indicator:hover::after,
-.provider-false-positive-indicator:focus-visible::after {
+.proxy-badge:hover::after,
+.proxy-badge:focus-visible::after {
     opacity: 1;
-    visibility: visible;
 }
 
+/* --------------------------------------------------
+   Provider body links
+-------------------------------------------------- */
 .api-key-link-text {
     font-family: 'Segoe UI', sans-serif;
     font-size: 11px;
@@ -388,6 +318,10 @@ html, body {
 .provider-website-link:focus-visible {
     outline: none;
 }
+
+/* --------------------------------------------------
+   Provider bypass row
+-------------------------------------------------- */
 
 .provider-bypass-row {
     display: flex;
@@ -460,22 +394,17 @@ html, body {
     background-image: url(../../assets/misc/switch_off.avif);
 }
 
+.toggle-switch.disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+}
+
 /* --------------------------------------------------
    Form fields
 -------------------------------------------------- */
 .field-group {
     margin-top: 12px;
-}
-
-.field-row {
-    display: flex;
-    gap: 10px;
-    margin-top: 0;
-}
-
-.field-row .field-group {
     flex: 1;
-    margin-top: 12px;
 }
 
 .field-label {
@@ -488,17 +417,7 @@ html, body {
     margin-bottom: 5px;
 }
 
-.optional-tag {
-    font-weight: 400;
-    letter-spacing: 0;
-    text-transform: none;
-    color: #646464;
-    font-size: 10px;
-}
-
-.field-input,
-.field-select,
-.field-textarea {
+.field-input {
     width: 100%;
     background-color: #1c1c1c;
     border: 1px solid #262626;
@@ -511,20 +430,21 @@ html, body {
     opacity: 1;
 }
 
-.field-textarea {
-    resize: none;
-    font-family: 'Consolas', 'Courier New', monospace;
-    font-size: 11px;
-    line-height: 1.5;
+.field-input.field-enabled {
+    background-color: #373737;
+    border: 1px solid #5a5a5a;
+    color: #ebebeb;
+    cursor: text;
+    opacity: 1;
 }
 
-.field-select {
-    appearance: none;
-    -webkit-appearance: none;
-    padding-right: 24px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23555'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 8px center;
+.field-input.field-enabled:focus {
+    outline: none;
+    border-color: #f3ba22;
+}
+
+.field-input:disabled {
+    cursor: not-allowed;
 }
 
 /* --------------------------------------------------
@@ -549,6 +469,11 @@ html, body {
     -webkit-user-select: none;
 }
 
+.action-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+}
+
 .apply-btn {
     background-color: #f3ba22;
     color: #ffffff;
@@ -556,102 +481,17 @@ html, body {
     margin: 0 0 3px 0;
 }
 
-.delete-btn {
-    background-color: #3e3e3e;
-    color: #c8c8c8;
-}
-
-/* --------------------------------------------------
-   Section header row (label + Add button)
--------------------------------------------------- */
-.section-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
-}
-
-.section-header .section-label {
-    margin: 0;
-}
-
-.add-provider-toggle {
-    font-family: 'Segoe UI', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    padding: 5px 14px;
-    border-radius: 4px;
-    border: 1px solid rgba(243, 186, 34, 0.4);
-    background-color: rgba(243, 186, 34, 0.1);
-    color: #f3ba22;
-    cursor: pointer;
-    user-select: none;
-    -webkit-user-select: none;
-}
-
-.add-provider-toggle:hover {
-    background-color: rgba(243, 186, 34, 0.2);
-}
-
-/* --------------------------------------------------
-   Add Provider form
--------------------------------------------------- */
-.add-provider-form {
-    background-color: #2d2d2d;
-    border-radius: 6px;
-    padding: 14px 14px 12px;
-    margin-bottom: 12px;
-    border: 1px solid #464646;
-}
-
-.add-provider-title {
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: #b4b4b4;
-    margin: 0 0 12px 0;
-}
-
-.add-provider-actions {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-top: 14px;
-}
-
-.add-provider-form .apply-btn.is-valid {
+.apply-btn.is-valid {
     cursor: pointer;
     opacity: 1;
 }
 
-.add-provider-form .apply-btn.is-valid:hover {
+.apply-btn.is-valid:hover {
     background-color: #dca81c;
 }
 
-.add-provider-form .apply-btn.is-valid:active {
+.apply-btn.is-valid:active {
     background-color: #c89814;
-}
-
-.field-input.field-enabled,
-.field-select.field-enabled,
-.field-textarea.field-enabled {
-    background-color: #373737;
-    border: 1px solid #5a5a5a;
-    color: #ebebeb;
-    cursor: text;
-    opacity: 1;
-}
-
-.field-select.field-enabled {
-    cursor: pointer;
-}
-
-.field-input.field-enabled:focus,
-.field-select.field-enabled:focus,
-.field-textarea.field-enabled:focus {
-    outline: none;
-    border-color: #f3ba22;
 }
 
 /* --------------------------------------------------
@@ -702,71 +542,8 @@ html, body {
 }
 
 /* --------------------------------------------------
-   Required tag (mirrors optional-tag)
+    Third-party provider apply button
 -------------------------------------------------- */
-.required-tag {
-    font-weight: 600;
-    letter-spacing: 0;
-    text-transform: none;
-    color: #f3ba22;
-    font-size: 10px;
-}
-
-/* --------------------------------------------------
-   Custom provider items (fields are editable)
--------------------------------------------------- */
-.field-input:disabled {
-    cursor: not-allowed;
-}
-
-.password-field-wrap .field-input {
-    padding-right: 34px;
-}
-
-.provider-item.custom .field-input,
-.provider-item.custom .field-select,
-.provider-item.custom .field-textarea {
-    background-color: #373737;
-    border: 1px solid #5a5a5a;
-    color: #ebebeb;
-    cursor: text;
-    opacity: 1;
-}
-
-.provider-item.custom .field-select {
-    cursor: pointer;
-}
-
-.provider-item.custom .field-input:focus,
-.provider-item.custom .field-select:focus,
-.provider-item.custom .field-textarea:focus {
-    outline: none;
-    border-color: #f3ba22;
-}
-
-.provider-item.custom .apply-btn.is-changed {
-    cursor: pointer;
-    opacity: 1;
-}
-
-.provider-item.custom .apply-btn.is-changed:hover {
-    background-color: #dca81c;
-}
-
-.provider-item.custom .apply-btn.is-changed:active {
-    background-color: #c89814;
-}
-
-.provider-item.custom .delete-btn {
-    cursor: pointer;
-    opacity: 1;
-}
-
-.provider-item.custom .delete-btn:hover {
-    background-color: #502828;
-    color: #ffb4b4;
-}
-
 .provider-item.third-party .third-party-apply-btn.is-changed {
     cursor: pointer;
     opacity: 1;
@@ -787,6 +564,10 @@ html, body {
     position: relative;
     display: flex;
     align-items: center;
+}
+
+.password-field-wrap .field-input {
+    padding-right: 34px;
 }
 
 .password-reveal-btn {
@@ -834,21 +615,6 @@ html, body {
 }
 
 /* --------------------------------------------------
-   Inline code in field labels
--------------------------------------------------- */
-.field-label code {
-    font-family: 'Consolas', 'Courier New', monospace;
-    font-size: 10px;
-    background-color: #232323;
-    padding: 1px 4px;
-    border-radius: 3px;
-    color: #b4b4b4;
-    text-transform: none;
-    letter-spacing: 0;
-    font-weight: 400;
-}
-
-/* --------------------------------------------------
    Provider sections
 -------------------------------------------------- */
 .provider-section {
@@ -866,164 +632,8 @@ html, body {
     gap: 6px;
 }
 
-.custom-section {
-    margin-top: 8px;
-}
-
-.no-custom-note {
-    font-size: 12px;
-    color: #646464;
-    margin: 6px 2px 0;
-}
-
 /* --------------------------------------------------
-   Logic block builder
--------------------------------------------------- */
-.logic-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 2px;
-}
-
-.logic-header .field-label {
-    margin: 0;
-}
-
-.logic-add-btn {
-    font-family: 'Segoe UI', sans-serif;
-    font-size: 11px;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 4px;
-    border: 1px solid rgba(243, 186, 34, 0.4);
-    background-color: rgba(243, 186, 34, 0.1);
-    color: #f3ba22;
-    cursor: pointer;
-    user-select: none;
-    -webkit-user-select: none;
-    flex-shrink: 0;
-    position: relative;
-    top: 2px;
-}
-
-.logic-add-btn:hover {
-    background-color: rgba(243, 186, 34, 0.2);
-}
-
-.logic-block-list {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.logic-block-inner {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background-color: #262626;
-    border: 1px solid #373737;
-    border-radius: 4px;
-    padding: 6px 8px;
-}
-
-.logic-block-label {
-    font-size: 10px;
-    font-weight: 700;
-    color: #f3ba22;
-    letter-spacing: 0.05em;
-    flex-shrink: 0;
-    text-transform: uppercase;
-}
-
-.logic-condition {
-    flex: 1;
-    min-width: 0;
-}
-
-.logic-result {
-    width: 130px;
-    flex-shrink: 0;
-}
-
-.logic-block-btns {
-    display: flex;
-    gap: 4px;
-    flex-shrink: 0;
-}
-
-.logic-move-btn,
-.logic-remove-btn {
-    font-size: 10px;
-    width: 22px;
-    height: 22px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    user-select: none;
-    -webkit-user-select: none;
-}
-
-.logic-move-btn {
-    background-color: #373737;
-    color: #b4b4b4;
-}
-
-.logic-move-btn:hover {
-    background-color: #464646;
-}
-
-.logic-remove-btn {
-    background-color: #3c2323;
-    color: #c87878;
-}
-
-.logic-remove-btn:hover {
-    background-color: #502828;
-    color: #ffa0a0;
-}
-
-.logic-condition.is-invalid {
-    border-color: #b44646;
-    outline-color: #b44646;
-}
-
-.logic-condition-error {
-    display: block;
-    font-size: 11px;
-    color: #c86464;
-    padding: 3px 8px 1px;
-    min-height: 0;
-}
-
-.logic-condition-error:empty {
-    display: none;
-}
-
-.logic-empty-note,
-.logic-locked-note {
-    font-size: 11px;
-    color: #646464;
-    padding: 6px 0 0;
-    font-style: italic;
-}
-
-.field-help {
-    font-size: 11px;
-    color: #646464;
-    margin: -1px 0 6px;
-    line-height: 1.4;
-}
-
-.logic-header + .field-help {
-    margin-top: -2px;
-}
-
-/* --------------------------------------------------
-   Reset footer
+   Footer buttons
 -------------------------------------------------- */
 .reset-footer {
     display: flex;
@@ -1054,6 +664,11 @@ html, body {
     transition: background-color 0.15s ease, color 0.15s ease;
 }
 
+.reset-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+}
+
 .reset-providers-btn {
     background-color: #373737;
     color: #c8c8c8;
@@ -1074,41 +689,4 @@ html, body {
 .reset-all-btn:not(:disabled):hover {
     background-color: #502828;
     color: #ffaaaa;
-}
-
-/* --------------------------------------------------
-   Security hardening
--------------------------------------------------- */
-.action-btn:disabled {
-    cursor: not-allowed;
-    opacity: 0.4;
-}
-
-.toggle-switch.disabled {
-    cursor: not-allowed;
-    opacity: 0.45;
-}
-
-.reset-btn:disabled {
-    cursor: not-allowed;
-    opacity: 0.45;
-}
-
-.security-note {
-    margin: 0 0 12px;
-    padding: 10px 12px;
-    border-radius: 6px;
-    border: 1px solid rgba(243, 186, 34, 0.35);
-    background-color: rgba(243, 186, 34, 0.08);
-    color: #dcdcdc;
-    font-size: 12px;
-    line-height: 1.6;
-}
-
-.settings-section {
-    background-color: #323232;
-    border-radius: 6px;
-    padding: 14px;
-    border: 1px solid #3e3e3e;
-    margin-bottom: 14px;
 }
