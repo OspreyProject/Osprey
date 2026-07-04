@@ -42,13 +42,13 @@ extension icon in your browser's toolbar.
 
 ###
 
-The settings page allows you to configure which protection providers Osprey uses to check websites.
+The settings page allows you to configure which protection providers Osprey uses to check websites:
 
 ![Settings Page](https://i.imgur.com/pjhiy6R.png)
 
 ###
 
-You can even add your own API keys for third-party integrations that support it.
+You can even add your own API keys for third-party integrations that support it:
 
 ![Third-Party Integrations](https://i.imgur.com/xzYLywa.png)
 
@@ -58,9 +58,6 @@ When Osprey blocks a website, you'll see a warning page like this:
 
 ![Warning Page](https://i.imgur.com/RZZ82Kr.png)
 
-From there, you can choose to go back to safety, continue anyway if you believe the warning is a false positive,
-report the website as safe, or always allow the website if the warning page keeps appearing.
-
 ## Privacy
 
 Osprey routes every URL you visit to the protection providers you have enabled, using our privacy-respecting
@@ -69,6 +66,9 @@ personally identifiable information.
 
 Providers only see requests originating from the proxy server's IP address, which is shared by thousands of users,
 making it **impossible** for any provider to associate a URL lookup with you specifically.
+
+We also don't log any personally identifiable information, and we don't store any browsing history.
+Osprey is designed to be **privacy-first**, and we will never compromise that.
 
 ## Contact Us
 
