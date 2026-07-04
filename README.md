@@ -36,7 +36,7 @@ your browsing data.
 ###
 
 You can check Osprey's real-time protection status by left-clicking the ![Icon](https://i.imgur.com/E1SM8OJ.png)
-extension icon in your browser's toolbar.
+extension icon in your browser's toolbar:
 
 ![Popup Panel](https://i.imgur.com/0MaOw9D.png)
 
@@ -57,6 +57,21 @@ You can even add your own API keys for third-party integrations that support it:
 When Osprey blocks a website, you'll see a warning page like this:
 
 ![Warning Page](https://i.imgur.com/RZZ82Kr.png)
+
+## Our Partners
+
+Thanks to our partnered protection providers below, who've supported the project and provided exclusive access to their
+premium threat intelligence feeds:
+
+<p align="center">
+  <a href="https://alphamountain.ai?utm-source=osprey" title="alphaMountain"><img src="https://i.imgur.com/zyWXJVd.png" alt="alphaMountain" height="40"></a>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://bfore.ai/?utm-source=osprey" title="BforeAI"><img src="https://i.imgur.com/0a864E3.png" alt="BforeAI" height="40"></a>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://chainpatrol.com/?utm-source=osprey" title="ChainPatrol"><img src="https://i.imgur.com/lKLZERI.png" alt="ChainPatrol" height="40"></a>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://izoologic.com/?utm-source=osprey" title="iZOOlogic"><img src="https://i.imgur.com/O2AVvEa.png" alt="iZOOlogic" height="40"></a>
+</p>
 
 ## Privacy
 
