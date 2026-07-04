@@ -64,13 +64,13 @@ Thanks to our partnered protection providers below, who've supported the project
 premium threat intelligence feeds:
 
 <p align="center">
-  <a href="https://alphamountain.ai?utm-source=osprey" title="alphaMountain"><img src="https://i.imgur.com/zyWXJVd.png" alt="alphaMountain" height="50"></a>
+  <a href="https://alphamountain.ai?utm-source=osprey" title="alphaMountain"><img src="https://i.imgur.com/zyWXJVd.png" alt="alphaMountain" height="75"></a>
   &nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="https://bfore.ai/?utm-source=osprey" title="BforeAI"><img src="https://i.imgur.com/0a864E3.png" alt="BforeAI" height="50"></a>
+  <a href="https://bfore.ai/?utm-source=osprey" title="BforeAI"><img src="https://i.imgur.com/0a864E3.png" alt="BforeAI" height="75"></a>
   &nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="https://chainpatrol.com/?utm-source=osprey" title="ChainPatrol"><img src="https://i.imgur.com/lKLZERI.png" alt="ChainPatrol" height="50"></a>
+  <a href="https://chainpatrol.com/?utm-source=osprey" title="ChainPatrol"><img src="https://i.imgur.com/lKLZERI.png" alt="ChainPatrol" height="75"></a>
   &nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="https://izoologic.com/?utm-source=osprey" title="iZOOlogic"><img src="https://i.imgur.com/O2AVvEa.png" alt="iZOOlogic" height="50"></a>
+  <a href="https://izoologic.com/?utm-source=osprey" title="iZOOlogic"><img src="https://i.imgur.com/O2AVvEa.png" alt="iZOOlogic" height="75"></a>
 </p>
 
 ## Privacy
