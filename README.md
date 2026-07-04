@@ -73,6 +73,8 @@ premium threat intelligence feeds:
   <a href="https://izoologic.com/?utm-source=osprey" title="iZOOlogic"><img src="https://i.imgur.com/9DCLCdH.png" alt="iZOOlogic" height="75"></a>
 </p>
 
+and PrecisionSec, who couldn't provide a logo, but have been a great partner and supporter of the project.
+
 ## Privacy
 
 Osprey routes every URL you visit to the protection providers you have enabled, using our privacy-respecting
