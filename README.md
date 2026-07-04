@@ -61,7 +61,8 @@ When Osprey blocks a website, you'll see a warning page like this:
 ## Privacy
 
 Osprey routes every URL you visit to the protection providers you have enabled, using our privacy-respecting
-[proxy server](https://github.com/Foulest/OspreyProxy), ensuring that providers never see your real IP address or any
+[proxy server](https://github.com/OspreyProject/OspreyProxy), ensuring that providers never see your real IP address or
+any
 personally identifiable information.
 
 Providers only see requests originating from the proxy server's IP address, which is shared by thousands of users,
