@@ -30,7 +30,8 @@
     "webNavigation"
   ],
   "host_permissions": [
-    "*://*/*"
+    "*://api.osprey.ac/*",
+    "*://api.metadefender.com/*"
   ],
   "incognito": "split",
   "storage": {
