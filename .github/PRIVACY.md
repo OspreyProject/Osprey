@@ -1,6 +1,6 @@
 # Privacy Policy
 
-**Effective Date:** 06/16/2026
+**Effective Date:** 07/06/2026
 
 Osprey: Browser Protection is committed to protecting your privacy. This Privacy Policy explains what data is processed
 when you use the Osprey browser extension and its supporting proxy service, and how it is handled.
@@ -36,18 +36,26 @@ is immediately hashed and stored in-memory. Raw IP addresses are not written to 
 
 ## Third-Party Integrations
 
-If you configure a provider using your own API key, that provider receives requests directly from your device rather
-than through the proxy server. The privacy protections described above (IP shielding and caching) **do not apply** to
-those integrations. You are subject to that provider's own data handling practices when using a personal API key.
+If you configure a provider using your own API key (for example, MetaDefender), that provider receives requests
+directly from your device rather than through the proxy server. The privacy protections described above (IP
+shielding and caching) **do not apply** to those integrations. You are subject to that provider's own data
+handling practices when using a personal API key.
 
 ## Browser Permissions
 
 The extension requires the following permissions, used strictly for its security features:
 
 - `tabs`: detects tab navigation events
-- `webNavigation`: detects web navigation events
+- `webNavigation`: observes navigation events so that destination URLs can be checked
 - `storage`: caches results locally and persists your settings
-- `host permissions for all URLs`: inspects navigated URLs across all websites
+- host access to `https://api.osprey.ac/*`: allows the extension to send URLs to the Osprey proxy server for
+  checking
+- host access to `https://api.metadefender.com/*`: allows the extension to contact the MetaDefender API directly,
+  only when you configure your own MetaDefender API key
+
+The extension does **not** request host access to the websites you browse. It cannot read page content, inject
+scripts, or access cookies or form data on the sites you visit. The URLs you navigate to are observed only through
+the browser's navigation events, which expose the destination URL but not the contents of the page.
 
 ## Data Stored Locally
 
