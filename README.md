@@ -1,9 +1,9 @@
 # Osprey: Browser Protection
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
-[![Chrome Users](https://img.shields.io/chrome-web-store/users/jmnpibhfpmpfjhhkmpadlbgjnbhpjgnd?label=Chrome%20Users&color=00CC00)](https://chromewebstore.google.com/detail/osprey-browser-protection/jmnpibhfpmpfjhhkmpadlbgjnbhpjgnd)
-[![Edge Users](https://img.shields.io/badge/dynamic/json?label=Edge%20Users&color=00CC00&query=%24.activeInstallCount&url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%2Fnopglhplnghfhpniofkcopmhbjdonlgn)](https://microsoftedge.microsoft.com/addons/detail/osprey-browser-protectio/nopglhplnghfhpniofkcopmhbjdonlgn)
-[![Firefox Users](https://img.shields.io/amo/users/osprey-browser-protection?label=Firefox%20Users&color=00CC00)](https://addons.mozilla.org/en-US/firefox/addon/osprey-browser-protection)
+[![Chrome Users](https://img.shields.io/chrome-web-store/users/jmnpibhfpmpfjhhkmpadlbgjnbhpjgnd?label=Chrome%20Users&color=00CC00)](https://osprey.ac/chrome)
+[![Edge Users](https://img.shields.io/badge/dynamic/json?label=Edge%20Users&color=00CC00&query=%24.activeInstallCount&url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%2Fnopglhplnghfhpniofkcopmhbjdonlgn)](https://osprey.ac/edge)
+[![Firefox Users](https://img.shields.io/amo/users/osprey-browser-protection?label=Firefox%20Users&color=00CC00)](https://osprey.ac/firefox)
 
 **Osprey** is a free, open-source browser security extension that protects you from phishing, malware, scams, and other
 malicious websites. As you browse, Osprey checks every site you visit against more than **20 threat-intelligence
