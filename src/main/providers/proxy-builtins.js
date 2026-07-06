@@ -114,7 +114,7 @@
                     group: providerGroups.official_partners.id,
                     icon: 'assets/providers/bforeai.avif',
                     enabledByDefault: true,
-                    bypassBlockingThreshold: true,
+                    bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'bforeai',
                     tags: ['proxy', 'partner'],
                     policyKey: 'BforeAIEnabled',
@@ -144,7 +144,7 @@
                     group: providerGroups.official_partners.id,
                     icon: 'assets/providers/izoologic.avif',
                     enabledByDefault: true,
-                    bypassBlockingThreshold: false,
+                    bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'izoologic',
                     tags: ['proxy', 'partner'],
                     policyKey: 'iZOOlogicEnabled',

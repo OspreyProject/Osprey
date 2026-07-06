@@ -77,6 +77,7 @@ if (typeof importScripts === 'function') {
     const navigationService = globalThis.OspreyNavigationService;
     const providerCatalog = globalThis.OspreyProviderCatalog;
     const providerEngine = globalThis.OspreyProviderEngine;
+    const providerStateStore = globalThis.OspreyProviderStateStore;
     const reportLinkBuilder = globalThis.OspreyReportLinkBuilder;
     const resultAggregationService = globalThis.OspreyResultAggregationService;
 
@@ -110,6 +111,51 @@ if (typeof importScripts === 'function') {
             return null;
         }
         return reportLinkBuilder.build(definition.report, {blockedUrl});
+    };
+
+    const emergencySettingsMigrations = Object.freeze([
+        {
+            providerId: 'bforeai',
+            setting: 'bypassBlockingThreshold',
+            value: false
+        },
+    ]);
+
+    const migratableProviderSettings = Object.freeze({
+        enabled: {
+            read: providerState => providerState.enabled,
+            apply: (providerId, value) => providerStateStore.setProviderEnabled(providerId, value),
+        },
+        bypassBlockingThreshold: {
+            read: providerState => providerState.bypassBlockingThreshold,
+            apply: (providerId, value) => providerStateStore.setBypassBlockingThreshold(providerId, value),
+        },
+    });
+
+    const runEmergencySettingsMigrations = async () => {
+        if (emergencySettingsMigrations.length === 0) {
+            return;
+        }
+
+        try {
+            const state = await providerStateStore.getState();
+
+            for (const migration of emergencySettingsMigrations) {
+                const handler = migratableProviderSettings[migration.setting];
+                const providerState = state?.providers?.[migration.providerId];
+
+                if (!handler || !providerState) {
+                    console.warn(`Skipping emergency settings migration for ${migration.providerId}/${migration.setting}`);
+                    continue;
+                }
+
+                if (handler.read(providerState) !== migration.value) {
+                    await handler.apply(migration.providerId, migration.value);
+                }
+            }
+        } catch (error) {
+            console.error('Failed to apply emergency settings migrations', error);
+        }
     };
 
     const messageHandlers = {
@@ -239,6 +285,8 @@ if (typeof importScripts === 'function') {
             badgeService.clearTab(tabId);
             blockingService.clearTab(tabId);
         });
+
+        await runEmergencySettingsMigrations();
 
         navigationService.register();
     };
