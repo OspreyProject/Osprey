@@ -120,11 +120,6 @@ if (typeof importScripts === 'function') {
             value: false
         },
         {
-            providerId: 'apva',
-            setting: 'bypassBlockingThreshold',
-            value: false
-        },
-        {
             providerId: 'red-flag-domains',
             setting: 'bypassBlockingThreshold',
             value: false
