@@ -79,14 +79,16 @@ and PrecisionSec, who couldn't provide a logo, but have been a great partner and
 
 Osprey routes every URL you visit to the protection providers you have enabled, using our privacy-respecting
 [proxy server](https://github.com/OspreyProject/OspreyProxy), ensuring that providers never see your real IP address or
-any
-personally identifiable information.
+any personally identifiable information.
 
 Providers only see requests originating from the proxy server's IP address, which is shared by thousands of users,
 making it **impossible** for any provider to associate a URL lookup with you specifically.
 
-We also don't log any personally identifiable information, and we don't store any browsing history.
-Osprey is designed to be **privacy-first**, and we will never compromise that.
+We also don't log any personally identifiable information, and we don't store your browsing history. The one exception
+is transient false-positive monitoring: when a provider flags a site as malicious or phishing, the proxy keeps an
+in-memory record of what was checked (a domain, or a URL with query parameters stripped). It never includes your IP,
+never covers safe sites, and is never written to disk, so we can catch and correct mistaken blocks. Osprey is designed
+to be **privacy-first**, and we will never compromise that.
 
 ## Contact Us
 
