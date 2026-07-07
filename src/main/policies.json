@@ -131,12 +131,6 @@
       "type": "boolean",
       "default": true
     },
-    "KADAntiScamEnabled": {
-      "title": "KAD Anti-Scam Enabled",
-      "description": "Managed enabled state for KAD Anti-Scam.",
-      "type": "boolean",
-      "default": true
-    },
     "OpenPhishEnabled": {
       "title": "OpenPhish Enabled",
       "description": "Managed enabled state for OpenPhish.",
