@@ -148,7 +148,7 @@
                     endpoint: 'izoologic',
                     tags: ['proxy', 'partner'],
                     policyKey: 'iZOOlogicEnabled',
-                    report: mailtoReport('reporting.cti@izoologic.com', 'iZOOlogic Osprey Endpoint'),
+                    report: mailtoReport('reporting.cti@izoologic.com', 'iZOOlogic GetUrlVerdict API'),
                 }),
 
                 builtin({
@@ -163,7 +163,7 @@
                     endpoint: 'precisionsec',
                     tags: ['proxy', 'hostname_only', 'partner'],
                     policyKey: 'PrecisionSecEnabled',
-                    report: mailtoReport('info@precisionsec.com', 'PrecisionSec Threat Intelligence'),
+                    report: mailtoReport('info@precisionsec.com', 'PrecisionSec Check Domain API'),
                 }),
 
                 builtin({
@@ -221,7 +221,7 @@
                     bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'controld-security',
                     policyKey: 'ControlDSecurityEnabled',
-                    report: mailtoReport('help@controld.com', 'Control D Security DNS'),
+                    report: mailtoReport('help@controld.com', 'Control D \'no-malware-typo\' DNS'),
                 }),
 
                 hostnameBuiltin({
@@ -361,7 +361,7 @@
                     bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'securefeed',
                     policyKey: 'SecureFeedEnabled',
-                    report: mailtoReport('contact@securefeed.com', 'SecureFeed List'),
+                    report: mailtoReport('contact@securefeed.com', 'SecureFeed Host List'),
                 }),
 
                 hostnameBuiltin({
@@ -417,7 +417,7 @@
                     bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'urlabuse',
                     policyKey: 'URLAbuseEnabled',
-                    report: mailtoReport('info@urlabuse.com', 'URLAbuse List'),
+                    report: mailtoReport('info@urlabuse.com', 'URLAbuse Lookup API'),
                 }),
 
                 hostnameBuiltin({
