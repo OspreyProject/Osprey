@@ -60,8 +60,8 @@
       "default": false
     },
     "AlphaMountainEnabled": {
-      "title": "AlphaMountain Web Protection Enabled",
-      "description": "Managed enabled state for AlphaMountain Web Protection.",
+      "title": "AlphaMountain Enabled",
+      "description": "Managed enabled state for AlphaMountain.",
       "type": "boolean",
       "default": true
     },
