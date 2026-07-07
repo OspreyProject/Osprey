@@ -1,6 +1,6 @@
 # Privacy Policy
 
-**Effective Date:** 07/06/2026
+**Effective Date:** 07/07/2026
 
 Osprey: Browser Protection is committed to protecting your privacy. This Privacy Policy explains what data is processed
 when you use the Osprey browser extension and its supporting proxy service, and how it is handled.
@@ -77,11 +77,22 @@ stability, and capacity. Metrics include aggregated counts such as requests per 
 system performance indicators. This data is used solely for service reliability and abuse prevention, not for
 advertising or user profiling.
 
+## False-Positive Monitoring
+
+To catch cases where a legitimate website is mistakenly flagged as dangerous, the proxy server keeps a transient log
+entry whenever a provider returns a **malicious** or **phishing** verdict. Each entry records only the provider name,
+the verdict, and the same value that was checked against that provider: a hostname for DNS-based providers, or the URL
+with query parameters stripped for URL-based providers. It never includes the query string, your IP address, or any
+other identifier that could tie the lookup back to you.
+
+Results that come back safe are **never** logged. These entries exist only in memory, are not written to disk, and are
+not sent to any external system. They are lost when the proxy restarts.
+
 ## Data Retention
 
-On the proxy server, rate-limit states, local list snapshots, and transient runtime logs exist only in memory and may be
-lost on restart. Aggregated operational metrics may be retained longer in Prometheus/Grafana subject to those systems'
-retention settings.
+On the proxy server, rate-limit states, local list snapshots, and transient runtime logs (including the false-positive
+monitoring entries described above) exist only in memory and may be lost on restart. Aggregated operational metrics may
+be retained longer in Prometheus/Grafana subject to those systems' retention settings.
 
 ## Changes to This Policy
 
