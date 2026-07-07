@@ -119,6 +119,26 @@ if (typeof importScripts === 'function') {
             setting: 'bypassBlockingThreshold',
             value: false
         },
+        {
+            providerId: 'apva',
+            setting: 'bypassBlockingThreshold',
+            value: false
+        },
+        {
+            providerId: 'red-flag-domains',
+            setting: 'bypassBlockingThreshold',
+            value: false
+        },
+        {
+            providerId: 'securefeed',
+            setting: 'bypassBlockingThreshold',
+            value: false
+        },
+        {
+            providerId: 'urlabuse',
+            setting: 'bypassBlockingThreshold',
+            value: false
+        },
     ]);
 
     const migratableProviderSettings = Object.freeze({

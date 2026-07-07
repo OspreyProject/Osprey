@@ -274,7 +274,7 @@
                     group: providerGroups.feeds.id,
                     icon: 'assets/providers/apva.avif',
                     enabledByDefault: true,
-                    bypassBlockingThreshold: true,
+                    bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'apva',
                     policyKey: 'APVAEnabled',
                     report: externalUrlReport('https://antiphish.org/false-positive'),
@@ -344,7 +344,7 @@
                     group: providerGroups.feeds.id,
                     icon: 'assets/providers/red-flag-domains.avif',
                     enabledByDefault: true,
-                    bypassBlockingThreshold: true,
+                    bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'red-flag-domains',
                     policyKey: 'RedFlagDomainsEnabled',
                     report: mailtoReport('hello@red.flag.domains', 'Red Flag Domains List'),
@@ -358,7 +358,7 @@
                     group: providerGroups.feeds.id,
                     icon: 'assets/providers/securefeed.avif',
                     enabledByDefault: true,
-                    bypassBlockingThreshold: true,
+                    bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'securefeed',
                     policyKey: 'SecureFeedEnabled',
                     report: mailtoReport('contact@securefeed.com', 'SecureFeed List'),
@@ -414,7 +414,7 @@
                     group: providerGroups.feeds.id,
                     icon: 'assets/providers/urlabuse.avif',
                     enabledByDefault: true,
-                    bypassBlockingThreshold: false,
+                    bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'urlabuse',
                     policyKey: 'URLAbuseEnabled',
                     report: mailtoReport('info@urlabuse.com', 'URLAbuse List'),
