@@ -95,12 +95,6 @@
       "type": "boolean",
       "default": true
     },
-    "CleanBrowsingEnabled": {
-      "title": "CleanBrowsing Enabled",
-      "description": "Managed enabled state for CleanBrowsing.",
-      "type": "boolean",
-      "default": true
-    },
     "CloudflareEnabled": {
       "title": "Cloudflare Enabled",
       "description": "Managed enabled state for Cloudflare.",

@@ -178,20 +178,6 @@
                 }),
 
                 hostnameBuiltin({
-                    id: 'cleanbrowsing-security',
-                    website: 'https://cleanbrowsing.org/?utm_source=osprey',
-                    aliases: ['cleanBrowsingSecurity'],
-                    displayName: 'CleanBrowsing',
-                    group: providerGroups.security_filters.id,
-                    icon: 'assets/providers/cleanbrowsing.avif',
-                    enabledByDefault: true,
-                    bypassBlockingThreshold: false, // keep this 'false'
-                    endpoint: 'cleanbrowsing-security',
-                    policyKey: 'CleanBrowsingSecurityEnabled',
-                    report: mailtoReport('support@cleanbrowsing.org', 'CleanBrowsing Security Filter'),
-                }),
-
-                hostnameBuiltin({
                     id: 'cloudflare-security',
                     website: 'https://one.one.one.one/?utm_source=osprey',
                     aliases: ['cloudflareSecurity'],
