@@ -95,6 +95,12 @@
       "type": "boolean",
       "default": true
     },
+    "AA419Enabled": {
+      "title": "Artists Against 419 Enabled",
+      "description": "Managed enabled state for Artists Against 419.",
+      "type": "boolean",
+      "default": true
+    },
     "CloudflareEnabled": {
       "title": "Cloudflare Enabled",
       "description": "Managed enabled state for Cloudflare.",
@@ -106,18 +112,6 @@
       "description": "Managed enabled state for Control D.",
       "type": "boolean",
       "default": false
-    },
-    "Quad9Enabled": {
-      "title": "Quad9 Enabled",
-      "description": "Managed enabled state for Quad9.",
-      "type": "boolean",
-      "default": true
-    },
-    "SwitchCHEnabled": {
-      "title": "Switch.ch Enabled",
-      "description": "Managed enabled state for Switch.ch.",
-      "type": "boolean",
-      "default": true
     },
     "OpenPhishEnabled": {
       "title": "OpenPhish Enabled",
@@ -137,6 +131,12 @@
       "type": "boolean",
       "default": true
     },
+    "Quad9Enabled": {
+      "title": "Quad9 Enabled",
+      "description": "Managed enabled state for Quad9.",
+      "type": "boolean",
+      "default": true
+    },
     "RedFlagDomainsEnabled": {
       "title": "Red Flag Domains Enabled",
       "description": "Managed enabled state for Red Flag Domains.",
@@ -152,6 +152,12 @@
     "SinkingYachtsEnabled": {
       "title": "SinkingYachts Enabled",
       "description": "Managed enabled state for SinkingYachts.",
+      "type": "boolean",
+      "default": true
+    },
+    "SwitchCHEnabled": {
+      "title": "Switch.ch Enabled",
+      "description": "Managed enabled state for Switch.ch.",
       "type": "boolean",
       "default": true
     },

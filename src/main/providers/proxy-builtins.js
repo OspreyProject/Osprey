@@ -162,75 +162,19 @@
                 }),
 
                 builtin({
-                    id: 'adguard-security',
+                    id: 'adguard-dns',
                     website: 'https://adguard-dns.io/?utm_source=osprey',
-                    aliases: ['adGuardSecurity'],
+                    aliases: ['adGuardDNS'],
                     displayName: 'AdGuard DNS',
                     group: providerGroups.security_filters.id,
                     icon: 'assets/providers/adguard.avif',
                     enabledByDefault: true,
                     bypassBlockingThreshold: false, // keep this 'false'
-                    endpoint: 'adguard-security',
+                    endpoint: 'adguard-dns',
                     lookupTarget: 'hostname',
                     tags: ['proxy', 'hostname_only'],
-                    policyKey: 'AdGuardSecurityEnabled',
+                    policyKey: 'AdGuardDNSEnabled',
                     report: mailtoReport('support@adguard.com', 'AdGuard Public DNS'),
-                }),
-
-                hostnameBuiltin({
-                    id: 'cloudflare-security',
-                    website: 'https://one.one.one.one/?utm_source=osprey',
-                    aliases: ['cloudflareSecurity'],
-                    displayName: 'Cloudflare',
-                    group: providerGroups.security_filters.id,
-                    icon: 'assets/providers/cloudflare.avif',
-                    enabledByDefault: true,
-                    bypassBlockingThreshold: false, // keep this 'false'
-                    endpoint: 'cloudflare-security',
-                    policyKey: 'CloudflareSecurityEnabled',
-                    report: cloudflareReport,
-                }),
-
-                hostnameBuiltin({
-                    id: 'controld-security',
-                    website: 'https://controld.com/?utm_source=osprey',
-                    aliases: ['controlDSecurity'],
-                    displayName: 'Control D',
-                    group: providerGroups.security_filters.id,
-                    icon: 'assets/providers/controld.avif',
-                    enabledByDefault: true,
-                    bypassBlockingThreshold: false, // keep this 'false'
-                    endpoint: 'controld-security',
-                    policyKey: 'ControlDSecurityEnabled',
-                    report: mailtoReport('help@controld.com', 'Control D \'no-malware-typo\' DNS'),
-                }),
-
-                hostnameBuiltin({
-                    id: 'quad9',
-                    website: 'https://quad9.net/?utm_source=osprey',
-                    aliases: ['quad9'],
-                    displayName: 'Quad9',
-                    group: providerGroups.security_filters.id,
-                    icon: 'assets/providers/quad9.avif',
-                    enabledByDefault: true,
-                    bypassBlockingThreshold: false, // keep this 'false'
-                    endpoint: 'quad9',
-                    policyKey: 'Quad9Enabled',
-                    report: externalUrlReport('https://quad9.net/support/contact'),
-                }),
-
-                hostnameBuiltin({
-                    id: 'switch-ch',
-                    website: 'https://www.switch.ch/?utm_source=osprey',
-                    aliases: ['switchCH'],
-                    displayName: 'Switch.ch',
-                    group: providerGroups.security_filters.id,
-                    icon: 'assets/providers/switchch.avif',
-                    enabledByDefault: true,
-                    bypassBlockingThreshold: false, // keep this 'false'
-                    endpoint: 'switch-ch',
-                    policyKey: 'SwitchCHEnabled',
-                    report: mailtoReport('dnsfirewall@switch.ch', 'Switch.ch Public DNS'),
                 }),
 
                 hostnameBuiltin({
@@ -245,6 +189,34 @@
                     endpoint: 'aa419',
                     policyKey: 'AA419Enabled',
                     report: externalUrlReport('https://wiki.aa419.org/index.php/Contact_Us'),
+                }),
+
+                hostnameBuiltin({
+                    id: 'cloudflare',
+                    website: 'https://one.one.one.one/?utm_source=osprey',
+                    aliases: ['cloudflare'],
+                    displayName: 'Cloudflare',
+                    group: providerGroups.security_filters.id,
+                    icon: 'assets/providers/cloudflare.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: false, // keep this 'false'
+                    endpoint: 'cloudflare',
+                    policyKey: 'CloudflareEnabled',
+                    report: cloudflareReport,
+                }),
+
+                hostnameBuiltin({
+                    id: 'control-d',
+                    website: 'https://controld.com/?utm_source=osprey',
+                    aliases: ['controlD'],
+                    displayName: 'Control D',
+                    group: providerGroups.security_filters.id,
+                    icon: 'assets/providers/controld.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: false, // keep this 'false'
+                    endpoint: 'control-d',
+                    policyKey: 'ControlDEnabled',
+                    report: mailtoReport('help@controld.com', 'Control D \'no-malware-typo\' DNS'),
                 }),
 
                 hostnameBuiltin({
@@ -290,6 +262,20 @@
                 }),
 
                 hostnameBuiltin({
+                    id: 'quad9',
+                    website: 'https://quad9.net/?utm_source=osprey',
+                    aliases: ['quad9'],
+                    displayName: 'Quad9',
+                    group: providerGroups.security_filters.id,
+                    icon: 'assets/providers/quad9.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: false, // keep this 'false'
+                    endpoint: 'quad9',
+                    policyKey: 'Quad9Enabled',
+                    report: externalUrlReport('https://quad9.net/support/contact'),
+                }),
+
+                hostnameBuiltin({
                     id: 'red-flag-domains',
                     website: 'https://red.flag.domains/?utm_source=osprey',
                     aliases: ['red-flag-domains'],
@@ -329,6 +315,20 @@
                     endpoint: 'sinking-yachts',
                     policyKey: 'SinkingYachtsEnabled',
                     report: mailtoReport('sinkingyachts@gmail.com', 'SinkingYachts List'),
+                }),
+
+                hostnameBuiltin({
+                    id: 'switch-ch',
+                    website: 'https://www.switch.ch/?utm_source=osprey',
+                    aliases: ['switchCH'],
+                    displayName: 'Switch.ch',
+                    group: providerGroups.security_filters.id,
+                    icon: 'assets/providers/switchch.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: false, // keep this 'false'
+                    endpoint: 'switch-ch',
+                    policyKey: 'SwitchCHEnabled',
+                    report: mailtoReport('dnsfirewall@switch.ch', 'Switch.ch Public DNS'),
                 }),
 
                 hostnameBuiltin({
