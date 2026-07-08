@@ -71,11 +71,6 @@
                 template: 'https://radar.cloudflare.com/domains/feedback/{url}',
             });
 
-            const openDnsReport = Object.freeze({
-                type: 'external_url',
-                url: 'https://talosintelligence.com/reputation_center/web_reputation',
-            });
-
             const spamhausReport = Object.freeze({
                 type: 'external_url',
                 url: 'https://www.spamhaus.com/abuse-ch/#contact-us',
@@ -222,20 +217,6 @@
                     endpoint: 'controld-security',
                     policyKey: 'ControlDSecurityEnabled',
                     report: mailtoReport('help@controld.com', 'Control D \'no-malware-typo\' DNS'),
-                }),
-
-                hostnameBuiltin({
-                    id: 'opendns-security',
-                    website: 'https://www.opendns.com/?utm_source=osprey',
-                    aliases: ['openDNSSecurity'],
-                    displayName: 'OpenDNS',
-                    group: providerGroups.security_filters.id,
-                    icon: 'assets/providers/opendns.avif',
-                    enabledByDefault: true,
-                    bypassBlockingThreshold: false, // keep this 'false'
-                    endpoint: 'opendns-security',
-                    policyKey: 'OpenDNSSecurityEnabled',
-                    report: openDnsReport,
                 }),
 
                 hostnameBuiltin({

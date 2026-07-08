@@ -113,12 +113,6 @@
       "type": "boolean",
       "default": false
     },
-    "OpenDNSEnabled": {
-      "title": "OpenDNS Enabled",
-      "description": "Managed enabled state for OpenDNS.",
-      "type": "boolean",
-      "default": true
-    },
     "Quad9Enabled": {
       "title": "Quad9 Enabled",
       "description": "Managed enabled state for Quad9.",
