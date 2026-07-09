@@ -119,12 +119,6 @@
       "type": "boolean",
       "default": true
     },
-    "PhishDestroyEnabled": {
-      "title": "PhishDestroy Enabled",
-      "description": "Managed enabled state for PhishDestroy.",
-      "type": "boolean",
-      "default": true
-    },
     "PhishuntIOEnabled": {
       "title": "Phishunt.io Enabled",
       "description": "Managed enabled state for Phishunt.io.",
