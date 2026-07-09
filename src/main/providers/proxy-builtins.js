@@ -234,6 +234,20 @@
                 }),
 
                 hostnameBuiltin({
+                    id: 'phishdestroy',
+                    website: 'https://phishdestroy.io/?utm_source=osprey',
+                    aliases: ['phishDestroy'],
+                    displayName: 'PhishDestroy',
+                    group: providerGroups.feeds.id,
+                    icon: 'assets/providers/phishdestroy.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: false, // keep this 'false'
+                    endpoint: 'phishdestroy',
+                    policyKey: 'PhishDestroyEnabled',
+                    report: externalUrlReport('https://phishdestroy.io/appeals'),
+                }),
+
+                hostnameBuiltin({
                     id: 'phishunt-io',
                     website: 'https://phishunt.io/?utm_source=osprey',
                     aliases: ['phishuntIO'],
