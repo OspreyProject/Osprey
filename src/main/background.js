@@ -113,7 +113,13 @@ if (typeof importScripts === 'function') {
         return reportLinkBuilder.build(definition.report, {blockedUrl});
     };
 
-    const emergencySettingsMigrations = Object.freeze([]);
+    const emergencySettingsMigrations = Object.freeze([
+        {
+            providerId: 'phishunt-io',
+            setting: 'bypassBlockingThreshold',
+            value: false
+        },
+    ]);
 
     const migratableProviderSettings = Object.freeze({
         enabled: {

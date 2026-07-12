@@ -255,7 +255,7 @@
                     group: providerGroups.feeds.id,
                     icon: 'assets/providers/phishuntio.avif',
                     enabledByDefault: true,
-                    bypassBlockingThreshold: true,
+                    bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'phishunt-io',
                     policyKey: 'PhishuntIOEnabled',
                     report: mailtoReport('info@phishunt.io', 'Phishunt.io Feed'),
