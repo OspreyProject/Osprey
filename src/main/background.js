@@ -113,28 +113,7 @@ if (typeof importScripts === 'function') {
         return reportLinkBuilder.build(definition.report, {blockedUrl});
     };
 
-    const emergencySettingsMigrations = Object.freeze([
-        {
-            providerId: 'bforeai',
-            setting: 'bypassBlockingThreshold',
-            value: false
-        },
-        {
-            providerId: 'red-flag-domains',
-            setting: 'bypassBlockingThreshold',
-            value: false
-        },
-        {
-            providerId: 'securefeed',
-            setting: 'bypassBlockingThreshold',
-            value: false
-        },
-        {
-            providerId: 'urlabuse',
-            setting: 'bypassBlockingThreshold',
-            value: false
-        },
-    ]);
+    const emergencySettingsMigrations = Object.freeze([]);
 
     const migratableProviderSettings = Object.freeze({
         enabled: {

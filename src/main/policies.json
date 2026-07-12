@@ -143,12 +143,6 @@
       "type": "boolean",
       "default": true
     },
-    "SecureFeedEnabled": {
-      "title": "SecureFeed Enabled",
-      "description": "Managed enabled state for SecureFeed.",
-      "type": "boolean",
-      "default": true
-    },
     "SinkingYachtsEnabled": {
       "title": "SinkingYachts Enabled",
       "description": "Managed enabled state for SinkingYachts.",

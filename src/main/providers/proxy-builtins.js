@@ -290,20 +290,6 @@
                 }),
 
                 hostnameBuiltin({
-                    id: 'securefeed',
-                    website: 'https://securefeed.com/?utm_source=osprey',
-                    aliases: ['securefeed'],
-                    displayName: 'SecureFeed',
-                    group: providerGroups.feeds.id,
-                    icon: 'assets/providers/securefeed.avif',
-                    enabledByDefault: true,
-                    bypassBlockingThreshold: false, // keep this 'false'
-                    endpoint: 'securefeed',
-                    policyKey: 'SecureFeedEnabled',
-                    report: mailtoReport('contact@securefeed.com', 'SecureFeed Host List'),
-                }),
-
-                hostnameBuiltin({
                     id: 'sinking-yachts',
                     website: 'https://sinking.yachts/?utm_source=osprey',
                     aliases: ['sinking-yachts'],
