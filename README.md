@@ -9,17 +9,17 @@
 malicious websites. As you browse, Osprey checks every site you visit against more than **20 threat-intelligence
 providers**, then blocks or warns you the moment one of them flags a site as dangerous.
 
-[Terms of Service](https://osprey.ac/terms)
+[Website](https://osprey.ac)
 • [Privacy Policy](https://osprey.ac/privacy)
-• [Wiki (FAQs)](https://osprey.ac/wiki)
+• [Terms of Service](https://osprey.ac/terms)
 • [MalwareTips](https://malwaretips.com/threads/osprey-browser-protection-discussion-and-updates.135565/?utm_source=osprey)
 • [Wilders Security](https://wilderssecurity.com/threads/osprey-browser-protection.456729/?utm_source=osprey)
 
 ###
 
-[![Google Chrome](https://i.imgur.com/R9AN3cA.png)](https://chromewebstore.google.com/detail/osprey-browser-protection/jmnpibhfpmpfjhhkmpadlbgjnbhpjgnd)
-[![Microsoft Edge](https://i.imgur.com/oVmDDtj.png)](https://microsoftedge.microsoft.com/addons/detail/osprey-browser-protectio/nopglhplnghfhpniofkcopmhbjdonlgn)
-[![Firefox](https://i.imgur.com/uXgho1n.png)](https://addons.mozilla.org/en-US/firefox/addon/osprey-browser-protection)
+[![Google Chrome](https://i.imgur.com/R9AN3cA.png)](https://osprey.ac/chrome)
+[![Microsoft Edge](https://i.imgur.com/oVmDDtj.png)](https://osprey.ac/edge)
+[![Firefox](https://i.imgur.com/uXgho1n.png)](https://osprey.ac/firefox)
 
 ###
 
