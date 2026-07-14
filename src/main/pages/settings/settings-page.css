@@ -81,7 +81,7 @@ html, body {
 .bannerText {
     font-size: 16px;
     font-weight: 700;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 1px rgba(0, 0, 0, 0.3);
     padding: 8px 0;
 }
 
@@ -478,7 +478,7 @@ html, body {
 .apply-btn {
     background-color: #f3ba22;
     color: #ffffff;
-    text-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 1px rgba(0, 0, 0, 0.3);
     margin: 0 0 3px 0;
 }
 
