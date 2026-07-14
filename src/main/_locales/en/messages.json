@@ -11,11 +11,11 @@
   "logoAlt": {
     "message": "Osprey Logo"
   },
-    "message": "Unsafe Website Blocked"
   "warningProse": {
+    "message": "Harmful Website Blocked"
   },
   "warningTitle": {
-    "message": "Warning: This website is unsafe"
+    "message": "Harmful website blocked"
   },
   "recommendation": {
     "message": "Osprey has blocked access to this website. It is unsafe to continue."
@@ -39,7 +39,7 @@
     "message": "Report this website as safe"
   },
   "allowWebsite": {
-    "message": "Always ignore this website"
+    "message": "Add website to exclusions"
   },
   "backButton": {
     "message": "Back to safety"
@@ -190,9 +190,6 @@
   },
   "urlUnavailable": {
     "message": "Unavailable"
-  },
-  "contextVerifyFailed": {
-    "message": "This warning page could not verify a safe action context. Continue and allow actions are disabled."
   },
   "providerLogoAlt": {
     "message": "$1 Logo"

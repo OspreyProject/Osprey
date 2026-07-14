@@ -36,6 +36,8 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
 
     let pageshowListenerRegistered = false;
     let counterPort = null;
+
+    let totalBlocks = 0;
     let actionInFlight = false;
     let isInitialized = false;
     let revealed = false;
@@ -291,8 +293,35 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         clearReportedBySuffix();
     }
 
+    function updateContinueLabel(remainingBlocks) {
+        const button = domElements.continueButton;
+
+        if (!button) {
+            return;
+        }
+
+        const remaining = Math.max(1, Number(remainingBlocks) || 1);
+
+        if (remaining > totalBlocks) {
+            totalBlocks = remaining;
+        }
+
+        const baseLabel = LangUtil.CONTINUE_BUTTON;
+
+        if (totalBlocks <= 1) {
+            setTextContent(button, baseLabel);
+            return;
+        }
+
+        const current = totalBlocks - remaining + 1;
+        setTextContent(button, `${baseLabel} (${current}/${totalBlocks})`);
+    }
+
     function updateBlockedCounter(response) {
         const reportedBy = domElements.reportedBy;
+        const blockingCount = typeof response?.count === 'number' ? Math.max(0, response.count) : 0;
+
+        updateContinueLabel(blockingCount + 1);
 
         if (!reportedBy) {
             return;

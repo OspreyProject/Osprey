@@ -113,6 +113,7 @@ html, body {
     background-color: #323232;
     border-radius: 6px;
     overflow: hidden;
+    margin: 30px 0 0 0;
     padding: 22px 22px 20px;
     border: 1px solid #3e3e3e;
 }
@@ -130,7 +131,8 @@ html, body {
     width: 84px;
     height: 84px;
     border-radius: 50%;
-    background-color: #3c3c3c;
+    background-color: rgb(92 42 34 / 0.47);
+    border: 1px solid #8D3826;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -150,7 +152,7 @@ html, body {
 }
 
 .warning-title {
-    margin: 0;
+    margin: 10px 0 0;
     font-size: 28px;
     line-height: 1.15;
     font-weight: 600;
@@ -158,15 +160,8 @@ html, body {
 }
 
 .warning-lead {
-    margin: 12px 0 0;
+    margin: 7px 0 0;
     font-size: 15px;
-    line-height: 1.6;
-    color: #ffffff;
-}
-
-.warning-text {
-    margin: 10px 0 0;
-    font-size: 14px;
     line-height: 1.6;
     color: #b1b5b8;
 }
