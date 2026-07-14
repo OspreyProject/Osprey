@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "Logo Osprey"
   },
-  "warningPageTitle": {
+  "warningProse": {
     "message": "Trang web không an toàn đã bị chặn"
   },
   "warningTitle": {
@@ -19,9 +19,6 @@
   },
   "recommendation": {
     "message": "Osprey đã chặn quyền truy cập vào trang web này. Tiếp tục là không an toàn."
-  },
-  "details": {
-    "message": "Nếu bạn là chủ sở hữu trang web này, hãy liên hệ với nhà cung cấp bảo mật để giải quyết vấn đề."
   },
   "urlLabel": {
     "message": "URL: "
@@ -193,9 +190,6 @@
   },
   "urlUnavailable": {
     "message": "Không có sẵn"
-  },
-  "contextVerifyFailed": {
-    "message": "Trang cảnh báo này không thể xác minh ngữ cảnh hành động an toàn. Tiếp tục và cho phép đã bị vô hiệu hóa."
   },
   "providerLogoAlt": {
     "message": "Logo $1"

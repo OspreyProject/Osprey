@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "لوگوی Osprey"
   },
-  "warningPageTitle": {
+  "warningProse": {
     "message": "وب‌سایت ناامن مسدود شد"
   },
   "warningTitle": {
@@ -19,9 +19,6 @@
   },
   "recommendation": {
     "message": "Osprey دسترسی به این وب‌سایت را مسدود کرده است. ادامه دادن ایمن نیست."
-  },
-  "details": {
-    "message": "اگر مالک این وب‌سایت هستید، برای رفع مشکل با ارائه‌دهنده امنیتی تماس بگیرید."
   },
   "urlLabel": {
     "message": "آدرس: "
@@ -193,9 +190,6 @@
   },
   "urlUnavailable": {
     "message": "در دسترس نیست"
-  },
-  "contextVerifyFailed": {
-    "message": "این صفحه هشدار نتوانست زمینه اقدام ایمن را تأیید کند. ادامه دادن و مجاز کردن غیرفعال هستند."
   },
   "providerLogoAlt": {
     "message": "لوگوی $1"

@@ -29,7 +29,6 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
 
     const safeTitleRegex = /[^\p{L}\p{N}\p{Z}\p{P}]/gu;
 
-    let reportedByText = LangUtil.UNKNOWN_ORIGIN;
     let currentOrigin = protectionResult.Origin.UNKNOWN;
     let currentContext = null;
     let currentState = null;
@@ -53,7 +52,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
     const domElementIDs = [
         'reason', 'url', 'reportedBy', 'reportWebsite', 'allowWebsite',
         'backButton', 'continueButton', 'warningTitle', 'recommendation',
-        'details', 'urlLabel', 'reportedByLabel', 'reasonLabel', 'logo', 'reportBreakpoint',
+        'urlLabel', 'reportedByLabel', 'reasonLabel', 'logo', 'reportBreakpoint',
         'reportedByLogo', 'reportedByLink', 'reportedBySuffix',
     ];
 
@@ -66,7 +65,6 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
     const pageTextByID = {
         warningTitle: LangUtil.WARNING_TITLE,
         recommendation: LangUtil.RECOMMENDATION,
-        details: LangUtil.DETAILS,
         urlLabel: LangUtil.URL_LABEL,
         reportedByLabel: LangUtil.REPORTED_BY_LABEL,
         reasonLabel: LangUtil.REASON_LABEL,
@@ -294,9 +292,9 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
     }
 
     function updateBlockedCounter(response) {
-        const el = domElements.reportedBy;
+        const reportedBy = domElements.reportedBy;
 
-        if (!el) {
+        if (!reportedBy) {
             return;
         }
 
@@ -334,8 +332,8 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
 
         const newTitle = `${LangUtil.REPORTED_BY_ALSO}${systemsStr}`.replace(safeTitleRegex, '');
 
-        if (el.title !== newTitle) {
-            el.title = newTitle;
+        if (reportedBy.title !== newTitle) {
+            reportedBy.title = newTitle;
         }
     }
 
@@ -411,12 +409,11 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
     }
 
     function localizePage() {
-        if (document.title !== LangUtil.WARNING_PAGE_TITLE) {
-            document.title = LangUtil.WARNING_PAGE_TITLE;
+        if (document.title !== LangUtil.WARNING_PROSE) {
+            document.title = LangUtil.WARNING_PROSE;
         }
 
         setTextContent(document.querySelector('.bannerText'), LangUtil.TITLE);
-        setTextContent(document.querySelector('.warning-page-title'), LangUtil.WARNING_PAGE_TITLE);
 
         for (let i = 0, len = domElementIDs.length; i < len; i++) {
             const id = domElementIDs[i];
@@ -543,10 +540,6 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
     function showContext(context) {
         setTextContent(domElements.reason, context.resultText);
         setTextContent(domElements.url, context.blockedUrl || LangUtil.URL_UNAVAILABLE);
-
-        if (domElements.details) {
-            setTextContent(domElements.details, context.actionable ? LangUtil.DETAILS : LangUtil.CONTEXT_VERIFY_FAILED);
-        }
     }
 
     function syncActionVisibility() {

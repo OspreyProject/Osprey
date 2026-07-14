@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "Ospreyロゴ"
   },
-  "warningPageTitle": {
+  "warningProse": {
     "message": "安全でないウェブサイトをブロックしました"
   },
   "warningTitle": {
@@ -19,9 +19,6 @@
   },
   "recommendation": {
     "message": "Ospreyがこのウェブサイトへのアクセスをブロックしました。続行することは安全ではありません。"
-  },
-  "details": {
-    "message": "このウェブサイトの所有者である場合は、問題を解決するためにセキュリティプロバイダーにお問い合わせください。"
   },
   "urlLabel": {
     "message": "URL: "
@@ -193,9 +190,6 @@
   },
   "urlUnavailable": {
     "message": "利用不可"
-  },
-  "contextVerifyFailed": {
-    "message": "この警告ページは安全なアクションコンテキストを確認できませんでした。続行と許可は無効になっています。"
   },
   "providerLogoAlt": {
     "message": "$1 ロゴ"

@@ -57,7 +57,6 @@
         TERMS_LINK: 'termsLink',
         WARNING_TITLE: 'warningTitle',
         RECOMMENDATION: 'recommendation',
-        DETAILS: 'details',
         REPORT_WEBSITE: 'reportWebsite',
         ALLOW_WEBSITE: 'allowWebsite',
         BACK_BUTTON: 'backButton',
@@ -66,7 +65,6 @@
         REPORTED_BY_ALSO: 'reportedByAlso',
         UNKNOWN_ORIGIN: 'unknownOrigin',
         URL_UNAVAILABLE: 'urlUnavailable',
-        CONTEXT_VERIFY_FAILED: 'contextVerifyFailed',
         KNOWN_SAFE: 'knownSafe',
         FAILED: 'failed',
         WAITING: 'waiting',
@@ -96,7 +94,7 @@
         TOAST_ALL_SETTINGS_RESTORED: 'toastAllSettingsRestored',
         TOAST_SAVE_API_KEY_FIRST: 'toastSaveApiKeyFirst',
         TOAST_FAILED_TO_UPDATE_STATE: 'toastFailedToUpdateState',
-        WARNING_PAGE_TITLE: 'warningPageTitle',
+        WARNING_PROSE: 'warningProse',
         PROVIDER_NAME_FALLBACK: 'providerNameFallback',
     };
 

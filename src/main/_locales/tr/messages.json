@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "Osprey Logosu"
   },
-  "warningPageTitle": {
+  "warningProse": {
     "message": "Güvensiz Web Sitesi Engellendi"
   },
   "warningTitle": {
@@ -19,9 +19,6 @@
   },
   "recommendation": {
     "message": "Osprey bu web sitesine erişimi engelledi. Devam etmek güvenli değil."
-  },
-  "details": {
-    "message": "Bu web sitesinin sahibiyseniz, sorunu çözmek için güvenlik sağlayıcısıyla iletişime geçin."
   },
   "urlLabel": {
     "message": "URL: "
@@ -193,9 +190,6 @@
   },
   "urlUnavailable": {
     "message": "Kullanılamıyor"
-  },
-  "contextVerifyFailed": {
-    "message": "Bu uyarı sayfası güvenli eylem bağlamını doğrulayamadı. Devam et ve izin ver devre dışı bırakıldı."
   },
   "providerLogoAlt": {
     "message": "$1 Logosu"

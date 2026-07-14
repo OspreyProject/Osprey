@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "Osprey 標誌"
   },
-  "warningPageTitle": {
+  "warningProse": {
     "message": "不安全網站已被封鎖"
   },
   "warningTitle": {
@@ -19,9 +19,6 @@
   },
   "recommendation": {
     "message": "Osprey 已封鎖對此網站的存取。繼續操作並不安全。"
-  },
-  "details": {
-    "message": "如果您是該網站的擁有者，請聯絡安全提供商以解決此問題。"
   },
   "urlLabel": {
     "message": "網址："
@@ -193,9 +190,6 @@
   },
   "urlUnavailable": {
     "message": "不可用"
-  },
-  "contextVerifyFailed": {
-    "message": "此警告頁面無法驗證安全操作內容。繼續和允許操作已被停用。"
   },
   "providerLogoAlt": {
     "message": "$1 標誌"

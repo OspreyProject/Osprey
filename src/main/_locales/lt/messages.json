@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "Osprey logotipas"
   },
-  "warningPageTitle": {
+  "warningProse": {
     "message": "Nesaugi svetainė užblokuota"
   },
   "warningTitle": {
@@ -19,9 +19,6 @@
   },
   "recommendation": {
     "message": "Osprey užblokavo prieigą prie šios svetainės. Tęsti nėra saugu."
-  },
-  "details": {
-    "message": "Jei esate šios svetainės savininkas, kreipkitės į saugos teikėją, kad išspręstumėte problemą."
   },
   "urlLabel": {
     "message": "URL: "
@@ -193,9 +190,6 @@
   },
   "urlUnavailable": {
     "message": "Nepasiekiama"
-  },
-  "contextVerifyFailed": {
-    "message": "Šis įspėjimo puslapis negalėjo patvirtinti saugaus veiksmo konteksto. Tęsti ir leisti yra išjungti."
   },
   "providerLogoAlt": {
     "message": "$1 logotipas"

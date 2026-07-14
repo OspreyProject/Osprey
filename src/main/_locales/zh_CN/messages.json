@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "Osprey 标志"
   },
-  "warningPageTitle": {
+  "warningProse": {
     "message": "不安全网站已被拦截"
   },
   "warningTitle": {
@@ -19,9 +19,6 @@
   },
   "recommendation": {
     "message": "Osprey 已阻止访问此网站。继续操作并不安全。"
-  },
-  "details": {
-    "message": "如果您是该网站的所有者，请联系安全提供商以解决此问题。"
   },
   "urlLabel": {
     "message": "网址："
@@ -193,9 +190,6 @@
   },
   "urlUnavailable": {
     "message": "不可用"
-  },
-  "contextVerifyFailed": {
-    "message": "此警告页面无法验证安全操作上下文。继续和允许操作已被禁用。"
   },
   "providerLogoAlt": {
     "message": "$1 标志"

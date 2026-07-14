@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "Logo Osprey"
   },
-  "warningPageTitle": {
+  "warningProse": {
     "message": "Site web nesigur blocat"
   },
   "warningTitle": {
@@ -19,9 +19,6 @@
   },
   "recommendation": {
     "message": "Osprey a blocat accesul la acest site web. Nu este sigur să continuați."
-  },
-  "details": {
-    "message": "Dacă sunteți proprietarul acestui site web, contactați furnizorul de securitate pentru a rezolva problema."
   },
   "urlLabel": {
     "message": "URL: "
@@ -193,9 +190,6 @@
   },
   "urlUnavailable": {
     "message": "Indisponibil"
-  },
-  "contextVerifyFailed": {
-    "message": "Această pagină de avertizare nu a putut verifica un context de acțiune sigur. Continuare și permite sunt dezactivate."
   },
   "providerLogoAlt": {
     "message": "Logo $1"

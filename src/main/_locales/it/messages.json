@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "Logo Osprey"
   },
-  "warningPageTitle": {
+  "warningProse": {
     "message": "Sito web non sicuro bloccato"
   },
   "warningTitle": {
@@ -19,9 +19,6 @@
   },
   "recommendation": {
     "message": "Osprey ha bloccato l'accesso a questo sito web. Non è sicuro continuare."
-  },
-  "details": {
-    "message": "Se sei il proprietario di questo sito web, contatta il fornitore di sicurezza per risolvere il problema."
   },
   "urlLabel": {
     "message": "URL: "
@@ -193,9 +190,6 @@
   },
   "urlUnavailable": {
     "message": "Non disponibile"
-  },
-  "contextVerifyFailed": {
-    "message": "Questa pagina di avviso non ha potuto verificare un contesto di azione sicura. Continua e consenti sono disabilitati."
   },
   "providerLogoAlt": {
     "message": "Logo $1"

@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "Логотип Osprey"
   },
-  "warningPageTitle": {
+  "warningProse": {
     "message": "Небезпечний сайт заблоковано"
   },
   "warningTitle": {
@@ -19,9 +19,6 @@
   },
   "recommendation": {
     "message": "Osprey заблокував доступ до цього сайту. Продовжувати небезпечно."
-  },
-  "details": {
-    "message": "Якщо ви є власником цього сайту, зверніться до постачальника безпеки для вирішення проблеми."
   },
   "urlLabel": {
     "message": "URL: "
@@ -193,9 +190,6 @@
   },
   "urlUnavailable": {
     "message": "Недоступно"
-  },
-  "contextVerifyFailed": {
-    "message": "Ця сторінка попередження не змогла перевірити контекст безпечної дії. Продовжити і дозволити вимкнено."
   },
   "providerLogoAlt": {
     "message": "Логотип $1"

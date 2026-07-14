@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "Osprey-logo"
   },
-  "warningPageTitle": {
+  "warningProse": {
     "message": "Vaarallinen verkkosivusto estetty"
   },
   "warningTitle": {
@@ -19,9 +19,6 @@
   },
   "recommendation": {
     "message": "Osprey on estänyt pääsyn tälle verkkosivustolle. Jatkaminen ei ole turvallista."
-  },
-  "details": {
-    "message": "Jos olet tämän verkkosivuston omistaja, ota yhteyttä suojauspalveluntarjoajaan ongelman ratkaisemiseksi."
   },
   "urlLabel": {
     "message": "URL-osoite: "
@@ -193,9 +190,6 @@
   },
   "urlUnavailable": {
     "message": "Ei saatavilla"
-  },
-  "contextVerifyFailed": {
-    "message": "Tämä varoitussivu ei voinut vahvistaa turvallisen toiminnon kontekstia. Jatkaminen ja sallimistoiminnot on poistettu käytöstä."
   },
   "providerLogoAlt": {
     "message": "$1-logo"

@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "Logotip d'Osprey"
   },
-  "warningPageTitle": {
+  "warningProse": {
     "message": "Lloc web no segur bloquejat"
   },
   "warningTitle": {
@@ -19,9 +19,6 @@
   },
   "recommendation": {
     "message": "Osprey ha bloquejat l'accés a aquest lloc web. No és segur continuar."
-  },
-  "details": {
-    "message": "Si sou el propietari d'aquest lloc web, poseu-vos en contacte amb el proveïdor de seguretat per resoldre el problema."
   },
   "urlLabel": {
     "message": "URL: "
@@ -193,9 +190,6 @@
   },
   "urlUnavailable": {
     "message": "No disponible"
-  },
-  "contextVerifyFailed": {
-    "message": "Aquesta pàgina d'advertència no ha pogut verificar un context d'acció segura. Les accions de continuar i permetre estan desactivades."
   },
   "providerLogoAlt": {
     "message": "Logotip de $1"

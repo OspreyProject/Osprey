@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "شعار Osprey"
   },
-  "warningPageTitle": {
+  "warningProse": {
     "message": "تم حظر موقع ويب غير آمن"
   },
   "warningTitle": {
@@ -19,9 +19,6 @@
   },
   "recommendation": {
     "message": "قام Osprey بحظر الوصول إلى هذا الموقع. من غير الآمن المتابعة."
-  },
-  "details": {
-    "message": "إذا كنت مالك هذا الموقع، يرجى التواصل مع مزود الأمان لحل المشكلة."
   },
   "urlLabel": {
     "message": "الرابط: "
@@ -193,9 +190,6 @@
   },
   "urlUnavailable": {
     "message": "غير متاح"
-  },
-  "contextVerifyFailed": {
-    "message": "تعذّر على صفحة التحذير هذه التحقق من سياق إجراء آمن. تم تعطيل خياري المتابعة والسماح."
   },
   "providerLogoAlt": {
     "message": "شعار $1"

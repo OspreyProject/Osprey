@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "Osprey-logotyp"
   },
-  "warningPageTitle": {
+  "warningProse": {
     "message": "Osäker webbplats blockerad"
   },
   "warningTitle": {
@@ -19,9 +19,6 @@
   },
   "recommendation": {
     "message": "Osprey har blockerat åtkomst till den här webbplatsen. Det är inte säkert att fortsätta."
-  },
-  "details": {
-    "message": "Om du äger den här webbplatsen, kontakta säkerhetsleverantören för att lösa problemet."
   },
   "urlLabel": {
     "message": "URL: "
@@ -193,9 +190,6 @@
   },
   "urlUnavailable": {
     "message": "Ej tillgänglig"
-  },
-  "contextVerifyFailed": {
-    "message": "Den här varningssidan kunde inte verifiera ett säkert åtgärdssammanhang. Fortsätt och tillåt är inaktiverade."
   },
   "providerLogoAlt": {
     "message": "$1-logotyp"

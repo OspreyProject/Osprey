@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "Osprey-logo"
   },
-  "warningPageTitle": {
+  "warningProse": {
     "message": "Onveilige website geblokkeerd"
   },
   "warningTitle": {
@@ -19,9 +19,6 @@
   },
   "recommendation": {
     "message": "Osprey heeft de toegang tot deze website geblokkeerd. Het is niet veilig om door te gaan."
-  },
-  "details": {
-    "message": "Als u de eigenaar van deze website bent, neem dan contact op met de beveiligingsprovider om het probleem op te lossen."
   },
   "urlLabel": {
     "message": "URL: "
@@ -193,9 +190,6 @@
   },
   "urlUnavailable": {
     "message": "Niet beschikbaar"
-  },
-  "contextVerifyFailed": {
-    "message": "Deze waarschuwingspagina kon geen veilige actiecontext verifiëren. Doorgaan en toestaan zijn uitgeschakeld."
   },
   "providerLogoAlt": {
     "message": "$1-logo"

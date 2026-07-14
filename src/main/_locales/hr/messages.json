@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "Osprey logotip"
   },
-  "warningPageTitle": {
+  "warningProse": {
     "message": "Nesigurna web-stranica blokirana"
   },
   "warningTitle": {
@@ -19,9 +19,6 @@
   },
   "recommendation": {
     "message": "Osprey je blokirao pristup ovoj web-stranici. Nije sigurno nastaviti."
-  },
-  "details": {
-    "message": "Ako ste vlasnik ove web-stranice, obratite se sigurnosnom pružatelju za rješavanje problema."
   },
   "urlLabel": {
     "message": "URL: "
@@ -193,9 +190,6 @@
   },
   "urlUnavailable": {
     "message": "Nedostupno"
-  },
-  "contextVerifyFailed": {
-    "message": "Ova stranica s upozorenjem nije mogla provjeriti siguran kontekst radnje. Nastavi i dopusti su onemogućeni."
   },
   "providerLogoAlt": {
     "message": "$1 logotip"

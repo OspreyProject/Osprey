@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "Logo Osprey"
   },
-  "warningPageTitle": {
+  "warningProse": {
     "message": "Nebezpečná webová stránka zablokována"
   },
   "warningTitle": {
@@ -19,9 +19,6 @@
   },
   "recommendation": {
     "message": "Osprey zablokoval přístup na tuto webovou stránku. Pokračování není bezpečné."
-  },
-  "details": {
-    "message": "Pokud jste vlastníkem této webové stránky, obraťte se na poskytovatele zabezpečení a vyřešte problém."
   },
   "urlLabel": {
     "message": "URL: "
@@ -193,9 +190,6 @@
   },
   "urlUnavailable": {
     "message": "Nedostupné"
-  },
-  "contextVerifyFailed": {
-    "message": "Tato varovná stránka nemohla ověřit kontext bezpečné akce. Možnosti pokračovat a povolit jsou zakázány."
   },
   "providerLogoAlt": {
     "message": "Logo $1"

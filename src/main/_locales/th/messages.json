@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "โลโก้ Osprey"
   },
-  "warningPageTitle": {
+  "warningProse": {
     "message": "เว็บไซต์ที่ไม่ปลอดภัยถูกบล็อก"
   },
   "warningTitle": {
@@ -19,9 +19,6 @@
   },
   "recommendation": {
     "message": "Osprey ได้บล็อกการเข้าถึงเว็บไซต์นี้ ไม่ปลอดภัยที่จะดำเนินการต่อ"
-  },
-  "details": {
-    "message": "หากคุณเป็นเจ้าของเว็บไซต์นี้ โปรดติดต่อผู้ให้บริการด้านความปลอดภัยเพื่อแก้ไขปัญหา"
   },
   "urlLabel": {
     "message": "URL: "
@@ -193,9 +190,6 @@
   },
   "urlUnavailable": {
     "message": "ไม่พร้อมใช้งาน"
-  },
-  "contextVerifyFailed": {
-    "message": "หน้าคำเตือนนี้ไม่สามารถยืนยันบริบทการดำเนินการที่ปลอดภัยได้ ปุ่มดำเนินการต่อและอนุญาตถูกปิดใช้งาน"
   },
   "providerLogoAlt": {
     "message": "โลโก้ $1"

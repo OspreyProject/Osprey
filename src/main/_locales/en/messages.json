@@ -11,17 +11,14 @@
   "logoAlt": {
     "message": "Osprey Logo"
   },
-  "warningPageTitle": {
     "message": "Unsafe Website Blocked"
+  "warningProse": {
   },
   "warningTitle": {
     "message": "Warning: This website is unsafe"
   },
   "recommendation": {
     "message": "Osprey has blocked access to this website. It is unsafe to continue."
-  },
-  "details": {
-    "message": "If you are the owner of this website, please contact the security provider to resolve the issue."
   },
   "urlLabel": {
     "message": "URL: "

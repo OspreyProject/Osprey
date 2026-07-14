@@ -11,7 +11,7 @@
   "logoAlt": {
     "message": "Osprey logó"
   },
-  "warningPageTitle": {
+  "warningProse": {
     "message": "Nem biztonságos weboldal blokkolva"
   },
   "warningTitle": {
@@ -19,9 +19,6 @@
   },
   "recommendation": {
     "message": "Az Osprey blokkolta a hozzáférést ehhez a weboldalhoz. Nem biztonságos a folytatás."
-  },
-  "details": {
-    "message": "Ha Ön a weboldal tulajdonosa, kérjük vegye fel a kapcsolatot a biztonsági szolgáltatóval a probléma megoldása érdekében."
   },
   "urlLabel": {
     "message": "URL: "
@@ -193,9 +190,6 @@
   },
   "urlUnavailable": {
     "message": "Nem elérhető"
-  },
-  "contextVerifyFailed": {
-    "message": "Ez a figyelmeztető oldal nem tudta ellenőrizni a biztonságos műveleti környezetet. A folytatás és az engedélyezés le van tiltva."
   },
   "providerLogoAlt": {
     "message": "$1 logó"
