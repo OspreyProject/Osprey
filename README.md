@@ -56,7 +56,7 @@ You can even add your own API keys for third-party integrations that support it:
 
 When Osprey blocks a website, you'll see a warning page like this:
 
-![Warning Page](https://i.imgur.com/RZZ82Kr.png)
+![Warning Page](https://i.imgur.com/TGvQLk4.png)
 
 ## Our Partners
 
