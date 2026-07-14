@@ -87,10 +87,10 @@
     "message": "Dynamic DNS Domain"
   },
   "clearAllowedWebsites": {
-    "message": "Clear list of allowed websites"
+    "message": "Clear all excluded websites"
   },
   "clearAllowedWebsitesMessage": {
-    "message": "All allowed websites have been cleared."
+    "message": "All excluded websites have been cleared."
   },
   "settingsTitle": {
     "message": "Settings"
