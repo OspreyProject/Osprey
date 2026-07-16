@@ -24,7 +24,7 @@
 
 html, body {
     margin: 0;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Segoe UI', system-ui, sans-serif;
     font-weight: 400;
     background-color: #282828;
     color: #ffffff;
@@ -55,9 +55,10 @@ html, body {
 .banner {
     display: flex;
     align-items: stretch;
-    background-color: #f3ba22;
+    background-color: #373737;
     color: #ffffff;
     position: relative;
+    border-bottom: 1px solid #464646;
 }
 
 .logo {
@@ -163,7 +164,7 @@ html, body {
     margin: 7px 0 0;
     font-size: 15px;
     line-height: 1.6;
-    color: #b1b5b8;
+    color: #BDC1C3;
 }
 
 /* --------------------------------------------------
@@ -189,14 +190,22 @@ html, body {
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #8c8c8c;
+    color: #BABABA;
     margin-bottom: 5px;
 }
 
 .detail-value {
     font-size: 13px;
     line-height: 1.5;
-    color: #ebebeb;
+    color: #ffffff;
+}
+
+#reportedByLink {
+    color: #ffffff;
+}
+
+#reportedBySuffix {
+    color: #BABABA;
 }
 
 .url-value,
@@ -284,7 +293,7 @@ html, body {
 }
 
 .action-btn {
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Segoe UI', system-ui, sans-serif;
     font-size: 13px;
     font-weight: 600;
     padding: 8px 18px;
@@ -296,8 +305,7 @@ html, body {
 
 .primary-btn {
     background-color: #f3ba22;
-    color: #ffffff;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 1px rgba(0, 0, 0, 0.3);
+    color: #282828;
     cursor: pointer;
 }
 
@@ -381,9 +389,7 @@ html, body {
     padding: 0;
     margin: 0;
     font: inherit;
-    color: #f3ba22;
-    text-decoration: none;
-    border-bottom: 1px solid rgba(243, 186, 34, 0.5);
+    color: #C0C0C0;
     cursor: pointer;
     user-select: none;
     -webkit-user-select: none;
@@ -395,6 +401,6 @@ html, body {
 }
 
 .inline-action-btn:hover:not(:disabled) {
-    color: #ffcd4a;
-    border-bottom-color: #ffcd4a;
+    color: #F2F2F2;
+    text-decoration: underline;
 }
