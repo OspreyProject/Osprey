@@ -305,7 +305,7 @@
 
                 hostnameBuiltin({
                     id: 'switch-ch',
-                    website: 'https://www.switch.ch/?utm_source=osprey',
+                    website: 'https://www.switch.ch/en/dns-firewall/?utm_source=osprey',
                     aliases: ['switchCH'],
                     displayName: 'Switch.ch',
                     group: providerGroups.security_filters.id,
