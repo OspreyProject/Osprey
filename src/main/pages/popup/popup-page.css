@@ -20,7 +20,7 @@
 -------------------------------------------------- */
 html, body {
     margin: 0;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Segoe UI', system-ui, sans-serif;
     font-weight: 400;
     position: relative;
     box-sizing: border-box;
@@ -36,9 +36,10 @@ html, body {
 .banner {
     display: flex;
     align-items: stretch;
-    background-color: #f3ba22;
+    background-color: #373737;
     color: #ffffff;
     position: relative;
+    border-bottom: 1px solid #464646;
 }
 
 .logo {
@@ -67,7 +68,6 @@ html, body {
     font-size: 16px;
     font-weight: 500;
     line-height: 1.2;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 1px rgba(0, 0, 0, 0.3);
     padding: 8px 0;
 }
 
@@ -126,15 +126,14 @@ html, body {
 
 .settings-button {
     background-color: #f3ba22;
-    color: #ffffff;
+    color: #282828;
     border: none;
     border-radius: 5px;
     padding: 8px 24px;
     font-size: 14px;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Segoe UI', system-ui, sans-serif;
     font-weight: 600;
     cursor: pointer;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 1px rgba(0, 0, 0, 0.3);
     user-select: none;
     -webkit-user-select: none;
 }
