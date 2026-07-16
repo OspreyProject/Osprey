@@ -68,19 +68,25 @@ globalThis.OspreyProviderCard = (() => {
         }
     };
 
-    const createExternalLinkText = (rawUrl, label, className, providerId) => {
+    const createExternalLinkText = (rawUrl, label, className, providerId, accessibleName) => {
         const safeUrl = sanitizeExternalUrl(rawUrl);
 
         if (!safeUrl) {
             return null;
         }
 
-        const link = formHelpers.createElement('div', {
+        const linkProps = {
             className,
             textContent: label,
             role: 'link',
             tabIndex: 0,
-        });
+        };
+
+        if (accessibleName) {
+            linkProps.ariaLabel = accessibleName;
+        }
+
+        const link = formHelpers.createElement('div', linkProps);
 
         const open = () => openExternalUrl(safeUrl, providerId);
 
@@ -101,24 +107,19 @@ globalThis.OspreyProviderCard = (() => {
     };
 
     function onHeaderClick(event) {
-        if (!event.target.closest('.provider-toggle-wrap')) {
-            const currentItem = headerContextMap.get(event.currentTarget);
-
-            if (currentItem) {
-                const expanded = currentItem.classList.toggle('expanded');
-                event.currentTarget.setAttribute('aria-expanded', String(expanded));
-            }
+        if (event.target.closest('.provider-toggle-wrap')) {
+            return;
         }
-    }
 
-    function onHeaderKeyDown(event) {
-        if ((event.key === enterString || event.key === spaceString) && event.target === event.currentTarget) {
-            event.preventDefault();
-            const currentItem = headerContextMap.get(event.currentTarget);
+        const header = event.currentTarget;
+        const currentItem = headerContextMap.get(header);
 
-            if (currentItem) {
-                const expanded = currentItem.classList.toggle('expanded');
-                event.currentTarget.setAttribute('aria-expanded', String(expanded));
+        if (currentItem) {
+            const expanded = currentItem.classList.toggle('expanded');
+            const expandButton = header.querySelector('.expand-arrow');
+
+            if (expandButton) {
+                expandButton.setAttribute('aria-expanded', String(expanded));
             }
         }
     }
@@ -233,38 +234,48 @@ globalThis.OspreyProviderCard = (() => {
         return indicators;
     }
 
-    function createHeaderToggle(isEnabled) {
+    function createHeaderToggle(isEnabled, providerName) {
         return formHelpers.createElement('span', {
             className: isEnabled ? 'toggle-switch on' : 'toggle-switch off',
             role: 'switch',
             ariaChecked: isEnabled,
             tabIndex: 0,
+            ariaLabel: providerName,
         });
     }
 
     function createProviderHeader(definition, iconUrl, isEnabled, indicators = []) {
         const header = createDiv('provider-header');
-        const toggleSwitch = createHeaderToggle(isEnabled);
+        const providerName = formHelpers.normalizeProviderName(definition.displayName) || 'Unnamed Provider';
+        const toggleSwitch = createHeaderToggle(isEnabled, providerName);
 
-        header.tabIndex = 0;
-        header.setAttribute('role', 'button');
-        header.setAttribute('aria-expanded', 'false');
+        const expandButton = formHelpers.createElement('button', {
+            type: 'button',
+            className: 'expand-arrow',
+            ariaLabel: providerName,
+            attributes: {
+                'aria-expanded': 'false',
+            },
+        }, formHelpers.createElement('span', {
+            className: 'expand-arrow-glyph',
+            textContent: '▼',
+            attributes: {
+                'aria-hidden': 'true',
+            },
+        }));
 
         header.append(
             createProviderLogo(definition.displayName, iconUrl),
 
             formHelpers.createElement('span', {
                 className: 'provider-name',
-                textContent: formHelpers.normalizeProviderName(definition.displayName) || 'Unnamed Provider',
+                textContent: providerName,
             }),
 
             ...indicators,
             createDiv('provider-toggle-wrap', toggleSwitch),
 
-            formHelpers.createElement('span', {
-                className: 'expand-arrow',
-                textContent: '▼',
-            }),
+            expandButton,
         );
         return {header, toggleSwitch};
     }
@@ -283,7 +294,6 @@ globalThis.OspreyProviderCard = (() => {
 
         headerContextMap.set(header, item);
         header.addEventListener(clickString, onHeaderClick, captureListenerOptions);
-        header.addEventListener(keydownString, onHeaderKeyDown, captureListenerOptions);
 
         const handleToggleClick = () => {
             if (disabled) {
@@ -472,7 +482,9 @@ globalThis.OspreyProviderCard = (() => {
             buildIndicators(definition),
         );
 
-        const websiteLink = createExternalLinkText(definition.website, LangUtil.WEBSITE_LINK + ' ↗', 'provider-website-link', definition.id);
+        const builtInProviderName = formHelpers.normalizeProviderName(definition.displayName) || definition.id;
+        const websiteLink = createExternalLinkText(definition.website, LangUtil.WEBSITE_LINK + ' ↗',
+            'provider-website-link', definition.id, `${builtInProviderName}, ${LangUtil.WEBSITE_LINK}`);
 
         const isDisabled = Boolean(
             runtime?.effectiveState?.app?.lockSettings ||
@@ -520,6 +532,8 @@ globalThis.OspreyProviderCard = (() => {
             runtime?.providerManagedIds?.has(definition.id),
         );
 
+        const thirdPartyProviderName = formHelpers.normalizeProviderName(definition.displayName) || definition.id;
+
         const passwordField = formHelpers.createPasswordField({
             value: formHelpers.sanitizeMultiline(savedApiKey, formHelpers.maxAPIKeyLength),
             dataset: {field: 'apiKey'},
@@ -532,7 +546,8 @@ globalThis.OspreyProviderCard = (() => {
             disabled: true,
         });
 
-        const apiKeyLink = createExternalLinkText(definition.apiKeyUrl, LangUtil.GET_API_KEY + ' ↗', 'api-key-link-text', definition.id);
+        const apiKeyLink = createExternalLinkText(definition.apiKeyUrl, LangUtil.GET_API_KEY + ' ↗',
+            'api-key-link-text', definition.id, `${thirdPartyProviderName}, ${LangUtil.GET_API_KEY}`);
 
         passwordField.input.disabled = fieldsLocked;
 
@@ -581,7 +596,8 @@ globalThis.OspreyProviderCard = (() => {
             apiKeyLink,
         );
 
-        const websiteLink = createExternalLinkText(definition.website, LangUtil.WEBSITE_LINK + ' ↗', 'provider-website-link', definition.id);
+        const websiteLink = createExternalLinkText(definition.website, LangUtil.WEBSITE_LINK + ' ↗',
+            'provider-website-link', definition.id, `${thirdPartyProviderName}, ${LangUtil.WEBSITE_LINK}`);
         const bypassControl = createBypassThresholdControl(definition, providerState, toggleLocked);
 
         body.append(...[

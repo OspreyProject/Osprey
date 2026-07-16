@@ -142,8 +142,26 @@ globalThis.OspreyFormHelpers = (() => {
         return sanitizeMultiline(value, maxAPIKeyLength);
     }
 
+    let fieldIdCounter = 0;
+
+    function ensureControlId(control) {
+        if (!control.id) {
+            fieldIdCounter += 1;
+            control.id = `osprey-field-${fieldIdCounter}`;
+        }
+        return control.id;
+    }
+
     function createFieldGroup(labelText, inputElement, tagNode = null, helpNode = null) {
         const label = createTextElement('label', 'field-label', labelText);
+
+        const control = inputElement && inputElement.matches && inputElement.matches('input, textarea, select') ?
+            inputElement :
+            (inputElement && inputElement.querySelector ? inputElement.querySelector('input, textarea, select') : null);
+
+        if (control) {
+            label.htmlFor = ensureControlId(control);
+        }
 
         if (tagNode) {
             label.append(' ', tagNode);
