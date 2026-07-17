@@ -21,20 +21,11 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
     const browserAPI = globalThis.OspreyBrowserAPI;
     const providerStateStore = globalThis.OspreyProviderStateStore;
 
-    const termsURL = 'https://github.com/OspreyProject/Osprey/blob/main/.github/TERMS.md';
-    const privacyURL = 'https://github.com/OspreyProject/Osprey/blob/main/.github/PRIVACY.md';
     let isInitialized = false;
 
     const setText = (element, value) => {
         if (element !== null) {
             element.textContent = value;
-        }
-    };
-
-    const setLink = (element, text, href) => {
-        if (element !== null) {
-            element.textContent = text;
-            element.href = href;
         }
     };
 
@@ -51,20 +42,9 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
         const statusHeading = document.getElementById('statusHeading');
         const providerCount = document.getElementById('providerCount');
         const settingsButton = document.getElementById('settingsButton');
-        const websiteLink = document.getElementById('websiteLink');
-        const version = document.getElementById('version');
-        const privacyPolicy = document.getElementById('privacyPolicy');
-        const termsFooterLink = document.getElementById('termsFooterLink');
 
         document.title = LangUtil.TITLE;
         setText(bannerText, LangUtil.TITLE);
-        setText(websiteLink, LangUtil.WEBSITE_LINK);
-
-        const manifestVersion = browserAPI.api?.runtime.getManifest().version || '';
-        setText(version, LangUtil.VERSION + manifestVersion);
-
-        setLink(privacyPolicy, LangUtil.PRIVACY_POLICY, privacyURL);
-        setLink(termsFooterLink, LangUtil.TERMS_LINK, termsURL);
 
         LangUtil.applyLogoAlt(logo);
 
