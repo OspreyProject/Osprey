@@ -1,21 +1,21 @@
 {
   "extensionName": {
-    "message": "Osprey: Protecció del navegador"
+    "message": "Osprey: protecció del navegador"
   },
   "extensionShortName": {
     "message": "Osprey"
   },
   "extensionDescription": {
-    "message": "Bloqueja automàticament phishing, malware, estafes i llocs perillosos mentre navegues. Protecció gratuïta per navegar més segur."
+    "message": "Bloqueja phishing, programari maliciós, estafes i llocs web perillosos mentre navegues. Protecció gratuïta i navegació segura."
   },
   "logoAlt": {
     "message": "Logotip d'Osprey"
   },
   "warningProse": {
-    "message": "Lloc web no segur bloquejat"
+    "message": "S'ha bloquejat un lloc web perjudicial"
   },
   "warningTitle": {
-    "message": "Avís: aquest lloc web no és segur"
+    "message": "S'ha bloquejat un lloc web perjudicial"
   },
   "recommendation": {
     "message": "Osprey ha bloquejat l'accés a aquest lloc web. No és segur continuar."
@@ -24,22 +24,22 @@
     "message": "URL: "
   },
   "reportedByLabel": {
-    "message": "Notificat per: "
+    "message": "Reportat per: "
   },
   "reportedByOthers": {
     "message": "(i ___ més)"
   },
   "reportedByAlso": {
-    "message": "També notificat per: "
+    "message": "També reportat per: "
   },
   "reasonLabel": {
     "message": "Motiu: "
   },
   "reportWebsite": {
-    "message": "Notifica aquest lloc web com a segur"
+    "message": "Reporta aquest lloc web com a segur"
   },
   "allowWebsite": {
-    "message": "Ignora sempre aquest lloc web"
+    "message": "Afegeix el lloc web a les exclusions"
   },
   "backButton": {
     "message": "Torna a la seguretat"
@@ -47,29 +47,23 @@
   "continueButton": {
     "message": "Continua igualment"
   },
-  "version": {
-    "message": "Versió: "
-  },
   "websiteLink": {
     "message": "Lloc web"
   },
-  "privacyPolicy": {
-    "message": "Política de privadesa"
-  },
-  "termsLink": {
-    "message": "Condicions"
-  },
   "knownSafe": {
-    "message": "Segur conegut"
+    "message": "Conegut com a segur"
   },
   "failed": {
     "message": "Ha fallat"
   },
   "waiting": {
-    "message": "Esperant"
+    "message": "En espera"
   },
   "allowed": {
     "message": "Permès"
+  },
+  "phishing": {
+    "message": "Pesc (phishing)"
   },
   "malicious": {
     "message": "Maliciós"
@@ -81,40 +75,13 @@
     "message": "Domini registrat recentment"
   },
   "dynamicDns": {
-    "message": "Domini amb DNS dinàmic"
+    "message": "Domini de DNS dinàmic"
   },
   "clearAllowedWebsites": {
-    "message": "Esborra la llista de llocs web permesos"
+    "message": "Esborra tots els llocs web exclosos"
   },
   "clearAllowedWebsitesMessage": {
-    "message": "S'han esborrat tots els llocs web permesos."
-  },
-  "phishing": {
-    "message": "Pesca d'identitat"
-  },
-  "bypassBlockingThreshold": {
-    "message": "Ignora el llindar de bloqueig"
-  },
-  "bypassBlockingThresholdTooltip": {
-    "message": "Quan està activat, qualsevol domini marcat per aquest proveïdor es bloquejarà immediatament, ometent el llindar de dos proveïdors. Això pot augmentar els falsos positius."
-  },
-  "blockNewlyRegistered": {
-    "message": "Bloqueja els dominis registrats recentment"
-  },
-  "blockNewlyRegisteredTooltip": {
-    "message": "Quan està activat, aquest proveïdor bloqueja els dominis que s'han registrat durant els últims 90 dies. Això pot augmentar els falsos positius."
-  },
-  "blockSuspicious": {
-    "message": "Bloqueja els dominis sospitosos"
-  },
-  "blockSuspiciousTooltip": {
-    "message": "Quan està activat, aquest proveïdor bloqueja els dominis que ha marcat com a sospitosos, encara que no s'hagi confirmat que allotgin contingut maliciós. Això pot augmentar els falsos positius."
-  },
-  "blockDynamicDns": {
-    "message": "Bloqueja els dominis amb DNS dinàmic"
-  },
-  "blockDynamicDnsTooltip": {
-    "message": "Quan està activat, aquest proveïdor bloqueja els dominis que utilitzen serveis de DNS dinàmic, que de vegades són abusats per actors maliciosos. Això pot augmentar els falsos positius."
+    "message": "S'han esborrat tots els llocs web exclosos."
   },
   "settingsTitle": {
     "message": "Configuració"
@@ -126,13 +93,37 @@
     "message": "Integracions de tercers"
   },
   "resetDefaultProviders": {
-    "message": "Restableix els proveïdors predeterminats"
+    "message": "Restableix els proveïdors de protecció"
   },
   "resetAll": {
     "message": "Restableix-ho tot"
   },
   "fieldLabelApiKey": {
-    "message": "Clau de l'API"
+    "message": "Clau API"
+  },
+  "bypassBlockingThreshold": {
+    "message": "Ignora el llindar de bloqueig"
+  },
+  "bypassBlockingThresholdTooltip": {
+    "message": "Quan s'activa, qualsevol domini marcat per aquest proveïdor es bloquejarà immediatament, ometent el llindar de dos proveïdors. Això pot augmentar els falsos positius."
+  },
+  "blockNewlyRegistered": {
+    "message": "Bloqueja els dominis registrats recentment"
+  },
+  "blockNewlyRegisteredTooltip": {
+    "message": "Quan s'activa, aquest proveïdor bloqueja els dominis registrats durant els últims 90 dies. Això pot augmentar els falsos positius."
+  },
+  "blockSuspicious": {
+    "message": "Bloqueja els dominis sospitosos"
+  },
+  "blockSuspiciousTooltip": {
+    "message": "Quan s'activa, aquest proveïdor bloqueja els dominis que ha marcat com a sospitosos, encara que no s'hagi confirmat que allotgin contingut maliciós. Això pot augmentar els falsos positius."
+  },
+  "blockDynamicDns": {
+    "message": "Bloqueja els dominis de DNS dinàmic"
+  },
+  "blockDynamicDnsTooltip": {
+    "message": "Quan s'activa, aquest proveïdor bloqueja els dominis que utilitzen serveis de DNS dinàmic, que de vegades són abusats pels actors d'amenaces. Això pot augmentar els falsos positius."
   },
   "applyButton": {
     "message": "Aplica"
@@ -144,13 +135,13 @@
     "message": "Adreça IP protegida"
   },
   "showApiKey": {
-    "message": "Mostra la clau de l'API"
+    "message": "Mostra la clau API"
   },
   "hideApiKey": {
-    "message": "Amaga la clau de l'API"
+    "message": "Amaga la clau API"
   },
   "getApiKey": {
-    "message": "Obtenir la clau API"
+    "message": "Obtén una clau API"
   },
   "toastSaved": {
     "message": "Desat."
@@ -159,19 +150,19 @@
     "message": "No s'ha pogut desar."
   },
   "toastDefaultProvidersRestored": {
-    "message": "Proveïdors predeterminats restaurats."
+    "message": "S'han restaurat els proveïdors de protecció."
   },
   "toastAllSettingsRestored": {
-    "message": "Tota la configuració restaurada."
+    "message": "S'ha restaurat tota la configuració."
   },
   "toastSaveApiKeyFirst": {
-    "message": "Desa una clau d'API vàlida abans d'activar aquesta integració."
+    "message": "Desa una clau API vàlida abans d'activar aquesta integració."
   },
   "toastFailedToUpdateState": {
     "message": "No s'ha pogut actualitzar l'estat del proveïdor."
   },
   "statusHeadingSecure": {
-    "message": "Esteu segur"
+    "message": "Estàs protegit"
   },
   "statusHeadingNoProviders": {
     "message": "Cap proveïdor activat"

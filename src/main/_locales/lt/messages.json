@@ -1,24 +1,24 @@
 {
   "extensionName": {
-    "message": "Osprey: Naršyklės apsauga"
+    "message": "Osprey: naršyklės apsauga"
   },
   "extensionShortName": {
     "message": "Osprey"
   },
   "extensionDescription": {
-    "message": "Automatiškai blokuoja sukčiavimą, kenkėjiškas programas, apgaules ir pavojingas svetaines. Nemokama apsauga saugesniam naršymui."
+    "message": "Blokuoja sukčiavimą, kenkėjiškas programas, apgaules ir pavojingas svetaines. Nemokama apsauga saugesniam naršymui."
   },
   "logoAlt": {
     "message": "Osprey logotipas"
   },
   "warningProse": {
-    "message": "Nesaugi svetainė užblokuota"
+    "message": "Kenksminga svetainė užblokuota"
   },
   "warningTitle": {
-    "message": "Įspėjimas: ši svetainė yra nesaugi"
+    "message": "Kenksminga svetainė užblokuota"
   },
   "recommendation": {
-    "message": "Osprey užblokavo prieigą prie šios svetainės. Tęsti nėra saugu."
+    "message": "Osprey užblokavo prieigą prie šios svetainės. Tęsti nesaugu."
   },
   "urlLabel": {
     "message": "URL: "
@@ -27,7 +27,7 @@
     "message": "Pranešė: "
   },
   "reportedByOthers": {
-    "message": "(ir ___ kitų)"
+    "message": "(ir dar ___)"
   },
   "reportedByAlso": {
     "message": "Taip pat pranešė: "
@@ -36,31 +36,22 @@
     "message": "Priežastis: "
   },
   "reportWebsite": {
-    "message": "Pranešti apie šią svetainę kaip saugią"
+    "message": "Pranešti, kad ši svetainė saugi"
   },
   "allowWebsite": {
-    "message": "Visada ignoruoti šią svetainę"
+    "message": "Pridėti svetainę prie išimčių"
   },
   "backButton": {
-    "message": "Grįžti į saugią vietą"
+    "message": "Grįžti į saugumą"
   },
   "continueButton": {
-    "message": "Tęsti bet kuriuo atveju"
-  },
-  "version": {
-    "message": "Versija: "
+    "message": "Vis tiek tęsti"
   },
   "websiteLink": {
     "message": "Svetainė"
   },
-  "privacyPolicy": {
-    "message": "Privatumo politika"
-  },
-  "termsLink": {
-    "message": "Sąlygos"
-  },
   "knownSafe": {
-    "message": "Žinoma saugi"
+    "message": "Žinoma kaip saugi"
   },
   "failed": {
     "message": "Nepavyko"
@@ -70,6 +61,9 @@
   },
   "allowed": {
     "message": "Leidžiama"
+  },
+  "phishing": {
+    "message": "Sukčiavimas"
   },
   "malicious": {
     "message": "Kenkėjiška"
@@ -83,26 +77,23 @@
   "dynamicDns": {
     "message": "Dinaminio DNS domenas"
   },
-  "phishing": {
-    "message": "Sukčiavimas apsimetant"
-  },
   "clearAllowedWebsites": {
-    "message": "Išvalyti leidžiamų svetainių sąrašą"
+    "message": "Išvalyti visas išskirtas svetaines"
   },
   "clearAllowedWebsitesMessage": {
-    "message": "Visos leidžiamos svetainės buvo išvalytos."
+    "message": "Visos išskirtos svetainės išvalytos."
   },
   "settingsTitle": {
     "message": "Nustatymai"
   },
   "providersSection": {
-    "message": "Apsaugos teikėjai"
+    "message": "Apsaugos tiekėjai"
   },
   "thirdPartySection": {
     "message": "Trečiųjų šalių integracijos"
   },
   "resetDefaultProviders": {
-    "message": "Atkurti numatytuosius teikėjus"
+    "message": "Atkurti apsaugos tiekėjus"
   },
   "resetAll": {
     "message": "Atkurti viską"
@@ -114,25 +105,25 @@
     "message": "Nepaisyti blokavimo slenksčio"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Kai įjungta, bet kuris šio tiekėjo pažymėtas domenas bus nedelsiant užblokuotas, apeinant dviejų tiekėjų slenkstį. Tai gali padidinti klaidingai teigiamų rezultatų skaičių."
+    "message": "Kai įjungta, bet kuris šio tiekėjo pažymėtas domenas bus nedelsiant užblokuotas, apeinant dviejų tiekėjų slenkstį. Tai gali padidinti klaidingų teigiamų rezultatų skaičių."
   },
   "blockNewlyRegistered": {
     "message": "Blokuoti neseniai registruotus domenus"
   },
   "blockNewlyRegisteredTooltip": {
-    "message": "Kai įjungta, šis tiekėjas blokuoja domenus, kurie buvo užregistruoti per pastarąsias 90 dienų. Tai gali padidinti klaidingai teigiamų rezultatų skaičių."
+    "message": "Kai įjungta, šis tiekėjas blokuoja domenus, registruotus per pastarąsias 90 dienų. Tai gali padidinti klaidingų teigiamų rezultatų skaičių."
   },
   "blockSuspicious": {
     "message": "Blokuoti įtartinus domenus"
   },
   "blockSuspiciousTooltip": {
-    "message": "Kai įjungta, šis tiekėjas blokuoja domenus, kuriuos jis pažymėjo kaip įtartinus, net jei nepatvirtinta, kad juose talpinamas kenkėjiškas turinys. Tai gali padidinti klaidingai teigiamų rezultatų skaičių."
+    "message": "Kai įjungta, šis tiekėjas blokuoja domenus, kuriuos pažymėjo kaip įtartinus, net jei nepatvirtinta, kad juose talpinamas kenkėjiškas turinys. Tai gali padidinti klaidingų teigiamų rezultatų skaičių."
   },
   "blockDynamicDns": {
     "message": "Blokuoti dinaminio DNS domenus"
   },
   "blockDynamicDnsTooltip": {
-    "message": "Kai įjungta, šis tiekėjas blokuoja domenus, kurie naudoja dinaminio DNS paslaugas, kuriomis kartais piktnaudžiauja grėsmių vykdytojai. Tai gali padidinti klaidingai teigiamų rezultatų skaičių."
+    "message": "Kai įjungta, šis tiekėjas blokuoja domenus, naudojančius dinaminio DNS paslaugas, kuriomis kartais piktnaudžiauja grėsmių vykdytojai. Tai gali padidinti klaidingų teigiamų rezultatų skaičių."
   },
   "applyButton": {
     "message": "Taikyti"
@@ -153,34 +144,34 @@
     "message": "Gauti API raktą"
   },
   "toastSaved": {
-    "message": "Išsaugota."
+    "message": "Įrašyta."
   },
   "toastFailedToSave": {
-    "message": "Nepavyko išsaugoti."
+    "message": "Nepavyko įrašyti."
   },
   "toastDefaultProvidersRestored": {
-    "message": "Numatytieji teikėjai atkurti."
+    "message": "Apsaugos tiekėjai atkurti."
   },
   "toastAllSettingsRestored": {
     "message": "Visi nustatymai atkurti."
   },
   "toastSaveApiKeyFirst": {
-    "message": "Prieš įgalindami šią integraciją išsaugokite galiojantį API raktą."
+    "message": "Prieš įjungdami šią integraciją įrašykite galiojantį API raktą."
   },
   "toastFailedToUpdateState": {
-    "message": "Nepavyko atnaujinti teikėjo būsenos."
+    "message": "Nepavyko atnaujinti tiekėjo būsenos."
   },
   "statusHeadingSecure": {
     "message": "Esate saugūs"
   },
   "statusHeadingNoProviders": {
-    "message": "Nėra įgalintų teikėjų"
+    "message": "Nėra įjungtų tiekėjų"
   },
   "statusIconAltProtected": {
     "message": "Apsaugota"
   },
   "providersEnabledCount": {
-    "message": "___ iš ___ teikėjų įgalinta"
+    "message": "Įjungta ___ iš ___ tiekėjų"
   },
   "openSettings": {
     "message": "Atidaryti nustatymus"
@@ -195,6 +186,6 @@
     "message": "$1 logotipas"
   },
   "providerNameFallback": {
-    "message": "Teikėjas"
+    "message": "Tiekėjas"
   }
 }

@@ -6,16 +6,16 @@
     "message": "Osprey"
   },
   "extensionDescription": {
-    "message": "Automatycznie blokuje phishing, malware, oszustwa i niebezpieczne strony. Darmowa ochrona dla bezpieczniejszego przeglądania."
+    "message": "Blokuje phishing, złośliwe oprogramowanie, oszustwa i niebezpieczne strony. Bezpłatna ochrona i bezpieczne przeglądanie."
   },
   "logoAlt": {
     "message": "Logo Osprey"
   },
   "warningProse": {
-    "message": "Niebezpieczna strona zablokowana"
+    "message": "Zablokowano szkodliwą stronę"
   },
   "warningTitle": {
-    "message": "Ostrzeżenie: Ta strona jest niebezpieczna"
+    "message": "Zablokowano szkodliwą stronę"
   },
   "recommendation": {
     "message": "Osprey zablokował dostęp do tej strony. Kontynuowanie nie jest bezpieczne."
@@ -30,7 +30,7 @@
     "message": "(i ___ innych)"
   },
   "reportedByAlso": {
-    "message": "Zgłoszone również przez: "
+    "message": "Zgłoszone także przez: "
   },
   "reasonLabel": {
     "message": "Powód: "
@@ -39,37 +39,31 @@
     "message": "Zgłoś tę stronę jako bezpieczną"
   },
   "allowWebsite": {
-    "message": "Zawsze ignoruj tę stronę"
+    "message": "Dodaj stronę do wykluczeń"
   },
   "backButton": {
-    "message": "Wróć do bezpieczeństwa"
+    "message": "Powrót do bezpieczeństwa"
   },
   "continueButton": {
     "message": "Kontynuuj mimo to"
   },
-  "version": {
-    "message": "Wersja: "
-  },
   "websiteLink": {
-    "message": "Strona internetowa"
-  },
-  "privacyPolicy": {
-    "message": "Polityka prywatności"
-  },
-  "termsLink": {
-    "message": "Warunki"
+    "message": "Strona"
   },
   "knownSafe": {
-    "message": "Znana bezpieczna"
+    "message": "Znana jako bezpieczna"
   },
   "failed": {
-    "message": "Nieudane"
+    "message": "Niepowodzenie"
   },
   "waiting": {
     "message": "Oczekiwanie"
   },
   "allowed": {
     "message": "Dozwolone"
+  },
+  "phishing": {
+    "message": "Phishing"
   },
   "malicious": {
     "message": "Złośliwe"
@@ -78,19 +72,16 @@
     "message": "Podejrzane"
   },
   "newlyRegistered": {
-    "message": "Nowo zarejestrowana domena"
+    "message": "Niedawno zarejestrowana domena"
   },
   "dynamicDns": {
-    "message": "Domena z dynamicznym DNS"
-  },
-  "phishing": {
-    "message": "Phishing"
+    "message": "Domena dynamicznego DNS"
   },
   "clearAllowedWebsites": {
-    "message": "Wyczyść listę dozwolonych stron"
+    "message": "Wyczyść wszystkie wykluczone strony"
   },
   "clearAllowedWebsitesMessage": {
-    "message": "Wszystkie dozwolone strony zostały wyczyszczone."
+    "message": "Wszystkie wykluczone strony zostały wyczyszczone."
   },
   "settingsTitle": {
     "message": "Ustawienia"
@@ -99,10 +90,10 @@
     "message": "Dostawcy ochrony"
   },
   "thirdPartySection": {
-    "message": "Integracje firm trzecich"
+    "message": "Integracje zewnętrzne"
   },
   "resetDefaultProviders": {
-    "message": "Przywróć domyślnych dostawców"
+    "message": "Przywróć dostawców ochrony"
   },
   "resetAll": {
     "message": "Przywróć wszystko"
@@ -114,25 +105,25 @@
     "message": "Ignoruj próg blokowania"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Gdy ta opcja jest włączona, każda domena oznaczona przez tego dostawcę zostanie natychmiast zablokowana z pominięciem progu dwóch dostawców. Może to zwiększyć liczbę fałszywych alarmów."
+    "message": "Po włączeniu każda domena oznaczona przez tego dostawcę zostanie natychmiast zablokowana, z pominięciem progu dwóch dostawców. Może to zwiększyć liczbę fałszywych alarmów."
   },
   "blockNewlyRegistered": {
-    "message": "Blokuj nowo zarejestrowane domeny"
+    "message": "Blokuj niedawno zarejestrowane domeny"
   },
   "blockNewlyRegisteredTooltip": {
-    "message": "Gdy ta opcja jest włączona, ten dostawca blokuje domeny zarejestrowane w ciągu ostatnich 90 dni. Może to zwiększyć liczbę fałszywych alarmów."
+    "message": "Po włączeniu ten dostawca blokuje domeny zarejestrowane w ciągu ostatnich 90 dni. Może to zwiększyć liczbę fałszywych alarmów."
   },
   "blockSuspicious": {
     "message": "Blokuj podejrzane domeny"
   },
   "blockSuspiciousTooltip": {
-    "message": "Gdy ta opcja jest włączona, ten dostawca blokuje domeny, które oznaczył jako podejrzane, nawet jeśli nie potwierdzono, że hostują złośliwą treść. Może to zwiększyć liczbę fałszywych alarmów."
+    "message": "Po włączeniu ten dostawca blokuje domeny oznaczone jako podejrzane, nawet jeśli nie potwierdzono, że hostują złośliwą zawartość. Może to zwiększyć liczbę fałszywych alarmów."
   },
   "blockDynamicDns": {
-    "message": "Blokuj domeny z dynamicznym DNS"
+    "message": "Blokuj domeny dynamicznego DNS"
   },
   "blockDynamicDnsTooltip": {
-    "message": "Gdy ta opcja jest włączona, ten dostawca blokuje domeny korzystające z usług dynamicznego DNS, które bywają nadużywane przez cyberprzestępców. Może to zwiększyć liczbę fałszywych alarmów."
+    "message": "Po włączeniu ten dostawca blokuje domeny korzystające z usług dynamicznego DNS, które bywają wykorzystywane przez cyberprzestępców. Może to zwiększyć liczbę fałszywych alarmów."
   },
   "applyButton": {
     "message": "Zastosuj"
@@ -150,37 +141,37 @@
     "message": "Ukryj klucz API"
   },
   "getApiKey": {
-    "message": "Pobierz klucz API"
+    "message": "Uzyskaj klucz API"
   },
   "toastSaved": {
     "message": "Zapisano."
   },
   "toastFailedToSave": {
-    "message": "Zapisanie nie powiodło się."
+    "message": "Nie udało się zapisać."
   },
   "toastDefaultProvidersRestored": {
-    "message": "Przywrócono domyślnych dostawców."
+    "message": "Przywrócono dostawców ochrony."
   },
   "toastAllSettingsRestored": {
-    "message": "Wszystkie ustawienia przywrócone."
+    "message": "Przywrócono wszystkie ustawienia."
   },
   "toastSaveApiKeyFirst": {
     "message": "Zapisz prawidłowy klucz API przed włączeniem tej integracji."
   },
   "toastFailedToUpdateState": {
-    "message": "Aktualizacja stanu dostawcy nie powiodła się."
+    "message": "Nie udało się zaktualizować stanu dostawcy."
   },
   "statusHeadingSecure": {
-    "message": "Jesteś bezpieczny"
+    "message": "Jesteś chroniony"
   },
   "statusHeadingNoProviders": {
-    "message": "Brak włączonych dostawców"
+    "message": "Nie włączono żadnych dostawców"
   },
   "statusIconAltProtected": {
     "message": "Chroniony"
   },
   "providersEnabledCount": {
-    "message": "___ z ___ dostawców włączonych"
+    "message": "Włączono ___ z ___ dostawców"
   },
   "openSettings": {
     "message": "Otwórz ustawienia"

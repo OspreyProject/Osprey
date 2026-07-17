@@ -6,16 +6,16 @@
     "message": "Osprey"
   },
   "extensionDescription": {
-    "message": "Kimlik avını, kötü amaçlı yazılımları, dolandırıcılığı ve tehlikeli siteleri otomatik engeller. Ücretsiz, daha güvenli gezinme."
+    "message": "Kimlik avını, kötü amaçlı yazılımı, dolandırıcılığı ve tehlikeli siteleri engeller. Güvenli gezinme için ücretsiz koruma."
   },
   "logoAlt": {
     "message": "Osprey Logosu"
   },
   "warningProse": {
-    "message": "Güvensiz Web Sitesi Engellendi"
+    "message": "Zararlı web sitesi engellendi"
   },
   "warningTitle": {
-    "message": "Uyarı: Bu web sitesi güvensiz"
+    "message": "Zararlı web sitesi engellendi"
   },
   "recommendation": {
     "message": "Osprey bu web sitesine erişimi engelledi. Devam etmek güvenli değil."
@@ -27,10 +27,10 @@
     "message": "Bildiren: "
   },
   "reportedByOthers": {
-    "message": "(ve ___ diğeri)"
+    "message": "(ve ___ diğer)"
   },
   "reportedByAlso": {
-    "message": "Ayrıca bildiren: "
+    "message": "Ayrıca bildirenler: "
   },
   "reasonLabel": {
     "message": "Neden: "
@@ -39,7 +39,7 @@
     "message": "Bu web sitesini güvenli olarak bildir"
   },
   "allowWebsite": {
-    "message": "Bu web sitesini her zaman yoksay"
+    "message": "Web sitesini istisnalara ekle"
   },
   "backButton": {
     "message": "Güvenliğe geri dön"
@@ -47,20 +47,11 @@
   "continueButton": {
     "message": "Yine de devam et"
   },
-  "version": {
-    "message": "Sürüm: "
-  },
   "websiteLink": {
     "message": "Web sitesi"
   },
-  "privacyPolicy": {
-    "message": "Gizlilik Politikası"
-  },
-  "termsLink": {
-    "message": "Koşullar"
-  },
   "knownSafe": {
-    "message": "Bilinen Güvenli"
+    "message": "Güvenli olarak biliniyor"
   },
   "failed": {
     "message": "Başarısız"
@@ -69,55 +60,55 @@
     "message": "Bekliyor"
   },
   "allowed": {
-    "message": "İzin Verildi"
+    "message": "İzin verildi"
+  },
+  "phishing": {
+    "message": "Kimlik avı"
   },
   "malicious": {
-    "message": "Kötü Amaçlı"
+    "message": "Kötü amaçlı"
   },
   "suspicious": {
     "message": "Şüpheli"
   },
   "newlyRegistered": {
-    "message": "Yeni kaydedilmiş alan adı"
+    "message": "Yakın zamanda kaydedilmiş alan adı"
   },
   "dynamicDns": {
     "message": "Dinamik DNS alan adı"
   },
-  "phishing": {
-    "message": "Kimlik Avı"
-  },
   "clearAllowedWebsites": {
-    "message": "İzin verilen web siteleri listesini temizle"
+    "message": "Tüm hariç tutulan web sitelerini temizle"
   },
   "clearAllowedWebsitesMessage": {
-    "message": "İzin verilen tüm web siteleri temizlendi."
+    "message": "Hariç tutulan tüm web siteleri temizlendi."
   },
   "settingsTitle": {
     "message": "Ayarlar"
   },
   "providersSection": {
-    "message": "Koruma Sağlayıcıları"
+    "message": "Koruma sağlayıcıları"
   },
   "thirdPartySection": {
-    "message": "Üçüncü Taraf Entegrasyonları"
+    "message": "Üçüncü taraf entegrasyonları"
   },
   "resetDefaultProviders": {
-    "message": "Varsayılan sağlayıcıları sıfırla"
+    "message": "Koruma sağlayıcılarını sıfırla"
   },
   "resetAll": {
     "message": "Tümünü sıfırla"
   },
   "fieldLabelApiKey": {
-    "message": "API Anahtarı"
+    "message": "API anahtarı"
   },
   "bypassBlockingThreshold": {
     "message": "Engelleme eşiğini yoksay"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Etkinleştirildiğinde, bu sağlayıcının işaretlediği herhangi bir alan adı, iki sağlayıcı eşiği atlanarak anında engellenir. Bu, yanlış pozitifleri artırabilir."
+    "message": "Etkinleştirildiğinde, bu sağlayıcının işaretlediği herhangi bir alan adı, iki sağlayıcı eşiği atlanarak hemen engellenir. Bu, yanlış pozitifleri artırabilir."
   },
   "blockNewlyRegistered": {
-    "message": "Yeni kaydedilmiş alan adlarını engelle"
+    "message": "Yakın zamanda kaydedilmiş alan adlarını engelle"
   },
   "blockNewlyRegisteredTooltip": {
     "message": "Etkinleştirildiğinde, bu sağlayıcı son 90 gün içinde kaydedilmiş alan adlarını engeller. Bu, yanlış pozitifleri artırabilir."
@@ -126,7 +117,7 @@
     "message": "Şüpheli alan adlarını engelle"
   },
   "blockSuspiciousTooltip": {
-    "message": "Etkinleştirildiğinde, bu sağlayıcı, zararlı içerik barındırdığı doğrulanmamış olsa bile şüpheli olarak işaretlediği alan adlarını engeller. Bu, yanlış pozitifleri artırabilir."
+    "message": "Etkinleştirildiğinde, bu sağlayıcı, kötü amaçlı içerik barındırdığı doğrulanmamış olsa bile şüpheli olarak işaretlediği alan adlarını engeller. Bu, yanlış pozitifleri artırabilir."
   },
   "blockDynamicDns": {
     "message": "Dinamik DNS alan adlarını engelle"
@@ -138,10 +129,10 @@
     "message": "Uygula"
   },
   "officialPartnerTitle": {
-    "message": "Resmi Ortak"
+    "message": "Resmi ortak"
   },
   "indicatorIpProtected": {
-    "message": "IP Adresi Korunuyor"
+    "message": "IP adresi korunuyor"
   },
   "showApiKey": {
     "message": "API anahtarını göster"
@@ -150,7 +141,7 @@
     "message": "API anahtarını gizle"
   },
   "getApiKey": {
-    "message": "API Anahtarı Al"
+    "message": "API anahtarı al"
   },
   "toastSaved": {
     "message": "Kaydedildi."
@@ -159,7 +150,7 @@
     "message": "Kaydedilemedi."
   },
   "toastDefaultProvidersRestored": {
-    "message": "Varsayılan sağlayıcılar geri yüklendi."
+    "message": "Koruma sağlayıcıları geri yüklendi."
   },
   "toastAllSettingsRestored": {
     "message": "Tüm ayarlar geri yüklendi."
@@ -177,10 +168,10 @@
     "message": "Etkin sağlayıcı yok"
   },
   "statusIconAltProtected": {
-    "message": "Korumalı"
+    "message": "Korunuyor"
   },
   "providersEnabledCount": {
-    "message": "___ / ___ sağlayıcı etkin"
+    "message": "___ sağlayıcıdan ___ tanesi etkin"
   },
   "openSettings": {
     "message": "Ayarları aç"

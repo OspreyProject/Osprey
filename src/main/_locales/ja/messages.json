@@ -6,19 +6,19 @@
     "message": "Osprey"
   },
   "extensionDescription": {
-    "message": "閲覧中にフィッシング、マルウェア、詐欺、危険なサイトを自動ブロック。無料で、より安全なブラウジングを。"
+    "message": "閲覧中にフィッシング、マルウェア、詐欺、危険なウェブサイトを自動的にブロックします。より安全な閲覧のための無料の保護。"
   },
   "logoAlt": {
-    "message": "Ospreyロゴ"
+    "message": "Osprey のロゴ"
   },
   "warningProse": {
-    "message": "安全でないウェブサイトをブロックしました"
+    "message": "有害なウェブサイトをブロックしました"
   },
   "warningTitle": {
-    "message": "警告: このウェブサイトは安全ではありません"
+    "message": "有害なウェブサイトをブロックしました"
   },
   "recommendation": {
-    "message": "Ospreyがこのウェブサイトへのアクセスをブロックしました。続行することは安全ではありません。"
+    "message": "Osprey がこのウェブサイトへのアクセスをブロックしました。続行するのは安全ではありません。"
   },
   "urlLabel": {
     "message": "URL: "
@@ -27,40 +27,31 @@
     "message": "報告者: "
   },
   "reportedByOthers": {
-    "message": "(他 ___ 件)"
+    "message": "（他 ___ 件）"
   },
   "reportedByAlso": {
-    "message": "他にも報告: "
+    "message": "次のユーザーも報告: "
   },
   "reasonLabel": {
     "message": "理由: "
   },
   "reportWebsite": {
-    "message": "このウェブサイトを安全として報告する"
+    "message": "このウェブサイトを安全として報告"
   },
   "allowWebsite": {
-    "message": "このウェブサイトを常に無視する"
+    "message": "ウェブサイトを除外リストに追加"
   },
   "backButton": {
     "message": "安全な場所に戻る"
   },
   "continueButton": {
-    "message": "それでも続行する"
-  },
-  "version": {
-    "message": "バージョン: "
+    "message": "それでも続行"
   },
   "websiteLink": {
     "message": "ウェブサイト"
   },
-  "privacyPolicy": {
-    "message": "プライバシーポリシー"
-  },
-  "termsLink": {
-    "message": "利用規約"
-  },
   "knownSafe": {
-    "message": "安全確認済み"
+    "message": "安全と確認済み"
   },
   "failed": {
     "message": "失敗"
@@ -71,26 +62,26 @@
   "allowed": {
     "message": "許可済み"
   },
-  "malicious": {
-    "message": "悪意のある"
-  },
-  "suspicious": {
-    "message": "不審"
-  },
-  "newlyRegistered": {
-    "message": "新規登録されたドメイン"
-  },
-  "dynamicDns": {
-    "message": "ダイナミック DNS のドメイン"
-  },
   "phishing": {
     "message": "フィッシング"
   },
+  "malicious": {
+    "message": "悪意あり"
+  },
+  "suspicious": {
+    "message": "疑わしい"
+  },
+  "newlyRegistered": {
+    "message": "最近登録されたドメイン"
+  },
+  "dynamicDns": {
+    "message": "ダイナミック DNS ドメイン"
+  },
   "clearAllowedWebsites": {
-    "message": "許可済みウェブサイトリストをクリア"
+    "message": "除外したウェブサイトをすべて消去"
   },
   "clearAllowedWebsitesMessage": {
-    "message": "すべての許可済みウェブサイトがクリアされました。"
+    "message": "除外したウェブサイトをすべて消去しました。"
   },
   "settingsTitle": {
     "message": "設定"
@@ -99,37 +90,37 @@
     "message": "保護プロバイダー"
   },
   "thirdPartySection": {
-    "message": "サードパーティ統合"
+    "message": "サードパーティ連携"
   },
   "resetDefaultProviders": {
-    "message": "デフォルトプロバイダーをリセット"
+    "message": "保護プロバイダーをリセット"
   },
   "resetAll": {
     "message": "すべてリセット"
   },
   "fieldLabelApiKey": {
-    "message": "APIキー"
+    "message": "API キー"
   },
   "bypassBlockingThreshold": {
-    "message": "ブロックのしきい値を無視"
+    "message": "ブロックしきい値を無視"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "有効にすると、このプロバイダーによってフラグが付けられたドメインは、2 つのプロバイダーによるしきい値を経ずに即座にブロックされます。これにより誤検知が増える可能性があります。"
+    "message": "有効にすると、このプロバイダーがフラグを付けたドメインは、2 つのプロバイダーのしきい値を回避して直ちにブロックされます。これにより誤検知が増える可能性があります。"
   },
   "blockNewlyRegistered": {
-    "message": "新規登録されたドメインをブロック"
+    "message": "最近登録されたドメインをブロック"
   },
   "blockNewlyRegisteredTooltip": {
     "message": "有効にすると、このプロバイダーは過去 90 日以内に登録されたドメインをブロックします。これにより誤検知が増える可能性があります。"
   },
   "blockSuspicious": {
-    "message": "不審なドメインをブロック"
+    "message": "疑わしいドメインをブロック"
   },
   "blockSuspiciousTooltip": {
-    "message": "有効にすると、このプロバイダーは、悪意のあるコンテンツをホストしていると確認されていなくても、不審としてフラグを付けたドメインをブロックします。これにより誤検知が増える可能性があります。"
+    "message": "有効にすると、このプロバイダーは、悪意あるコンテンツをホストしていると確認されていなくても、疑わしいとフラグを付けたドメインをブロックします。これにより誤検知が増える可能性があります。"
   },
   "blockDynamicDns": {
-    "message": "ダイナミック DNS のドメインをブロック"
+    "message": "ダイナミック DNS ドメインをブロック"
   },
   "blockDynamicDnsTooltip": {
     "message": "有効にすると、このプロバイダーは、脅威アクターに悪用されることがあるダイナミック DNS サービスを使用するドメインをブロックします。これにより誤検知が増える可能性があります。"
@@ -141,16 +132,16 @@
     "message": "公式パートナー"
   },
   "indicatorIpProtected": {
-    "message": "IPアドレス保護済み"
+    "message": "IP アドレス保護済み"
   },
   "showApiKey": {
-    "message": "APIキーを表示"
+    "message": "API キーを表示"
   },
   "hideApiKey": {
-    "message": "APIキーを非表示"
+    "message": "API キーを非表示"
   },
   "getApiKey": {
-    "message": "APIキーを取得"
+    "message": "API キーを取得"
   },
   "toastSaved": {
     "message": "保存しました。"
@@ -159,19 +150,19 @@
     "message": "保存に失敗しました。"
   },
   "toastDefaultProvidersRestored": {
-    "message": "デフォルトプロバイダーが復元されました。"
+    "message": "保護プロバイダーを復元しました。"
   },
   "toastAllSettingsRestored": {
-    "message": "すべての設定が復元されました。"
+    "message": "すべての設定を復元しました。"
   },
   "toastSaveApiKeyFirst": {
-    "message": "この統合を有効にする前に有効なAPIキーを保存してください。"
+    "message": "この連携を有効にする前に、有効な API キーを保存してください。"
   },
   "toastFailedToUpdateState": {
     "message": "プロバイダーの状態の更新に失敗しました。"
   },
   "statusHeadingSecure": {
-    "message": "保護されています"
+    "message": "あなたは保護されています"
   },
   "statusHeadingNoProviders": {
     "message": "有効なプロバイダーがありません"
@@ -180,7 +171,7 @@
     "message": "保護済み"
   },
   "providersEnabledCount": {
-    "message": "___ / ___ プロバイダーが有効"
+    "message": "___ / ___ 個のプロバイダーが有効"
   },
   "openSettings": {
     "message": "設定を開く"
@@ -192,7 +183,7 @@
     "message": "利用不可"
   },
   "providerLogoAlt": {
-    "message": "$1 ロゴ"
+    "message": "$1 のロゴ"
   },
   "providerNameFallback": {
     "message": "プロバイダー"

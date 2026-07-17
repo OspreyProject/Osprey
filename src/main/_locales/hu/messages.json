@@ -6,40 +6,40 @@
     "message": "Osprey"
   },
   "extensionDescription": {
-    "message": "Automatikusan blokkolja az adathalászatot, kártevőket, csalásokat és veszélyes oldalakat. Ingyenes, biztonságosabb böngészés."
+    "message": "Blokkolja az adathalászatot, kártevőket, csalásokat és veszélyes webhelyeket. Ingyenes védelem a biztonságos böngészéshez."
   },
   "logoAlt": {
     "message": "Osprey logó"
   },
   "warningProse": {
-    "message": "Nem biztonságos weboldal blokkolva"
+    "message": "Káros webhely letiltva"
   },
   "warningTitle": {
-    "message": "Figyelmeztetés: Ez a weboldal nem biztonságos"
+    "message": "Káros webhely letiltva"
   },
   "recommendation": {
-    "message": "Az Osprey blokkolta a hozzáférést ehhez a weboldalhoz. Nem biztonságos a folytatás."
+    "message": "Az Osprey letiltotta a hozzáférést ehhez a webhelyhez. A folytatás nem biztonságos."
   },
   "urlLabel": {
     "message": "URL: "
   },
   "reportedByLabel": {
-    "message": "Jelentette: "
+    "message": "Bejelentette: "
   },
   "reportedByOthers": {
-    "message": "(és ___ másik)"
+    "message": "(és ___ további)"
   },
   "reportedByAlso": {
-    "message": "Szintén jelentette: "
+    "message": "Szintén bejelentette: "
   },
   "reasonLabel": {
     "message": "Ok: "
   },
   "reportWebsite": {
-    "message": "Weboldal jelentése biztonságosként"
+    "message": "Webhely biztonságosként való bejelentése"
   },
   "allowWebsite": {
-    "message": "Weboldal mindig figyelmen kívül hagyása"
+    "message": "Webhely hozzáadása a kivételekhez"
   },
   "backButton": {
     "message": "Vissza a biztonságba"
@@ -47,17 +47,8 @@
   "continueButton": {
     "message": "Folytatás mindenképpen"
   },
-  "version": {
-    "message": "Verzió: "
-  },
   "websiteLink": {
-    "message": "Weboldal"
-  },
-  "privacyPolicy": {
-    "message": "Adatvédelmi szabályzat"
-  },
-  "termsLink": {
-    "message": "Feltételek"
+    "message": "Webhely"
   },
   "knownSafe": {
     "message": "Ismerten biztonságos"
@@ -66,31 +57,31 @@
     "message": "Sikertelen"
   },
   "waiting": {
-    "message": "Várakozás"
+    "message": "Várakozik"
   },
   "allowed": {
-    "message": "Engedélyezett"
+    "message": "Engedélyezve"
+  },
+  "phishing": {
+    "message": "Adathalászat"
   },
   "malicious": {
-    "message": "Rosszindulatú"
+    "message": "Kártékony"
   },
   "suspicious": {
     "message": "Gyanús"
   },
   "newlyRegistered": {
-    "message": "Újonnan regisztrált domain"
+    "message": "Nemrég regisztrált domain"
   },
   "dynamicDns": {
-    "message": "Dinamikus DNS-t használó domain"
-  },
-  "phishing": {
-    "message": "Adathalászat"
+    "message": "Dinamikus DNS-domain"
   },
   "clearAllowedWebsites": {
-    "message": "Engedélyezett weboldalak listájának törlése"
+    "message": "Összes kizárt webhely törlése"
   },
   "clearAllowedWebsitesMessage": {
-    "message": "Az összes engedélyezett weboldal törölve lett."
+    "message": "Az összes kizárt webhely törölve lett."
   },
   "settingsTitle": {
     "message": "Beállítások"
@@ -99,40 +90,40 @@
     "message": "Védelmi szolgáltatók"
   },
   "thirdPartySection": {
-    "message": "Harmadik féltől származó integrációk"
+    "message": "Külső integrációk"
   },
   "resetDefaultProviders": {
-    "message": "Alapértelmezett szolgáltatók visszaállítása"
+    "message": "Védelmi szolgáltatók visszaállítása"
   },
   "resetAll": {
     "message": "Összes visszaállítása"
   },
   "fieldLabelApiKey": {
-    "message": "API kulcs"
+    "message": "API-kulcs"
   },
   "bypassBlockingThreshold": {
     "message": "Blokkolási küszöb figyelmen kívül hagyása"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Ha engedélyezve van, az e szolgáltató által megjelölt bármely domaint azonnal blokkolja, megkerülve a két szolgáltatós küszöböt. Ez növelheti a téves riasztások számát."
+    "message": "Ha engedélyezve van, a szolgáltató által megjelölt bármely domain azonnal letiltásra kerül, megkerülve a kétszolgáltatós küszöböt. Ez növelheti a téves riasztások számát."
   },
   "blockNewlyRegistered": {
-    "message": "Újonnan regisztrált domainek blokkolása"
+    "message": "Nemrég regisztrált domainek blokkolása"
   },
   "blockNewlyRegisteredTooltip": {
-    "message": "Ha engedélyezve van, ez a szolgáltató blokkolja azokat a domaineket, amelyeket az elmúlt 90 napban regisztráltak. Ez növelheti a téves riasztások számát."
+    "message": "Ha engedélyezve van, ez a szolgáltató letiltja az elmúlt 90 napban regisztrált domaineket. Ez növelheti a téves riasztások számát."
   },
   "blockSuspicious": {
     "message": "Gyanús domainek blokkolása"
   },
   "blockSuspiciousTooltip": {
-    "message": "Ha engedélyezve van, ez a szolgáltató blokkolja azokat a domaineket, amelyeket gyanúsként jelölt meg, még akkor is, ha nem nyert megerősítést, hogy káros tartalmat tárolnak. Ez növelheti a téves riasztások számát."
+    "message": "Ha engedélyezve van, ez a szolgáltató letiltja az általa gyanúsként megjelölt domaineket, még akkor is, ha nem erősítették meg, hogy kártékony tartalmat szolgálnak ki. Ez növelheti a téves riasztások számát."
   },
   "blockDynamicDns": {
-    "message": "Dinamikus DNS-t használó domainek blokkolása"
+    "message": "Dinamikus DNS-domainek blokkolása"
   },
   "blockDynamicDnsTooltip": {
-    "message": "Ha engedélyezve van, ez a szolgáltató blokkolja azokat a domaineket, amelyek dinamikus DNS-szolgáltatásokat használnak, amelyekkel a fenyegető szereplők olykor visszaélnek. Ez növelheti a téves riasztások számát."
+    "message": "Ha engedélyezve van, ez a szolgáltató letiltja a dinamikus DNS-szolgáltatásokat használó domaineket, amelyekkel a fenyegető szereplők időnként visszaélnek. Ez növelheti a téves riasztások számát."
   },
   "applyButton": {
     "message": "Alkalmaz"
@@ -141,46 +132,46 @@
     "message": "Hivatalos partner"
   },
   "indicatorIpProtected": {
-    "message": "IP-cím védett"
+    "message": "IP-cím védve"
   },
   "showApiKey": {
-    "message": "API kulcs megjelenítése"
+    "message": "API-kulcs megjelenítése"
   },
   "hideApiKey": {
-    "message": "API kulcs elrejtése"
+    "message": "API-kulcs elrejtése"
   },
   "getApiKey": {
-    "message": "API kulcs lekérése"
+    "message": "API-kulcs beszerzése"
   },
   "toastSaved": {
     "message": "Mentve."
   },
   "toastFailedToSave": {
-    "message": "Mentés sikertelen."
+    "message": "A mentés sikertelen."
   },
   "toastDefaultProvidersRestored": {
-    "message": "Alapértelmezett szolgáltatók visszaállítva."
+    "message": "Védelmi szolgáltatók visszaállítva."
   },
   "toastAllSettingsRestored": {
-    "message": "Minden beállítás visszaállítva."
+    "message": "Az összes beállítás visszaállítva."
   },
   "toastSaveApiKeyFirst": {
-    "message": "Mentsen el egy érvényes API kulcsot az integráció engedélyezése előtt."
+    "message": "Az integráció engedélyezése előtt mentsen el egy érvényes API-kulcsot."
   },
   "toastFailedToUpdateState": {
     "message": "A szolgáltató állapotának frissítése sikertelen."
   },
   "statusHeadingSecure": {
-    "message": "Biztonságban van"
+    "message": "Ön védve van"
   },
   "statusHeadingNoProviders": {
     "message": "Nincs engedélyezett szolgáltató"
   },
   "statusIconAltProtected": {
-    "message": "Védett"
+    "message": "Védve"
   },
   "providersEnabledCount": {
-    "message": "___ / ___ szolgáltató engedélyezve"
+    "message": "___/___ szolgáltató engedélyezve"
   },
   "openSettings": {
     "message": "Beállítások megnyitása"
@@ -189,7 +180,7 @@
     "message": "Ismeretlen"
   },
   "urlUnavailable": {
-    "message": "Nem elérhető"
+    "message": "Nem érhető el"
   },
   "providerLogoAlt": {
     "message": "$1 logó"

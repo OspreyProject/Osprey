@@ -6,19 +6,19 @@
     "message": "Osprey"
   },
   "extensionDescription": {
-    "message": "Automatski blokira phishing, zlonamjerni softver, prijevare i opasne stranice. Besplatna zaštita za sigurnije pregledavanje."
+    "message": "Blokira phishing, zlonamjerni softver, prijevare i opasne web-stranice. Besplatna zaštita za sigurnije pregledavanje."
   },
   "logoAlt": {
     "message": "Osprey logotip"
   },
   "warningProse": {
-    "message": "Nesigurna web-stranica blokirana"
+    "message": "Štetna web-stranica blokirana"
   },
   "warningTitle": {
-    "message": "Upozorenje: Ova web-stranica nije sigurna"
+    "message": "Štetna web-stranica blokirana"
   },
   "recommendation": {
-    "message": "Osprey je blokirao pristup ovoj web-stranici. Nije sigurno nastaviti."
+    "message": "Osprey je blokirao pristup ovoj web-stranici. Nastavak nije siguran."
   },
   "urlLabel": {
     "message": "URL: "
@@ -27,7 +27,7 @@
     "message": "Prijavio: "
   },
   "reportedByOthers": {
-    "message": "(i ___ ostalih)"
+    "message": "(i još ___)"
   },
   "reportedByAlso": {
     "message": "Također prijavio: "
@@ -39,37 +39,31 @@
     "message": "Prijavi ovu web-stranicu kao sigurnu"
   },
   "allowWebsite": {
-    "message": "Uvijek zanemarivati ovu web-stranicu"
+    "message": "Dodaj web-stranicu u iznimke"
   },
   "backButton": {
-    "message": "Natrag na sigurnost"
+    "message": "Natrag na sigurno"
   },
   "continueButton": {
-    "message": "Svejedno nastavi"
-  },
-  "version": {
-    "message": "Verzija: "
+    "message": "Ipak nastavi"
   },
   "websiteLink": {
     "message": "Web-stranica"
   },
-  "privacyPolicy": {
-    "message": "Pravila privatnosti"
-  },
-  "termsLink": {
-    "message": "Uvjeti"
-  },
   "knownSafe": {
-    "message": "Poznato sigurno"
+    "message": "Poznato kao sigurno"
   },
   "failed": {
     "message": "Neuspješno"
   },
   "waiting": {
-    "message": "Čekanje"
+    "message": "Na čekanju"
   },
   "allowed": {
     "message": "Dopušteno"
+  },
+  "phishing": {
+    "message": "Krađa identiteta"
   },
   "malicious": {
     "message": "Zlonamjerno"
@@ -81,16 +75,13 @@
     "message": "Nedavno registrirana domena"
   },
   "dynamicDns": {
-    "message": "Domena s dinamičkim DNS-om"
-  },
-  "phishing": {
-    "message": "Krađa identiteta"
+    "message": "Domena dinamičkog DNS-a"
   },
   "clearAllowedWebsites": {
-    "message": "Obriši popis dopuštenih web-stranica"
+    "message": "Očisti sve isključene web-stranice"
   },
   "clearAllowedWebsitesMessage": {
-    "message": "Sve dopuštene web-stranice su obrisane."
+    "message": "Sve isključene web-stranice su očišćene."
   },
   "settingsTitle": {
     "message": "Postavke"
@@ -102,10 +93,10 @@
     "message": "Integracije trećih strana"
   },
   "resetDefaultProviders": {
-    "message": "Vrati zadane pružatelje"
+    "message": "Vrati pružatelje zaštite na zadano"
   },
   "resetAll": {
-    "message": "Vrati sve"
+    "message": "Vrati sve na zadano"
   },
   "fieldLabelApiKey": {
     "message": "API ključ"
@@ -114,13 +105,13 @@
     "message": "Zanemari prag blokiranja"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Kada je omogućeno, svaka domena koju ovaj pružatelj označi bit će odmah blokirana, zaobilazeći prag dvaju pružatelja. To može povećati broj lažno pozitivnih rezultata."
+    "message": "Kada je omogućeno, svaka domena koju ovaj pružatelj označi bit će odmah blokirana, zaobilazeći prag od dva pružatelja. To može povećati broj lažno pozitivnih rezultata."
   },
   "blockNewlyRegistered": {
     "message": "Blokiraj nedavno registrirane domene"
   },
   "blockNewlyRegisteredTooltip": {
-    "message": "Kada je omogućeno, ovaj pružatelj blokira domene koje su registrirane unutar posljednjih 90 dana. To može povećati broj lažno pozitivnih rezultata."
+    "message": "Kada je omogućeno, ovaj pružatelj blokira domene registrirane u posljednjih 90 dana. To može povećati broj lažno pozitivnih rezultata."
   },
   "blockSuspicious": {
     "message": "Blokiraj sumnjive domene"
@@ -129,7 +120,7 @@
     "message": "Kada je omogućeno, ovaj pružatelj blokira domene koje je označio kao sumnjive, čak i ako nije potvrđeno da udomljuju zlonamjerni sadržaj. To može povećati broj lažno pozitivnih rezultata."
   },
   "blockDynamicDns": {
-    "message": "Blokiraj domene s dinamičkim DNS-om"
+    "message": "Blokiraj domene dinamičkog DNS-a"
   },
   "blockDynamicDnsTooltip": {
     "message": "Kada je omogućeno, ovaj pružatelj blokira domene koje koriste usluge dinamičkog DNS-a, koje ponekad zloupotrebljavaju akteri prijetnji. To može povećati broj lažno pozitivnih rezultata."
@@ -150,7 +141,7 @@
     "message": "Sakrij API ključ"
   },
   "getApiKey": {
-    "message": "Dohvati API ključ"
+    "message": "Nabavi API ključ"
   },
   "toastSaved": {
     "message": "Spremljeno."
@@ -159,22 +150,22 @@
     "message": "Spremanje nije uspjelo."
   },
   "toastDefaultProvidersRestored": {
-    "message": "Zadani pružatelji vraćeni."
+    "message": "Pružatelji zaštite vraćeni."
   },
   "toastAllSettingsRestored": {
     "message": "Sve postavke vraćene."
   },
   "toastSaveApiKeyFirst": {
-    "message": "Spremi valjani API ključ prije omogućavanja ove integracije."
+    "message": "Spremite valjani API ključ prije omogućavanja ove integracije."
   },
   "toastFailedToUpdateState": {
     "message": "Ažuriranje stanja pružatelja nije uspjelo."
   },
   "statusHeadingSecure": {
-    "message": "Zaštićeni ste"
+    "message": "Sigurni ste"
   },
   "statusHeadingNoProviders": {
-    "message": "Nema omogućenih pružatelja"
+    "message": "Nijedan pružatelj nije omogućen"
   },
   "statusIconAltProtected": {
     "message": "Zaštićeno"

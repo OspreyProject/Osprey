@@ -1,75 +1,69 @@
 {
   "extensionName": {
-    "message": "Osprey: Protection du navigateur"
+    "message": "Osprey : Protection du navigateur"
   },
   "extensionShortName": {
     "message": "Osprey"
   },
   "extensionDescription": {
-    "message": "Bloque automatiquement hameçonnage, malwares, arnaques et sites dangereux. Protection gratuite pour naviguer plus sûr."
+    "message": "Bloque hameçonnage, logiciels malveillants, arnaques et sites dangereux. Protection gratuite pour une navigation plus sûre."
   },
   "logoAlt": {
-    "message": "Logo Osprey"
+    "message": "Logo d'Osprey"
   },
   "warningProse": {
-    "message": "Site web non sécurisé bloqué"
+    "message": "Site web nuisible bloqué"
   },
   "warningTitle": {
-    "message": "Avertissement: Ce site web est dangereux"
+    "message": "Site web nuisible bloqué"
   },
   "recommendation": {
-    "message": "Osprey a bloqué l'accès à ce site web. Il n'est pas sûr de continuer."
+    "message": "Osprey a bloqué l'accès à ce site web. Il n'est pas prudent de continuer."
   },
   "urlLabel": {
-    "message": "URL: "
+    "message": "URL : "
   },
   "reportedByLabel": {
-    "message": "Signalé par: "
+    "message": "Signalé par : "
   },
   "reportedByOthers": {
     "message": "(et ___ autres)"
   },
   "reportedByAlso": {
-    "message": "Aussi signalé par: "
+    "message": "Également signalé par : "
   },
   "reasonLabel": {
-    "message": "Raison: "
+    "message": "Motif : "
   },
   "reportWebsite": {
-    "message": "Signaler ce site comme sûr"
+    "message": "Signaler ce site web comme sûr"
   },
   "allowWebsite": {
-    "message": "Toujours ignorer ce site"
+    "message": "Ajouter le site web aux exclusions"
   },
   "backButton": {
-    "message": "Retour à la sécurité"
+    "message": "Retour en sécurité"
   },
   "continueButton": {
     "message": "Continuer quand même"
   },
-  "version": {
-    "message": "Version: "
-  },
   "websiteLink": {
     "message": "Site web"
   },
-  "privacyPolicy": {
-    "message": "Politique de confidentialité"
-  },
-  "termsLink": {
-    "message": "Conditions"
-  },
   "knownSafe": {
-    "message": "Sécurisé connu"
+    "message": "Connu comme sûr"
   },
   "failed": {
-    "message": "Échoué"
+    "message": "Échec"
   },
   "waiting": {
     "message": "En attente"
   },
   "allowed": {
     "message": "Autorisé"
+  },
+  "phishing": {
+    "message": "Hameçonnage"
   },
   "malicious": {
     "message": "Malveillant"
@@ -81,16 +75,13 @@
     "message": "Domaine récemment enregistré"
   },
   "dynamicDns": {
-    "message": "Domaine à DNS dynamique"
-  },
-  "phishing": {
-    "message": "Hameçonnage"
+    "message": "Domaine DNS dynamique"
   },
   "clearAllowedWebsites": {
-    "message": "Effacer la liste des sites autorisés"
+    "message": "Effacer tous les sites web exclus"
   },
   "clearAllowedWebsitesMessage": {
-    "message": "Tous les sites autorisés ont été effacés."
+    "message": "Tous les sites web exclus ont été effacés."
   },
   "settingsTitle": {
     "message": "Paramètres"
@@ -102,7 +93,7 @@
     "message": "Intégrations tierces"
   },
   "resetDefaultProviders": {
-    "message": "Réinitialiser les fournisseurs par défaut"
+    "message": "Réinitialiser les fournisseurs de protection"
   },
   "resetAll": {
     "message": "Tout réinitialiser"
@@ -114,7 +105,7 @@
     "message": "Ignorer le seuil de blocage"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Lorsque cette option est activée, tout domaine signalé par ce fournisseur est immédiatement bloqué, contournant le seuil de deux fournisseurs. Cela peut augmenter les faux positifs."
+    "message": "Lorsque cette option est activée, tout domaine signalé par ce fournisseur sera immédiatement bloqué, en contournant le seuil de deux fournisseurs. Cela peut augmenter les faux positifs."
   },
   "blockNewlyRegistered": {
     "message": "Bloquer les domaines récemment enregistrés"
@@ -129,10 +120,10 @@
     "message": "Lorsque cette option est activée, ce fournisseur bloque les domaines qu'il a signalés comme suspects, même s'il n'a pas été confirmé qu'ils hébergent du contenu malveillant. Cela peut augmenter les faux positifs."
   },
   "blockDynamicDns": {
-    "message": "Bloquer les domaines utilisant un DNS dynamique"
+    "message": "Bloquer les domaines DNS dynamiques"
   },
   "blockDynamicDnsTooltip": {
-    "message": "Lorsque cette option est activée, ce fournisseur bloque les domaines qui utilisent des services de DNS dynamique, parfois détournés par des acteurs malveillants. Cela peut augmenter les faux positifs."
+    "message": "Lorsque cette option est activée, ce fournisseur bloque les domaines qui utilisent des services DNS dynamiques, parfois détournés par des acteurs malveillants. Cela peut augmenter les faux positifs."
   },
   "applyButton": {
     "message": "Appliquer"
@@ -150,7 +141,7 @@
     "message": "Masquer la clé API"
   },
   "getApiKey": {
-    "message": "Obtenir la clé API"
+    "message": "Obtenir une clé API"
   },
   "toastSaved": {
     "message": "Enregistré."
@@ -159,10 +150,10 @@
     "message": "Échec de l'enregistrement."
   },
   "toastDefaultProvidersRestored": {
-    "message": "Fournisseurs par défaut restaurés."
+    "message": "Fournisseurs de protection restaurés."
   },
   "toastAllSettingsRestored": {
-    "message": "Tous les paramètres restaurés."
+    "message": "Tous les paramètres ont été restaurés."
   },
   "toastSaveApiKeyFirst": {
     "message": "Enregistrez une clé API valide avant d'activer cette intégration."
@@ -171,7 +162,7 @@
     "message": "Échec de la mise à jour de l'état du fournisseur."
   },
   "statusHeadingSecure": {
-    "message": "Vous êtes en sécurité"
+    "message": "Vous êtes protégé"
   },
   "statusHeadingNoProviders": {
     "message": "Aucun fournisseur activé"
@@ -180,7 +171,7 @@
     "message": "Protégé"
   },
   "providersEnabledCount": {
-    "message": "___ sur ___ fournisseurs activés"
+    "message": "___ fournisseurs activés sur ___"
   },
   "openSettings": {
     "message": "Ouvrir les paramètres"
@@ -192,7 +183,7 @@
     "message": "Indisponible"
   },
   "providerLogoAlt": {
-    "message": "Logo $1"
+    "message": "Logo de $1"
   },
   "providerNameFallback": {
     "message": "Fournisseur"

@@ -12,10 +12,10 @@
     "message": "Osprey-logo"
   },
   "warningProse": {
-    "message": "Usikkert websted blokeret"
+    "message": "Skadeligt websted blokeret"
   },
   "warningTitle": {
-    "message": "Advarsel: Dette websted er usikkert"
+    "message": "Skadeligt websted blokeret"
   },
   "recommendation": {
     "message": "Osprey har blokeret adgangen til dette websted. Det er ikke sikkert at fortsætte."
@@ -39,7 +39,7 @@
     "message": "Rapportér dette websted som sikkert"
   },
   "allowWebsite": {
-    "message": "Ignorer altid dette websted"
+    "message": "Føj websted til undtagelser"
   },
   "backButton": {
     "message": "Tilbage til sikkerhed"
@@ -47,20 +47,11 @@
   "continueButton": {
     "message": "Fortsæt alligevel"
   },
-  "version": {
-    "message": "Version: "
-  },
   "websiteLink": {
     "message": "Websted"
   },
-  "privacyPolicy": {
-    "message": "Privatlivspolitik"
-  },
-  "termsLink": {
-    "message": "Vilkår"
-  },
   "knownSafe": {
-    "message": "Kendt sikkert"
+    "message": "Kendt som sikkert"
   },
   "failed": {
     "message": "Mislykkedes"
@@ -71,8 +62,11 @@
   "allowed": {
     "message": "Tilladt"
   },
+  "phishing": {
+    "message": "Phishing"
+  },
   "malicious": {
-    "message": "Ondsindet"
+    "message": "Skadelig"
   },
   "suspicious": {
     "message": "Mistænkelig"
@@ -81,16 +75,13 @@
     "message": "Nyligt registreret domæne"
   },
   "dynamicDns": {
-    "message": "Domæne med dynamisk DNS"
-  },
-  "phishing": {
-    "message": "Phishing"
+    "message": "Dynamisk DNS-domæne"
   },
   "clearAllowedWebsites": {
-    "message": "Ryd liste over tilladte websteder"
+    "message": "Ryd alle udelukkede websteder"
   },
   "clearAllowedWebsitesMessage": {
-    "message": "Alle tilladte websteder er blevet ryddet."
+    "message": "Alle udelukkede websteder er blevet ryddet."
   },
   "settingsTitle": {
     "message": "Indstillinger"
@@ -102,7 +93,7 @@
     "message": "Tredjepartsintegrationer"
   },
   "resetDefaultProviders": {
-    "message": "Nulstil standardudbydere"
+    "message": "Nulstil beskyttelsesudbydere"
   },
   "resetAll": {
     "message": "Nulstil alt"
@@ -111,28 +102,28 @@
     "message": "API-nøgle"
   },
   "bypassBlockingThreshold": {
-    "message": "Ignorér blokeringsgrænse"
+    "message": "Ignorér blokeringstærskel"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Når dette er aktiveret, blokeres ethvert domæne, der markeres af denne udbyder, øjeblikkeligt, idet grænsen med to udbydere omgås. Dette kan øge antallet af falske positiver."
+    "message": "Når dette er aktiveret, blokeres ethvert domæne, som denne udbyder markerer, med det samme, hvorved tærsklen på to udbydere omgås. Dette kan øge antallet af falske positiver."
   },
   "blockNewlyRegistered": {
     "message": "Bloker nyligt registrerede domæner"
   },
   "blockNewlyRegisteredTooltip": {
-    "message": "Når dette er aktiveret, blokerer denne udbyder domæner, der er blevet registreret inden for de seneste 90 dage. Dette kan øge antallet af falske positiver."
+    "message": "Når dette er aktiveret, blokerer denne udbyder domæner, der er registreret inden for de seneste 90 dage. Dette kan øge antallet af falske positiver."
   },
   "blockSuspicious": {
     "message": "Bloker mistænkelige domæner"
   },
   "blockSuspiciousTooltip": {
-    "message": "Når dette er aktiveret, blokerer denne udbyder domæner, som den har markeret som mistænkelige, selv hvis det ikke er bekræftet, at de hoster skadeligt indhold. Dette kan øge antallet af falske positiver."
+    "message": "Når dette er aktiveret, blokerer denne udbyder domæner, som den har markeret som mistænkelige, selvom det ikke er bekræftet, at de hoster skadeligt indhold. Dette kan øge antallet af falske positiver."
   },
   "blockDynamicDns": {
-    "message": "Bloker domæner med dynamisk DNS"
+    "message": "Bloker dynamiske DNS-domæner"
   },
   "blockDynamicDnsTooltip": {
-    "message": "Når dette er aktiveret, blokerer denne udbyder domæner, der bruger dynamiske DNS-tjenester, som undertiden misbruges af trusselsaktører. Dette kan øge antallet af falske positiver."
+    "message": "Når dette er aktiveret, blokerer denne udbyder domæner, der bruger dynamiske DNS-tjenester, som nogle gange misbruges af trusselsaktører. Dette kan øge antallet af falske positiver."
   },
   "applyButton": {
     "message": "Anvend"
@@ -159,19 +150,19 @@
     "message": "Kunne ikke gemme."
   },
   "toastDefaultProvidersRestored": {
-    "message": "Standardudbydere gendannet."
+    "message": "Beskyttelsesudbydere er gendannet."
   },
   "toastAllSettingsRestored": {
-    "message": "Alle indstillinger gendannet."
+    "message": "Alle indstillinger er gendannet."
   },
   "toastSaveApiKeyFirst": {
     "message": "Gem en gyldig API-nøgle, før du aktiverer denne integration."
   },
   "toastFailedToUpdateState": {
-    "message": "Kunne ikke opdatere udbyderens tilstand."
+    "message": "Kunne ikke opdatere udbyderens status."
   },
   "statusHeadingSecure": {
-    "message": "Du er sikker"
+    "message": "Du er beskyttet"
   },
   "statusHeadingNoProviders": {
     "message": "Ingen udbydere aktiveret"

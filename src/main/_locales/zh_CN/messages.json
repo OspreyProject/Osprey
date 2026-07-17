@@ -6,58 +6,49 @@
     "message": "Osprey"
   },
   "extensionDescription": {
-    "message": "浏览时自动拦截网络钓鱼、恶意软件、诈骗和危险网站。免费防护，让上网更安全。"
+    "message": "在您浏览时自动拦截钓鱼、恶意软件、诈骗和危险网站。免费保护，让浏览更安全。"
   },
   "logoAlt": {
-    "message": "Osprey 标志"
+    "message": "Osprey 徽标"
   },
   "warningProse": {
-    "message": "不安全网站已被拦截"
+    "message": "已拦截有害网站"
   },
   "warningTitle": {
-    "message": "警告：此网站不安全"
+    "message": "已拦截有害网站"
   },
   "recommendation": {
-    "message": "Osprey 已阻止访问此网站。继续操作并不安全。"
+    "message": "Osprey 已拦截对此网站的访问。继续访问不安全。"
   },
   "urlLabel": {
     "message": "网址："
   },
   "reportedByLabel": {
-    "message": "举报方："
+    "message": "举报者："
   },
   "reportedByOthers": {
-    "message": "（及其他 ___ 方）"
+    "message": "（及其他 ___ 人）"
   },
   "reportedByAlso": {
-    "message": "同时举报方："
+    "message": "另有举报者："
   },
   "reasonLabel": {
     "message": "原因："
   },
   "reportWebsite": {
-    "message": "将此网站举报为安全"
+    "message": "举报此网站为安全"
   },
   "allowWebsite": {
-    "message": "始终忽略此网站"
+    "message": "将网站加入排除列表"
   },
   "backButton": {
     "message": "返回安全页面"
   },
   "continueButton": {
-    "message": "仍然继续"
-  },
-  "version": {
-    "message": "版本："
+    "message": "仍要继续"
   },
   "websiteLink": {
     "message": "网站"
-  },
-  "privacyPolicy": {
-    "message": "隐私政策"
-  },
-  "termsLink": {
-    "message": "条款"
   },
   "knownSafe": {
     "message": "已知安全"
@@ -71,6 +62,9 @@
   "allowed": {
     "message": "已允许"
   },
+  "phishing": {
+    "message": "钓鱼"
+  },
   "malicious": {
     "message": "恶意"
   },
@@ -78,19 +72,16 @@
     "message": "可疑"
   },
   "newlyRegistered": {
-    "message": "新注册的域名"
+    "message": "新近注册的域名"
   },
   "dynamicDns": {
     "message": "动态 DNS 域名"
   },
-  "phishing": {
-    "message": "网络钓鱼"
-  },
   "clearAllowedWebsites": {
-    "message": "清除允许网站列表"
+    "message": "清除所有已排除的网站"
   },
   "clearAllowedWebsitesMessage": {
-    "message": "所有允许的网站已被清除。"
+    "message": "已清除所有已排除的网站。"
   },
   "settingsTitle": {
     "message": "设置"
@@ -102,7 +93,7 @@
     "message": "第三方集成"
   },
   "resetDefaultProviders": {
-    "message": "重置默认提供商"
+    "message": "重置保护提供商"
   },
   "resetAll": {
     "message": "全部重置"
@@ -114,25 +105,25 @@
     "message": "忽略拦截阈值"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "启用后，凡是被该提供商标记的域名都会被立即拦截，从而绕过双提供商阈值。这可能会增加误报。"
+    "message": "启用后，此提供商标记的任何域名都将立即被拦截，从而绕过两家提供商的阈值。这可能会增加误报。"
   },
   "blockNewlyRegistered": {
-    "message": "拦截新注册的域名"
+    "message": "拦截新近注册的域名"
   },
   "blockNewlyRegisteredTooltip": {
-    "message": "启用后，该提供商会拦截在过去 90 天内注册的域名。这可能会增加误报。"
+    "message": "启用后，此提供商会拦截过去 90 天内注册的域名。这可能会增加误报。"
   },
   "blockSuspicious": {
     "message": "拦截可疑域名"
   },
   "blockSuspiciousTooltip": {
-    "message": "启用后，即使尚未确认域名托管恶意内容，该提供商也会拦截其标记为可疑的域名。这可能会增加误报。"
+    "message": "启用后，此提供商会拦截其标记为可疑的域名，即使尚未确认其托管恶意内容。这可能会增加误报。"
   },
   "blockDynamicDns": {
     "message": "拦截动态 DNS 域名"
   },
   "blockDynamicDnsTooltip": {
-    "message": "启用后，该提供商会拦截使用动态 DNS 服务的域名，这类服务有时会被威胁行为者滥用。这可能会增加误报。"
+    "message": "启用后，此提供商会拦截使用动态 DNS 服务的域名，这类服务有时会被威胁行为者滥用。这可能会增加误报。"
   },
   "applyButton": {
     "message": "应用"
@@ -141,7 +132,7 @@
     "message": "官方合作伙伴"
   },
   "indicatorIpProtected": {
-    "message": "IP 地址已受保护"
+    "message": "IP 地址受保护"
   },
   "showApiKey": {
     "message": "显示 API 密钥"
@@ -159,13 +150,13 @@
     "message": "保存失败。"
   },
   "toastDefaultProvidersRestored": {
-    "message": "默认提供商已恢复。"
+    "message": "已恢复保护提供商。"
   },
   "toastAllSettingsRestored": {
-    "message": "所有设置已恢复。"
+    "message": "已恢复所有设置。"
   },
   "toastSaveApiKeyFirst": {
-    "message": "在启用此集成之前，请先保存有效的 API 密钥。"
+    "message": "启用此集成前，请先保存有效的 API 密钥。"
   },
   "toastFailedToUpdateState": {
     "message": "更新提供商状态失败。"
@@ -177,10 +168,10 @@
     "message": "未启用任何提供商"
   },
   "statusIconAltProtected": {
-    "message": "已保护"
+    "message": "受保护"
   },
   "providersEnabledCount": {
-    "message": "___ / ___ 提供商已启用"
+    "message": "已启用 ___ 家提供商（共 ___ 家）"
   },
   "openSettings": {
     "message": "打开设置"
@@ -192,7 +183,7 @@
     "message": "不可用"
   },
   "providerLogoAlt": {
-    "message": "$1 标志"
+    "message": "$1 徽标"
   },
   "providerNameFallback": {
     "message": "提供商"

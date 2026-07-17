@@ -6,19 +6,19 @@
     "message": "Osprey"
   },
   "extensionDescription": {
-    "message": "Blokkerer automatisk phishing, skadelig programvare, svindel og farlige nettsteder. Gratis beskyttelse for tryggere surfing."
+    "message": "Blokkerer phishing, skadelig programvare, svindel og farlige nettsteder. Gratis beskyttelse for tryggere surfing."
   },
   "logoAlt": {
     "message": "Osprey-logo"
   },
   "warningProse": {
-    "message": "Usikkert nettsted blokkert"
+    "message": "Skadelig nettsted blokkert"
   },
   "warningTitle": {
-    "message": "Advarsel: Dette nettstedet er usikkert"
+    "message": "Skadelig nettsted blokkert"
   },
   "recommendation": {
-    "message": "Osprey har blokkert tilgang til dette nettstedet. Det er ikke trygt å fortsette."
+    "message": "Osprey har blokkert tilgangen til dette nettstedet. Det er ikke trygt å fortsette."
   },
   "urlLabel": {
     "message": "URL: "
@@ -39,28 +39,19 @@
     "message": "Rapporter dette nettstedet som trygt"
   },
   "allowWebsite": {
-    "message": "Ignorer alltid dette nettstedet"
+    "message": "Legg nettstedet til i unntak"
   },
   "backButton": {
-    "message": "Tilbake til sikkerhet"
+    "message": "Tilbake til trygghet"
   },
   "continueButton": {
     "message": "Fortsett likevel"
   },
-  "version": {
-    "message": "Versjon: "
-  },
   "websiteLink": {
     "message": "Nettsted"
   },
-  "privacyPolicy": {
-    "message": "Personvernerklæring"
-  },
-  "termsLink": {
-    "message": "Vilkår"
-  },
   "knownSafe": {
-    "message": "Kjent trygt"
+    "message": "Kjent som trygt"
   },
   "failed": {
     "message": "Mislyktes"
@@ -71,8 +62,11 @@
   "allowed": {
     "message": "Tillatt"
   },
+  "phishing": {
+    "message": "Phishing"
+  },
   "malicious": {
-    "message": "Ondsinnet"
+    "message": "Skadelig"
   },
   "suspicious": {
     "message": "Mistenkelig"
@@ -81,16 +75,13 @@
     "message": "Nylig registrert domene"
   },
   "dynamicDns": {
-    "message": "Domene med dynamisk DNS"
-  },
-  "phishing": {
-    "message": "Phishing"
+    "message": "Dynamisk DNS-domene"
   },
   "clearAllowedWebsites": {
-    "message": "Fjern liste over tillatte nettsteder"
+    "message": "Tøm alle ekskluderte nettsteder"
   },
   "clearAllowedWebsitesMessage": {
-    "message": "Alle tillatte nettsteder er fjernet."
+    "message": "Alle ekskluderte nettsteder er tømt."
   },
   "settingsTitle": {
     "message": "Innstillinger"
@@ -99,10 +90,10 @@
     "message": "Beskyttelsesleverandører"
   },
   "thirdPartySection": {
-    "message": "Tredjeparts integrasjoner"
+    "message": "Tredjepartsintegrasjoner"
   },
   "resetDefaultProviders": {
-    "message": "Tilbakestill standardleverandører"
+    "message": "Tilbakestill beskyttelsesleverandører"
   },
   "resetAll": {
     "message": "Tilbakestill alt"
@@ -111,25 +102,25 @@
     "message": "API-nøkkel"
   },
   "bypassBlockingThreshold": {
-    "message": "Ignorer blokkeringsgrense"
+    "message": "Ignorer blokkeringsterskel"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Når dette er aktivert, blokkeres ethvert domene som flagges av denne leverandøren umiddelbart, og grensen med to leverandører omgås. Dette kan øke antallet falske positiver."
+    "message": "Når dette er aktivert, blokkeres ethvert domene som denne leverandøren flagger umiddelbart, og terskelen på to leverandører omgås. Dette kan øke antallet falske positiver."
   },
   "blockNewlyRegistered": {
     "message": "Blokker nylig registrerte domener"
   },
   "blockNewlyRegisteredTooltip": {
-    "message": "Når dette er aktivert, blokkerer denne leverandøren domener som er registrert i løpet av de siste 90 dagene. Dette kan øke antallet falske positiver."
+    "message": "Når dette er aktivert, blokkerer denne leverandøren domener som er registrert de siste 90 dagene. Dette kan øke antallet falske positiver."
   },
   "blockSuspicious": {
     "message": "Blokker mistenkelige domener"
   },
   "blockSuspiciousTooltip": {
-    "message": "Når dette er aktivert, blokkerer denne leverandøren domener som den har flagget som mistenkelige, selv om det ikke er bekreftet at de er vert for skadelig innhold. Dette kan øke antallet falske positiver."
+    "message": "Når dette er aktivert, blokkerer denne leverandøren domener den har flagget som mistenkelige, selv om det ikke er bekreftet at de er vert for skadelig innhold. Dette kan øke antallet falske positiver."
   },
   "blockDynamicDns": {
-    "message": "Blokker domener med dynamisk DNS"
+    "message": "Blokker dynamiske DNS-domener"
   },
   "blockDynamicDnsTooltip": {
     "message": "Når dette er aktivert, blokkerer denne leverandøren domener som bruker dynamiske DNS-tjenester, som noen ganger misbrukes av trusselaktører. Dette kan øke antallet falske positiver."
@@ -159,7 +150,7 @@
     "message": "Kunne ikke lagre."
   },
   "toastDefaultProvidersRestored": {
-    "message": "Standardleverandører gjenopprettet."
+    "message": "Beskyttelsesleverandører gjenopprettet."
   },
   "toastAllSettingsRestored": {
     "message": "Alle innstillinger gjenopprettet."
@@ -168,10 +159,10 @@
     "message": "Lagre en gyldig API-nøkkel før du aktiverer denne integrasjonen."
   },
   "toastFailedToUpdateState": {
-    "message": "Kunne ikke oppdatere leverandørstatus."
+    "message": "Kunne ikke oppdatere leverandørstatusen."
   },
   "statusHeadingSecure": {
-    "message": "Du er trygg"
+    "message": "Du er beskyttet"
   },
   "statusHeadingNoProviders": {
     "message": "Ingen leverandører aktivert"

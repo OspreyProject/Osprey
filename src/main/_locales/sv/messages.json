@@ -6,19 +6,19 @@
     "message": "Osprey"
   },
   "extensionDescription": {
-    "message": "Blockerar automatiskt nätfiske, skadlig kod, bedrägerier och farliga sajter när du surfar. Gratis skydd för säkrare surfning."
+    "message": "Blockerar automatiskt nätfiske, skadlig kod, bedrägerier och farliga webbplatser medan du surfar. Gratis skydd för säkrare surfning."
   },
   "logoAlt": {
     "message": "Osprey-logotyp"
   },
   "warningProse": {
-    "message": "Osäker webbplats blockerad"
+    "message": "Skadlig webbplats blockerad"
   },
   "warningTitle": {
-    "message": "Varning: Den här webbplatsen är osäker"
+    "message": "Skadlig webbplats blockerad"
   },
   "recommendation": {
-    "message": "Osprey har blockerat åtkomst till den här webbplatsen. Det är inte säkert att fortsätta."
+    "message": "Osprey har blockerat åtkomsten till denna webbplats. Det är inte säkert att fortsätta."
   },
   "urlLabel": {
     "message": "URL: "
@@ -36,10 +36,10 @@
     "message": "Orsak: "
   },
   "reportWebsite": {
-    "message": "Rapportera den här webbplatsen som säker"
+    "message": "Rapportera denna webbplats som säker"
   },
   "allowWebsite": {
-    "message": "Ignorera alltid den här webbplatsen"
+    "message": "Lägg till webbplats i undantag"
   },
   "backButton": {
     "message": "Tillbaka till säkerhet"
@@ -47,20 +47,11 @@
   "continueButton": {
     "message": "Fortsätt ändå"
   },
-  "version": {
-    "message": "Version: "
-  },
   "websiteLink": {
     "message": "Webbplats"
   },
-  "privacyPolicy": {
-    "message": "Integritetspolicy"
-  },
-  "termsLink": {
-    "message": "Villkor"
-  },
   "knownSafe": {
-    "message": "Känd säker"
+    "message": "Känd som säker"
   },
   "failed": {
     "message": "Misslyckades"
@@ -70,6 +61,9 @@
   },
   "allowed": {
     "message": "Tillåten"
+  },
+  "phishing": {
+    "message": "Nätfiske"
   },
   "malicious": {
     "message": "Skadlig"
@@ -81,16 +75,13 @@
     "message": "Nyligen registrerad domän"
   },
   "dynamicDns": {
-    "message": "Domän med dynamisk DNS"
-  },
-  "phishing": {
-    "message": "Nätfiske"
+    "message": "Dynamisk DNS-domän"
   },
   "clearAllowedWebsites": {
-    "message": "Rensa lista över tillåtna webbplatser"
+    "message": "Rensa alla undantagna webbplatser"
   },
   "clearAllowedWebsitesMessage": {
-    "message": "Alla tillåtna webbplatser har rensats."
+    "message": "Alla undantagna webbplatser har rensats."
   },
   "settingsTitle": {
     "message": "Inställningar"
@@ -102,7 +93,7 @@
     "message": "Tredjepartsintegrationer"
   },
   "resetDefaultProviders": {
-    "message": "Återställ standardleverantörer"
+    "message": "Återställ skyddsleverantörer"
   },
   "resetAll": {
     "message": "Återställ allt"
@@ -114,25 +105,25 @@
     "message": "Ignorera blockeringströskel"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "När detta är aktiverat blockeras varje domän som flaggas av den här leverantören omedelbart, varvid tröskeln med två leverantörer förbigås. Detta kan öka antalet falska positiva resultat."
+    "message": "När detta är aktiverat blockeras alla domäner som denna leverantör flaggar omedelbart, vilket kringgår tröskeln på två leverantörer. Detta kan öka antalet falska positiva."
   },
   "blockNewlyRegistered": {
     "message": "Blockera nyligen registrerade domäner"
   },
   "blockNewlyRegisteredTooltip": {
-    "message": "När detta är aktiverat blockerar den här leverantören domäner som registrerats under de senaste 90 dagarna. Detta kan öka antalet falska positiva resultat."
+    "message": "När detta är aktiverat blockerar denna leverantör domäner som registrerats under de senaste 90 dagarna. Detta kan öka antalet falska positiva."
   },
   "blockSuspicious": {
     "message": "Blockera misstänkta domäner"
   },
   "blockSuspiciousTooltip": {
-    "message": "När detta är aktiverat blockerar den här leverantören domäner som den har flaggat som misstänkta, även om det inte har bekräftats att de är värdar för skadligt innehåll. Detta kan öka antalet falska positiva resultat."
+    "message": "När detta är aktiverat blockerar denna leverantör domäner som den har flaggat som misstänkta, även om det inte har bekräftats att de är värd för skadligt innehåll. Detta kan öka antalet falska positiva."
   },
   "blockDynamicDns": {
-    "message": "Blockera domäner med dynamisk DNS"
+    "message": "Blockera dynamiska DNS-domäner"
   },
   "blockDynamicDnsTooltip": {
-    "message": "När detta är aktiverat blockerar den här leverantören domäner som använder tjänster för dynamisk DNS, vilka ibland missbrukas av hotaktörer. Detta kan öka antalet falska positiva resultat."
+    "message": "När detta är aktiverat blockerar denna leverantör domäner som använder dynamiska DNS-tjänster, som ibland missbrukas av hotaktörer. Detta kan öka antalet falska positiva."
   },
   "applyButton": {
     "message": "Tillämpa"
@@ -153,25 +144,25 @@
     "message": "Hämta API-nyckel"
   },
   "toastSaved": {
-    "message": "Sparad."
+    "message": "Sparat."
   },
   "toastFailedToSave": {
     "message": "Det gick inte att spara."
   },
   "toastDefaultProvidersRestored": {
-    "message": "Standardleverantörer återställda."
+    "message": "Skyddsleverantörer återställda."
   },
   "toastAllSettingsRestored": {
     "message": "Alla inställningar återställda."
   },
   "toastSaveApiKeyFirst": {
-    "message": "Spara en giltig API-nyckel innan du aktiverar den här integrationen."
+    "message": "Spara en giltig API-nyckel innan du aktiverar denna integration."
   },
   "toastFailedToUpdateState": {
     "message": "Det gick inte att uppdatera leverantörens status."
   },
   "statusHeadingSecure": {
-    "message": "Du är säker"
+    "message": "Du är skyddad"
   },
   "statusHeadingNoProviders": {
     "message": "Inga leverantörer aktiverade"

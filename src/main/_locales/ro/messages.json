@@ -1,24 +1,24 @@
 {
   "extensionName": {
-    "message": "Osprey: Protecție browser"
+    "message": "Osprey: Protecția browserului"
   },
   "extensionShortName": {
     "message": "Osprey"
   },
   "extensionDescription": {
-    "message": "Blochează automat phishing, malware, escrocherii și site-uri periculoase. Protecție gratuită pentru o navigare mai sigură."
+    "message": "Blochează phishing, malware, escrocherii și site-uri periculoase. Protecție gratuită pentru o navigare mai sigură."
   },
   "logoAlt": {
-    "message": "Logo Osprey"
+    "message": "Sigla Osprey"
   },
   "warningProse": {
-    "message": "Site web nesigur blocat"
+    "message": "Site web dăunător blocat"
   },
   "warningTitle": {
-    "message": "Avertisment: Acest site web este nesigur"
+    "message": "Site web dăunător blocat"
   },
   "recommendation": {
-    "message": "Osprey a blocat accesul la acest site web. Nu este sigur să continuați."
+    "message": "Osprey a blocat accesul la acest site web. Nu este sigur să continui."
   },
   "urlLabel": {
     "message": "URL: "
@@ -27,7 +27,7 @@
     "message": "Raportat de: "
   },
   "reportedByOthers": {
-    "message": "(și ___ alții)"
+    "message": "(și încă ___)"
   },
   "reportedByAlso": {
     "message": "Raportat și de: "
@@ -36,43 +36,37 @@
     "message": "Motiv: "
   },
   "reportWebsite": {
-    "message": "Raportați acest site ca sigur"
+    "message": "Raportează acest site web ca fiind sigur"
   },
   "allowWebsite": {
-    "message": "Ignorați întotdeauna acest site"
+    "message": "Adaugă site-ul web la excepții"
   },
   "backButton": {
-    "message": "Înapoi la siguranță"
+    "message": "Înapoi în siguranță"
   },
   "continueButton": {
-    "message": "Continuați oricum"
-  },
-  "version": {
-    "message": "Versiune: "
+    "message": "Continuă oricum"
   },
   "websiteLink": {
     "message": "Site web"
   },
-  "privacyPolicy": {
-    "message": "Politica de confidențialitate"
-  },
-  "termsLink": {
-    "message": "Termeni"
-  },
   "knownSafe": {
-    "message": "Cunoscut sigur"
+    "message": "Cunoscut ca sigur"
   },
   "failed": {
     "message": "Eșuat"
   },
   "waiting": {
-    "message": "Așteptare"
+    "message": "În așteptare"
   },
   "allowed": {
     "message": "Permis"
   },
+  "phishing": {
+    "message": "Phishing"
+  },
   "malicious": {
-    "message": "Malițios"
+    "message": "Rău intenționat"
   },
   "suspicious": {
     "message": "Suspect"
@@ -81,16 +75,13 @@
     "message": "Domeniu înregistrat recent"
   },
   "dynamicDns": {
-    "message": "Domeniu cu DNS dinamic"
-  },
-  "phishing": {
-    "message": "Phishing"
+    "message": "Domeniu DNS dinamic"
   },
   "clearAllowedWebsites": {
-    "message": "Ștergeți lista site-urilor permise"
+    "message": "Șterge toate site-urile web excluse"
   },
   "clearAllowedWebsitesMessage": {
-    "message": "Toate site-urile permise au fost șterse."
+    "message": "Toate site-urile web excluse au fost șterse."
   },
   "settingsTitle": {
     "message": "Setări"
@@ -102,10 +93,10 @@
     "message": "Integrări terțe"
   },
   "resetDefaultProviders": {
-    "message": "Restabiliți furnizorii impliciți"
+    "message": "Resetează furnizorii de protecție"
   },
   "resetAll": {
-    "message": "Restabiliți totul"
+    "message": "Resetează tot"
   },
   "fieldLabelApiKey": {
     "message": "Cheie API"
@@ -114,28 +105,28 @@
     "message": "Ignoră pragul de blocare"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Când este activat, orice domeniu semnalat de acest furnizor va fi blocat imediat, ocolind pragul cu doi furnizori. Acest lucru poate crește numărul de alarme false."
+    "message": "Când este activată, orice domeniu semnalat de acest furnizor va fi blocat imediat, ocolind pragul de doi furnizori. Acest lucru poate crește numărul de rezultate fals pozitive."
   },
   "blockNewlyRegistered": {
     "message": "Blochează domeniile înregistrate recent"
   },
   "blockNewlyRegisteredTooltip": {
-    "message": "Când este activat, acest furnizor blochează domeniile care au fost înregistrate în ultimele 90 de zile. Acest lucru poate crește numărul de alarme false."
+    "message": "Când este activată, acest furnizor blochează domeniile înregistrate în ultimele 90 de zile. Acest lucru poate crește numărul de rezultate fals pozitive."
   },
   "blockSuspicious": {
     "message": "Blochează domeniile suspecte"
   },
   "blockSuspiciousTooltip": {
-    "message": "Când este activat, acest furnizor blochează domeniile pe care le-a semnalat ca suspecte, chiar dacă nu s-a confirmat că găzduiesc conținut rău intenționat. Acest lucru poate crește numărul de alarme false."
+    "message": "Când este activată, acest furnizor blochează domeniile pe care le-a semnalat ca suspecte, chiar dacă nu s-a confirmat că găzduiesc conținut rău intenționat. Acest lucru poate crește numărul de rezultate fals pozitive."
   },
   "blockDynamicDns": {
-    "message": "Blochează domeniile cu DNS dinamic"
+    "message": "Blochează domeniile DNS dinamice"
   },
   "blockDynamicDnsTooltip": {
-    "message": "Când este activat, acest furnizor blochează domeniile care folosesc servicii de DNS dinamic, care sunt uneori abuzate de actorii amenințărilor. Acest lucru poate crește numărul de alarme false."
+    "message": "Când este activată, acest furnizor blochează domeniile care folosesc servicii DNS dinamice, uneori abuzate de actori de amenințare. Acest lucru poate crește numărul de rezultate fals pozitive."
   },
   "applyButton": {
-    "message": "Aplicați"
+    "message": "Aplică"
   },
   "officialPartnerTitle": {
     "message": "Partener oficial"
@@ -144,10 +135,10 @@
     "message": "Adresă IP protejată"
   },
   "showApiKey": {
-    "message": "Afișați cheia API"
+    "message": "Afișează cheia API"
   },
   "hideApiKey": {
-    "message": "Ascundeți cheia API"
+    "message": "Ascunde cheia API"
   },
   "getApiKey": {
     "message": "Obține cheia API"
@@ -159,19 +150,19 @@
     "message": "Salvarea a eșuat."
   },
   "toastDefaultProvidersRestored": {
-    "message": "Furnizorii impliciți au fost restabiliți."
+    "message": "Furnizorii de protecție au fost restabiliți."
   },
   "toastAllSettingsRestored": {
     "message": "Toate setările au fost restabilite."
   },
   "toastSaveApiKeyFirst": {
-    "message": "Salvați o cheie API validă înainte de a activa această integrare."
+    "message": "Salvează o cheie API validă înainte de a activa această integrare."
   },
   "toastFailedToUpdateState": {
     "message": "Actualizarea stării furnizorului a eșuat."
   },
   "statusHeadingSecure": {
-    "message": "Ești în siguranță"
+    "message": "Ești protejat"
   },
   "statusHeadingNoProviders": {
     "message": "Niciun furnizor activat"
@@ -183,7 +174,7 @@
     "message": "___ din ___ furnizori activați"
   },
   "openSettings": {
-    "message": "Deschideți setările"
+    "message": "Deschide setările"
   },
   "unknownOrigin": {
     "message": "Necunoscut"
@@ -192,7 +183,7 @@
     "message": "Indisponibil"
   },
   "providerLogoAlt": {
-    "message": "Logo $1"
+    "message": "Sigla $1"
   },
   "providerNameFallback": {
     "message": "Furnizor"

@@ -1,24 +1,24 @@
 {
   "extensionName": {
-    "message": "Osprey: Selaimen suojaus"
+    "message": "Osprey: Selainsuojaus"
   },
   "extensionShortName": {
     "message": "Osprey"
   },
   "extensionDescription": {
-    "message": "Estää automaattisesti tietojenkalastelun, haittaohjelmat, huijaukset ja vaaralliset sivustot. Ilmainen suoja turvalliseen selailuun."
+    "message": "Estää tietojenkalastelun, haittaohjelmat, huijaukset ja vaaralliset sivustot. Ilmainen suojaus turvalliseen selaamiseen."
   },
   "logoAlt": {
     "message": "Osprey-logo"
   },
   "warningProse": {
-    "message": "Vaarallinen verkkosivusto estetty"
+    "message": "Haitallinen sivusto estetty"
   },
   "warningTitle": {
-    "message": "Varoitus: Tämä verkkosivusto ei ole turvallinen"
+    "message": "Haitallinen sivusto estetty"
   },
   "recommendation": {
-    "message": "Osprey on estänyt pääsyn tälle verkkosivustolle. Jatkaminen ei ole turvallista."
+    "message": "Osprey on estänyt pääsyn tälle sivustolle. Jatkaminen ei ole turvallista."
   },
   "urlLabel": {
     "message": "URL-osoite: "
@@ -30,16 +30,16 @@
     "message": "(ja ___ muuta)"
   },
   "reportedByAlso": {
-    "message": "Ilmoittanut myös: "
+    "message": "Myös ilmoittanut: "
   },
   "reasonLabel": {
     "message": "Syy: "
   },
   "reportWebsite": {
-    "message": "Ilmoita tämä verkkosivusto turvalliseksi"
+    "message": "Ilmoita tämä sivusto turvalliseksi"
   },
   "allowWebsite": {
-    "message": "Ohita tämä verkkosivusto aina"
+    "message": "Lisää sivusto poikkeuksiin"
   },
   "backButton": {
     "message": "Takaisin turvaan"
@@ -47,17 +47,8 @@
   "continueButton": {
     "message": "Jatka silti"
   },
-  "version": {
-    "message": "Versio: "
-  },
   "websiteLink": {
-    "message": "Verkkosivusto"
-  },
-  "privacyPolicy": {
-    "message": "Tietosuojakäytäntö"
-  },
-  "termsLink": {
-    "message": "Ehdot"
+    "message": "Sivusto"
   },
   "knownSafe": {
     "message": "Tunnetusti turvallinen"
@@ -71,6 +62,9 @@
   "allowed": {
     "message": "Sallittu"
   },
+  "phishing": {
+    "message": "Tietojenkalastelu"
+  },
   "malicious": {
     "message": "Haitallinen"
   },
@@ -81,16 +75,13 @@
     "message": "Äskettäin rekisteröity verkkotunnus"
   },
   "dynamicDns": {
-    "message": "Dynaamista DNS:ää käyttävä verkkotunnus"
-  },
-  "phishing": {
-    "message": "Tietojenkalastelu"
+    "message": "Dynaaminen DNS-verkkotunnus"
   },
   "clearAllowedWebsites": {
-    "message": "Tyhjennä sallittujen verkkosivustojen luettelo"
+    "message": "Tyhjennä kaikki poissuljetut sivustot"
   },
   "clearAllowedWebsitesMessage": {
-    "message": "Kaikki sallitut verkkosivustot on tyhjennetty."
+    "message": "Kaikki poissuljetut sivustot on tyhjennetty."
   },
   "settingsTitle": {
     "message": "Asetukset"
@@ -102,7 +93,7 @@
     "message": "Kolmannen osapuolen integraatiot"
   },
   "resetDefaultProviders": {
-    "message": "Palauta oletuspalveluntarjoajat"
+    "message": "Palauta suojauksen tarjoajat"
   },
   "resetAll": {
     "message": "Palauta kaikki"
@@ -114,25 +105,25 @@
     "message": "Ohita estokynnys"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Kun tämä on käytössä, mikä tahansa tämän palveluntarjoajan merkitsemä verkkotunnus estetään välittömästi ohittaen kahden palveluntarjoajan kynnyksen. Tämä voi lisätä vääriä hälytyksiä."
+    "message": "Kun tämä on käytössä, mikä tahansa tämän tarjoajan merkitsemä verkkotunnus estetään välittömästi ohittaen kahden tarjoajan kynnyksen. Tämä voi lisätä vääriä positiivisia tuloksia."
   },
   "blockNewlyRegistered": {
     "message": "Estä äskettäin rekisteröidyt verkkotunnukset"
   },
   "blockNewlyRegisteredTooltip": {
-    "message": "Kun tämä on käytössä, tämä palveluntarjoaja estää verkkotunnukset, jotka on rekisteröity viimeisten 90 päivän aikana. Tämä voi lisätä vääriä hälytyksiä."
+    "message": "Kun tämä on käytössä, tämä tarjoaja estää viimeisen 90 päivän aikana rekisteröidyt verkkotunnukset. Tämä voi lisätä vääriä positiivisia tuloksia."
   },
   "blockSuspicious": {
     "message": "Estä epäilyttävät verkkotunnukset"
   },
   "blockSuspiciousTooltip": {
-    "message": "Kun tämä on käytössä, tämä palveluntarjoaja estää verkkotunnukset, jotka se on merkinnyt epäilyttäviksi, vaikka niiden ei olisi vahvistettu isännöivän haitallista sisältöä. Tämä voi lisätä vääriä hälytyksiä."
+    "message": "Kun tämä on käytössä, tämä tarjoaja estää epäilyttäviksi merkitsemänsä verkkotunnukset, vaikka niiden ei olisi vahvistettu isännöivän haitallista sisältöä. Tämä voi lisätä vääriä positiivisia tuloksia."
   },
   "blockDynamicDns": {
-    "message": "Estä dynaamista DNS:ää käyttävät verkkotunnukset"
+    "message": "Estä dynaamiset DNS-verkkotunnukset"
   },
   "blockDynamicDnsTooltip": {
-    "message": "Kun tämä on käytössä, tämä palveluntarjoaja estää verkkotunnukset, jotka käyttävät dynaamisia DNS-palveluja, joita uhkatoimijat joskus käyttävät väärin. Tämä voi lisätä vääriä hälytyksiä."
+    "message": "Kun tämä on käytössä, tämä tarjoaja estää dynaamisia DNS-palveluita käyttävät verkkotunnukset, joita uhkatoimijat joskus väärinkäyttävät. Tämä voi lisätä vääriä positiivisia tuloksia."
   },
   "applyButton": {
     "message": "Käytä"
@@ -150,7 +141,7 @@
     "message": "Piilota API-avain"
   },
   "getApiKey": {
-    "message": "Hae API-avain"
+    "message": "Hanki API-avain"
   },
   "toastSaved": {
     "message": "Tallennettu."
@@ -159,7 +150,7 @@
     "message": "Tallennus epäonnistui."
   },
   "toastDefaultProvidersRestored": {
-    "message": "Oletuspalveluntarjoajat palautettu."
+    "message": "Suojauksen tarjoajat palautettu."
   },
   "toastAllSettingsRestored": {
     "message": "Kaikki asetukset palautettu."
@@ -168,19 +159,19 @@
     "message": "Tallenna kelvollinen API-avain ennen tämän integraation käyttöönottoa."
   },
   "toastFailedToUpdateState": {
-    "message": "Palveluntarjoajan tilan päivittäminen epäonnistui."
+    "message": "Tarjoajan tilan päivitys epäonnistui."
   },
   "statusHeadingSecure": {
     "message": "Olet suojattu"
   },
   "statusHeadingNoProviders": {
-    "message": "Palveluntarjoajia ei ole käytössä"
+    "message": "Ei käytössä olevia tarjoajia"
   },
   "statusIconAltProtected": {
     "message": "Suojattu"
   },
   "providersEnabledCount": {
-    "message": "___/___ palveluntarjoajaa käytössä"
+    "message": "___/___ tarjoajaa käytössä"
   },
   "openSettings": {
     "message": "Avaa asetukset"
@@ -195,6 +186,6 @@
     "message": "$1-logo"
   },
   "providerNameFallback": {
-    "message": "Palveluntarjoaja"
+    "message": "Tarjoaja"
   }
 }

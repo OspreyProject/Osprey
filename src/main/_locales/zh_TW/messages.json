@@ -6,58 +6,49 @@
     "message": "Osprey"
   },
   "extensionDescription": {
-    "message": "瀏覽時自動封鎖網路釣魚、惡意軟體、詐騙和危險網站。免費防護，讓上網更安全。"
+    "message": "在您瀏覽時自動封鎖釣魚、惡意軟體、詐騙和危險網站。免費保護，讓瀏覽更安全。"
   },
   "logoAlt": {
     "message": "Osprey 標誌"
   },
   "warningProse": {
-    "message": "不安全網站已被封鎖"
+    "message": "已封鎖有害網站"
   },
   "warningTitle": {
-    "message": "警告：此網站不安全"
+    "message": "已封鎖有害網站"
   },
   "recommendation": {
-    "message": "Osprey 已封鎖對此網站的存取。繼續操作並不安全。"
+    "message": "Osprey 已封鎖對此網站的存取。繼續存取並不安全。"
   },
   "urlLabel": {
     "message": "網址："
   },
   "reportedByLabel": {
-    "message": "舉報方："
+    "message": "回報者："
   },
   "reportedByOthers": {
-    "message": "（及其他 ___ 方）"
+    "message": "（及其他 ___ 人）"
   },
   "reportedByAlso": {
-    "message": "同時舉報方："
+    "message": "另有回報者："
   },
   "reasonLabel": {
     "message": "原因："
   },
   "reportWebsite": {
-    "message": "將此網站舉報為安全"
+    "message": "回報此網站為安全"
   },
   "allowWebsite": {
-    "message": "一律忽略此網站"
+    "message": "將網站加入排除清單"
   },
   "backButton": {
     "message": "返回安全頁面"
   },
   "continueButton": {
-    "message": "仍然繼續"
-  },
-  "version": {
-    "message": "版本："
+    "message": "仍要繼續"
   },
   "websiteLink": {
     "message": "網站"
-  },
-  "privacyPolicy": {
-    "message": "隱私權政策"
-  },
-  "termsLink": {
-    "message": "條款"
   },
   "knownSafe": {
     "message": "已知安全"
@@ -71,6 +62,9 @@
   "allowed": {
     "message": "已允許"
   },
+  "phishing": {
+    "message": "釣魚"
+  },
   "malicious": {
     "message": "惡意"
   },
@@ -83,26 +77,23 @@
   "dynamicDns": {
     "message": "動態 DNS 網域"
   },
-  "phishing": {
-    "message": "網路釣魚"
-  },
   "clearAllowedWebsites": {
-    "message": "清除允許網站清單"
+    "message": "清除所有已排除的網站"
   },
   "clearAllowedWebsitesMessage": {
-    "message": "所有允許的網站已被清除。"
+    "message": "已清除所有已排除的網站。"
   },
   "settingsTitle": {
     "message": "設定"
   },
   "providersSection": {
-    "message": "保護提供商"
+    "message": "保護提供者"
   },
   "thirdPartySection": {
     "message": "第三方整合"
   },
   "resetDefaultProviders": {
-    "message": "重設預設提供商"
+    "message": "重設保護提供者"
   },
   "resetAll": {
     "message": "全部重設"
@@ -111,22 +102,22 @@
     "message": "API 金鑰"
   },
   "bypassBlockingThreshold": {
-    "message": "忽略封鎖閾值"
+    "message": "忽略封鎖門檻"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "啟用後，凡是被此提供者標記的網域都會立即被封鎖，從而略過雙提供者閾值。這可能會增加誤判。"
+    "message": "啟用後，此提供者標記的任何網域都會立即被封鎖，並略過兩家提供者的門檻。這可能會增加誤判。"
   },
   "blockNewlyRegistered": {
     "message": "封鎖近期註冊的網域"
   },
   "blockNewlyRegisteredTooltip": {
-    "message": "啟用後，此提供者會封鎖在過去 90 天內註冊的網域。這可能會增加誤判。"
+    "message": "啟用後，此提供者會封鎖過去 90 天內註冊的網域。這可能會增加誤判。"
   },
   "blockSuspicious": {
     "message": "封鎖可疑網域"
   },
   "blockSuspiciousTooltip": {
-    "message": "啟用後，即使尚未確認網域代管惡意內容，此提供者也會封鎖其標記為可疑的網域。這可能會增加誤判。"
+    "message": "啟用後，此提供者會封鎖其標記為可疑的網域，即使尚未確認其代管惡意內容。這可能會增加誤判。"
   },
   "blockDynamicDns": {
     "message": "封鎖動態 DNS 網域"
@@ -141,7 +132,7 @@
     "message": "官方合作夥伴"
   },
   "indicatorIpProtected": {
-    "message": "IP 位址已受保護"
+    "message": "IP 位址受保護"
   },
   "showApiKey": {
     "message": "顯示 API 金鑰"
@@ -159,28 +150,28 @@
     "message": "儲存失敗。"
   },
   "toastDefaultProvidersRestored": {
-    "message": "預設提供商已還原。"
+    "message": "已還原保護提供者。"
   },
   "toastAllSettingsRestored": {
-    "message": "所有設定已還原。"
+    "message": "已還原所有設定。"
   },
   "toastSaveApiKeyFirst": {
-    "message": "在啟用此整合之前，請先儲存有效的 API 金鑰。"
+    "message": "啟用此整合前，請先儲存有效的 API 金鑰。"
   },
   "toastFailedToUpdateState": {
-    "message": "更新提供商狀態失敗。"
+    "message": "更新提供者狀態失敗。"
   },
   "statusHeadingSecure": {
     "message": "您已受到保護"
   },
   "statusHeadingNoProviders": {
-    "message": "未啟用任何提供商"
+    "message": "未啟用任何提供者"
   },
   "statusIconAltProtected": {
-    "message": "已保護"
+    "message": "受保護"
   },
   "providersEnabledCount": {
-    "message": "___ / ___ 提供商已啟用"
+    "message": "已啟用 ___ 家提供者（共 ___ 家）"
   },
   "openSettings": {
     "message": "開啟設定"
@@ -189,12 +180,12 @@
     "message": "未知"
   },
   "urlUnavailable": {
-    "message": "不可用"
+    "message": "無法使用"
   },
   "providerLogoAlt": {
     "message": "$1 標誌"
   },
   "providerNameFallback": {
-    "message": "提供商"
+    "message": "提供者"
   }
 }

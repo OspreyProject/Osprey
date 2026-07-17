@@ -1,21 +1,21 @@
 {
   "extensionName": {
-    "message": "Osprey: Proteção do Navegador"
+    "message": "Osprey: Proteção do navegador"
   },
   "extensionShortName": {
     "message": "Osprey"
   },
   "extensionDescription": {
-    "message": "Bloqueia automaticamente phishing, malware, burlas e sites perigosos. Proteção grátis para navegar com mais segurança."
+    "message": "Bloqueia phishing, malware, burlas e sites perigosos enquanto navega. Proteção gratuita para navegar mais seguro."
   },
   "logoAlt": {
     "message": "Logótipo do Osprey"
   },
   "warningProse": {
-    "message": "Site inseguro bloqueado"
+    "message": "Site prejudicial bloqueado"
   },
   "warningTitle": {
-    "message": "Aviso: Este site é inseguro"
+    "message": "Site prejudicial bloqueado"
   },
   "recommendation": {
     "message": "O Osprey bloqueou o acesso a este site. Não é seguro continuar."
@@ -24,52 +24,46 @@
     "message": "URL: "
   },
   "reportedByLabel": {
-    "message": "Reportado por: "
+    "message": "Comunicado por: "
   },
   "reportedByOthers": {
-    "message": "(e ___ outros)"
+    "message": "(e mais ___)"
   },
   "reportedByAlso": {
-    "message": "Também reportado por: "
+    "message": "Também comunicado por: "
   },
   "reasonLabel": {
     "message": "Motivo: "
   },
   "reportWebsite": {
-    "message": "Reportar este site como seguro"
+    "message": "Comunicar este site como seguro"
   },
   "allowWebsite": {
-    "message": "Ignorar sempre este site"
+    "message": "Adicionar site às exclusões"
   },
   "backButton": {
     "message": "Voltar à segurança"
   },
   "continueButton": {
-    "message": "Continuar na mesma"
-  },
-  "version": {
-    "message": "Versão: "
+    "message": "Continuar mesmo assim"
   },
   "websiteLink": {
     "message": "Site"
   },
-  "privacyPolicy": {
-    "message": "Política de Privacidade"
-  },
-  "termsLink": {
-    "message": "Termos"
-  },
   "knownSafe": {
-    "message": "Seguro conhecido"
+    "message": "Conhecido como seguro"
   },
   "failed": {
-    "message": "Falhado"
+    "message": "Falhou"
   },
   "waiting": {
     "message": "A aguardar"
   },
   "allowed": {
     "message": "Permitido"
+  },
+  "phishing": {
+    "message": "Phishing"
   },
   "malicious": {
     "message": "Malicioso"
@@ -81,16 +75,13 @@
     "message": "Domínio registado recentemente"
   },
   "dynamicDns": {
-    "message": "Domínio com DNS dinâmico"
-  },
-  "phishing": {
-    "message": "Phishing"
+    "message": "Domínio de DNS dinâmico"
   },
   "clearAllowedWebsites": {
-    "message": "Limpar lista de sites permitidos"
+    "message": "Limpar todos os sites excluídos"
   },
   "clearAllowedWebsitesMessage": {
-    "message": "Todos os sites permitidos foram limpos."
+    "message": "Todos os sites excluídos foram limpos."
   },
   "settingsTitle": {
     "message": "Definições"
@@ -102,7 +93,7 @@
     "message": "Integrações de terceiros"
   },
   "resetDefaultProviders": {
-    "message": "Repor fornecedores predefinidos"
+    "message": "Repor fornecedores de proteção"
   },
   "resetAll": {
     "message": "Repor tudo"
@@ -114,13 +105,13 @@
     "message": "Ignorar limite de bloqueio"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Quando ativado, qualquer domínio sinalizado por este fornecedor será bloqueado imediatamente, ignorando o limite de dois fornecedores. Isto pode aumentar os falsos positivos."
+    "message": "Quando ativado, qualquer domínio sinalizado por este fornecedor será bloqueado de imediato, ignorando o limite de dois fornecedores. Isto pode aumentar os falsos positivos."
   },
   "blockNewlyRegistered": {
     "message": "Bloquear domínios registados recentemente"
   },
   "blockNewlyRegisteredTooltip": {
-    "message": "Quando ativado, este fornecedor bloqueia domínios que foram registados nos últimos 90 dias. Isto pode aumentar os falsos positivos."
+    "message": "Quando ativado, este fornecedor bloqueia domínios registados nos últimos 90 dias. Isto pode aumentar os falsos positivos."
   },
   "blockSuspicious": {
     "message": "Bloquear domínios suspeitos"
@@ -129,10 +120,10 @@
     "message": "Quando ativado, este fornecedor bloqueia domínios que sinalizou como suspeitos, mesmo que não tenha sido confirmado que alojam conteúdo malicioso. Isto pode aumentar os falsos positivos."
   },
   "blockDynamicDns": {
-    "message": "Bloquear domínios com DNS dinâmico"
+    "message": "Bloquear domínios de DNS dinâmico"
   },
   "blockDynamicDnsTooltip": {
-    "message": "Quando ativado, este fornecedor bloqueia domínios que utilizam serviços de DNS dinâmico, que por vezes são utilizados de forma abusiva por agentes de ameaça. Isto pode aumentar os falsos positivos."
+    "message": "Quando ativado, este fornecedor bloqueia domínios que utilizam serviços de DNS dinâmico, por vezes abusados por agentes de ameaças. Isto pode aumentar os falsos positivos."
   },
   "applyButton": {
     "message": "Aplicar"
@@ -159,7 +150,7 @@
     "message": "Falha ao guardar."
   },
   "toastDefaultProvidersRestored": {
-    "message": "Fornecedores predefinidos restaurados."
+    "message": "Fornecedores de proteção restaurados."
   },
   "toastAllSettingsRestored": {
     "message": "Todas as definições restauradas."
@@ -171,16 +162,16 @@
     "message": "Falha ao atualizar o estado do fornecedor."
   },
   "statusHeadingSecure": {
-    "message": "Está seguro"
+    "message": "Está protegido"
   },
   "statusHeadingNoProviders": {
-    "message": "Nenhum fornecedor ativo"
+    "message": "Nenhum fornecedor ativado"
   },
   "statusIconAltProtected": {
     "message": "Protegido"
   },
   "providersEnabledCount": {
-    "message": "___ de ___ fornecedores ativos"
+    "message": "___ de ___ fornecedores ativados"
   },
   "openSettings": {
     "message": "Abrir definições"
@@ -192,7 +183,7 @@
     "message": "Indisponível"
   },
   "providerLogoAlt": {
-    "message": "Logótipo de $1"
+    "message": "Logótipo do $1"
   },
   "providerNameFallback": {
     "message": "Fornecedor"

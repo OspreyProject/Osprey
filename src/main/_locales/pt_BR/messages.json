@@ -1,21 +1,21 @@
 {
   "extensionName": {
-    "message": "Osprey: Proteção do Navegador"
+    "message": "Osprey: Proteção do navegador"
   },
   "extensionShortName": {
     "message": "Osprey"
   },
   "extensionDescription": {
-    "message": "Bloqueia automaticamente phishing, malware, golpes e sites perigosos. Proteção grátis para navegar com mais segurança."
+    "message": "Bloqueia phishing, malware, golpes e sites perigosos enquanto você navega. Proteção gratuita para navegar mais seguro."
   },
   "logoAlt": {
-    "message": "Logo do Osprey"
+    "message": "Logotipo do Osprey"
   },
   "warningProse": {
-    "message": "Site inseguro bloqueado"
+    "message": "Site prejudicial bloqueado"
   },
   "warningTitle": {
-    "message": "Aviso: Este site é inseguro"
+    "message": "Site prejudicial bloqueado"
   },
   "recommendation": {
     "message": "O Osprey bloqueou o acesso a este site. Não é seguro continuar."
@@ -27,7 +27,7 @@
     "message": "Reportado por: "
   },
   "reportedByOthers": {
-    "message": "(e ___ outros)"
+    "message": "(e mais ___)"
   },
   "reportedByAlso": {
     "message": "Também reportado por: "
@@ -39,28 +39,19 @@
     "message": "Reportar este site como seguro"
   },
   "allowWebsite": {
-    "message": "Sempre ignorar este site"
+    "message": "Adicionar site às exclusões"
   },
   "backButton": {
-    "message": "Voltar para segurança"
+    "message": "Voltar à segurança"
   },
   "continueButton": {
     "message": "Continuar mesmo assim"
   },
-  "version": {
-    "message": "Versão: "
-  },
   "websiteLink": {
     "message": "Site"
   },
-  "privacyPolicy": {
-    "message": "Política de Privacidade"
-  },
-  "termsLink": {
-    "message": "Termos"
-  },
   "knownSafe": {
-    "message": "Seguro conhecido"
+    "message": "Conhecido como seguro"
   },
   "failed": {
     "message": "Falhou"
@@ -70,6 +61,9 @@
   },
   "allowed": {
     "message": "Permitido"
+  },
+  "phishing": {
+    "message": "Phishing"
   },
   "malicious": {
     "message": "Malicioso"
@@ -81,16 +75,13 @@
     "message": "Domínio registrado recentemente"
   },
   "dynamicDns": {
-    "message": "Domínio com DNS dinâmico"
-  },
-  "phishing": {
-    "message": "Phishing"
+    "message": "Domínio de DNS dinâmico"
   },
   "clearAllowedWebsites": {
-    "message": "Limpar lista de sites permitidos"
+    "message": "Limpar todos os sites excluídos"
   },
   "clearAllowedWebsitesMessage": {
-    "message": "Todos os sites permitidos foram limpos."
+    "message": "Todos os sites excluídos foram limpos."
   },
   "settingsTitle": {
     "message": "Configurações"
@@ -102,7 +93,7 @@
     "message": "Integrações de terceiros"
   },
   "resetDefaultProviders": {
-    "message": "Redefinir provedores padrão"
+    "message": "Redefinir provedores de proteção"
   },
   "resetAll": {
     "message": "Redefinir tudo"
@@ -120,7 +111,7 @@
     "message": "Bloquear domínios registrados recentemente"
   },
   "blockNewlyRegisteredTooltip": {
-    "message": "Quando ativado, este provedor bloqueia domínios que foram registrados nos últimos 90 dias. Isso pode aumentar os falsos positivos."
+    "message": "Quando ativado, este provedor bloqueia domínios registrados nos últimos 90 dias. Isso pode aumentar os falsos positivos."
   },
   "blockSuspicious": {
     "message": "Bloquear domínios suspeitos"
@@ -129,10 +120,10 @@
     "message": "Quando ativado, este provedor bloqueia domínios que ele sinalizou como suspeitos, mesmo que não tenha sido confirmado que hospedam conteúdo malicioso. Isso pode aumentar os falsos positivos."
   },
   "blockDynamicDns": {
-    "message": "Bloquear domínios com DNS dinâmico"
+    "message": "Bloquear domínios de DNS dinâmico"
   },
   "blockDynamicDnsTooltip": {
-    "message": "Quando ativado, este provedor bloqueia domínios que usam serviços de DNS dinâmico, que às vezes são abusados por agentes de ameaça. Isso pode aumentar os falsos positivos."
+    "message": "Quando ativado, este provedor bloqueia domínios que usam serviços de DNS dinâmico, que às vezes são abusados por agentes de ameaças. Isso pode aumentar os falsos positivos."
   },
   "applyButton": {
     "message": "Aplicar"
@@ -150,7 +141,7 @@
     "message": "Ocultar chave de API"
   },
   "getApiKey": {
-    "message": "Obter chave da API"
+    "message": "Obter chave de API"
   },
   "toastSaved": {
     "message": "Salvo."
@@ -159,28 +150,28 @@
     "message": "Falha ao salvar."
   },
   "toastDefaultProvidersRestored": {
-    "message": "Provedores padrão restaurados."
+    "message": "Provedores de proteção restaurados."
   },
   "toastAllSettingsRestored": {
     "message": "Todas as configurações restauradas."
   },
   "toastSaveApiKeyFirst": {
-    "message": "Salve uma chave de API válida antes de habilitar esta integração."
+    "message": "Salve uma chave de API válida antes de ativar esta integração."
   },
   "toastFailedToUpdateState": {
     "message": "Falha ao atualizar o estado do provedor."
   },
   "statusHeadingSecure": {
-    "message": "Você está seguro"
+    "message": "Você está protegido"
   },
   "statusHeadingNoProviders": {
-    "message": "Nenhum provedor habilitado"
+    "message": "Nenhum provedor ativado"
   },
   "statusIconAltProtected": {
     "message": "Protegido"
   },
   "providersEnabledCount": {
-    "message": "___ de ___ provedores habilitados"
+    "message": "___ de ___ provedores ativados"
   },
   "openSettings": {
     "message": "Abrir configurações"
@@ -192,7 +183,7 @@
     "message": "Indisponível"
   },
   "providerLogoAlt": {
-    "message": "Logo do $1"
+    "message": "Logotipo do $1"
   },
   "providerNameFallback": {
     "message": "Provedor"

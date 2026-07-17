@@ -6,16 +6,16 @@
     "message": "Osprey"
   },
   "extensionDescription": {
-    "message": "يحظر تلقائيًا التصيّد والبرمجيات الخبيثة وعمليات الاحتيال والمواقع الخطرة أثناء تصفّحك. حماية مجانية لتصفّح أكثر أمانًا."
+    "message": "يحظر تلقائيًا التصيّد الاحتيالي والبرامج الضارة وعمليات الاحتيال والمواقع الخطيرة أثناء تصفّحك. حماية مجانية لتصفّح أكثر أمانًا."
   },
   "logoAlt": {
     "message": "شعار Osprey"
   },
   "warningProse": {
-    "message": "تم حظر موقع ويب غير آمن"
+    "message": "تم حظر موقع ضار"
   },
   "warningTitle": {
-    "message": "تحذير: هذا الموقع غير آمن"
+    "message": "تم حظر موقع ضار"
   },
   "recommendation": {
     "message": "قام Osprey بحظر الوصول إلى هذا الموقع. من غير الآمن المتابعة."
@@ -24,22 +24,22 @@
     "message": "الرابط: "
   },
   "reportedByLabel": {
-    "message": "تم الإبلاغ بواسطة: "
+    "message": "تم الإبلاغ عنه بواسطة: "
   },
   "reportedByOthers": {
     "message": "(و ___ آخرين)"
   },
   "reportedByAlso": {
-    "message": "تم الإبلاغ أيضاً بواسطة: "
+    "message": "تم الإبلاغ عنه أيضًا بواسطة: "
   },
   "reasonLabel": {
     "message": "السبب: "
   },
   "reportWebsite": {
-    "message": "الإبلاغ عن هذا الموقع بأنه آمن"
+    "message": "الإبلاغ عن هذا الموقع كآمن"
   },
   "allowWebsite": {
-    "message": "تجاهل هذا الموقع دائماً"
+    "message": "إضافة الموقع إلى الاستثناءات"
   },
   "backButton": {
     "message": "العودة إلى الأمان"
@@ -47,62 +47,53 @@
   "continueButton": {
     "message": "المتابعة على أي حال"
   },
-  "version": {
-    "message": "الإصدار: "
-  },
   "websiteLink": {
-    "message": "الموقع الإلكتروني"
-  },
-  "privacyPolicy": {
-    "message": "سياسة الخصوصية"
-  },
-  "termsLink": {
-    "message": "الشروط"
+    "message": "الموقع"
   },
   "knownSafe": {
-    "message": "آمن ومعروف"
+    "message": "معروف كآمن"
   },
   "failed": {
     "message": "فشل"
   },
   "waiting": {
-    "message": "انتظار"
+    "message": "قيد الانتظار"
   },
   "allowed": {
     "message": "مسموح"
   },
+  "phishing": {
+    "message": "تصيّد احتيالي"
+  },
   "malicious": {
-    "message": "خبيث"
+    "message": "ضار"
   },
   "suspicious": {
     "message": "مشبوه"
   },
   "newlyRegistered": {
-    "message": "نطاق مُسجَّل حديثًا"
+    "message": "نطاق مسجّل حديثًا"
   },
   "dynamicDns": {
     "message": "نطاق DNS ديناميكي"
   },
-  "phishing": {
-    "message": "تصيد احتيالي"
-  },
   "clearAllowedWebsites": {
-    "message": "مسح قائمة المواقع المسموح بها"
+    "message": "مسح جميع المواقع المستثناة"
   },
   "clearAllowedWebsitesMessage": {
-    "message": "تم مسح جميع المواقع المسموح بها."
+    "message": "تم مسح جميع المواقع المستثناة."
   },
   "settingsTitle": {
     "message": "الإعدادات"
   },
   "providersSection": {
-    "message": "مزودو الحماية"
+    "message": "مزوّدو الحماية"
   },
   "thirdPartySection": {
     "message": "تكاملات الطرف الثالث"
   },
   "resetDefaultProviders": {
-    "message": "إعادة تعيين المزودين الافتراضيين"
+    "message": "إعادة تعيين مزوّدي الحماية"
   },
   "resetAll": {
     "message": "إعادة تعيين الكل"
@@ -111,28 +102,28 @@
     "message": "مفتاح API"
   },
   "bypassBlockingThreshold": {
-    "message": "تجاهل عتبة الحظر"
+    "message": "تجاهل حد الحظر"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "عند التفعيل، سيتم حظر أي نطاق يُبلّغ عنه هذا المزوّد فورًا، متجاوزًا عتبة المزوّدَين. قد يؤدي ذلك إلى زيادة الإيجابيات الكاذبة."
+    "message": "عند التفعيل، سيتم حظر أي نطاق يشير إليه هذا المزوّد على الفور، متجاوزًا حد المزوّدَين. قد يؤدي ذلك إلى زيادة النتائج الإيجابية الخاطئة."
   },
   "blockNewlyRegistered": {
-    "message": "حظر النطاقات المُسجَّلة حديثًا"
+    "message": "حظر النطاقات المسجّلة حديثًا"
   },
   "blockNewlyRegisteredTooltip": {
-    "message": "عند التفعيل، يحظر هذا المزوّد النطاقات التي سُجِّلت خلال الـ 90 يومًا الماضية. قد يؤدي ذلك إلى زيادة الإيجابيات الكاذبة."
+    "message": "عند التفعيل، يحظر هذا المزوّد النطاقات التي تم تسجيلها خلال آخر 90 يومًا. قد يؤدي ذلك إلى زيادة النتائج الإيجابية الخاطئة."
   },
   "blockSuspicious": {
     "message": "حظر النطاقات المشبوهة"
   },
   "blockSuspiciousTooltip": {
-    "message": "عند التفعيل، يحظر هذا المزوّد النطاقات التي صنّفها على أنها مشبوهة، حتى وإن لم يتأكّد استضافتها لمحتوى ضار. قد يؤدي ذلك إلى زيادة الإيجابيات الكاذبة."
+    "message": "عند التفعيل، يحظر هذا المزوّد النطاقات التي وضع عليها علامة كمشبوهة، حتى لو لم يتم تأكيد استضافتها لمحتوى ضار. قد يؤدي ذلك إلى زيادة النتائج الإيجابية الخاطئة."
   },
   "blockDynamicDns": {
-    "message": "حظر نطاقات DNS الديناميكي"
+    "message": "حظر نطاقات DNS الديناميكية"
   },
   "blockDynamicDnsTooltip": {
-    "message": "عند التفعيل، يحظر هذا المزوّد النطاقات التي تستخدم خدمات DNS الديناميكي، والتي يُسيء استغلالها أحيانًا الجهات الخبيثة. قد يؤدي ذلك إلى زيادة الإيجابيات الكاذبة."
+    "message": "عند التفعيل، يحظر هذا المزوّد النطاقات التي تستخدم خدمات DNS الديناميكية، والتي يُساء استخدامها أحيانًا من قبل الجهات المهدِّدة. قد يؤدي ذلك إلى زيادة النتائج الإيجابية الخاطئة."
   },
   "applyButton": {
     "message": "تطبيق"
@@ -159,28 +150,28 @@
     "message": "فشل الحفظ."
   },
   "toastDefaultProvidersRestored": {
-    "message": "تمت استعادة المزودين الافتراضيين."
+    "message": "تمت استعادة مزوّدي الحماية."
   },
   "toastAllSettingsRestored": {
     "message": "تمت استعادة جميع الإعدادات."
   },
   "toastSaveApiKeyFirst": {
-    "message": "احفظ مفتاح API صالحاً قبل تفعيل هذا التكامل."
+    "message": "احفظ مفتاح API صالحًا قبل تفعيل هذا التكامل."
   },
   "toastFailedToUpdateState": {
-    "message": "فشل تحديث حالة المزود."
+    "message": "فشل تحديث حالة المزوّد."
   },
   "statusHeadingSecure": {
-    "message": "أنت بأمان"
+    "message": "أنت محمي"
   },
   "statusHeadingNoProviders": {
-    "message": "لا يوجد مزودون مفعّلون"
+    "message": "لا يوجد مزوّدون مفعّلون"
   },
   "statusIconAltProtected": {
     "message": "محمي"
   },
   "providersEnabledCount": {
-    "message": "___ من ___ مزود مفعّل"
+    "message": "___ من ___ مزوّدين مفعّلين"
   },
   "openSettings": {
     "message": "فتح الإعدادات"
@@ -195,6 +186,6 @@
     "message": "شعار $1"
   },
   "providerNameFallback": {
-    "message": "المزود"
+    "message": "مزوّد"
   }
 }

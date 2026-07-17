@@ -6,19 +6,19 @@
     "message": "Osprey"
   },
   "extensionDescription": {
-    "message": "Blokkeert automatisch phishing, malware, oplichting en gevaarlijke sites terwijl je surft. Gratis bescherming voor veiliger browsen."
+    "message": "Blockiert automatisch Phishing, Malware, Betrug und gefährliche Websites beim Surfen. Kostenloser Schutz für sichereres Surfen."
   },
   "logoAlt": {
     "message": "Osprey-Logo"
   },
   "warningProse": {
-    "message": "Unsichere Website blockiert"
+    "message": "Schädliche Website blockiert"
   },
   "warningTitle": {
-    "message": "Warnung: Diese Website ist unsicher"
+    "message": "Schädliche Website blockiert"
   },
   "recommendation": {
-    "message": "Osprey hat den Zugriff auf diese Website blockiert. Es ist nicht sicher, fortzufahren."
+    "message": "Osprey hat den Zugriff auf diese Website blockiert. Es ist nicht sicher fortzufahren."
   },
   "urlLabel": {
     "message": "URL: "
@@ -27,10 +27,10 @@
     "message": "Gemeldet von: "
   },
   "reportedByOthers": {
-    "message": "(und ___ weitere)"
+    "message": "(und ___ weiteren)"
   },
   "reportedByAlso": {
-    "message": "Auch gemeldet von: "
+    "message": "Ebenfalls gemeldet von: "
   },
   "reasonLabel": {
     "message": "Grund: "
@@ -39,7 +39,7 @@
     "message": "Diese Website als sicher melden"
   },
   "allowWebsite": {
-    "message": "Diese Website immer ignorieren"
+    "message": "Website zu den Ausnahmen hinzufügen"
   },
   "backButton": {
     "message": "Zurück zur Sicherheit"
@@ -47,50 +47,41 @@
   "continueButton": {
     "message": "Trotzdem fortfahren"
   },
-  "version": {
-    "message": "Version: "
-  },
   "websiteLink": {
     "message": "Website"
   },
-  "privacyPolicy": {
-    "message": "Datenschutzrichtlinie"
-  },
-  "termsLink": {
-    "message": "Nutzungsbedingungen"
-  },
   "knownSafe": {
-    "message": "Bekannt sicher"
+    "message": "Als sicher bekannt"
   },
   "failed": {
     "message": "Fehlgeschlagen"
   },
   "waiting": {
-    "message": "Warten"
+    "message": "Wartet"
   },
   "allowed": {
-    "message": "Erlaubt"
+    "message": "Zugelassen"
+  },
+  "phishing": {
+    "message": "Phishing"
   },
   "malicious": {
-    "message": "Schädlich"
+    "message": "Bösartig"
   },
   "suspicious": {
     "message": "Verdächtig"
   },
   "newlyRegistered": {
-    "message": "Neu registrierte Domain"
+    "message": "Kürzlich registrierte Domain"
   },
   "dynamicDns": {
-    "message": "Domain mit dynamischem DNS"
-  },
-  "phishing": {
-    "message": "Phishing"
+    "message": "Dynamische DNS-Domain"
   },
   "clearAllowedWebsites": {
-    "message": "Liste erlaubter Websites löschen"
+    "message": "Alle ausgeschlossenen Websites löschen"
   },
   "clearAllowedWebsitesMessage": {
-    "message": "Alle erlaubten Websites wurden gelöscht."
+    "message": "Alle ausgeschlossenen Websites wurden gelöscht."
   },
   "settingsTitle": {
     "message": "Einstellungen"
@@ -102,7 +93,7 @@
     "message": "Drittanbieter-Integrationen"
   },
   "resetDefaultProviders": {
-    "message": "Standard-Anbieter zurücksetzen"
+    "message": "Schutzanbieter zurücksetzen"
   },
   "resetAll": {
     "message": "Alles zurücksetzen"
@@ -111,28 +102,28 @@
     "message": "API-Schlüssel"
   },
   "bypassBlockingThreshold": {
-    "message": "Blockierungsschwelle ignorieren"
+    "message": "Blockierschwelle ignorieren"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Wenn aktiviert, wird jede von diesem Anbieter gemeldete Domain sofort blockiert, wodurch die Schwelle von zwei Anbietern umgangen wird. Dies kann die Anzahl der Fehlalarme erhöhen."
+    "message": "Wenn aktiviert, wird jede von diesem Anbieter markierte Domain sofort blockiert und die Schwelle von zwei Anbietern umgangen. Dies kann die Anzahl falsch positiver Ergebnisse erhöhen."
   },
   "blockNewlyRegistered": {
-    "message": "Neu registrierte Domains blockieren"
+    "message": "Kürzlich registrierte Domains blockieren"
   },
   "blockNewlyRegisteredTooltip": {
-    "message": "Wenn aktiviert, blockiert dieser Anbieter Domains, die innerhalb der letzten 90 Tage registriert wurden. Dies kann die Anzahl der Fehlalarme erhöhen."
+    "message": "Wenn aktiviert, blockiert dieser Anbieter Domains, die in den letzten 90 Tagen registriert wurden. Dies kann die Anzahl falsch positiver Ergebnisse erhöhen."
   },
   "blockSuspicious": {
     "message": "Verdächtige Domains blockieren"
   },
   "blockSuspiciousTooltip": {
-    "message": "Wenn aktiviert, blockiert dieser Anbieter Domains, die er als verdächtig eingestuft hat, auch wenn nicht bestätigt wurde, dass sie schädliche Inhalte hosten. Dies kann die Anzahl der Fehlalarme erhöhen."
+    "message": "Wenn aktiviert, blockiert dieser Anbieter Domains, die er als verdächtig eingestuft hat, auch wenn nicht bestätigt ist, dass sie bösartige Inhalte hosten. Dies kann die Anzahl falsch positiver Ergebnisse erhöhen."
   },
   "blockDynamicDns": {
-    "message": "Domains mit dynamischem DNS blockieren"
+    "message": "Dynamische DNS-Domains blockieren"
   },
   "blockDynamicDnsTooltip": {
-    "message": "Wenn aktiviert, blockiert dieser Anbieter Domains, die dynamische DNS-Dienste nutzen, welche manchmal von Bedrohungsakteuren missbraucht werden. Dies kann die Anzahl der Fehlalarme erhöhen."
+    "message": "Wenn aktiviert, blockiert dieser Anbieter Domains, die dynamische DNS-Dienste nutzen, welche manchmal von Bedrohungsakteuren missbraucht werden. Dies kann die Anzahl falsch positiver Ergebnisse erhöhen."
   },
   "applyButton": {
     "message": "Anwenden"
@@ -159,7 +150,7 @@
     "message": "Speichern fehlgeschlagen."
   },
   "toastDefaultProvidersRestored": {
-    "message": "Standard-Anbieter wiederhergestellt."
+    "message": "Schutzanbieter wiederhergestellt."
   },
   "toastAllSettingsRestored": {
     "message": "Alle Einstellungen wiederhergestellt."
@@ -171,7 +162,7 @@
     "message": "Anbieterstatus konnte nicht aktualisiert werden."
   },
   "statusHeadingSecure": {
-    "message": "Sie sind sicher"
+    "message": "Sie sind geschützt"
   },
   "statusHeadingNoProviders": {
     "message": "Keine Anbieter aktiviert"

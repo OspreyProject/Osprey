@@ -1,21 +1,21 @@
 {
   "extensionName": {
-    "message": "Osprey: Browserbescherming"
+    "message": "Osprey: Browserbeveiliging"
   },
   "extensionShortName": {
     "message": "Osprey"
   },
   "extensionDescription": {
-    "message": "Blokkeert automatisch phishing, malware, oplichting en gevaarlijke sites terwijl je surft. Gratis bescherming voor veiliger browsen."
+    "message": "Blokkeert phishing, malware, oplichting en gevaarlijke websites. Gratis bescherming voor veiliger browsen."
   },
   "logoAlt": {
     "message": "Osprey-logo"
   },
   "warningProse": {
-    "message": "Onveilige website geblokkeerd"
+    "message": "Schadelijke website geblokkeerd"
   },
   "warningTitle": {
-    "message": "Waarschuwing: deze website is onveilig"
+    "message": "Schadelijke website geblokkeerd"
   },
   "recommendation": {
     "message": "Osprey heeft de toegang tot deze website geblokkeerd. Het is niet veilig om door te gaan."
@@ -24,22 +24,22 @@
     "message": "URL: "
   },
   "reportedByLabel": {
-    "message": "Gemeld door: "
+    "message": "Gerapporteerd door: "
   },
   "reportedByOthers": {
     "message": "(en ___ anderen)"
   },
   "reportedByAlso": {
-    "message": "Ook gemeld door: "
+    "message": "Ook gerapporteerd door: "
   },
   "reasonLabel": {
     "message": "Reden: "
   },
   "reportWebsite": {
-    "message": "Deze website rapporteren als veilig"
+    "message": "Deze website als veilig rapporteren"
   },
   "allowWebsite": {
-    "message": "Deze website altijd negeren"
+    "message": "Website toevoegen aan uitzonderingen"
   },
   "backButton": {
     "message": "Terug naar veiligheid"
@@ -47,29 +47,23 @@
   "continueButton": {
     "message": "Toch doorgaan"
   },
-  "version": {
-    "message": "Versie: "
-  },
   "websiteLink": {
     "message": "Website"
   },
-  "privacyPolicy": {
-    "message": "Privacybeleid"
-  },
-  "termsLink": {
-    "message": "Voorwaarden"
-  },
   "knownSafe": {
-    "message": "Bekend veilig"
+    "message": "Bekend als veilig"
   },
   "failed": {
     "message": "Mislukt"
   },
   "waiting": {
-    "message": "Wachten"
+    "message": "In afwachting"
   },
   "allowed": {
     "message": "Toegestaan"
+  },
+  "phishing": {
+    "message": "Phishing"
   },
   "malicious": {
     "message": "Kwaadaardig"
@@ -78,31 +72,28 @@
     "message": "Verdacht"
   },
   "newlyRegistered": {
-    "message": "Onlangs geregistreerd domein"
+    "message": "Recent geregistreerd domein"
   },
   "dynamicDns": {
-    "message": "Domein met dynamische DNS"
-  },
-  "phishing": {
-    "message": "Phishing"
+    "message": "Dynamisch DNS-domein"
   },
   "clearAllowedWebsites": {
-    "message": "Lijst met toegestane websites wissen"
+    "message": "Alle uitgesloten websites wissen"
   },
   "clearAllowedWebsitesMessage": {
-    "message": "Alle toegestane websites zijn gewist."
+    "message": "Alle uitgesloten websites zijn gewist."
   },
   "settingsTitle": {
     "message": "Instellingen"
   },
   "providersSection": {
-    "message": "Beschermingsproviders"
+    "message": "Beveiligingsproviders"
   },
   "thirdPartySection": {
     "message": "Integraties van derden"
   },
   "resetDefaultProviders": {
-    "message": "Standaardproviders herstellen"
+    "message": "Beveiligingsproviders herstellen"
   },
   "resetAll": {
     "message": "Alles herstellen"
@@ -111,28 +102,28 @@
     "message": "API-sleutel"
   },
   "bypassBlockingThreshold": {
-    "message": "Blokkeringsdrempel negeren"
+    "message": "Blokkeerdrempel negeren"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Wanneer dit is ingeschakeld, wordt elk domein dat door deze provider wordt gemarkeerd onmiddellijk geblokkeerd, waarbij de drempel van twee providers wordt omzeild. Dit kan het aantal valse positieven verhogen."
+    "message": "Indien ingeschakeld wordt elk domein dat door deze provider wordt gemarkeerd onmiddellijk geblokkeerd, waarbij de drempel van twee providers wordt omzeild. Dit kan het aantal valse positieven verhogen."
   },
   "blockNewlyRegistered": {
-    "message": "Onlangs geregistreerde domeinen blokkeren"
+    "message": "Recent geregistreerde domeinen blokkeren"
   },
   "blockNewlyRegisteredTooltip": {
-    "message": "Wanneer dit is ingeschakeld, blokkeert deze provider domeinen die in de afgelopen 90 dagen zijn geregistreerd. Dit kan het aantal valse positieven verhogen."
+    "message": "Indien ingeschakeld blokkeert deze provider domeinen die in de afgelopen 90 dagen zijn geregistreerd. Dit kan het aantal valse positieven verhogen."
   },
   "blockSuspicious": {
     "message": "Verdachte domeinen blokkeren"
   },
   "blockSuspiciousTooltip": {
-    "message": "Wanneer dit is ingeschakeld, blokkeert deze provider domeinen die het als verdacht heeft gemarkeerd, zelfs als niet is bevestigd dat ze schadelijke inhoud hosten. Dit kan het aantal valse positieven verhogen."
+    "message": "Indien ingeschakeld blokkeert deze provider domeinen die hij als verdacht heeft gemarkeerd, zelfs als niet is bevestigd dat ze kwaadaardige inhoud hosten. Dit kan het aantal valse positieven verhogen."
   },
   "blockDynamicDns": {
-    "message": "Domeinen met dynamische DNS blokkeren"
+    "message": "Dynamische DNS-domeinen blokkeren"
   },
   "blockDynamicDnsTooltip": {
-    "message": "Wanneer dit is ingeschakeld, blokkeert deze provider domeinen die gebruikmaken van dynamische DNS-services, die soms worden misbruikt door bedreigingsactoren. Dit kan het aantal valse positieven verhogen."
+    "message": "Indien ingeschakeld blokkeert deze provider domeinen die gebruikmaken van dynamische DNS-diensten, die soms door kwaadwillenden worden misbruikt. Dit kan het aantal valse positieven verhogen."
   },
   "applyButton": {
     "message": "Toepassen"
@@ -144,7 +135,7 @@
     "message": "IP-adres beschermd"
   },
   "showApiKey": {
-    "message": "API-sleutel weergeven"
+    "message": "API-sleutel tonen"
   },
   "hideApiKey": {
     "message": "API-sleutel verbergen"
@@ -159,19 +150,19 @@
     "message": "Opslaan mislukt."
   },
   "toastDefaultProvidersRestored": {
-    "message": "Standaardproviders hersteld."
+    "message": "Beveiligingsproviders hersteld."
   },
   "toastAllSettingsRestored": {
     "message": "Alle instellingen hersteld."
   },
   "toastSaveApiKeyFirst": {
-    "message": "Sla een geldige API-sleutel op voordat u deze integratie inschakelt."
+    "message": "Sla een geldige API-sleutel op voordat je deze integratie inschakelt."
   },
   "toastFailedToUpdateState": {
-    "message": "Providerstatus bijwerken mislukt."
+    "message": "Bijwerken van de providerstatus mislukt."
   },
   "statusHeadingSecure": {
-    "message": "U bent veilig"
+    "message": "Je bent beschermd"
   },
   "statusHeadingNoProviders": {
     "message": "Geen providers ingeschakeld"

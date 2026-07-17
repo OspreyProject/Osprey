@@ -6,16 +6,16 @@
     "message": "Osprey"
   },
   "extensionDescription": {
-    "message": "Blocca automaticamente phishing, malware, truffe e siti pericolosi. Protezione gratuita per una navigazione più sicura."
+    "message": "Blocca phishing, malware, truffe e siti web pericolosi mentre navighi. Protezione gratuita per navigare più sicuro."
   },
   "logoAlt": {
-    "message": "Logo Osprey"
+    "message": "Logo di Osprey"
   },
   "warningProse": {
-    "message": "Sito web non sicuro bloccato"
+    "message": "Sito web dannoso bloccato"
   },
   "warningTitle": {
-    "message": "Avviso: questo sito web non è sicuro"
+    "message": "Sito web dannoso bloccato"
   },
   "recommendation": {
     "message": "Osprey ha bloccato l'accesso a questo sito web. Non è sicuro continuare."
@@ -36,10 +36,10 @@
     "message": "Motivo: "
   },
   "reportWebsite": {
-    "message": "Segnala questo sito come sicuro"
+    "message": "Segnala questo sito web come sicuro"
   },
   "allowWebsite": {
-    "message": "Ignora sempre questo sito"
+    "message": "Aggiungi il sito web alle esclusioni"
   },
   "backButton": {
     "message": "Torna alla sicurezza"
@@ -47,20 +47,11 @@
   "continueButton": {
     "message": "Continua comunque"
   },
-  "version": {
-    "message": "Versione: "
-  },
   "websiteLink": {
     "message": "Sito web"
   },
-  "privacyPolicy": {
-    "message": "Informativa sulla privacy"
-  },
-  "termsLink": {
-    "message": "Termini"
-  },
   "knownSafe": {
-    "message": "Sicuro noto"
+    "message": "Noto come sicuro"
   },
   "failed": {
     "message": "Non riuscito"
@@ -70,6 +61,9 @@
   },
   "allowed": {
     "message": "Consentito"
+  },
+  "phishing": {
+    "message": "Phishing"
   },
   "malicious": {
     "message": "Dannoso"
@@ -81,16 +75,13 @@
     "message": "Dominio registrato di recente"
   },
   "dynamicDns": {
-    "message": "Dominio con DNS dinamico"
-  },
-  "phishing": {
-    "message": "Phishing"
+    "message": "Dominio DNS dinamico"
   },
   "clearAllowedWebsites": {
-    "message": "Cancella elenco siti consentiti"
+    "message": "Cancella tutti i siti web esclusi"
   },
   "clearAllowedWebsitesMessage": {
-    "message": "Tutti i siti consentiti sono stati cancellati."
+    "message": "Tutti i siti web esclusi sono stati cancellati."
   },
   "settingsTitle": {
     "message": "Impostazioni"
@@ -102,10 +93,10 @@
     "message": "Integrazioni di terze parti"
   },
   "resetDefaultProviders": {
-    "message": "Ripristina fornitori predefiniti"
+    "message": "Reimposta fornitori di protezione"
   },
   "resetAll": {
-    "message": "Ripristina tutto"
+    "message": "Reimposta tutto"
   },
   "fieldLabelApiKey": {
     "message": "Chiave API"
@@ -114,25 +105,25 @@
     "message": "Ignora la soglia di blocco"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Se attivata, qualsiasi dominio segnalato da questo provider verrà bloccato immediatamente, ignorando la soglia di due provider. Ciò può aumentare i falsi positivi."
+    "message": "Se attivata, qualsiasi dominio segnalato da questo fornitore verrà bloccato immediatamente, ignorando la soglia dei due fornitori. Questo può aumentare i falsi positivi."
   },
   "blockNewlyRegistered": {
     "message": "Blocca i domini registrati di recente"
   },
   "blockNewlyRegisteredTooltip": {
-    "message": "Se attivata, questo provider blocca i domini registrati negli ultimi 90 giorni. Ciò può aumentare i falsi positivi."
+    "message": "Se attivata, questo fornitore blocca i domini registrati negli ultimi 90 giorni. Questo può aumentare i falsi positivi."
   },
   "blockSuspicious": {
     "message": "Blocca i domini sospetti"
   },
   "blockSuspiciousTooltip": {
-    "message": "Se attivata, questo provider blocca i domini che ha segnalato come sospetti, anche se non è stato confermato che ospitino contenuti dannosi. Ciò può aumentare i falsi positivi."
+    "message": "Se attivata, questo fornitore blocca i domini che ha contrassegnato come sospetti, anche se non è stato confermato che ospitino contenuti dannosi. Questo può aumentare i falsi positivi."
   },
   "blockDynamicDns": {
-    "message": "Blocca i domini con DNS dinamico"
+    "message": "Blocca i domini DNS dinamici"
   },
   "blockDynamicDnsTooltip": {
-    "message": "Se attivata, questo provider blocca i domini che utilizzano servizi di DNS dinamico, talvolta sfruttati in modo improprio dagli autori di minacce. Ciò può aumentare i falsi positivi."
+    "message": "Se attivata, questo fornitore blocca i domini che utilizzano servizi DNS dinamici, talvolta abusati dagli autori delle minacce. Questo può aumentare i falsi positivi."
   },
   "applyButton": {
     "message": "Applica"
@@ -159,28 +150,28 @@
     "message": "Salvataggio non riuscito."
   },
   "toastDefaultProvidersRestored": {
-    "message": "Fornitori predefiniti ripristinati."
+    "message": "Fornitori di protezione ripristinati."
   },
   "toastAllSettingsRestored": {
     "message": "Tutte le impostazioni ripristinate."
   },
   "toastSaveApiKeyFirst": {
-    "message": "Salva una chiave API valida prima di abilitare questa integrazione."
+    "message": "Salva una chiave API valida prima di attivare questa integrazione."
   },
   "toastFailedToUpdateState": {
     "message": "Aggiornamento dello stato del fornitore non riuscito."
   },
   "statusHeadingSecure": {
-    "message": "Sei al sicuro"
+    "message": "Sei protetto"
   },
   "statusHeadingNoProviders": {
-    "message": "Nessun fornitore abilitato"
+    "message": "Nessun fornitore attivato"
   },
   "statusIconAltProtected": {
     "message": "Protetto"
   },
   "providersEnabledCount": {
-    "message": "___ di ___ fornitori abilitati"
+    "message": "___ di ___ fornitori attivati"
   },
   "openSettings": {
     "message": "Apri impostazioni"
@@ -192,7 +183,7 @@
     "message": "Non disponibile"
   },
   "providerLogoAlt": {
-    "message": "Logo $1"
+    "message": "Logo di $1"
   },
   "providerNameFallback": {
     "message": "Fornitore"

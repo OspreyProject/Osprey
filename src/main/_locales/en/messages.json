@@ -47,17 +47,8 @@
   "continueButton": {
     "message": "Continue anyway"
   },
-  "version": {
-    "message": "Version: "
-  },
   "websiteLink": {
     "message": "Website"
-  },
-  "privacyPolicy": {
-    "message": "Privacy Policy"
-  },
-  "termsLink": {
-    "message": "Terms"
   },
   "knownSafe": {
     "message": "Known Safe"
@@ -102,7 +93,7 @@
     "message": "Third-Party Integrations"
   },
   "resetDefaultProviders": {
-    "message": "Reset Default Providers"
+    "message": "Reset Protection Providers"
   },
   "resetAll": {
     "message": "Reset All"
@@ -159,7 +150,7 @@
     "message": "Failed to save."
   },
   "toastDefaultProvidersRestored": {
-    "message": "Default providers restored."
+    "message": "Protection providers restored."
   },
   "toastAllSettingsRestored": {
     "message": "All settings restored."

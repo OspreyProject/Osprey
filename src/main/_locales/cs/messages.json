@@ -6,40 +6,40 @@
     "message": "Osprey"
   },
   "extensionDescription": {
-    "message": "Automaticky blokuje phishing, malware, podvody a nebezpečné weby při prohlížení. Bezplatná ochrana pro bezpečnější prohlížení."
+    "message": "Automaticky blokuje phishing, malware, podvody a nebezpečné weby při procházení. Bezplatná ochrana pro bezpečnější prohlížení."
   },
   "logoAlt": {
     "message": "Logo Osprey"
   },
   "warningProse": {
-    "message": "Nebezpečná webová stránka zablokována"
+    "message": "Škodlivý web zablokován"
   },
   "warningTitle": {
-    "message": "Upozornění: Tato webová stránka je nebezpečná"
+    "message": "Škodlivý web zablokován"
   },
   "recommendation": {
-    "message": "Osprey zablokoval přístup na tuto webovou stránku. Pokračování není bezpečné."
+    "message": "Osprey zablokoval přístup na tento web. Není bezpečné pokračovat."
   },
   "urlLabel": {
     "message": "URL: "
   },
   "reportedByLabel": {
-    "message": "Nahlášeno: "
+    "message": "Nahlásil: "
   },
   "reportedByOthers": {
     "message": "(a ___ dalších)"
   },
   "reportedByAlso": {
-    "message": "Také nahlášeno: "
+    "message": "Také nahlásil: "
   },
   "reasonLabel": {
     "message": "Důvod: "
   },
   "reportWebsite": {
-    "message": "Nahlásit tuto stránku jako bezpečnou"
+    "message": "Nahlásit tento web jako bezpečný"
   },
   "allowWebsite": {
-    "message": "Tuto stránku vždy ignorovat"
+    "message": "Přidat web mezi výjimky"
   },
   "backButton": {
     "message": "Zpět do bezpečí"
@@ -47,50 +47,41 @@
   "continueButton": {
     "message": "Přesto pokračovat"
   },
-  "version": {
-    "message": "Verze: "
-  },
   "websiteLink": {
-    "message": "Webová stránka"
-  },
-  "privacyPolicy": {
-    "message": "Zásady ochrany osobních údajů"
-  },
-  "termsLink": {
-    "message": "Podmínky"
+    "message": "Web"
   },
   "knownSafe": {
-    "message": "Bezpečné"
+    "message": "Známý jako bezpečný"
   },
   "failed": {
     "message": "Selhalo"
   },
   "waiting": {
-    "message": "Čekání"
+    "message": "Čeká se"
   },
   "allowed": {
     "message": "Povoleno"
   },
-  "malicious": {
-    "message": "Škodlivé"
-  },
-  "suspicious": {
-    "message": "Podezřelé"
-  },
-  "newlyRegistered": {
-    "message": "Nově registrovaná doména"
-  },
-  "dynamicDns": {
-    "message": "Doména s dynamickým DNS"
-  },
   "phishing": {
     "message": "Phishing"
   },
+  "malicious": {
+    "message": "Škodlivý"
+  },
+  "suspicious": {
+    "message": "Podezřelý"
+  },
+  "newlyRegistered": {
+    "message": "Nedávno zaregistrovaná doména"
+  },
+  "dynamicDns": {
+    "message": "Doména dynamické DNS"
+  },
   "clearAllowedWebsites": {
-    "message": "Vymazat seznam povolených stránek"
+    "message": "Vymazat všechny vyloučené weby"
   },
   "clearAllowedWebsitesMessage": {
-    "message": "Všechny povolené webové stránky byly vymazány."
+    "message": "Všechny vyloučené weby byly vymazány."
   },
   "settingsTitle": {
     "message": "Nastavení"
@@ -102,7 +93,7 @@
     "message": "Integrace třetích stran"
   },
   "resetDefaultProviders": {
-    "message": "Obnovit výchozí poskytovatele"
+    "message": "Obnovit poskytovatele ochrany"
   },
   "resetAll": {
     "message": "Obnovit vše"
@@ -114,13 +105,13 @@
     "message": "Ignorovat práh blokování"
   },
   "bypassBlockingThresholdTooltip": {
-    "message": "Když je zapnuto, jakákoli doména označená tímto poskytovatelem bude okamžitě zablokována a obejde práh dvou poskytovatelů. To může zvýšit počet falešně pozitivních výsledků."
+    "message": "Když je zapnuto, každá doména označená tímto poskytovatelem bude okamžitě zablokována, čímž se obejde práh dvou poskytovatelů. To může zvýšit počet falešně pozitivních výsledků."
   },
   "blockNewlyRegistered": {
-    "message": "Blokovat nově registrované domény"
+    "message": "Blokovat nedávno zaregistrované domény"
   },
   "blockNewlyRegisteredTooltip": {
-    "message": "Když je zapnuto, tento poskytovatel blokuje domény, které byly zaregistrovány během posledních 90 dnů. To může zvýšit počet falešně pozitivních výsledků."
+    "message": "Když je zapnuto, tento poskytovatel blokuje domény zaregistrované během posledních 90 dnů. To může zvýšit počet falešně pozitivních výsledků."
   },
   "blockSuspicious": {
     "message": "Blokovat podezřelé domény"
@@ -129,10 +120,10 @@
     "message": "Když je zapnuto, tento poskytovatel blokuje domény, které označil jako podezřelé, i když nebylo potvrzeno, že hostují škodlivý obsah. To může zvýšit počet falešně pozitivních výsledků."
   },
   "blockDynamicDns": {
-    "message": "Blokovat domény s dynamickým DNS"
+    "message": "Blokovat domény dynamické DNS"
   },
   "blockDynamicDnsTooltip": {
-    "message": "Když je zapnuto, tento poskytovatel blokuje domény, které využívají služby dynamického DNS, jež jsou někdy zneužívány útočníky. To může zvýšit počet falešně pozitivních výsledků."
+    "message": "Když je zapnuto, tento poskytovatel blokuje domény využívající služby dynamické DNS, které jsou někdy zneužívány hrozbovými aktéry. To může zvýšit počet falešně pozitivních výsledků."
   },
   "applyButton": {
     "message": "Použít"
@@ -159,34 +150,34 @@
     "message": "Uložení se nezdařilo."
   },
   "toastDefaultProvidersRestored": {
-    "message": "Výchozí poskytovatelé obnoveni."
+    "message": "Poskytovatelé ochrany byli obnoveni."
   },
   "toastAllSettingsRestored": {
-    "message": "Všechna nastavení obnovena."
+    "message": "Všechna nastavení byla obnovena."
   },
   "toastSaveApiKeyFirst": {
-    "message": "Před povolením této integrace uložte platný klíč API."
+    "message": "Před zapnutím této integrace uložte platný klíč API."
   },
   "toastFailedToUpdateState": {
-    "message": "Aktualizace stavu poskytovatele se nezdařila."
+    "message": "Nepodařilo se aktualizovat stav poskytovatele."
   },
   "statusHeadingSecure": {
     "message": "Jste v bezpečí"
   },
   "statusHeadingNoProviders": {
-    "message": "Žádní povolení poskytovatelé"
+    "message": "Žádní poskytovatelé nejsou zapnuti"
   },
   "statusIconAltProtected": {
     "message": "Chráněno"
   },
   "providersEnabledCount": {
-    "message": "___ z ___ poskytovatelů povoleno"
+    "message": "___ z ___ poskytovatelů zapnuto"
   },
   "openSettings": {
     "message": "Otevřít nastavení"
   },
   "unknownOrigin": {
-    "message": "Neznámý"
+    "message": "Neznámé"
   },
   "urlUnavailable": {
     "message": "Nedostupné"
