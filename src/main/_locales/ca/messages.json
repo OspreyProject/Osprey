@@ -176,6 +176,9 @@
   "openSettings": {
     "message": "Obre la configuració"
   },
+  "themeToggleLabel": {
+    "message": "Canvia el mode clar/fosc"
+  },
   "unknownOrigin": {
     "message": "Desconegut"
   },

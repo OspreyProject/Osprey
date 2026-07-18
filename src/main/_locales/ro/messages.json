@@ -176,6 +176,9 @@
   "openSettings": {
     "message": "Deschide setările"
   },
+  "themeToggleLabel": {
+    "message": "Comută modul luminos/întunecat"
+  },
   "unknownOrigin": {
     "message": "Necunoscut"
   },

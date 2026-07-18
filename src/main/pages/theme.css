@@ -1,0 +1,237 @@
+/*
+ * Osprey - a browser extension that protects you from malicious websites.
+ * Copyright (C) 2026 Osprey Project (https://github.com/OspreyProject)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+/* --------------------------------------------------
+   Theme tokens
+
+   The default (no data-theme attribute) is dark, so the extension keeps
+   rendering correctly before the theme controller runs. The dark values below
+   are identical to the colors the pages used before theming, so dark mode is
+   pixel-for-pixel unchanged. html[data-theme="light"] overrides them with the
+   same light palette the website uses.
+-------------------------------------------------- */
+:root {
+    /* Surfaces */
+    --bg: #282828;
+    --surface: #323232;
+    --surface-raised: #3c3c3c;
+    --surface-hover: #3a3a3a;
+    --header-bg: #373737;
+    --detail-bg: #2d2d2d;
+    --input-bg: #1c1c1c;
+    --input-bg-enabled: #373737;
+    --tooltip-bg: #1c1c1c;
+
+    /* Borders */
+    --border: #464646;
+    --border-subtle: #3e3e3e;
+    --input-border: #262626;
+    --input-border-enabled: #5a5a5a;
+
+    /* Text */
+    --text: #ffffff;
+    --text-strong: #ebebeb;
+    --text-bright: #e6e6e6;
+    --text-muted: #c0c0c0;
+    --text-muted-soft: #bdc1c3;
+    --text-label: #b1b5b8;
+    --text-detail-label: #bababa;
+    --text-faint: #787878;
+    --text-icon: #c8c8c8;
+    --input-text-disabled: #414141;
+
+    /* Accent (brand yellow) */
+    --accent: #f3ba22;
+    --accent-hover: #dca81c;
+    --accent-active: #c89814;
+    --on-accent: #282828;
+
+    /* Accent used as text or links. Yellow reads fine on the dark surfaces, so
+       it is just the accent; light mode swaps in a deeper gold that keeps
+       enough contrast on white. */
+    --accent-ink: #f3ba22;
+    --accent-ink-hover: #ffcd4a;
+
+    /* Translucent accent fills and borders. These layer over whatever surface
+       they sit on, so they work in both themes and are shared. */
+    --accent-faint: rgba(243, 186, 34, 0.1);
+    --accent-faint-strong: rgba(243, 186, 34, 0.18);
+    --accent-border: rgba(243, 186, 34, 0.5);
+    --accent-border-strong: rgba(243, 186, 34, 0.6);
+    --partner-icon: var(--accent);
+    --partner-badge-bg: rgba(243, 186, 34, 0.16);
+    --partner-badge-border: rgba(243, 186, 34, 0.45);
+
+    /* Proxy badge (green) */
+    --proxy-icon: #32C85C;
+    --proxy-badge-bg: rgba(60, 170, 90, 0.16);
+    --proxy-badge-border: rgba(85, 200, 115, 0.45);
+
+    /* Warning hero icon (red) */
+    --warning-icon-bg: rgb(92 42 34 / 0.47);
+    --warning-icon-border: #8d3826;
+
+    /* Toasts */
+    --toast-success-bg: #285a32;
+    --toast-success-text: #dbf6e1;
+    --toast-success-border: #3c824b;
+    --toast-error-bg: #5a2323;
+    --toast-error-text: #ecb6b6;
+    --toast-error-border: #823737;
+
+    /* Reset buttons */
+    --reset-btn-bg: #373737;
+    --reset-btn-text: #c8c8c8;
+    --reset-btn-border: #4b4b4b;
+    --reset-btn-hover-bg: #464646;
+    --reset-btn-hover-text: #e6e6e6;
+    --reset-all-bg: #3c2323;
+    --reset-all-text: #e4a6a6;
+    --reset-all-border: #5a3232;
+    --reset-all-hover-bg: #502828;
+    --reset-all-hover-text: #ffadad;
+
+    /* Shadows and shared effects */
+    --shadow-toast: 0 4px 16px rgba(0, 0, 0, 0.4);
+    --shadow-tooltip: 0 4px 12px rgba(0, 0, 0, 0.35);
+    --banner-text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 1px rgba(0, 0, 0, 0.3);
+
+    color-scheme: dark;
+}
+
+html[data-theme="light"] {
+    /* Surfaces */
+    --bg: #ffffff;
+    --surface: #f4f4f5;
+    --surface-raised: #ececee;
+    --surface-hover: #eaeaec;
+    --header-bg: #f8f8f9;
+    --detail-bg: #ededee;
+    --input-bg: #ececed;
+    --input-bg-enabled: #ffffff;
+    --tooltip-bg: #ffffff;
+
+    /* Borders */
+    --border: #dededf;
+    --border-subtle: #e1e1e3;
+    --input-border: #d5d5d7;
+    --input-border-enabled: #c4c4c6;
+
+    /* Text */
+    --text: #282828;
+    --text-strong: #282828;
+    --text-bright: #303030;
+    --text-muted: #4F4F4F;
+    --text-muted-soft: #505358;
+    --text-label: #55595E;
+    --text-detail-label: #4C4F52;
+    --text-faint: #8b8b8d;
+    --text-icon: #565656;
+    --input-text-disabled: #a0a0a0;
+
+    /* Accent as text or links */
+    --accent-ink: #664E00;
+    --accent-ink-hover: #7d5f00;
+
+    /* Proxy badge (green) */
+    --proxy-icon: #FFFFFF;
+    --proxy-badge-bg: rgba(85, 200, 115, 1);
+    --proxy-badge-border: rgba(60, 170, 90, 0.8);
+    --partner-icon: #FFFFFF;
+    --partner-badge-bg: rgba(243, 186, 34, 0.7);
+    --partner-badge-border: rgba(243, 186, 34, 1);
+
+    /* Warning hero icon (red) */
+    --warning-icon-bg: rgb(224 0 0 / 0.08);
+    --warning-icon-border: #d98a78;
+
+    /* Toasts */
+    --toast-success-bg: #d9f2df;
+    --toast-success-text: #1c5a2c;
+    --toast-success-border: #a5d9b2;
+    --toast-error-bg: #f7dcdc;
+    --toast-error-text: #8a2b2b;
+    --toast-error-border: #e0a5a5;
+
+    /* Reset buttons */
+    --reset-btn-bg: #ececee;
+    --reset-btn-text: #4a4a4a;
+    --reset-btn-border: #cfcfd1;
+    --reset-btn-hover-bg: #e0e0e2;
+    --reset-btn-hover-text: #282828;
+    --reset-all-bg: #f7e2e2;
+    --reset-all-text: #822B2B;
+    --reset-all-border: #e6b5b5;
+    --reset-all-hover-bg: #f0d0d0;
+    --reset-all-hover-text: #8a2020;
+
+    /* Shadows and shared effects */
+    --shadow-toast: 0 4px 16px rgba(0, 0, 0, 0.18);
+    --shadow-tooltip: 0 4px 12px rgba(0, 0, 0, 0.15);
+    --banner-text-shadow: none;
+
+    color-scheme: light;
+}
+
+/* --------------------------------------------------
+   Theme toggle
+
+   One button holding both icons. Which one shows is decided in CSS off
+   html[data-theme], so switching themes never runs JS to swap an icon: dark
+   shows the sun (tap for light), light shows the moon (tap for dark). The
+   hidden icon is display:none, so an inline SVG costs nothing to keep around.
+-------------------------------------------------- */
+.theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+    background: none;
+    border: none;
+    border-radius: 6px;
+    color: var(--text-muted);
+    cursor: pointer;
+    line-height: 0;
+}
+
+.theme-toggle:hover {
+    color: var(--accent-ink);
+    background-color: var(--surface-hover);
+}
+
+.theme-toggle svg {
+    display: block;
+    width: 20px;
+    height: 20px;
+}
+
+/* Dark is the default, so the moon is hidden unless the theme is light. This
+   avoids showing both icons for the brief moment before the controller sets an
+   explicit data-theme attribute. */
+.theme-toggle .icon-moon {
+    display: none;
+}
+
+html[data-theme="light"] .theme-toggle .icon-sun {
+    display: none;
+}
+
+html[data-theme="light"] .theme-toggle .icon-moon {
+    display: block;
+}

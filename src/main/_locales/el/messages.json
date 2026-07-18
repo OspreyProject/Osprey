@@ -176,6 +176,9 @@
   "openSettings": {
     "message": "Άνοιγμα ρυθμίσεων"
   },
+  "themeToggleLabel": {
+    "message": "Εναλλαγή φωτεινής/σκοτεινής λειτουργίας"
+  },
   "unknownOrigin": {
     "message": "Άγνωστο"
   },

@@ -176,6 +176,9 @@
   "openSettings": {
     "message": "فتح الإعدادات"
   },
+  "themeToggleLabel": {
+    "message": "تبديل الوضع الفاتح/الداكن"
+  },
   "unknownOrigin": {
     "message": "غير معروف"
   },

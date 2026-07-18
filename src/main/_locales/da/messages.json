@@ -176,6 +176,9 @@
   "openSettings": {
     "message": "Åbn indstillinger"
   },
+  "themeToggleLabel": {
+    "message": "Skift lys/mørk tilstand"
+  },
   "unknownOrigin": {
     "message": "Ukendt"
   },

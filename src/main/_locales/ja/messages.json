@@ -176,6 +176,9 @@
   "openSettings": {
     "message": "設定を開く"
   },
+  "themeToggleLabel": {
+    "message": "ライト/ダークモードを切り替え"
+  },
   "unknownOrigin": {
     "message": "不明"
   },

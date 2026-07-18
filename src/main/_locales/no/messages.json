@@ -176,6 +176,9 @@
   "openSettings": {
     "message": "Åpne innstillinger"
   },
+  "themeToggleLabel": {
+    "message": "Bytt lys/mørk modus"
+  },
   "unknownOrigin": {
     "message": "Ukjent"
   },

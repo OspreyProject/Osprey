@@ -176,6 +176,9 @@
   "openSettings": {
     "message": "Beállítások megnyitása"
   },
+  "themeToggleLabel": {
+    "message": "Világos/sötét mód váltása"
+  },
   "unknownOrigin": {
     "message": "Ismeretlen"
   },

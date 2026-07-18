@@ -176,6 +176,9 @@
   "openSettings": {
     "message": "Otvori postavke"
   },
+  "themeToggleLabel": {
+    "message": "Promijeni svijetli/tamni način"
+  },
   "unknownOrigin": {
     "message": "Nepoznato"
   },

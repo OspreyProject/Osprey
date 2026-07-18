@@ -176,6 +176,9 @@
   "openSettings": {
     "message": "Відкрити налаштування"
   },
+  "themeToggleLabel": {
+    "message": "Перемкнути світлу/темну тему"
+  },
   "unknownOrigin": {
     "message": "Невідомо"
   },

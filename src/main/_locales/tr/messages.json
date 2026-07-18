@@ -176,6 +176,9 @@
   "openSettings": {
     "message": "Ayarları aç"
   },
+  "themeToggleLabel": {
+    "message": "Açık/koyu modu değiştir"
+  },
   "unknownOrigin": {
     "message": "Bilinmiyor"
   },

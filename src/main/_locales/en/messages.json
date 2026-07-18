@@ -176,6 +176,9 @@
   "openSettings": {
     "message": "Open Settings"
   },
+  "themeToggleLabel": {
+    "message": "Toggle light/dark mode"
+  },
   "unknownOrigin": {
     "message": "Unknown"
   },

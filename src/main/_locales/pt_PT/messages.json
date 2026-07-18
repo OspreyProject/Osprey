@@ -176,6 +176,9 @@
   "openSettings": {
     "message": "Abrir definições"
   },
+  "themeToggleLabel": {
+    "message": "Alternar modo claro/escuro"
+  },
   "unknownOrigin": {
     "message": "Desconhecido"
   },

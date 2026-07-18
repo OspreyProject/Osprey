@@ -54,6 +54,7 @@
         STATUS_ICON_ALT_PROTECTED: 'statusIconAltProtected',
         PROVIDERS_ENABLED_COUNT: 'providersEnabledCount',
         OPEN_SETTINGS: 'openSettings',
+        THEME_TOGGLE_LABEL: 'themeToggleLabel',
         TERMS_LINK: 'termsLink',
         WARNING_TITLE: 'warningTitle',
         RECOMMENDATION: 'recommendation',

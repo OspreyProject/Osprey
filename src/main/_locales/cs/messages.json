@@ -176,6 +176,9 @@
   "openSettings": {
     "message": "Otevřít nastavení"
   },
+  "themeToggleLabel": {
+    "message": "Přepnout světlý/tmavý režim"
+  },
   "unknownOrigin": {
     "message": "Neznámé"
   },

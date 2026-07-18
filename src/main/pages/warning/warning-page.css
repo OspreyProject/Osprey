@@ -26,13 +26,13 @@ html, body {
     margin: 0;
     font-family: 'Segoe UI', system-ui, sans-serif;
     font-weight: 400;
-    background-color: #282828;
-    color: #ffffff;
+    background-color: var(--bg);
+    color: var(--text);
     min-height: 100%;
 }
 
 .gray {
-    background-color: #282828;
+    background-color: var(--bg);
 }
 
 @supports (zoom: 1.25) {
@@ -55,10 +55,10 @@ html, body {
 .banner {
     display: flex;
     align-items: stretch;
-    background-color: #373737;
-    color: #ffffff;
+    background-color: var(--header-bg);
+    color: var(--text);
     position: relative;
-    border-bottom: 1px solid #464646;
+    border-bottom: 1px solid var(--border);
 }
 
 .logo {
@@ -86,7 +86,7 @@ html, body {
 .bannerText {
     font-size: 16px;
     font-weight: 700;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 1px rgba(0, 0, 0, 0.3);
+    text-shadow: var(--banner-text-shadow);
     padding: 8px 0;
 }
 
@@ -98,7 +98,7 @@ html, body {
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #b1b5b8;
+    color: var(--text-label);
     padding: 14px 0 0 16px;
     max-width: 860px;
     margin: 0 auto;
@@ -111,12 +111,12 @@ html, body {
 }
 
 .warning-card {
-    background-color: #323232;
+    background-color: var(--surface);
     border-radius: 6px;
     overflow: hidden;
     margin: 30px 0 0 0;
     padding: 22px 22px 20px;
-    border: 1px solid #3e3e3e;
+    border: 1px solid var(--border-subtle);
 }
 
 /* --------------------------------------------------
@@ -132,8 +132,8 @@ html, body {
     width: 84px;
     height: 84px;
     border-radius: 50%;
-    background-color: rgb(92 42 34 / 0.47);
-    border: 1px solid #8D3826;
+    background-color: var(--warning-icon-bg);
+    border: 1px solid var(--warning-icon-border);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -157,14 +157,14 @@ html, body {
     font-size: 28px;
     line-height: 1.15;
     font-weight: 600;
-    color: #ffffff;
+    color: var(--text);
 }
 
 .warning-lead {
     margin: 7px 0 0;
     font-size: 15px;
     line-height: 1.6;
-    color: #BDC1C3;
+    color: var(--text-muted-soft);
 }
 
 /* --------------------------------------------------
@@ -178,8 +178,8 @@ html, body {
 }
 
 .detail-row {
-    background-color: #2d2d2d;
-    border: 1px solid #3e3e3e;
+    background-color: var(--detail-bg);
+    border: 1px solid var(--border-subtle);
     border-radius: 6px;
     padding: 10px 12px;
 }
@@ -190,22 +190,22 @@ html, body {
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #BABABA;
+    color: var(--text-detail-label);
     margin-bottom: 5px;
 }
 
 .detail-value {
     font-size: 13px;
     line-height: 1.5;
-    color: #ffffff;
+    color: var(--text);
 }
 
 #reportedByLink {
-    color: #ffffff;
+    color: var(--text);
 }
 
 #reportedBySuffix {
-    color: #BABABA;
+    color: var(--text-detail-label);
 }
 
 .url-value,
@@ -235,19 +235,19 @@ html, body {
 }
 
 .provider-inline-name {
-    color: #ffffff;
+    color: var(--text);
     text-decoration: none;
     cursor: pointer;
 }
 
 .provider-inline-name:hover {
-    color: #ffffff;
-    border-bottom-color: #ffffff;
+    color: var(--text);
+    border-bottom-color: var(--text);
     text-decoration: underline;
 }
 
 .provider-inline-name:focus-visible {
-    outline: 2px solid #ffffff;
+    outline: 2px solid var(--text);
     outline-offset: 2px;
     border-radius: 2px;
 }
@@ -269,17 +269,17 @@ html, body {
 }
 
 .inline-action {
-    color: #f3ba22;
+    color: var(--accent-ink);
     text-decoration: none;
-    border-bottom: 1px solid rgba(243, 186, 34, 0.5);
+    border-bottom: 1px solid var(--accent-border);
     cursor: pointer;
     user-select: none;
     -webkit-user-select: none;
 }
 
 .inline-action:hover {
-    color: #ffcd4a;
-    border-bottom-color: #ffcd4a;
+    color: var(--accent-ink-hover);
+    border-bottom-color: var(--accent-ink-hover);
 }
 
 /* --------------------------------------------------
@@ -304,33 +304,33 @@ html, body {
 }
 
 .primary-btn {
-    background-color: #f3ba22;
-    color: #282828;
+    background-color: var(--accent);
+    color: var(--on-accent);
     cursor: pointer;
 }
 
 .primary-btn:hover {
-    background-color: #dca81c;
+    background-color: var(--accent-hover);
 }
 
 .primary-btn:active {
-    background-color: #c89814;
+    background-color: var(--accent-active);
 }
 
 .secondary-btn {
     background-color: transparent;
-    color: #f3ba22;
-    border: 1px solid rgba(243, 186, 34, 0.6);
+    color: var(--accent-ink);
+    border: 1px solid var(--accent-border-strong);
     cursor: pointer;
 }
 
 .secondary-btn:hover {
-    background-color: rgba(243, 186, 34, 0.1);
-    border-color: #f3ba22;
+    background-color: var(--accent-faint);
+    border-color: var(--accent-ink);
 }
 
 .secondary-btn:active {
-    background-color: rgba(243, 186, 34, 0.18);
+    background-color: var(--accent-faint-strong);
 }
 
 /* --------------------------------------------------
@@ -389,7 +389,7 @@ html, body {
     padding: 0;
     margin: 0;
     font: inherit;
-    color: #C0C0C0;
+    color: var(--text-muted);
     cursor: pointer;
     user-select: none;
     -webkit-user-select: none;
@@ -401,6 +401,6 @@ html, body {
 }
 
 .inline-action-btn:hover:not(:disabled) {
-    color: #F2F2F2;
+    color: var(--text-strong);
     text-decoration: underline;
 }

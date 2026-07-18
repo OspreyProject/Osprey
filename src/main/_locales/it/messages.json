@@ -176,6 +176,9 @@
   "openSettings": {
     "message": "Apri impostazioni"
   },
+  "themeToggleLabel": {
+    "message": "Attiva/disattiva modalità chiara/scura"
+  },
   "unknownOrigin": {
     "message": "Sconosciuto"
   },

@@ -49,6 +49,13 @@ globalThis.SettingsSingleton = globalThis.SettingsSingleton || (() => {
         document.title = LangUtil.SETTINGS_TITLE;
         setTextById('version', LangUtil.VERSION + cachedExtensionVersion);
         setTextBySelector('.bannerText', LangUtil.TITLE);
+
+        const themeToggle = document.getElementById('themeToggle');
+
+        if (themeToggle !== null) {
+            themeToggle.setAttribute('aria-label', LangUtil.THEME_TOGGLE_LABEL);
+            themeToggle.setAttribute('title', LangUtil.THEME_TOGGLE_LABEL);
+        }
     }
 
     const onRefreshError = error => {

@@ -176,6 +176,9 @@
   "openSettings": {
     "message": "Atidaryti nustatymus"
   },
+  "themeToggleLabel": {
+    "message": "Perjungti šviesų/tamsų režimą"
+  },
   "unknownOrigin": {
     "message": "Nežinoma"
   },

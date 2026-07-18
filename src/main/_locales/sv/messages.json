@@ -176,6 +176,9 @@
   "openSettings": {
     "message": "Öppna inställningar"
   },
+  "themeToggleLabel": {
+    "message": "Växla ljust/mörkt läge"
+  },
   "unknownOrigin": {
     "message": "Okänd"
   },

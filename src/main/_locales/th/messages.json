@@ -176,6 +176,9 @@
   "openSettings": {
     "message": "เปิดการตั้งค่า"
   },
+  "themeToggleLabel": {
+    "message": "สลับโหมดสว่าง/มืด"
+  },
   "unknownOrigin": {
     "message": "ไม่ทราบ"
   },

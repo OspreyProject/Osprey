@@ -176,6 +176,9 @@
   "openSettings": {
     "message": "Mở cài đặt"
   },
+  "themeToggleLabel": {
+    "message": "Chuyển chế độ sáng/tối"
+  },
   "unknownOrigin": {
     "message": "Không xác định"
   },

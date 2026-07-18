@@ -176,6 +176,9 @@
   "openSettings": {
     "message": "Otwórz ustawienia"
   },
+  "themeToggleLabel": {
+    "message": "Przełącz tryb jasny/ciemny"
+  },
   "unknownOrigin": {
     "message": "Nieznane"
   },

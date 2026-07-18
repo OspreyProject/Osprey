@@ -27,7 +27,7 @@ html, body {
 }
 
 .gray {
-    background-color: #282828;
+    background-color: var(--bg);
 }
 
 /* --------------------------------------------------
@@ -36,10 +36,10 @@ html, body {
 .banner {
     display: flex;
     align-items: stretch;
-    background-color: #373737;
-    color: #ffffff;
+    background-color: var(--header-bg);
+    color: var(--text);
     position: relative;
-    border-bottom: 1px solid #464646;
+    border-bottom: 1px solid var(--border);
 }
 
 .logo {
@@ -73,9 +73,10 @@ html, body {
 }
 
 .bannerText {
-    color: #ffffff;
+    color: var(--text);
     text-decoration: none;
     pointer-events: auto;
+    text-shadow: var(--banner-text-shadow);
 }
 
 .bannerText:hover {
@@ -86,7 +87,7 @@ html, body {
    Alternate Section Text
 -------------------------------------------------- */
 .alternate {
-    color: #ffffff;
+    color: var(--text);
 }
 
 /* --------------------------------------------------
@@ -106,7 +107,7 @@ html, body {
     width: 90px;
     height: 90px;
     border-radius: 50%;
-    background-color: #3c3c3c;
+    background-color: var(--surface-raised);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -123,21 +124,21 @@ html, body {
 .status-heading {
     font-size: 20px;
     font-weight: 600;
-    color: #ffffff;
+    color: var(--text);
     margin: 0 0 8px;
     text-align: center;
 }
 
 .provider-count {
     font-size: 13px;
-    color: #b1b5b8;
+    color: var(--text-label);
     margin: 0 0 24px;
     text-align: center;
 }
 
 .settings-button {
-    background-color: #f3ba22;
-    color: #282828;
+    background-color: var(--accent);
+    color: var(--on-accent);
     border: none;
     border-radius: 5px;
     padding: 8px 24px;
@@ -150,9 +151,9 @@ html, body {
 }
 
 .settings-button:hover {
-    background-color: #dca81c;
+    background-color: var(--accent-hover);
 }
 
 .settings-button:active {
-    background-color: #c89814;
+    background-color: var(--accent-active);
 }

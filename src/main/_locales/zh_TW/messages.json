@@ -176,6 +176,9 @@
   "openSettings": {
     "message": "開啟設定"
   },
+  "themeToggleLabel": {
+    "message": "切換淺色/深色模式"
+  },
   "unknownOrigin": {
     "message": "未知"
   },

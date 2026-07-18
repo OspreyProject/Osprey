@@ -176,6 +176,9 @@
   "openSettings": {
     "message": "Einstellungen öffnen"
   },
+  "themeToggleLabel": {
+    "message": "Hellen/dunklen Modus umschalten"
+  },
   "unknownOrigin": {
     "message": "Unbekannt"
   },

@@ -176,6 +176,9 @@
   "openSettings": {
     "message": "باز کردن تنظیمات"
   },
+  "themeToggleLabel": {
+    "message": "تغییر حالت روشن/تاریک"
+  },
   "unknownOrigin": {
     "message": "نامشخص"
   },

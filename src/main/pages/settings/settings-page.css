@@ -26,8 +26,8 @@ html, body {
     margin: 0;
     font-family: 'Segoe UI', system-ui, sans-serif;
     font-weight: 400;
-    background-color: #282828;
-    color: #ffffff;
+    background-color: var(--bg);
+    color: var(--text);
     min-width: 480px;
 }
 
@@ -51,10 +51,10 @@ html, body {
 .banner {
     display: flex;
     align-items: stretch;
-    background-color: #373737;
-    color: #ffffff;
+    background-color: var(--header-bg);
+    color: var(--text);
     position: relative;
-    border-bottom: 1px solid #464646;
+    border-bottom: 1px solid var(--border);
 }
 
 .logo {
@@ -87,14 +87,24 @@ html, body {
 }
 
 .bannerText {
-    color: #ffffff;
+    color: var(--text);
     text-decoration: none;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 1px rgba(0, 0, 0, 0.3);
+    text-shadow: var(--banner-text-shadow);
     pointer-events: auto;
 }
 
 .bannerText:hover {
     text-decoration: underline;
+}
+
+/* Theme toggle sits at the right edge of the banner, clear of the centered
+   title, which stays centered because it is absolutely positioned. */
+.banner .theme-toggle {
+    margin-left: auto;
+    align-self: center;
+    margin-right: 8px;
+    position: relative;
+    z-index: 1;
 }
 
 /* --------------------------------------------------
@@ -111,7 +121,7 @@ html, body {
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #b1b5b8;
+    color: var(--text-label);
     margin: 0 0 10px 2px;
 }
 
@@ -128,14 +138,14 @@ html, body {
    Provider items
 -------------------------------------------------- */
 .provider-item {
-    background-color: #323232;
+    background-color: var(--surface);
     border-radius: 6px;
     overflow: visible;
 }
 
 .expand-arrow {
     font-size: 10px;
-    color: #787878;
+    color: var(--text-faint);
     transition: transform 0.2s ease;
     flex-shrink: 0;
     line-height: 1;
@@ -155,7 +165,7 @@ html, body {
 .provider-body {
     display: none;
     padding: 0 12px 14px;
-    border-top: 1px solid #3e3e3e;
+    border-top: 1px solid var(--border-subtle);
 }
 
 .provider-item.expanded .provider-body {
@@ -173,7 +183,7 @@ html, body {
 }
 
 .provider-header:hover {
-    background-color: #3a3a3a;
+    background-color: var(--surface-hover);
 }
 
 .provider-logo {
@@ -187,7 +197,7 @@ html, body {
 .provider-name {
     font-size: 13px;
     font-weight: 500;
-    color: #e6e6e6;
+    color: var(--text-bright);
     flex: 1;
 }
 
@@ -213,8 +223,8 @@ html, body {
     justify-content: center;
     border-radius: 50%;
     flex-shrink: 0;
-    background-color: rgba(243, 186, 34, 0.16);
-    border: 1px solid rgba(243, 186, 34, 0.45);
+    background-color: var(--partner-badge-bg);
+    border: 1px solid var(--partner-badge-border);
     cursor: help;
     outline: none;
     font-size: 0;
@@ -225,7 +235,7 @@ html, body {
     content: "";
     width: 11px;
     height: 11px;
-    background-color: #f3ba22;
+    background-color: var(--partner-icon);
     -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='black' d='M8 1.2l1.92 3.89 4.29.62-3.1 3.02.73 4.27L8 10.98 4.16 13l.73-4.27-3.1-3.02 4.29-.62L8 1.2z'/%3E%3C/svg%3E");
     mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='black' d='M8 1.2l1.92 3.89 4.29.62-3.1 3.02.73 4.27L8 10.98 4.16 13l.73-4.27-3.1-3.02 4.29-.62L8 1.2z'/%3E%3C/svg%3E");
     -webkit-mask-repeat: no-repeat;
@@ -245,8 +255,8 @@ html, body {
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background-color: rgba(60, 170, 90, 0.16);
-    border: 1px solid rgba(85, 200, 115, 0.45);
+    background-color: var(--proxy-badge-bg);
+    border: 1px solid var(--proxy-badge-border);
     cursor: help;
     outline: none;
 }
@@ -255,7 +265,7 @@ html, body {
     content: "";
     width: 11px;
     height: 11px;
-    background-color: #5cd67c;
+    background-color: var(--proxy-icon);
     -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='black' d='M8 1l5 2v4c0 3.55-2.29 6.78-5 8-2.71-1.22-5-4.45-5-8V3l5-2zm0 2.04L5 4.22V7c0 2.55 1.54 4.96 3 5.86 1.46-.9 3-3.31 3-5.86V4.22L8 3.04z'/%3E%3C/svg%3E");
     mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='black' d='M8 1l5 2v4c0 3.55-2.29 6.78-5 8-2.71-1.22-5-4.45-5-8V3l5-2zm0 2.04L5 4.22V7c0 2.55 1.54 4.96 3 5.86 1.46-.9 3-3.31 3-5.86V4.22L8 3.04z'/%3E%3C/svg%3E");
     -webkit-mask-repeat: no-repeat;
@@ -280,12 +290,12 @@ html, body {
     font-size: 11px;
     line-height: 1.25;
     font-weight: 600;
-    color: #ebebeb;
-    background-color: #1c1c1c;
-    border: 1px solid #464646;
+    color: var(--text-strong);
+    background-color: var(--tooltip-bg);
+    border: 1px solid var(--border);
     border-radius: 4px;
     padding: 5px 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+    box-shadow: var(--shadow-tooltip);
     z-index: 5;
 }
 
@@ -303,7 +313,7 @@ html, body {
     font-family: 'Segoe UI', system-ui, sans-serif;
     font-size: 11px;
     font-weight: 400;
-    color: #C0C0C0;
+    color: var(--text-muted);
     cursor: pointer;
     width: fit-content;
     margin: 4px 0 8px 0;
@@ -323,7 +333,7 @@ html, body {
     font-family: 'Segoe UI', system-ui, sans-serif;
     font-size: 11px;
     font-weight: 400;
-    color: #C0C0C0;
+    color: var(--text-muted);
     cursor: pointer;
     width: fit-content;
     margin: 12px 0 0 0;
@@ -364,7 +374,7 @@ html, body {
     height: 13px;
     margin: 0;
     flex-shrink: 0;
-    accent-color: #f3ba22;
+    accent-color: var(--accent);
     cursor: pointer;
 }
 
@@ -376,7 +386,7 @@ html, body {
     font-family: 'Segoe UI', system-ui, sans-serif;
     font-size: 11px;
     font-weight: 400;
-    color: #C0C0C0;
+    color: var(--text-muted);
     line-height: 1.3;
     margin: 0 0 2px 0;
 }
@@ -428,16 +438,16 @@ html, body {
     font-weight: 600;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: #BDC1C3;
+    color: var(--text-muted-soft);
     margin-bottom: 5px;
 }
 
 .field-input {
     width: 100%;
-    background-color: #1c1c1c;
-    border: 1px solid #262626;
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
     border-radius: 4px;
-    color: #414141;
+    color: var(--input-text-disabled);
     font-family: 'Segoe UI', system-ui, sans-serif;
     font-size: 12px;
     padding: 6px 8px;
@@ -446,16 +456,16 @@ html, body {
 }
 
 .field-input.field-enabled {
-    background-color: #373737;
-    border: 1px solid #5a5a5a;
-    color: #ebebeb;
+    background-color: var(--input-bg-enabled);
+    border: 1px solid var(--input-border-enabled);
+    color: var(--text-strong);
     cursor: text;
     opacity: 1;
 }
 
 .field-input.field-enabled:focus {
     outline: none;
-    border-color: #f3ba22;
+    border-color: var(--accent);
 }
 
 .field-input:disabled {
@@ -490,8 +500,8 @@ html, body {
 }
 
 .apply-btn {
-    background-color: #f3ba22;
-    color: #282828;
+    background-color: var(--accent);
+    color: var(--on-accent);
     margin: 0 0 3px 0;
 }
 
@@ -501,11 +511,11 @@ html, body {
 }
 
 .apply-btn.is-valid:hover {
-    background-color: #dca81c;
+    background-color: var(--accent-hover);
 }
 
 .apply-btn.is-valid:active {
-    background-color: #c89814;
+    background-color: var(--accent-active);
 }
 
 /* --------------------------------------------------
@@ -529,7 +539,7 @@ html, body {
     font-weight: 500;
     padding: 10px 16px;
     border-radius: 6px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    box-shadow: var(--shadow-toast);
     max-width: 320px;
     word-break: break-word;
     cursor: pointer;
@@ -544,15 +554,15 @@ html, body {
 }
 
 .toast-notification.toast-success {
-    background-color: #285a32;
-    color: #DBF6E1;
-    border: 1px solid #3c824b;
+    background-color: var(--toast-success-bg);
+    color: var(--toast-success-text);
+    border: 1px solid var(--toast-success-border);
 }
 
 .toast-notification.toast-error {
-    background-color: #5a2323;
-    color: #ECB6B6;
-    border: 1px solid #823737;
+    background-color: var(--toast-error-bg);
+    color: var(--toast-error-text);
+    border: 1px solid var(--toast-error-border);
 }
 
 /* --------------------------------------------------
@@ -564,11 +574,11 @@ html, body {
 }
 
 .provider-item.third-party .third-party-apply-btn.is-changed:hover {
-    background-color: #dca81c;
+    background-color: var(--accent-hover);
 }
 
 .provider-item.third-party .third-party-apply-btn.is-changed:active {
-    background-color: #c89814;
+    background-color: var(--accent-active);
 }
 
 /* --------------------------------------------------
@@ -609,7 +619,7 @@ html, body {
     display: inline-block;
     width: 16px;
     height: 16px;
-    background-color: #c8c8c8;
+    background-color: var(--text-icon);
     -webkit-mask-repeat: no-repeat;
     mask-repeat: no-repeat;
     -webkit-mask-position: center;
@@ -655,7 +665,7 @@ html, body {
     align-items: flex-start;
     gap: 10px;
     padding: 14px 2px 20px;
-    border-top: 1px solid #373737;
+    border-top: 1px solid var(--border-subtle);
     margin-top: 4px;
 }
 
@@ -684,23 +694,23 @@ html, body {
 }
 
 .reset-providers-btn {
-    background-color: #373737;
-    color: #c8c8c8;
-    border: 1px solid #4b4b4b;
+    background-color: var(--reset-btn-bg);
+    color: var(--reset-btn-text);
+    border: 1px solid var(--reset-btn-border);
 }
 
 .reset-providers-btn:not(:disabled):hover {
-    background-color: #464646;
-    color: #e6e6e6;
+    background-color: var(--reset-btn-hover-bg);
+    color: var(--reset-btn-hover-text);
 }
 
 .reset-all-btn {
-    background-color: #3c2323;
-    color: #E4A6A6;
-    border: 1px solid #5a3232;
+    background-color: var(--reset-all-bg);
+    color: var(--reset-all-text);
+    border: 1px solid var(--reset-all-border);
 }
 
 .reset-all-btn:not(:disabled):hover {
-    background-color: #502828;
-    color: #FFADAD;
+    background-color: var(--reset-all-hover-bg);
+    color: var(--reset-all-hover-text);
 }
