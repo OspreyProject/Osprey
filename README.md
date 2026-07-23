@@ -38,7 +38,7 @@ your browsing data.
 You can check Osprey's real-time protection status by left-clicking the ![Icon](https://i.imgur.com/E1SM8OJ.png)
 extension icon in your browser's toolbar:
 
-[![Popup Panel](https://i.imgur.com/sCH7PgI.png)](https://i.imgur.com/sCH7PgI.png)
+[![Popup Panel](https://i.imgur.com/nEnszeG.png)](https://i.imgur.com/nEnszeG.png)
 
 ###
 
