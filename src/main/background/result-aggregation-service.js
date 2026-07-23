@@ -18,11 +18,173 @@
 'use strict';
 
 globalThis.OspreyResultAggregationService = (() => {
+    const browserAPI = globalThis.OspreyBrowserAPI;
     const protectionResult = globalThis.OspreyProtectionResult;
+
+    const sessionArea = 'session';
+    const storageKey = 'osprey.blockedContexts';
 
     const blockedByTab = new Map();
     const frameZeroUrlByTab = new Map();
     const warningPageReadyTabs = new Set();
+
+    const authoritativeBlocked = new Set();
+    const authoritativeMeta = new Set();
+
+    let hydrationPromise = null;
+    let persistPromise = Promise.resolve();
+    let persistScheduled = false;
+
+    const markBlockedAuthoritative = tabId => {
+        if (typeof tabId === 'number') {
+            authoritativeBlocked.add(tabId);
+        }
+    };
+
+    const markMetaAuthoritative = tabId => {
+        if (typeof tabId === 'number') {
+            authoritativeMeta.add(tabId);
+        }
+    };
+
+    const serializeContext = context => {
+        if (!context) {
+            return null;
+        }
+
+        return {
+            url: context.url,
+            entries: Array.from(context.entries.entries()),
+            redirected: context.redirected,
+            total: context.total,
+        };
+    };
+
+    const serializeState = () => {
+        const snapshot = {};
+        const tabIds = new Set();
+
+        for (const tabId of blockedByTab.keys()) {
+            tabIds.add(tabId);
+        }
+
+        for (const tabId of frameZeroUrlByTab.keys()) {
+            tabIds.add(tabId);
+        }
+
+        for (const tabId of warningPageReadyTabs) {
+            tabIds.add(tabId);
+        }
+
+        for (const tabId of tabIds) {
+            snapshot[String(tabId)] = {
+                blocked: serializeContext(blockedByTab.get(tabId)),
+                frameZeroUrl: frameZeroUrlByTab.get(tabId) || '',
+                warningReady: warningPageReadyTabs.has(tabId),
+            };
+        }
+        return snapshot;
+    };
+
+    const restoreEntries = rawEntries => {
+        const entries = new Map();
+
+        if (!Array.isArray(rawEntries)) {
+            return entries;
+        }
+
+        for (let i = 0, len = rawEntries.length; i < len; i++) {
+            const pair = rawEntries[i];
+
+            if (Array.isArray(pair) && typeof pair[0] === 'string' && typeof pair[1] === 'string') {
+                entries.set(pair[0], pair[1]);
+            }
+        }
+        return entries;
+    };
+
+    const restoreTab = (rawTabId, entry) => {
+        const tabId = Number.parseInt(rawTabId, 10);
+
+        if (!Number.isFinite(tabId) || !entry || typeof entry !== 'object') {
+            return;
+        }
+
+        const blocked = entry.blocked;
+
+        if (blocked && typeof blocked === 'object' && !authoritativeBlocked.has(tabId)) {
+            const entries = restoreEntries(blocked.entries);
+
+            if (entries.size > 0) {
+                const storedTotal = Number(blocked.total);
+
+                blockedByTab.set(tabId, {
+                    url: typeof blocked.url === 'string' ? blocked.url : '',
+                    entries,
+                    redirected: blocked.redirected === true,
+                    total: Math.max(entries.size, Number.isFinite(storedTotal) ? storedTotal : 0),
+                });
+            }
+        }
+
+        if (authoritativeMeta.has(tabId)) {
+            return;
+        }
+
+        if (typeof entry.frameZeroUrl === 'string' && entry.frameZeroUrl.length > 0) {
+            frameZeroUrlByTab.set(tabId, entry.frameZeroUrl);
+        }
+
+        if (entry.warningReady === true) {
+            warningPageReadyTabs.add(tabId);
+        }
+    };
+
+    const hydrate = async () => {
+        try {
+            const stored = await browserAPI.storageGet(sessionArea, storageKey);
+            const snapshot = stored?.[storageKey];
+
+            if (!snapshot || typeof snapshot !== 'object') {
+                return;
+            }
+
+            const rawTabIds = Object.keys(snapshot);
+
+            for (let i = 0, len = rawTabIds.length; i < len; i++) {
+                restoreTab(rawTabIds[i], snapshot[rawTabIds[i]]);
+            }
+        } catch (error) {
+            console.warn('Failed to restore blocked-context state from session storage', error);
+        }
+    };
+
+    const ensureHydrated = () => {
+        if (hydrationPromise === null) {
+            hydrationPromise = hydrate();
+        }
+        return hydrationPromise;
+    };
+
+    const persistNow = async () => {
+        try {
+            await browserAPI.storageSet(sessionArea, {[storageKey]: serializeState()});
+        } catch (error) {
+            console.warn('Failed to persist blocked-context state to session storage', error);
+        }
+    };
+
+    const persist = () => {
+        if (!persistScheduled) {
+            persistScheduled = true;
+
+            persistPromise = persistPromise.then(() => {
+                persistScheduled = false;
+                return persistNow();
+            });
+        }
+        return persistPromise;
+    };
 
     const cloneContext = current => {
         if (!current) {
@@ -60,21 +222,36 @@ globalThis.OspreyResultAggregationService = (() => {
             primaryResult,
             origins,
             redirected: current.redirected,
+            remaining: length,
+            total: Math.max(current.total, length),
         };
     };
 
     const beginNavigation = tabId => {
+        markBlockedAuthoritative(tabId);
+        markMetaAuthoritative(tabId);
         blockedByTab.delete(tabId);
         warningPageReadyTabs.delete(tabId);
+
+        persist().then(() => {
+            // ignored
+        });
     };
 
     const setFrameZeroUrl = (tabId, url) => {
+        markMetaAuthoritative(tabId);
         frameZeroUrlByTab.set(tabId, url);
+
+        persist().then(() => {
+            // ignored
+        });
     };
 
     const getFrameZeroUrl = tabId => frameZeroUrlByTab.get(tabId) || '';
 
     const recordBlockingResult = (tabId, url, origin, result) => {
+        markBlockedAuthoritative(tabId);
+
         let context = blockedByTab.get(tabId);
         const firstForUrl = !context || context.url !== url;
 
@@ -86,6 +263,7 @@ globalThis.OspreyResultAggregationService = (() => {
                 url,
                 entries: entriesMap,
                 redirected: false,
+                total: 1,
             };
 
             blockedByTab.set(tabId, context);
@@ -94,8 +272,13 @@ globalThis.OspreyResultAggregationService = (() => {
 
             if (!entries.has(origin)) {
                 entries.set(origin, result);
+                context.total = Math.max(context.total + 1, entries.size);
             }
         }
+
+        persist().then(() => {
+            // ignored
+        });
 
         return {
             context: cloneContext(context),
@@ -107,7 +290,12 @@ globalThis.OspreyResultAggregationService = (() => {
         const context = blockedByTab.get(tabId);
 
         if (context) {
+            markBlockedAuthoritative(tabId);
             context.redirected = true;
+
+            persist().then(() => {
+                // ignored
+            });
         }
     };
 
@@ -128,30 +316,52 @@ globalThis.OspreyResultAggregationService = (() => {
             return null;
         }
 
+        markBlockedAuthoritative(tabId);
+
         const entries = current.entries;
         entries.delete(origin);
 
         if (entries.size > 0) {
+            persist().then(() => {
+                // ignored
+            });
             return cloneContext(current);
         }
 
         blockedByTab.delete(tabId);
+
+        persist().then(() => {
+            // ignored
+        });
         return null;
     };
 
     const clear = tabId => {
+        markBlockedAuthoritative(tabId);
+        markMetaAuthoritative(tabId);
         blockedByTab.delete(tabId);
         frameZeroUrlByTab.delete(tabId);
         warningPageReadyTabs.delete(tabId);
+
+        persist().then(() => {
+            // ignored
+        });
     };
 
     const markWarningPageReady = tabId => {
+        markMetaAuthoritative(tabId);
         warningPageReadyTabs.add(tabId);
+
+        persist().then(() => {
+            // ignored
+        });
     };
 
     const isWarningPageReady = tabId => warningPageReadyTabs.has(tabId);
 
     return Object.freeze({
+        ensureHydrated,
+        persist,
         beginNavigation,
         setFrameZeroUrl,
         getFrameZeroUrl,

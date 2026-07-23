@@ -39,7 +39,7 @@ globalThis.OspreyBlockingService = (() => {
 
     const getBlockingThreshold = enabledCount => enabledCount >= 4 ? 2 : 1;
 
-    const getPayloadSignature = p => `${p.count}|${p.primaryOrigin}|${p.primaryResult}|${p.systems.join(',')}`;
+    const getPayloadSignature = p => `${p.known}|${p.count}|${p.remaining}|${p.total}|${p.primaryOrigin}|${p.primaryResult}|${p.systems.join(',')}`;
 
     const getBlockingAnalysis = (runtime, blockedContext, result) => {
         const blockedOrigins = blockedContext?.origins;
@@ -118,10 +118,13 @@ globalThis.OspreyBlockingService = (() => {
         if (!context) {
             return {
                 messageType: messages.BLOCKED_COUNTER_PONG,
+                known: false,
                 count: 0,
                 systems: [],
                 primaryOrigin: null,
                 primaryResult: null,
+                remaining: 0,
+                total: 0,
             };
         }
 
@@ -130,10 +133,13 @@ globalThis.OspreyBlockingService = (() => {
 
         return {
             messageType: messages.BLOCKED_COUNTER_PONG,
+            known: true,
             count: systems.length,
             systems,
             primaryOrigin,
             primaryResult,
+            remaining: context.remaining,
+            total: context.total,
         };
     };
 
@@ -158,6 +164,8 @@ globalThis.OspreyBlockingService = (() => {
     };
 
     const pushBlockedContextUpdate = async tabId => {
+        await resultAggregationService.ensureHydrated();
+
         if (!resultAggregationService.isRedirected(tabId)) {
             pendingBlockedPayloadByTab.delete(tabId);
             lastBlockedSignatureByTab.delete(tabId);
@@ -199,12 +207,17 @@ globalThis.OspreyBlockingService = (() => {
         }
 
         warningPortsByTab.set(tabId, port);
-        resultAggregationService.markWarningPageReady(tabId);
 
         port.onMessage.addListener(msg => {
-            if (msg?.messageType === messages.BLOCKED_COUNTER_PING && warningPortsByTab.get(tabId) === port) {
-                sendCurrentBlockedContext(tabId, port);
+            if (msg?.messageType !== messages.BLOCKED_COUNTER_PING) {
+                return;
             }
+
+            resultAggregationService.ensureHydrated().then(() => {
+                if (warningPortsByTab.get(tabId) === port) {
+                    sendCurrentBlockedContext(tabId, port);
+                }
+            });
         });
 
         port.onDisconnect.addListener(() => {
@@ -213,8 +226,15 @@ globalThis.OspreyBlockingService = (() => {
             }
         });
 
-        sendCurrentBlockedContext(tabId, port);
-        pendingBlockedPayloadByTab.delete(tabId);
+        resultAggregationService.ensureHydrated().then(() => {
+            if (warningPortsByTab.get(tabId) !== port) {
+                return;
+            }
+
+            resultAggregationService.markWarningPageReady(tabId);
+            sendCurrentBlockedContext(tabId, port);
+            pendingBlockedPayloadByTab.delete(tabId);
+        });
     };
 
     const clearBlockedUI = async tabId => {
@@ -230,7 +250,8 @@ globalThis.OspreyBlockingService = (() => {
         pendingBlockedPayloadByTab.delete(tabId);
     };
 
-    const markWarningPageReady = tabId => {
+    const markWarningPageReady = async tabId => {
+        await resultAggregationService.ensureHydrated();
         resultAggregationService.markWarningPageReady(tabId);
         return pushBlockedContextUpdate(tabId);
     };
@@ -285,6 +306,7 @@ globalThis.OspreyBlockingService = (() => {
         }
 
         resultAggregationService.recordBlockingResult(tabId, navigationUrl, protectionResult.origin, protectionResult.result);
+        await resultAggregationService.persist();
 
         const blockedContext = resultAggregationService.getBlockedContext(tabId);
         const analysis = getBlockingAnalysis(runtime, blockedContext, protectionResult.result);
@@ -344,6 +366,7 @@ globalThis.OspreyBlockingService = (() => {
                 return;
             }
 
+            await resultAggregationService.ensureHydrated();
             resultAggregationService.beginNavigation(details.tabId);
             resultAggregationService.setFrameZeroUrl(details.tabId, normalizedUrl);
             lastBlockedSignatureByTab.delete(details.tabId);
@@ -416,6 +439,13 @@ globalThis.OspreyBlockingService = (() => {
             return failClosed(tabId);
         }
 
+        await resultAggregationService.ensureHydrated();
+
+        if (!resultAggregationService.getBlockedContext(tabId)) {
+            console.warn(`OspreyBlockingService refused CONTINUE_TO_WEBSITE for tab ${tabId} because no blocked context is recorded`);
+            return {ok: false, navigated: false, context: null, known: false};
+        }
+
         const runtime = await providerRuntimeFactory.createRuntime();
         const provider = runtime.providers.find(p => p.id === origin);
 
@@ -438,6 +468,7 @@ globalThis.OspreyBlockingService = (() => {
         });
 
         const nextContext = resultAggregationService.removeOrigin(tabId, origin);
+        await resultAggregationService.persist();
 
         if (nextContext) {
             resultAggregationService.markRedirected(tabId);
