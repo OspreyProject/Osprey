@@ -80,6 +80,7 @@ html, body {
 }
 
 .bannerText:hover {
+    color: var(--accent-ink);
     text-decoration: underline;
 }
 
