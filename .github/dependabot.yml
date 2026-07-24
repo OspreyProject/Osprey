@@ -9,3 +9,5 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "daily" # Check for updates daily
+    cooldown:
+      default-days: 7
