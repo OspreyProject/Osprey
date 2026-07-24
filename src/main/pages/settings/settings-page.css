@@ -98,11 +98,24 @@ html, body {
     text-decoration: underline;
 }
 
-/* Theme toggle sits at the right edge of the banner, clear of the centered
-   title, which stays centered because it is absolutely positioned. */
-.banner .theme-toggle {
+.banner-version {
     margin-left: auto;
     align-self: center;
+    font-size: 12px;
+    color: var(--text-muted);
+    text-decoration: none;
+    position: relative;
+    z-index: 1;
+}
+
+.banner-version:hover {
+    color: var(--accent-ink);
+    text-decoration: underline;
+}
+
+.banner .theme-toggle {
+    align-self: center;
+    margin-left: 8px;
     margin-right: 8px;
     position: relative;
     z-index: 1;

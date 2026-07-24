@@ -47,7 +47,7 @@ globalThis.SettingsSingleton = globalThis.SettingsSingleton || (() => {
         }
 
         document.title = LangUtil.SETTINGS_TITLE;
-        setTextById('version', LangUtil.VERSION + cachedExtensionVersion);
+        setTextById('version', cachedExtensionVersion);
         setTextBySelector('.bannerText', LangUtil.TITLE);
 
         const themeToggle = document.getElementById('themeToggle');
