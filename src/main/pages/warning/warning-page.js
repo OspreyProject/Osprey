@@ -38,6 +38,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
     let counterPort = null;
 
     let totalBlocks = 0;
+    let contextKnown = true;
     let actionInFlight = false;
     let isInitialized = false;
     let revealed = false;
@@ -82,11 +83,6 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
             hideReportButton: true,
         },
         providers: {},
-    };
-
-    const withCurrentTabId = message => {
-        message.tabId = typeof currentContext?.tabId === 'number' ? currentContext.tabId : message.tabId;
-        return message;
     };
 
     const isExpectedPortClosureError = error => {
@@ -211,7 +207,6 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
             resultTextEN,
             blockedUrl,
             origin,
-            tabId: typeof fields.tabId === 'number' && Number.isFinite(fields.tabId) ? fields.tabId : null,
             actionable,
             reportable,
             cachedReportUrl,
@@ -293,7 +288,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         clearReportedBySuffix();
     }
 
-    function updateContinueLabel(remainingBlocks) {
+    function updateContinueLabel(remainingBlocks, reportedTotal) {
         const button = domElements.continueButton;
 
         if (!button) {
@@ -301,6 +296,11 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         }
 
         const remaining = Math.max(1, Number(remainingBlocks) || 1);
+        const total = Number(reportedTotal);
+
+        if (Number.isFinite(total) && total > totalBlocks) {
+            totalBlocks = total;
+        }
 
         if (remaining > totalBlocks) {
             totalBlocks = remaining;
@@ -319,9 +319,20 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
 
     function updateBlockedCounter(response) {
         const reportedBy = domElements.reportedBy;
-        const blockingCount = typeof response?.count === 'number' ? Math.max(0, response.count) : 0;
 
-        updateContinueLabel(blockingCount + 1);
+        if (response?.known === false) {
+            contextKnown = false;
+            syncActionVisibility();
+            return;
+        }
+
+        contextKnown = true;
+        syncActionVisibility();
+
+        const blockingCount = typeof response?.count === 'number' ? Math.max(0, response.count) : 0;
+        const remaining = typeof response?.remaining === 'number' ? response.remaining : blockingCount + 1;
+
+        updateContinueLabel(remaining, response?.total);
 
         if (!reportedBy) {
             return;
@@ -371,12 +382,6 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
             return;
         }
 
-        if (typeof currentContext?.tabId === 'number' &&
-            typeof message?.tabId === 'number' &&
-            message.tabId !== currentContext.tabId) {
-            return;
-        }
-
         updateBlockedCounter(message);
     }
 
@@ -409,7 +414,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         }
 
         try {
-            port.postMessage(withCurrentTabId({messageType: messages.BLOCKED_COUNTER_PING}));
+            port.postMessage({messageType: messages.BLOCKED_COUNTER_PING});
         } catch (error) {
             counterPort = null;
             console.warn('WarningPage failed to refresh blocked-counter state', error);
@@ -466,7 +471,6 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
             origin: warningContext.origin,
             result,
             actionable: blockedUrlParsed !== null,
-            tabId: warningContext.tabId,
         });
     }
 
@@ -480,14 +484,10 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
                 params = new URL(pageUrl).searchParams;
             }
 
-            const rawTabId = params.get('tid');
-            const parsedTabId = rawTabId ? Number.parseInt(rawTabId, 10) : Number.NaN;
-
             return {
                 blockedUrl: params.get('url') || '',
                 origin: params.get('or') || 'unknown',
                 result: params.get('rs') || 'failed',
-                tabId: Number.isFinite(parsedTabId) ? parsedTabId : null,
             };
         } catch {
             return warningContextFallback;
@@ -577,16 +577,17 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         }
 
         const appState = currentState.app;
-        const canContinue = currentContext.actionable === true && !appState?.hideContinueButtons;
+        const canAct = currentContext.actionable === true && !appState?.hideContinueButtons;
+        const canContinue = canAct && contextKnown === true;
 
-        const canReport = canContinue === true && currentContext.reportable === true &&
+        const canReport = canAct === true && currentContext.reportable === true &&
             !appState?.hideReportButton && currentContext.cachedReportUrl !== null;
 
         setButtonState(domElements.reportWebsite, canReport, canReport);
-        setButtonState(domElements.allowWebsite, canContinue, canContinue);
+        setButtonState(domElements.allowWebsite, canAct, canAct);
         setButtonState(domElements.continueButton, canContinue, canContinue);
         setButtonState(domElements.backButton, true, true);
-        setElementVisibility(domElements.reportBreakpoint, canReport && canContinue);
+        setElementVisibility(domElements.reportBreakpoint, canReport && canAct);
     }
 
     function applyNextBlockedContext(nextContext) {
@@ -606,19 +607,22 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         }
 
         updateBlockedCounter({
+            known: true,
             count: Math.max(0, origins.length - 1),
             systems,
             primaryOrigin: nextContext.primaryOrigin,
             primaryResult: nextContext.primaryResult,
+            remaining: typeof nextContext.remaining === 'number' ? nextContext.remaining : origins.length,
+            total: nextContext.total,
         });
     }
 
     function buildActionMessage(messageType) {
-        return withCurrentTabId({
+        return {
             messageType,
             blockedUrl: currentContext.blockedUrl,
             origin: currentContext.origin,
-        });
+        };
     }
 
     function wireActions(state) {
@@ -643,6 +647,12 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
 
             [domElements.continueButton, async () => {
                 const response = await sendNavigationMessage(buildActionMessage(messages.CONTINUE_TO_WEBSITE));
+
+                if (response?.known === false) {
+                    contextKnown = false;
+                    syncActionVisibility();
+                    return;
+                }
 
                 if (response?.context) {
                     applyNextBlockedContext(response.context);

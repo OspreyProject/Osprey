@@ -108,7 +108,7 @@ globalThis.OspreyNavigationService = (() => {
                 return;
             }
 
-            blockingService.markWarningPageReady(tabId).catch(error => {
+            blockingService.markWarningPageReady(tabId, url).catch(error => {
                 console.error(`${eventName} warning-page update failed`, error);
             });
             return;

@@ -251,14 +251,8 @@ globalThis.OspreyUrlService = (() => {
         return false;
     };
 
-    const buildWarningPageUrl = ({url, origin, result, tabId}) => {
-        let page = `${blockPageUrl()}?url=${encodeURIComponent(url)}&or=${encodeURIComponent(origin || 'unknown')}&rs=${encodeURIComponent(result)}`;
-
-        if (typeof tabId === 'number' && Number.isFinite(tabId)) {
-            page += '&tid=' + tabId;
-        }
-        return page;
-    };
+    const buildWarningPageUrl = ({url, origin, result}) =>
+        `${blockPageUrl()}?url=${encodeURIComponent(url)}&or=${encodeURIComponent(origin || 'unknown')}&rs=${encodeURIComponent(result)}`;
 
     const haveSameOrigin = (leftUrl, rightUrl) => {
         const left = parseHttpUrl(leftUrl);

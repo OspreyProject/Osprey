@@ -252,7 +252,8 @@ if (typeof importScripts === 'function') {
             return false;
         }
 
-        const tabId = typeof message.tabId === 'number' ? message.tabId : sender.tab?.id ?? null;
+        const senderTabId = sender?.tab?.id;
+        const tabId = typeof senderTabId === 'number' ? senderTabId : null;
         return handler(message, tabId, sendResponse, sender);
     };
 
@@ -279,7 +280,7 @@ if (typeof importScripts === 'function') {
         });
 
         api.tabs?.onRemoved?.addListener(tabId => {
-            resultAggregationService.clear(tabId);
+            resultAggregationService.releaseTab(tabId);
             providerEngine.abortTab(tabId);
             cacheService.clearProcessingByTab(tabId);
             badgeService.clearTab(tabId);
