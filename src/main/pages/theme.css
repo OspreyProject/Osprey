@@ -1,6 +1,6 @@
 /*
- * Osprey - a browser extension that protects you from malicious websites.
- * Copyright (C) 2026 Osprey Project (https://github.com/OspreyProject)
+ * Copyright (C) 2024-2026 Osprey Project LLC and contributors (https://osprey.ac)
+ * SPDX-License-Identifier: GPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,15 +15,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-/* --------------------------------------------------
-   Theme tokens
-
-   The default (no data-theme attribute) is dark, so the extension keeps
-   rendering correctly before the theme controller runs. The dark values below
-   are identical to the colors the pages used before theming, so dark mode is
-   pixel-for-pixel unchanged. html[data-theme="light"] overrides them with the
-   same light palette the website uses.
--------------------------------------------------- */
 :root {
     /* Surfaces */
     --bg: #282828;
