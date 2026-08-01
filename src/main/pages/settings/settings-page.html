@@ -38,11 +38,13 @@
     <script defer src="../../state/policy-service.js" type="text/javascript"></script>
     <script defer src="../../platform/protection-result.js" type="text/javascript"></script>
     <script defer src="../../providers/provider-runtime-factory.js" type="text/javascript"></script>
+    <script defer src="../../platform/url-service.js" type="text/javascript"></script>
     <script defer src="../../shared/lang-util.js" type="text/javascript"></script>
     <script defer src="ui/form-helpers.js" type="text/javascript"></script>
     <script defer src="ui/toast.js" type="text/javascript"></script>
     <script defer src="ui/provider-card.js" type="text/javascript"></script>
     <script defer src="ui/provider-list.js" type="text/javascript"></script>
+    <script defer src="ui/exclusions-page.js" type="text/javascript"></script>
     <script defer src="ui/settings-controller.js" type="text/javascript"></script>
     <script defer src="settings-page.js" type="text/javascript"></script>
 </head>
@@ -73,8 +75,16 @@
     </button>
 </header>
 
-<main class="settings-main">
-    <div id="providerList"></div>
-</main>
+<div class="settings-layout">
+    <nav id="settingsNav" class="settings-nav" aria-label="Settings sections"></nav>
+    <main class="settings-main">
+        <section id="page-providers" class="settings-page" data-page="providers">
+            <div id="providerList"></div>
+        </section>
+        <section id="page-exclusions" class="settings-page" data-page="exclusions" hidden>
+            <div id="exclusionsList"></div>
+        </section>
+    </main>
+</div>
 </body>
 </html>

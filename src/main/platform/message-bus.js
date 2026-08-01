@@ -30,5 +30,9 @@ globalThis.OspreyMessageBus = Object.freeze({
         REPORT_WEBSITE: 'reportWebsite',
         ALLOW_WEBSITE: 'allowWebsite',
         CLEAR_ALLOWED_WEBSITES: 'clearAllowedWebsites',
+        GET_EXCLUSIONS: 'getExclusions',
+        ADD_GLOBAL_EXCLUSION: 'addGlobalExclusion',
+        REMOVE_GLOBAL_EXCLUSION: 'removeGlobalExclusion',
+        REMOVE_PROVIDER_EXCLUSION: 'removeProviderExclusion',
     }),
 });

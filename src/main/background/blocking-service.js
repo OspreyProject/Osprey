@@ -517,7 +517,7 @@ globalThis.OspreyBlockingService = (() => {
             return failClosed(tabId);
         }
 
-        cacheService.markAllowed(provider.id, lookupKey, runtime.effectiveState.app.cacheExpirationSeconds).then(() => {
+        cacheService.markAllowed(provider.id, lookupKey, runtime.effectiveState.app.cacheExpirationSeconds, true).then(() => {
             // ignored
         });
 

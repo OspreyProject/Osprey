@@ -97,6 +97,22 @@
         TOAST_FAILED_TO_UPDATE_STATE: 'toastFailedToUpdateState',
         WARNING_PROSE: 'warningProse',
         PROVIDER_NAME_FALLBACK: 'providerNameFallback',
+        NAV_PROVIDERS: 'navProviders',
+        NAV_EXCLUSIONS: 'navExclusions',
+        TRUSTED_SITES_LABEL: 'trustedSitesLabel',
+        BYPASSES_LABEL: 'bypassesLabel',
+        ADD_SITE_BUTTON: 'addSiteButton',
+        ADD_SITE_ARIA_LABEL: 'addSiteAriaLabel',
+        REMOVE_EXCLUSION_LABEL: 'removeExclusionLabel',
+        REMOVE_ALL_FOR_SITE: 'removeAllForSite',
+        TEMPORARY_BADGE: 'temporaryBadge',
+        TEMPORARY_BADGE_TOOLTIP: 'temporaryBadgeTooltip',
+        NO_TRUSTED_SITES: 'noTrustedSites',
+        NO_BYPASSES: 'noBypasses',
+        EXCLUSIONS_LOCKED_NOTE: 'exclusionsLockedNote',
+        EXCLUSIONS_LOAD_ERROR: 'exclusionsLoadError',
+        TOAST_EXCLUSION_REMOVED: 'toastExclusionRemoved',
+        TOAST_EXCLUSION_INVALID: 'toastExclusionInvalid',
     };
 
     const resolvedKeys = {};

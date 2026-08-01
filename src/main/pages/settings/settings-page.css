@@ -122,12 +122,63 @@ html, body {
 }
 
 /* --------------------------------------------------
-   Main content
+   Layout: sidebar + page
 -------------------------------------------------- */
+.settings-layout {
+    position: relative;
+    padding: 18px 20px 10px;
+}
+
+.settings-nav {
+    position: absolute;
+    left: 14px;
+    top: 18px;
+    width: 164px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.nav-item {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    background: none;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.nav-item:hover {
+    background-color: var(--surface-hover);
+    color: var(--text-bright);
+}
+
+.nav-item.active {
+    color: var(--text);
+    font-weight: 600;
+    background-color: var(--accent-faint);
+}
+
+.nav-item:focus-visible {
+    outline: 2px solid var(--accent-border);
+    outline-offset: 1px;
+}
+
 .settings-main {
-    padding: 16px 16px 8px;
-    max-width: 640px;
+    max-width: 620px;
+    min-width: 0;
     margin: 0 auto;
+}
+
+.settings-page[hidden] {
+    display: none;
 }
 
 .section-label {
@@ -727,4 +778,247 @@ html, body {
 .reset-all-btn:not(:disabled):hover {
     background-color: var(--reset-all-hover-bg);
     color: var(--reset-all-hover-text);
+}
+
+/* --------------------------------------------------
+   Exclusions page
+-------------------------------------------------- */
+.excl-section {
+    margin-bottom: 22px;
+}
+
+.excl-add {
+    display: flex;
+    gap: 8px;
+    margin: 0 0 12px;
+}
+
+.excl-add-input {
+    flex: 1;
+    margin: 0;
+}
+
+.excl-add-btn {
+    flex-shrink: 0;
+    margin: 0;
+    white-space: nowrap;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 18px;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--accent);
+    color: var(--on-accent);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.excl-add-btn:hover {
+    background-color: var(--accent-hover);
+}
+
+.excl-add-btn:active {
+    background-color: var(--accent-active);
+}
+
+/* Trusted (global) rows: flat, with a Remove button on the right */
+.excl-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--surface);
+    border-radius: 6px;
+    padding: 8px 10px 8px 12px;
+}
+
+.excl-row-host {
+    flex: 1;
+    font-size: 13px;
+    color: var(--text-bright);
+    word-break: break-all;
+}
+
+.excl-row-remove {
+    flex-shrink: 0;
+}
+
+.excl-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* Site cards (collapsible, matching the provider cards) */
+.excl-item-host {
+    word-break: break-all;
+}
+
+.excl-item-body {
+    display: none;
+    padding: 8px 12px 14px;
+    border-top: 1px solid var(--border-subtle);
+}
+
+.provider-item.expanded .excl-item-body {
+    display: block;
+}
+
+.excl-item-body .reset-btn {
+    margin-top: 12px;
+}
+
+.excl-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.excl-dot-trusted {
+    background-color: var(--accent);
+}
+
+.excl-dot-provider {
+    background-color: var(--text-faint);
+}
+
+.excl-count {
+    flex-shrink: 0;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-muted);
+    background-color: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 1px 7px;
+    min-width: 20px;
+    text-align: center;
+}
+
+/* Provider rows inside a bypass card body */
+.excl-entry {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 6px 0;
+}
+
+.excl-entry .provider-logo {
+    width: 16px;
+    height: 16px;
+}
+
+.excl-entry-name {
+    font-size: 12px;
+    color: var(--text-bright);
+    flex-shrink: 0;
+}
+
+.excl-entry-detail {
+    font-size: 11px;
+    color: var(--text-faint);
+    flex: 1 1 auto;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.excl-temp-badge {
+    flex-shrink: 0;
+    margin-left: auto;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background-color: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 1px 7px;
+    cursor: help;
+}
+
+.excl-remove {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    line-height: 1;
+    background: none;
+    border: none;
+    border-radius: 4px;
+    color: var(--text-faint);
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.excl-remove:hover {
+    background-color: var(--reset-all-bg);
+    color: var(--reset-all-text);
+}
+
+.excl-remove:focus-visible {
+    outline: 2px solid var(--accent-border);
+    outline-offset: 1px;
+}
+
+/* Empty and error states */
+.excl-empty {
+    font-size: 12px;
+    color: var(--text-faint);
+    background-color: var(--surface);
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+    padding: 14px;
+    margin: 0;
+    text-align: center;
+}
+
+/* Clear-all footer */
+.excl-footer {
+    display: flex;
+    padding: 14px 2px 20px;
+    border-top: 1px solid var(--border-subtle);
+    margin-top: 6px;
+}
+
+.excl-locked-note {
+    font-size: 12px;
+    color: var(--text-muted);
+    background-color: var(--accent-faint);
+    border: 1px solid var(--accent-border);
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin: 0 0 18px;
+}
+
+/* --------------------------------------------------
+   Narrow viewports: nav collapses above the content
+-------------------------------------------------- */
+@media (max-width: 980px) {
+    .settings-layout {
+        padding: 14px;
+    }
+
+    .settings-nav {
+        position: static;
+        left: auto;
+        top: auto;
+        width: auto;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-bottom: 12px;
+    }
+
+    .settings-main {
+        max-width: none;
+        margin: 0;
+    }
 }

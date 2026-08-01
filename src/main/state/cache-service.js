@@ -158,10 +158,16 @@ globalThis.OspreyCacheService = (() => {
 
         for (const [key, entry] of Object.entries(value)) {
             if (entry && typeof entry === 'object') {
-                map.set(key, {
+                const normalized = {
                     exp: Number(entry.exp) || 0,
                     result: entry.result,
-                });
+                };
+
+                if (entry.userAllowed) {
+                    normalized.userAllowed = true;
+                }
+
+                map.set(key, normalized);
             }
         }
         return map;
@@ -584,7 +590,15 @@ globalThis.OspreyCacheService = (() => {
 
     const getAllowedEntry = createEntryGetter('allowed');
     const getBlockedEntry = createEntryGetter('blocked');
-    const markAllowed = createEntryMarker('allowed', expirationSeconds => ({exp: Date.now() + expirationSeconds * 1000}));
+
+    const markAllowed = createEntryMarker('allowed', (expirationSeconds, userAllowed = false) => {
+        const record = {exp: Date.now() + expirationSeconds * 1000};
+
+        if (userAllowed) {
+            record.userAllowed = true;
+        }
+        return record;
+    });
 
     const markBlocked = createEntryMarker('blocked', (result, expirationSeconds) => ({
         exp: Date.now() + expirationSeconds * 1000,
@@ -599,6 +613,142 @@ globalThis.OspreyCacheService = (() => {
             markMetaDirty();
             scheduleFlush();
         }
+    };
+
+    const listExclusions = async () => {
+        const snapshot = await getSnapshot();
+        const now = Date.now();
+        const providers = {};
+
+        for (const [providerId, provider] of snapshot.providers.entries()) {
+            const entries = [];
+
+            for (const [lookupKey, entry] of provider.allowed.entries()) {
+                if (entry?.userAllowed && entry.exp >= now) {
+                    entries.push({lookupKey, exp: entry.exp});
+                }
+            }
+
+            if (entries.length > 0) {
+                providers[providerId] = entries;
+            }
+        }
+
+        return {
+            globalAllowPatterns: snapshot.globalAllowPatterns.slice(),
+            providers,
+        };
+    };
+
+    const isRegistrableDomain = host => {
+        if (typeof host !== 'string' || host.length === 0) {
+            return false;
+        }
+
+        const labels = host.split('.');
+
+        if (labels.length < 2) {
+            return false;
+        }
+
+        for (let i = 0, len = labels.length; i < len; i++) {
+            if (labels[i].length === 0) {
+                return false;
+            }
+        }
+
+        const tld = labels.at(-1);
+        return /^[a-z]{2,}$/.test(tld) || /^xn--[a-z0-9-]+$/.test(tld);
+    };
+
+    const resolveHostFromInput = rawHost => {
+        const value = String(rawHost || '').trim();
+
+        if (!value) {
+            return '';
+        }
+
+        let host = '';
+
+        if (value.includes('://')) {
+            const parsed = urlService.parseHttpUrl(value);
+            host = parsed ? urlService.canonicalizeHostname(parsed.hostname) : '';
+        } else {
+            const candidate = urlService.canonicalizeHostname(value);
+
+            if (urlService.isAcceptableHost(candidate)) {
+                host = candidate;
+            } else {
+                const parsed = urlService.parseHttpUrl(`https://${value}`);
+                host = parsed ? urlService.canonicalizeHostname(parsed.hostname) : '';
+            }
+        }
+        return isRegistrableDomain(host) ? host : '';
+    };
+
+    const addGlobalHost = async rawHost => {
+        const host = resolveHostFromInput(rawHost);
+
+        if (!host) {
+            return {
+                ok: false,
+                reason: 'invalid'
+            };
+        }
+
+        const pattern = `*.${host}`;
+        const snapshot = await getSnapshot();
+
+        if (snapshot.globalAllowPatterns.includes(pattern)) {
+            return {
+                ok: true,
+                added: false,
+                host,
+                pattern
+            };
+        }
+
+        snapshot.globalAllowPatterns.push(pattern);
+        parsedAllowPatternsCache = null;
+        markMetaDirty();
+        scheduleFlush();
+
+        return {
+            ok: true,
+            added: true,
+            host,
+            pattern
+        };
+    };
+
+    const removeGlobalPattern = async pattern => {
+        const snapshot = await getSnapshot();
+        const index = snapshot.globalAllowPatterns.indexOf(pattern);
+
+        if (index === -1) {
+            return {
+                ok: true,
+                removed: false
+            };
+        }
+
+        snapshot.globalAllowPatterns.splice(index, 1);
+        parsedAllowPatternsCache = null;
+        markMetaDirty();
+        scheduleFlush();
+
+        return {
+            ok: true,
+            removed: true
+        };
+    };
+
+    const removeProviderAllowed = async (providerId, lookupKey) => {
+        await deleteRecord(providerId, 'allowed', lookupKey);
+
+        return {
+            ok: true
+        };
     };
 
     const clearAll = async () => {
@@ -770,6 +920,10 @@ globalThis.OspreyCacheService = (() => {
         markAllowed,
         markBlocked,
         allowPattern,
+        listExclusions,
+        addGlobalHost,
+        removeGlobalPattern,
+        removeProviderAllowed,
         clearAll,
         clearBlockedForLookup,
         clearBlockedForProviderLookup,

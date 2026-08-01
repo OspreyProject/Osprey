@@ -190,5 +190,69 @@
   },
   "providerNameFallback": {
     "message": "Provider"
+  },
+  "navProviders": {
+    "message": "Providers"
+  },
+  "navExclusions": {
+    "message": "Exclusions"
+  },
+  "trustedSitesLabel": {
+    "message": "Excluded websites"
+  },
+  "bypassesLabel": {
+    "message": "Ignored warnings"
+  },
+  "addSiteButton": {
+    "message": "Add"
+  },
+  "addSiteAriaLabel": {
+    "message": "Website to add to excluded websites"
+  },
+  "removeExclusionLabel": {
+    "message": "Remove"
+  },
+  "removeAllForSite": {
+    "message": "Remove all"
+  },
+  "temporaryBadge": {
+    "message": "Temporary"
+  },
+  "temporaryBadgeTooltip": {
+    "message": "This exclusion expires on its own."
+  },
+  "noTrustedSites": {
+    "message": "No excluded websites yet."
+  },
+  "noBypasses": {
+    "message": "Nothing here yet. Warnings you ignore show up in this list."
+  },
+  "exclusionsLockedNote": {
+    "message": "Managing excluded websites is turned off by your administrator."
+  },
+  "exclusionsLoadError": {
+    "message": "Couldn't load your excluded websites. Try reopening this page."
+  },
+  "toastExclusionAdded": {
+    "message": "Added $host$ to excluded websites.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionExists": {
+    "message": "$host$ is already excluded.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionInvalid": {
+    "message": "Enter a valid website address."
+  },
+  "toastExclusionRemoved": {
+    "message": "Exclusion removed."
   }
 }

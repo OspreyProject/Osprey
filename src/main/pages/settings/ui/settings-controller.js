@@ -19,11 +19,19 @@
 
 globalThis.SettingsSingleton = globalThis.SettingsSingleton || (() => {
     const browserAPI = globalThis.OspreyBrowserAPI;
+    const formHelpers = globalThis.OspreyFormHelpers;
     const providerList = globalThis.OspreyProviderList;
+    const exclusionsPage = globalThis.OspreyExclusionsPage;
     const providerRuntimeFactory = globalThis.OspreyProviderRuntimeFactory;
+
+    const defaultPage = 'providers';
 
     let cachedExtensionVersion = null;
     let isInitialized = false;
+    let activePage = defaultPage;
+    let currentRuntime = null;
+
+    const navButtons = new Map();
 
     function setTextById(id, text) {
         const element = document.getElementById(id);
@@ -58,6 +66,87 @@ globalThis.SettingsSingleton = globalThis.SettingsSingleton || (() => {
         }
     }
 
+    const navItems = () => [
+        {
+            page: 'providers',
+            label: LangUtil.NAV_PROVIDERS
+        },
+        {
+            page: 'exclusions',
+            label: LangUtil.NAV_EXCLUSIONS
+        },
+    ];
+
+    function buildNav() {
+        const nav = document.getElementById('settingsNav');
+
+        if (!nav || navButtons.size > 0) {
+            return;
+        }
+
+        const items = navItems();
+
+        for (let i = 0, len = items.length; i < len; i++) {
+            const item = items[i];
+
+            const button = formHelpers.createElement('button', {
+                type: 'button',
+                className: 'nav-item',
+                textContent: item.label,
+                dataset: {page: item.page},
+                ariaPressed: item.page === activePage,
+            });
+
+            button.addEventListener('click', () => setActivePage(item.page));
+            navButtons.set(item.page, button);
+            nav.appendChild(button);
+        }
+
+        syncNavState();
+    }
+
+    function syncNavState() {
+        for (const [page, button] of navButtons.entries()) {
+            const isActive = page === activePage;
+            button.classList.toggle('active', isActive);
+            button.setAttribute('aria-pressed', String(isActive));
+        }
+    }
+
+    function syncPageVisibility() {
+        const pages = document.querySelectorAll('.settings-page');
+
+        for (let i = 0, len = pages.length; i < len; i++) {
+            const pageElement = pages[i];
+            pageElement.hidden = pageElement.dataset.page !== activePage;
+        }
+    }
+
+    function renderActivePage() {
+        if (!currentRuntime) {
+            return;
+        }
+
+        if (activePage === 'exclusions') {
+            exclusionsPage?.render(currentRuntime).then(() => {
+                // ignored
+            });
+        } else {
+            providerList.render(currentRuntime.effectiveState, currentRuntime);
+        }
+    }
+
+    function setActivePage(page) {
+        if (!navButtons.has(page)) {
+            return;
+        }
+
+        activePage = page;
+        syncNavState();
+        syncPageVisibility();
+        renderActivePage();
+    }
+
     const onRefreshError = error => {
         console.error('SettingsPage: failed to refresh state', error);
     };
@@ -68,8 +157,8 @@ globalThis.SettingsSingleton = globalThis.SettingsSingleton || (() => {
 
     const refresh = async () => {
         try {
-            const runtime = await providerRuntimeFactory.createRuntime();
-            providerList.render(runtime.effectiveState, runtime);
+            currentRuntime = await providerRuntimeFactory.createRuntime();
+            renderActivePage();
         } catch (error) {
             onRefreshError(error);
         }
@@ -81,6 +170,8 @@ globalThis.SettingsSingleton = globalThis.SettingsSingleton || (() => {
         }
 
         isInitialized = true;
+        buildNav();
+        syncPageVisibility();
         document.addEventListener('osprey:settings-changed', refresh);
 
         refresh().then(initFooter).catch(onInitError);

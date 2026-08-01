@@ -18,9 +18,7 @@
 'use strict';
 
 globalThis.OspreyProviderList = (() => {
-    const browserAPI = globalThis.OspreyBrowserAPI;
     const formHelpers = globalThis.OspreyFormHelpers;
-    const messageBus = globalThis.OspreyMessageBus;
     const providerCard = globalThis.OspreyProviderCard;
     const providerCatalog = globalThis.OspreyProviderCatalog;
     const providerStateStore = globalThis.OspreyProviderStateStore;
@@ -46,21 +44,6 @@ globalThis.OspreyProviderList = (() => {
         });
     }
 
-    function clearAllowedWebsites() {
-        return browserAPI.runtimeSendMessage({
-            messageType: messageBus.Messages.CLEAR_ALLOWED_WEBSITES,
-        }).then(response => {
-            if (response?.ok) {
-                toast.show(LangUtil.CLEAR_ALLOWED_WEBSITES_MESSAGE);
-            } else {
-                toast.show(LangUtil.TOAST_FAILED_TO_SAVE, true);
-            }
-        }).catch(error => {
-            console.error('ProviderList failed to clear allowed websites', error);
-            toast.show(LangUtil.TOAST_FAILED_TO_SAVE, true);
-        });
-    }
-
     function handleDelegatedAction(event) {
         const target = event.target;
 
@@ -68,9 +51,7 @@ globalThis.OspreyProviderList = (() => {
             return;
         }
 
-        if (target.id === 'clearAllowedWebsitesBtn') {
-            clearAllowedWebsites();
-        } else if (target.id === 'resetDefaultProvidersBtn') {
+        if (target.id === 'resetDefaultProvidersBtn') {
             runStoreAction(
                 providerStateStore.resetDefaultProviders(),
                 LangUtil.TOAST_DEFAULT_PROVIDERS_RESTORED,
@@ -118,15 +99,6 @@ globalThis.OspreyProviderList = (() => {
 
         const appState = runtime?.effectiveState?.app;
         const resetProvidersDisabled = Boolean(appState?.disableResetButtons || appState?.lockSettings);
-        const clearAllowedDisabled = Boolean(appState?.disableClearAllowedWebsites);
-
-        const clearAllowedButton = formHelpers.createElement('button', {
-            id: 'clearAllowedWebsitesBtn',
-            type: 'button',
-            className: 'reset-btn reset-providers-btn clear-allowed-btn',
-            textContent: LangUtil.CLEAR_ALLOWED_WEBSITES,
-            disabled: clearAllowedDisabled,
-        });
 
         const resetRow = formHelpers.createElement('div', {
             className: 'reset-footer-row',
@@ -149,7 +121,7 @@ globalThis.OspreyProviderList = (() => {
         });
 
         resetRow.append(resetProvidersButton, resetAllButton);
-        footer.append(clearAllowedButton, resetRow);
+        footer.append(resetRow);
         return footer;
     }
 

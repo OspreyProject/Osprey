@@ -235,6 +235,51 @@ if (typeof importScripts === 'function') {
             cacheService.clearAll().then(() => ({ok: true})),
             'Failed CLEAR_ALLOWED_WEBSITES',
         ),
+
+        [messages.GET_EXCLUSIONS]: (_message, _tabId, sendResponse) => respondAsync(
+            sendResponse,
+            cacheService.listExclusions().then(data => ({ok: true, data})),
+            'Failed GET_EXCLUSIONS',
+        ),
+
+        [messages.ADD_GLOBAL_EXCLUSION]: (message, _tabId, sendResponse) => {
+            if (typeof message.host !== 'string') {
+                console.warn('OspreyBackground rejected ADD_GLOBAL_EXCLUSION because the message payload was incomplete');
+                return respond(sendResponse, {ok: false});
+            }
+
+            return respondAsync(
+                sendResponse,
+                cacheService.addGlobalHost(message.host),
+                'Failed ADD_GLOBAL_EXCLUSION',
+            );
+        },
+
+        [messages.REMOVE_GLOBAL_EXCLUSION]: (message, _tabId, sendResponse) => {
+            if (typeof message.pattern !== 'string') {
+                console.warn('OspreyBackground rejected REMOVE_GLOBAL_EXCLUSION because the message payload was incomplete');
+                return respond(sendResponse, {ok: false});
+            }
+
+            return respondAsync(
+                sendResponse,
+                cacheService.removeGlobalPattern(message.pattern),
+                'Failed REMOVE_GLOBAL_EXCLUSION',
+            );
+        },
+
+        [messages.REMOVE_PROVIDER_EXCLUSION]: (message, _tabId, sendResponse) => {
+            if (typeof message.providerId !== 'string' || typeof message.lookupKey !== 'string') {
+                console.warn('OspreyBackground rejected REMOVE_PROVIDER_EXCLUSION because the message payload was incomplete');
+                return respond(sendResponse, {ok: false});
+            }
+
+            return respondAsync(
+                sendResponse,
+                cacheService.removeProviderAllowed(message.providerId, message.lookupKey),
+                'Failed REMOVE_PROVIDER_EXCLUSION',
+            );
+        },
     };
 
     const handleMessage = (message, sender, sendResponse) => {
