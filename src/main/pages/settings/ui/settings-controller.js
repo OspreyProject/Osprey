@@ -22,6 +22,7 @@ globalThis.SettingsSingleton = globalThis.SettingsSingleton || (() => {
     const formHelpers = globalThis.OspreyFormHelpers;
     const providerList = globalThis.OspreyProviderList;
     const exclusionsPage = globalThis.OspreyExclusionsPage;
+    const aboutPage = globalThis.OspreyAboutPage;
     const providerRuntimeFactory = globalThis.OspreyProviderRuntimeFactory;
 
     const defaultPage = 'providers';
@@ -75,6 +76,10 @@ globalThis.SettingsSingleton = globalThis.SettingsSingleton || (() => {
             page: 'exclusions',
             label: LangUtil.NAV_EXCLUSIONS
         },
+        {
+            page: 'about',
+            label: LangUtil.NAV_ABOUT
+        },
     ];
 
     function buildNav() {
@@ -123,6 +128,11 @@ globalThis.SettingsSingleton = globalThis.SettingsSingleton || (() => {
     }
 
     function renderActivePage() {
+        if (activePage === 'about') {
+            aboutPage?.render();
+            return;
+        }
+
         if (!currentRuntime) {
             return;
         }

@@ -254,5 +254,43 @@
   },
   "toastExclusionRemoved": {
     "message": "Exclusion removed."
+  },
+  "navAbout": {
+    "message": "About"
+  },
+  "aboutLabel": {
+    "message": "About"
+  },
+  "aboutVersion": {
+    "message": "Version $ver$",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "aboutCopyright": {
+    "message": "© 2026 Osprey Project LLC"
+  },
+  "aboutRights": {
+    "message": "All rights reserved."
+  },
+  "aboutLicense": {
+    "message": "Licensed under GPLv3."
+  },
+  "aboutChangelog": {
+    "message": "Changelog"
+  },
+  "aboutGithub": {
+    "message": "GitHub"
+  },
+  "aboutWebsite": {
+    "message": "Website"
+  },
+  "aboutPrivacy": {
+    "message": "Privacy Policy"
+  },
+  "aboutTerms": {
+    "message": "Terms of Service"
   }
 }

@@ -1022,3 +1022,57 @@ html, body {
         margin: 0;
     }
 }
+
+/* --------------------------------------------------
+   About page
+-------------------------------------------------- */
+.about {
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.about-info {
+    margin-bottom: 22px;
+}
+
+.about-app-name {
+    margin: 0 0 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-bright);
+}
+
+.about-meta {
+    margin: 0 0 3px;
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+.about-links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.about-link {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent-ink);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.about-link:hover {
+    color: var(--accent-ink-hover);
+    text-decoration: underline;
+}
+
+.about-link:focus-visible {
+    outline: 2px solid var(--accent-border);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
