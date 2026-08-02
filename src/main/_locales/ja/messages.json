@@ -190,5 +190,107 @@
   },
   "providerNameFallback": {
     "message": "プロバイダー"
+  },
+  "navProviders": {
+    "message": "プロバイダー"
+  },
+  "navExclusions": {
+    "message": "除外リスト"
+  },
+  "trustedSitesLabel": {
+    "message": "除外したウェブサイト"
+  },
+  "bypassesLabel": {
+    "message": "無視した警告"
+  },
+  "addSiteButton": {
+    "message": "追加"
+  },
+  "addSiteAriaLabel": {
+    "message": "除外リストに追加するウェブサイト"
+  },
+  "removeExclusionLabel": {
+    "message": "削除"
+  },
+  "removeAllForSite": {
+    "message": "すべて削除"
+  },
+  "temporaryBadge": {
+    "message": "一時的"
+  },
+  "temporaryBadgeTooltip": {
+    "message": "この除外は自動的に期限切れになります。"
+  },
+  "noTrustedSites": {
+    "message": "除外したウェブサイトはまだありません。"
+  },
+  "noBypasses": {
+    "message": "ここにはまだ何もありません。無視した警告はこのリストに表示されます。"
+  },
+  "exclusionsLockedNote": {
+    "message": "除外したウェブサイトの管理は管理者によって無効にされています。"
+  },
+  "exclusionsLoadError": {
+    "message": "除外したウェブサイトを読み込めませんでした。このページを開き直してください。"
+  },
+  "toastExclusionAdded": {
+    "message": "$host$ を除外したウェブサイトに追加しました。",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionExists": {
+    "message": "$host$ はすでに除外されています。",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionInvalid": {
+    "message": "有効なウェブサイトのアドレスを入力してください。"
+  },
+  "toastExclusionRemoved": {
+    "message": "除外を削除しました。"
+  },
+  "navAbout": {
+    "message": "情報"
+  },
+  "aboutLabel": {
+    "message": "情報"
+  },
+  "aboutVersion": {
+    "message": "バージョン $ver$",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "aboutCopyright": {
+    "message": "© 2026 Osprey Project LLC"
+  },
+  "aboutRights": {
+    "message": "無断複製・転載を禁じます。"
+  },
+  "aboutLicense": {
+    "message": "GPLv3 の下でライセンスされています。"
+  },
+  "aboutChangelog": {
+    "message": "変更履歴"
+  },
+  "aboutGithub": {
+    "message": "GitHub"
+  },
+  "aboutWebsite": {
+    "message": "ウェブサイト"
+  },
+  "aboutPrivacy": {
+    "message": "プライバシーポリシー"
+  },
+  "aboutTerms": {
+    "message": "利用規約"
   }
 }

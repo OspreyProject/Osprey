@@ -190,5 +190,107 @@
   },
   "providerNameFallback": {
     "message": "Poskytovatel"
+  },
+  "navProviders": {
+    "message": "Poskytovatelé"
+  },
+  "navExclusions": {
+    "message": "Výjimky"
+  },
+  "trustedSitesLabel": {
+    "message": "Vyloučené weby"
+  },
+  "bypassesLabel": {
+    "message": "Ignorovaná varování"
+  },
+  "addSiteButton": {
+    "message": "Přidat"
+  },
+  "addSiteAriaLabel": {
+    "message": "Web, který se má přidat mezi vyloučené weby"
+  },
+  "removeExclusionLabel": {
+    "message": "Odebrat"
+  },
+  "removeAllForSite": {
+    "message": "Odebrat vše"
+  },
+  "temporaryBadge": {
+    "message": "Dočasné"
+  },
+  "temporaryBadgeTooltip": {
+    "message": "Tato výjimka vyprší sama."
+  },
+  "noTrustedSites": {
+    "message": "Zatím žádné vyloučené weby."
+  },
+  "noBypasses": {
+    "message": "Zatím tu nic není. Varování, která ignorujete, se zobrazí v tomto seznamu."
+  },
+  "exclusionsLockedNote": {
+    "message": "Správu vyloučených webů vypnul váš správce."
+  },
+  "exclusionsLoadError": {
+    "message": "Vyloučené weby se nepodařilo načíst. Zkuste tuto stránku znovu otevřít."
+  },
+  "toastExclusionAdded": {
+    "message": "Web $host$ byl přidán mezi vyloučené weby.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionExists": {
+    "message": "$host$ je již vyloučen.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionInvalid": {
+    "message": "Zadejte platnou adresu webu."
+  },
+  "toastExclusionRemoved": {
+    "message": "Výjimka byla odebrána."
+  },
+  "navAbout": {
+    "message": "O aplikaci"
+  },
+  "aboutLabel": {
+    "message": "O aplikaci"
+  },
+  "aboutVersion": {
+    "message": "Verze $ver$",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "aboutCopyright": {
+    "message": "© 2026 Osprey Project LLC"
+  },
+  "aboutRights": {
+    "message": "Všechna práva vyhrazena."
+  },
+  "aboutLicense": {
+    "message": "Licencováno pod GPLv3."
+  },
+  "aboutChangelog": {
+    "message": "Seznam změn"
+  },
+  "aboutGithub": {
+    "message": "GitHub"
+  },
+  "aboutWebsite": {
+    "message": "Web"
+  },
+  "aboutPrivacy": {
+    "message": "Zásady ochrany osobních údajů"
+  },
+  "aboutTerms": {
+    "message": "Podmínky služby"
   }
 }

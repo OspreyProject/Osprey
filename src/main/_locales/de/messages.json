@@ -190,5 +190,107 @@
   },
   "providerNameFallback": {
     "message": "Anbieter"
+  },
+  "navProviders": {
+    "message": "Anbieter"
+  },
+  "navExclusions": {
+    "message": "Ausnahmen"
+  },
+  "trustedSitesLabel": {
+    "message": "Ausgeschlossene Websites"
+  },
+  "bypassesLabel": {
+    "message": "Ignorierte Warnungen"
+  },
+  "addSiteButton": {
+    "message": "Hinzufügen"
+  },
+  "addSiteAriaLabel": {
+    "message": "Website, die zu den ausgeschlossenen Websites hinzugefügt werden soll"
+  },
+  "removeExclusionLabel": {
+    "message": "Entfernen"
+  },
+  "removeAllForSite": {
+    "message": "Alle entfernen"
+  },
+  "temporaryBadge": {
+    "message": "Vorübergehend"
+  },
+  "temporaryBadgeTooltip": {
+    "message": "Diese Ausnahme läuft von selbst ab."
+  },
+  "noTrustedSites": {
+    "message": "Noch keine ausgeschlossenen Websites."
+  },
+  "noBypasses": {
+    "message": "Hier ist noch nichts. Warnungen, die du ignorierst, erscheinen in dieser Liste."
+  },
+  "exclusionsLockedNote": {
+    "message": "Die Verwaltung ausgeschlossener Websites wurde von deinem Administrator deaktiviert."
+  },
+  "exclusionsLoadError": {
+    "message": "Deine ausgeschlossenen Websites konnten nicht geladen werden. Versuche, diese Seite erneut zu öffnen."
+  },
+  "toastExclusionAdded": {
+    "message": "$host$ wurde zu den ausgeschlossenen Websites hinzugefügt.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionExists": {
+    "message": "$host$ ist bereits ausgeschlossen.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionInvalid": {
+    "message": "Gib eine gültige Website-Adresse ein."
+  },
+  "toastExclusionRemoved": {
+    "message": "Ausnahme entfernt."
+  },
+  "navAbout": {
+    "message": "Über"
+  },
+  "aboutLabel": {
+    "message": "Über"
+  },
+  "aboutVersion": {
+    "message": "Version $ver$",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "aboutCopyright": {
+    "message": "© 2026 Osprey Project LLC"
+  },
+  "aboutRights": {
+    "message": "Alle Rechte vorbehalten."
+  },
+  "aboutLicense": {
+    "message": "Lizenziert unter GPLv3."
+  },
+  "aboutChangelog": {
+    "message": "Änderungsprotokoll"
+  },
+  "aboutGithub": {
+    "message": "GitHub"
+  },
+  "aboutWebsite": {
+    "message": "Website"
+  },
+  "aboutPrivacy": {
+    "message": "Datenschutzerklärung"
+  },
+  "aboutTerms": {
+    "message": "Nutzungsbedingungen"
   }
 }

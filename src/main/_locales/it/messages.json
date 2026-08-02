@@ -190,5 +190,107 @@
   },
   "providerNameFallback": {
     "message": "Fornitore"
+  },
+  "navProviders": {
+    "message": "Provider"
+  },
+  "navExclusions": {
+    "message": "Esclusioni"
+  },
+  "trustedSitesLabel": {
+    "message": "Siti web esclusi"
+  },
+  "bypassesLabel": {
+    "message": "Avvisi ignorati"
+  },
+  "addSiteButton": {
+    "message": "Aggiungi"
+  },
+  "addSiteAriaLabel": {
+    "message": "Sito web da aggiungere ai siti web esclusi"
+  },
+  "removeExclusionLabel": {
+    "message": "Rimuovi"
+  },
+  "removeAllForSite": {
+    "message": "Rimuovi tutti"
+  },
+  "temporaryBadge": {
+    "message": "Temporaneo"
+  },
+  "temporaryBadgeTooltip": {
+    "message": "Questa esclusione scade da sola."
+  },
+  "noTrustedSites": {
+    "message": "Ancora nessun sito web escluso."
+  },
+  "noBypasses": {
+    "message": "Qui non c'è ancora niente. Gli avvisi che ignori compaiono in questo elenco."
+  },
+  "exclusionsLockedNote": {
+    "message": "La gestione dei siti web esclusi è stata disattivata dal tuo amministratore."
+  },
+  "exclusionsLoadError": {
+    "message": "Impossibile caricare i tuoi siti web esclusi. Prova a riaprire questa pagina."
+  },
+  "toastExclusionAdded": {
+    "message": "$host$ è stato aggiunto ai siti web esclusi.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionExists": {
+    "message": "$host$ è già escluso.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionInvalid": {
+    "message": "Inserisci un indirizzo di sito web valido."
+  },
+  "toastExclusionRemoved": {
+    "message": "Esclusione rimossa."
+  },
+  "navAbout": {
+    "message": "Informazioni"
+  },
+  "aboutLabel": {
+    "message": "Informazioni"
+  },
+  "aboutVersion": {
+    "message": "Versione $ver$",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "aboutCopyright": {
+    "message": "© 2026 Osprey Project LLC"
+  },
+  "aboutRights": {
+    "message": "Tutti i diritti riservati."
+  },
+  "aboutLicense": {
+    "message": "Concesso in licenza sotto GPLv3."
+  },
+  "aboutChangelog": {
+    "message": "Registro delle modifiche"
+  },
+  "aboutGithub": {
+    "message": "GitHub"
+  },
+  "aboutWebsite": {
+    "message": "Sito web"
+  },
+  "aboutPrivacy": {
+    "message": "Informativa sulla privacy"
+  },
+  "aboutTerms": {
+    "message": "Termini di servizio"
   }
 }

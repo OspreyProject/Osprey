@@ -190,5 +190,107 @@
   },
   "providerNameFallback": {
     "message": "Dostawca"
+  },
+  "navProviders": {
+    "message": "Dostawcy"
+  },
+  "navExclusions": {
+    "message": "Wykluczenia"
+  },
+  "trustedSitesLabel": {
+    "message": "Wykluczone strony"
+  },
+  "bypassesLabel": {
+    "message": "Zignorowane ostrzeżenia"
+  },
+  "addSiteButton": {
+    "message": "Dodaj"
+  },
+  "addSiteAriaLabel": {
+    "message": "Strona do dodania do wykluczonych stron"
+  },
+  "removeExclusionLabel": {
+    "message": "Usuń"
+  },
+  "removeAllForSite": {
+    "message": "Usuń wszystko"
+  },
+  "temporaryBadge": {
+    "message": "Tymczasowe"
+  },
+  "temporaryBadgeTooltip": {
+    "message": "To wykluczenie wygasa samoczynnie."
+  },
+  "noTrustedSites": {
+    "message": "Brak wykluczonych stron."
+  },
+  "noBypasses": {
+    "message": "Jeszcze nic tu nie ma. Ignorowane ostrzeżenia pojawią się na tej liście."
+  },
+  "exclusionsLockedNote": {
+    "message": "Zarządzanie wykluczonymi stronami zostało wyłączone przez administratora."
+  },
+  "exclusionsLoadError": {
+    "message": "Nie udało się wczytać wykluczonych stron. Spróbuj ponownie otworzyć tę stronę."
+  },
+  "toastExclusionAdded": {
+    "message": "Dodano $host$ do wykluczonych stron.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionExists": {
+    "message": "$host$ jest już wykluczona.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionInvalid": {
+    "message": "Wprowadź prawidłowy adres strony."
+  },
+  "toastExclusionRemoved": {
+    "message": "Wykluczenie usunięte."
+  },
+  "navAbout": {
+    "message": "O aplikacji"
+  },
+  "aboutLabel": {
+    "message": "O aplikacji"
+  },
+  "aboutVersion": {
+    "message": "Wersja $ver$",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "aboutCopyright": {
+    "message": "© 2026 Osprey Project LLC"
+  },
+  "aboutRights": {
+    "message": "Wszelkie prawa zastrzeżone."
+  },
+  "aboutLicense": {
+    "message": "Licencjonowane na warunkach GPLv3."
+  },
+  "aboutChangelog": {
+    "message": "Dziennik zmian"
+  },
+  "aboutGithub": {
+    "message": "GitHub"
+  },
+  "aboutWebsite": {
+    "message": "Strona"
+  },
+  "aboutPrivacy": {
+    "message": "Polityka prywatności"
+  },
+  "aboutTerms": {
+    "message": "Warunki usługi"
   }
 }

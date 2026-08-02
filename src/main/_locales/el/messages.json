@@ -190,5 +190,107 @@
   },
   "providerNameFallback": {
     "message": "Πάροχος"
+  },
+  "navProviders": {
+    "message": "Πάροχοι"
+  },
+  "navExclusions": {
+    "message": "Εξαιρέσεις"
+  },
+  "trustedSitesLabel": {
+    "message": "Εξαιρούμενοι ιστότοποι"
+  },
+  "bypassesLabel": {
+    "message": "Αγνοημένες προειδοποιήσεις"
+  },
+  "addSiteButton": {
+    "message": "Προσθήκη"
+  },
+  "addSiteAriaLabel": {
+    "message": "Ιστότοπος προς προσθήκη στους εξαιρούμενους ιστότοπους"
+  },
+  "removeExclusionLabel": {
+    "message": "Αφαίρεση"
+  },
+  "removeAllForSite": {
+    "message": "Αφαίρεση όλων"
+  },
+  "temporaryBadge": {
+    "message": "Προσωρινό"
+  },
+  "temporaryBadgeTooltip": {
+    "message": "Αυτή η εξαίρεση λήγει από μόνη της."
+  },
+  "noTrustedSites": {
+    "message": "Δεν υπάρχουν ακόμη εξαιρούμενοι ιστότοποι."
+  },
+  "noBypasses": {
+    "message": "Δεν υπάρχει τίποτα εδώ ακόμη. Οι προειδοποιήσεις που αγνοείτε εμφανίζονται σε αυτήν τη λίστα."
+  },
+  "exclusionsLockedNote": {
+    "message": "Η διαχείριση των εξαιρούμενων ιστότοπων έχει απενεργοποιηθεί από τον διαχειριστή σας."
+  },
+  "exclusionsLoadError": {
+    "message": "Δεν ήταν δυνατή η φόρτωση των εξαιρούμενων ιστότοπων. Δοκιμάστε να ανοίξετε ξανά αυτήν τη σελίδα."
+  },
+  "toastExclusionAdded": {
+    "message": "Ο ιστότοπος $host$ προστέθηκε στους εξαιρούμενους ιστότοπους.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionExists": {
+    "message": "Ο ιστότοπος $host$ έχει ήδη εξαιρεθεί.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionInvalid": {
+    "message": "Εισαγάγετε μια έγκυρη διεύθυνση ιστότοπου."
+  },
+  "toastExclusionRemoved": {
+    "message": "Η εξαίρεση αφαιρέθηκε."
+  },
+  "navAbout": {
+    "message": "Σχετικά"
+  },
+  "aboutLabel": {
+    "message": "Σχετικά"
+  },
+  "aboutVersion": {
+    "message": "Έκδοση $ver$",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "aboutCopyright": {
+    "message": "© 2026 Osprey Project LLC"
+  },
+  "aboutRights": {
+    "message": "Με επιφύλαξη κάθε δικαιώματος."
+  },
+  "aboutLicense": {
+    "message": "Υπό άδεια GPLv3."
+  },
+  "aboutChangelog": {
+    "message": "Αρχείο αλλαγών"
+  },
+  "aboutGithub": {
+    "message": "GitHub"
+  },
+  "aboutWebsite": {
+    "message": "Ιστότοπος"
+  },
+  "aboutPrivacy": {
+    "message": "Πολιτική απορρήτου"
+  },
+  "aboutTerms": {
+    "message": "Όροι χρήσης"
   }
 }

@@ -190,5 +190,107 @@
   },
   "providerNameFallback": {
     "message": "Provider"
+  },
+  "navProviders": {
+    "message": "Providers"
+  },
+  "navExclusions": {
+    "message": "Uitzonderingen"
+  },
+  "trustedSitesLabel": {
+    "message": "Uitgesloten websites"
+  },
+  "bypassesLabel": {
+    "message": "Genegeerde waarschuwingen"
+  },
+  "addSiteButton": {
+    "message": "Toevoegen"
+  },
+  "addSiteAriaLabel": {
+    "message": "Website om toe te voegen aan uitgesloten websites"
+  },
+  "removeExclusionLabel": {
+    "message": "Verwijderen"
+  },
+  "removeAllForSite": {
+    "message": "Alles verwijderen"
+  },
+  "temporaryBadge": {
+    "message": "Tijdelijk"
+  },
+  "temporaryBadgeTooltip": {
+    "message": "Deze uitzondering verloopt vanzelf."
+  },
+  "noTrustedSites": {
+    "message": "Nog geen uitgesloten websites."
+  },
+  "noBypasses": {
+    "message": "Hier is nog niets. Waarschuwingen die je negeert, verschijnen in deze lijst."
+  },
+  "exclusionsLockedNote": {
+    "message": "Het beheer van uitgesloten websites is uitgeschakeld door je beheerder."
+  },
+  "exclusionsLoadError": {
+    "message": "Je uitgesloten websites konden niet worden geladen. Probeer deze pagina opnieuw te openen."
+  },
+  "toastExclusionAdded": {
+    "message": "$host$ is toegevoegd aan uitgesloten websites.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionExists": {
+    "message": "$host$ is al uitgesloten.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionInvalid": {
+    "message": "Voer een geldig websiteadres in."
+  },
+  "toastExclusionRemoved": {
+    "message": "Uitzondering verwijderd."
+  },
+  "navAbout": {
+    "message": "Over"
+  },
+  "aboutLabel": {
+    "message": "Over"
+  },
+  "aboutVersion": {
+    "message": "Versie $ver$",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "aboutCopyright": {
+    "message": "© 2026 Osprey Project LLC"
+  },
+  "aboutRights": {
+    "message": "Alle rechten voorbehouden."
+  },
+  "aboutLicense": {
+    "message": "Gelicentieerd onder GPLv3."
+  },
+  "aboutChangelog": {
+    "message": "Wijzigingslogboek"
+  },
+  "aboutGithub": {
+    "message": "GitHub"
+  },
+  "aboutWebsite": {
+    "message": "Website"
+  },
+  "aboutPrivacy": {
+    "message": "Privacybeleid"
+  },
+  "aboutTerms": {
+    "message": "Servicevoorwaarden"
   }
 }

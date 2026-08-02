@@ -190,5 +190,107 @@
   },
   "providerNameFallback": {
     "message": "مزوّد"
+  },
+  "navProviders": {
+    "message": "المزوّدون"
+  },
+  "navExclusions": {
+    "message": "الاستثناءات"
+  },
+  "trustedSitesLabel": {
+    "message": "المواقع المستثناة"
+  },
+  "bypassesLabel": {
+    "message": "التحذيرات المتجاهَلة"
+  },
+  "addSiteButton": {
+    "message": "إضافة"
+  },
+  "addSiteAriaLabel": {
+    "message": "موقع لإضافته إلى المواقع المستثناة"
+  },
+  "removeExclusionLabel": {
+    "message": "إزالة"
+  },
+  "removeAllForSite": {
+    "message": "إزالة الكل"
+  },
+  "temporaryBadge": {
+    "message": "مؤقت"
+  },
+  "temporaryBadgeTooltip": {
+    "message": "ينتهي هذا الاستثناء تلقائيًا."
+  },
+  "noTrustedSites": {
+    "message": "لا توجد مواقع مستثناة بعد."
+  },
+  "noBypasses": {
+    "message": "لا شيء هنا بعد. تظهر التحذيرات التي تتجاهلها في هذه القائمة."
+  },
+  "exclusionsLockedNote": {
+    "message": "إدارة المواقع المستثناة معطَّلة من قِبل المسؤول."
+  },
+  "exclusionsLoadError": {
+    "message": "تعذّر تحميل المواقع المستثناة. حاول إعادة فتح هذه الصفحة."
+  },
+  "toastExclusionAdded": {
+    "message": "تمت إضافة $host$ إلى المواقع المستثناة.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionExists": {
+    "message": "$host$ مستثنى بالفعل.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionInvalid": {
+    "message": "أدخل عنوان موقع صالحًا."
+  },
+  "toastExclusionRemoved": {
+    "message": "تمت إزالة الاستثناء."
+  },
+  "navAbout": {
+    "message": "حول"
+  },
+  "aboutLabel": {
+    "message": "حول"
+  },
+  "aboutVersion": {
+    "message": "الإصدار $ver$",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "aboutCopyright": {
+    "message": "© 2026 Osprey Project LLC"
+  },
+  "aboutRights": {
+    "message": "جميع الحقوق محفوظة."
+  },
+  "aboutLicense": {
+    "message": "مرخّص بموجب GPLv3."
+  },
+  "aboutChangelog": {
+    "message": "سجل التغييرات"
+  },
+  "aboutGithub": {
+    "message": "GitHub"
+  },
+  "aboutWebsite": {
+    "message": "الموقع"
+  },
+  "aboutPrivacy": {
+    "message": "سياسة الخصوصية"
+  },
+  "aboutTerms": {
+    "message": "شروط الخدمة"
   }
 }

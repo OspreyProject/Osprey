@@ -190,5 +190,107 @@
   },
   "providerNameFallback": {
     "message": "Leverandør"
+  },
+  "navProviders": {
+    "message": "Leverandører"
+  },
+  "navExclusions": {
+    "message": "Unntak"
+  },
+  "trustedSitesLabel": {
+    "message": "Ekskluderte nettsteder"
+  },
+  "bypassesLabel": {
+    "message": "Ignorerte advarsler"
+  },
+  "addSiteButton": {
+    "message": "Legg til"
+  },
+  "addSiteAriaLabel": {
+    "message": "Nettsted som skal legges til i ekskluderte nettsteder"
+  },
+  "removeExclusionLabel": {
+    "message": "Fjern"
+  },
+  "removeAllForSite": {
+    "message": "Fjern alle"
+  },
+  "temporaryBadge": {
+    "message": "Midlertidig"
+  },
+  "temporaryBadgeTooltip": {
+    "message": "Dette unntaket utløper av seg selv."
+  },
+  "noTrustedSites": {
+    "message": "Ingen ekskluderte nettsteder ennå."
+  },
+  "noBypasses": {
+    "message": "Det er ingenting her ennå. Advarsler du ignorerer, vises i denne listen."
+  },
+  "exclusionsLockedNote": {
+    "message": "Administrasjon av ekskluderte nettsteder er slått av av administratoren din."
+  },
+  "exclusionsLoadError": {
+    "message": "Kunne ikke laste inn de ekskluderte nettstedene dine. Prøv å åpne denne siden på nytt."
+  },
+  "toastExclusionAdded": {
+    "message": "$host$ ble lagt til i ekskluderte nettsteder.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionExists": {
+    "message": "$host$ er allerede ekskludert.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionInvalid": {
+    "message": "Skriv inn en gyldig nettstedsadresse."
+  },
+  "toastExclusionRemoved": {
+    "message": "Unntak fjernet."
+  },
+  "navAbout": {
+    "message": "Om"
+  },
+  "aboutLabel": {
+    "message": "Om"
+  },
+  "aboutVersion": {
+    "message": "Versjon $ver$",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "aboutCopyright": {
+    "message": "© 2026 Osprey Project LLC"
+  },
+  "aboutRights": {
+    "message": "Med enerett."
+  },
+  "aboutLicense": {
+    "message": "Lisensiert under GPLv3."
+  },
+  "aboutChangelog": {
+    "message": "Endringslogg"
+  },
+  "aboutGithub": {
+    "message": "GitHub"
+  },
+  "aboutWebsite": {
+    "message": "Nettsted"
+  },
+  "aboutPrivacy": {
+    "message": "Personvernerklæring"
+  },
+  "aboutTerms": {
+    "message": "Vilkår for bruk"
   }
 }

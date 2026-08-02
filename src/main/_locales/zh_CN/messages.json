@@ -190,5 +190,107 @@
   },
   "providerNameFallback": {
     "message": "提供商"
+  },
+  "navProviders": {
+    "message": "提供商"
+  },
+  "navExclusions": {
+    "message": "排除列表"
+  },
+  "trustedSitesLabel": {
+    "message": "已排除的网站"
+  },
+  "bypassesLabel": {
+    "message": "已忽略的警告"
+  },
+  "addSiteButton": {
+    "message": "添加"
+  },
+  "addSiteAriaLabel": {
+    "message": "要添加到已排除网站的网站"
+  },
+  "removeExclusionLabel": {
+    "message": "移除"
+  },
+  "removeAllForSite": {
+    "message": "全部移除"
+  },
+  "temporaryBadge": {
+    "message": "临时"
+  },
+  "temporaryBadgeTooltip": {
+    "message": "此排除项会自动过期。"
+  },
+  "noTrustedSites": {
+    "message": "尚无已排除的网站。"
+  },
+  "noBypasses": {
+    "message": "这里还没有任何内容。你忽略的警告会显示在此列表中。"
+  },
+  "exclusionsLockedNote": {
+    "message": "已排除网站的管理已被你的管理员关闭。"
+  },
+  "exclusionsLoadError": {
+    "message": "无法加载你已排除的网站。请尝试重新打开此页面。"
+  },
+  "toastExclusionAdded": {
+    "message": "已将 $host$ 添加到已排除的网站。",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionExists": {
+    "message": "$host$ 已被排除。",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionInvalid": {
+    "message": "请输入有效的网站地址。"
+  },
+  "toastExclusionRemoved": {
+    "message": "已移除排除项。"
+  },
+  "navAbout": {
+    "message": "关于"
+  },
+  "aboutLabel": {
+    "message": "关于"
+  },
+  "aboutVersion": {
+    "message": "版本 $ver$",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "aboutCopyright": {
+    "message": "© 2026 Osprey Project LLC"
+  },
+  "aboutRights": {
+    "message": "保留所有权利。"
+  },
+  "aboutLicense": {
+    "message": "基于 GPLv3 授权。"
+  },
+  "aboutChangelog": {
+    "message": "更新日志"
+  },
+  "aboutGithub": {
+    "message": "GitHub"
+  },
+  "aboutWebsite": {
+    "message": "网站"
+  },
+  "aboutPrivacy": {
+    "message": "隐私政策"
+  },
+  "aboutTerms": {
+    "message": "服务条款"
   }
 }

@@ -190,5 +190,107 @@
   },
   "providerNameFallback": {
     "message": "Поставщик"
+  },
+  "navProviders": {
+    "message": "Поставщики"
+  },
+  "navExclusions": {
+    "message": "Исключения"
+  },
+  "trustedSitesLabel": {
+    "message": "Исключённые сайты"
+  },
+  "bypassesLabel": {
+    "message": "Проигнорированные предупреждения"
+  },
+  "addSiteButton": {
+    "message": "Добавить"
+  },
+  "addSiteAriaLabel": {
+    "message": "Сайт для добавления в исключённые сайты"
+  },
+  "removeExclusionLabel": {
+    "message": "Удалить"
+  },
+  "removeAllForSite": {
+    "message": "Удалить все"
+  },
+  "temporaryBadge": {
+    "message": "Временное"
+  },
+  "temporaryBadgeTooltip": {
+    "message": "Это исключение истекает само по себе."
+  },
+  "noTrustedSites": {
+    "message": "Исключённых сайтов пока нет."
+  },
+  "noBypasses": {
+    "message": "Здесь пока ничего нет. Предупреждения, которые вы игнорируете, отображаются в этом списке."
+  },
+  "exclusionsLockedNote": {
+    "message": "Управление исключёнными сайтами отключено вашим администратором."
+  },
+  "exclusionsLoadError": {
+    "message": "Не удалось загрузить ваши исключённые сайты. Попробуйте снова открыть эту страницу."
+  },
+  "toastExclusionAdded": {
+    "message": "Сайт $host$ добавлен в исключённые сайты.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionExists": {
+    "message": "$host$ уже исключён.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionInvalid": {
+    "message": "Введите действительный адрес сайта."
+  },
+  "toastExclusionRemoved": {
+    "message": "Исключение удалено."
+  },
+  "navAbout": {
+    "message": "О программе"
+  },
+  "aboutLabel": {
+    "message": "О программе"
+  },
+  "aboutVersion": {
+    "message": "Версия $ver$",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "aboutCopyright": {
+    "message": "© 2026 Osprey Project LLC"
+  },
+  "aboutRights": {
+    "message": "Все права защищены."
+  },
+  "aboutLicense": {
+    "message": "Распространяется по лицензии GPLv3."
+  },
+  "aboutChangelog": {
+    "message": "Список изменений"
+  },
+  "aboutGithub": {
+    "message": "GitHub"
+  },
+  "aboutWebsite": {
+    "message": "Сайт"
+  },
+  "aboutPrivacy": {
+    "message": "Политика конфиденциальности"
+  },
+  "aboutTerms": {
+    "message": "Условия использования"
   }
 }

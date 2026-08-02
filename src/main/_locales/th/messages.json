@@ -190,5 +190,107 @@
   },
   "providerNameFallback": {
     "message": "ผู้ให้บริการ"
+  },
+  "navProviders": {
+    "message": "ผู้ให้บริการ"
+  },
+  "navExclusions": {
+    "message": "รายการยกเว้น"
+  },
+  "trustedSitesLabel": {
+    "message": "เว็บไซต์ที่ยกเว้น"
+  },
+  "bypassesLabel": {
+    "message": "คำเตือนที่ถูกเพิกเฉย"
+  },
+  "addSiteButton": {
+    "message": "เพิ่ม"
+  },
+  "addSiteAriaLabel": {
+    "message": "เว็บไซต์ที่จะเพิ่มลงในเว็บไซต์ที่ยกเว้น"
+  },
+  "removeExclusionLabel": {
+    "message": "นำออก"
+  },
+  "removeAllForSite": {
+    "message": "นำออกทั้งหมด"
+  },
+  "temporaryBadge": {
+    "message": "ชั่วคราว"
+  },
+  "temporaryBadgeTooltip": {
+    "message": "การยกเว้นนี้จะหมดอายุเอง"
+  },
+  "noTrustedSites": {
+    "message": "ยังไม่มีเว็บไซต์ที่ยกเว้น"
+  },
+  "noBypasses": {
+    "message": "ยังไม่มีอะไรที่นี่ คำเตือนที่คุณเพิกเฉยจะแสดงในรายการนี้"
+  },
+  "exclusionsLockedNote": {
+    "message": "การจัดการเว็บไซต์ที่ยกเว้นถูกปิดโดยผู้ดูแลระบบของคุณ"
+  },
+  "exclusionsLoadError": {
+    "message": "ไม่สามารถโหลดเว็บไซต์ที่ยกเว้นของคุณได้ ลองเปิดหน้านี้อีกครั้ง"
+  },
+  "toastExclusionAdded": {
+    "message": "เพิ่ม $host$ ลงในเว็บไซต์ที่ยกเว้นแล้ว",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionExists": {
+    "message": "$host$ ถูกยกเว้นอยู่แล้ว",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionInvalid": {
+    "message": "ป้อนที่อยู่เว็บไซต์ที่ถูกต้อง"
+  },
+  "toastExclusionRemoved": {
+    "message": "นำการยกเว้นออกแล้ว"
+  },
+  "navAbout": {
+    "message": "เกี่ยวกับ"
+  },
+  "aboutLabel": {
+    "message": "เกี่ยวกับ"
+  },
+  "aboutVersion": {
+    "message": "เวอร์ชัน $ver$",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "aboutCopyright": {
+    "message": "© 2026 Osprey Project LLC"
+  },
+  "aboutRights": {
+    "message": "สงวนลิขสิทธิ์ทั้งหมด"
+  },
+  "aboutLicense": {
+    "message": "อนุญาตภายใต้ GPLv3"
+  },
+  "aboutChangelog": {
+    "message": "บันทึกการเปลี่ยนแปลง"
+  },
+  "aboutGithub": {
+    "message": "GitHub"
+  },
+  "aboutWebsite": {
+    "message": "เว็บไซต์"
+  },
+  "aboutPrivacy": {
+    "message": "นโยบายความเป็นส่วนตัว"
+  },
+  "aboutTerms": {
+    "message": "ข้อกำหนดในการให้บริการ"
   }
 }

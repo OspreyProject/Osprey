@@ -190,5 +190,107 @@
   },
   "providerNameFallback": {
     "message": "ارائه‌دهنده"
+  },
+  "navProviders": {
+    "message": "ارائه‌دهندگان"
+  },
+  "navExclusions": {
+    "message": "استثناها"
+  },
+  "trustedSitesLabel": {
+    "message": "وب‌سایت‌های مستثنا"
+  },
+  "bypassesLabel": {
+    "message": "هشدارهای نادیده‌گرفته‌شده"
+  },
+  "addSiteButton": {
+    "message": "افزودن"
+  },
+  "addSiteAriaLabel": {
+    "message": "وب‌سایتی برای افزودن به وب‌سایت‌های مستثنا"
+  },
+  "removeExclusionLabel": {
+    "message": "حذف"
+  },
+  "removeAllForSite": {
+    "message": "حذف همه"
+  },
+  "temporaryBadge": {
+    "message": "موقت"
+  },
+  "temporaryBadgeTooltip": {
+    "message": "این استثنا خودبه‌خود منقضی می‌شود."
+  },
+  "noTrustedSites": {
+    "message": "هنوز هیچ وب‌سایت مستثنایی وجود ندارد."
+  },
+  "noBypasses": {
+    "message": "هنوز چیزی اینجا نیست. هشدارهایی که نادیده می‌گیرید در این فهرست نمایش داده می‌شوند."
+  },
+  "exclusionsLockedNote": {
+    "message": "مدیریت وب‌سایت‌های مستثنا توسط مدیر شما غیرفعال شده است."
+  },
+  "exclusionsLoadError": {
+    "message": "بارگیری وب‌سایت‌های مستثنای شما ممکن نشد. این صفحه را دوباره باز کنید."
+  },
+  "toastExclusionAdded": {
+    "message": "$host$ به وب‌سایت‌های مستثنا افزوده شد.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionExists": {
+    "message": "$host$ از قبل مستثنا شده است.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionInvalid": {
+    "message": "یک نشانی وب‌سایت معتبر وارد کنید."
+  },
+  "toastExclusionRemoved": {
+    "message": "استثنا حذف شد."
+  },
+  "navAbout": {
+    "message": "درباره"
+  },
+  "aboutLabel": {
+    "message": "درباره"
+  },
+  "aboutVersion": {
+    "message": "نسخهٔ $ver$",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "aboutCopyright": {
+    "message": "© 2026 Osprey Project LLC"
+  },
+  "aboutRights": {
+    "message": "همهٔ حقوق محفوظ است."
+  },
+  "aboutLicense": {
+    "message": "دارای مجوز GPLv3."
+  },
+  "aboutChangelog": {
+    "message": "فهرست تغییرات"
+  },
+  "aboutGithub": {
+    "message": "GitHub"
+  },
+  "aboutWebsite": {
+    "message": "وب‌سایت"
+  },
+  "aboutPrivacy": {
+    "message": "سیاست حریم خصوصی"
+  },
+  "aboutTerms": {
+    "message": "شرایط خدمات"
   }
 }

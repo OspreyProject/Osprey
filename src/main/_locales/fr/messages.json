@@ -190,5 +190,107 @@
   },
   "providerNameFallback": {
     "message": "Fournisseur"
+  },
+  "navProviders": {
+    "message": "Fournisseurs"
+  },
+  "navExclusions": {
+    "message": "Exclusions"
+  },
+  "trustedSitesLabel": {
+    "message": "Sites web exclus"
+  },
+  "bypassesLabel": {
+    "message": "Avertissements ignorés"
+  },
+  "addSiteButton": {
+    "message": "Ajouter"
+  },
+  "addSiteAriaLabel": {
+    "message": "Site web à ajouter aux sites web exclus"
+  },
+  "removeExclusionLabel": {
+    "message": "Retirer"
+  },
+  "removeAllForSite": {
+    "message": "Tout retirer"
+  },
+  "temporaryBadge": {
+    "message": "Temporaire"
+  },
+  "temporaryBadgeTooltip": {
+    "message": "Cette exclusion expire d'elle-même."
+  },
+  "noTrustedSites": {
+    "message": "Aucun site web exclu pour le moment."
+  },
+  "noBypasses": {
+    "message": "Rien ici pour le moment. Les avertissements que vous ignorez apparaissent dans cette liste."
+  },
+  "exclusionsLockedNote": {
+    "message": "La gestion des sites web exclus a été désactivée par votre administrateur."
+  },
+  "exclusionsLoadError": {
+    "message": "Impossible de charger vos sites web exclus. Essayez de rouvrir cette page."
+  },
+  "toastExclusionAdded": {
+    "message": "$host$ a été ajouté aux sites web exclus.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionExists": {
+    "message": "$host$ est déjà exclu.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionInvalid": {
+    "message": "Saisissez une adresse de site web valide."
+  },
+  "toastExclusionRemoved": {
+    "message": "Exclusion retirée."
+  },
+  "navAbout": {
+    "message": "À propos"
+  },
+  "aboutLabel": {
+    "message": "À propos"
+  },
+  "aboutVersion": {
+    "message": "Version $ver$",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "aboutCopyright": {
+    "message": "© 2026 Osprey Project LLC"
+  },
+  "aboutRights": {
+    "message": "Tous droits réservés."
+  },
+  "aboutLicense": {
+    "message": "Sous licence GPLv3."
+  },
+  "aboutChangelog": {
+    "message": "Journal des modifications"
+  },
+  "aboutGithub": {
+    "message": "GitHub"
+  },
+  "aboutWebsite": {
+    "message": "Site web"
+  },
+  "aboutPrivacy": {
+    "message": "Politique de confidentialité"
+  },
+  "aboutTerms": {
+    "message": "Conditions d'utilisation"
   }
 }

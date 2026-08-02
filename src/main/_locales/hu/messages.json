@@ -190,5 +190,107 @@
   },
   "providerNameFallback": {
     "message": "Szolgáltató"
+  },
+  "navProviders": {
+    "message": "Szolgáltatók"
+  },
+  "navExclusions": {
+    "message": "Kivételek"
+  },
+  "trustedSitesLabel": {
+    "message": "Kizárt webhelyek"
+  },
+  "bypassesLabel": {
+    "message": "Figyelmen kívül hagyott figyelmeztetések"
+  },
+  "addSiteButton": {
+    "message": "Hozzáadás"
+  },
+  "addSiteAriaLabel": {
+    "message": "A kizárt webhelyekhez hozzáadandó webhely"
+  },
+  "removeExclusionLabel": {
+    "message": "Eltávolítás"
+  },
+  "removeAllForSite": {
+    "message": "Összes eltávolítása"
+  },
+  "temporaryBadge": {
+    "message": "Ideiglenes"
+  },
+  "temporaryBadgeTooltip": {
+    "message": "Ez a kivétel magától lejár."
+  },
+  "noTrustedSites": {
+    "message": "Még nincsenek kizárt webhelyek."
+  },
+  "noBypasses": {
+    "message": "Itt még nincs semmi. Az általad figyelmen kívül hagyott figyelmeztetések ebben a listában jelennek meg."
+  },
+  "exclusionsLockedNote": {
+    "message": "A kizárt webhelyek kezelését a rendszergazdád kikapcsolta."
+  },
+  "exclusionsLoadError": {
+    "message": "Nem sikerült betölteni a kizárt webhelyeidet. Próbáld meg újra megnyitni ezt az oldalt."
+  },
+  "toastExclusionAdded": {
+    "message": "A(z) $host$ hozzáadva a kizárt webhelyekhez.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionExists": {
+    "message": "A(z) $host$ már ki van zárva.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionInvalid": {
+    "message": "Adj meg egy érvényes webhelycímet."
+  },
+  "toastExclusionRemoved": {
+    "message": "Kivétel eltávolítva."
+  },
+  "navAbout": {
+    "message": "Névjegy"
+  },
+  "aboutLabel": {
+    "message": "Névjegy"
+  },
+  "aboutVersion": {
+    "message": "Verzió: $ver$",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "aboutCopyright": {
+    "message": "© 2026 Osprey Project LLC"
+  },
+  "aboutRights": {
+    "message": "Minden jog fenntartva."
+  },
+  "aboutLicense": {
+    "message": "GPLv3 licenc alatt."
+  },
+  "aboutChangelog": {
+    "message": "Változásnapló"
+  },
+  "aboutGithub": {
+    "message": "GitHub"
+  },
+  "aboutWebsite": {
+    "message": "Webhely"
+  },
+  "aboutPrivacy": {
+    "message": "Adatvédelmi szabályzat"
+  },
+  "aboutTerms": {
+    "message": "Szolgáltatási feltételek"
   }
 }

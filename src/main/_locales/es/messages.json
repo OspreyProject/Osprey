@@ -190,5 +190,107 @@
   },
   "providerNameFallback": {
     "message": "Proveedor"
+  },
+  "navProviders": {
+    "message": "Proveedores"
+  },
+  "navExclusions": {
+    "message": "Exclusiones"
+  },
+  "trustedSitesLabel": {
+    "message": "Sitios web excluidos"
+  },
+  "bypassesLabel": {
+    "message": "Advertencias ignoradas"
+  },
+  "addSiteButton": {
+    "message": "Añadir"
+  },
+  "addSiteAriaLabel": {
+    "message": "Sitio web para añadir a los sitios web excluidos"
+  },
+  "removeExclusionLabel": {
+    "message": "Quitar"
+  },
+  "removeAllForSite": {
+    "message": "Quitar todo"
+  },
+  "temporaryBadge": {
+    "message": "Temporal"
+  },
+  "temporaryBadgeTooltip": {
+    "message": "Esta exclusión caduca por sí sola."
+  },
+  "noTrustedSites": {
+    "message": "Aún no hay sitios web excluidos."
+  },
+  "noBypasses": {
+    "message": "Aquí no hay nada todavía. Las advertencias que ignores aparecerán en esta lista."
+  },
+  "exclusionsLockedNote": {
+    "message": "La gestión de los sitios web excluidos está desactivada por tu administrador."
+  },
+  "exclusionsLoadError": {
+    "message": "No se pudieron cargar tus sitios web excluidos. Prueba a volver a abrir esta página."
+  },
+  "toastExclusionAdded": {
+    "message": "Se añadió $host$ a los sitios web excluidos.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionExists": {
+    "message": "$host$ ya está excluido.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionInvalid": {
+    "message": "Introduce una dirección de sitio web válida."
+  },
+  "toastExclusionRemoved": {
+    "message": "Exclusión eliminada."
+  },
+  "navAbout": {
+    "message": "Acerca de"
+  },
+  "aboutLabel": {
+    "message": "Acerca de"
+  },
+  "aboutVersion": {
+    "message": "Versión $ver$",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "aboutCopyright": {
+    "message": "© 2026 Osprey Project LLC"
+  },
+  "aboutRights": {
+    "message": "Todos los derechos reservados."
+  },
+  "aboutLicense": {
+    "message": "Con licencia GPLv3."
+  },
+  "aboutChangelog": {
+    "message": "Registro de cambios"
+  },
+  "aboutGithub": {
+    "message": "GitHub"
+  },
+  "aboutWebsite": {
+    "message": "Sitio web"
+  },
+  "aboutPrivacy": {
+    "message": "Política de privacidad"
+  },
+  "aboutTerms": {
+    "message": "Términos del servicio"
   }
 }

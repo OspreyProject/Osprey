@@ -190,5 +190,107 @@
   },
   "providerNameFallback": {
     "message": "提供者"
+  },
+  "navProviders": {
+    "message": "提供者"
+  },
+  "navExclusions": {
+    "message": "排除清單"
+  },
+  "trustedSitesLabel": {
+    "message": "已排除的網站"
+  },
+  "bypassesLabel": {
+    "message": "已忽略的警告"
+  },
+  "addSiteButton": {
+    "message": "新增"
+  },
+  "addSiteAriaLabel": {
+    "message": "要新增至已排除網站的網站"
+  },
+  "removeExclusionLabel": {
+    "message": "移除"
+  },
+  "removeAllForSite": {
+    "message": "全部移除"
+  },
+  "temporaryBadge": {
+    "message": "暫時"
+  },
+  "temporaryBadgeTooltip": {
+    "message": "此排除項目會自動到期。"
+  },
+  "noTrustedSites": {
+    "message": "尚無已排除的網站。"
+  },
+  "noBypasses": {
+    "message": "這裡還沒有任何內容。你忽略的警告會顯示在此清單中。"
+  },
+  "exclusionsLockedNote": {
+    "message": "已排除網站的管理已被你的管理員關閉。"
+  },
+  "exclusionsLoadError": {
+    "message": "無法載入你已排除的網站。請嘗試重新開啟此頁面。"
+  },
+  "toastExclusionAdded": {
+    "message": "已將 $host$ 新增至已排除的網站。",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionExists": {
+    "message": "$host$ 已被排除。",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionInvalid": {
+    "message": "請輸入有效的網站位址。"
+  },
+  "toastExclusionRemoved": {
+    "message": "已移除排除項目。"
+  },
+  "navAbout": {
+    "message": "關於"
+  },
+  "aboutLabel": {
+    "message": "關於"
+  },
+  "aboutVersion": {
+    "message": "版本 $ver$",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "aboutCopyright": {
+    "message": "© 2026 Osprey Project LLC"
+  },
+  "aboutRights": {
+    "message": "保留所有權利。"
+  },
+  "aboutLicense": {
+    "message": "依 GPLv3 授權。"
+  },
+  "aboutChangelog": {
+    "message": "變更記錄"
+  },
+  "aboutGithub": {
+    "message": "GitHub"
+  },
+  "aboutWebsite": {
+    "message": "網站"
+  },
+  "aboutPrivacy": {
+    "message": "隱私權政策"
+  },
+  "aboutTerms": {
+    "message": "服務條款"
   }
 }

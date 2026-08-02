@@ -190,5 +190,107 @@
   },
   "providerNameFallback": {
     "message": "Sağlayıcı"
+  },
+  "navProviders": {
+    "message": "Sağlayıcılar"
+  },
+  "navExclusions": {
+    "message": "İstisnalar"
+  },
+  "trustedSitesLabel": {
+    "message": "Hariç tutulan web siteleri"
+  },
+  "bypassesLabel": {
+    "message": "Yoksayılan uyarılar"
+  },
+  "addSiteButton": {
+    "message": "Ekle"
+  },
+  "addSiteAriaLabel": {
+    "message": "Hariç tutulan web sitelerine eklenecek web sitesi"
+  },
+  "removeExclusionLabel": {
+    "message": "Kaldır"
+  },
+  "removeAllForSite": {
+    "message": "Tümünü kaldır"
+  },
+  "temporaryBadge": {
+    "message": "Geçici"
+  },
+  "temporaryBadgeTooltip": {
+    "message": "Bu istisna kendiliğinden sona erer."
+  },
+  "noTrustedSites": {
+    "message": "Henüz hariç tutulan web sitesi yok."
+  },
+  "noBypasses": {
+    "message": "Burada henüz bir şey yok. Yoksaydığınız uyarılar bu listede görünür."
+  },
+  "exclusionsLockedNote": {
+    "message": "Hariç tutulan web sitelerini yönetme, yöneticiniz tarafından kapatıldı."
+  },
+  "exclusionsLoadError": {
+    "message": "Hariç tutulan web siteleriniz yüklenemedi. Bu sayfayı yeniden açmayı deneyin."
+  },
+  "toastExclusionAdded": {
+    "message": "$host$ hariç tutulan web sitelerine eklendi.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionExists": {
+    "message": "$host$ zaten hariç tutuluyor.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionInvalid": {
+    "message": "Geçerli bir web sitesi adresi girin."
+  },
+  "toastExclusionRemoved": {
+    "message": "İstisna kaldırıldı."
+  },
+  "navAbout": {
+    "message": "Hakkında"
+  },
+  "aboutLabel": {
+    "message": "Hakkında"
+  },
+  "aboutVersion": {
+    "message": "Sürüm $ver$",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "aboutCopyright": {
+    "message": "© 2026 Osprey Project LLC"
+  },
+  "aboutRights": {
+    "message": "Tüm hakları saklıdır."
+  },
+  "aboutLicense": {
+    "message": "GPLv3 kapsamında lisanslanmıştır."
+  },
+  "aboutChangelog": {
+    "message": "Değişiklik günlüğü"
+  },
+  "aboutGithub": {
+    "message": "GitHub"
+  },
+  "aboutWebsite": {
+    "message": "Web sitesi"
+  },
+  "aboutPrivacy": {
+    "message": "Gizlilik Politikası"
+  },
+  "aboutTerms": {
+    "message": "Hizmet Şartları"
   }
 }

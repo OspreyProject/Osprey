@@ -190,5 +190,107 @@
   },
   "providerNameFallback": {
     "message": "Pružatelj"
+  },
+  "navProviders": {
+    "message": "Pružatelji"
+  },
+  "navExclusions": {
+    "message": "Iznimke"
+  },
+  "trustedSitesLabel": {
+    "message": "Isključene web-stranice"
+  },
+  "bypassesLabel": {
+    "message": "Zanemarena upozorenja"
+  },
+  "addSiteButton": {
+    "message": "Dodaj"
+  },
+  "addSiteAriaLabel": {
+    "message": "Web-stranica za dodavanje u isključene web-stranice"
+  },
+  "removeExclusionLabel": {
+    "message": "Ukloni"
+  },
+  "removeAllForSite": {
+    "message": "Ukloni sve"
+  },
+  "temporaryBadge": {
+    "message": "Privremeno"
+  },
+  "temporaryBadgeTooltip": {
+    "message": "Ova iznimka istječe sama od sebe."
+  },
+  "noTrustedSites": {
+    "message": "Još nema isključenih web-stranica."
+  },
+  "noBypasses": {
+    "message": "Ovdje još nema ničega. Upozorenja koja zanemarite pojavljuju se na ovom popisu."
+  },
+  "exclusionsLockedNote": {
+    "message": "Upravljanje isključenim web-stranicama isključio je vaš administrator."
+  },
+  "exclusionsLoadError": {
+    "message": "Nije moguće učitati vaše isključene web-stranice. Pokušajte ponovno otvoriti ovu stranicu."
+  },
+  "toastExclusionAdded": {
+    "message": "$host$ dodan je u isključene web-stranice.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionExists": {
+    "message": "$host$ već je isključen.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionInvalid": {
+    "message": "Unesite valjanu adresu web-stranice."
+  },
+  "toastExclusionRemoved": {
+    "message": "Iznimka uklonjena."
+  },
+  "navAbout": {
+    "message": "O aplikaciji"
+  },
+  "aboutLabel": {
+    "message": "O aplikaciji"
+  },
+  "aboutVersion": {
+    "message": "Verzija $ver$",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "aboutCopyright": {
+    "message": "© 2026 Osprey Project LLC"
+  },
+  "aboutRights": {
+    "message": "Sva prava pridržana."
+  },
+  "aboutLicense": {
+    "message": "Licencirano pod GPLv3."
+  },
+  "aboutChangelog": {
+    "message": "Zapisnik promjena"
+  },
+  "aboutGithub": {
+    "message": "GitHub"
+  },
+  "aboutWebsite": {
+    "message": "Web-stranica"
+  },
+  "aboutPrivacy": {
+    "message": "Pravila o privatnosti"
+  },
+  "aboutTerms": {
+    "message": "Uvjeti pružanja usluge"
   }
 }

@@ -190,5 +190,107 @@
   },
   "providerNameFallback": {
     "message": "Leverantör"
+  },
+  "navProviders": {
+    "message": "Leverantörer"
+  },
+  "navExclusions": {
+    "message": "Undantag"
+  },
+  "trustedSitesLabel": {
+    "message": "Undantagna webbplatser"
+  },
+  "bypassesLabel": {
+    "message": "Ignorerade varningar"
+  },
+  "addSiteButton": {
+    "message": "Lägg till"
+  },
+  "addSiteAriaLabel": {
+    "message": "Webbplats att lägga till i undantagna webbplatser"
+  },
+  "removeExclusionLabel": {
+    "message": "Ta bort"
+  },
+  "removeAllForSite": {
+    "message": "Ta bort alla"
+  },
+  "temporaryBadge": {
+    "message": "Tillfällig"
+  },
+  "temporaryBadgeTooltip": {
+    "message": "Det här undantaget upphör att gälla av sig självt."
+  },
+  "noTrustedSites": {
+    "message": "Inga undantagna webbplatser ännu."
+  },
+  "noBypasses": {
+    "message": "Det finns inget här ännu. Varningar du ignorerar visas i den här listan."
+  },
+  "exclusionsLockedNote": {
+    "message": "Hantering av undantagna webbplatser har inaktiverats av din administratör."
+  },
+  "exclusionsLoadError": {
+    "message": "Det gick inte att läsa in dina undantagna webbplatser. Försök att öppna den här sidan igen."
+  },
+  "toastExclusionAdded": {
+    "message": "$host$ lades till i undantagna webbplatser.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionExists": {
+    "message": "$host$ är redan undantagen.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionInvalid": {
+    "message": "Ange en giltig webbplatsadress."
+  },
+  "toastExclusionRemoved": {
+    "message": "Undantag borttaget."
+  },
+  "navAbout": {
+    "message": "Om"
+  },
+  "aboutLabel": {
+    "message": "Om"
+  },
+  "aboutVersion": {
+    "message": "Version $ver$",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "aboutCopyright": {
+    "message": "© 2026 Osprey Project LLC"
+  },
+  "aboutRights": {
+    "message": "Med ensamrätt."
+  },
+  "aboutLicense": {
+    "message": "Licensierad under GPLv3."
+  },
+  "aboutChangelog": {
+    "message": "Ändringslogg"
+  },
+  "aboutGithub": {
+    "message": "GitHub"
+  },
+  "aboutWebsite": {
+    "message": "Webbplats"
+  },
+  "aboutPrivacy": {
+    "message": "Integritetspolicy"
+  },
+  "aboutTerms": {
+    "message": "Användarvillkor"
   }
 }

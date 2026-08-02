@@ -190,5 +190,107 @@
   },
   "providerNameFallback": {
     "message": "Provedor"
+  },
+  "navProviders": {
+    "message": "Provedores"
+  },
+  "navExclusions": {
+    "message": "Exclusões"
+  },
+  "trustedSitesLabel": {
+    "message": "Sites excluídos"
+  },
+  "bypassesLabel": {
+    "message": "Avisos ignorados"
+  },
+  "addSiteButton": {
+    "message": "Adicionar"
+  },
+  "addSiteAriaLabel": {
+    "message": "Site a adicionar aos sites excluídos"
+  },
+  "removeExclusionLabel": {
+    "message": "Remover"
+  },
+  "removeAllForSite": {
+    "message": "Remover tudo"
+  },
+  "temporaryBadge": {
+    "message": "Temporário"
+  },
+  "temporaryBadgeTooltip": {
+    "message": "Esta exclusão expira sozinha."
+  },
+  "noTrustedSites": {
+    "message": "Nenhum site excluído ainda."
+  },
+  "noBypasses": {
+    "message": "Ainda não há nada aqui. Os avisos que você ignora aparecem nesta lista."
+  },
+  "exclusionsLockedNote": {
+    "message": "O gerenciamento de sites excluídos foi desativado pelo seu administrador."
+  },
+  "exclusionsLoadError": {
+    "message": "Não foi possível carregar seus sites excluídos. Tente reabrir esta página."
+  },
+  "toastExclusionAdded": {
+    "message": "$host$ foi adicionado aos sites excluídos.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionExists": {
+    "message": "$host$ já está excluído.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionInvalid": {
+    "message": "Digite um endereço de site válido."
+  },
+  "toastExclusionRemoved": {
+    "message": "Exclusão removida."
+  },
+  "navAbout": {
+    "message": "Sobre"
+  },
+  "aboutLabel": {
+    "message": "Sobre"
+  },
+  "aboutVersion": {
+    "message": "Versão $ver$",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "aboutCopyright": {
+    "message": "© 2026 Osprey Project LLC"
+  },
+  "aboutRights": {
+    "message": "Todos os direitos reservados."
+  },
+  "aboutLicense": {
+    "message": "Licenciado sob a GPLv3."
+  },
+  "aboutChangelog": {
+    "message": "Registro de alterações"
+  },
+  "aboutGithub": {
+    "message": "GitHub"
+  },
+  "aboutWebsite": {
+    "message": "Site"
+  },
+  "aboutPrivacy": {
+    "message": "Política de Privacidade"
+  },
+  "aboutTerms": {
+    "message": "Termos de Serviço"
   }
 }

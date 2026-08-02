@@ -190,5 +190,107 @@
   },
   "providerNameFallback": {
     "message": "Постачальник"
+  },
+  "navProviders": {
+    "message": "Постачальники"
+  },
+  "navExclusions": {
+    "message": "Винятки"
+  },
+  "trustedSitesLabel": {
+    "message": "Виключені сайти"
+  },
+  "bypassesLabel": {
+    "message": "Проігноровані попередження"
+  },
+  "addSiteButton": {
+    "message": "Додати"
+  },
+  "addSiteAriaLabel": {
+    "message": "Сайт для додавання до виключених сайтів"
+  },
+  "removeExclusionLabel": {
+    "message": "Видалити"
+  },
+  "removeAllForSite": {
+    "message": "Видалити все"
+  },
+  "temporaryBadge": {
+    "message": "Тимчасовий"
+  },
+  "temporaryBadgeTooltip": {
+    "message": "Цей виняток спливає автоматично."
+  },
+  "noTrustedSites": {
+    "message": "Виключених сайтів поки немає."
+  },
+  "noBypasses": {
+    "message": "Тут поки нічого немає. Попередження, які ви ігноруєте, з'являються в цьому списку."
+  },
+  "exclusionsLockedNote": {
+    "message": "Керування виключеними сайтами вимкнено вашим адміністратором."
+  },
+  "exclusionsLoadError": {
+    "message": "Не вдалося завантажити ваші виключені сайти. Спробуйте повторно відкрити цю сторінку."
+  },
+  "toastExclusionAdded": {
+    "message": "Сайт $host$ додано до виключених сайтів.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionExists": {
+    "message": "$host$ уже виключено.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionInvalid": {
+    "message": "Введіть дійсну адресу сайту."
+  },
+  "toastExclusionRemoved": {
+    "message": "Виняток видалено."
+  },
+  "navAbout": {
+    "message": "Про програму"
+  },
+  "aboutLabel": {
+    "message": "Про програму"
+  },
+  "aboutVersion": {
+    "message": "Версія $ver$",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "aboutCopyright": {
+    "message": "© 2026 Osprey Project LLC"
+  },
+  "aboutRights": {
+    "message": "Усі права захищено."
+  },
+  "aboutLicense": {
+    "message": "Ліцензовано за GPLv3."
+  },
+  "aboutChangelog": {
+    "message": "Журнал змін"
+  },
+  "aboutGithub": {
+    "message": "GitHub"
+  },
+  "aboutWebsite": {
+    "message": "Сайт"
+  },
+  "aboutPrivacy": {
+    "message": "Політика конфіденційності"
+  },
+  "aboutTerms": {
+    "message": "Умови використання"
   }
 }

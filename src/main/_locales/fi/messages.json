@@ -190,5 +190,107 @@
   },
   "providerNameFallback": {
     "message": "Tarjoaja"
+  },
+  "navProviders": {
+    "message": "Palveluntarjoajat"
+  },
+  "navExclusions": {
+    "message": "Poikkeukset"
+  },
+  "trustedSitesLabel": {
+    "message": "Poissuljetut sivustot"
+  },
+  "bypassesLabel": {
+    "message": "Ohitetut varoitukset"
+  },
+  "addSiteButton": {
+    "message": "Lisää"
+  },
+  "addSiteAriaLabel": {
+    "message": "Sivusto, joka lisätään poissuljettuihin sivustoihin"
+  },
+  "removeExclusionLabel": {
+    "message": "Poista"
+  },
+  "removeAllForSite": {
+    "message": "Poista kaikki"
+  },
+  "temporaryBadge": {
+    "message": "Väliaikainen"
+  },
+  "temporaryBadgeTooltip": {
+    "message": "Tämä poikkeus vanhenee itsestään."
+  },
+  "noTrustedSites": {
+    "message": "Ei vielä poissuljettuja sivustoja."
+  },
+  "noBypasses": {
+    "message": "Täällä ei ole vielä mitään. Ohittamasi varoitukset näkyvät tässä luettelossa."
+  },
+  "exclusionsLockedNote": {
+    "message": "Järjestelmänvalvojasi on poistanut poissuljettujen sivustojen hallinnan käytöstä."
+  },
+  "exclusionsLoadError": {
+    "message": "Poissuljettuja sivustojasi ei voitu ladata. Yritä avata tämä sivu uudelleen."
+  },
+  "toastExclusionAdded": {
+    "message": "$host$ lisättiin poissuljettuihin sivustoihin.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionExists": {
+    "message": "$host$ on jo poissuljettu.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionInvalid": {
+    "message": "Anna kelvollinen sivuston osoite."
+  },
+  "toastExclusionRemoved": {
+    "message": "Poikkeus poistettu."
+  },
+  "navAbout": {
+    "message": "Tietoja"
+  },
+  "aboutLabel": {
+    "message": "Tietoja"
+  },
+  "aboutVersion": {
+    "message": "Versio $ver$",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "aboutCopyright": {
+    "message": "© 2026 Osprey Project LLC"
+  },
+  "aboutRights": {
+    "message": "Kaikki oikeudet pidätetään."
+  },
+  "aboutLicense": {
+    "message": "Lisensoitu GPLv3-lisenssillä."
+  },
+  "aboutChangelog": {
+    "message": "Muutosloki"
+  },
+  "aboutGithub": {
+    "message": "GitHub"
+  },
+  "aboutWebsite": {
+    "message": "Sivusto"
+  },
+  "aboutPrivacy": {
+    "message": "Tietosuojakäytäntö"
+  },
+  "aboutTerms": {
+    "message": "Käyttöehdot"
   }
 }

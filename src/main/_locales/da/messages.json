@@ -190,5 +190,107 @@
   },
   "providerNameFallback": {
     "message": "Udbyder"
+  },
+  "navProviders": {
+    "message": "Udbydere"
+  },
+  "navExclusions": {
+    "message": "Undtagelser"
+  },
+  "trustedSitesLabel": {
+    "message": "Udelukkede websteder"
+  },
+  "bypassesLabel": {
+    "message": "Ignorerede advarsler"
+  },
+  "addSiteButton": {
+    "message": "Tilføj"
+  },
+  "addSiteAriaLabel": {
+    "message": "Websted, der skal føjes til udelukkede websteder"
+  },
+  "removeExclusionLabel": {
+    "message": "Fjern"
+  },
+  "removeAllForSite": {
+    "message": "Fjern alle"
+  },
+  "temporaryBadge": {
+    "message": "Midlertidig"
+  },
+  "temporaryBadgeTooltip": {
+    "message": "Denne undtagelse udløber af sig selv."
+  },
+  "noTrustedSites": {
+    "message": "Ingen udelukkede websteder endnu."
+  },
+  "noBypasses": {
+    "message": "Der er ikke noget her endnu. Advarsler, du ignorerer, vises på denne liste."
+  },
+  "exclusionsLockedNote": {
+    "message": "Administration af udelukkede websteder er slået fra af din administrator."
+  },
+  "exclusionsLoadError": {
+    "message": "Dine udelukkede websteder kunne ikke indlæses. Prøv at åbne denne side igen."
+  },
+  "toastExclusionAdded": {
+    "message": "$host$ blev føjet til udelukkede websteder.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionExists": {
+    "message": "$host$ er allerede udelukket.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionInvalid": {
+    "message": "Indtast en gyldig webstedsadresse."
+  },
+  "toastExclusionRemoved": {
+    "message": "Undtagelse fjernet."
+  },
+  "navAbout": {
+    "message": "Om"
+  },
+  "aboutLabel": {
+    "message": "Om"
+  },
+  "aboutVersion": {
+    "message": "Version $ver$",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "aboutCopyright": {
+    "message": "© 2026 Osprey Project LLC"
+  },
+  "aboutRights": {
+    "message": "Alle rettigheder forbeholdes."
+  },
+  "aboutLicense": {
+    "message": "Licenseret under GPLv3."
+  },
+  "aboutChangelog": {
+    "message": "Ændringslog"
+  },
+  "aboutGithub": {
+    "message": "GitHub"
+  },
+  "aboutWebsite": {
+    "message": "Websted"
+  },
+  "aboutPrivacy": {
+    "message": "Privatlivspolitik"
+  },
+  "aboutTerms": {
+    "message": "Servicevilkår"
   }
 }

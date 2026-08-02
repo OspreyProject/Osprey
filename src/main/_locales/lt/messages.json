@@ -190,5 +190,107 @@
   },
   "providerNameFallback": {
     "message": "Tiekėjas"
+  },
+  "navProviders": {
+    "message": "Teikėjai"
+  },
+  "navExclusions": {
+    "message": "Išimtys"
+  },
+  "trustedSitesLabel": {
+    "message": "Išskirtos svetainės"
+  },
+  "bypassesLabel": {
+    "message": "Nepaisyti įspėjimai"
+  },
+  "addSiteButton": {
+    "message": "Pridėti"
+  },
+  "addSiteAriaLabel": {
+    "message": "Svetainė, kurią reikia pridėti prie išskirtų svetainių"
+  },
+  "removeExclusionLabel": {
+    "message": "Pašalinti"
+  },
+  "removeAllForSite": {
+    "message": "Pašalinti viską"
+  },
+  "temporaryBadge": {
+    "message": "Laikina"
+  },
+  "temporaryBadgeTooltip": {
+    "message": "Ši išimtis baigia galioti savaime."
+  },
+  "noTrustedSites": {
+    "message": "Kol kas nėra išskirtų svetainių."
+  },
+  "noBypasses": {
+    "message": "Kol kas čia nieko nėra. Įspėjimai, kurių nepaisote, rodomi šiame sąraše."
+  },
+  "exclusionsLockedNote": {
+    "message": "Išskirtų svetainių valdymą išjungė jūsų administratorius."
+  },
+  "exclusionsLoadError": {
+    "message": "Nepavyko įkelti jūsų išskirtų svetainių. Pabandykite iš naujo atidaryti šį puslapį."
+  },
+  "toastExclusionAdded": {
+    "message": "$host$ pridėta prie išskirtų svetainių.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionExists": {
+    "message": "$host$ jau yra išskirta.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionInvalid": {
+    "message": "Įveskite galiojantį svetainės adresą."
+  },
+  "toastExclusionRemoved": {
+    "message": "Išimtis pašalinta."
+  },
+  "navAbout": {
+    "message": "Apie"
+  },
+  "aboutLabel": {
+    "message": "Apie"
+  },
+  "aboutVersion": {
+    "message": "Versija $ver$",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "aboutCopyright": {
+    "message": "© 2026 Osprey Project LLC"
+  },
+  "aboutRights": {
+    "message": "Visos teisės saugomos."
+  },
+  "aboutLicense": {
+    "message": "Licencijuota pagal GPLv3."
+  },
+  "aboutChangelog": {
+    "message": "Keitimų žurnalas"
+  },
+  "aboutGithub": {
+    "message": "GitHub"
+  },
+  "aboutWebsite": {
+    "message": "Svetainė"
+  },
+  "aboutPrivacy": {
+    "message": "Privatumo politika"
+  },
+  "aboutTerms": {
+    "message": "Paslaugų teikimo sąlygos"
   }
 }

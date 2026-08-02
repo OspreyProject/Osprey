@@ -190,5 +190,107 @@
   },
   "providerNameFallback": {
     "message": "Proveïdor"
+  },
+  "navProviders": {
+    "message": "Proveïdors"
+  },
+  "navExclusions": {
+    "message": "Exclusions"
+  },
+  "trustedSitesLabel": {
+    "message": "Llocs web exclosos"
+  },
+  "bypassesLabel": {
+    "message": "Advertiments ignorats"
+  },
+  "addSiteButton": {
+    "message": "Afegeix"
+  },
+  "addSiteAriaLabel": {
+    "message": "Lloc web per afegir als llocs web exclosos"
+  },
+  "removeExclusionLabel": {
+    "message": "Elimina"
+  },
+  "removeAllForSite": {
+    "message": "Elimina-ho tot"
+  },
+  "temporaryBadge": {
+    "message": "Temporal"
+  },
+  "temporaryBadgeTooltip": {
+    "message": "Aquesta exclusió caduca automàticament."
+  },
+  "noTrustedSites": {
+    "message": "Encara no hi ha cap lloc web exclòs."
+  },
+  "noBypasses": {
+    "message": "Encara no hi ha res. Els advertiments que ignoris apareixeran en aquesta llista."
+  },
+  "exclusionsLockedNote": {
+    "message": "La gestió dels llocs web exclosos està desactivada per l'administrador."
+  },
+  "exclusionsLoadError": {
+    "message": "No s'han pogut carregar els llocs web exclosos. Prova de tornar a obrir aquesta pàgina."
+  },
+  "toastExclusionAdded": {
+    "message": "S'ha afegit $host$ als llocs web exclosos.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionExists": {
+    "message": "$host$ ja està exclòs.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionInvalid": {
+    "message": "Introdueix una adreça de lloc web vàlida."
+  },
+  "toastExclusionRemoved": {
+    "message": "S'ha eliminat l'exclusió."
+  },
+  "navAbout": {
+    "message": "Quant a"
+  },
+  "aboutLabel": {
+    "message": "Quant a"
+  },
+  "aboutVersion": {
+    "message": "Versió $ver$",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "aboutCopyright": {
+    "message": "© 2026 Osprey Project LLC"
+  },
+  "aboutRights": {
+    "message": "Tots els drets reservats."
+  },
+  "aboutLicense": {
+    "message": "Amb llicència GPLv3."
+  },
+  "aboutChangelog": {
+    "message": "Registre de canvis"
+  },
+  "aboutGithub": {
+    "message": "GitHub"
+  },
+  "aboutWebsite": {
+    "message": "Lloc web"
+  },
+  "aboutPrivacy": {
+    "message": "Política de privadesa"
+  },
+  "aboutTerms": {
+    "message": "Termes del servei"
   }
 }

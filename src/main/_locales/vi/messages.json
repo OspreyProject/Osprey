@@ -190,5 +190,107 @@
   },
   "providerNameFallback": {
     "message": "Nhà cung cấp"
+  },
+  "navProviders": {
+    "message": "Nhà cung cấp"
+  },
+  "navExclusions": {
+    "message": "Danh sách loại trừ"
+  },
+  "trustedSitesLabel": {
+    "message": "Trang web bị loại trừ"
+  },
+  "bypassesLabel": {
+    "message": "Cảnh báo đã bỏ qua"
+  },
+  "addSiteButton": {
+    "message": "Thêm"
+  },
+  "addSiteAriaLabel": {
+    "message": "Trang web cần thêm vào danh sách loại trừ"
+  },
+  "removeExclusionLabel": {
+    "message": "Xóa"
+  },
+  "removeAllForSite": {
+    "message": "Xóa tất cả"
+  },
+  "temporaryBadge": {
+    "message": "Tạm thời"
+  },
+  "temporaryBadgeTooltip": {
+    "message": "Mục loại trừ này sẽ tự hết hạn."
+  },
+  "noTrustedSites": {
+    "message": "Chưa có trang web nào bị loại trừ."
+  },
+  "noBypasses": {
+    "message": "Chưa có gì ở đây. Các cảnh báo bạn bỏ qua sẽ xuất hiện trong danh sách này."
+  },
+  "exclusionsLockedNote": {
+    "message": "Việc quản lý các trang web bị loại trừ đã bị quản trị viên của bạn tắt."
+  },
+  "exclusionsLoadError": {
+    "message": "Không thể tải các trang web bị loại trừ của bạn. Hãy thử mở lại trang này."
+  },
+  "toastExclusionAdded": {
+    "message": "Đã thêm $host$ vào danh sách loại trừ.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionExists": {
+    "message": "$host$ đã bị loại trừ.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionInvalid": {
+    "message": "Nhập một địa chỉ trang web hợp lệ."
+  },
+  "toastExclusionRemoved": {
+    "message": "Đã xóa mục loại trừ."
+  },
+  "navAbout": {
+    "message": "Giới thiệu"
+  },
+  "aboutLabel": {
+    "message": "Giới thiệu"
+  },
+  "aboutVersion": {
+    "message": "Phiên bản $ver$",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "aboutCopyright": {
+    "message": "© 2026 Osprey Project LLC"
+  },
+  "aboutRights": {
+    "message": "Bảo lưu mọi quyền."
+  },
+  "aboutLicense": {
+    "message": "Được cấp phép theo GPLv3."
+  },
+  "aboutChangelog": {
+    "message": "Nhật ký thay đổi"
+  },
+  "aboutGithub": {
+    "message": "GitHub"
+  },
+  "aboutWebsite": {
+    "message": "Trang web"
+  },
+  "aboutPrivacy": {
+    "message": "Chính sách quyền riêng tư"
+  },
+  "aboutTerms": {
+    "message": "Điều khoản dịch vụ"
   }
 }

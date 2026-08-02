@@ -190,5 +190,107 @@
   },
   "providerNameFallback": {
     "message": "Furnizor"
+  },
+  "navProviders": {
+    "message": "Furnizori"
+  },
+  "navExclusions": {
+    "message": "Excepții"
+  },
+  "trustedSitesLabel": {
+    "message": "Site-uri web excluse"
+  },
+  "bypassesLabel": {
+    "message": "Avertismente ignorate"
+  },
+  "addSiteButton": {
+    "message": "Adaugă"
+  },
+  "addSiteAriaLabel": {
+    "message": "Site web de adăugat la site-urile web excluse"
+  },
+  "removeExclusionLabel": {
+    "message": "Elimină"
+  },
+  "removeAllForSite": {
+    "message": "Elimină tot"
+  },
+  "temporaryBadge": {
+    "message": "Temporar"
+  },
+  "temporaryBadgeTooltip": {
+    "message": "Această excepție expiră de la sine."
+  },
+  "noTrustedSites": {
+    "message": "Încă niciun site web exclus."
+  },
+  "noBypasses": {
+    "message": "Încă nu este nimic aici. Avertismentele pe care le ignori apar în această listă."
+  },
+  "exclusionsLockedNote": {
+    "message": "Gestionarea site-urilor web excluse a fost dezactivată de administratorul tău."
+  },
+  "exclusionsLoadError": {
+    "message": "Site-urile web excluse nu au putut fi încărcate. Încearcă să redeschizi această pagină."
+  },
+  "toastExclusionAdded": {
+    "message": "$host$ a fost adăugat la site-urile web excluse.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionExists": {
+    "message": "$host$ este deja exclus.",
+    "placeholders": {
+      "host": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastExclusionInvalid": {
+    "message": "Introdu o adresă de site web validă."
+  },
+  "toastExclusionRemoved": {
+    "message": "Excepție eliminată."
+  },
+  "navAbout": {
+    "message": "Despre"
+  },
+  "aboutLabel": {
+    "message": "Despre"
+  },
+  "aboutVersion": {
+    "message": "Versiunea $ver$",
+    "placeholders": {
+      "ver": {
+        "content": "$1"
+      }
+    }
+  },
+  "aboutCopyright": {
+    "message": "© 2026 Osprey Project LLC"
+  },
+  "aboutRights": {
+    "message": "Toate drepturile rezervate."
+  },
+  "aboutLicense": {
+    "message": "Licențiat sub GPLv3."
+  },
+  "aboutChangelog": {
+    "message": "Jurnal de modificări"
+  },
+  "aboutGithub": {
+    "message": "GitHub"
+  },
+  "aboutWebsite": {
+    "message": "Site web"
+  },
+  "aboutPrivacy": {
+    "message": "Politica de confidențialitate"
+  },
+  "aboutTerms": {
+    "message": "Termeni și condiții"
   }
 }
