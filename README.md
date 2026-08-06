@@ -33,6 +33,10 @@ Osprey's goal is to be the most trusted, transparent, and effective browser prot
 businesses, while being **free, forever**. Unlike other free extensions, Osprey will **never** collect, profile, or sell
 your browsing data.
 
+If you want to support the project, you can contribute through [ko-fi](https://ko-fi.com/ospreyproject). ☕
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/ospreyproject)
+
 ###
 
 You can check Osprey's real-time protection status by left-clicking the ![Icon](https://i.imgur.com/E1SM8OJ.png)
