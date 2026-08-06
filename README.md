@@ -9,10 +9,6 @@
 malicious websites. As you browse, Osprey checks every site you visit against more than **20 threat-intelligence
 providers**, then blocks or warns you the moment one of them flags a site as dangerous.
 
-If you want to support the project, you can contribute through [ko-fi](https://ko-fi.com/ospreyproject). ☕
-
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/ospreyproject)
-
 [Website](https://osprey.ac)
 • [Privacy Policy](https://osprey.ac/privacy)
 • [Terms of Service](https://osprey.ac/terms)
@@ -30,6 +26,10 @@ If you want to support the project, you can contribute through [ko-fi](https://k
 [![Osprey Banner](https://i.imgur.com/zzv8QYh.png)](https://osprey.ac)
 
 ###
+
+If you want to support the project, you can contribute through [ko-fi](https://ko-fi.com/ospreyproject). ☕
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/ospreyproject)
 
 ## About Osprey
 
