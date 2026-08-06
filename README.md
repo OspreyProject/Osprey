@@ -5,11 +5,11 @@
 [![Edge Users](https://img.shields.io/badge/dynamic/json?label=Edge%20Users&color=00CC00&query=%24.activeInstallCount&url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%2Fnopglhplnghfhpniofkcopmhbjdonlgn)](https://osprey.ac/edge)
 [![Firefox Users](https://img.shields.io/amo/users/osprey-browser-protection?label=Firefox%20Users&color=00CC00)](https://osprey.ac/firefox)
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/ospreyproject)
-
 **Osprey** is a free, open-source browser security extension that protects you from phishing, malware, scams, and other
 malicious websites. As you browse, Osprey checks every site you visit against more than **20 threat-intelligence
 providers**, then blocks or warns you the moment one of them flags a site as dangerous.
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/ospreyproject)
 
 [Website](https://osprey.ac)
 • [Privacy Policy](https://osprey.ac/privacy)
@@ -18,8 +18,6 @@ providers**, then blocks or warns you the moment one of them flags a site as dan
 • [Wilders Security](https://wilderssecurity.com/threads/osprey-browser-protection.456729/?utm_source=osprey)
 
 ###
-
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/ospreyproject)
 
 [![Google Chrome](https://i.imgur.com/R9AN3cA.png)](https://osprey.ac/chrome)
 [![Microsoft Edge](https://i.imgur.com/oVmDDtj.png)](https://osprey.ac/edge)
