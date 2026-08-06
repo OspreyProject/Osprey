@@ -27,10 +27,6 @@ providers**, then blocks or warns you the moment one of them flags a site as dan
 
 ###
 
-If you want to support the project, you can contribute through [ko-fi](https://ko-fi.com/ospreyproject). ☕
-
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/ospreyproject)
-
 ## About Osprey
 
 Osprey's goal is to be the most trusted, transparent, and effective browser protection extension for home users and
