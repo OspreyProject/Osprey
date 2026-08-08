@@ -115,7 +115,9 @@ html, body {
 
 .banner .theme-toggle {
     align-self: center;
-    margin-left: 8px;
+    width: 1.8rem;
+    height: 1.8rem;
+    margin-left: 0.2rem;
     margin-right: 8px;
     position: relative;
     z-index: 1;
@@ -123,6 +125,32 @@ html, body {
 
 /* 16px so it renders at 20px (matching the website) under the 1.25 body zoom */
 .banner .theme-toggle svg {
+    width: 16px;
+    height: 16px;
+}
+
+.banner .support-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    width: 1.8rem;
+    height: 1.8rem;
+    margin-left: 8px;
+    border-radius: 6px;
+    color: var(--text-muted);
+    line-height: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.banner .support-link:hover {
+    color: #FF5A16;
+    background-color: var(--surface-hover);
+}
+
+.banner .support-link svg {
+    display: block;
     width: 16px;
     height: 16px;
 }
@@ -725,6 +753,10 @@ html, body {
     display: flex;
     flex-direction: column;
     gap: 6px;
+}
+
+.integrations-section {
+    margin-top: 24px;
 }
 
 /* --------------------------------------------------
