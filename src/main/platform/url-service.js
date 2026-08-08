@@ -185,6 +185,42 @@ globalThis.OspreyUrlService = (() => {
         return url;
     };
 
+    const queryRetentionRules = [
+        {hostname: 'drive.google.com', pathname: '/uc', keys: ['export', 'id']},
+        {hostname: 'drive.usercontent.google.com', pathname: '/download', keys: ['id', 'export']},
+        {hostname: 'google.com', pathname: '/share.google', keys: ['q']},
+    ];
+
+    const retainedSearch = (hostname, pathname, searchParams) => {
+        let keys = null;
+
+        for (let i = 0, len = queryRetentionRules.length; i < len; i++) {
+            const rule = queryRetentionRules[i];
+
+            if (rule.hostname === hostname && rule.pathname === pathname) {
+                keys = rule.keys;
+                break;
+            }
+        }
+
+        if (keys === null) {
+            return '';
+        }
+
+        const parts = [];
+
+        for (let i = 0, len = keys.length; i < len; i++) {
+            const key = keys[i];
+            const value = searchParams.get(key);
+
+            if (value !== null) {
+                parts.push(`${key}=${encodeURIComponent(value)}`);
+            }
+        }
+
+        return parts.length === 0 ? '' : `?${parts.join('&')}`;
+    };
+
     const normalizeUrl = value => {
         const cacheKey = typeof value === 'string' ? value : value.href;
         const cached = normalizeUrlCache.getFromMap(cacheKey);
@@ -200,7 +236,7 @@ globalThis.OspreyUrlService = (() => {
             return null;
         }
 
-        normalized.search = '';
+        normalized.search = retainedSearch(normalized.hostname, normalized.pathname, normalized.searchParams);
         normalized.hash = '';
         normalized.port = '';
 
