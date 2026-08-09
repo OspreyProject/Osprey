@@ -187,6 +187,7 @@ globalThis.OspreyUrlService = (() => {
 
     const queryRetentionRules = [
         {hostname: 'drive.google.com', pathname: '/uc', keys: ['export', 'id']},
+        {hostname: 'adclick.g.doubleclick.net', pathname: '/pcs/click', keys: ['adurl']},
         {hostname: 'drive.usercontent.google.com', pathname: '/download', keys: ['id', 'export']},
         {hostname: 'google.com', pathname: '/share.google', keys: ['q']},
     ];
@@ -217,7 +218,6 @@ globalThis.OspreyUrlService = (() => {
                 parts.push(`${key}=${encodeURIComponent(value)}`);
             }
         }
-
         return parts.length === 0 ? '' : `?${parts.join('&')}`;
     };
 
