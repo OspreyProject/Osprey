@@ -287,8 +287,26 @@ globalThis.OspreyUrlService = (() => {
         return false;
     };
 
+    const maxBlockedUrlParamLength = 8192;
+
+    const clampBlockedUrlForTransport = value => {
+        const str = typeof value === 'string' ? value : String(value ?? '');
+
+        if (str.length <= maxBlockedUrlParamLength) {
+            return str;
+        }
+
+        let end = maxBlockedUrlParamLength;
+        const code = str.charCodeAt(end - 1);
+
+        if (code >= 0xD800 && code <= 0xDBFF) {
+            end -= 1;
+        }
+        return str.slice(0, end);
+    };
+
     const buildWarningPageUrl = ({url, origin, result}) =>
-        `${blockPageUrl()}?url=${encodeURIComponent(url)}&or=${encodeURIComponent(origin || 'unknown')}&rs=${encodeURIComponent(result)}`;
+        `${blockPageUrl()}?url=${encodeURIComponent(clampBlockedUrlForTransport(url))}&or=${encodeURIComponent(origin || 'unknown')}&rs=${encodeURIComponent(result)}`;
 
     const haveSameOrigin = (leftUrl, rightUrl) => {
         const left = parseHttpUrl(leftUrl);
