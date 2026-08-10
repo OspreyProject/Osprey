@@ -98,21 +98,6 @@ html, body {
     text-decoration: underline;
 }
 
-.banner-version {
-    margin-left: auto;
-    align-self: center;
-    font-size: 12px;
-    color: var(--text-muted);
-    text-decoration: none;
-    position: relative;
-    z-index: 1;
-}
-
-.banner-version:hover {
-    color: var(--accent-ink);
-    text-decoration: underline;
-}
-
 .banner .theme-toggle {
     align-self: center;
     width: 1.8rem;
@@ -136,7 +121,7 @@ html, body {
     align-self: center;
     width: 1.8rem;
     height: 1.8rem;
-    margin-left: 8px;
+    margin-left: auto;
     border-radius: 6px;
     color: var(--text-muted);
     line-height: 0;
