@@ -387,9 +387,12 @@ globalThis.OspreyBlockingService = (() => {
             result: protectionResult.result,
         });
 
-        await browserAPI.tabsUpdate(tabId, {url: warningUrl}).then(() => pushBlockedContextUpdate(tabId)).then(() => {
-            // ignored
-        });
+        try {
+            await browserAPI.tabsUpdate(tabId, {url: warningUrl});
+            await pushBlockedContextUpdate(tabId);
+        } catch (error) {
+            console.warn(`OspreyBlockingService failed to redirect tab ${tabId} to the warning page`, error);
+        }
     };
 
     const handleNavigation = async details => {
@@ -454,24 +457,27 @@ globalThis.OspreyBlockingService = (() => {
         const normalizedUrl = urlService.normalizeUrl(parsed);
         const pattern = '*.' + urlService.canonicalizeHostname(parsed.hostname);
 
-        cacheService.allowPattern(pattern).then(() => {
-            // ignored
-        });
-
-        cacheService.clearBlockedForLookup(normalizedUrl).then(() => {
-            // ignored
-        });
-
         const providers = runtime.providers;
+
+        const pendingWrites = [
+            cacheService.allowPattern(pattern).then(() => {
+                // ignored
+            }),
+
+            cacheService.clearBlockedForLookup(normalizedUrl).then(() => {
+                // ignored
+            })
+        ];
 
         for (const element of providers) {
             const key = urlService.lookupValueForTarget(blockedUrl, element.lookupTarget || 'url');
 
             if (key && key !== normalizedUrl) {
-                cacheService.clearBlockedForProviderLookup(element.id, key).then(() => {
-                });
+                pendingWrites.push(cacheService.clearBlockedForProviderLookup(element.id, key));
             }
         }
+
+        await Promise.allSettled(pendingWrites);
 
         rememberSuppressedNavigation(tabId, normalizedUrl);
         const success = await navigateWithSafetyFallback(tabId, blockedUrl);
@@ -519,13 +525,10 @@ globalThis.OspreyBlockingService = (() => {
             return failClosed(tabId);
         }
 
-        cacheService.markAllowed(provider.id, lookupKey, runtime.effectiveState.app.cacheExpirationSeconds, true).then(() => {
-            // ignored
-        });
-
-        cacheService.clearBlockedForProviderLookup(provider.id, lookupKey).then(() => {
-            // ignored
-        });
+        await Promise.allSettled([
+            cacheService.markAllowed(provider.id, lookupKey, runtime.effectiveState.app.cacheExpirationSeconds, true),
+            cacheService.clearBlockedForProviderLookup(provider.id, lookupKey),
+        ]);
 
         const nextContext = resultAggregationService.removeOrigin(tabId, origin);
         await resultAggregationService.persist();
