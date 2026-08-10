@@ -19,30 +19,65 @@
 
 globalThis.OspreyBrowserAPI = (() => {
     const api = globalThis.browser ?? globalThis.chrome;
+    const hostCallTimeoutMs = 1000;
+
+    const withTimeout = promise => new Promise((resolve, reject) => {
+        let settled = false;
+
+        const timer = setTimeout(() => {
+            if (settled) {
+                return;
+            }
+
+            settled = true;
+            console.warn(`OspreyBrowserAPI host call exceeded ${hostCallTimeoutMs}ms; continuing without its result`);
+            resolve(undefined);
+        }, hostCallTimeoutMs);
+
+        promise.then(value => {
+            if (settled) {
+                return;
+            }
+
+            settled = true;
+            clearTimeout(timer);
+            resolve(value);
+        }, error => {
+            if (settled) {
+                return;
+            }
+
+            settled = true;
+            clearTimeout(timer);
+            reject(error);
+        });
+    });
 
     const invoke = (context, fn, argCount, arg1, arg2) => {
         if (typeof fn !== 'function') {
             return Promise.resolve(undefined);
         }
 
-        try {
-            let result;
+        return withTimeout((() => {
+            try {
+                let result;
 
-            if (argCount === 2) {
-                result = fn.call(context, arg1, arg2);
-            } else if (argCount === 1) {
-                result = fn.call(context, arg1);
-            } else {
-                result = fn.call(context);
-            }
+                if (argCount === 2) {
+                    result = fn.call(context, arg1, arg2);
+                } else if (argCount === 1) {
+                    result = fn.call(context, arg1);
+                } else {
+                    result = fn.call(context);
+                }
 
-            if (result != null && typeof result.then === 'function') {
-                return result;
+                if (result != null && typeof result.then === 'function') {
+                    return result;
+                }
+                return Promise.resolve(result);
+            } catch (error) {
+                return Promise.reject(error);
             }
-            return Promise.resolve(result);
-        } catch (error) {
-            return Promise.reject(error);
-        }
+        })());
     };
 
     const withCallback = (fn, context, args = []) => {
@@ -55,7 +90,7 @@ globalThis.OspreyBrowserAPI = (() => {
             const result = fn.apply(context, args);
 
             if (result != null && typeof result.then === 'function') {
-                return result;
+                return withTimeout(result);
             }
             return Promise.resolve(result);
         } catch (error) {
