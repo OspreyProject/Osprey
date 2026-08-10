@@ -114,7 +114,9 @@ globalThis.OspreyNavigationService = (() => {
             return;
         }
 
-        if (isRecentNavigationDuplicate(tabId, url, source)) {
+        const dedupeKey = urlService.normalizeUrl(url) || url;
+
+        if (isRecentNavigationDuplicate(tabId, dedupeKey, source)) {
             return;
         }
 
