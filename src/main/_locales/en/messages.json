@@ -255,6 +255,15 @@
   "toastExclusionRemoved": {
     "message": "Exclusion removed."
   },
+  "toastSettingsImported": {
+    "message": "Settings imported."
+  },
+  "toastSettingsExported": {
+    "message": "Settings exported."
+  },
+  "toastImportInvalid": {
+    "message": "That file is not a valid Osprey settings export."
+  },
   "navAbout": {
     "message": "About"
   },
@@ -269,14 +278,11 @@
       }
     }
   },
-  "aboutCopyright": {
-    "message": "© 2026 Osprey Project LLC"
+  "aboutLicenseNotice": {
+    "message": "Osprey is free and open-source software, licensed under the GNU General Public License v3."
   },
-  "aboutRights": {
-    "message": "All rights reserved."
-  },
-  "aboutLicense": {
-    "message": "Licensed under GPLv3."
+  "aboutCopyrightNotice": {
+    "message": "© 2026 Osprey Project LLC. All rights reserved."
   },
   "aboutChangelog": {
     "message": "Changelog"
@@ -292,5 +298,11 @@
   },
   "aboutTerms": {
     "message": "Terms of Service"
+  },
+  "importSettings": {
+    "message": "Import Settings"
+  },
+  "exportSettings": {
+    "message": "Export Settings"
   }
 }
