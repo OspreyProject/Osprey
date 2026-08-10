@@ -329,6 +329,17 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         contextKnown = true;
         syncActionVisibility();
 
+        if (typeof response?.blockedUrl === 'string' && response.blockedUrl.length > 0 && currentContext) {
+            const parsedAuthoritative = parseSafeHttpUrl(response.blockedUrl);
+            const authoritative = parsedAuthoritative ? stripTrailingSlash(parsedAuthoritative) : null;
+
+            if (authoritative && authoritative !== currentContext.blockedUrl) {
+                currentContext = buildContext({...currentContext, blockedUrl: authoritative, actionable: true});
+                currentOrigin = currentContext.origin;
+                showContext(currentContext);
+            }
+        }
+
         const blockingCount = typeof response?.count === 'number' ? Math.max(0, response.count) : 0;
         const remaining = typeof response?.remaining === 'number' ? response.remaining : blockingCount + 1;
 
@@ -679,6 +690,8 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
 
         isInitialized = true;
 
+        setTimeout(revealPage, 1000);
+
         for (let i = 0, len = domElementIDs.length; i < len; i++) {
             const id = domElementIDs[i];
             domElements[id] = document.getElementById(id);
@@ -705,8 +718,6 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
                 console.warn('WarningPage failed to resolve effective settings; applying fallback restrictions', error);
                 wireActions(fallbackState);
             }).finally(revealPage);
-
-        setTimeout(revealPage, 1000);
     }
 
     return {
