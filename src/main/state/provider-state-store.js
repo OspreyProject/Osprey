@@ -359,6 +359,15 @@ globalThis.OspreyProviderStateStore = (() => {
         return {};
     });
 
+    const importState = rawState => updateState(async state => {
+        const locks = await getPolicyLocks();
+
+        if (state.app.lockSettings || locks.lockSettings) {
+            return;
+        }
+        return rawState && typeof rawState === 'object' ? rawState : {};
+    });
+
     const countEnabledProviders = state => {
         if (!state?.providers) {
             return 0;
@@ -399,6 +408,7 @@ globalThis.OspreyProviderStateStore = (() => {
         setBlockCategory,
         resetDefaultProviders,
         resetAll,
+        importState,
         countEnabledProviders,
         countTotalProviders,
     });

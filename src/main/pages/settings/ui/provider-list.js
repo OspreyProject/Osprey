@@ -122,6 +122,12 @@ globalThis.OspreyProviderList = (() => {
 
         resetRow.append(resetProvidersButton, resetAllButton);
         footer.append(resetRow);
+
+        const importExportPage = globalThis.OspreyImportExportPage;
+
+        if (importExportPage) {
+            footer.append(importExportPage.buildControls(runtime));
+        }
         return footer;
     }
 
