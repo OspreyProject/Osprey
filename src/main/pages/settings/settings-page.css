@@ -1047,21 +1047,39 @@ html, body {
 }
 
 /* --------------------------------------------------
-   About page
--------------------------------------------------- */
-.about {
-    width: fit-content;
-    max-width: 100%;
-    margin: 0 auto;
-    text-align: left;
-}
+   Shared content sections (Import / Export, About)
 
-.about-info {
+   These pages carry read-only info and a few actions rather than lists of
+   cards, so they reuse the same grammar as the Providers and Exclusions
+   pages: an uppercase section-label above content that sits on a rounded
+   surface card, left-aligned and flowing in the shared main column. A
+   hairline (matching the provider body and exclusions footer borders)
+   splits a card into stacked blocks.
+-------------------------------------------------- */
+.settings-section {
     margin-bottom: 22px;
 }
 
+.settings-section:last-child {
+    margin-bottom: 0;
+}
+
+.settings-card {
+    background-color: var(--surface);
+    border-radius: 6px;
+    padding: 14px 16px;
+}
+
+.settings-card-divider {
+    border-top: 1px solid var(--border-subtle);
+    margin: 14px 0;
+}
+
+/* --------------------------------------------------
+   About page
+-------------------------------------------------- */
 .about-app-name {
-    margin: 0 0 8px;
+    margin: 0 0 6px;
     font-size: 14px;
     font-weight: 700;
     color: var(--text-bright);
@@ -1072,6 +1090,10 @@ html, body {
     font-size: 12px;
     color: var(--text-muted);
     line-height: 1.5;
+}
+
+.about-meta-spaced {
+    margin-top: 12px;
 }
 
 .about-links {
