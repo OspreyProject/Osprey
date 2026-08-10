@@ -125,6 +125,7 @@ globalThis.OspreyBlockingService = (() => {
                 primaryResult: null,
                 remaining: 0,
                 total: 0,
+                blockedUrl: '',
             };
         }
 
@@ -140,6 +141,7 @@ globalThis.OspreyBlockingService = (() => {
             primaryResult,
             remaining: context.remaining,
             total: context.total,
+            blockedUrl: typeof context.url === 'string' ? context.url : '',
         };
     };
 
