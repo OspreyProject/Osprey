@@ -76,21 +76,14 @@ globalThis.OspreyAboutPage = (() => {
             textContent: LangUtil.format('aboutVersion', [getVersion()]),
         }),
 
-        formHelpers.createElement('br'),
-
         formHelpers.createElement('p', {
-            className: 'about-meta',
-            textContent: LangUtil.ABOUT_COPYRIGHT,
+            className: 'about-meta about-meta-spaced',
+            textContent: LangUtil.ABOUT_LICENSE_NOTICE,
         }),
 
         formHelpers.createElement('p', {
             className: 'about-meta',
-            textContent: LangUtil.ABOUT_RIGHTS,
-        }),
-
-        formHelpers.createElement('p', {
-            className: 'about-meta',
-            textContent: LangUtil.ABOUT_LICENSE,
+            textContent: LangUtil.ABOUT_COPYRIGHT_NOTICE,
         }),
     );
 
@@ -121,14 +114,31 @@ globalThis.OspreyAboutPage = (() => {
             return;
         }
 
-        const wrapper = formHelpers.createElement('div', {
-                className: 'about'
+        const label = formHelpers.createElement('p', {
+            className: 'section-label',
+            textContent: LangUtil.ABOUT_LABEL,
+        });
+
+        const divider = formHelpers.createElement('div', {
+            className: 'settings-card-divider',
+        });
+
+        const card = formHelpers.createElement('div', {
+                className: 'settings-card about',
             },
 
             buildInfo(),
+            divider,
             buildLinks());
 
-        container.replaceChildren(wrapper);
+        const section = formHelpers.createElement('div', {
+                className: 'settings-section',
+            },
+
+            label,
+            card);
+
+        container.replaceChildren(section);
     };
 
     return Object.freeze({
