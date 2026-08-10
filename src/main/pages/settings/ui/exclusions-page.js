@@ -497,9 +497,7 @@ globalThis.OspreyExclusionsPage = (() => {
         wrapper.appendChild(buildTrustedSection(patterns, readOnly));
         wrapper.appendChild(buildBypassSection(providers, readOnly));
 
-        const hasAny = patterns.length > 0 || Object.keys(providers).length > 0;
-
-        if (!readOnly && hasAny) {
+        if (!readOnly) {
             wrapper.appendChild(buildClearFooter());
         }
         return wrapper;
