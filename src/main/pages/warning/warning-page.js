@@ -125,10 +125,10 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
     const clearReportedBySuffix = () => {
         setTextContent(domElements.reportedBySuffix, '');
 
-        const container = domElements.reportedBy;
+        const suffix = domElements.reportedBySuffix;
 
-        if (container && container.title !== '') {
-            container.title = '';
+        if (suffix && suffix.title !== '') {
+            suffix.title = '';
         }
     };
 
@@ -381,10 +381,11 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
 
         setTextContent(domElements.reportedBySuffix, ` ${othersText}`);
 
+        const suffix = domElements.reportedBySuffix;
         const newTitle = `${LangUtil.REPORTED_BY_ALSO}${systemsStr}`.replace(safeTitleRegex, '');
 
-        if (reportedBy.title !== newTitle) {
-            reportedBy.title = newTitle;
+        if (suffix && suffix.title !== newTitle) {
+            suffix.title = newTitle;
         }
     }
 

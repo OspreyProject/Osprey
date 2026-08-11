@@ -206,6 +206,7 @@ html, body {
 
 #reportedBySuffix {
     color: var(--text-detail-label);
+    cursor: help;
 }
 
 .url-value,
