@@ -47,6 +47,7 @@
         CLEAR_ALLOWED_WEBSITES: 'clearAllowedWebsites',
         REPORT_WEBSITE_AS_MALICIOUS: 'reportWebsiteAsMalicious',
         WEBSITE_LINK: 'websiteLink',
+        OPEN_PROVIDER_WEBSITE: 'openProviderWebsite',
         VERSION: 'version',
         PRIVACY_POLICY: 'privacyPolicy',
         STATUS_HEADING_SECURE: 'statusHeadingSecure',

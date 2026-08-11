@@ -235,10 +235,15 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
                 link.setAttribute('href', href);
             }
 
+            link.setAttribute('title', LangUtil.OPEN_PROVIDER_WEBSITE);
             link.classList.remove('is-plain');
         } else {
             if (link.hasAttribute('href')) {
                 link.removeAttribute('href');
+            }
+
+            if (link.hasAttribute('title')) {
+                link.removeAttribute('title');
             }
 
             link.classList.add('is-plain');

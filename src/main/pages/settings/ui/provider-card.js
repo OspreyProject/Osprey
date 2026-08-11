@@ -68,7 +68,7 @@ globalThis.OspreyProviderCard = (() => {
         }
     };
 
-    const createExternalLinkText = (rawUrl, label, className, providerId, accessibleName) => {
+    const createExternalLinkText = (rawUrl, label, className, providerId, accessibleName, titleText) => {
         const safeUrl = sanitizeExternalUrl(rawUrl);
 
         if (!safeUrl) {
@@ -84,6 +84,10 @@ globalThis.OspreyProviderCard = (() => {
 
         if (accessibleName) {
             linkProps.ariaLabel = accessibleName;
+        }
+
+        if (titleText) {
+            linkProps.title = titleText;
         }
 
         const link = formHelpers.createElement('div', linkProps);
@@ -514,8 +518,10 @@ globalThis.OspreyProviderCard = (() => {
         );
 
         const builtInProviderName = formHelpers.normalizeProviderName(definition.displayName) || definition.id;
+
         const websiteLink = createExternalLinkText(definition.website, LangUtil.WEBSITE_LINK + ' ↗',
-            'provider-website-link', definition.id, `${builtInProviderName}, ${LangUtil.WEBSITE_LINK}`);
+            'provider-website-link', definition.id, `${builtInProviderName}, ${LangUtil.WEBSITE_LINK}`,
+            LangUtil.OPEN_PROVIDER_WEBSITE);
 
         const isDisabled = Boolean(
             runtime?.effectiveState?.app?.lockSettings ||
@@ -634,7 +640,9 @@ globalThis.OspreyProviderCard = (() => {
         );
 
         const websiteLink = createExternalLinkText(definition.website, LangUtil.WEBSITE_LINK + ' ↗',
-            'provider-website-link', definition.id, `${thirdPartyProviderName}, ${LangUtil.WEBSITE_LINK}`);
+            'provider-website-link', definition.id, `${thirdPartyProviderName}, ${LangUtil.WEBSITE_LINK}`,
+            LangUtil.OPEN_PROVIDER_WEBSITE);
+
         const bypassControl = createBypassThresholdControl(definition, providerState, toggleLocked);
 
         body.append(...[

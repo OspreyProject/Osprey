@@ -50,6 +50,9 @@
   "websiteLink": {
     "message": "Website"
   },
+  "openProviderWebsite": {
+    "message": "Click to open this provider's website"
+  },
   "knownSafe": {
     "message": "Known Safe"
   },
