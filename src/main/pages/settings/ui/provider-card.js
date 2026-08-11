@@ -115,17 +115,22 @@ globalThis.OspreyProviderCard = (() => {
         return toggle ? toggle.classList.contains(onString) : true;
     }
 
+    function isExpandGatedOnEnabled(item) {
+        return item.classList.contains('built-in');
+    }
+
     function setItemExpandable(item, isEnabled) {
+        const expandable = isExpandGatedOnEnabled(item) ? isEnabled : true;
         const expandButton = item.querySelector('.expand-arrow');
 
-        if (!isEnabled) {
+        if (!expandable) {
             item.classList.remove('expanded');
         }
 
         if (expandButton) {
-            expandButton.hidden = !isEnabled;
+            expandButton.hidden = !expandable;
 
-            if (!isEnabled) {
+            if (!expandable) {
                 expandButton.setAttribute('aria-expanded', 'false');
             }
         }
@@ -143,7 +148,7 @@ globalThis.OspreyProviderCard = (() => {
             return;
         }
 
-        if (!isItemEnabled(header)) {
+        if (isExpandGatedOnEnabled(currentItem) && !isItemEnabled(header)) {
             setItemExpandable(currentItem, false);
             return;
         }
