@@ -106,6 +106,27 @@ globalThis.OspreyProviderCard = (() => {
         return link;
     };
 
+    function isItemEnabled(header) {
+        const toggle = header.querySelector('.toggle-switch');
+        return toggle ? toggle.classList.contains(onString) : true;
+    }
+
+    function setItemExpandable(item, isEnabled) {
+        const expandButton = item.querySelector('.expand-arrow');
+
+        if (!isEnabled) {
+            item.classList.remove('expanded');
+        }
+
+        if (expandButton) {
+            expandButton.hidden = !isEnabled;
+
+            if (!isEnabled) {
+                expandButton.setAttribute('aria-expanded', 'false');
+            }
+        }
+    }
+
     function onHeaderClick(event) {
         if (event.target.closest('.provider-toggle-wrap')) {
             return;
@@ -114,13 +135,20 @@ globalThis.OspreyProviderCard = (() => {
         const header = event.currentTarget;
         const currentItem = headerContextMap.get(header);
 
-        if (currentItem) {
-            const expanded = currentItem.classList.toggle('expanded');
-            const expandButton = header.querySelector('.expand-arrow');
+        if (!currentItem) {
+            return;
+        }
 
-            if (expandButton) {
-                expandButton.setAttribute('aria-expanded', String(expanded));
-            }
+        if (!isItemEnabled(header)) {
+            setItemExpandable(currentItem, false);
+            return;
+        }
+
+        const expanded = currentItem.classList.toggle('expanded');
+        const expandButton = header.querySelector('.expand-arrow');
+
+        if (expandButton) {
+            expandButton.setAttribute('aria-expanded', String(expanded));
         }
     }
 
@@ -309,11 +337,13 @@ globalThis.OspreyProviderCard = (() => {
                 if (!key?.trim()) {
                     toast.show(LangUtil.TOAST_SAVE_API_KEY_FIRST, true);
                     setToggleVisualState(toggleSwitch, false);
+                    setItemExpandable(item, false);
                     return;
                 }
             }
 
             setToggleVisualState(toggleSwitch, nextState);
+            setItemExpandable(item, nextState);
 
             providerStateStore.setProviderEnabled(providerId, nextState)
                 .then(() => {
@@ -324,6 +354,7 @@ globalThis.OspreyProviderCard = (() => {
                 .catch(error => {
                     console.error(`ProviderCard failed to persist enabled state for provider '${providerId}'`, error);
                     setToggleVisualState(toggleSwitch, wasEnabled);
+                    setItemExpandable(item, wasEnabled);
                     toast.show(LangUtil.TOAST_FAILED_TO_UPDATE_STATE, true);
                 });
         };
@@ -488,6 +519,7 @@ globalThis.OspreyProviderCard = (() => {
 
         const isDisabled = Boolean(
             runtime?.effectiveState?.app?.lockSettings ||
+            runtime?.effectiveState?.app?.disableAllProviders ||
             runtime?.providerManagedIds?.has(definition.id),
         );
 
@@ -505,6 +537,7 @@ globalThis.OspreyProviderCard = (() => {
         });
 
         item.append(header, body);
+        setItemExpandable(item, Boolean(providerState?.enabled));
         return item;
     }
 
@@ -520,15 +553,19 @@ globalThis.OspreyProviderCard = (() => {
             isEnabled,
         );
 
+        const masterDisabled = Boolean(runtime?.effectiveState?.app?.disableAllProviders);
+
         const fieldsLocked = Boolean(
             runtime?.effectiveState?.app?.lockSettings ||
             runtime?.effectiveState?.app?.disableThirdPartyIntegrations ||
+            masterDisabled ||
             runtime?.providerManagedApiKeyIds?.has(definition.id),
         );
 
         const toggleLocked = Boolean(
             runtime?.effectiveState?.app?.lockSettings ||
             runtime?.effectiveState?.app?.disableThirdPartyIntegrations ||
+            masterDisabled ||
             runtime?.providerManagedIds?.has(definition.id),
         );
 
@@ -616,6 +653,7 @@ globalThis.OspreyProviderCard = (() => {
         });
 
         item.append(header, body);
+        setItemExpandable(item, isEnabled);
         syncApplyState();
         return item;
     }

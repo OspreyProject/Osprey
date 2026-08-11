@@ -34,9 +34,9 @@ globalThis.OspreyProviderList = (() => {
 
     const emitSettingsChanged = () => document.dispatchEvent(new CustomEvent('osprey:settings-changed'));
 
-    function runStoreAction(promise, successMessage, errorMessage) {
+    function runStoreAction(promise, successMessage, errorMessage, successIsError = false) {
         return promise.then(() => {
-            toast.show(successMessage);
+            toast.show(successMessage, successIsError);
             emitSettingsChanged();
         }).catch(error => {
             console.error(errorMessage, error);
@@ -64,6 +64,60 @@ globalThis.OspreyProviderList = (() => {
                 'ProviderList failed to reset all settings',
             );
         }
+    }
+
+    function createMasterDisableRow(state, runtime) {
+        const isDisabledAll = Boolean(state?.app?.disableAllProviders);
+        const locked = Boolean(runtime?.effectiveState?.app?.lockSettings);
+
+        const row = formHelpers.createElement('div', {
+            className: 'master-disable-row',
+        });
+
+        const label = formHelpers.createElement('span', {
+            className: 'master-disable-label',
+            textContent: LangUtil.MASTER_DISABLE_ALL,
+        });
+
+        const toggle = formHelpers.createElement('span', {
+            className: isDisabledAll ? 'toggle-switch on' : 'toggle-switch off',
+            role: 'switch',
+            ariaChecked: isDisabledAll,
+            tabIndex: locked ? -1 : 0,
+            ariaLabel: LangUtil.MASTER_DISABLE_ALL,
+        });
+
+        if (locked) {
+            toggle.classList.add('disabled');
+            toggle.setAttribute('aria-disabled', 'true');
+        }
+
+        const activate = () => {
+            if (locked) {
+                return;
+            }
+
+            const next = !toggle.classList.contains('on');
+
+            runStoreAction(
+                providerStateStore.setDisableAllProviders(next),
+                next ? LangUtil.TOAST_ALL_PROVIDERS_DISABLED : LangUtil.TOAST_ALL_PROVIDERS_ENABLED,
+                'ProviderList failed to update disable-all state',
+                next,
+            );
+        };
+
+        toggle.addEventListener('click', activate);
+
+        toggle.addEventListener('keydown', event => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                activate();
+            }
+        });
+
+        row.append(label, toggle);
+        return row;
     }
 
     function createSection(title, items, extraHeaderControl = null) {
@@ -167,6 +221,10 @@ globalThis.OspreyProviderList = (() => {
         }
 
         const fragment = document.createDocumentFragment();
+        const masterDisabled = Boolean(state.app?.disableAllProviders);
+
+        fragment.appendChild(createMasterDisableRow(state, runtime));
+
         const builtInLength = builtIns.length;
         const builtInItems = Array.from({length: builtInLength});
 
@@ -176,10 +234,16 @@ globalThis.OspreyProviderList = (() => {
             builtInItems[i] = providerCard.buildProviderCard(def, pState, runtime);
         }
 
-        fragment.appendChild(createSection(
+        const builtInSection = createSection(
             LangUtil.PROVIDERS_SECTION,
             builtInItems,
-        ).section);
+        );
+
+        if (masterDisabled) {
+            builtInSection.inner.classList.add('providers-locked');
+        }
+
+        fragment.appendChild(builtInSection.section);
 
         const thirdPartyLength = thirdParty.length;
         const thirdPartyItems = Array.from({length: thirdPartyLength});
@@ -196,6 +260,10 @@ globalThis.OspreyProviderList = (() => {
             LangUtil.THIRD_PARTY_SECTION,
             thirdPartyItems,
         );
+
+        if (masterDisabled) {
+            thirdPartySection.inner.classList.add('providers-locked');
+        }
 
         thirdPartySection.section.classList.add('integrations-section');
         fragment.appendChild(thirdPartySection.section);

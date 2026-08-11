@@ -744,6 +744,31 @@ html, body {
     margin-top: 24px;
 }
 
+.master-disable-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 12px;
+    margin-bottom: 16px;
+    background-color: var(--surface);
+    border-radius: 6px;
+}
+
+.master-disable-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.provider-list-inner.providers-locked {
+    opacity: 0.55;
+}
+
+.provider-list-inner.providers-locked .provider-header {
+    cursor: not-allowed;
+}
+
 /* --------------------------------------------------
    Footer buttons
 -------------------------------------------------- */

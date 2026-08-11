@@ -304,5 +304,14 @@
   },
   "exportSettings": {
     "message": "Export Settings"
+  },
+  "masterDisableAll": {
+    "message": "Disable all protection providers"
+  },
+  "toastAllProvidersDisabled": {
+    "message": "All protection providers disabled."
+  },
+  "toastAllProvidersEnabled": {
+    "message": "All protection providers enabled."
   }
 }

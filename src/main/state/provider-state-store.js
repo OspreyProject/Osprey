@@ -84,6 +84,7 @@ globalThis.OspreyProviderStateStore = (() => {
                 disableClearAllowedWebsites: typeof app.disableClearAllowedWebsites === 'boolean' ? app.disableClearAllowedWebsites : false,
                 disableResetButtons: typeof app.disableResetButtons === 'boolean' ? app.disableResetButtons : false,
                 disableThirdPartyIntegrations: typeof app.disableThirdPartyIntegrations === 'boolean' ? app.disableThirdPartyIntegrations : false,
+                disableAllProviders: typeof app.disableAllProviders === 'boolean' ? app.disableAllProviders : false,
                 cacheExpirationSeconds: 604800,
             },
             providers: Object.create(null),
@@ -133,6 +134,7 @@ globalThis.OspreyProviderStateStore = (() => {
                 disableClearAllowedWebsites: source.disableClearAllowedWebsites,
                 disableResetButtons: source.disableResetButtons,
                 disableThirdPartyIntegrations: source.disableThirdPartyIntegrations,
+                disableAllProviders: source.disableAllProviders,
                 cacheExpirationSeconds: source.cacheExpirationSeconds,
             },
             providers: {},
@@ -244,6 +246,16 @@ globalThis.OspreyProviderStateStore = (() => {
         });
 
         provider.enabled = Boolean(enabled);
+    });
+
+    const setDisableAllProviders = disabled => updateState(async state => {
+        const locks = await getPolicyLocks();
+
+        if (state.app.lockSettings || locks.lockSettings) {
+            return;
+        }
+
+        state.app = {...state.app, disableAllProviders: Boolean(disabled)};
     });
 
     const setProviderApiKey = (providerId, apiKey) => updateState(async state => {
@@ -403,6 +415,7 @@ globalThis.OspreyProviderStateStore = (() => {
         stateKey,
         getState,
         setProviderEnabled,
+        setDisableAllProviders,
         setProviderApiKey,
         setBypassBlockingThreshold,
         setBlockCategory,

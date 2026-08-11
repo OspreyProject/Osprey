@@ -249,6 +249,14 @@ globalThis.OspreyPolicyService = (() => {
             effective.app.disableThirdPartyIntegrations,
         );
 
+        if (effective.app.disableAllProviders) {
+            const providerIds = Object.keys(effective.providers);
+
+            for (const providerId of providerIds) {
+                effective.providers[providerId].enabled = false;
+            }
+        }
+
         return Object.freeze({
             policies,
             effectiveState: effective,
