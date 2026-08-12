@@ -34,6 +34,7 @@ const bootstrapScripts = [
     'platform/request-builder.js',
     'platform/response-rule-engine.js',
     'state/cache-service.js',
+    'state/event-log-service.js',
     'platform/message-bus.js',
     'providers/provider-runtime-factory.js',
     'providers/provider-engine.js',
@@ -72,6 +73,7 @@ if (typeof importScripts === 'function') {
     const blockingService = globalThis.OspreyBlockingService;
     const browserAPI = globalThis.OspreyBrowserAPI;
     const cacheService = globalThis.OspreyCacheService;
+    const eventLogService = globalThis.OspreyEventLogService;
     const messages = globalThis.OspreyMessageBus.Messages;
     const ports = globalThis.OspreyMessageBus.Ports;
     const navigationService = globalThis.OspreyNavigationService;
@@ -117,7 +119,7 @@ if (typeof importScripts === 'function') {
         {
             providerId: 'phishunt-io',
             setting: 'bypassBlockingThreshold',
-            value: false
+            value: false,
         },
     ]);
 
@@ -280,6 +282,18 @@ if (typeof importScripts === 'function') {
                 'Failed REMOVE_PROVIDER_EXCLUSION',
             );
         },
+
+        [messages.GET_EVENT_LOG]: (_message, _tabId, sendResponse) => respondAsync(
+            sendResponse,
+            eventLogService.getEvents().then(data => ({ok: true, data})),
+            'Failed GET_EVENT_LOG',
+        ),
+
+        [messages.CLEAR_EVENT_LOG]: (_message, _tabId, sendResponse) => respondAsync(
+            sendResponse,
+            eventLogService.clear().then(() => ({ok: true})),
+            'Failed CLEAR_EVENT_LOG',
+        ),
     };
 
     const handleMessage = (message, sender, sendResponse) => {

@@ -462,6 +462,15 @@ globalThis.OspreyPolicyService = (() => {
         return config;
     };
 
+    const getEndpointIdentity = async () => {
+        const policies = await getPolicies();
+
+        return {
+            deviceTag: trimStringMap(policies.DeviceTag),
+            siteId: trimStringMap(policies.SiteId),
+        };
+    };
+
     const storageApi = browserAPI.api?.storage;
 
     if (storageApi?.onChanged?.addListener !== undefined) {
@@ -486,5 +495,6 @@ globalThis.OspreyPolicyService = (() => {
         applyToAppState,
         getEffectiveAppLocks,
         getManagedListConfig,
+        getEndpointIdentity,
     });
 })();

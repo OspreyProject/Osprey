@@ -34,5 +34,7 @@ globalThis.OspreyMessageBus = Object.freeze({
         ADD_GLOBAL_EXCLUSION: 'addGlobalExclusion',
         REMOVE_GLOBAL_EXCLUSION: 'removeGlobalExclusion',
         REMOVE_PROVIDER_EXCLUSION: 'removeProviderExclusion',
+        GET_EVENT_LOG: 'getEventLog',
+        CLEAR_EVENT_LOG: 'clearEventLog',
     }),
 });

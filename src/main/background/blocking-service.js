@@ -21,6 +21,7 @@ globalThis.OspreyBlockingService = (() => {
     const badgeService = globalThis.OspreyBadgeService;
     const browserAPI = globalThis.OspreyBrowserAPI;
     const cacheService = globalThis.OspreyCacheService;
+    const eventLogService = globalThis.OspreyEventLogService;
     const messages = globalThis.OspreyMessageBus.Messages;
     const providerEngine = globalThis.OspreyProviderEngine;
     const providerRuntimeFactory = globalThis.OspreyProviderRuntimeFactory;
@@ -455,6 +456,17 @@ globalThis.OspreyBlockingService = (() => {
 
         const runtime = await providerRuntimeFactory.createRuntime();
         const normalizedUrl = urlService.normalizeUrl(parsed);
+
+        await resultAggregationService.ensureHydrated();
+        const allowContext = resultAggregationService.getBlockedContext(tabId);
+
+        eventLogService?.recordOverride({
+            action: 'allowWebsite',
+            url: normalizedUrl,
+            providerId: allowContext?.primaryOrigin ?? null,
+            verdict: allowContext?.primaryResult ?? null,
+        });
+
         const pattern = '*.' + urlService.canonicalizeHostname(parsed.hostname);
 
         const providers = runtime.providers;
@@ -524,6 +536,15 @@ globalThis.OspreyBlockingService = (() => {
         if (!lookupKey) {
             return failClosed(tabId);
         }
+
+        const bypassContext = resultAggregationService.getBlockedContext(tabId);
+
+        eventLogService?.recordOverride({
+            action: 'continueToWebsite',
+            url: urlService.normalizeUrl(parsed),
+            providerId: origin,
+            verdict: bypassContext?.primaryResult ?? null,
+        });
 
         await Promise.allSettled([
             cacheService.markAllowed(provider.id, lookupKey, runtime.effectiveState.app.cacheExpirationSeconds, true),

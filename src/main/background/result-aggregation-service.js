@@ -21,6 +21,7 @@ globalThis.OspreyResultAggregationService = (() => {
     const browserAPI = globalThis.OspreyBrowserAPI;
     const protectionResult = globalThis.OspreyProtectionResult;
     const urlService = globalThis.OspreyUrlService;
+    const eventLogService = globalThis.OspreyEventLogService;
 
     const sessionArea = 'session';
     const storageKey = 'osprey.blockedContexts';
@@ -325,6 +326,15 @@ globalThis.OspreyResultAggregationService = (() => {
 
         let context = blockedByTab.get(tabId);
         const firstForUrl = !context || context.url !== url;
+        const isNewDetection = firstForUrl || !context.entries.has(origin);
+
+        if (isNewDetection) {
+            eventLogService?.recordDetection({
+                url,
+                providerId: origin,
+                verdict: result
+            });
+        }
 
         if (firstForUrl) {
             const entriesMap = new Map();
