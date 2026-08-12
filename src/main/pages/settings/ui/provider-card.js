@@ -116,7 +116,7 @@ globalThis.OspreyProviderCard = (() => {
     }
 
     function isExpandGatedOnEnabled(item) {
-        return item.classList.contains('built-in');
+        return item.dataset.expandGate === 'enabled';
     }
 
     function setItemExpandable(item, isEnabled) {
@@ -548,6 +548,7 @@ globalThis.OspreyProviderCard = (() => {
         });
 
         item.append(header, body);
+        item.dataset.expandGate = 'enabled';
         setItemExpandable(item, Boolean(providerState?.enabled));
         return item;
     }
@@ -666,6 +667,11 @@ globalThis.OspreyProviderCard = (() => {
         });
 
         item.append(header, body);
+
+        if (masterDisabled) {
+            item.dataset.expandGate = 'enabled';
+        }
+
         setItemExpandable(item, isEnabled);
         syncApplyState();
         return item;

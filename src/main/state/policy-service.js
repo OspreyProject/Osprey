@@ -23,9 +23,30 @@ globalThis.OspreyPolicyService = (() => {
 
     let cachedPolicies = null;
     let cachedPoliciesPromise = null;
+    let cachedManagedListConfig = null;
 
     const identityMap = value => value;
     const negateMap = value => !value;
+    const trimStringMap = value => String(value == null ? '' : value).trim();
+
+    const normalizeStringList = value => {
+        if (!Array.isArray(value)) {
+            return [];
+        }
+
+        const out = [];
+
+        for (const element of value) {
+            if (typeof element === 'string') {
+                const trimmed = element.trim();
+
+                if (trimmed) {
+                    out.push(trimmed);
+                }
+            }
+        }
+        return out;
+    };
 
     const appPolicyMappings = [
         {
@@ -81,6 +102,24 @@ globalThis.OspreyPolicyService = (() => {
             type: 'string',
             stateKey: 'proxyBaseUrl',
             mapValue: trimStringMap,
+        },
+        {
+            policyKey: 'DeviceTag',
+            type: 'string',
+            stateKey: 'deviceTag',
+            mapValue: trimStringMap,
+        },
+        {
+            policyKey: 'SiteId',
+            type: 'string',
+            stateKey: 'siteId',
+            mapValue: trimStringMap,
+        },
+        {
+            policyKey: 'DisableUserAllowlist',
+            type: 'boolean',
+            stateKey: 'disableUserAllowlist',
+            mapValue: identityMap,
         },
     ];
 
@@ -144,6 +183,26 @@ globalThis.OspreyPolicyService = (() => {
                 }
             }
         }
+
+        const managedAllowlist = normalizeStringList(policies.ManagedAllowlist);
+
+        if (managedAllowlist.length > 0) {
+            app.managedAllowlist = managedAllowlist;
+
+            if (appManagedKeys !== undefined) {
+                appManagedKeys.add('managedAllowlist');
+            }
+        }
+
+        const managedBlocklist = normalizeStringList(policies.ManagedBlocklist);
+
+        if (managedBlocklist.length > 0) {
+            app.managedBlocklist = managedBlocklist;
+
+            if (appManagedKeys !== undefined) {
+                appManagedKeys.add('managedBlocklist');
+            }
+        }
     };
 
     const applyProviderPolicies = (providers, policies, providerManagedIds, providerManagedApiKeyIds, disableThirdPartyIntegrations) => {
@@ -192,6 +251,69 @@ globalThis.OspreyPolicyService = (() => {
                 } else {
                     providerManagedApiKeyIds.add(definition.id);
                 }
+            }
+        }
+
+        applyManagedProviderSettings(providers, policies, providerManagedIds);
+    };
+
+    const applyManagedProviderSettings = (providers, policies, providerManagedIds) => {
+        const settings = policies.ManagedProviderSettings;
+
+        if (!settings || typeof settings !== 'object') {
+            return;
+        }
+
+        for (const rawId of Object.keys(settings)) {
+            const override = settings[rawId];
+
+            if (!override || typeof override !== 'object') {
+                continue;
+            }
+
+            const definition = providerCatalog.getDefinition(rawId);
+
+            if (!definition) {
+                continue;
+            }
+
+            const providerState = ensureProviderState(providers, definition);
+            let managed = false;
+
+            if (typeof override.bypassBlockingThreshold === 'boolean') {
+                providerState.bypassBlockingThreshold = override.bypassBlockingThreshold;
+                managed = true;
+            }
+
+            const timeout = Number(override.requestTimeoutMs);
+
+            if (Number.isFinite(timeout) && timeout >= 1000 && timeout <= 60000) {
+                providerState.requestTimeoutMs = timeout;
+                managed = true;
+            }
+
+            if (override.blockCategories && typeof override.blockCategories === 'object') {
+                const nextCategories = {};
+                const existing = providerState.blockCategories;
+
+                if (existing && typeof existing === 'object') {
+                    for (const key of Object.keys(existing)) {
+                        nextCategories[key] = existing[key];
+                    }
+                }
+
+                for (const key of Object.keys(override.blockCategories)) {
+                    if (typeof override.blockCategories[key] === 'boolean') {
+                        nextCategories[key] = override.blockCategories[key];
+                    }
+                }
+
+                providerState.blockCategories = nextCategories;
+                managed = true;
+            }
+
+            if (managed) {
+                providerManagedIds.add(definition.id);
             }
         }
     };
@@ -289,6 +411,25 @@ globalThis.OspreyPolicyService = (() => {
     const invalidate = () => {
         cachedPolicies = null;
         cachedPoliciesPromise = null;
+        cachedManagedListConfig = null;
+    };
+
+    const getManagedListConfig = async () => {
+        const policies = await getPolicies();
+
+        if (cachedManagedListConfig !== null && cachedManagedListConfig.source === policies) {
+            return cachedManagedListConfig;
+        }
+
+        const config = Object.freeze({
+            source: policies,
+            allowlist: normalizeStringList(policies.ManagedAllowlist),
+            blocklist: normalizeStringList(policies.ManagedBlocklist),
+            disableUserAllowlist: policies.DisableUserAllowlist === true,
+        });
+
+        cachedManagedListConfig = config;
+        return config;
     };
 
     const storageApi = browserAPI.api?.storage;
@@ -314,5 +455,6 @@ globalThis.OspreyPolicyService = (() => {
         applyToState,
         applyToAppState,
         getEffectiveAppLocks,
+        getManagedListConfig,
     });
 })();

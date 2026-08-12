@@ -172,12 +172,73 @@
       "description": "Managed enabled state for Validin.",
       "type": "boolean",
       "default": true
+    },
+    "ManagedAllowlist": {
+      "title": "Managed Allowlist",
+      "description": "Host or URL patterns that are always treated as safe. The end user cannot remove these. Examples: \"intranet.example.com\", \"*.corp.example.com\", \"https://apps.example.com/portal\".",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "ManagedBlocklist": {
+      "title": "Managed Blocklist",
+      "description": "Host or URL patterns that are always blocked, evaluated before the threat providers run. Examples: \"bad.example.com\", \"*.malware.example\", \"https://phish.example/login\".",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
     "ProxyBaseUrl": {
       "title": "Proxy Base URL",
       "description": "Overrides the backend origin the extension sends lookups to. Must be an http(s) origin, for example \"https://osprey.msp.example\". When empty, the default public backend is used.",
       "type": "string",
       "default": ""
     },
+    "DeviceTag": {
+      "title": "Device Tag",
+      "description": "Opaque identifier for this endpoint, attached to reported events by later features. Has no visible effect on its own.",
+      "type": "string",
+      "default": ""
+    },
+    "SiteId": {
+      "title": "Site ID",
+      "description": "Opaque identifier for the client organization this endpoint belongs to, attached to reported events by later features. Has no visible effect on its own.",
+      "type": "string",
+      "default": ""
+    },
+    "DisableUserAllowlist": {
+      "title": "Disable User Allowlist",
+      "description": "If true, the end user cannot add any allowlist entries or exclusions, and existing user allowlist entries are ignored.",
+      "type": "boolean",
+      "default": false
+    },
+    "ManagedProviderSettings": {
+      "title": "Managed Provider Settings",
+      "description": "Per-provider overrides keyed by provider id. Each value may set \"bypassBlockingThreshold\" (boolean), \"requestTimeoutMs\" (integer between 1000 and 60000), and \"blockCategories\" (an object mapping a category key to a boolean).",
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "bypassBlockingThreshold": {
+            "type": "boolean"
+          },
+          "requestTimeoutMs": {
+            "type": "integer",
+            "minimum": 1000,
+            "maximum": 60000
+          },
+          "blockCategories": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "boolean"
+            }
+          }
+        }
+      },
+      "default": {}
     }
   }
 }

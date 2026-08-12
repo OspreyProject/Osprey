@@ -63,7 +63,7 @@ globalThis.OspreyRequestBuilder = (() => {
         });
     };
 
-    const buildProxyRequest = (provider, url) => {
+    const buildProxyRequest = (provider, url, providerState = {}) => {
         const base = String(provider.proxyBaseUrl || '');
         const end = String(provider.endpoint || '');
 
@@ -91,12 +91,12 @@ globalThis.OspreyRequestBuilder = (() => {
                     url: urlService.normalizeUrl(url),
                 }),
             },
-            timeoutMs: 7000,
+            timeoutMs: providerState.requestTimeoutMs > 0 ? providerState.requestTimeoutMs : 7000,
             lookupKey: urlService.lookupValueForTarget(url, provider.lookupTarget),
         };
     };
 
-    const buildDirectRequest = (provider, url, apiKey = '') => {
+    const buildDirectRequest = (provider, url, apiKey = '', providerState = {}) => {
         const parsed = urlService.parseHttpUrl(url);
 
         if (!parsed) {
@@ -142,6 +142,10 @@ globalThis.OspreyRequestBuilder = (() => {
             timeoutMs = 7000;
         }
 
+        if (providerState.requestTimeoutMs > 0) {
+            timeoutMs = providerState.requestTimeoutMs;
+        }
+
         return {
             url: replaceTemplate(request.urlTemplate, normUrl, hostname, lookupValue, apiKey, true),
             options: {
@@ -156,8 +160,8 @@ globalThis.OspreyRequestBuilder = (() => {
 
     const buildRequest = (provider, url, providerState = {}) =>
         provider.kind === 'proxy_builtin' ?
-            buildProxyRequest(provider, url) :
-            buildDirectRequest(provider, url, providerState.apiKey || '');
+            buildProxyRequest(provider, url, providerState) :
+            buildDirectRequest(provider, url, providerState.apiKey || '', providerState);
 
     return Object.freeze({
         buildRequest,

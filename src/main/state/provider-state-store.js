@@ -87,6 +87,11 @@ globalThis.OspreyProviderStateStore = (() => {
                 disableAllProviders: typeof app.disableAllProviders === 'boolean' ? app.disableAllProviders : false,
                 cacheExpirationSeconds: 604800,
                 proxyBaseUrl: typeof app.proxyBaseUrl === 'string' ? app.proxyBaseUrl : '',
+                deviceTag: typeof app.deviceTag === 'string' ? app.deviceTag : '',
+                siteId: typeof app.siteId === 'string' ? app.siteId : '',
+                disableUserAllowlist: typeof app.disableUserAllowlist === 'boolean' ? app.disableUserAllowlist : false,
+                managedAllowlist: Array.isArray(app.managedAllowlist) ? app.managedAllowlist.filter(entry => typeof entry === 'string') : [],
+                managedBlocklist: Array.isArray(app.managedBlocklist) ? app.managedBlocklist.filter(entry => typeof entry === 'string') : [],
             },
             providers: Object.create(null),
         };
@@ -113,6 +118,10 @@ globalThis.OspreyProviderStateStore = (() => {
                     Boolean(element.bypassBlockingThreshold),
 
                 blockCategories: normalizeBlockCategories(element, src),
+
+                requestTimeoutMs: src && Number.isFinite(Number(src.requestTimeoutMs)) && Number(src.requestTimeoutMs) > 0 ?
+                    Number(src.requestTimeoutMs) :
+                    0,
             };
 
             Object.freeze(base.providers[id]);

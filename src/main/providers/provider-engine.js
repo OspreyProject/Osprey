@@ -445,9 +445,15 @@ globalThis.OspreyProviderEngine = (() => {
         const individualProviders = [];
         const sharedGroups = new Map();
         let hasEnabled = false;
+        let managedProvider = null;
 
         for (const element of providers) {
             const provider = element;
+
+            if (provider.kind === 'managed_local') {
+                managedProvider = provider;
+                continue;
+            }
 
             if (!provider.state.enabled) {
                 continue;
@@ -470,6 +476,14 @@ globalThis.OspreyProviderEngine = (() => {
             }
         }
 
+        const managedDecision = await cacheService.getManagedListDecision(parsedUrl);
+
+        if (managedDecision.blocked && managedProvider) {
+            await abortTab(tabId);
+            emitResult(managedProvider, parsedUrl.toString(), protectionResult.resultTypes.MALICIOUS, onResult);
+            return;
+        }
+
         if (!hasEnabled) {
             return;
         }
@@ -480,7 +494,7 @@ globalThis.OspreyProviderEngine = (() => {
         abortControllers.set(tabId, controller);
 
         const targetUrl = parsedUrl.toString();
-        const globalAllowMatched = await cacheService.matchesGlobalPattern(parsedUrl);
+        const globalAllowMatched = managedDecision.allowed || await cacheService.matchesGlobalPattern(parsedUrl);
         const tasks = [];
 
         for (const element of individualProviders) {

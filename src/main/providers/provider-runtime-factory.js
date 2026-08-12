@@ -31,6 +31,41 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
     const dynamicDns = protectionResult.resultTypes.DYNAMIC_DNS;
 
     const emptyCategoryState = Object.freeze(Object.create(null));
+    const managedBlocklistID = 'managed-blocklist';
+
+    const resolveProxyBaseOverride = raw => {
+        if (typeof raw !== 'string') {
+            return '';
+        }
+
+        const trimmed = raw.trim();
+
+        if (!trimmed) {
+            return '';
+        }
+
+        let parsed;
+
+        try {
+            parsed = new URL(trimmed);
+        } catch {
+            return '';
+        }
+
+        if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+            return '';
+        }
+        return parsed.origin;
+    };
+
+    const resolveRequestTimeoutMs = rawState => {
+        if (rawState === undefined) {
+            return 0;
+        }
+
+        const value = Number(rawState.requestTimeoutMs);
+        return Number.isFinite(value) && value > 0 ? value : 0;
+    };
 
     const resolveBlockCategoryState = (definition, rawState) => {
         const declared = Array.isArray(definition.blockCategories) ? definition.blockCategories : null;
@@ -70,6 +105,8 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
             providerManagedApiKeyIds,
         } = policyResult;
 
+        const proxyBaseOverride = resolveProxyBaseOverride(policies.ProxyBaseUrl);
+
         const definitions = providerCatalog.getAllDefinitions();
         const definitionsLength = definitions.length;
 
@@ -96,12 +133,18 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
                 Boolean(definition.bypassBlockingThreshold);
 
             const blockCategoryState = resolveBlockCategoryState(definition, rawState);
+            const requestTimeoutMs = resolveRequestTimeoutMs(rawState);
+
+            const effectiveProxyBaseUrl = definition.kind === 'proxy_builtin' && proxyBaseOverride ?
+                proxyBaseOverride :
+                definition.proxyBaseUrl;
 
             const provider = Object.freeze({
                 ...definition,
+                proxyBaseUrl: effectiveProxyBaseUrl,
                 bypassBlockingThreshold,
                 blockCategoryState,
-                state: Object.freeze({enabled, apiKey, bypassBlockingThreshold, blockCategoryState}),
+                state: Object.freeze({enabled, apiKey, bypassBlockingThreshold, blockCategoryState, requestTimeoutMs}),
                 managed: providerManagedIds.has(definition.id),
             });
 
@@ -129,6 +172,40 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
                     blockingProviderIdsByResult[dynamicDns].add(provider.id);
                 }
             }
+        }
+
+        const managedBlocklist = Array.isArray(policies.ManagedBlocklist) ?
+            policies.ManagedBlocklist.filter(entry => typeof entry === 'string' && entry.trim()) :
+            [];
+
+        if (managedBlocklist.length > 0) {
+            const managedProvider = Object.freeze({
+                id: managedBlocklistID,
+                kind: 'managed_local',
+                displayName: 'Managed Blocklist',
+                group: 'security_filters',
+                icon: '',
+                aliases: [],
+                enabledByDefault: true,
+                bypassBlockingThreshold: true,
+                blockCategories: [],
+                blockCategoryState: emptyCategoryState,
+                lookupTarget: 'url',
+                tags: ['managed'],
+                report: {type: 'none'},
+                managed: true,
+                state: Object.freeze({
+                    enabled: true,
+                    apiKey: '',
+                    bypassBlockingThreshold: true,
+                    blockCategoryState: emptyCategoryState,
+                    requestTimeoutMs: 0,
+                }),
+            });
+
+            providers.push(managedProvider);
+            providersById.set(managedBlocklistID, managedProvider);
+            blockingProviderIdsByResult[malicious].add(managedBlocklistID);
         }
 
         providers.sort((a, b) => {

@@ -21,6 +21,7 @@ globalThis.OspreyCacheService = (() => {
     const browserAPI = globalThis.OspreyBrowserAPI;
     const urlService = globalThis.OspreyUrlService;
     const protectionResult = globalThis.OspreyProtectionResult;
+    const policyService = globalThis.OspreyPolicyService;
 
     const cacheKey = 'osprey_cache';
     const metaKey = cacheKey;
@@ -562,10 +563,137 @@ globalThis.OspreyCacheService = (() => {
         return patternsSet;
     };
 
+    const parseManagedPattern = raw => {
+        if (typeof raw !== 'string') {
+            return null;
+        }
+
+        let value = raw.trim().toLowerCase();
+
+        if (!value) {
+            return null;
+        }
+
+        const schemeIndex = value.indexOf('://');
+
+        if (schemeIndex !== -1) {
+            value = value.slice(schemeIndex + 3);
+        }
+
+        if (value.startsWith('*.')) {
+            value = value.slice(2);
+        }
+
+        let host = value;
+        let pathPrefix = '';
+        const slashIndex = value.indexOf('/');
+
+        if (slashIndex !== -1) {
+            host = value.slice(0, slashIndex);
+            pathPrefix = value.slice(slashIndex);
+        }
+
+        const colonIndex = host.indexOf(':');
+
+        if (colonIndex !== -1) {
+            host = host.slice(0, colonIndex);
+        }
+
+        host = urlService.canonicalizeHostname(host);
+
+        if (!host || !urlService.isAcceptableHost(host)) {
+            return null;
+        }
+
+        if (pathPrefix === '/') {
+            pathPrefix = '';
+        }
+
+        if (pathPrefix.length > 1 && pathPrefix.endsWith('/')) {
+            pathPrefix = pathPrefix.replace(/\/+$/, '');
+        }
+
+        return {host, pathPrefix};
+    };
+
+    const hostMatchesPattern = (urlHost, patternHost) =>
+        urlHost === patternHost || urlHost.endsWith(`.${patternHost}`);
+
+    const matchesManagedPattern = (parsedUrl, pattern) => {
+        const urlHost = urlService.canonicalizeHostname(parsedUrl.hostname);
+
+        if (!hostMatchesPattern(urlHost, pattern.host)) {
+            return false;
+        }
+
+        if (pattern.pathPrefix) {
+            const path = (parsedUrl.pathname || '/').toLowerCase();
+
+            if (path !== pattern.pathPrefix && !path.startsWith(`${pattern.pathPrefix}/`)) {
+                return false;
+            }
+        }
+        return true;
+    };
+
+    let parsedManagedCache = null;
+
+    const getParsedManaged = async () => {
+        const config = policyService ? await policyService.getManagedListConfig() : null;
+
+        if (!config) {
+            return {allow: [], block: [], disableUserAllowlist: false};
+        }
+
+        if (parsedManagedCache !== null && parsedManagedCache.source === config) {
+            return parsedManagedCache;
+        }
+
+        const parsed = {
+            source: config,
+            allow: config.allowlist.map(parseManagedPattern).filter(Boolean),
+            block: config.blocklist.map(parseManagedPattern).filter(Boolean),
+            disableUserAllowlist: config.disableUserAllowlist === true,
+        };
+
+        parsedManagedCache = parsed;
+        return parsed;
+    };
+
+    const matchesPatternList = (parsedUrl, patterns) => {
+        for (const pattern of patterns) {
+            if (matchesManagedPattern(parsedUrl, pattern)) {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    const getManagedListDecision = async url => {
+        const parsed = urlService.parseHttpUrl(url);
+
+        if (!parsed) {
+            return {blocked: false, allowed: false};
+        }
+
+        const managed = await getParsedManaged();
+
+        return {
+            blocked: matchesPatternList(parsed, managed.block),
+            allowed: matchesPatternList(parsed, managed.allow),
+        };
+    };
+
     const matchesGlobalPattern = async url => {
         const parsed = urlService.parseHttpUrl(url);
 
         if (!parsed) {
+            return false;
+        }
+
+        const managed = await getParsedManaged();
+
+        if (managed.disableUserAllowlist) {
             return false;
         }
 
@@ -591,7 +719,7 @@ globalThis.OspreyCacheService = (() => {
     const getAllowedEntry = createEntryGetter('allowed');
     const getBlockedEntry = createEntryGetter('blocked');
 
-    const markAllowed = createEntryMarker('allowed', (expirationSeconds, userAllowed = false) => {
+    const baseMarkAllowed = createEntryMarker('allowed', (expirationSeconds, userAllowed = false) => {
         const record = {exp: Date.now() + expirationSeconds * 1000};
 
         if (userAllowed) {
@@ -600,12 +728,29 @@ globalThis.OspreyCacheService = (() => {
         return record;
     });
 
+    const markAllowed = async (providerId, lookupKey, expirationSeconds, userAllowed = false) => {
+        if (userAllowed) {
+            const managed = await getParsedManaged();
+
+            if (managed.disableUserAllowlist) {
+                return undefined;
+            }
+        }
+        return baseMarkAllowed(providerId, lookupKey, expirationSeconds, userAllowed);
+    };
+
     const markBlocked = createEntryMarker('blocked', (result, expirationSeconds) => ({
         exp: Date.now() + expirationSeconds * 1000,
         result,
     }));
 
     const allowPattern = async pattern => {
+        const managed = await getParsedManaged();
+
+        if (managed.disableUserAllowlist) {
+            return;
+        }
+
         const snapshot = await getSnapshot();
 
         if (!snapshot.globalAllowPatterns.includes(pattern)) {
@@ -687,6 +832,15 @@ globalThis.OspreyCacheService = (() => {
     };
 
     const addGlobalHost = async rawHost => {
+        const managed = await getParsedManaged();
+
+        if (managed.disableUserAllowlist) {
+            return {
+                ok: false,
+                reason: 'managed'
+            };
+        }
+
         const host = resolveHostFromInput(rawHost);
 
         if (!host) {
@@ -915,6 +1069,7 @@ globalThis.OspreyCacheService = (() => {
 
     return Object.freeze({
         matchesGlobalPattern,
+        getManagedListDecision,
         getAllowedEntry,
         getBlockedEntry,
         markAllowed,
