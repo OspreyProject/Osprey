@@ -33,6 +33,10 @@
     "https://api.osprey.ac/*",
     "https://api.metadefender.com/*"
   ],
+  "optional_host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
   "incognito": "split",
   "storage": {
     "managed_schema": "policies.json"
