@@ -77,6 +77,7 @@ if (typeof importScripts === 'function') {
     const messages = globalThis.OspreyMessageBus.Messages;
     const ports = globalThis.OspreyMessageBus.Ports;
     const navigationService = globalThis.OspreyNavigationService;
+    const policyService = globalThis.OspreyPolicyService;
     const providerCatalog = globalThis.OspreyProviderCatalog;
     const providerEngine = globalThis.OspreyProviderEngine;
     const providerStateStore = globalThis.OspreyProviderStateStore;
@@ -316,6 +317,42 @@ if (typeof importScripts === 'function') {
         return handler(message, tabId, sendResponse, sender);
     };
 
+    const setUpRemoteConfig = async api => {
+        if (!policyService || typeof policyService.initRemoteConfig !== 'function') {
+            return;
+        }
+
+        try {
+            await policyService.initRemoteConfig();
+        } catch (error) {
+            console.error('Failed to load persisted remote config', error);
+        }
+
+        const alarms = api.alarms;
+
+        if (alarms?.create) {
+            try {
+                alarms.create(policyService.remoteConfigAlarmName, {
+                    periodInMinutes: policyService.remoteConfigRefreshMinutes,
+                });
+            } catch (error) {
+                console.error('Failed to schedule the remote config refresh alarm', error);
+            }
+
+            alarms.onAlarm?.addListener(alarm => {
+                if (alarm?.name === policyService.remoteConfigAlarmName) {
+                    policyService.refreshRemoteConfig().catch(error => {
+                        console.error('Scheduled remote config refresh failed', error);
+                    });
+                }
+            });
+        }
+
+        policyService.refreshRemoteConfig().catch(error => {
+            console.error('Startup remote config refresh failed', error);
+        });
+    };
+
     const init = async () => {
         const api = browserAPI.api;
 
@@ -347,6 +384,8 @@ if (typeof importScripts === 'function') {
         });
 
         await runEmergencySettingsMigrations();
+
+        await setUpRemoteConfig(api);
 
         navigationService.register();
     };

@@ -35,6 +35,13 @@ globalThis.OspreyProviderCatalog = (() => {
     const staticAliasMap = new Map();
     const sharedApiKeyGroupMembers = new Map();
 
+    // Runtime custom providers supplied by a remote configuration document
+    // (see policy-service). Kept separate from the static catalog above so the
+    // built-in set is never mutated, and rebuilt wholesale by setCustomDefinitions.
+    const customById = new Map();
+    const customAliasMap = new Map();
+    let customDefinitions = [];
+
     let defIdx = 0;
 
     const processDefinition = definition => {
@@ -95,7 +102,53 @@ globalThis.OspreyProviderCatalog = (() => {
         catalogValidator.validate(allDefinitions);
     }
 
-    const getAllDefinitions = () => allDefinitions;
+    let combinedDefinitions = allDefinitions;
+
+    const setCustomDefinitions = definitions => {
+        customById.clear();
+        customAliasMap.clear();
+
+        const accepted = [];
+        const candidates = Array.isArray(definitions) ? definitions : [];
+
+        for (const definition of candidates) {
+            if (!definition || typeof definition !== 'object' || !definition.id) {
+                continue;
+            }
+
+            if (byId.has(definition.id) || staticAliasMap.has(definition.id) || customById.has(definition.id)) {
+                console.warn(`OspreyProviderCatalog ignoring custom provider with conflicting id '${definition.id}'`);
+                continue;
+            }
+
+            customById.set(definition.id, definition);
+            customAliasMap.set(definition.id, definition.id);
+
+            if (Array.isArray(definition.aliases)) {
+                for (const alias of definition.aliases) {
+                    if (alias && !staticAliasMap.has(alias) && !customAliasMap.has(alias)) {
+                        customAliasMap.set(alias, definition.id);
+                    }
+                }
+            }
+
+            accepted.push(definition);
+        }
+
+        customDefinitions = accepted;
+        combinedDefinitions = accepted.length > 0 ? Object.freeze(allDefinitions.concat(accepted)) : allDefinitions;
+        return accepted.length;
+    };
+
+    const isCustomProvider = idOrAlias => {
+        if (!idOrAlias) {
+            return false;
+        }
+        return customById.has(idOrAlias) || customAliasMap.has(idOrAlias);
+    };
+
+    const getAllDefinitions = () => combinedDefinitions;
+    const getCustomDefinitions = () => customDefinitions.slice();
 
     const getDefinition = idOrAlias => {
         if (!idOrAlias) {
@@ -106,6 +159,16 @@ globalThis.OspreyProviderCatalog = (() => {
 
         if (resolvedId !== undefined) {
             const definition = byId.get(resolvedId);
+
+            if (definition !== undefined) {
+                return definition;
+            }
+        }
+
+        const customResolvedId = customAliasMap.get(idOrAlias);
+
+        if (customResolvedId !== undefined) {
+            const definition = customById.get(customResolvedId);
 
             if (definition !== undefined) {
                 return definition;
@@ -235,6 +298,9 @@ globalThis.OspreyProviderCatalog = (() => {
         getDirectIntegrations,
         getSharedGroupMembersById,
         getAllDefinitions,
+        getCustomDefinitions,
+        setCustomDefinitions,
+        isCustomProvider,
         getDefinition,
         requiresApiKey,
         proxyEndpointUrl,

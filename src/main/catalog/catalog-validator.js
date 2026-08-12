@@ -254,7 +254,83 @@ globalThis.OspreyCatalogValidator = (() => {
         }
     };
 
+    const seedStateFromExisting = existingDefinitions => {
+        const state = {
+            ids: new Set(),
+            aliases: new Set(),
+            policyKeys: new Set(),
+            proxyEndpoints: new Set(),
+            groups: new Set(Object.keys(providerGroups || {})),
+        };
+
+        if (!Array.isArray(existingDefinitions)) {
+            return state;
+        }
+
+        for (const definition of existingDefinitions) {
+            if (!definition) {
+                continue;
+            }
+
+            if (definition.id) {
+                state.ids.add(definition.id);
+                state.aliases.add(definition.id);
+            }
+
+            if (Array.isArray(definition.aliases)) {
+                for (const alias of definition.aliases) {
+                    if (alias) {
+                        state.aliases.add(alias);
+                    }
+                }
+            }
+
+            if (definition.policyKey) {
+                state.policyKeys.add(definition.policyKey);
+            }
+
+            if (definition.kind === 'proxy_builtin' && definition.endpoint) {
+                state.proxyEndpoints.add(definition.endpoint);
+            }
+        }
+        return state;
+    };
+
+    const validateCustom = (customDefinitions, existingDefinitions) => {
+        const valid = [];
+        const errors = [];
+
+        if (!Array.isArray(customDefinitions)) {
+            return {valid, errors};
+        }
+
+        let committed = seedStateFromExisting(existingDefinitions);
+
+        for (const candidate of customDefinitions) {
+            const trial = {
+                ids: new Set(committed.ids),
+                aliases: new Set(committed.aliases),
+                policyKeys: new Set(committed.policyKeys),
+                proxyEndpoints: new Set(committed.proxyEndpoints),
+                groups: committed.groups,
+            };
+
+            try {
+                validateDefinition(candidate, trial);
+                valid.push(candidate);
+                committed = trial;
+            } catch (error) {
+                errors.push({
+                    id: candidate && typeof candidate === 'object' ? candidate.id : undefined,
+                    message: error?.message ? error.message : String(error),
+                });
+            }
+        }
+        return {valid, errors};
+    };
+
     return Object.freeze({
         validate,
+        validateCustom,
     });
 })();

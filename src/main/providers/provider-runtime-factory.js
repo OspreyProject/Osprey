@@ -135,9 +135,9 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
             const blockCategoryState = resolveBlockCategoryState(definition, rawState);
             const requestTimeoutMs = resolveRequestTimeoutMs(rawState);
 
-            const effectiveProxyBaseUrl = definition.kind === 'proxy_builtin' && proxyBaseOverride ?
-                proxyBaseOverride :
-                definition.proxyBaseUrl;
+            const effectiveProxyBaseUrl = definition.kind === 'proxy_builtin' && proxyBaseOverride && !providerCatalog.isCustomProvider(definition.id)
+                ? proxyBaseOverride
+                : definition.proxyBaseUrl;
 
             const provider = Object.freeze({
                 ...definition,
@@ -290,8 +290,12 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
         cachedAppRuntime = null;
     };
 
+    const remoteConfigStorageKey = 'osprey_remote_config';
+
     globalThis.OspreyBrowserAPI.api?.storage?.onChanged?.addListener((changes, area) => {
-        if (area === 'local' && changes?.[providerStateStore.stateKey] || area === 'managed') {
+        const localRelevant = area === 'local' && (changes?.[providerStateStore.stateKey] || changes?.[remoteConfigStorageKey]);
+
+        if (localRelevant || area === 'managed') {
             invalidate();
         }
     });

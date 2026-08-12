@@ -413,9 +413,11 @@ globalThis.OspreyProviderStateStore = (() => {
         loadingPromise = null;
     };
 
+    const remoteConfigStorageKey = 'osprey_remote_config';
+
     if (browserAPI.api?.storage?.onChanged?.addListener) {
         browserAPI.api.storage.onChanged.addListener((changes, area) => {
-            if (area === 'local' && changes?.[stateKey]) {
+            if (area === 'local' && (changes?.[stateKey] || changes?.[remoteConfigStorageKey])) {
                 invalidateCache();
             }
         });

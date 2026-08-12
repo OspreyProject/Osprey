@@ -269,6 +269,12 @@
       "description": "Optional override for the lead sentence on the warning page. When empty, the default block message is shown.",
       "type": "string",
       "default": ""
+    },
+    "ManagedConfigUrl": {
+      "title": "Managed Config URL",
+      "description": "An http(s) URL to a JSON configuration document the extension fetches on startup and on a schedule. Values from the document are merged UNDER managed storage: anything an admin sets locally here always wins, and the document fills in the rest. On a fetch failure the last successfully fetched document is kept, so a network outage never drops settings. The document may also define custom threat providers. When empty, no remote configuration is fetched. This key can only be set through managed storage; a fetched document cannot change it.",
+      "type": "string",
+      "default": ""
     }
   }
 }

@@ -20,13 +20,25 @@
 globalThis.OspreyPolicyService = (() => {
     const browserAPI = globalThis.OspreyBrowserAPI;
     const providerCatalog = globalThis.OspreyProviderCatalog;
+    const catalogValidator = globalThis.OspreyCatalogValidator;
 
-    let cachedPolicies = null;
-    let cachedPoliciesPromise = null;
+    const remoteConfigStorageKey = 'osprey_remote_config';
+    const remoteConfigAlarmName = 'osprey-remote-config-refresh';
+    const remoteConfigRefreshMinutes = 60;
+    const remoteConfigFetchTimeoutMS = 15000;
+    const remoteConfigMaxBytes = 512 * 1024;
+    const controlOnlyPolicyKeys = new Set(['ManagedConfigUrl']);
+    const unsafeKeys = new Set(['__proto__', 'constructor', 'prototype']);
+
+    let cachedManagedPolicies = null;
+    let cachedManagedPoliciesPromise = null;
+    let cachedRemoteConfig = null;
+    let cachedRemoteConfigPromise = null;
+    let cachedEffectivePolicies = null;
     let cachedManagedListConfig = null;
+    let lastSeededCustomKey = null;
 
     const identityMap = value => value;
-    const negateMap = value => !value;
     const trimStringMap = value => String(value == null ? '' : value).trim();
 
     const normalizeStringList = value => {
@@ -348,38 +360,331 @@ globalThis.OspreyPolicyService = (() => {
         }
     };
 
-    const getPolicies = async ({fresh = false} = {}) => {
-        if (!fresh && cachedPolicies !== null) {
-            return cachedPolicies;
+    const getManagedPolicies = async ({fresh = false} = {}) => {
+        if (!fresh && cachedManagedPolicies !== null) {
+            return cachedManagedPolicies;
         }
 
-        if (!fresh && cachedPoliciesPromise !== null) {
-            return cachedPoliciesPromise;
+        if (!fresh && cachedManagedPoliciesPromise !== null) {
+            return cachedManagedPoliciesPromise;
         }
 
         const managedStorage = browserAPI.api?.storage?.managed;
 
         if (managedStorage?.get === undefined) {
-            cachedPolicies = Object.freeze({});
-            return cachedPolicies;
+            cachedManagedPolicies = Object.freeze({});
+            return cachedManagedPolicies;
         }
 
-        cachedPoliciesPromise = (async () => {
+        cachedManagedPoliciesPromise = (async () => {
             try {
                 const result = await browserAPI.storageGet('managed', null);
-                cachedPolicies = Object.freeze(result || {});
+                cachedManagedPolicies = Object.freeze(result || {});
             } catch (error) {
                 if (error && typeof error.message === 'string' && !error.message.includes('Managed storage manifest not found')) {
                     console.warn('OspreyPolicyService failed to read managed policies', error);
                 }
 
-                cachedPolicies = Object.freeze({});
+                cachedManagedPolicies = Object.freeze({});
             }
 
-            cachedPoliciesPromise = null;
-            return cachedPolicies;
+            cachedManagedPoliciesPromise = null;
+            return cachedManagedPolicies;
         })();
-        return cachedPoliciesPromise;
+        return cachedManagedPoliciesPromise;
+    };
+
+    const isPlainObject = value => value !== null && typeof value === 'object' && !Array.isArray(value);
+
+    const getStaticDefinitions = () => providerCatalog.getBuiltins().concat(providerCatalog.getDirectIntegrations());
+
+    const sanitizeCustomProviders = list => {
+        if (!Array.isArray(list)) {
+            return [];
+        }
+
+        const out = [];
+
+        for (const entry of list) {
+            if (!isPlainObject(entry)) {
+                continue;
+            }
+
+            const clean = {};
+
+            for (const key of Object.keys(entry)) {
+                if (unsafeKeys.has(key) || key === 'policyKey') {
+                    continue;
+                }
+
+                clean[key] = entry[key];
+            }
+
+            out.push(clean);
+        }
+        return out;
+    };
+
+    const sanitizeRemoteDocument = document => {
+        const policies = {};
+        let customProviders = [];
+
+        if (isPlainObject(document)) {
+            const rawPolicies = isPlainObject(document.policies) ? document.policies : document;
+
+            for (const key of Object.keys(rawPolicies)) {
+                if (unsafeKeys.has(key) || controlOnlyPolicyKeys.has(key)) {
+                    continue;
+                }
+
+                if (key === 'policies' || key === 'customProviders' || key === 'version') {
+                    continue;
+                }
+
+                policies[key] = rawPolicies[key];
+            }
+
+            if (Array.isArray(document.customProviders)) {
+                customProviders = sanitizeCustomProviders(document.customProviders);
+            }
+        }
+        return {policies, customProviders};
+    };
+
+    const readStoredRemoteConfig = async () => {
+        try {
+            const stored = await browserAPI.storageGet('local', remoteConfigStorageKey);
+            const document = stored ? stored[remoteConfigStorageKey] : null;
+
+            if (isPlainObject(document)) {
+                return {
+                    policies: isPlainObject(document.policies) ? document.policies : {},
+                    customProviders: Array.isArray(document.customProviders) ? document.customProviders : [],
+                };
+            }
+        } catch (error) {
+            console.warn('OspreyPolicyService failed to read stored remote config', error);
+        }
+        return {policies: {}, customProviders: []};
+    };
+
+    const getRemoteConfig = async ({fresh = false} = {}) => {
+        if (!fresh && cachedRemoteConfig !== null) {
+            return cachedRemoteConfig;
+        }
+
+        if (!fresh && cachedRemoteConfigPromise !== null) {
+            return cachedRemoteConfigPromise;
+        }
+
+        cachedRemoteConfigPromise = (async () => {
+            const stored = await readStoredRemoteConfig();
+
+            cachedRemoteConfig = Object.freeze({
+                policies: Object.freeze({...stored.policies}),
+                customProviders: Object.freeze(stored.customProviders.slice()),
+            });
+
+            cachedRemoteConfigPromise = null;
+            return cachedRemoteConfig;
+        })();
+        return cachedRemoteConfigPromise;
+    };
+
+    const seedCustomProviders = async () => {
+        if (!providerCatalog || typeof providerCatalog.setCustomDefinitions !== 'function') {
+            return;
+        }
+
+        const remote = await getRemoteConfig();
+        const raw = Array.isArray(remote.customProviders) ? remote.customProviders : [];
+        const seedKey = JSON.stringify(raw);
+
+        if (seedKey === lastSeededCustomKey) {
+            return;
+        }
+
+        let toRegister = [];
+
+        if (raw.length > 0 && catalogValidator && typeof catalogValidator.validateCustom === 'function') {
+            const {valid, errors} = catalogValidator.validateCustom(raw, getStaticDefinitions());
+
+            if (errors.length > 0) {
+                console.warn('OspreyPolicyService rejected invalid custom providers from remote config', errors);
+            }
+
+            toRegister = valid;
+        }
+
+        providerCatalog.setCustomDefinitions(toRegister);
+        lastSeededCustomKey = seedKey;
+    };
+
+    const assignInto = (target, source) => {
+        if (!isPlainObject(source)) {
+            return;
+        }
+
+        for (const key of Object.keys(source)) {
+            if (unsafeKeys.has(key)) {
+                continue;
+            }
+
+            target[key] = source[key];
+        }
+    };
+
+    const buildEffectivePolicies = (managed, remotePolicies) => {
+        const merged = {};
+
+        assignInto(merged, remotePolicies);
+        assignInto(merged, managed);
+
+        for (const key of controlOnlyPolicyKeys) {
+            if (isPlainObject(managed) && Object.hasOwn(managed, key)) {
+                merged[key] = managed[key];
+            } else {
+                delete merged[key];
+            }
+        }
+        return Object.freeze(merged);
+    };
+
+    const getPolicies = async ({fresh = false} = {}) => {
+        if (!fresh && cachedEffectivePolicies !== null) {
+            return cachedEffectivePolicies;
+        }
+
+        const [managed, remote] = await Promise.all([
+            getManagedPolicies({fresh}),
+            getRemoteConfig({fresh}),
+        ]);
+
+        cachedEffectivePolicies = buildEffectivePolicies(managed, remote.policies);
+        return cachedEffectivePolicies;
+    };
+
+    const resolveConfigUrl = managed => {
+        const raw = managed && typeof managed.ManagedConfigUrl === 'string' ? managed.ManagedConfigUrl.trim() : '';
+
+        if (!raw) {
+            return '';
+        }
+
+        let parsed;
+
+        try {
+            parsed = new URL(raw);
+        } catch {
+            console.warn('OspreyPolicyService ignoring malformed ManagedConfigUrl');
+            return '';
+        }
+
+        if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+            console.warn('OspreyPolicyService ignoring non-http(s) ManagedConfigUrl');
+            return '';
+        }
+        return parsed.href;
+    };
+
+    const fetchConfigDocument = async url => {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), remoteConfigFetchTimeoutMS);
+
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                credentials: 'omit',
+                cache: 'no-store',
+                redirect: 'follow',
+                signal: controller.signal,
+                headers: {Accept: 'application/json'},
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+
+            const text = await response.text();
+
+            if (text.length > remoteConfigMaxBytes) {
+                throw new Error(`config document exceeds ${remoteConfigMaxBytes} bytes`);
+            }
+            return JSON.parse(text);
+        } finally {
+            clearTimeout(timer);
+        }
+    };
+
+    const persistRemoteConfig = async payload => {
+        try {
+            await browserAPI.storageSet('local', {[remoteConfigStorageKey]: payload});
+            return true;
+        } catch (error) {
+            console.warn('OspreyPolicyService failed to persist remote config', error);
+            return false;
+        }
+    };
+
+    const refreshRemoteConfig = async () => {
+        const managed = await getManagedPolicies();
+        const url = resolveConfigUrl(managed);
+
+        if (!url) {
+            return {ok: false, reason: 'no-url'};
+        }
+
+        let document;
+
+        try {
+            document = await fetchConfigDocument(url);
+        } catch (error) {
+            console.warn('OspreyPolicyService remote config fetch failed; keeping last-known-good', error);
+            return {ok: false, reason: 'fetch-failed'};
+        }
+
+        const sanitized = sanitizeRemoteDocument(document);
+
+        let customProviders = [];
+
+        if (sanitized.customProviders.length > 0 && catalogValidator && typeof catalogValidator.validateCustom === 'function') {
+            const {valid, errors} = catalogValidator.validateCustom(sanitized.customProviders, getStaticDefinitions());
+
+            if (errors.length > 0) {
+                console.warn('OspreyPolicyService dropped invalid custom providers from remote config', errors);
+            }
+
+            customProviders = valid;
+        }
+
+        const payload = {
+            policies: sanitized.policies,
+            customProviders,
+            updatedAt: Date.now(),
+        };
+
+        await persistRemoteConfig(payload);
+
+        cachedRemoteConfig = Object.freeze({
+            policies: Object.freeze({...sanitized.policies}),
+            customProviders: Object.freeze(customProviders.slice()),
+        });
+
+        cachedEffectivePolicies = null;
+        cachedManagedListConfig = null;
+        lastSeededCustomKey = null;
+
+        await seedCustomProviders();
+
+        return {
+            ok: true,
+            customProviderCount: customProviders.length,
+        };
+    };
+
+    const initRemoteConfig = async () => {
+        await getRemoteConfig({fresh: true});
+        await seedCustomProviders();
     };
 
     const applyToState = async state => {
@@ -439,8 +744,16 @@ globalThis.OspreyPolicyService = (() => {
     };
 
     const invalidate = () => {
-        cachedPolicies = null;
-        cachedPoliciesPromise = null;
+        cachedManagedPolicies = null;
+        cachedManagedPoliciesPromise = null;
+        cachedEffectivePolicies = null;
+        cachedManagedListConfig = null;
+    };
+
+    const invalidateRemote = () => {
+        cachedRemoteConfig = null;
+        cachedRemoteConfigPromise = null;
+        cachedEffectivePolicies = null;
         cachedManagedListConfig = null;
     };
 
@@ -474,9 +787,14 @@ globalThis.OspreyPolicyService = (() => {
     const storageApi = browserAPI.api?.storage;
 
     if (storageApi?.onChanged?.addListener !== undefined) {
-        storageApi.onChanged.addListener((_changes, area) => {
+        storageApi.onChanged.addListener((changes, area) => {
             if (area === 'managed') {
                 invalidate();
+            } else if (area === 'local' && changes?.[remoteConfigStorageKey]) {
+                invalidateRemote();
+                seedCustomProviders().catch(error => {
+                    console.warn('OspreyPolicyService failed to seed custom providers after remote config change', error);
+                });
             }
         });
     }
@@ -496,5 +814,10 @@ globalThis.OspreyPolicyService = (() => {
         getEffectiveAppLocks,
         getManagedListConfig,
         getEndpointIdentity,
+        refreshRemoteConfig,
+        initRemoteConfig,
+        remoteConfigStorageKey,
+        remoteConfigAlarmName,
+        remoteConfigRefreshMinutes,
     });
 })();
