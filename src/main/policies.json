@@ -197,6 +197,12 @@
       "type": "string",
       "default": ""
     },
+    "ProxyApiKey": {
+      "title": "Proxy API Key",
+      "description": "Per-tenant API key presented to a self-hosted proxy as the X-Osprey-Tenant-Key header on every lookup. Only sent when ProxyBaseUrl is set, so the key is never sent to the public backend. When empty, no key is sent.",
+      "type": "string",
+      "default": ""
+    },
     "DeviceTag": {
       "title": "Device Tag",
       "description": "Opaque identifier for this endpoint, attached to reported events by later features. Has no visible effect on its own.",

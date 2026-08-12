@@ -82,11 +82,14 @@ globalThis.OspreyRequestBuilder = (() => {
 
         const proxyUrl = `${baseLen === base.length ? base : base.slice(0, baseLen)}/${endStart === 0 ? end : end.slice(endStart)}`;
 
+        const tenantKey = typeof provider.proxyApiKey === 'string' ? provider.proxyApiKey : '';
+        const headers = tenantKey ? {...proxyHeaders, 'X-Osprey-Tenant-Key': tenantKey} : proxyHeaders;
+
         return {
             url: proxyUrl,
             options: {
                 method: 'POST',
-                headers: proxyHeaders,
+                headers,
                 body: JSON.stringify({
                     url: urlService.normalizeUrl(url),
                 }),

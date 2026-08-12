@@ -106,6 +106,7 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
         } = policyResult;
 
         const proxyBaseOverride = resolveProxyBaseOverride(policies.ProxyBaseUrl);
+        const proxyApiKey = proxyBaseOverride && typeof policies.ProxyApiKey === 'string' ? policies.ProxyApiKey.trim() : '';
 
         const definitions = providerCatalog.getAllDefinitions();
         const definitionsLength = definitions.length;
@@ -139,9 +140,14 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
                 ? proxyBaseOverride
                 : definition.proxyBaseUrl;
 
+            const effectiveProxyApiKey = definition.kind === 'proxy_builtin' && proxyApiKey && !providerCatalog.isCustomProvider(definition.id)
+                ? proxyApiKey
+                : '';
+
             const provider = Object.freeze({
                 ...definition,
                 proxyBaseUrl: effectiveProxyBaseUrl,
+                proxyApiKey: effectiveProxyApiKey,
                 bypassBlockingThreshold,
                 blockCategoryState,
                 state: Object.freeze({enabled, apiKey, bypassBlockingThreshold, blockCategoryState, requestTimeoutMs}),
