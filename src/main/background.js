@@ -353,6 +353,52 @@ if (typeof importScripts === 'function') {
         });
     };
 
+    const setUpReporting = async api => {
+        if (!eventLogService || typeof eventLogService.flushToReporting !== 'function') {
+            return;
+        }
+
+        const runFlush = () => eventLogService.flushToReporting().catch(error => {
+            console.error('Event reporting flush failed', error);
+        });
+
+        const runHeartbeat = () => eventLogService.sendHeartbeat().catch(error => {
+            console.error('Reporting heartbeat failed', error);
+        });
+
+        const alarms = api.alarms;
+
+        if (alarms?.create) {
+            try {
+                alarms.create(eventLogService.reportFlushAlarmName, {
+                    periodInMinutes: eventLogService.reportFlushIntervalMinutes,
+                });
+
+                alarms.create(eventLogService.heartbeatAlarmName, {
+                    periodInMinutes: eventLogService.heartbeatIntervalMinutes,
+                });
+            } catch (error) {
+                console.error('Failed to schedule reporting alarms', error);
+            }
+
+            alarms.onAlarm?.addListener(alarm => {
+                if (alarm?.name === eventLogService.reportFlushAlarmName) {
+                    runFlush();
+                } else if (alarm?.name === eventLogService.heartbeatAlarmName) {
+                    runHeartbeat();
+                }
+            });
+        }
+
+        runHeartbeat().then(() => {
+            // ignored
+        });
+
+        runFlush().then(() => {
+            // ignored
+        });
+    };
+
     const init = async () => {
         const api = browserAPI.api;
 
@@ -386,6 +432,8 @@ if (typeof importScripts === 'function') {
         await runEmergencySettingsMigrations();
 
         await setUpRemoteConfig(api);
+
+        await setUpReporting(api);
 
         navigationService.register();
     };

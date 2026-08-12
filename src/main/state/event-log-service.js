@@ -26,6 +26,16 @@ globalThis.OspreyEventLogService = (() => {
     const maxEvents = 1000;
     const flushDelay = 250;
 
+    const reportFlushAlarmName = 'osprey-report-flush';
+    const reportFlushIntervalMinutes = 5;
+    const heartbeatAlarmName = 'osprey-heartbeat';
+    const heartbeatIntervalMinutes = 15;
+    const reportBatchSize = 200;
+    const reportMaxAttempts = 3;
+    const reportRetryBaseDelayMs = 1000;
+    const reportRequestTimeoutMs = 15000;
+    const heartbeatProbeTimeoutMs = 5000;
+
     const idb = (() => {
         const dbName = 'osprey_cache';
         const storeName = 'kv';
@@ -140,6 +150,7 @@ globalThis.OspreyEventLogService = (() => {
             deviceTag: typeof raw.deviceTag === 'string' ? raw.deviceTag : '',
             siteId: typeof raw.siteId === 'string' ? raw.siteId : '',
             version: typeof raw.version === 'string' ? raw.version : '',
+            reported: raw.reported === true,
         };
     };
 
@@ -245,6 +256,7 @@ globalThis.OspreyEventLogService = (() => {
             deviceTag: identity.deviceTag,
             siteId: identity.siteId,
             version: getExtensionVersion(),
+            reported: false,
         };
 
         list.push(event);
@@ -258,18 +270,227 @@ globalThis.OspreyEventLogService = (() => {
     };
 
     const recordDetection = ({url, providerId, verdict} = {}) =>
-        append({type: 'block', action: null, url, providerId, verdict}).catch(error => {
+        append({
+            type: 'block',
+            action: null,
+            url,
+            providerId,
+            verdict,
+        }).catch(error => {
             console.warn('OspreyEventLogService failed to record detection event', error);
         });
 
     const recordOverride = ({url, providerId, verdict, action} = {}) =>
-        append({type: 'bypass', action, url, providerId, verdict}).catch(error => {
+        append({
+            type: 'bypass',
+            action,
+            url,
+            providerId,
+            verdict,
+        }).catch(error => {
             console.warn('OspreyEventLogService failed to record override event', error);
         });
 
+    const toPublicEvent = event => ({
+        id: event.id,
+        ts: event.ts,
+        type: event.type,
+        action: event.action,
+        url: event.url,
+        providerId: event.providerId,
+        verdict: event.verdict,
+        deviceTag: event.deviceTag,
+        siteId: event.siteId,
+        version: event.version,
+    });
+
+    const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+    const postJson = async (endpoint, authToken, body) => {
+        const payload = JSON.stringify(body);
+
+        for (let attempt = 1; attempt <= reportMaxAttempts; attempt++) {
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), reportRequestTimeoutMs);
+
+            try {
+                const headers = {'Content-Type': 'application/json'};
+
+                if (authToken) {
+                    headers.Authorization = `Bearer ${authToken}`;
+                }
+
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    credentials: 'omit',
+                    cache: 'no-store',
+                    redirect: 'follow',
+                    signal: controller.signal,
+                    headers,
+                    body: payload,
+                });
+
+                if (response.ok) {
+                    return true;
+                }
+
+                if (response.status >= 400 && response.status < 500 && response.status !== 429) {
+                    console.warn(`OspreyEventLogService reporting endpoint rejected request with HTTP ${response.status}`);
+                    return false;
+                }
+            } catch (error) {
+                console.warn(`OspreyEventLogService reporting request attempt ${attempt} failed`, error);
+            } finally {
+                clearTimeout(timer);
+            }
+
+            if (attempt < reportMaxAttempts) {
+                await sleep(reportRetryBaseDelayMs * (2 ** (attempt - 1)));
+            }
+        }
+        return false;
+    };
+
+    const flushToReporting = async () => {
+        const config = await policyService.getReportingConfig();
+
+        if (!config.endpoint) {
+            return {
+                ok: false,
+                reason: 'no-endpoint'
+            };
+        }
+
+        const list = await ensureLoaded();
+        const pending = [];
+
+        for (const entry of list) {
+            if (entry.reported !== true) {
+                pending.push(entry);
+            }
+        }
+
+        if (pending.length === 0) {
+            return {
+                ok: true,
+                sent: 0
+            };
+        }
+
+        const identity = await policyService.getEndpointIdentity();
+        const version = getExtensionVersion();
+        let sent = 0;
+
+        for (let i = 0; i < pending.length; i += reportBatchSize) {
+            const batch = pending.slice(i, i + reportBatchSize);
+
+            const body = {
+                kind: 'events',
+                schemaVersion,
+                sentAt: Date.now(),
+                deviceTag: identity.deviceTag,
+                siteId: identity.siteId,
+                version,
+                events: batch.map(toPublicEvent),
+            };
+
+            const ok = await postJson(config.endpoint, config.authToken, body);
+
+            if (!ok) {
+                if (sent > 0) {
+                    await flushNow();
+                }
+
+                return {
+                    ok: false,
+                    reason: 'post-failed',
+                    sent
+                };
+            }
+
+            for (const entry of batch) {
+                entry.reported = true;
+            }
+
+            sent += batch.length;
+        }
+
+        await flushNow();
+
+        return {
+            ok: true,
+            sent
+        };
+    };
+
+    const probeProxyReachable = async origin => {
+        if (!origin) {
+            return false;
+        }
+
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), heartbeatProbeTimeoutMs);
+
+        try {
+            await fetch(origin, {
+                method: 'GET',
+                credentials: 'omit',
+                cache: 'no-store',
+                redirect: 'follow',
+                signal: controller.signal,
+            });
+            return true;
+        } catch {
+            return false;
+        } finally {
+            clearTimeout(timer);
+        }
+    };
+
+    const sendHeartbeat = async () => {
+        const config = await policyService.getReportingConfig();
+
+        if (!config.endpoint) {
+            return {
+                ok: false,
+                reason: 'no-endpoint'
+            };
+        }
+
+        const identity = await policyService.getEndpointIdentity();
+
+        const proxyOrigin = typeof policyService.getProxyOrigin === 'function'
+            ? await policyService.getProxyOrigin()
+            : '';
+
+        const proxyReachable = await probeProxyReachable(proxyOrigin);
+
+        const body = {
+            kind: 'heartbeat',
+            schemaVersion,
+            sentAt: Date.now(),
+            installed: true,
+            enabled: true,
+            version: getExtensionVersion(),
+            deviceTag: identity.deviceTag,
+            siteId: identity.siteId,
+            proxyOrigin,
+            proxyReachable,
+        };
+
+        const ok = await postJson(config.endpoint, config.authToken, body);
+
+        return ok ? {
+            ok: true
+        } : {
+            ok: false,
+            reason: 'post-failed'
+        };
+    };
+
     const getEvents = async () => {
         const list = await ensureLoaded();
-        return list.map(entry => ({...entry}));
+        return list.map(toPublicEvent);
     };
 
     const clear = async () => {
@@ -283,5 +504,11 @@ globalThis.OspreyEventLogService = (() => {
         recordOverride,
         getEvents,
         clear,
+        flushToReporting,
+        sendHeartbeat,
+        reportFlushAlarmName,
+        reportFlushIntervalMinutes,
+        heartbeatAlarmName,
+        heartbeatIntervalMinutes,
     });
 })();

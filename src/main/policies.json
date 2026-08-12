@@ -275,6 +275,18 @@
       "description": "An http(s) URL to a JSON configuration document the extension fetches on startup and on a schedule. Values from the document are merged UNDER managed storage: anything an admin sets locally here always wins, and the document fills in the rest. On a fetch failure the last successfully fetched document is kept, so a network outage never drops settings. The document may also define custom threat providers. When empty, no remote configuration is fetched. This key can only be set through managed storage; a fetched document cannot change it.",
       "type": "string",
       "default": ""
+    },
+    "ReportingEndpoint": {
+      "title": "Reporting Endpoint",
+      "description": "An http(s) URL the extension POSTs detection and override events and periodic health heartbeats to. When empty, no events or heartbeats are sent. Example: \"https://reporting.msp.example/osprey\".",
+      "type": "string",
+      "default": ""
+    },
+    "ReportingAuthToken": {
+      "title": "Reporting Auth Token",
+      "description": "Optional bearer token sent as the Authorization header on every reporting request. When set, each POST carries \"Authorization: Bearer <token>\". When empty, no Authorization header is sent.",
+      "type": "string",
+      "default": ""
     }
   }
 }

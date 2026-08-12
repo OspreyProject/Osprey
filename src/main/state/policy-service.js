@@ -27,6 +27,7 @@ globalThis.OspreyPolicyService = (() => {
     const remoteConfigRefreshMinutes = 60;
     const remoteConfigFetchTimeoutMS = 15000;
     const remoteConfigMaxBytes = 512 * 1024;
+    const defaultProxyOrigin = 'https://api.osprey.ac';
     const controlOnlyPolicyKeys = new Set(['ManagedConfigUrl']);
     const unsafeKeys = new Set(['__proto__', 'constructor', 'prototype']);
 
@@ -784,6 +785,58 @@ globalThis.OspreyPolicyService = (() => {
         };
     };
 
+    const resolveHttpUrl = raw => {
+        const trimmed = String(raw == null ? '' : raw).trim();
+
+        if (!trimmed) {
+            return '';
+        }
+
+        let parsed;
+
+        try {
+            parsed = new URL(trimmed);
+        } catch {
+            return '';
+        }
+
+        if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+            return '';
+        }
+        return parsed.href;
+    };
+
+    const getReportingConfig = async () => {
+        const policies = await getPolicies();
+
+        return {
+            endpoint: resolveHttpUrl(policies.ReportingEndpoint),
+            authToken: trimStringMap(policies.ReportingAuthToken),
+        };
+    };
+
+    const getProxyOrigin = async () => {
+        const policies = await getPolicies();
+        const raw = trimStringMap(policies.ProxyBaseUrl);
+
+        if (!raw) {
+            return defaultProxyOrigin;
+        }
+
+        let parsed;
+
+        try {
+            parsed = new URL(raw);
+        } catch {
+            return defaultProxyOrigin;
+        }
+
+        if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+            return defaultProxyOrigin;
+        }
+        return parsed.origin;
+    };
+
     const storageApi = browserAPI.api?.storage;
 
     if (storageApi?.onChanged?.addListener !== undefined) {
@@ -814,6 +867,8 @@ globalThis.OspreyPolicyService = (() => {
         getEffectiveAppLocks,
         getManagedListConfig,
         getEndpointIdentity,
+        getReportingConfig,
+        getProxyOrigin,
         refreshRemoteConfig,
         initRemoteConfig,
         remoteConfigStorageKey,
