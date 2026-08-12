@@ -131,3 +131,12 @@ The heartbeat fields are:
 - `proxyReachable` is `true` when the extension received any HTTP response from `proxyOrigin`, and `false` when the
   request failed or timed out. It reports whether the endpoint can reach its configured backend, independent of whether
   any single lookup succeeds.
+
+## Testing your endpoint
+
+The fastest way to confirm a reporting configuration is the hosted checker at https://osprey.ac/reporting-check. It
+generates a temporary receiver URL you set as `ReportingEndpoint` on a pilot endpoint, then shows every event batch and
+heartbeat as it arrives and validates that `DeviceTag`, `SiteId`, and the `Authorization` header are present. The test
+session lives only in memory, holds the last 30 payloads, and expires 30 minutes after the last activity, so it is a
+configuration checker rather than a place to point a production fleet. Self-hosters get the same receiver on their own
+proxy at `/reporting/test/{token}`, controlled by the `osprey.reporting-test.enabled` property.
