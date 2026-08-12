@@ -167,7 +167,7 @@ globalThis.OspreyProviderCatalog = (() => {
             return '';
         }
 
-        let base = definition.proxyBaseUrl || 'https://api.osprey.ac';
+        let base = definition.proxyBaseUrl || globalThis.OspreyDefaultProxyBaseUrl || 'https://api.osprey.ac';
 
         if (base.endsWith('/')) {
             base = base.replace(/\/+$/, '');

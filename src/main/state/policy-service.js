@@ -76,6 +76,12 @@ globalThis.OspreyPolicyService = (() => {
             stateKey: 'disableThirdPartyIntegrations',
             mapValue: identityMap,
         },
+        {
+            policyKey: 'ProxyBaseUrl',
+            type: 'string',
+            stateKey: 'proxyBaseUrl',
+            mapValue: trimStringMap,
+        },
     ];
 
     const toPascalCase = value => String(value || '')

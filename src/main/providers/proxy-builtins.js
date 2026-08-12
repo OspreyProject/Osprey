@@ -18,6 +18,9 @@
 'use strict';
 
 (() => {
+    const defaultProxyBaseURL = 'https://api.osprey.ac';
+    globalThis.OspreyDefaultProxyBaseUrl = defaultProxyBaseURL;
+
     Object.defineProperty(globalThis, 'OspreyProxyBuiltins', {
         configurable: true,
         enumerable: true,
@@ -41,7 +44,7 @@
 
             const buildMonomorphicShape = def => Object.freeze({
                 kind: 'proxy_builtin',
-                proxyBaseUrl: 'https://api.osprey.ac',
+                proxyBaseUrl: defaultProxyBaseURL,
                 id: def.id,
                 aliases: def.aliases || [],
                 displayName: def.displayName,

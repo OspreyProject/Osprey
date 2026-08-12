@@ -86,6 +86,7 @@ globalThis.OspreyProviderStateStore = (() => {
                 disableThirdPartyIntegrations: typeof app.disableThirdPartyIntegrations === 'boolean' ? app.disableThirdPartyIntegrations : false,
                 disableAllProviders: typeof app.disableAllProviders === 'boolean' ? app.disableAllProviders : false,
                 cacheExpirationSeconds: 604800,
+                proxyBaseUrl: typeof app.proxyBaseUrl === 'string' ? app.proxyBaseUrl : '',
             },
             providers: Object.create(null),
         };

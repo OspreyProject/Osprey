@@ -172,6 +172,12 @@
       "description": "Managed enabled state for Validin.",
       "type": "boolean",
       "default": true
+    "ProxyBaseUrl": {
+      "title": "Proxy Base URL",
+      "description": "Overrides the backend origin the extension sends lookups to. Must be an http(s) origin, for example \"https://osprey.msp.example\". When empty, the default public backend is used.",
+      "type": "string",
+      "default": ""
+    },
     }
   }
 }
