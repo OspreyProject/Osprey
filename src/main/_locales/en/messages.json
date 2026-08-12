@@ -20,6 +20,12 @@
   "recommendation": {
     "message": "Osprey has blocked access to this website. It is unsafe to continue."
   },
+  "supportContactLabel": {
+    "message": "Need help?"
+  },
+  "supportContactLink": {
+    "message": "Contact support"
+  },
   "urlLabel": {
     "message": "URL: "
   },

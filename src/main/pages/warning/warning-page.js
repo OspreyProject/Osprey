@@ -56,7 +56,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         'reason', 'url', 'reportedBy', 'reportWebsite', 'allowWebsite',
         'backButton', 'continueButton', 'warningTitle', 'recommendation',
         'urlLabel', 'reportedByLabel', 'reasonLabel', 'logo', 'reportBreakpoint',
-        'reportedByLogo', 'reportedByLink', 'reportedBySuffix',
+        'reportedByLogo', 'reportedByLink', 'reportedBySuffix', 'supportContact',
     ];
 
     const warningContextFallback = {
@@ -67,7 +67,6 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
 
     const pageTextByID = {
         warningTitle: LangUtil.WARNING_TITLE,
-        recommendation: LangUtil.RECOMMENDATION,
         urlLabel: LangUtil.URL_LABEL,
         reportedByLabel: LangUtil.REPORTED_BY_LABEL,
         reasonLabel: LangUtil.REASON_LABEL,
@@ -475,6 +474,8 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
             }
         }
 
+        setTextContent(domElements.recommendation, LangUtil.getBlockMessage());
+
         LangUtil.applyLogoAlt(domElements.logo);
     }
 
@@ -642,8 +643,96 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         };
     }
 
+    function isValidLogoSrc(value) {
+        if (typeof value !== 'string' || value.length === 0) {
+            return false;
+        }
+
+        if (value.startsWith('data:image/')) {
+            return true;
+        }
+
+        return parseSafeHttpUrl(value) !== null;
+    }
+
+    function buildSupportLink(text, href) {
+        const link = document.createElement('a');
+        link.className = 'inline-action';
+        link.textContent = text;
+        link.setAttribute('href', href);
+        link.setAttribute('target', '_blank');
+        link.setAttribute('rel', 'noopener noreferrer');
+        link.setAttribute('referrerpolicy', 'no-referrer');
+        return link;
+    }
+
+    function applySupportContact(app) {
+        const container = domElements.supportContact;
+
+        if (!container) {
+            return;
+        }
+
+        container.textContent = '';
+
+        const supportUrlParsed = parseSafeHttpUrl(app?.supportUrl);
+        const supportEmail = typeof app?.supportEmail === 'string' ? app.supportEmail.trim() : '';
+        const hasEmail = supportEmail.length > 0 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(supportEmail);
+
+        if (!supportUrlParsed && !hasEmail) {
+            setElementVisibility(container, false);
+            return;
+        }
+
+        const label = document.createElement('span');
+        label.textContent = LangUtil.SUPPORT_CONTACT_LABEL;
+        container.appendChild(label);
+        container.appendChild(document.createTextNode(' '));
+
+        if (supportUrlParsed) {
+            container.appendChild(buildSupportLink(LangUtil.SUPPORT_CONTACT_LINK, supportUrlParsed.toString()));
+        }
+
+        if (hasEmail) {
+            if (supportUrlParsed) {
+                container.appendChild(document.createTextNode(' \u00b7 '));
+            }
+
+            container.appendChild(buildSupportLink(supportEmail, `mailto:${supportEmail}`));
+        }
+
+        setElementVisibility(container, true);
+    }
+
+    function applyBranding(app) {
+        if (!app) {
+            return;
+        }
+
+        const productName = typeof app.brandProductName === 'string' ? app.brandProductName.trim() : '';
+
+        if (productName) {
+            setTextContent(document.querySelector('.bannerText'), productName);
+
+            if (domElements.logo) {
+                domElements.logo.alt = productName;
+            }
+        }
+
+        if (isValidLogoSrc(app.brandLogoUrl) && domElements.logo) {
+            domElements.logo.src = app.brandLogoUrl;
+        }
+
+        const customBlockMessage = typeof app.customBlockMessage === 'string' ? app.customBlockMessage.trim() : '';
+        LangUtil.setBlockMessageOverride(customBlockMessage);
+        setTextContent(domElements.recommendation, LangUtil.getBlockMessage());
+
+        applySupportContact(app);
+    }
+
     function wireActions(state) {
         currentState = state;
+        applyBranding(state.app);
 
         applyOriginVisuals(currentOrigin);
         syncCounterForVisibility();

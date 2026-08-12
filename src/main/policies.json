@@ -239,6 +239,36 @@
         }
       },
       "default": {}
+    },
+    "BrandLogoUrl": {
+      "title": "Brand Logo URL",
+      "description": "Image URL or data: image string used for the logo on the warning page and popup. When empty, the default Osprey logo is shown.",
+      "type": "string",
+      "default": ""
+    },
+    "BrandProductName": {
+      "title": "Brand Product Name",
+      "description": "Name shown in the warning page banner and popup, replacing the default Osprey product name. When empty, the default name is shown.",
+      "type": "string",
+      "default": ""
+    },
+    "SupportUrl": {
+      "title": "Support URL",
+      "description": "Support or help-desk URL shown as a contact link on the warning page and popup. Must be an http(s) URL, for example \"https://help.msp.example\". When empty, no support link is shown.",
+      "type": "string",
+      "default": ""
+    },
+    "SupportEmail": {
+      "title": "Support Email",
+      "description": "Support email address shown as a contact link on the warning page. When empty, no email link is shown.",
+      "type": "string",
+      "default": ""
+    },
+    "CustomBlockMessage": {
+      "title": "Custom Block Message",
+      "description": "Optional override for the lead sentence on the warning page. When empty, the default block message is shown.",
+      "type": "string",
+      "default": ""
     }
   }
 }

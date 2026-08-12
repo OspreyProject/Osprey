@@ -121,6 +121,36 @@ globalThis.OspreyPolicyService = (() => {
             stateKey: 'disableUserAllowlist',
             mapValue: identityMap,
         },
+        {
+            policyKey: 'BrandLogoUrl',
+            type: 'string',
+            stateKey: 'brandLogoUrl',
+            mapValue: trimStringMap,
+        },
+        {
+            policyKey: 'BrandProductName',
+            type: 'string',
+            stateKey: 'brandProductName',
+            mapValue: trimStringMap,
+        },
+        {
+            policyKey: 'SupportUrl',
+            type: 'string',
+            stateKey: 'supportUrl',
+            mapValue: trimStringMap,
+        },
+        {
+            policyKey: 'SupportEmail',
+            type: 'string',
+            stateKey: 'supportEmail',
+            mapValue: trimStringMap,
+        },
+        {
+            policyKey: 'CustomBlockMessage',
+            type: 'string',
+            stateKey: 'customBlockMessage',
+            mapValue: trimStringMap,
+        },
     ];
 
     const toPascalCase = value => String(value || '')

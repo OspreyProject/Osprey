@@ -261,6 +261,20 @@ html, body {
 }
 
 /* --------------------------------------------------
+   Support contact
+-------------------------------------------------- */
+.warning-support {
+    margin: 16px 0 0;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-muted-soft);
+}
+
+.warning-support.hidden {
+    display: none;
+}
+
+/* --------------------------------------------------
    Inline actions
 -------------------------------------------------- */
 .warning-links {

@@ -29,6 +29,57 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
         }
     };
 
+    const parseHttpsUrl = value => {
+        if (typeof value !== 'string' || value.length === 0) {
+            return null;
+        }
+
+        const trimmed = value.trim();
+
+        if (!trimmed.startsWith('http:') && !trimmed.startsWith('https:')) {
+            return null;
+        }
+
+        try {
+            const parsed = new URL(trimmed);
+            return parsed.hostname ? parsed.toString() : null;
+        } catch {
+            return null;
+        }
+    };
+
+    const isValidLogoSrc = value => typeof value === 'string' &&
+        (value.startsWith('data:image/') || parseHttpsUrl(value) !== null);
+
+    const applyBranding = (logo, bannerText, state) => {
+        const app = state && typeof state === 'object' ? state.app : null;
+
+        if (!app) {
+            return;
+        }
+
+        const productName = typeof app.brandProductName === 'string' ? app.brandProductName.trim() : '';
+
+        if (productName) {
+            setText(bannerText, productName);
+
+            if (logo !== null) {
+                logo.alt = productName;
+            }
+        }
+
+        if (isValidLogoSrc(app.brandLogoUrl) && logo !== null) {
+            logo.src = app.brandLogoUrl;
+        }
+
+        const bannerLink = document.getElementById('bannerLink');
+        const supportUrl = parseHttpsUrl(app.supportUrl);
+
+        if (bannerLink !== null && supportUrl !== null) {
+            bannerLink.setAttribute('href', supportUrl);
+        }
+    };
+
     const initialize = state => {
         if (isInitialized) {
             return;
@@ -47,6 +98,7 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
         setText(bannerText, LangUtil.TITLE);
 
         LangUtil.applyLogoAlt(logo);
+        applyBranding(logo, bannerText, state);
 
         if (settingsButton !== null) {
             settingsButton.textContent = LangUtil.OPEN_SETTINGS;

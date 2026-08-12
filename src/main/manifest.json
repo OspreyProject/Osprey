@@ -17,7 +17,7 @@
     "default_popup": "pages/popup/popup-page.html"
   },
   "content_security_policy": {
-    "extension_pages": "script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+    "extension_pages": "script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
   },
   "icons": {
     "16": "assets/osprey/icon16.png",

@@ -59,6 +59,8 @@
         TERMS_LINK: 'termsLink',
         WARNING_TITLE: 'warningTitle',
         RECOMMENDATION: 'recommendation',
+        SUPPORT_CONTACT_LABEL: 'supportContactLabel',
+        SUPPORT_CONTACT_LINK: 'supportContactLink',
         REPORT_WEBSITE: 'reportWebsite',
         ALLOW_WEBSITE: 'allowWebsite',
         BACK_BUTTON: 'backButton',
@@ -141,6 +143,8 @@
         resolvedKeys[prop] = msg(staticKeys[prop]);
     }
 
+    let blockMessageOverride = '';
+
     const langUtil = Object.freeze({
         translate: msg,
         format: msg,
@@ -149,6 +153,10 @@
                 element.alt = langUtil.LOGO_ALT;
             }
         },
+        setBlockMessageOverride: value => {
+            blockMessageOverride = typeof value === 'string' ? value.trim() : '';
+        },
+        getBlockMessage: () => blockMessageOverride || resolvedKeys.RECOMMENDATION,
         ...resolvedKeys,
     });
 
