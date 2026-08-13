@@ -529,7 +529,7 @@ globalThis.OspreyProviderCard = (() => {
             LangUtil.OPEN_PROVIDER_WEBSITE);
 
         const isDisabled = Boolean(
-            runtime?.effectiveState?.app?.lockSettings ||
+            runtime?.effectiveState?.app?.lockProviderSettings ||
             runtime?.effectiveState?.app?.disableAllProviders ||
             runtime?.providerManagedIds?.has(definition.id),
         );
@@ -568,15 +568,15 @@ globalThis.OspreyProviderCard = (() => {
         const masterDisabled = Boolean(runtime?.effectiveState?.app?.disableAllProviders);
 
         const fieldsLocked = Boolean(
-            runtime?.effectiveState?.app?.lockSettings ||
-            runtime?.effectiveState?.app?.disableThirdPartyIntegrations ||
+            runtime?.effectiveState?.app?.lockProviderSettings ||
+            runtime?.effectiveState?.app?.disableThirdPartyProviders ||
             masterDisabled ||
             runtime?.providerManagedApiKeyIds?.has(definition.id),
         );
 
         const toggleLocked = Boolean(
-            runtime?.effectiveState?.app?.lockSettings ||
-            runtime?.effectiveState?.app?.disableThirdPartyIntegrations ||
+            runtime?.effectiveState?.app?.lockProviderSettings ||
+            runtime?.effectiveState?.app?.disableThirdPartyProviders ||
             masterDisabled ||
             runtime?.providerManagedIds?.has(definition.id),
         );

@@ -58,7 +58,7 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
             return;
         }
 
-        const productName = typeof app.brandProductName === 'string' ? app.brandProductName.trim() : '';
+        const productName = typeof app.brandName === 'string' ? app.brandName.trim() : '';
 
         if (productName) {
             setText(bannerText, productName);
@@ -161,7 +161,7 @@ globalThis.PopupSingleton = globalThis.PopupSingleton || (() => {
     };
 
     const processStateAndBoot = state => {
-        if (state !== null && typeof state === 'object' && state.app?.hidePopupPanel) {
+        if (state !== null && typeof state === 'object' && state.app?.hideProviderControls) {
             if (typeof globalThis.close === 'function') {
                 globalThis.close();
             }

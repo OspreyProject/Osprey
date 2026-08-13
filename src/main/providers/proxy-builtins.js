@@ -55,7 +55,7 @@
                 blockCategories: def.blockCategories || emptyBlockCategories,
                 endpoint: def.endpoint,
                 tags: def.tags || ['proxy'],
-                policyKey: def.policyKey,
+
                 report: def.report,
                 lookupTarget: def.lookupTarget || 'url',
                 website: def.website || '',
@@ -100,7 +100,6 @@
                     blockCategories: alphaMountainBlockCategories,
                     endpoint: 'alphamountain',
                     tags: ['proxy', 'partner'],
-                    policyKey: 'AlphaMountainEnabled',
                     report: externalUrlReport('https://alphamountain.freshdesk.com/support/tickets/new'),
                 }),
 
@@ -115,7 +114,6 @@
                     bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'bforeai',
                     tags: ['proxy', 'partner'],
-                    policyKey: 'BforeAIEnabled',
                     report: externalUrlReport('https://bfore.ai/support'),
                 }),
 
@@ -130,7 +128,6 @@
                     bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'chainpatrol',
                     tags: ['proxy', 'partner'],
-                    policyKey: 'ChainPatrolEnabled',
                     report: externalUrlReport('https://app.chainpatrol.io/dispute'),
                 }),
 
@@ -145,7 +142,6 @@
                     bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'izoologic',
                     tags: ['proxy', 'partner'],
-                    policyKey: 'iZOOlogicEnabled',
                     report: mailtoReport('reporting.cti@izoologic.com', 'iZOOlogic GetUrlVerdict API'),
                 }),
 
@@ -160,7 +156,6 @@
                     bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'precisionsec',
                     tags: ['proxy', 'hostname_only', 'partner'],
-                    policyKey: 'PrecisionSecEnabled',
                     report: mailtoReport('info@precisionsec.com', 'PrecisionSec Check Domain API'),
                 }),
 
@@ -176,7 +171,6 @@
                     endpoint: 'adguard-dns',
                     lookupTarget: 'hostname',
                     tags: ['proxy', 'hostname_only'],
-                    policyKey: 'AdGuardDNSEnabled',
                     report: mailtoReport('support@adguard.com', 'AdGuard Public DNS'),
                 }),
 
@@ -190,7 +184,6 @@
                     enabledByDefault: true,
                     bypassBlockingThreshold: true,
                     endpoint: 'aa419',
-                    policyKey: 'AA419Enabled',
                     report: externalUrlReport('https://wiki.aa419.org/index.php/Contact_Us'),
                 }),
 
@@ -204,7 +197,6 @@
                     enabledByDefault: true,
                     bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'cloudflare',
-                    policyKey: 'CloudflareEnabled',
                     report: cloudflareReport,
                 }),
 
@@ -218,7 +210,6 @@
                     enabledByDefault: true,
                     bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'control-d',
-                    policyKey: 'ControlDEnabled',
                     report: mailtoReport('help@controld.com', 'Control D \'no-malware-typo\' DNS'),
                 }),
 
@@ -232,7 +223,6 @@
                     enabledByDefault: true,
                     bypassBlockingThreshold: true,
                     endpoint: 'openphish',
-                    policyKey: 'OpenPhishEnabled',
                     report: mailtoReport('support@openphish.com', 'OpenPhish Public List'),
                 }),
 
@@ -246,7 +236,6 @@
                     enabledByDefault: true,
                     bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'phishunt-io',
-                    policyKey: 'PhishuntIOEnabled',
                     report: mailtoReport('info@phishunt.io', 'Phishunt.io Feed'),
                 }),
 
@@ -260,7 +249,6 @@
                     enabledByDefault: true,
                     bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'quad9',
-                    policyKey: 'Quad9Enabled',
                     report: externalUrlReport('https://quad9.net/support/contact'),
                 }),
 
@@ -274,7 +262,6 @@
                     enabledByDefault: true,
                     bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'red-flag-domains',
-                    policyKey: 'RedFlagDomainsEnabled',
                     report: mailtoReport('hello@red.flag.domains', 'Red Flag Domains List'),
                 }),
 
@@ -288,7 +275,6 @@
                     enabledByDefault: true,
                     bypassBlockingThreshold: true,
                     endpoint: 'sinking-yachts',
-                    policyKey: 'SinkingYachtsEnabled',
                     report: mailtoReport('sinkingyachts@gmail.com', 'SinkingYachts List'),
                 }),
 
@@ -302,7 +288,6 @@
                     enabledByDefault: true,
                     bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'switch-ch',
-                    policyKey: 'SwitchCHEnabled',
                     report: mailtoReport('dnsfirewall@switch.ch', 'Switch.ch Public DNS'),
                 }),
 
@@ -316,7 +301,6 @@
                     enabledByDefault: true,
                     bypassBlockingThreshold: true,
                     endpoint: 'threatfox',
-                    policyKey: 'THREATfoxEnabled',
                     report: spamhausReport,
                 }),
 
@@ -330,7 +314,6 @@
                     enabledByDefault: true,
                     bypassBlockingThreshold: true,
                     endpoint: 'urlhaus',
-                    policyKey: 'URLhausEnabled',
                     report: spamhausReport,
                 }),
 
@@ -344,7 +327,6 @@
                     enabledByDefault: true,
                     bypassBlockingThreshold: false, // keep this 'false'
                     endpoint: 'urlabuse',
-                    policyKey: 'URLAbuseEnabled',
                     report: mailtoReport('info@urlabuse.com', 'URLAbuse Lookup API'),
                 }),
 
@@ -358,7 +340,6 @@
                     enabledByDefault: true,
                     bypassBlockingThreshold: true,
                     endpoint: 'validin',
-                    policyKey: 'ValidinEnabled',
                     report: mailtoReport('lets.talk@validin.com', 'Validin Public Phish Feeds'),
                 }),
             ]);

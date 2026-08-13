@@ -78,8 +78,8 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
 
     const fallbackState = {
         app: {
-            hideContinueButtons: true,
-            hideReportButton: true,
+            hideWarningProceedButton: true,
+            hideWarningReportButton: true,
         },
         providers: {},
     };
@@ -474,7 +474,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
             }
         }
 
-        setTextContent(domElements.recommendation, LangUtil.getBlockMessage());
+        setTextContent(domElements.recommendation, LangUtil.getWarningMessage());
 
         LangUtil.applyLogoAlt(domElements.logo);
     }
@@ -595,11 +595,11 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         }
 
         const appState = currentState.app;
-        const canAct = currentContext.actionable === true && !appState?.hideContinueButtons;
+        const canAct = currentContext.actionable === true && !appState?.hideWarningProceedButton;
         const canContinue = canAct && contextKnown === true;
 
         const canReport = canAct === true && currentContext.reportable === true &&
-            !appState?.hideReportButton && currentContext.cachedReportUrl !== null;
+            !appState?.hideWarningReportButton && currentContext.cachedReportUrl !== null;
 
         setButtonState(domElements.reportWebsite, canReport, canReport);
         setButtonState(domElements.allowWebsite, canAct, canAct);
@@ -709,7 +709,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
             return;
         }
 
-        const productName = typeof app.brandProductName === 'string' ? app.brandProductName.trim() : '';
+        const productName = typeof app.brandName === 'string' ? app.brandName.trim() : '';
 
         if (productName) {
             setTextContent(document.querySelector('.bannerText'), productName);
@@ -723,9 +723,9 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
             domElements.logo.src = app.brandLogoUrl;
         }
 
-        const customBlockMessage = typeof app.customBlockMessage === 'string' ? app.customBlockMessage.trim() : '';
-        LangUtil.setBlockMessageOverride(customBlockMessage);
-        setTextContent(domElements.recommendation, LangUtil.getBlockMessage());
+        const customWarningMessage = typeof app.customWarningMessage === 'string' ? app.customWarningMessage.trim() : '';
+        LangUtil.setWarningMessageOverride(customWarningMessage);
+        setTextContent(domElements.recommendation, LangUtil.getWarningMessage());
 
         applySupportContact(app);
     }

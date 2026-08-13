@@ -77,13 +77,13 @@ globalThis.OspreyProviderStateStore = (() => {
         const base = {
             version: 2,
             app: {
-                hideContinueButtons: typeof app.hideContinueButtons === 'boolean' ? app.hideContinueButtons : false,
-                hideReportButton: typeof app.hideReportButton === 'boolean' ? app.hideReportButton : false,
-                lockSettings: typeof app.lockSettings === 'boolean' ? app.lockSettings : typeof app.lockProtectionOptions === 'boolean' ? app.lockProtectionOptions : false,
-                hidePopupPanel: typeof app.hidePopupPanel === 'boolean' ? app.hidePopupPanel : typeof app.hideProtectionOptions === 'boolean' ? app.hideProtectionOptions : false,
-                disableClearAllowedWebsites: typeof app.disableClearAllowedWebsites === 'boolean' ? app.disableClearAllowedWebsites : false,
-                disableResetButtons: typeof app.disableResetButtons === 'boolean' ? app.disableResetButtons : false,
-                disableThirdPartyIntegrations: typeof app.disableThirdPartyIntegrations === 'boolean' ? app.disableThirdPartyIntegrations : false,
+                hideWarningProceedButton: typeof app.hideWarningProceedButton === 'boolean' ? app.hideWarningProceedButton : typeof app.hideContinueButtons === 'boolean' ? app.hideContinueButtons : false,
+                hideWarningReportButton: typeof app.hideWarningReportButton === 'boolean' ? app.hideWarningReportButton : typeof app.hideReportButton === 'boolean' ? app.hideReportButton : false,
+                lockProviderSettings: typeof app.lockProviderSettings === 'boolean' ? app.lockProviderSettings : typeof app.lockSettings === 'boolean' ? app.lockSettings : typeof app.lockProtectionOptions === 'boolean' ? app.lockProtectionOptions : false,
+                hideProviderControls: typeof app.hideProviderControls === 'boolean' ? app.hideProviderControls : typeof app.hidePopupPanel === 'boolean' ? app.hidePopupPanel : typeof app.hideProtectionOptions === 'boolean' ? app.hideProtectionOptions : false,
+                lockUserAllowlist: typeof app.lockUserAllowlist === 'boolean' ? app.lockUserAllowlist : typeof app.disableClearAllowedWebsites === 'boolean' ? app.disableClearAllowedWebsites : false,
+                disableSettingsReset: typeof app.disableSettingsReset === 'boolean' ? app.disableSettingsReset : typeof app.disableResetButtons === 'boolean' ? app.disableResetButtons : false,
+                disableThirdPartyProviders: typeof app.disableThirdPartyProviders === 'boolean' ? app.disableThirdPartyProviders : typeof app.disableThirdPartyIntegrations === 'boolean' ? app.disableThirdPartyIntegrations : false,
                 disableAllProviders: typeof app.disableAllProviders === 'boolean' ? app.disableAllProviders : false,
                 cacheExpirationSeconds: 604800,
                 proxyBaseUrl: typeof app.proxyBaseUrl === 'string' ? app.proxyBaseUrl : '',
@@ -137,13 +137,13 @@ globalThis.OspreyProviderStateStore = (() => {
 
         const draft = {
             app: {
-                hideContinueButtons: source.hideContinueButtons,
-                hideReportButton: source.hideReportButton,
-                lockSettings: source.lockSettings ?? source.lockProtectionOptions,
-                hidePopupPanel: source.hidePopupPanel ?? source.hideProtectionOptions,
-                disableClearAllowedWebsites: source.disableClearAllowedWebsites,
-                disableResetButtons: source.disableResetButtons,
-                disableThirdPartyIntegrations: source.disableThirdPartyIntegrations,
+                hideWarningProceedButton: source.hideWarningProceedButton ?? source.hideContinueButtons,
+                hideWarningReportButton: source.hideWarningReportButton ?? source.hideReportButton,
+                lockProviderSettings: source.lockProviderSettings ?? source.lockSettings ?? source.lockProtectionOptions,
+                hideProviderControls: source.hideProviderControls ?? source.hidePopupPanel ?? source.hideProtectionOptions,
+                lockUserAllowlist: source.lockUserAllowlist ?? source.disableClearAllowedWebsites,
+                disableSettingsReset: source.disableSettingsReset ?? source.disableResetButtons,
+                disableThirdPartyProviders: source.disableThirdPartyProviders ?? source.disableThirdPartyIntegrations,
                 disableAllProviders: source.disableAllProviders,
                 cacheExpirationSeconds: source.cacheExpirationSeconds,
             },
@@ -246,7 +246,7 @@ globalThis.OspreyProviderStateStore = (() => {
     const setProviderEnabled = (providerId, enabled) => updateState(async state => {
         const locks = await getPolicyLocks();
 
-        if (isUnsafeProviderId(providerId) || state.app.lockSettings || locks.lockSettings) {
+        if (isUnsafeProviderId(providerId) || state.app.lockProviderSettings || locks.lockProviderSettings) {
             return;
         }
 
@@ -261,7 +261,7 @@ globalThis.OspreyProviderStateStore = (() => {
     const setDisableAllProviders = disabled => updateState(async state => {
         const locks = await getPolicyLocks();
 
-        if (state.app.lockSettings || locks.lockSettings) {
+        if (state.app.lockProviderSettings || locks.lockProviderSettings) {
             return;
         }
 
@@ -271,7 +271,7 @@ globalThis.OspreyProviderStateStore = (() => {
     const setProviderApiKey = (providerId, apiKey) => updateState(async state => {
         const locks = await getPolicyLocks();
 
-        if (isUnsafeProviderId(providerId) || state.app.lockSettings || locks.lockSettings) {
+        if (isUnsafeProviderId(providerId) || state.app.lockProviderSettings || locks.lockProviderSettings) {
             return;
         }
 
@@ -302,7 +302,7 @@ globalThis.OspreyProviderStateStore = (() => {
     const setBypassBlockingThreshold = (providerId, bypass) => updateState(async state => {
         const locks = await getPolicyLocks();
 
-        if (isUnsafeProviderId(providerId) || state.app.lockSettings || locks.lockSettings) {
+        if (isUnsafeProviderId(providerId) || state.app.lockProviderSettings || locks.lockProviderSettings) {
             return;
         }
 
@@ -317,7 +317,7 @@ globalThis.OspreyProviderStateStore = (() => {
     const setBlockCategory = (providerId, categoryKey, enabled) => updateState(async state => {
         const locks = await getPolicyLocks();
 
-        if (isUnsafeProviderId(providerId) || state.app.lockSettings || locks.lockSettings) {
+        if (isUnsafeProviderId(providerId) || state.app.lockProviderSettings || locks.lockProviderSettings) {
             return;
         }
 
@@ -352,7 +352,7 @@ globalThis.OspreyProviderStateStore = (() => {
     const resetDefaultProviders = () => updateState(async state => {
         const locks = await getPolicyLocks();
 
-        if (state.app.disableResetButtons || locks.disableResetButtons) {
+        if (state.app.disableSettingsReset || locks.disableSettingsReset) {
             return;
         }
 
@@ -375,7 +375,7 @@ globalThis.OspreyProviderStateStore = (() => {
     const resetAll = () => updateState(async state => {
         const locks = await getPolicyLocks();
 
-        if (state.app.disableResetButtons || locks.disableResetButtons) {
+        if (state.app.disableSettingsReset || locks.disableSettingsReset) {
             return;
         }
         return {};
@@ -384,7 +384,7 @@ globalThis.OspreyProviderStateStore = (() => {
     const importState = rawState => updateState(async state => {
         const locks = await getPolicyLocks();
 
-        if (state.app.lockSettings || locks.lockSettings) {
+        if (state.app.lockProviderSettings || locks.lockProviderSettings) {
             return;
         }
         return rawState && typeof rawState === 'object' ? rawState : {};

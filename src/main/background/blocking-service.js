@@ -420,7 +420,7 @@ globalThis.OspreyBlockingService = (() => {
                 return;
             }
 
-            if (runtime.effectiveState.app.hidePopupPanel && details.url.includes('/pages/popup/popup-page.html')) {
+            if (runtime.effectiveState.app.hideProviderControls && details.url.includes('/pages/popup/popup-page.html')) {
                 return;
             }
 

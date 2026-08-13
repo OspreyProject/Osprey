@@ -221,12 +221,6 @@ globalThis.OspreyCatalogValidator = (() => {
         requireArray(definition.tags, `Tags must be an array for ${id}`);
         validateReport(definition, definition.report);
 
-        const policyKey = definition.policyKey;
-
-        if (policyKey) {
-            addUnique(state.policyKeys, policyKey, `Duplicate policy key: ${policyKey}`);
-        }
-
         if (kind === 'proxy_builtin') {
             validateProxyBuiltin(definition, state.proxyEndpoints);
         } else if (kind === 'direct_static') {
@@ -242,7 +236,6 @@ globalThis.OspreyCatalogValidator = (() => {
         const state = {
             ids: new Set(),
             aliases: new Set(),
-            policyKeys: new Set(),
             proxyEndpoints: new Set(),
             groups: new Set(Object.keys(providerGroups || {})),
         };
@@ -258,7 +251,6 @@ globalThis.OspreyCatalogValidator = (() => {
         const state = {
             ids: new Set(),
             aliases: new Set(),
-            policyKeys: new Set(),
             proxyEndpoints: new Set(),
             groups: new Set(Object.keys(providerGroups || {})),
         };
@@ -285,10 +277,6 @@ globalThis.OspreyCatalogValidator = (() => {
                 }
             }
 
-            if (definition.policyKey) {
-                state.policyKeys.add(definition.policyKey);
-            }
-
             if (definition.kind === 'proxy_builtin' && definition.endpoint) {
                 state.proxyEndpoints.add(definition.endpoint);
             }
@@ -310,7 +298,6 @@ globalThis.OspreyCatalogValidator = (() => {
             const trial = {
                 ids: new Set(committed.ids),
                 aliases: new Set(committed.aliases),
-                policyKeys: new Set(committed.policyKeys),
                 proxyEndpoints: new Set(committed.proxyEndpoints),
                 groups: committed.groups,
             };

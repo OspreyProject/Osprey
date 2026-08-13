@@ -143,7 +143,7 @@
         resolvedKeys[prop] = msg(staticKeys[prop]);
     }
 
-    let blockMessageOverride = '';
+    let warningMessageOverride = '';
 
     const langUtil = Object.freeze({
         translate: msg,
@@ -153,10 +153,10 @@
                 element.alt = langUtil.LOGO_ALT;
             }
         },
-        setBlockMessageOverride: value => {
-            blockMessageOverride = typeof value === 'string' ? value.trim() : '';
+        setWarningMessageOverride: value => {
+            warningMessageOverride = typeof value === 'string' ? value.trim() : '';
         },
-        getBlockMessage: () => blockMessageOverride || resolvedKeys.RECOMMENDATION,
+        getWarningMessage: () => warningMessageOverride || resolvedKeys.RECOMMENDATION,
         ...resolvedKeys,
     });
 

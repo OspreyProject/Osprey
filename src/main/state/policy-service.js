@@ -63,15 +63,15 @@ globalThis.OspreyPolicyService = (() => {
 
     const appPolicyMappings = [
         {
-            policyKey: 'HideContinueButtons',
+            policyKey: 'HideWarningProceedButton',
             type: 'boolean',
-            stateKey: 'hideContinueButtons',
+            stateKey: 'hideWarningProceedButton',
             mapValue: identityMap,
         },
         {
-            policyKey: 'HideReportButton',
+            policyKey: 'HideWarningReportButton',
             type: 'boolean',
-            stateKey: 'hideReportButton',
+            stateKey: 'hideWarningReportButton',
             mapValue: identityMap,
         },
         {
@@ -81,33 +81,33 @@ globalThis.OspreyPolicyService = (() => {
             mapValue: identityMap,
         },
         {
-            policyKey: 'DisableClearAllowedWebsites',
+            policyKey: 'LockUserAllowlist',
             type: 'boolean',
-            stateKey: 'disableClearAllowedWebsites',
+            stateKey: 'lockUserAllowlist',
             mapValue: identityMap,
         },
         {
-            policyKey: 'LockProtectionOptions',
+            policyKey: 'LockProviderSettings',
             type: 'boolean',
-            stateKey: 'lockSettings',
+            stateKey: 'lockProviderSettings',
             mapValue: identityMap,
         },
         {
-            policyKey: 'HideProtectionOptions',
+            policyKey: 'HideProviderControls',
             type: 'boolean',
-            stateKey: 'hidePopupPanel',
+            stateKey: 'hideProviderControls',
             mapValue: identityMap,
         },
         {
-            policyKey: 'DisableResetButtons',
+            policyKey: 'DisableSettingsReset',
             type: 'boolean',
-            stateKey: 'disableResetButtons',
+            stateKey: 'disableSettingsReset',
             mapValue: identityMap,
         },
         {
-            policyKey: 'DisableThirdPartyIntegrations',
+            policyKey: 'DisableThirdPartyProviders',
             type: 'boolean',
-            stateKey: 'disableThirdPartyIntegrations',
+            stateKey: 'disableThirdPartyProviders',
             mapValue: identityMap,
         },
         {
@@ -141,9 +141,9 @@ globalThis.OspreyPolicyService = (() => {
             mapValue: trimStringMap,
         },
         {
-            policyKey: 'BrandProductName',
+            policyKey: 'BrandName',
             type: 'string',
-            stateKey: 'brandProductName',
+            stateKey: 'brandName',
             mapValue: trimStringMap,
         },
         {
@@ -159,9 +159,9 @@ globalThis.OspreyPolicyService = (() => {
             mapValue: trimStringMap,
         },
         {
-            policyKey: 'CustomBlockMessage',
+            policyKey: 'CustomWarningMessage',
             type: 'string',
-            stateKey: 'customBlockMessage',
+            stateKey: 'customWarningMessage',
             mapValue: trimStringMap,
         },
     ];
@@ -248,19 +248,7 @@ globalThis.OspreyPolicyService = (() => {
         }
     };
 
-    const applyProviderPolicies = (providers, policies, providerManagedIds, providerManagedApiKeyIds, disableThirdPartyIntegrations) => {
-        const builtins = providerCatalog.getBuiltins();
-
-        for (const element of builtins) {
-            const definition = element;
-            const policyKey = definition.policyKey;
-
-            if (policyKey !== undefined && typeof policies[policyKey] === 'boolean') {
-                ensureProviderState(providers, definition).enabled = policies[policyKey];
-                providerManagedIds.add(definition.id);
-            }
-        }
-
+    const applyProviderPolicies = (providers, policies, providerManagedIds, providerManagedApiKeyIds, disableThirdPartyProviders) => {
         const directIntegrations = providerCatalog.getDirectIntegrations();
 
         for (const element of directIntegrations) {
@@ -268,7 +256,7 @@ globalThis.OspreyPolicyService = (() => {
             const providerState = ensureProviderState(providers, definition);
             const apiKeyPolicyKey = getApiKeyPolicyKey(definition);
 
-            if (disableThirdPartyIntegrations) {
+            if (disableThirdPartyProviders) {
                 providerState.enabled = false;
                 providerManagedIds.add(definition.id);
             }
@@ -322,6 +310,11 @@ globalThis.OspreyPolicyService = (() => {
 
             const providerState = ensureProviderState(providers, definition);
             let managed = false;
+
+            if (typeof override.enabled === 'boolean') {
+                providerState.enabled = override.enabled;
+                managed = true;
+            }
 
             if (typeof override.bypassBlockingThreshold === 'boolean') {
                 providerState.bypassBlockingThreshold = override.bypassBlockingThreshold;
@@ -414,7 +407,7 @@ globalThis.OspreyPolicyService = (() => {
             const clean = {};
 
             for (const key of Object.keys(entry)) {
-                if (unsafeKeys.has(key) || key === 'policyKey') {
+                if (unsafeKeys.has(key)) {
                     continue;
                 }
 
@@ -710,7 +703,7 @@ globalThis.OspreyPolicyService = (() => {
             policies,
             providerManagedIds,
             providerManagedApiKeyIds,
-            effective.app.disableThirdPartyIntegrations,
+            effective.app.disableThirdPartyProviders,
         );
 
         if (effective.app.disableAllProviders) {
@@ -856,8 +849,8 @@ globalThis.OspreyPolicyService = (() => {
         const policies = await getPolicies();
 
         return {
-            lockSettings: policies.LockProtectionOptions === true,
-            disableResetButtons: policies.DisableResetButtons === true,
+            lockProviderSettings: policies.LockProviderSettings === true,
+            disableSettingsReset: policies.DisableSettingsReset === true,
         };
     };
 

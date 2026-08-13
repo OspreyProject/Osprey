@@ -44,11 +44,12 @@ The document is a JSON object. The canonical form has two sections:
       "*.malware.example"
     ],
     "ProxyBaseUrl": "https://osprey.msp.example",
-    "BrandProductName": "Acme Secure Browsing",
+    "BrandName": "Acme Secure Browsing",
     "SupportEmail": "help@msp.example",
     "DisableUserAllowlist": true,
     "ManagedProviderSettings": {
       "phishunt-io": {
+        "enabled": true,
         "bypassBlockingThreshold": false
       }
     }
@@ -81,7 +82,6 @@ Rules enforced during validation:
 - `group` must be one of `official_partners`, `security_filters`, `feeds`, or
   `direct_integrations`.
 - `kind` must be `proxy_builtin` or `direct_static`.
-- A `policyKey` field is stripped, so a custom provider can never claim a managed policy key.
 
 A custom `proxy_builtin` provider keeps its own `proxyBaseUrl` even when the global
 `ProxyBaseUrl` policy is set, so pointing the built-in providers at a self-hosted backend does not reroute a separate

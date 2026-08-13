@@ -41,7 +41,7 @@ globalThis.OspreyExclusionsPage = (() => {
         return cachedContainer;
     };
 
-    const isReadOnly = () => Boolean(currentRuntime?.effectiveState?.app?.disableClearAllowedWebsites);
+    const isReadOnly = () => Boolean(currentRuntime?.effectiveState?.app?.lockUserAllowlist);
 
     const patternToHost = pattern =>
         (typeof pattern === 'string' && pattern.startsWith('*.') ? pattern.slice(2) : String(pattern || ''));

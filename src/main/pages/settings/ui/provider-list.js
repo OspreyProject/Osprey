@@ -68,7 +68,7 @@ globalThis.OspreyProviderList = (() => {
 
     function createMasterDisableRow(state, runtime) {
         const isDisabledAll = Boolean(state?.app?.disableAllProviders);
-        const locked = Boolean(runtime?.effectiveState?.app?.lockSettings);
+        const locked = Boolean(runtime?.effectiveState?.app?.lockProviderSettings);
 
         const row = formHelpers.createElement('div', {
             className: 'master-disable-row',
@@ -152,7 +152,7 @@ globalThis.OspreyProviderList = (() => {
         });
 
         const appState = runtime?.effectiveState?.app;
-        const resetProvidersDisabled = Boolean(appState?.disableResetButtons || appState?.lockSettings);
+        const resetProvidersDisabled = Boolean(appState?.disableSettingsReset || appState?.lockProviderSettings);
 
         const resetRow = formHelpers.createElement('div', {
             className: 'reset-footer-row',

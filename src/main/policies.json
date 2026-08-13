@@ -3,39 +3,39 @@
   "_comment_2": "Windows path: HKLM\\SOFTWARE\\Policies\\Google\\Chrome\\3rdParty\\Extensions\\<extensionID>\\policy",
   "type": "object",
   "properties": {
-    "HideContinueButtons": {
-      "title": "Hide Continue Buttons",
-      "description": "If true, the warning page continue buttons are hidden.",
+    "HideWarningProceedButton": {
+      "title": "Hide Warning Proceed Button",
+      "description": "If true, the warning page proceed button is hidden.",
       "type": "boolean",
       "default": false
     },
-    "HideReportButton": {
-      "title": "Hide Report Button",
+    "HideWarningReportButton": {
+      "title": "Hide Warning Report Button",
       "description": "If true, the warning page report button is hidden.",
       "type": "boolean",
       "default": false
     },
-    "DisableClearAllowedWebsites": {
-      "title": "Disable Clear Allowed Websites",
-      "description": "If true, the clear allowed websites button is disabled.",
+    "LockUserAllowlist": {
+      "title": "Lock User Allowlist",
+      "description": "If true, the user cannot edit or clear the allowed websites list, but existing entries still apply.",
       "type": "boolean",
       "default": false
     },
-    "LockProtectionOptions": {
-      "title": "Lock Protection Options",
+    "LockProviderSettings": {
+      "title": "Lock Provider Settings",
       "description": "If true, provider toggles and provider settings are locked in the options page.",
       "type": "boolean",
       "default": false
     },
-    "DisableResetButtons": {
-      "title": "Disable Reset Buttons",
+    "DisableSettingsReset": {
+      "title": "Disable Settings Reset",
       "description": "If true, reset actions in the settings page are disabled.",
       "type": "boolean",
       "default": false
     },
-    "DisableThirdPartyIntegrations": {
-      "title": "Disable Third-Party Integrations",
-      "description": "If true, third-party direct integrations are disabled and cannot be enabled from settings.",
+    "DisableThirdPartyProviders": {
+      "title": "Disable Third-Party Providers",
+      "description": "If true, third-party providers are disabled and cannot be enabled from settings.",
       "type": "boolean",
       "default": false
     },
@@ -53,125 +53,11 @@
       "type": "string",
       "default": ""
     },
-    "HideProtectionOptions": {
-      "title": "Hide Protection Options",
-      "description": "If true, protection options are hidden from the popup and options page.",
+    "HideProviderControls": {
+      "title": "Hide Provider Controls",
+      "description": "If true, provider controls are hidden from the popup and options page.",
       "type": "boolean",
       "default": false
-    },
-    "AlphaMountainEnabled": {
-      "title": "AlphaMountain Enabled",
-      "description": "Managed enabled state for AlphaMountain.",
-      "type": "boolean",
-      "default": true
-    },
-    "BforeAIPreCrimeEnabled": {
-      "title": "BforeAI PreCrime Enabled",
-      "description": "Managed enabled state for BforeAI PreCrime.",
-      "type": "boolean",
-      "default": true
-    },
-    "ChainPatrolEnabled": {
-      "title": "ChainPatrol Enabled",
-      "description": "Managed enabled state for ChainPatrol.",
-      "type": "boolean",
-      "default": true
-    },
-    "iZOOlogicEnabled": {
-      "title": "iZOOlogic Enabled",
-      "description": "Managed enabled state for iZOOlogic.",
-      "type": "boolean",
-      "default": true
-    },
-    "PrecisionSecEnabled": {
-      "title": "PrecisionSec Enabled",
-      "description": "Managed enabled state for PrecisionSec.",
-      "type": "boolean",
-      "default": true
-    },
-    "AdGuardDNSEnabled": {
-      "title": "AdGuard DNS Enabled",
-      "description": "Managed enabled state for AdGuard DNS.",
-      "type": "boolean",
-      "default": true
-    },
-    "AA419Enabled": {
-      "title": "Artists Against 419 Enabled",
-      "description": "Managed enabled state for Artists Against 419.",
-      "type": "boolean",
-      "default": true
-    },
-    "CloudflareEnabled": {
-      "title": "Cloudflare Enabled",
-      "description": "Managed enabled state for Cloudflare.",
-      "type": "boolean",
-      "default": true
-    },
-    "ControlDEnabled": {
-      "title": "Control D Enabled",
-      "description": "Managed enabled state for Control D.",
-      "type": "boolean",
-      "default": false
-    },
-    "OpenPhishEnabled": {
-      "title": "OpenPhish Enabled",
-      "description": "Managed enabled state for OpenPhish.",
-      "type": "boolean",
-      "default": true
-    },
-    "PhishuntIOEnabled": {
-      "title": "Phishunt.io Enabled",
-      "description": "Managed enabled state for Phishunt.io.",
-      "type": "boolean",
-      "default": true
-    },
-    "Quad9Enabled": {
-      "title": "Quad9 Enabled",
-      "description": "Managed enabled state for Quad9.",
-      "type": "boolean",
-      "default": true
-    },
-    "RedFlagDomainsEnabled": {
-      "title": "Red Flag Domains Enabled",
-      "description": "Managed enabled state for Red Flag Domains.",
-      "type": "boolean",
-      "default": true
-    },
-    "SinkingYachtsEnabled": {
-      "title": "SinkingYachts Enabled",
-      "description": "Managed enabled state for SinkingYachts.",
-      "type": "boolean",
-      "default": true
-    },
-    "SwitchCHEnabled": {
-      "title": "Switch.ch Enabled",
-      "description": "Managed enabled state for Switch.ch.",
-      "type": "boolean",
-      "default": true
-    },
-    "THREATfoxEnabled": {
-      "title": "THREATfox Enabled",
-      "description": "Managed enabled state for THREATfox.",
-      "type": "boolean",
-      "default": true
-    },
-    "URLhausEnabled": {
-      "title": "URLhaus Enabled",
-      "description": "Managed enabled state for URLhaus.",
-      "type": "boolean",
-      "default": true
-    },
-    "URLAbuseEnabled": {
-      "title": "URLAbuse Enabled",
-      "description": "Managed enabled state for URLAbuse.",
-      "type": "boolean",
-      "default": true
-    },
-    "ValidinEnabled": {
-      "title": "Validin Enabled",
-      "description": "Managed enabled state for Validin.",
-      "type": "boolean",
-      "default": true
     },
     "ManagedAllowlist": {
       "title": "Managed Allowlist",
@@ -223,11 +109,14 @@
     },
     "ManagedProviderSettings": {
       "title": "Managed Provider Settings",
-      "description": "Per-provider overrides keyed by provider id. Each value may set \"bypassBlockingThreshold\" (boolean), \"requestTimeoutMs\" (integer between 1000 and 60000), and \"blockCategories\" (an object mapping a category key to a boolean).",
+      "description": "Per-provider overrides keyed by provider id. Each value may set \"enabled\" (boolean, the managed enabled state for the provider), \"bypassBlockingThreshold\" (boolean), \"requestTimeoutMs\" (integer between 1000 and 60000), and \"blockCategories\" (an object mapping a category key to a boolean).",
       "type": "object",
       "additionalProperties": {
         "type": "object",
         "properties": {
+          "enabled": {
+            "type": "boolean"
+          },
           "bypassBlockingThreshold": {
             "type": "boolean"
           },
@@ -252,8 +141,8 @@
       "type": "string",
       "default": ""
     },
-    "BrandProductName": {
-      "title": "Brand Product Name",
+    "BrandName": {
+      "title": "Brand Name",
       "description": "Name shown in the warning page banner and popup, replacing the default Osprey product name. When empty, the default name is shown.",
       "type": "string",
       "default": ""
@@ -270,9 +159,9 @@
       "type": "string",
       "default": ""
     },
-    "CustomBlockMessage": {
-      "title": "Custom Block Message",
-      "description": "Optional override for the lead sentence on the warning page. When empty, the default block message is shown.",
+    "CustomWarningMessage": {
+      "title": "Custom Warning Message",
+      "description": "Optional override for the lead sentence on the warning page. When empty, the default warning message is shown.",
       "type": "string",
       "default": ""
     },

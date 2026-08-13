@@ -30,7 +30,7 @@ globalThis.OspreyImportExportPage = (() => {
 
     const isLocked = () => {
         const app = currentRuntime?.effectiveState?.app;
-        return Boolean(app?.lockSettings);
+        return Boolean(app?.lockProviderSettings);
     };
 
     const buildFileName = () => {
