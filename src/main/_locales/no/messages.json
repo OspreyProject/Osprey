@@ -20,6 +20,12 @@
   "recommendation": {
     "message": "Osprey har blokkert tilgangen til dette nettstedet. Det er ikke trygt å fortsette."
   },
+  "supportContactLabel": {
+    "message": "Trenger du hjelp?"
+  },
+  "supportContactLink": {
+    "message": "Kontakt kundestøtte"
+  },
   "urlLabel": {
     "message": "URL: "
   },
@@ -49,6 +55,9 @@
   },
   "websiteLink": {
     "message": "Nettsted"
+  },
+  "openProviderWebsite": {
+    "message": "Klikk for å åpne denne leverandørens nettsted"
   },
   "knownSafe": {
     "message": "Kjent som trygt"
@@ -255,6 +264,15 @@
   "toastExclusionRemoved": {
     "message": "Unntak fjernet."
   },
+  "toastSettingsImported": {
+    "message": "Innstillinger importert."
+  },
+  "toastSettingsExported": {
+    "message": "Innstillinger eksportert."
+  },
+  "toastImportInvalid": {
+    "message": "Denne filen er ikke en gyldig Osprey-innstillingseksport."
+  },
   "navAbout": {
     "message": "Om"
   },
@@ -269,14 +287,11 @@
       }
     }
   },
-  "aboutCopyright": {
-    "message": "© 2026 Osprey Project LLC"
+  "aboutLicenseNotice": {
+    "message": "Osprey er fri og åpen kildekode-programvare, lisensiert under GNU General Public License v3."
   },
-  "aboutRights": {
-    "message": "Med enerett."
-  },
-  "aboutLicense": {
-    "message": "Lisensiert under GPLv3."
+  "aboutCopyrightNotice": {
+    "message": "© 2026 Osprey Project LLC. Med enerett."
   },
   "aboutChangelog": {
     "message": "Endringslogg"
@@ -292,5 +307,20 @@
   },
   "aboutTerms": {
     "message": "Vilkår for bruk"
+  },
+  "importSettings": {
+    "message": "Importer innstillinger"
+  },
+  "exportSettings": {
+    "message": "Eksporter innstillinger"
+  },
+  "masterDisableAll": {
+    "message": "Deaktiver alle beskyttelsesleverandører"
+  },
+  "toastAllProvidersDisabled": {
+    "message": "Alle beskyttelsesleverandører deaktivert."
+  },
+  "toastAllProvidersEnabled": {
+    "message": "Alle beskyttelsesleverandører aktivert."
   }
 }

@@ -20,6 +20,12 @@
   "recommendation": {
     "message": "Osprey a bloqué l'accès à ce site web. Il n'est pas prudent de continuer."
   },
+  "supportContactLabel": {
+    "message": "Besoin d'aide ?"
+  },
+  "supportContactLink": {
+    "message": "Contacter le support"
+  },
   "urlLabel": {
     "message": "URL : "
   },
@@ -49,6 +55,9 @@
   },
   "websiteLink": {
     "message": "Site web"
+  },
+  "openProviderWebsite": {
+    "message": "Cliquez pour ouvrir le site web de ce fournisseur"
   },
   "knownSafe": {
     "message": "Connu comme sûr"
@@ -255,6 +264,15 @@
   "toastExclusionRemoved": {
     "message": "Exclusion retirée."
   },
+  "toastSettingsImported": {
+    "message": "Paramètres importés."
+  },
+  "toastSettingsExported": {
+    "message": "Paramètres exportés."
+  },
+  "toastImportInvalid": {
+    "message": "Ce fichier n'est pas un export de paramètres Osprey valide."
+  },
   "navAbout": {
     "message": "À propos"
   },
@@ -269,14 +287,11 @@
       }
     }
   },
-  "aboutCopyright": {
-    "message": "© 2026 Osprey Project LLC"
+  "aboutLicenseNotice": {
+    "message": "Osprey est un logiciel libre et open source, sous licence GNU General Public License v3."
   },
-  "aboutRights": {
-    "message": "Tous droits réservés."
-  },
-  "aboutLicense": {
-    "message": "Sous licence GPLv3."
+  "aboutCopyrightNotice": {
+    "message": "© 2026 Osprey Project LLC. Tous droits réservés."
   },
   "aboutChangelog": {
     "message": "Journal des modifications"
@@ -292,5 +307,20 @@
   },
   "aboutTerms": {
     "message": "Conditions d'utilisation"
+  },
+  "importSettings": {
+    "message": "Importer les paramètres"
+  },
+  "exportSettings": {
+    "message": "Exporter les paramètres"
+  },
+  "masterDisableAll": {
+    "message": "Désactiver tous les fournisseurs de protection"
+  },
+  "toastAllProvidersDisabled": {
+    "message": "Tous les fournisseurs de protection désactivés."
+  },
+  "toastAllProvidersEnabled": {
+    "message": "Tous les fournisseurs de protection activés."
   }
 }

@@ -20,6 +20,12 @@
   "recommendation": {
     "message": "Osprey heeft de toegang tot deze website geblokkeerd. Het is niet veilig om door te gaan."
   },
+  "supportContactLabel": {
+    "message": "Hulp nodig?"
+  },
+  "supportContactLink": {
+    "message": "Contact opnemen met support"
+  },
   "urlLabel": {
     "message": "URL: "
   },
@@ -49,6 +55,9 @@
   },
   "websiteLink": {
     "message": "Website"
+  },
+  "openProviderWebsite": {
+    "message": "Klik om de website van deze provider te openen"
   },
   "knownSafe": {
     "message": "Bekend als veilig"
@@ -255,6 +264,15 @@
   "toastExclusionRemoved": {
     "message": "Uitzondering verwijderd."
   },
+  "toastSettingsImported": {
+    "message": "Instellingen geïmporteerd."
+  },
+  "toastSettingsExported": {
+    "message": "Instellingen geëxporteerd."
+  },
+  "toastImportInvalid": {
+    "message": "Dat bestand is geen geldige Osprey-instellingenexport."
+  },
   "navAbout": {
     "message": "Over"
   },
@@ -269,14 +287,11 @@
       }
     }
   },
-  "aboutCopyright": {
-    "message": "© 2026 Osprey Project LLC"
+  "aboutLicenseNotice": {
+    "message": "Osprey is vrije en opensourcesoftware, gelicentieerd onder de GNU General Public License v3."
   },
-  "aboutRights": {
-    "message": "Alle rechten voorbehouden."
-  },
-  "aboutLicense": {
-    "message": "Gelicentieerd onder GPLv3."
+  "aboutCopyrightNotice": {
+    "message": "© 2026 Osprey Project LLC. Alle rechten voorbehouden."
   },
   "aboutChangelog": {
     "message": "Wijzigingslogboek"
@@ -292,5 +307,20 @@
   },
   "aboutTerms": {
     "message": "Servicevoorwaarden"
+  },
+  "importSettings": {
+    "message": "Instellingen importeren"
+  },
+  "exportSettings": {
+    "message": "Instellingen exporteren"
+  },
+  "masterDisableAll": {
+    "message": "Alle beveiligingsproviders uitschakelen"
+  },
+  "toastAllProvidersDisabled": {
+    "message": "Alle beveiligingsproviders uitgeschakeld."
+  },
+  "toastAllProvidersEnabled": {
+    "message": "Alle beveiligingsproviders ingeschakeld."
   }
 }

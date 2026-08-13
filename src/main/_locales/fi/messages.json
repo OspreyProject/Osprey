@@ -20,6 +20,12 @@
   "recommendation": {
     "message": "Osprey on estänyt pääsyn tälle sivustolle. Jatkaminen ei ole turvallista."
   },
+  "supportContactLabel": {
+    "message": "Tarvitsetko apua?"
+  },
+  "supportContactLink": {
+    "message": "Ota yhteyttä tukeen"
+  },
   "urlLabel": {
     "message": "URL-osoite: "
   },
@@ -49,6 +55,9 @@
   },
   "websiteLink": {
     "message": "Sivusto"
+  },
+  "openProviderWebsite": {
+    "message": "Avaa tämän tarjoajan sivusto napsauttamalla"
   },
   "knownSafe": {
     "message": "Tunnetusti turvallinen"
@@ -255,6 +264,15 @@
   "toastExclusionRemoved": {
     "message": "Poikkeus poistettu."
   },
+  "toastSettingsImported": {
+    "message": "Asetukset tuotu."
+  },
+  "toastSettingsExported": {
+    "message": "Asetukset viety."
+  },
+  "toastImportInvalid": {
+    "message": "Tiedosto ei ole kelvollinen Osprey-asetusvienti."
+  },
   "navAbout": {
     "message": "Tietoja"
   },
@@ -269,14 +287,11 @@
       }
     }
   },
-  "aboutCopyright": {
-    "message": "© 2026 Osprey Project LLC"
+  "aboutLicenseNotice": {
+    "message": "Osprey on vapaa ja avoimen lähdekoodin ohjelmisto, lisensoitu GNU General Public License v3 -lisenssillä."
   },
-  "aboutRights": {
-    "message": "Kaikki oikeudet pidätetään."
-  },
-  "aboutLicense": {
-    "message": "Lisensoitu GPLv3-lisenssillä."
+  "aboutCopyrightNotice": {
+    "message": "© 2026 Osprey Project LLC. Kaikki oikeudet pidätetään."
   },
   "aboutChangelog": {
     "message": "Muutosloki"
@@ -292,5 +307,20 @@
   },
   "aboutTerms": {
     "message": "Käyttöehdot"
+  },
+  "importSettings": {
+    "message": "Tuo asetukset"
+  },
+  "exportSettings": {
+    "message": "Vie asetukset"
+  },
+  "masterDisableAll": {
+    "message": "Poista kaikki suojauksen tarjoajat käytöstä"
+  },
+  "toastAllProvidersDisabled": {
+    "message": "Kaikki suojauksen tarjoajat poistettu käytöstä."
+  },
+  "toastAllProvidersEnabled": {
+    "message": "Kaikki suojauksen tarjoajat otettu käyttöön."
   }
 }

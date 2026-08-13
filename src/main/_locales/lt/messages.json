@@ -20,6 +20,12 @@
   "recommendation": {
     "message": "Osprey užblokavo prieigą prie šios svetainės. Tęsti nesaugu."
   },
+  "supportContactLabel": {
+    "message": "Reikia pagalbos?"
+  },
+  "supportContactLink": {
+    "message": "Susisiekti su palaikymu"
+  },
   "urlLabel": {
     "message": "URL: "
   },
@@ -49,6 +55,9 @@
   },
   "websiteLink": {
     "message": "Svetainė"
+  },
+  "openProviderWebsite": {
+    "message": "Spustelėkite, kad atidarytumėte šio tiekėjo svetainę"
   },
   "knownSafe": {
     "message": "Žinoma kaip saugi"
@@ -255,6 +264,15 @@
   "toastExclusionRemoved": {
     "message": "Išimtis pašalinta."
   },
+  "toastSettingsImported": {
+    "message": "Nustatymai importuoti."
+  },
+  "toastSettingsExported": {
+    "message": "Nustatymai eksportuoti."
+  },
+  "toastImportInvalid": {
+    "message": "Šis failas nėra tinkamas Osprey nustatymų eksportas."
+  },
   "navAbout": {
     "message": "Apie"
   },
@@ -269,14 +287,11 @@
       }
     }
   },
-  "aboutCopyright": {
-    "message": "© 2026 Osprey Project LLC"
+  "aboutLicenseNotice": {
+    "message": "Osprey yra nemokama atvirojo kodo programinė įranga, licencijuota pagal GNU General Public License v3."
   },
-  "aboutRights": {
-    "message": "Visos teisės saugomos."
-  },
-  "aboutLicense": {
-    "message": "Licencijuota pagal GPLv3."
+  "aboutCopyrightNotice": {
+    "message": "© 2026 Osprey Project LLC. Visos teisės saugomos."
   },
   "aboutChangelog": {
     "message": "Keitimų žurnalas"
@@ -292,5 +307,20 @@
   },
   "aboutTerms": {
     "message": "Paslaugų teikimo sąlygos"
+  },
+  "importSettings": {
+    "message": "Importuoti nustatymus"
+  },
+  "exportSettings": {
+    "message": "Eksportuoti nustatymus"
+  },
+  "masterDisableAll": {
+    "message": "Išjungti visus apsaugos tiekėjus"
+  },
+  "toastAllProvidersDisabled": {
+    "message": "Visi apsaugos tiekėjai išjungti."
+  },
+  "toastAllProvidersEnabled": {
+    "message": "Visi apsaugos tiekėjai įjungti."
   }
 }

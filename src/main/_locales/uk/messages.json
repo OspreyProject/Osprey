@@ -20,6 +20,12 @@
   "recommendation": {
     "message": "Osprey заблокував доступ до цього сайту. Продовжувати небезпечно."
   },
+  "supportContactLabel": {
+    "message": "Потрібна допомога?"
+  },
+  "supportContactLink": {
+    "message": "Звернутися до підтримки"
+  },
   "urlLabel": {
     "message": "URL: "
   },
@@ -49,6 +55,9 @@
   },
   "websiteLink": {
     "message": "Сайт"
+  },
+  "openProviderWebsite": {
+    "message": "Натисніть, щоб відкрити сайт цього постачальника"
   },
   "knownSafe": {
     "message": "Відомий як безпечний"
@@ -255,6 +264,15 @@
   "toastExclusionRemoved": {
     "message": "Виняток видалено."
   },
+  "toastSettingsImported": {
+    "message": "Налаштування імпортовано."
+  },
+  "toastSettingsExported": {
+    "message": "Налаштування експортовано."
+  },
+  "toastImportInvalid": {
+    "message": "Цей файл не є дійсним експортом налаштувань Osprey."
+  },
   "navAbout": {
     "message": "Про програму"
   },
@@ -269,14 +287,11 @@
       }
     }
   },
-  "aboutCopyright": {
-    "message": "© 2026 Osprey Project LLC"
+  "aboutLicenseNotice": {
+    "message": "Osprey — це безкоштовне програмне забезпечення з відкритим кодом, ліцензоване згідно з GNU General Public License v3."
   },
-  "aboutRights": {
-    "message": "Усі права захищено."
-  },
-  "aboutLicense": {
-    "message": "Ліцензовано за GPLv3."
+  "aboutCopyrightNotice": {
+    "message": "© 2026 Osprey Project LLC. Усі права захищено."
   },
   "aboutChangelog": {
     "message": "Журнал змін"
@@ -292,5 +307,20 @@
   },
   "aboutTerms": {
     "message": "Умови використання"
+  },
+  "importSettings": {
+    "message": "Імпортувати налаштування"
+  },
+  "exportSettings": {
+    "message": "Експортувати налаштування"
+  },
+  "masterDisableAll": {
+    "message": "Вимкнути всіх постачальників захисту"
+  },
+  "toastAllProvidersDisabled": {
+    "message": "Усіх постачальників захисту вимкнено."
+  },
+  "toastAllProvidersEnabled": {
+    "message": "Усіх постачальників захисту ввімкнено."
   }
 }

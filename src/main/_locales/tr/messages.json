@@ -20,6 +20,12 @@
   "recommendation": {
     "message": "Osprey bu web sitesine erişimi engelledi. Devam etmek güvenli değil."
   },
+  "supportContactLabel": {
+    "message": "Yardım mı gerekiyor?"
+  },
+  "supportContactLink": {
+    "message": "Destek ile iletişime geç"
+  },
   "urlLabel": {
     "message": "URL: "
   },
@@ -49,6 +55,9 @@
   },
   "websiteLink": {
     "message": "Web sitesi"
+  },
+  "openProviderWebsite": {
+    "message": "Bu sağlayıcının web sitesini açmak için tıklayın"
   },
   "knownSafe": {
     "message": "Güvenli olarak biliniyor"
@@ -255,6 +264,15 @@
   "toastExclusionRemoved": {
     "message": "İstisna kaldırıldı."
   },
+  "toastSettingsImported": {
+    "message": "Ayarlar içe aktarıldı."
+  },
+  "toastSettingsExported": {
+    "message": "Ayarlar dışa aktarıldı."
+  },
+  "toastImportInvalid": {
+    "message": "Bu dosya geçerli bir Osprey ayar dışa aktarımı değil."
+  },
   "navAbout": {
     "message": "Hakkında"
   },
@@ -269,14 +287,11 @@
       }
     }
   },
-  "aboutCopyright": {
-    "message": "© 2026 Osprey Project LLC"
+  "aboutLicenseNotice": {
+    "message": "Osprey, GNU General Public License v3 altında lisanslanan özgür ve açık kaynaklı bir yazılımdır."
   },
-  "aboutRights": {
-    "message": "Tüm hakları saklıdır."
-  },
-  "aboutLicense": {
-    "message": "GPLv3 kapsamında lisanslanmıştır."
+  "aboutCopyrightNotice": {
+    "message": "© 2026 Osprey Project LLC. Tüm hakları saklıdır."
   },
   "aboutChangelog": {
     "message": "Değişiklik günlüğü"
@@ -292,5 +307,20 @@
   },
   "aboutTerms": {
     "message": "Hizmet Şartları"
+  },
+  "importSettings": {
+    "message": "Ayarları içe aktar"
+  },
+  "exportSettings": {
+    "message": "Ayarları dışa aktar"
+  },
+  "masterDisableAll": {
+    "message": "Tüm koruma sağlayıcılarını devre dışı bırak"
+  },
+  "toastAllProvidersDisabled": {
+    "message": "Tüm koruma sağlayıcıları devre dışı bırakıldı."
+  },
+  "toastAllProvidersEnabled": {
+    "message": "Tüm koruma sağlayıcıları etkinleştirildi."
   }
 }

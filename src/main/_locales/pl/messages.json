@@ -20,6 +20,12 @@
   "recommendation": {
     "message": "Osprey zablokował dostęp do tej strony. Kontynuowanie nie jest bezpieczne."
   },
+  "supportContactLabel": {
+    "message": "Potrzebujesz pomocy?"
+  },
+  "supportContactLink": {
+    "message": "Skontaktuj się z pomocą techniczną"
+  },
   "urlLabel": {
     "message": "URL: "
   },
@@ -49,6 +55,9 @@
   },
   "websiteLink": {
     "message": "Strona"
+  },
+  "openProviderWebsite": {
+    "message": "Kliknij, aby otworzyć stronę tego dostawcy"
   },
   "knownSafe": {
     "message": "Znana jako bezpieczna"
@@ -255,6 +264,15 @@
   "toastExclusionRemoved": {
     "message": "Wykluczenie usunięte."
   },
+  "toastSettingsImported": {
+    "message": "Ustawienia zaimportowane."
+  },
+  "toastSettingsExported": {
+    "message": "Ustawienia wyeksportowane."
+  },
+  "toastImportInvalid": {
+    "message": "Ten plik nie jest prawidłowym eksportem ustawień Osprey."
+  },
   "navAbout": {
     "message": "O aplikacji"
   },
@@ -269,14 +287,11 @@
       }
     }
   },
-  "aboutCopyright": {
-    "message": "© 2026 Osprey Project LLC"
+  "aboutLicenseNotice": {
+    "message": "Osprey to darmowe oprogramowanie open source, licencjonowane na warunkach GNU General Public License v3."
   },
-  "aboutRights": {
-    "message": "Wszelkie prawa zastrzeżone."
-  },
-  "aboutLicense": {
-    "message": "Licencjonowane na warunkach GPLv3."
+  "aboutCopyrightNotice": {
+    "message": "© 2026 Osprey Project LLC. Wszelkie prawa zastrzeżone."
   },
   "aboutChangelog": {
     "message": "Dziennik zmian"
@@ -292,5 +307,20 @@
   },
   "aboutTerms": {
     "message": "Warunki usługi"
+  },
+  "importSettings": {
+    "message": "Importuj ustawienia"
+  },
+  "exportSettings": {
+    "message": "Eksportuj ustawienia"
+  },
+  "masterDisableAll": {
+    "message": "Wyłącz wszystkich dostawców ochrony"
+  },
+  "toastAllProvidersDisabled": {
+    "message": "Wszyscy dostawcy ochrony wyłączeni."
+  },
+  "toastAllProvidersEnabled": {
+    "message": "Wszyscy dostawcy ochrony włączeni."
   }
 }

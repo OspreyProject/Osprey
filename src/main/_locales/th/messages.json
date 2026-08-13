@@ -20,6 +20,12 @@
   "recommendation": {
     "message": "Osprey ได้บล็อกการเข้าถึงเว็บไซต์นี้ การดำเนินการต่อไม่ปลอดภัย"
   },
+  "supportContactLabel": {
+    "message": "ต้องการความช่วยเหลือไหม"
+  },
+  "supportContactLink": {
+    "message": "ติดต่อฝ่ายสนับสนุน"
+  },
   "urlLabel": {
     "message": "URL: "
   },
@@ -49,6 +55,9 @@
   },
   "websiteLink": {
     "message": "เว็บไซต์"
+  },
+  "openProviderWebsite": {
+    "message": "คลิกเพื่อเปิดเว็บไซต์ของผู้ให้บริการนี้"
   },
   "knownSafe": {
     "message": "ทราบว่าปลอดภัย"
@@ -255,6 +264,15 @@
   "toastExclusionRemoved": {
     "message": "นำการยกเว้นออกแล้ว"
   },
+  "toastSettingsImported": {
+    "message": "นำเข้าการตั้งค่าแล้ว"
+  },
+  "toastSettingsExported": {
+    "message": "ส่งออกการตั้งค่าแล้ว"
+  },
+  "toastImportInvalid": {
+    "message": "ไฟล์นี้ไม่ใช่ไฟล์ส่งออกการตั้งค่า Osprey ที่ถูกต้อง"
+  },
   "navAbout": {
     "message": "เกี่ยวกับ"
   },
@@ -269,14 +287,11 @@
       }
     }
   },
-  "aboutCopyright": {
-    "message": "© 2026 Osprey Project LLC"
+  "aboutLicenseNotice": {
+    "message": "Osprey เป็นซอฟต์แวร์เสรีและโอเพนซอร์ส ภายใต้สัญญาอนุญาต GNU General Public License v3"
   },
-  "aboutRights": {
-    "message": "สงวนลิขสิทธิ์ทั้งหมด"
-  },
-  "aboutLicense": {
-    "message": "อนุญาตภายใต้ GPLv3"
+  "aboutCopyrightNotice": {
+    "message": "© 2026 Osprey Project LLC. สงวนลิขสิทธิ์"
   },
   "aboutChangelog": {
     "message": "บันทึกการเปลี่ยนแปลง"
@@ -292,5 +307,20 @@
   },
   "aboutTerms": {
     "message": "ข้อกำหนดในการให้บริการ"
+  },
+  "importSettings": {
+    "message": "นำเข้าการตั้งค่า"
+  },
+  "exportSettings": {
+    "message": "ส่งออกการตั้งค่า"
+  },
+  "masterDisableAll": {
+    "message": "ปิดใช้งานผู้ให้บริการป้องกันทั้งหมด"
+  },
+  "toastAllProvidersDisabled": {
+    "message": "ปิดใช้งานผู้ให้บริการป้องกันทั้งหมดแล้ว"
+  },
+  "toastAllProvidersEnabled": {
+    "message": "เปิดใช้งานผู้ให้บริการป้องกันทั้งหมดแล้ว"
   }
 }

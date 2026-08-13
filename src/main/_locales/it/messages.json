@@ -20,6 +20,12 @@
   "recommendation": {
     "message": "Osprey ha bloccato l'accesso a questo sito web. Non è sicuro continuare."
   },
+  "supportContactLabel": {
+    "message": "Serve aiuto?"
+  },
+  "supportContactLink": {
+    "message": "Contatta l'assistenza"
+  },
   "urlLabel": {
     "message": "URL: "
   },
@@ -49,6 +55,9 @@
   },
   "websiteLink": {
     "message": "Sito web"
+  },
+  "openProviderWebsite": {
+    "message": "Fai clic per aprire il sito web di questo fornitore"
   },
   "knownSafe": {
     "message": "Noto come sicuro"
@@ -255,6 +264,15 @@
   "toastExclusionRemoved": {
     "message": "Esclusione rimossa."
   },
+  "toastSettingsImported": {
+    "message": "Impostazioni importate."
+  },
+  "toastSettingsExported": {
+    "message": "Impostazioni esportate."
+  },
+  "toastImportInvalid": {
+    "message": "Questo file non è un'esportazione di impostazioni Osprey valida."
+  },
   "navAbout": {
     "message": "Informazioni"
   },
@@ -269,14 +287,11 @@
       }
     }
   },
-  "aboutCopyright": {
-    "message": "© 2026 Osprey Project LLC"
+  "aboutLicenseNotice": {
+    "message": "Osprey è software libero e open source, concesso in licenza con GNU General Public License v3."
   },
-  "aboutRights": {
-    "message": "Tutti i diritti riservati."
-  },
-  "aboutLicense": {
-    "message": "Concesso in licenza sotto GPLv3."
+  "aboutCopyrightNotice": {
+    "message": "© 2026 Osprey Project LLC. Tutti i diritti riservati."
   },
   "aboutChangelog": {
     "message": "Registro delle modifiche"
@@ -292,5 +307,20 @@
   },
   "aboutTerms": {
     "message": "Termini di servizio"
+  },
+  "importSettings": {
+    "message": "Importa impostazioni"
+  },
+  "exportSettings": {
+    "message": "Esporta impostazioni"
+  },
+  "masterDisableAll": {
+    "message": "Disattiva tutti i fornitori di protezione"
+  },
+  "toastAllProvidersDisabled": {
+    "message": "Tutti i fornitori di protezione disattivati."
+  },
+  "toastAllProvidersEnabled": {
+    "message": "Tutti i fornitori di protezione attivati."
   }
 }

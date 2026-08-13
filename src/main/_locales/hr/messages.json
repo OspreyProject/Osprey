@@ -20,6 +20,12 @@
   "recommendation": {
     "message": "Osprey je blokirao pristup ovoj web-stranici. Nastavak nije siguran."
   },
+  "supportContactLabel": {
+    "message": "Trebate pomoć?"
+  },
+  "supportContactLink": {
+    "message": "Kontaktirajte podršku"
+  },
   "urlLabel": {
     "message": "URL: "
   },
@@ -49,6 +55,9 @@
   },
   "websiteLink": {
     "message": "Web-stranica"
+  },
+  "openProviderWebsite": {
+    "message": "Kliknite za otvaranje web-stranice ovog pružatelja"
   },
   "knownSafe": {
     "message": "Poznato kao sigurno"
@@ -255,6 +264,15 @@
   "toastExclusionRemoved": {
     "message": "Iznimka uklonjena."
   },
+  "toastSettingsImported": {
+    "message": "Postavke uvezene."
+  },
+  "toastSettingsExported": {
+    "message": "Postavke izvezene."
+  },
+  "toastImportInvalid": {
+    "message": "Ta datoteka nije valjani izvoz postavki Osprey."
+  },
   "navAbout": {
     "message": "O aplikaciji"
   },
@@ -269,14 +287,11 @@
       }
     }
   },
-  "aboutCopyright": {
-    "message": "© 2026 Osprey Project LLC"
+  "aboutLicenseNotice": {
+    "message": "Osprey je slobodan softver otvorenog koda, licenciran pod GNU General Public License v3."
   },
-  "aboutRights": {
-    "message": "Sva prava pridržana."
-  },
-  "aboutLicense": {
-    "message": "Licencirano pod GPLv3."
+  "aboutCopyrightNotice": {
+    "message": "© 2026 Osprey Project LLC. Sva prava pridržana."
   },
   "aboutChangelog": {
     "message": "Zapisnik promjena"
@@ -292,5 +307,20 @@
   },
   "aboutTerms": {
     "message": "Uvjeti pružanja usluge"
+  },
+  "importSettings": {
+    "message": "Uvezi postavke"
+  },
+  "exportSettings": {
+    "message": "Izvezi postavke"
+  },
+  "masterDisableAll": {
+    "message": "Onemogući sve pružatelje zaštite"
+  },
+  "toastAllProvidersDisabled": {
+    "message": "Svi pružatelji zaštite onemogućeni."
+  },
+  "toastAllProvidersEnabled": {
+    "message": "Svi pružatelji zaštite omogućeni."
   }
 }

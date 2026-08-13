@@ -20,6 +20,12 @@
   "recommendation": {
     "message": "Osprey đã chặn quyền truy cập vào trang web này. Tiếp tục là không an toàn."
   },
+  "supportContactLabel": {
+    "message": "Cần trợ giúp?"
+  },
+  "supportContactLink": {
+    "message": "Liên hệ bộ phận hỗ trợ"
+  },
   "urlLabel": {
     "message": "URL: "
   },
@@ -49,6 +55,9 @@
   },
   "websiteLink": {
     "message": "Trang web"
+  },
+  "openProviderWebsite": {
+    "message": "Nhấp để mở trang web của nhà cung cấp này"
   },
   "knownSafe": {
     "message": "Được biết là an toàn"
@@ -255,6 +264,15 @@
   "toastExclusionRemoved": {
     "message": "Đã xóa mục loại trừ."
   },
+  "toastSettingsImported": {
+    "message": "Đã nhập cài đặt."
+  },
+  "toastSettingsExported": {
+    "message": "Đã xuất cài đặt."
+  },
+  "toastImportInvalid": {
+    "message": "Tệp đó không phải là tệp xuất cài đặt Osprey hợp lệ."
+  },
   "navAbout": {
     "message": "Giới thiệu"
   },
@@ -269,14 +287,11 @@
       }
     }
   },
-  "aboutCopyright": {
-    "message": "© 2026 Osprey Project LLC"
+  "aboutLicenseNotice": {
+    "message": "Osprey là phần mềm miễn phí và mã nguồn mở, được cấp phép theo GNU General Public License v3."
   },
-  "aboutRights": {
-    "message": "Bảo lưu mọi quyền."
-  },
-  "aboutLicense": {
-    "message": "Được cấp phép theo GPLv3."
+  "aboutCopyrightNotice": {
+    "message": "© 2026 Osprey Project LLC. Bảo lưu mọi quyền."
   },
   "aboutChangelog": {
     "message": "Nhật ký thay đổi"
@@ -292,5 +307,20 @@
   },
   "aboutTerms": {
     "message": "Điều khoản dịch vụ"
+  },
+  "importSettings": {
+    "message": "Nhập cài đặt"
+  },
+  "exportSettings": {
+    "message": "Xuất cài đặt"
+  },
+  "masterDisableAll": {
+    "message": "Tắt tất cả nhà cung cấp bảo vệ"
+  },
+  "toastAllProvidersDisabled": {
+    "message": "Đã tắt tất cả nhà cung cấp bảo vệ."
+  },
+  "toastAllProvidersEnabled": {
+    "message": "Đã bật tất cả nhà cung cấp bảo vệ."
   }
 }

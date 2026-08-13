@@ -20,6 +20,12 @@
   "recommendation": {
     "message": "Osprey ha bloqueado el acceso a este sitio web. No es seguro continuar."
   },
+  "supportContactLabel": {
+    "message": "¿Necesitas ayuda?"
+  },
+  "supportContactLink": {
+    "message": "Contactar con soporte"
+  },
   "urlLabel": {
     "message": "URL: "
   },
@@ -49,6 +55,9 @@
   },
   "websiteLink": {
     "message": "Sitio web"
+  },
+  "openProviderWebsite": {
+    "message": "Haz clic para abrir el sitio web de este proveedor"
   },
   "knownSafe": {
     "message": "Conocido como seguro"
@@ -255,6 +264,15 @@
   "toastExclusionRemoved": {
     "message": "Exclusión eliminada."
   },
+  "toastSettingsImported": {
+    "message": "Configuración importada."
+  },
+  "toastSettingsExported": {
+    "message": "Configuración exportada."
+  },
+  "toastImportInvalid": {
+    "message": "Ese archivo no es una exportación de configuración de Osprey válida."
+  },
   "navAbout": {
     "message": "Acerca de"
   },
@@ -269,14 +287,11 @@
       }
     }
   },
-  "aboutCopyright": {
-    "message": "© 2026 Osprey Project LLC"
+  "aboutLicenseNotice": {
+    "message": "Osprey es software libre y de código abierto, con licencia GNU General Public License v3."
   },
-  "aboutRights": {
-    "message": "Todos los derechos reservados."
-  },
-  "aboutLicense": {
-    "message": "Con licencia GPLv3."
+  "aboutCopyrightNotice": {
+    "message": "© 2026 Osprey Project LLC. Todos los derechos reservados."
   },
   "aboutChangelog": {
     "message": "Registro de cambios"
@@ -292,5 +307,20 @@
   },
   "aboutTerms": {
     "message": "Términos del servicio"
+  },
+  "importSettings": {
+    "message": "Importar configuración"
+  },
+  "exportSettings": {
+    "message": "Exportar configuración"
+  },
+  "masterDisableAll": {
+    "message": "Desactivar todos los proveedores de protección"
+  },
+  "toastAllProvidersDisabled": {
+    "message": "Todos los proveedores de protección desactivados."
+  },
+  "toastAllProvidersEnabled": {
+    "message": "Todos los proveedores de protección activados."
   }
 }

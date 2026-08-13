@@ -20,6 +20,12 @@
   "recommendation": {
     "message": "Osprey 已拦截对此网站的访问。继续访问不安全。"
   },
+  "supportContactLabel": {
+    "message": "需要帮助？"
+  },
+  "supportContactLink": {
+    "message": "联系支持"
+  },
   "urlLabel": {
     "message": "网址："
   },
@@ -49,6 +55,9 @@
   },
   "websiteLink": {
     "message": "网站"
+  },
+  "openProviderWebsite": {
+    "message": "点击打开此提供商的网站"
   },
   "knownSafe": {
     "message": "已知安全"
@@ -255,6 +264,15 @@
   "toastExclusionRemoved": {
     "message": "已移除排除项。"
   },
+  "toastSettingsImported": {
+    "message": "设置已导入。"
+  },
+  "toastSettingsExported": {
+    "message": "设置已导出。"
+  },
+  "toastImportInvalid": {
+    "message": "该文件不是有效的 Osprey 设置导出文件。"
+  },
   "navAbout": {
     "message": "关于"
   },
@@ -269,14 +287,11 @@
       }
     }
   },
-  "aboutCopyright": {
-    "message": "© 2026 Osprey Project LLC"
+  "aboutLicenseNotice": {
+    "message": "Osprey 是自由开源软件，依据 GNU General Public License v3 授权。"
   },
-  "aboutRights": {
-    "message": "保留所有权利。"
-  },
-  "aboutLicense": {
-    "message": "基于 GPLv3 授权。"
+  "aboutCopyrightNotice": {
+    "message": "© 2026 Osprey Project LLC. 保留所有权利。"
   },
   "aboutChangelog": {
     "message": "更新日志"
@@ -292,5 +307,20 @@
   },
   "aboutTerms": {
     "message": "服务条款"
+  },
+  "importSettings": {
+    "message": "导入设置"
+  },
+  "exportSettings": {
+    "message": "导出设置"
+  },
+  "masterDisableAll": {
+    "message": "禁用所有保护提供商"
+  },
+  "toastAllProvidersDisabled": {
+    "message": "已禁用所有保护提供商。"
+  },
+  "toastAllProvidersEnabled": {
+    "message": "已启用所有保护提供商。"
   }
 }

@@ -20,6 +20,12 @@
   "recommendation": {
     "message": "Az Osprey letiltotta a hozzáférést ehhez a webhelyhez. A folytatás nem biztonságos."
   },
+  "supportContactLabel": {
+    "message": "Segítségre van szüksége?"
+  },
+  "supportContactLink": {
+    "message": "Kapcsolatfelvétel a támogatással"
+  },
   "urlLabel": {
     "message": "URL: "
   },
@@ -49,6 +55,9 @@
   },
   "websiteLink": {
     "message": "Webhely"
+  },
+  "openProviderWebsite": {
+    "message": "Kattintson a szolgáltató webhelyének megnyitásához"
   },
   "knownSafe": {
     "message": "Ismerten biztonságos"
@@ -255,6 +264,15 @@
   "toastExclusionRemoved": {
     "message": "Kivétel eltávolítva."
   },
+  "toastSettingsImported": {
+    "message": "Beállítások importálva."
+  },
+  "toastSettingsExported": {
+    "message": "Beállítások exportálva."
+  },
+  "toastImportInvalid": {
+    "message": "Ez a fájl nem érvényes Osprey-beállításexport."
+  },
   "navAbout": {
     "message": "Névjegy"
   },
@@ -269,14 +287,11 @@
       }
     }
   },
-  "aboutCopyright": {
-    "message": "© 2026 Osprey Project LLC"
+  "aboutLicenseNotice": {
+    "message": "Az Osprey szabad és nyílt forráskódú szoftver, a GNU General Public License v3 licenc alatt."
   },
-  "aboutRights": {
-    "message": "Minden jog fenntartva."
-  },
-  "aboutLicense": {
-    "message": "GPLv3 licenc alatt."
+  "aboutCopyrightNotice": {
+    "message": "© 2026 Osprey Project LLC. Minden jog fenntartva."
   },
   "aboutChangelog": {
     "message": "Változásnapló"
@@ -292,5 +307,20 @@
   },
   "aboutTerms": {
     "message": "Szolgáltatási feltételek"
+  },
+  "importSettings": {
+    "message": "Beállítások importálása"
+  },
+  "exportSettings": {
+    "message": "Beállítások exportálása"
+  },
+  "masterDisableAll": {
+    "message": "Az összes védelmi szolgáltató letiltása"
+  },
+  "toastAllProvidersDisabled": {
+    "message": "Az összes védelmi szolgáltató letiltva."
+  },
+  "toastAllProvidersEnabled": {
+    "message": "Az összes védelmi szolgáltató engedélyezve."
   }
 }

@@ -20,6 +20,12 @@
   "recommendation": {
     "message": "Το Osprey απέκλεισε την πρόσβαση σε αυτόν τον ιστότοπο. Δεν είναι ασφαλές να συνεχίσετε."
   },
+  "supportContactLabel": {
+    "message": "Χρειάζεστε βοήθεια;"
+  },
+  "supportContactLink": {
+    "message": "Επικοινωνία με την υποστήριξη"
+  },
   "urlLabel": {
     "message": "URL: "
   },
@@ -49,6 +55,9 @@
   },
   "websiteLink": {
     "message": "Ιστότοπος"
+  },
+  "openProviderWebsite": {
+    "message": "Κάντε κλικ για να ανοίξετε τον ιστότοπο αυτού του παρόχου"
   },
   "knownSafe": {
     "message": "Γνωστός ως ασφαλής"
@@ -255,6 +264,15 @@
   "toastExclusionRemoved": {
     "message": "Η εξαίρεση αφαιρέθηκε."
   },
+  "toastSettingsImported": {
+    "message": "Οι ρυθμίσεις εισήχθησαν."
+  },
+  "toastSettingsExported": {
+    "message": "Οι ρυθμίσεις εξήχθησαν."
+  },
+  "toastImportInvalid": {
+    "message": "Αυτό το αρχείο δεν είναι έγκυρη εξαγωγή ρυθμίσεων Osprey."
+  },
   "navAbout": {
     "message": "Σχετικά"
   },
@@ -269,14 +287,11 @@
       }
     }
   },
-  "aboutCopyright": {
-    "message": "© 2026 Osprey Project LLC"
+  "aboutLicenseNotice": {
+    "message": "Το Osprey είναι ελεύθερο λογισμικό ανοιχτού κώδικα, με άδεια GNU General Public License v3."
   },
-  "aboutRights": {
-    "message": "Με επιφύλαξη κάθε δικαιώματος."
-  },
-  "aboutLicense": {
-    "message": "Υπό άδεια GPLv3."
+  "aboutCopyrightNotice": {
+    "message": "© 2026 Osprey Project LLC. Με την επιφύλαξη παντός δικαιώματος."
   },
   "aboutChangelog": {
     "message": "Αρχείο αλλαγών"
@@ -292,5 +307,20 @@
   },
   "aboutTerms": {
     "message": "Όροι χρήσης"
+  },
+  "importSettings": {
+    "message": "Εισαγωγή ρυθμίσεων"
+  },
+  "exportSettings": {
+    "message": "Εξαγωγή ρυθμίσεων"
+  },
+  "masterDisableAll": {
+    "message": "Απενεργοποίηση όλων των παρόχων προστασίας"
+  },
+  "toastAllProvidersDisabled": {
+    "message": "Όλοι οι πάροχοι προστασίας απενεργοποιήθηκαν."
+  },
+  "toastAllProvidersEnabled": {
+    "message": "Όλοι οι πάροχοι προστασίας ενεργοποιήθηκαν."
   }
 }

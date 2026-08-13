@@ -20,6 +20,12 @@
   "recommendation": {
     "message": "Osprey 已封鎖對此網站的存取。繼續存取並不安全。"
   },
+  "supportContactLabel": {
+    "message": "需要協助？"
+  },
+  "supportContactLink": {
+    "message": "聯絡支援"
+  },
   "urlLabel": {
     "message": "網址："
   },
@@ -49,6 +55,9 @@
   },
   "websiteLink": {
     "message": "網站"
+  },
+  "openProviderWebsite": {
+    "message": "點按以開啟此提供者的網站"
   },
   "knownSafe": {
     "message": "已知安全"
@@ -255,6 +264,15 @@
   "toastExclusionRemoved": {
     "message": "已移除排除項目。"
   },
+  "toastSettingsImported": {
+    "message": "設定已匯入。"
+  },
+  "toastSettingsExported": {
+    "message": "設定已匯出。"
+  },
+  "toastImportInvalid": {
+    "message": "該檔案不是有效的 Osprey 設定匯出檔。"
+  },
   "navAbout": {
     "message": "關於"
   },
@@ -269,14 +287,11 @@
       }
     }
   },
-  "aboutCopyright": {
-    "message": "© 2026 Osprey Project LLC"
+  "aboutLicenseNotice": {
+    "message": "Osprey 是自由開放原始碼軟體，依據 GNU General Public License v3 授權。"
   },
-  "aboutRights": {
-    "message": "保留所有權利。"
-  },
-  "aboutLicense": {
-    "message": "依 GPLv3 授權。"
+  "aboutCopyrightNotice": {
+    "message": "© 2026 Osprey Project LLC. 保留所有權利。"
   },
   "aboutChangelog": {
     "message": "變更記錄"
@@ -292,5 +307,20 @@
   },
   "aboutTerms": {
     "message": "服務條款"
+  },
+  "importSettings": {
+    "message": "匯入設定"
+  },
+  "exportSettings": {
+    "message": "匯出設定"
+  },
+  "masterDisableAll": {
+    "message": "停用所有保護提供者"
+  },
+  "toastAllProvidersDisabled": {
+    "message": "已停用所有保護提供者。"
+  },
+  "toastAllProvidersEnabled": {
+    "message": "已啟用所有保護提供者。"
   }
 }

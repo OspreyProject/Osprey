@@ -20,6 +20,12 @@
   "recommendation": {
     "message": "Osprey がこのウェブサイトへのアクセスをブロックしました。続行するのは安全ではありません。"
   },
+  "supportContactLabel": {
+    "message": "お困りですか？"
+  },
+  "supportContactLink": {
+    "message": "サポートに問い合わせる"
+  },
   "urlLabel": {
     "message": "URL: "
   },
@@ -49,6 +55,9 @@
   },
   "websiteLink": {
     "message": "ウェブサイト"
+  },
+  "openProviderWebsite": {
+    "message": "クリックしてこのプロバイダーのウェブサイトを開く"
   },
   "knownSafe": {
     "message": "安全と確認済み"
@@ -255,6 +264,15 @@
   "toastExclusionRemoved": {
     "message": "除外を削除しました。"
   },
+  "toastSettingsImported": {
+    "message": "設定をインポートしました。"
+  },
+  "toastSettingsExported": {
+    "message": "設定をエクスポートしました。"
+  },
+  "toastImportInvalid": {
+    "message": "このファイルは有効な Osprey 設定エクスポートではありません。"
+  },
   "navAbout": {
     "message": "情報"
   },
@@ -269,14 +287,11 @@
       }
     }
   },
-  "aboutCopyright": {
-    "message": "© 2026 Osprey Project LLC"
+  "aboutLicenseNotice": {
+    "message": "Osprey は GNU General Public License v3 の下でライセンスされた、無料のオープンソースソフトウェアです。"
   },
-  "aboutRights": {
-    "message": "無断複製・転載を禁じます。"
-  },
-  "aboutLicense": {
-    "message": "GPLv3 の下でライセンスされています。"
+  "aboutCopyrightNotice": {
+    "message": "© 2026 Osprey Project LLC. All rights reserved."
   },
   "aboutChangelog": {
     "message": "変更履歴"
@@ -292,5 +307,20 @@
   },
   "aboutTerms": {
     "message": "利用規約"
+  },
+  "importSettings": {
+    "message": "設定をインポート"
+  },
+  "exportSettings": {
+    "message": "設定をエクスポート"
+  },
+  "masterDisableAll": {
+    "message": "すべての保護プロバイダーを無効にする"
+  },
+  "toastAllProvidersDisabled": {
+    "message": "すべての保護プロバイダーを無効にしました。"
+  },
+  "toastAllProvidersEnabled": {
+    "message": "すべての保護プロバイダーを有効にしました。"
   }
 }

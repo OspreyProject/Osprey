@@ -20,6 +20,12 @@
   "recommendation": {
     "message": "Osprey заблокировал доступ к этому сайту. Продолжать небезопасно."
   },
+  "supportContactLabel": {
+    "message": "Нужна помощь?"
+  },
+  "supportContactLink": {
+    "message": "Связаться с поддержкой"
+  },
   "urlLabel": {
     "message": "URL: "
   },
@@ -49,6 +55,9 @@
   },
   "websiteLink": {
     "message": "Сайт"
+  },
+  "openProviderWebsite": {
+    "message": "Нажмите, чтобы открыть сайт этого поставщика"
   },
   "knownSafe": {
     "message": "Известен как безопасный"
@@ -255,6 +264,15 @@
   "toastExclusionRemoved": {
     "message": "Исключение удалено."
   },
+  "toastSettingsImported": {
+    "message": "Настройки импортированы."
+  },
+  "toastSettingsExported": {
+    "message": "Настройки экспортированы."
+  },
+  "toastImportInvalid": {
+    "message": "Этот файл не является допустимым экспортом настроек Osprey."
+  },
   "navAbout": {
     "message": "О программе"
   },
@@ -269,14 +287,11 @@
       }
     }
   },
-  "aboutCopyright": {
-    "message": "© 2026 Osprey Project LLC"
+  "aboutLicenseNotice": {
+    "message": "Osprey — это бесплатное программное обеспечение с открытым исходным кодом, распространяемое по лицензии GNU General Public License v3."
   },
-  "aboutRights": {
-    "message": "Все права защищены."
-  },
-  "aboutLicense": {
-    "message": "Распространяется по лицензии GPLv3."
+  "aboutCopyrightNotice": {
+    "message": "© 2026 Osprey Project LLC. Все права защищены."
   },
   "aboutChangelog": {
     "message": "Список изменений"
@@ -292,5 +307,20 @@
   },
   "aboutTerms": {
     "message": "Условия использования"
+  },
+  "importSettings": {
+    "message": "Импортировать настройки"
+  },
+  "exportSettings": {
+    "message": "Экспортировать настройки"
+  },
+  "masterDisableAll": {
+    "message": "Отключить всех поставщиков защиты"
+  },
+  "toastAllProvidersDisabled": {
+    "message": "Все поставщики защиты отключены."
+  },
+  "toastAllProvidersEnabled": {
+    "message": "Все поставщики защиты включены."
   }
 }

@@ -20,6 +20,12 @@
   "recommendation": {
     "message": "Osprey ha bloquejat l'accés a aquest lloc web. No és segur continuar."
   },
+  "supportContactLabel": {
+    "message": "Necessites ajuda?"
+  },
+  "supportContactLink": {
+    "message": "Contacta amb el suport"
+  },
   "urlLabel": {
     "message": "URL: "
   },
@@ -49,6 +55,9 @@
   },
   "websiteLink": {
     "message": "Lloc web"
+  },
+  "openProviderWebsite": {
+    "message": "Fes clic per obrir el lloc web d'aquest proveïdor"
   },
   "knownSafe": {
     "message": "Conegut com a segur"
@@ -255,6 +264,15 @@
   "toastExclusionRemoved": {
     "message": "S'ha eliminat l'exclusió."
   },
+  "toastSettingsImported": {
+    "message": "Configuració importada."
+  },
+  "toastSettingsExported": {
+    "message": "Configuració exportada."
+  },
+  "toastImportInvalid": {
+    "message": "Aquest fitxer no és una exportació de configuració d'Osprey vàlida."
+  },
   "navAbout": {
     "message": "Quant a"
   },
@@ -269,14 +287,11 @@
       }
     }
   },
-  "aboutCopyright": {
-    "message": "© 2026 Osprey Project LLC"
+  "aboutLicenseNotice": {
+    "message": "Osprey és programari lliure i de codi obert, amb llicència GNU General Public License v3."
   },
-  "aboutRights": {
-    "message": "Tots els drets reservats."
-  },
-  "aboutLicense": {
-    "message": "Amb llicència GPLv3."
+  "aboutCopyrightNotice": {
+    "message": "© 2026 Osprey Project LLC. Tots els drets reservats."
   },
   "aboutChangelog": {
     "message": "Registre de canvis"
@@ -292,5 +307,20 @@
   },
   "aboutTerms": {
     "message": "Termes del servei"
+  },
+  "importSettings": {
+    "message": "Importa la configuració"
+  },
+  "exportSettings": {
+    "message": "Exporta la configuració"
+  },
+  "masterDisableAll": {
+    "message": "Desactiva tots els proveïdors de protecció"
+  },
+  "toastAllProvidersDisabled": {
+    "message": "Tots els proveïdors de protecció desactivats."
+  },
+  "toastAllProvidersEnabled": {
+    "message": "Tots els proveïdors de protecció activats."
   }
 }

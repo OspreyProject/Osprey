@@ -20,6 +20,12 @@
   "recommendation": {
     "message": "Osprey zablokoval přístup na tento web. Není bezpečné pokračovat."
   },
+  "supportContactLabel": {
+    "message": "Potřebujete pomoc?"
+  },
+  "supportContactLink": {
+    "message": "Kontaktovat podporu"
+  },
   "urlLabel": {
     "message": "URL: "
   },
@@ -49,6 +55,9 @@
   },
   "websiteLink": {
     "message": "Web"
+  },
+  "openProviderWebsite": {
+    "message": "Kliknutím otevřete web tohoto poskytovatele"
   },
   "knownSafe": {
     "message": "Známý jako bezpečný"
@@ -255,6 +264,15 @@
   "toastExclusionRemoved": {
     "message": "Výjimka byla odebrána."
   },
+  "toastSettingsImported": {
+    "message": "Nastavení importováno."
+  },
+  "toastSettingsExported": {
+    "message": "Nastavení exportováno."
+  },
+  "toastImportInvalid": {
+    "message": "Tento soubor není platný export nastavení Osprey."
+  },
   "navAbout": {
     "message": "O aplikaci"
   },
@@ -269,14 +287,11 @@
       }
     }
   },
-  "aboutCopyright": {
-    "message": "© 2026 Osprey Project LLC"
+  "aboutLicenseNotice": {
+    "message": "Osprey je svobodný a otevřený software licencovaný pod GNU General Public License v3."
   },
-  "aboutRights": {
-    "message": "Všechna práva vyhrazena."
-  },
-  "aboutLicense": {
-    "message": "Licencováno pod GPLv3."
+  "aboutCopyrightNotice": {
+    "message": "© 2026 Osprey Project LLC. Všechna práva vyhrazena."
   },
   "aboutChangelog": {
     "message": "Seznam změn"
@@ -292,5 +307,20 @@
   },
   "aboutTerms": {
     "message": "Podmínky služby"
+  },
+  "importSettings": {
+    "message": "Importovat nastavení"
+  },
+  "exportSettings": {
+    "message": "Exportovat nastavení"
+  },
+  "masterDisableAll": {
+    "message": "Zakázat všechny poskytovatele ochrany"
+  },
+  "toastAllProvidersDisabled": {
+    "message": "Všichni poskytovatelé ochrany zakázáni."
+  },
+  "toastAllProvidersEnabled": {
+    "message": "Všichni poskytovatelé ochrany povoleni."
   }
 }

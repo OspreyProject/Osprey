@@ -20,6 +20,12 @@
   "recommendation": {
     "message": "Osprey가 이 웹사이트에 대한 접근을 차단했습니다. 계속하는 것은 안전하지 않습니다."
   },
+  "supportContactLabel": {
+    "message": "도움이 필요하신가요?"
+  },
+  "supportContactLink": {
+    "message": "지원팀에 문의"
+  },
   "urlLabel": {
     "message": "URL: "
   },
@@ -49,6 +55,9 @@
   },
   "websiteLink": {
     "message": "웹사이트"
+  },
+  "openProviderWebsite": {
+    "message": "클릭하여 이 공급자의 웹사이트 열기"
   },
   "knownSafe": {
     "message": "안전한 것으로 확인됨"
@@ -255,6 +264,15 @@
   "toastExclusionRemoved": {
     "message": "제외 항목을 제거했습니다."
   },
+  "toastSettingsImported": {
+    "message": "설정을 가져왔습니다."
+  },
+  "toastSettingsExported": {
+    "message": "설정을 내보냈습니다."
+  },
+  "toastImportInvalid": {
+    "message": "이 파일은 유효한 Osprey 설정 내보내기 파일이 아닙니다."
+  },
   "navAbout": {
     "message": "정보"
   },
@@ -269,14 +287,11 @@
       }
     }
   },
-  "aboutCopyright": {
-    "message": "© 2026 Osprey Project LLC"
+  "aboutLicenseNotice": {
+    "message": "Osprey는 GNU General Public License v3에 따라 라이선스가 부여된 무료 오픈 소스 소프트웨어입니다."
   },
-  "aboutRights": {
-    "message": "모든 권리 보유."
-  },
-  "aboutLicense": {
-    "message": "GPLv3에 따라 라이선스가 부여됩니다."
+  "aboutCopyrightNotice": {
+    "message": "© 2026 Osprey Project LLC. All rights reserved."
   },
   "aboutChangelog": {
     "message": "변경 내역"
@@ -292,5 +307,20 @@
   },
   "aboutTerms": {
     "message": "서비스 약관"
+  },
+  "importSettings": {
+    "message": "설정 가져오기"
+  },
+  "exportSettings": {
+    "message": "설정 내보내기"
+  },
+  "masterDisableAll": {
+    "message": "모든 보호 공급자 비활성화"
+  },
+  "toastAllProvidersDisabled": {
+    "message": "모든 보호 공급자를 비활성화했습니다."
+  },
+  "toastAllProvidersEnabled": {
+    "message": "모든 보호 공급자를 활성화했습니다."
   }
 }

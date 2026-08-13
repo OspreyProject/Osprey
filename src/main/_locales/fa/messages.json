@@ -20,6 +20,12 @@
   "recommendation": {
     "message": "Osprey دسترسی به این وب‌سایت را مسدود کرده است. ادامه دادن ایمن نیست."
   },
+  "supportContactLabel": {
+    "message": "به کمک نیاز دارید؟"
+  },
+  "supportContactLink": {
+    "message": "تماس با پشتیبانی"
+  },
   "urlLabel": {
     "message": "نشانی: "
   },
@@ -49,6 +55,9 @@
   },
   "websiteLink": {
     "message": "وب‌سایت"
+  },
+  "openProviderWebsite": {
+    "message": "برای باز کردن وب‌سایت این ارائه‌دهنده کلیک کنید"
   },
   "knownSafe": {
     "message": "شناخته‌شده به‌عنوان ایمن"
@@ -255,6 +264,15 @@
   "toastExclusionRemoved": {
     "message": "استثنا حذف شد."
   },
+  "toastSettingsImported": {
+    "message": "تنظیمات وارد شد."
+  },
+  "toastSettingsExported": {
+    "message": "تنظیمات صادر شد."
+  },
+  "toastImportInvalid": {
+    "message": "این فایل یک خروجی تنظیمات معتبر Osprey نیست."
+  },
   "navAbout": {
     "message": "درباره"
   },
@@ -269,14 +287,11 @@
       }
     }
   },
-  "aboutCopyright": {
-    "message": "© 2026 Osprey Project LLC"
+  "aboutLicenseNotice": {
+    "message": "Osprey نرم‌افزار آزاد و متن‌باز است و تحت مجوز GNU General Public License v3 منتشر شده است."
   },
-  "aboutRights": {
-    "message": "همهٔ حقوق محفوظ است."
-  },
-  "aboutLicense": {
-    "message": "دارای مجوز GPLv3."
+  "aboutCopyrightNotice": {
+    "message": "© 2026 Osprey Project LLC. همه حقوق محفوظ است."
   },
   "aboutChangelog": {
     "message": "فهرست تغییرات"
@@ -292,5 +307,20 @@
   },
   "aboutTerms": {
     "message": "شرایط خدمات"
+  },
+  "importSettings": {
+    "message": "وارد کردن تنظیمات"
+  },
+  "exportSettings": {
+    "message": "صادر کردن تنظیمات"
+  },
+  "masterDisableAll": {
+    "message": "غیرفعال کردن همه ارائه‌دهندگان محافظت"
+  },
+  "toastAllProvidersDisabled": {
+    "message": "همه ارائه‌دهندگان محافظت غیرفعال شدند."
+  },
+  "toastAllProvidersEnabled": {
+    "message": "همه ارائه‌دهندگان محافظت فعال شدند."
   }
 }

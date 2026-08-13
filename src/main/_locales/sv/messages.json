@@ -20,6 +20,12 @@
   "recommendation": {
     "message": "Osprey har blockerat åtkomsten till denna webbplats. Det är inte säkert att fortsätta."
   },
+  "supportContactLabel": {
+    "message": "Behöver du hjälp?"
+  },
+  "supportContactLink": {
+    "message": "Kontakta support"
+  },
   "urlLabel": {
     "message": "URL: "
   },
@@ -49,6 +55,9 @@
   },
   "websiteLink": {
     "message": "Webbplats"
+  },
+  "openProviderWebsite": {
+    "message": "Klicka för att öppna den här leverantörens webbplats"
   },
   "knownSafe": {
     "message": "Känd som säker"
@@ -255,6 +264,15 @@
   "toastExclusionRemoved": {
     "message": "Undantag borttaget."
   },
+  "toastSettingsImported": {
+    "message": "Inställningar importerade."
+  },
+  "toastSettingsExported": {
+    "message": "Inställningar exporterade."
+  },
+  "toastImportInvalid": {
+    "message": "Den filen är inte en giltig export av Osprey-inställningar."
+  },
   "navAbout": {
     "message": "Om"
   },
@@ -269,14 +287,11 @@
       }
     }
   },
-  "aboutCopyright": {
-    "message": "© 2026 Osprey Project LLC"
+  "aboutLicenseNotice": {
+    "message": "Osprey är fri programvara med öppen källkod, licensierad under GNU General Public License v3."
   },
-  "aboutRights": {
-    "message": "Med ensamrätt."
-  },
-  "aboutLicense": {
-    "message": "Licensierad under GPLv3."
+  "aboutCopyrightNotice": {
+    "message": "© 2026 Osprey Project LLC. Med ensamrätt."
   },
   "aboutChangelog": {
     "message": "Ändringslogg"
@@ -292,5 +307,20 @@
   },
   "aboutTerms": {
     "message": "Användarvillkor"
+  },
+  "importSettings": {
+    "message": "Importera inställningar"
+  },
+  "exportSettings": {
+    "message": "Exportera inställningar"
+  },
+  "masterDisableAll": {
+    "message": "Inaktivera alla skyddsleverantörer"
+  },
+  "toastAllProvidersDisabled": {
+    "message": "Alla skyddsleverantörer inaktiverade."
+  },
+  "toastAllProvidersEnabled": {
+    "message": "Alla skyddsleverantörer aktiverade."
   }
 }

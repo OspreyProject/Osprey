@@ -20,6 +20,12 @@
   "recommendation": {
     "message": "Osprey a blocat accesul la acest site web. Nu este sigur să continui."
   },
+  "supportContactLabel": {
+    "message": "Ai nevoie de ajutor?"
+  },
+  "supportContactLink": {
+    "message": "Contactează asistența"
+  },
   "urlLabel": {
     "message": "URL: "
   },
@@ -49,6 +55,9 @@
   },
   "websiteLink": {
     "message": "Site web"
+  },
+  "openProviderWebsite": {
+    "message": "Fă clic pentru a deschide site-ul web al acestui furnizor"
   },
   "knownSafe": {
     "message": "Cunoscut ca sigur"
@@ -255,6 +264,15 @@
   "toastExclusionRemoved": {
     "message": "Excepție eliminată."
   },
+  "toastSettingsImported": {
+    "message": "Setări importate."
+  },
+  "toastSettingsExported": {
+    "message": "Setări exportate."
+  },
+  "toastImportInvalid": {
+    "message": "Acest fișier nu este un export de setări Osprey valid."
+  },
   "navAbout": {
     "message": "Despre"
   },
@@ -269,14 +287,11 @@
       }
     }
   },
-  "aboutCopyright": {
-    "message": "© 2026 Osprey Project LLC"
+  "aboutLicenseNotice": {
+    "message": "Osprey este software liber și open-source, licențiat sub GNU General Public License v3."
   },
-  "aboutRights": {
-    "message": "Toate drepturile rezervate."
-  },
-  "aboutLicense": {
-    "message": "Licențiat sub GPLv3."
+  "aboutCopyrightNotice": {
+    "message": "© 2026 Osprey Project LLC. Toate drepturile rezervate."
   },
   "aboutChangelog": {
     "message": "Jurnal de modificări"
@@ -292,5 +307,20 @@
   },
   "aboutTerms": {
     "message": "Termeni și condiții"
+  },
+  "importSettings": {
+    "message": "Importă setările"
+  },
+  "exportSettings": {
+    "message": "Exportă setările"
+  },
+  "masterDisableAll": {
+    "message": "Dezactivează toți furnizorii de protecție"
+  },
+  "toastAllProvidersDisabled": {
+    "message": "Toți furnizorii de protecție dezactivați."
+  },
+  "toastAllProvidersEnabled": {
+    "message": "Toți furnizorii de protecție activați."
   }
 }

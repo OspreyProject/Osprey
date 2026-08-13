@@ -20,6 +20,12 @@
   "recommendation": {
     "message": "Osprey hat den Zugriff auf diese Website blockiert. Es ist nicht sicher fortzufahren."
   },
+  "supportContactLabel": {
+    "message": "Brauchen Sie Hilfe?"
+  },
+  "supportContactLink": {
+    "message": "Support kontaktieren"
+  },
   "urlLabel": {
     "message": "URL: "
   },
@@ -49,6 +55,9 @@
   },
   "websiteLink": {
     "message": "Website"
+  },
+  "openProviderWebsite": {
+    "message": "Klicken, um die Website dieses Anbieters zu öffnen"
   },
   "knownSafe": {
     "message": "Als sicher bekannt"
@@ -255,6 +264,15 @@
   "toastExclusionRemoved": {
     "message": "Ausnahme entfernt."
   },
+  "toastSettingsImported": {
+    "message": "Einstellungen importiert."
+  },
+  "toastSettingsExported": {
+    "message": "Einstellungen exportiert."
+  },
+  "toastImportInvalid": {
+    "message": "Diese Datei ist kein gültiger Osprey-Einstellungsexport."
+  },
   "navAbout": {
     "message": "Über"
   },
@@ -269,14 +287,11 @@
       }
     }
   },
-  "aboutCopyright": {
-    "message": "© 2026 Osprey Project LLC"
+  "aboutLicenseNotice": {
+    "message": "Osprey ist freie und quelloffene Software, lizenziert unter der GNU General Public License v3."
   },
-  "aboutRights": {
-    "message": "Alle Rechte vorbehalten."
-  },
-  "aboutLicense": {
-    "message": "Lizenziert unter GPLv3."
+  "aboutCopyrightNotice": {
+    "message": "© 2026 Osprey Project LLC. Alle Rechte vorbehalten."
   },
   "aboutChangelog": {
     "message": "Änderungsprotokoll"
@@ -292,5 +307,20 @@
   },
   "aboutTerms": {
     "message": "Nutzungsbedingungen"
+  },
+  "importSettings": {
+    "message": "Einstellungen importieren"
+  },
+  "exportSettings": {
+    "message": "Einstellungen exportieren"
+  },
+  "masterDisableAll": {
+    "message": "Alle Schutzanbieter deaktivieren"
+  },
+  "toastAllProvidersDisabled": {
+    "message": "Alle Schutzanbieter deaktiviert."
+  },
+  "toastAllProvidersEnabled": {
+    "message": "Alle Schutzanbieter aktiviert."
   }
 }

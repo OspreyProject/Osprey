@@ -20,6 +20,12 @@
   "recommendation": {
     "message": "قام Osprey بحظر الوصول إلى هذا الموقع. من غير الآمن المتابعة."
   },
+  "supportContactLabel": {
+    "message": "هل تحتاج مساعدة؟"
+  },
+  "supportContactLink": {
+    "message": "التواصل مع الدعم"
+  },
   "urlLabel": {
     "message": "الرابط: "
   },
@@ -49,6 +55,9 @@
   },
   "websiteLink": {
     "message": "الموقع"
+  },
+  "openProviderWebsite": {
+    "message": "انقر لفتح موقع هذا المزوّد"
   },
   "knownSafe": {
     "message": "معروف كآمن"
@@ -255,6 +264,15 @@
   "toastExclusionRemoved": {
     "message": "تمت إزالة الاستثناء."
   },
+  "toastSettingsImported": {
+    "message": "تم استيراد الإعدادات."
+  },
+  "toastSettingsExported": {
+    "message": "تم تصدير الإعدادات."
+  },
+  "toastImportInvalid": {
+    "message": "هذا الملف ليس ملف تصدير إعدادات صالحًا لـ Osprey."
+  },
   "navAbout": {
     "message": "حول"
   },
@@ -269,14 +287,11 @@
       }
     }
   },
-  "aboutCopyright": {
-    "message": "© 2026 Osprey Project LLC"
+  "aboutLicenseNotice": {
+    "message": "Osprey برنامج حر ومفتوح المصدر، مرخّص بموجب GNU General Public License v3."
   },
-  "aboutRights": {
-    "message": "جميع الحقوق محفوظة."
-  },
-  "aboutLicense": {
-    "message": "مرخّص بموجب GPLv3."
+  "aboutCopyrightNotice": {
+    "message": "© 2026 Osprey Project LLC. جميع الحقوق محفوظة."
   },
   "aboutChangelog": {
     "message": "سجل التغييرات"
@@ -292,5 +307,20 @@
   },
   "aboutTerms": {
     "message": "شروط الخدمة"
+  },
+  "importSettings": {
+    "message": "استيراد الإعدادات"
+  },
+  "exportSettings": {
+    "message": "تصدير الإعدادات"
+  },
+  "masterDisableAll": {
+    "message": "تعطيل جميع مزوّدي الحماية"
+  },
+  "toastAllProvidersDisabled": {
+    "message": "تم تعطيل جميع مزوّدي الحماية."
+  },
+  "toastAllProvidersEnabled": {
+    "message": "تم تفعيل جميع مزوّدي الحماية."
   }
 }
