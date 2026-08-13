@@ -1,9 +1,10 @@
 # Outbound events and heartbeats
 
 The `ReportingEndpoint` managed policy points the extension at an HTTP endpoint that receives two kinds of message: a
-batch of detection and override events, and a periodic health heartbeat. Together they let an MSP watch a fleet without
-a console. Detections and overrides arrive as they happen, and the heartbeat proves each endpoint is still installed,
-enabled, current, and able to reach its backend.
+batch of detection and override events, and a periodic health heartbeat. Detections and overrides arrive as they happen,
+and the heartbeat proves each endpoint is still installed, enabled, current, and able to reach its backend. The usual
+receiver is the Osprey Management Console, whose per-client ingest URL goes straight into this policy; the same payloads
+work with any receiver, so an MSP can also point this at its own webhook or SIEM and watch a fleet without the console.
 
 When `ReportingEndpoint` is empty, nothing is sent. The endpoint must be an `http(s)` URL. A malformed or non-`http(s)`
 value is treated as empty.
@@ -17,7 +18,7 @@ requests whose token does not match.
 ## What is sent, and when
 
 Both message kinds POST JSON to the same `ReportingEndpoint`. They are told apart by the top-level `kind` field, so a
-generic webhook, a SIEM such as Splunk or Sentinel, or the console built in a later step can route them.
+generic webhook, a SIEM such as Splunk or Sentinel, or the Osprey Management Console can route them.
 
 - Events are flushed every 5 minutes and once on startup. Each flush sends every event that has not yet been accepted by
   the endpoint.
