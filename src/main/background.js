@@ -317,6 +317,28 @@ if (typeof importScripts === 'function') {
         return handler(message, tabId, sendResponse, sender);
     };
 
+    const uninstallSurveyUrl = 'https://osprey.ac/uninstall';
+
+    const applyUninstallSurvey = async api => {
+        if (typeof api?.runtime?.setUninstallURL !== 'function') {
+            return;
+        }
+
+        let disabled = false;
+
+        try {
+            disabled = await policyService.isUninstallSurveyDisabled();
+        } catch (error) {
+            console.error('Failed to resolve the uninstall survey policy', error);
+        }
+
+        try {
+            await api.runtime.setUninstallURL(disabled ? '' : uninstallSurveyUrl);
+        } catch {
+            console.error('Failed to set uninstall URL, browser API may not be available');
+        }
+    };
+
     const setUpRemoteConfig = async api => {
         if (!policyService || typeof policyService.initRemoteConfig !== 'function') {
             return;
@@ -341,16 +363,20 @@ if (typeof importScripts === 'function') {
 
             alarms.onAlarm?.addListener(alarm => {
                 if (alarm?.name === policyService.remoteConfigAlarmName) {
-                    policyService.refreshRemoteConfig().catch(error => {
-                        console.error('Scheduled remote config refresh failed', error);
-                    });
+                    policyService.refreshRemoteConfig()
+                        .then(() => applyUninstallSurvey(api))
+                        .catch(error => {
+                            console.error('Scheduled remote config refresh failed', error);
+                        });
                 }
             });
         }
 
-        policyService.refreshRemoteConfig().catch(error => {
-            console.error('Startup remote config refresh failed', error);
-        });
+        policyService.refreshRemoteConfig()
+            .then(() => applyUninstallSurvey(api))
+            .catch(error => {
+                console.error('Startup remote config refresh failed', error);
+            });
     };
 
     const setUpReporting = async api => {
@@ -407,12 +433,6 @@ if (typeof importScripts === 'function') {
             return;
         }
 
-        try {
-            api.runtime.setUninstallURL?.('https://osprey.ac/uninstall');
-        } catch {
-            console.error('Failed to set uninstall URL, browser API may not be available');
-        }
-
         api.runtime.onMessage?.addListener(handleMessage);
 
         api.runtime.onConnect?.addListener(port => {
@@ -430,11 +450,9 @@ if (typeof importScripts === 'function') {
         });
 
         await runEmergencySettingsMigrations();
-
         await setUpRemoteConfig(api);
-
+        await applyUninstallSurvey(api);
         await setUpReporting(api);
-
         navigationService.register();
     };
 

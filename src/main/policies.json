@@ -107,6 +107,12 @@
       "type": "boolean",
       "default": false
     },
+    "DisableUninstallSurvey": {
+      "title": "Disable Uninstall Survey",
+      "description": "If true, the uninstall feedback page is not opened when the extension is removed. Leave unset for consumer installs so the survey is shown; set true for managed MSP deployments where the feedback page is unwanted.",
+      "type": "boolean",
+      "default": false
+    },
     "ManagedProviderSettings": {
       "title": "Managed Provider Settings",
       "description": "Per-provider overrides keyed by provider id. Each value may set \"enabled\" (boolean, the managed enabled state for the provider), \"bypassBlockingThreshold\" (boolean), \"requestTimeoutMs\" (integer between 1000 and 60000), and \"blockCategories\" (an object mapping a category key to a boolean).",

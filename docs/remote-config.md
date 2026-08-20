@@ -47,6 +47,7 @@ The document is a JSON object. The canonical form has two sections:
     "BrandName": "Acme Secure Browsing",
     "SupportEmail": "help@msp.example",
     "DisableUserAllowlist": true,
+    "DisableUninstallSurvey": true,
     "ManagedProviderSettings": {
       "phishunt-io": {
         "enabled": true,
@@ -62,6 +63,10 @@ The `policies` object accepts the same keys as managed storage, with two excepti
 
 - `ManagedConfigUrl` is ignored if present, because a document cannot change its own source.
 - Prototype keys such as `__proto__` are ignored.
+
+Set `DisableUninstallSurvey` to `true` to stop the extension from opening its uninstall feedback page when a user
+removes the extension. It defaults to `false`, so a consumer install still shows the survey; a managed MSP deployment
+normally sets it to `true`.
 
 A flat object of policy keys is also accepted. When the top-level object has no
 `policies` field, every key other than `version` and `customProviders` is treated as a policy value. The nested form is

@@ -854,10 +854,16 @@ globalThis.OspreyPolicyService = (() => {
         };
     };
 
+    const isUninstallSurveyDisabled = async () => {
+        const policies = await getPolicies();
+        return policies.DisableUninstallSurvey === true;
+    };
+
     return Object.freeze({
         applyToState,
         applyToAppState,
         getEffectiveAppLocks,
+        isUninstallSurveyDisabled,
         getManagedListConfig,
         getEndpointIdentity,
         getReportingConfig,
