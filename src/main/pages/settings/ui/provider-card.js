@@ -548,8 +548,14 @@ globalThis.OspreyProviderCard = (() => {
         });
 
         item.append(header, body);
-        item.dataset.expandGate = 'enabled';
-        setItemExpandable(item, Boolean(providerState?.enabled));
+
+        const masterDisabled = Boolean(runtime?.effectiveState?.app?.disableAllProviders);
+
+        if (masterDisabled) {
+            item.dataset.expandGate = 'enabled';
+        }
+
+        setItemExpandable(item, !masterDisabled);
         return item;
     }
 
@@ -672,7 +678,7 @@ globalThis.OspreyProviderCard = (() => {
             item.dataset.expandGate = 'enabled';
         }
 
-        setItemExpandable(item, isEnabled);
+        setItemExpandable(item, !masterDisabled);
         syncApplyState();
         return item;
     }
