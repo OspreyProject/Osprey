@@ -193,6 +193,21 @@ if (typeof importScripts === 'function') {
             );
         },
 
+        [messages.RECHECK_BLOCKED_URL]: (message, tabId, sendResponse) => {
+            if (typeof message.blockedUrl !== 'string' || message.blockedUrl.length === 0) {
+                console.warn('OspreyBackground rejected RECHECK_BLOCKED_URL because the message payload was incomplete');
+                return respond(sendResponse, {ok: false});
+            }
+
+            return respondAsync(
+                sendResponse,
+                policyService.refreshRemoteConfig()
+                    .then(() => cacheService.getManagedListDecision(message.blockedUrl))
+                    .then(decision => ({ok: true, allowed: decision.allowed === true && decision.blocked !== true})),
+                `Failed RECHECK_BLOCKED_URL for tab ${tabId}`,
+            );
+        },
+
         [messages.ALLOW_WEBSITE]: (message, tabId, sendResponse) => {
             if (typeof message.blockedUrl !== 'string') {
                 console.warn('OspreyBackground rejected ALLOW_WEBSITE because the message payload was incomplete');

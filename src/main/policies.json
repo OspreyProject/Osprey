@@ -165,6 +165,12 @@
       "type": "string",
       "default": ""
     },
+    "UserEmail": {
+      "title": "User Email",
+      "description": "The signed-in user's email address, set per user rather than per machine. Prefills the email field when the warning page's contact link opens a console-hosted unblock request page.",
+      "type": "string",
+      "default": ""
+    },
     "CustomWarningMessage": {
       "title": "Custom Warning Message",
       "description": "Optional override for the lead sentence on the warning page. When empty, the default warning message is shown.",

@@ -666,6 +666,67 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         return link;
     }
 
+    let approvalWatchTimer = null;
+    let approvalWatchAttempts = 0;
+
+    const approvalWatchIntervalMS = 60000;
+    const approvalWatchMaxAttempts = 60;
+
+    function stopApprovalWatch() {
+        if (approvalWatchTimer !== null) {
+            clearInterval(approvalWatchTimer);
+            approvalWatchTimer = null;
+        }
+    }
+
+    function startApprovalWatch() {
+        const blockedUrl = typeof currentContext?.blockedUrl === 'string' ? currentContext.blockedUrl : '';
+
+        if (approvalWatchTimer !== null || !blockedUrl) {
+            return;
+        }
+
+        approvalWatchAttempts = 0;
+
+        approvalWatchTimer = setInterval(async () => {
+            approvalWatchAttempts++;
+
+            if (approvalWatchAttempts > approvalWatchMaxAttempts) {
+                stopApprovalWatch();
+                return;
+            }
+
+            try {
+                const response = await browserAPI.runtimeSendMessage({
+                    messageType: messages.RECHECK_BLOCKED_URL,
+                    blockedUrl,
+                });
+
+                if (response?.ok === true && response.allowed === true) {
+                    stopApprovalWatch();
+                    await sendNavigationMessage(buildActionMessage(messages.CONTINUE_TO_WEBSITE));
+                }
+            } catch (error) {
+                console.warn('WarningPage approval watch check failed', error);
+            }
+        }, approvalWatchIntervalMS);
+    }
+
+    function buildRequestPageUrl(supportUrlParsed, app) {
+        const requestUrl = new URL(supportUrlParsed.href);
+        const blockedUrl = typeof currentContext?.blockedUrl === 'string' ? currentContext.blockedUrl : '';
+        const userEmail = typeof app?.userEmail === 'string' ? app.userEmail.trim() : '';
+
+        if (blockedUrl) {
+            requestUrl.searchParams.set('url', blockedUrl);
+        }
+
+        if (userEmail && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userEmail)) {
+            requestUrl.searchParams.set('email', userEmail);
+        }
+        return requestUrl.toString();
+    }
+
     function applySupportContact(app) {
         const container = domElements.supportContact;
 
@@ -690,7 +751,9 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         container.appendChild(document.createTextNode(' '));
 
         if (supportUrlParsed) {
-            container.appendChild(buildSupportLink(LangUtil.SUPPORT_CONTACT_LINK, supportUrlParsed.toString()));
+            const supportLink = buildSupportLink(LangUtil.SUPPORT_CONTACT_LINK, buildRequestPageUrl(supportUrlParsed, app));
+            supportLink.addEventListener('click', startApprovalWatch);
+            container.appendChild(supportLink);
         }
 
         if (hasEmail) {

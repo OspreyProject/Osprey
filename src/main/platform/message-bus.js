@@ -27,6 +27,7 @@ globalThis.OspreyMessageBus = Object.freeze({
         BLOCKED_COUNTER_PONG: 'blockedCounterPong',
         CONTINUE_TO_SAFETY: 'continueToSafety',
         CONTINUE_TO_WEBSITE: 'continueToWebsite',
+        RECHECK_BLOCKED_URL: 'recheckBlockedUrl',
         REPORT_WEBSITE: 'reportWebsite',
         ALLOW_WEBSITE: 'allowWebsite',
         CLEAR_ALLOWED_WEBSITES: 'clearAllowedWebsites',

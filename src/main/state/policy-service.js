@@ -159,6 +159,12 @@ globalThis.OspreyPolicyService = (() => {
             mapValue: trimStringMap,
         },
         {
+            policyKey: 'UserEmail',
+            type: 'string',
+            stateKey: 'userEmail',
+            mapValue: trimStringMap,
+        },
+        {
             policyKey: 'CustomWarningMessage',
             type: 'string',
             stateKey: 'customWarningMessage',

@@ -68,6 +68,11 @@ Set `DisableUninstallSurvey` to `true` to stop the extension from opening its un
 removes the extension. It defaults to `false`, so a consumer install still shows the survey; a managed MSP deployment
 normally sets it to `true`.
 
+`UserEmail` holds the signed-in user's email address and is intended to be set per user through Group Policy, Intune, or
+a plist rather than through this shared document, since the document is the same for every user of a client. When set,
+the warning page's contact link carries the user's email and the blocked URL as query parameters, so a console-hosted
+unblock request page opens with both fields already filled in.
+
 A flat object of policy keys is also accepted. When the top-level object has no
 `policies` field, every key other than `version` and `customProviders` is treated as a policy value. The nested form is
 recommended for clarity.
