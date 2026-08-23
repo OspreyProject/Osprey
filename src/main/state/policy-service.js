@@ -624,6 +624,42 @@ globalThis.OspreyPolicyService = (() => {
         return parsed.href;
     };
 
+    const readBodyCapped = async (response, maxBytes) => {
+        const body = response.body;
+
+        if (!body || typeof body.getReader !== 'function') {
+            const text = await response.text();
+
+            if (text.length > maxBytes) {
+                throw new Error(`config document exceeds ${maxBytes} bytes`);
+            }
+            return text;
+        }
+
+        const reader = body.getReader();
+        const decoder = new TextDecoder();
+        let received = 0;
+        let text = '';
+
+        for (; ;) {
+            const {done, value} = await reader.read();
+
+            if (done) {
+                break;
+            }
+
+            received += value.byteLength;
+
+            if (received > maxBytes) {
+                await reader.cancel().catch(() => undefined);
+                throw new Error(`config document exceeds ${maxBytes} bytes`);
+            }
+
+            text += decoder.decode(value, {stream: true});
+        }
+        return text + decoder.decode();
+    };
+
     const fetchConfigDocument = async url => {
         const controller = new AbortController();
         const timer = setTimeout(() => controller.abort(), remoteConfigFetchTimeoutMS);
