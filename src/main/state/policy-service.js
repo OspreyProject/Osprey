@@ -564,6 +564,43 @@ globalThis.OspreyPolicyService = (() => {
         return cachedEffectivePolicies;
     };
 
+    const isPrivateHost = hostname => {
+        const host = String(hostname || '').toLowerCase();
+
+        if (!host) {
+            return false;
+        }
+
+        if (host === 'localhost' || host === '[::1]' || host.endsWith('.localhost') || host.endsWith('.local')) {
+            return true;
+        }
+
+        const v4 = host.match(/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/);
+
+        if (!v4) {
+            return false;
+        }
+
+        const a = Number(v4[1]);
+        const b = Number(v4[2]);
+
+        if (a === 127 || a === 10) {
+            return true;
+        }
+
+        if (a === 192 && b === 168) {
+            return true;
+        }
+
+        if (a === 169 && b === 254) {
+            return true;
+        }
+        return a === 172 && b >= 16 && b <= 31;
+    };
+
+    const isAllowedTransport = parsed =>
+        parsed.protocol === 'https:' || (parsed.protocol === 'http:' && isPrivateHost(parsed.hostname));
+
     const resolveConfigUrl = managed => {
         const raw = managed && typeof managed.ManagedConfigUrl === 'string' ? managed.ManagedConfigUrl.trim() : '';
 
@@ -580,8 +617,8 @@ globalThis.OspreyPolicyService = (() => {
             return '';
         }
 
-        if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
-            console.warn('OspreyPolicyService ignoring non-http(s) ManagedConfigUrl');
+        if (!isAllowedTransport(parsed)) {
+            console.warn('OspreyPolicyService ignoring ManagedConfigUrl without an approved transport');
             return '';
         }
         return parsed.href;
@@ -598,18 +635,34 @@ globalThis.OspreyPolicyService = (() => {
                 cache: 'no-store',
                 redirect: 'follow',
                 signal: controller.signal,
-                headers: {Accept: 'application/json'},
+                headers: {
+                    Accept: 'application/json'
+                },
             });
 
             if (!response.ok) {
                 throw new Error(`HTTP ${response.status}`);
             }
 
-            const text = await response.text();
+            let finalUrl = null;
 
-            if (text.length > remoteConfigMaxBytes) {
+            try {
+                finalUrl = new URL(response.url);
+            } catch {
+                finalUrl = null;
+            }
+
+            if (finalUrl !== null && !isAllowedTransport(finalUrl)) {
+                throw new Error('config fetch was redirected off an approved transport');
+            }
+
+            const declaredLength = Number(response.headers.get('content-length'));
+
+            if (Number.isFinite(declaredLength) && declaredLength > remoteConfigMaxBytes) {
                 throw new Error(`config document exceeds ${remoteConfigMaxBytes} bytes`);
             }
+
+            const text = await readBodyCapped(response, remoteConfigMaxBytes);
             return JSON.parse(text);
         } finally {
             clearTimeout(timer);
@@ -799,7 +852,7 @@ globalThis.OspreyPolicyService = (() => {
             return '';
         }
 
-        if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+        if (!isAllowedTransport(parsed)) {
             return '';
         }
         return parsed.href;
@@ -830,7 +883,7 @@ globalThis.OspreyPolicyService = (() => {
             return defaultProxyOrigin;
         }
 
-        if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+        if (!isAllowedTransport(parsed)) {
             return defaultProxyOrigin;
         }
         return parsed.origin;

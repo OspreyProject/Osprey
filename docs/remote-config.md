@@ -19,8 +19,9 @@ can never redirect its own source.
 
 ## Refresh timing
 
-The extension fetches the document once at startup and then every 60 minutes through a browser alarm. Fetches use a 15
-second timeout, and documents larger than 512 KB are rejected.
+The extension fetches the document once at startup and then every 60 minutes through a browser alarm. Fetches use a
+15-second timeout, and documents larger than 512 KB are rejected. The URL must use `https`; plain `http` is accepted
+only for loopback and private-network hosts, and a fetch that is redirected off approved transport is rejected.
 
 ## Host permission
 

@@ -6,8 +6,8 @@ and the heartbeat proves each endpoint is still installed, enabled, current, and
 receiver is the Osprey Management Console, whose per-client ingest URL goes straight into this policy; the same payloads
 work with any receiver, so an MSP can also point this at its own webhook or SIEM and watch a fleet without the console.
 
-When `ReportingEndpoint` is empty, nothing is sent. The endpoint must be an `http(s)` URL. A malformed or non-`http(s)`
-value is treated as empty.
+When `ReportingEndpoint` is empty, nothing is sent. The endpoint must be an `https` URL, or an `http` URL on a loopback
+or private-network host. A malformed value or a public plain-`http` value is treated as empty.
 
 ## Authentication
 

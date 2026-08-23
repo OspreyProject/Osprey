@@ -32,6 +32,40 @@ globalThis.OspreyCatalogValidator = (() => {
     ]);
 
     const idPattern = /^[a-z0-9-]+$/;
+    const isPrivateHost = hostname => {
+        const host = String(hostname || '').toLowerCase();
+
+        if (!host) {
+            return false;
+        }
+
+        if (host === 'localhost' || host === '[::1]' || host.endsWith('.localhost') || host.endsWith('.local')) {
+            return true;
+        }
+
+        const v4 = host.match(/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/);
+
+        if (!v4) {
+            return false;
+        }
+
+        const a = Number(v4[1]);
+        const b = Number(v4[2]);
+
+        if (a === 127 || a === 10) {
+            return true;
+        }
+
+        if (a === 192 && b === 168) {
+            return true;
+        }
+
+        if (a === 169 && b === 254) {
+            return true;
+        }
+        return a === 172 && b >= 16 && b <= 31;
+    };
+
     const templateRegex = /{lookupValue}|{hostname}|{url}|{apiKey}|{api_key}/g;
 
     const urlValidationCache = new Map();
@@ -78,6 +112,11 @@ globalThis.OspreyCatalogValidator = (() => {
             if (!validProtocols.has(parsed.protocol)) {
                 cacheUrlResult(strValue, false);
                 fail('unsupported protocol');
+            }
+
+            if (parsed.protocol === 'http:' && !isPrivateHost(parsed.hostname)) {
+                cacheUrlResult(strValue, false);
+                fail(`${label} must use https for non-private hosts`);
             }
 
             cacheUrlResult(strValue, true);
@@ -187,6 +226,20 @@ globalThis.OspreyCatalogValidator = (() => {
 
         if (typeof proxyBaseUrl !== 'string' || !proxyBaseUrl.startsWith('http')) {
             fail(`Invalid proxy base URL for ${definition.id}`);
+        }
+
+        let parsedProxyBase = null;
+
+        try {
+            parsedProxyBase = new URL(proxyBaseUrl);
+        } catch {
+            fail(`Invalid proxy base URL for ${definition.id}`);
+            return;
+        }
+
+        if (parsedProxyBase.protocol !== 'https:' &&
+            !(parsedProxyBase.protocol === 'http:' && isPrivateHost(parsedProxyBase.hostname))) {
+            fail(`Proxy base URL for ${definition.id} must use https for non-private hosts`);
         }
 
         requirePattern(definition.endpoint, idPattern, `Invalid proxy endpoint for ${definition.id}`);
