@@ -32,6 +32,8 @@ globalThis.OspreyCatalogValidator = (() => {
     ]);
 
     const idPattern = /^[a-z0-9-]+$/;
+    const maxRegexPatternLength = 512;
+
     const isPrivateHost = hostname => {
         const host = String(hostname || '').toLowerCase();
 
@@ -158,6 +160,20 @@ globalThis.OspreyCatalogValidator = (() => {
         requireString(rule.path, `Response rule path missing for ${definition.id}`);
         requireOneOf(String(rule.operator || 'equals'), validRuleOperators, `Invalid response rule operator for ${definition.id}`);
         requireString(rule.result, `Response rule result missing for ${definition.id}`);
+
+        if (String(rule.operator || '') === 'regex') {
+            const pattern = String(rule.value == null ? '' : rule.value);
+
+            if (pattern.length > maxRegexPatternLength) {
+                fail(`Response rule regex exceeds ${maxRegexPatternLength} characters for ${definition.id}`);
+            }
+
+            try {
+                new RegExp(pattern);
+            } catch {
+                fail(`Invalid response rule regex for ${definition.id}`);
+            }
+        }
     };
 
     const templateReplacer = match => {
