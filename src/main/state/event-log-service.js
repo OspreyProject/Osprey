@@ -24,6 +24,7 @@ globalThis.OspreyEventLogService = (() => {
     const logKey = 'osprey_event_log';
     const schemaVersion = 1;
     const maxEvents = 1000;
+    const maxEventAgeMs = 30 * 24 * 60 * 60 * 1000;
     const flushDelay = 250;
 
     const reportFlushAlarmName = 'osprey-report-flush';
@@ -154,6 +155,19 @@ globalThis.OspreyEventLogService = (() => {
         };
     };
 
+    const pruneExpired = list => {
+        const cutoff = Date.now() - maxEventAgeMs;
+        let removed = 0;
+
+        for (let i = list.length - 1; i >= 0; i--) {
+            if (list[i].ts < cutoff) {
+                list.splice(i, 1);
+                removed++;
+            }
+        }
+        return removed;
+    };
+
     const loadEvents = async () => {
         try {
             const stored = await idb.get(logKey);
@@ -168,7 +182,16 @@ globalThis.OspreyEventLogService = (() => {
                         restored.push(normalized);
                     }
                 }
-                return restored.slice(-maxEvents);
+
+                const cutoff = Date.now() - maxEventAgeMs;
+                const fresh = [];
+
+                for (const entry of restored) {
+                    if (entry.ts >= cutoff) {
+                        fresh.push(entry);
+                    }
+                }
+                return fresh.slice(-maxEvents);
             }
         } catch (error) {
             console.warn('OspreyEventLogService failed to load event log', error);
@@ -238,11 +261,26 @@ globalThis.OspreyEventLogService = (() => {
         } catch {
             // ignored
         }
-        return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
+        try {
+            const bytes = new Uint8Array(16);
+            globalThis.crypto.getRandomValues(bytes);
+            let hex = '';
+
+            for (const byte of bytes) {
+                hex += byte.toString(16).padStart(2, '0');
+            }
+            return `${Date.now()}-${hex}`;
+        } catch {
+            return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+        }
     };
 
     const append = async partial => {
         const list = await ensureLoaded();
+
+        pruneExpired(list);
+
         const identity = await policyService.getEndpointIdentity();
 
         const event = {
@@ -362,6 +400,11 @@ globalThis.OspreyEventLogService = (() => {
         }
 
         const list = await ensureLoaded();
+
+        if (pruneExpired(list) > 0) {
+            scheduleFlush();
+        }
+
         const pending = [];
 
         for (const entry of list) {
@@ -490,6 +533,10 @@ globalThis.OspreyEventLogService = (() => {
 
     const getEvents = async () => {
         const list = await ensureLoaded();
+
+        if (pruneExpired(list) > 0) {
+            scheduleFlush();
+        }
         return list.map(toPublicEvent);
     };
 
