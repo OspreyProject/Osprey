@@ -340,7 +340,7 @@
                     enabledByDefault: true,
                     bypassBlockingThreshold: true,
                     endpoint: 'validin',
-                    report: mailtoReport('lets.talk@validin.com', 'Validin Public Phish Feeds'),
+                    report: mailtoReport('lets.talk@validin.com', 'Validin Community Edition'),
                 }),
             ]);
 
