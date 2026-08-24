@@ -501,6 +501,15 @@ globalThis.OspreyProviderCard = (() => {
         return container;
     }
 
+    function applyCommercialDisabledState(item, toggleSwitch) {
+        item.classList.add('commercial-disabled');
+        item.title = LangUtil.COMMERCIAL_DISABLED_TOOLTIP;
+        item.dataset.expandGate = 'enabled';
+
+        setToggleVisualState(toggleSwitch, false);
+        setItemExpandable(item, false);
+    }
+
     function createCardShell(className, id, definition, iconUrl, isEnabled, indicators = []) {
         const item = formHelpers.createElement('div', {
             className: `provider-item ${className}`,
@@ -524,11 +533,17 @@ globalThis.OspreyProviderCard = (() => {
 
         const builtInProviderName = formHelpers.normalizeProviderName(definition.displayName) || definition.id;
 
-        const websiteLink = createExternalLinkText(definition.website, LangUtil.WEBSITE_LINK + ' ↗',
-            'provider-website-link', definition.id, `${builtInProviderName}, ${LangUtil.WEBSITE_LINK}`,
-            LangUtil.OPEN_PROVIDER_WEBSITE);
+        const websiteLink = createExternalLinkText(definition.website,
+            LangUtil.WEBSITE_LINK + ' ↗',
+            'provider-website-link', definition.id,
+            `${builtInProviderName}, ${LangUtil.WEBSITE_LINK}`,
+            LangUtil.OPEN_PROVIDER_WEBSITE
+        );
+
+        const commercialDisabled = Boolean(runtime?.commercialDisabledIds?.has(definition.id));
 
         const isDisabled = Boolean(
+            commercialDisabled ||
             runtime?.effectiveState?.app?.lockProviderSettings ||
             runtime?.effectiveState?.app?.disableAllProviders ||
             runtime?.providerManagedIds?.has(definition.id),
@@ -556,6 +571,10 @@ globalThis.OspreyProviderCard = (() => {
         }
 
         setItemExpandable(item, !masterDisabled);
+
+        if (commercialDisabled) {
+            applyCommercialDisabledState(item, toggleSwitch);
+        }
         return item;
     }
 
@@ -572,8 +591,10 @@ globalThis.OspreyProviderCard = (() => {
         );
 
         const masterDisabled = Boolean(runtime?.effectiveState?.app?.disableAllProviders);
+        const commercialDisabled = Boolean(runtime?.commercialDisabledIds?.has(definition.id));
 
         const fieldsLocked = Boolean(
+            commercialDisabled ||
             runtime?.effectiveState?.app?.lockProviderSettings ||
             runtime?.effectiveState?.app?.disableThirdPartyProviders ||
             masterDisabled ||
@@ -581,6 +602,7 @@ globalThis.OspreyProviderCard = (() => {
         );
 
         const toggleLocked = Boolean(
+            commercialDisabled ||
             runtime?.effectiveState?.app?.lockProviderSettings ||
             runtime?.effectiveState?.app?.disableThirdPartyProviders ||
             masterDisabled ||
@@ -679,6 +701,11 @@ globalThis.OspreyProviderCard = (() => {
         }
 
         setItemExpandable(item, !masterDisabled);
+
+        if (commercialDisabled) {
+            applyCommercialDisabledState(item, toggleSwitch);
+        }
+
         syncApplyState();
         return item;
     }

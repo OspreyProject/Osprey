@@ -59,6 +59,9 @@
   "openProviderWebsite": {
     "message": "Click to open this provider's website"
   },
+  "commercialDisabledTooltip": {
+    "message": "This protection provider is disabled for commercial users."
+  },
   "knownSafe": {
     "message": "Known Safe"
   },

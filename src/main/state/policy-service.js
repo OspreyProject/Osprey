@@ -29,6 +29,7 @@ globalThis.OspreyPolicyService = (() => {
     const remoteConfigMaxBytes = 512 * 1024;
     const defaultProxyOrigin = 'https://api.osprey.ac';
     const controlOnlyPolicyKeys = new Set(['ManagedConfigUrl']);
+    const remoteOnlyPolicyKeys = new Set(['CommercialDisabledProviders']);
     const unsafeKeys = new Set(['__proto__', 'constructor', 'prototype']);
 
     let cachedManagedPolicies = null;
@@ -547,6 +548,14 @@ globalThis.OspreyPolicyService = (() => {
                 delete merged[key];
             }
         }
+
+        for (const key of remoteOnlyPolicyKeys) {
+            if (isPlainObject(remotePolicies) && Object.hasOwn(remotePolicies, key)) {
+                merged[key] = remotePolicies[key];
+            } else {
+                delete merged[key];
+            }
+        }
         return Object.freeze(merged);
     };
 
@@ -809,12 +818,28 @@ globalThis.OspreyPolicyService = (() => {
             }
         }
 
+        const commercialDisabledIds = new Set();
+        const commercialDisabledList = normalizeStringList(policies.CommercialDisabledProviders);
+
+        for (const providerId of commercialDisabledList) {
+            const definition = providerCatalog.getDefinition(providerId);
+
+            if (!definition) {
+                continue;
+            }
+
+            ensureProviderState(effective.providers, definition).enabled = false;
+            providerManagedIds.add(definition.id);
+            commercialDisabledIds.add(definition.id);
+        }
+
         return Object.freeze({
             policies,
             effectiveState: effective,
             appManagedKeys,
             providerManagedIds,
             providerManagedApiKeyIds,
+            commercialDisabledIds,
         });
     };
 

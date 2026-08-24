@@ -103,6 +103,7 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
             appManagedKeys,
             providerManagedIds,
             providerManagedApiKeyIds,
+            commercialDisabledIds,
         } = policyResult;
 
         const proxyBaseOverride = resolveProxyBaseOverride(policies.ProxyBaseUrl);
@@ -227,6 +228,7 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
             appManagedKeys,
             providerManagedIds,
             providerManagedApiKeyIds,
+            commercialDisabledIds,
             providers,
             providersById,
             blockingProviderIdsByResult: Object.freeze(blockingProviderIdsByResult),

@@ -74,6 +74,14 @@ a plist rather than through this shared document, since the document is the same
 the warning page's contact link carries the user's email and the blocked URL as query parameters, so a console-hosted
 unblock request page opens with both fields already filled in.
 
+`CommercialDisabledProviders` is an array of provider ids that are force-disabled on the endpoint. It is honored only
+when it arrives through this remote document; the same key in managed storage (Group Policy, Intune, or a plist) is
+ignored, so self-managed non-commercial deployments are never affected. Providers on the list are disabled after every
+other policy is applied, including `ManagedProviderSettings` entries that set
+`enabled: true`, and their cards render greyed out and locked in the settings page. The hosted console injects this key
+into every document it serves when a threat feed's license does not permit commercial use; documents served from other
+sources normally omit it.
+
 A flat object of policy keys is also accepted. When the top-level object has no
 `policies` field, every key other than `version` and `customProviders` is treated as a policy value. The nested form is
 recommended for clarity.

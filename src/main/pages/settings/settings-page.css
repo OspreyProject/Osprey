@@ -513,6 +513,14 @@ html, body {
     opacity: 0.45;
 }
 
+.provider-item.commercial-disabled {
+    opacity: 0.5;
+}
+
+.provider-item.commercial-disabled .provider-header {
+    cursor: not-allowed;
+}
+
 /* --------------------------------------------------
    Form fields
 -------------------------------------------------- */
