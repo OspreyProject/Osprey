@@ -59,6 +59,9 @@
   "openProviderWebsite": {
     "message": "클릭하여 이 공급자의 웹사이트 열기"
   },
+  "commercialDisabledTooltip": {
+    "message": "이 보호 제공업체는 상업용 사용자에게는 비활성화되어 있습니다."
+  },
   "knownSafe": {
     "message": "안전한 것으로 확인됨"
   },
@@ -322,5 +325,50 @@
   },
   "toastAllProvidersEnabled": {
     "message": "모든 보호 공급자를 활성화했습니다."
+  },
+  "welcomeTitle": {
+    "message": "Osprey에 오신 것을 환영합니다"
+  },
+  "welcomeIntro": {
+    "message": "Osprey 보호가 활성화되었습니다. 더 이상 아무것도 할 필요가 없습니다."
+  },
+  "welcomeWhyHeading": {
+    "message": "왜 필요한가요?"
+  },
+  "welcomeWhyBody": {
+    "message": "어떤 웹사이트는 가짜입니다. 은행, 택배 회사 또는 Instagram 같은 온라인 플랫폼인 척하면서 비밀번호, 은행 정보, 개인정보를 훔치려 합니다. 이런 가짜 웹사이트는 매우 진짜처럼 보일 수 있습니다. Osprey는 그중 최대 99%를 열리기 전에 차단하여 안전하게 인터넷을 사용할 수 있게 합니다."
+  },
+  "welcomeHowHeading": {
+    "message": "어떻게 작동하나요?"
+  },
+  "welcomeHowStep1": {
+    "message": "평소처럼 인터넷을 사용하세요."
+  },
+  "welcomeHowStep2": {
+    "message": "위험한 웹사이트를 열려고 하면 Osprey가 이를 차단하고 대신 경고 페이지를 보여줍니다."
+  },
+  "welcomeHowStep3": {
+    "message": "'안전한 곳으로 돌아가기' 버튼을 누르면 위험한 웹사이트가 닫힙니다."
+  },
+  "welcomeSafeHeading": {
+    "message": "안전한 웹사이트에는 영향이 없습니다"
+  },
+  "welcomeSafeBody": {
+    "message": "Osprey는 위험하다고 알려진 웹사이트에만 개입합니다. 다른 모든 것은 평소처럼 작동합니다."
+  },
+  "welcomeIconHeading": {
+    "message": "Osprey는 어디에 있나요?"
+  },
+  "welcomeIconBody": {
+    "message": "Osprey는 백그라운드에서 조용히 작동합니다. 아이콘은 브라우저 위쪽 모서리에 있습니다(보이지 않으면 퍼즐 조각 아이콘을 클릭하세요). 클릭하면 보호되고 있음을 확인할 수 있습니다."
+  },
+  "welcomeWarningPreviewAlt": {
+    "message": "경고 페이지 예시"
+  },
+  "welcomeDoneButton": {
+    "message": "알겠습니다"
+  },
+  "welcomeLearnMore": {
+    "message": "웹사이트에서 자세히 알아보기"
   }
 }

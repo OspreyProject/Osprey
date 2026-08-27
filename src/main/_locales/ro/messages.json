@@ -59,6 +59,9 @@
   "openProviderWebsite": {
     "message": "Fă clic pentru a deschide site-ul web al acestui furnizor"
   },
+  "commercialDisabledTooltip": {
+    "message": "Acest furnizor de protecție este dezactivat pentru utilizatorii comerciali."
+  },
   "knownSafe": {
     "message": "Cunoscut ca sigur"
   },
@@ -322,5 +325,50 @@
   },
   "toastAllProvidersEnabled": {
     "message": "Toți furnizorii de protecție activați."
+  },
+  "welcomeTitle": {
+    "message": "Bun venit la Osprey"
+  },
+  "welcomeIntro": {
+    "message": "Protecția Osprey este activată. Nu trebuie să faceți nimic altceva."
+  },
+  "welcomeWhyHeading": {
+    "message": "De ce am nevoie de asta?"
+  },
+  "welcomeWhyBody": {
+    "message": "Unele site-uri sunt false. Se prefac că sunt banca dvs., o firmă de curierat sau o platformă online precum Instagram pentru a vă fura parolele, datele bancare sau informațiile personale. Aceste site-uri false pot părea extrem de reale. Osprey blochează până la 99% dintre ele înainte să se deschidă, pentru ca navigarea dvs. să fie sigură."
+  },
+  "welcomeHowHeading": {
+    "message": "Cum funcționează?"
+  },
+  "welcomeHowStep1": {
+    "message": "Folosiți internetul exact ca întotdeauna."
+  },
+  "welcomeHowStep2": {
+    "message": "Dacă încercați să deschideți un site periculos, Osprey îl blochează și afișează în schimb o pagină de avertizare."
+  },
+  "welcomeHowStep3": {
+    "message": "Apăsați butonul 'Înapoi în siguranță' pentru a închide site-ul periculos."
+  },
+  "welcomeSafeHeading": {
+    "message": "Site-urile sigure nu sunt afectate"
+  },
+  "welcomeSafeBody": {
+    "message": "Osprey intervine doar atunci când un site este cunoscut ca periculos. Restul funcționează normal."
+  },
+  "welcomeIconHeading": {
+    "message": "Unde este Osprey?"
+  },
+  "welcomeIconBody": {
+    "message": "Osprey lucrează discret în fundal. Pictograma este în colțul de sus al browserului (faceți clic pe pictograma piesei de puzzle dacă nu o vedeți). Puteți face clic pe ea pentru a vedea că sunteți protejat."
+  },
+  "welcomeWarningPreviewAlt": {
+    "message": "Exemplu de pagină de avertizare"
+  },
+  "welcomeDoneButton": {
+    "message": "Am înțeles"
+  },
+  "welcomeLearnMore": {
+    "message": "Aflați mai multe pe site-ul nostru"
   }
 }

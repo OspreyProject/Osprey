@@ -59,6 +59,9 @@
   "openProviderWebsite": {
     "message": "Klicka för att öppna den här leverantörens webbplats"
   },
+  "commercialDisabledTooltip": {
+    "message": "Den här skyddsleverantören är inaktiverad för kommersiella användare."
+  },
   "knownSafe": {
     "message": "Känd som säker"
   },
@@ -322,5 +325,50 @@
   },
   "toastAllProvidersEnabled": {
     "message": "Alla skyddsleverantörer aktiverade."
+  },
+  "welcomeTitle": {
+    "message": "Välkommen till Osprey"
+  },
+  "welcomeIntro": {
+    "message": "Ospreys skydd är aktiverat. Du behöver inte göra något mer."
+  },
+  "welcomeWhyHeading": {
+    "message": "Varför behöver jag detta?"
+  },
+  "welcomeWhyBody": {
+    "message": "Vissa webbplatser är falska. De låtsas vara din bank, ett leveransföretag eller en onlineplattform som Instagram för att stjäla dina lösenord, dina bankuppgifter eller dina personuppgifter. Dessa falska webbplatser kan se mycket äkta ut. Osprey blockerar upp till 99 % av dem innan de öppnas så att du kan surfa säkert."
+  },
+  "welcomeHowHeading": {
+    "message": "Hur fungerar det?"
+  },
+  "welcomeHowStep1": {
+    "message": "Använd internet precis som du alltid gör."
+  },
+  "welcomeHowStep2": {
+    "message": "Om du försöker öppna en farlig webbplats blockerar Osprey den och visar en varningssida i stället."
+  },
+  "welcomeHowStep3": {
+    "message": "Tryck på knappen 'Tillbaka till säkerhet' för att stänga den farliga webbplatsen."
+  },
+  "welcomeSafeHeading": {
+    "message": "Säkra webbplatser påverkas inte"
+  },
+  "welcomeSafeBody": {
+    "message": "Osprey ingriper bara när en webbplats är känd för att vara farlig. Allt annat fungerar som vanligt."
+  },
+  "welcomeIconHeading": {
+    "message": "Var finns Osprey?"
+  },
+  "welcomeIconBody": {
+    "message": "Osprey arbetar tyst i bakgrunden. Ikonen finns i webbläsarens övre hörn (klicka på pusselbitsikonen om du inte ser den). Du kan klicka på den för att se att du är skyddad."
+  },
+  "welcomeWarningPreviewAlt": {
+    "message": "Exempel på varningssidan"
+  },
+  "welcomeDoneButton": {
+    "message": "Jag förstår"
+  },
+  "welcomeLearnMore": {
+    "message": "Läs mer på vår webbplats"
   }
 }

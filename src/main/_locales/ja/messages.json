@@ -59,6 +59,9 @@
   "openProviderWebsite": {
     "message": "クリックしてこのプロバイダーのウェブサイトを開く"
   },
+  "commercialDisabledTooltip": {
+    "message": "この保護プロバイダーは商用ユーザーには無効です。"
+  },
   "knownSafe": {
     "message": "安全と確認済み"
   },
@@ -322,5 +325,50 @@
   },
   "toastAllProvidersEnabled": {
     "message": "すべての保護プロバイダーを有効にしました。"
+  },
+  "welcomeTitle": {
+    "message": "Osprey へようこそ"
+  },
+  "welcomeIntro": {
+    "message": "Osprey の保護が有効になりました。他に何もする必要はありません。"
+  },
+  "welcomeWhyHeading": {
+    "message": "なぜ必要なの？"
+  },
+  "welcomeWhyBody": {
+    "message": "偽物のウェブサイトがあります。銀行や配送会社、Instagram のようなオンラインサービスになりすまして、パスワードや銀行情報、個人情報を盗もうとします。こうした偽サイトは本物そっくりに見えることがあります。Osprey はそのうち最大 99% を開く前にブロックし、安全に閲覧できるようにします。"
+  },
+  "welcomeHowHeading": {
+    "message": "どうやって動くの？"
+  },
+  "welcomeHowStep1": {
+    "message": "いつもと同じようにインターネットを使ってください。"
+  },
+  "welcomeHowStep2": {
+    "message": "危険なサイトを開こうとすると、Osprey がそれをブロックして、代わりに警告ページを表示します。"
+  },
+  "welcomeHowStep3": {
+    "message": "「安全な場所に戻る」ボタンを押すと、危険なサイトが閉じます。"
+  },
+  "welcomeSafeHeading": {
+    "message": "安全なサイトには影響しません"
+  },
+  "welcomeSafeBody": {
+    "message": "Osprey は危険と分かっているサイトにだけ介入します。それ以外はすべて普段どおりに動きます。"
+  },
+  "welcomeIconHeading": {
+    "message": "Osprey はどこにあるの？"
+  },
+  "welcomeIconBody": {
+    "message": "Osprey はバックグラウンドで静かに動いています。アイコンはブラウザーの上の隅にあります（見当たらない場合はパズルピースのアイコンをクリックしてください）。クリックすると保護されていることを確認できます。"
+  },
+  "welcomeWarningPreviewAlt": {
+    "message": "警告ページの例"
+  },
+  "welcomeDoneButton": {
+    "message": "わかりました"
+  },
+  "welcomeLearnMore": {
+    "message": "詳しくは公式サイトへ"
   }
 }

@@ -1,0 +1,159 @@
+/*
+ * Copyright (C) 2024-2026 Osprey Project LLC and contributors (https://osprey.ac)
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+html, body {
+    margin: 0;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-weight: 400;
+    box-sizing: border-box;
+}
+
+.gray {
+    background-color: var(--bg);
+    color: var(--text);
+}
+
+.welcome {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 48px 24px 64px;
+    font-size: 20px;
+    line-height: 1.6;
+}
+
+.logo {
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    display: block;
+    margin: 0 auto 32px;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.logo-light {
+    display: none;
+}
+
+html[data-theme="light"] .logo-dark {
+    display: none;
+}
+
+html[data-theme="light"] .logo-light {
+    display: block;
+}
+
+h1 {
+    font-size: 36px;
+    font-weight: 600;
+    text-align: center;
+    margin: 0 0 8px;
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 32px 0 8px;
+}
+
+p {
+    margin: 0 0 12px;
+}
+
+.intro {
+    text-align: center;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+}
+
+.steps {
+    margin: 0 0 20px;
+    padding-left: 28px;
+}
+
+.steps li {
+    margin-bottom: 8px;
+}
+
+.preview {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    text-align: center;
+}
+
+.preview-icon {
+    width: 56px;
+    height: 56px;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.preview-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin: 8px 0 4px;
+}
+
+.preview-text {
+    font-size: 16px;
+    color: var(--text-muted);
+    margin: 0 0 16px;
+}
+
+.preview-button,
+.done-button {
+    display: inline-block;
+    background-color: var(--accent);
+    color: var(--on-accent);
+    border: none;
+    border-radius: 6px;
+    padding: 12px 32px;
+    font-size: 20px;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-weight: 600;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.done-button {
+    display: block;
+    margin: 40px auto 16px;
+    cursor: pointer;
+}
+
+.done-button:hover {
+    background-color: var(--accent-hover);
+}
+
+.done-button:active {
+    background-color: var(--accent-active);
+}
+
+.learn-more {
+    text-align: center;
+    font-size: 16px;
+}
+
+.learn-more a {
+    color: var(--accent-ink);
+}
+
+.learn-more a:hover {
+    color: var(--accent-ink-hover);
+}

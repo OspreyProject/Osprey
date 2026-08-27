@@ -59,6 +59,9 @@
   "openProviderWebsite": {
     "message": "Clique para abrir o site deste provedor"
   },
+  "commercialDisabledTooltip": {
+    "message": "Este provedor de proteção está desativado para usuários comerciais."
+  },
   "knownSafe": {
     "message": "Conhecido como seguro"
   },
@@ -322,5 +325,50 @@
   },
   "toastAllProvidersEnabled": {
     "message": "Todos os provedores de proteção ativados."
+  },
+  "welcomeTitle": {
+    "message": "Bem-vindo ao Osprey"
+  },
+  "welcomeIntro": {
+    "message": "A proteção do Osprey está ativada. Você não precisa fazer mais nada."
+  },
+  "welcomeWhyHeading": {
+    "message": "Por que eu preciso disso?"
+  },
+  "welcomeWhyBody": {
+    "message": "Alguns sites são falsos. Eles fingem ser o seu banco, uma empresa de entregas ou uma plataforma online como o Instagram para roubar suas senhas, seus dados bancários ou suas informações pessoais. Esses sites falsos podem parecer extremamente reais. O Osprey bloqueia até 99% deles antes que abram, para manter sua navegação segura."
+  },
+  "welcomeHowHeading": {
+    "message": "Como funciona?"
+  },
+  "welcomeHowStep1": {
+    "message": "Use a internet exatamente como sempre."
+  },
+  "welcomeHowStep2": {
+    "message": "Se você tentar abrir um site perigoso, o Osprey o bloqueia e mostra uma página de aviso no lugar."
+  },
+  "welcomeHowStep3": {
+    "message": "Aperte o botão 'Voltar à segurança' para fechar o site perigoso."
+  },
+  "welcomeSafeHeading": {
+    "message": "Sites seguros não são afetados"
+  },
+  "welcomeSafeBody": {
+    "message": "O Osprey só interfere quando um site é conhecido por ser perigoso. Todo o resto funciona normalmente."
+  },
+  "welcomeIconHeading": {
+    "message": "Onde está o Osprey?"
+  },
+  "welcomeIconBody": {
+    "message": "O Osprey trabalha em silêncio em segundo plano. O ícone fica no canto superior do navegador (clique no ícone de peça de quebra-cabeça se não o vir). Você pode clicar nele para ver que está protegido."
+  },
+  "welcomeWarningPreviewAlt": {
+    "message": "Exemplo da página de aviso"
+  },
+  "welcomeDoneButton": {
+    "message": "Entendi"
+  },
+  "welcomeLearnMore": {
+    "message": "Saiba mais no nosso site"
   }
 }

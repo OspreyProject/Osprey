@@ -59,6 +59,9 @@
   "openProviderWebsite": {
     "message": "Kattintson a szolgáltató webhelyének megnyitásához"
   },
+  "commercialDisabledTooltip": {
+    "message": "Ez a védelmi szolgáltató kereskedelmi felhasználók számára le van tiltva."
+  },
   "knownSafe": {
     "message": "Ismerten biztonságos"
   },
@@ -322,5 +325,50 @@
   },
   "toastAllProvidersEnabled": {
     "message": "Az összes védelmi szolgáltató engedélyezve."
+  },
+  "welcomeTitle": {
+    "message": "Üdvözli az Osprey"
+  },
+  "welcomeIntro": {
+    "message": "Az Osprey védelme aktív. Nincs más teendője."
+  },
+  "welcomeWhyHeading": {
+    "message": "Miért van erre szükségem?"
+  },
+  "welcomeWhyBody": {
+    "message": "Egyes weboldalak hamisak. A bankjának, egy futárcégnek vagy egy online platformnak, például az Instagramnak adják ki magukat, hogy ellopják a jelszavait, a banki adatait vagy a személyes adatait. Ezek a hamis oldalak nagyon valódinak tűnhetnek. Az Osprey akár 99%-ukat blokkolja, mielőtt megnyílnának, hogy a böngészése biztonságos maradjon."
+  },
+  "welcomeHowHeading": {
+    "message": "Hogyan működik?"
+  },
+  "welcomeHowStep1": {
+    "message": "Használja az internetet pontosan úgy, ahogy eddig."
+  },
+  "welcomeHowStep2": {
+    "message": "Ha veszélyes weboldalt próbál megnyitni, az Osprey blokkolja, és helyette egy figyelmeztető oldalt mutat."
+  },
+  "welcomeHowStep3": {
+    "message": "Nyomja meg a 'Vissza a biztonságba' gombot a veszélyes weboldal bezárásához."
+  },
+  "welcomeSafeHeading": {
+    "message": "A biztonságos oldalakat nem érinti"
+  },
+  "welcomeSafeBody": {
+    "message": "Az Osprey csak akkor lép közbe, ha egy oldal ismerten veszélyes. Minden más a megszokott módon működik."
+  },
+  "welcomeIconHeading": {
+    "message": "Hol van az Osprey?"
+  },
+  "welcomeIconBody": {
+    "message": "Az Osprey csendben, a háttérben működik. Az ikon a böngésző felső sarkában található (kattintson a kirakódarab ikonra, ha nem látja). Rákattintva láthatja, hogy védve van."
+  },
+  "welcomeWarningPreviewAlt": {
+    "message": "Példa a figyelmeztető oldalra"
+  },
+  "welcomeDoneButton": {
+    "message": "Értem"
+  },
+  "welcomeLearnMore": {
+    "message": "További információ a weboldalunkon"
   }
 }

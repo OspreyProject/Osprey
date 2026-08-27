@@ -59,6 +59,9 @@
   "openProviderWebsite": {
     "message": "Clique para abrir o site deste fornecedor"
   },
+  "commercialDisabledTooltip": {
+    "message": "Este fornecedor de proteção está desativado para utilizadores comerciais."
+  },
   "knownSafe": {
     "message": "Conhecido como seguro"
   },
@@ -322,5 +325,50 @@
   },
   "toastAllProvidersEnabled": {
     "message": "Todos os fornecedores de proteção ativados."
+  },
+  "welcomeTitle": {
+    "message": "Bem-vindo ao Osprey"
+  },
+  "welcomeIntro": {
+    "message": "A proteção do Osprey está ativada. Não precisa de fazer mais nada."
+  },
+  "welcomeWhyHeading": {
+    "message": "Porque é que preciso disto?"
+  },
+  "welcomeWhyBody": {
+    "message": "Alguns sites são falsos. Fingem ser o seu banco, uma empresa de entregas ou uma plataforma online como o Instagram para roubar as suas palavras-passe, os seus dados bancários ou os seus dados pessoais. Estes sites falsos podem parecer extremamente reais. O Osprey bloqueia até 99% deles antes de abrirem, para manter a sua navegação segura."
+  },
+  "welcomeHowHeading": {
+    "message": "Como funciona?"
+  },
+  "welcomeHowStep1": {
+    "message": "Use a Internet exatamente como sempre."
+  },
+  "welcomeHowStep2": {
+    "message": "Se tentar abrir um site perigoso, o Osprey bloqueia-o e mostra em vez disso uma página de aviso."
+  },
+  "welcomeHowStep3": {
+    "message": "Prima o botão 'Voltar à segurança' para fechar o site perigoso."
+  },
+  "welcomeSafeHeading": {
+    "message": "Os sites seguros não são afetados"
+  },
+  "welcomeSafeBody": {
+    "message": "O Osprey só intervém quando um site é conhecido por ser perigoso. Tudo o resto funciona normalmente."
+  },
+  "welcomeIconHeading": {
+    "message": "Onde está o Osprey?"
+  },
+  "welcomeIconBody": {
+    "message": "O Osprey trabalha silenciosamente em segundo plano. O ícone está no canto superior do navegador (clique no ícone da peça de puzzle se não o vir). Pode clicar nele para ver que está protegido."
+  },
+  "welcomeWarningPreviewAlt": {
+    "message": "Exemplo da página de aviso"
+  },
+  "welcomeDoneButton": {
+    "message": "Entendido"
+  },
+  "welcomeLearnMore": {
+    "message": "Saiba mais no nosso site"
   }
 }

@@ -59,6 +59,9 @@
   "openProviderWebsite": {
     "message": "Avaa tämän tarjoajan sivusto napsauttamalla"
   },
+  "commercialDisabledTooltip": {
+    "message": "Tämä suojauspalvelu on poistettu käytöstä kaupallisilta käyttäjiltä."
+  },
   "knownSafe": {
     "message": "Tunnetusti turvallinen"
   },
@@ -322,5 +325,50 @@
   },
   "toastAllProvidersEnabled": {
     "message": "Kaikki suojauksen tarjoajat otettu käyttöön."
+  },
+  "welcomeTitle": {
+    "message": "Tervetuloa Ospreyhin"
+  },
+  "welcomeIntro": {
+    "message": "Ospreyn suojaus on käytössä. Sinun ei tarvitse tehdä mitään muuta."
+  },
+  "welcomeWhyHeading": {
+    "message": "Miksi tarvitsen tätä?"
+  },
+  "welcomeWhyBody": {
+    "message": "Jotkin verkkosivut ovat väärennettyjä. Ne esittävät pankkiasi, kuljetusyhtiötä tai verkkopalvelua kuten Instagramia varastaakseen salasanasi, pankkitietosi tai henkilötietosi. Nämä väärennetyt sivut voivat näyttää erittäin aidoilta. Osprey estää jopa 99 % niistä ennen kuin ne avautuvat, jotta selaamisesi pysyy turvallisena."
+  },
+  "welcomeHowHeading": {
+    "message": "Miten se toimii?"
+  },
+  "welcomeHowStep1": {
+    "message": "Käytä internetiä täsmälleen kuten aina."
+  },
+  "welcomeHowStep2": {
+    "message": "Jos yrität avata vaarallisen sivun, Osprey estää sen ja näyttää sen sijaan varoitussivun."
+  },
+  "welcomeHowStep3": {
+    "message": "Paina 'Takaisin turvaan' -painiketta sulkeaksesi vaarallisen sivun."
+  },
+  "welcomeSafeHeading": {
+    "message": "Turvalliset sivut eivät muutu"
+  },
+  "welcomeSafeBody": {
+    "message": "Osprey puuttuu asiaan vain, kun sivu tiedetään vaaralliseksi. Kaikki muu toimii normaalisti."
+  },
+  "welcomeIconHeading": {
+    "message": "Missä Osprey on?"
+  },
+  "welcomeIconBody": {
+    "message": "Osprey toimii hiljaa taustalla. Kuvake on selaimen yläkulmassa (napsauta palapelin palan kuvaketta, jos et näe sitä). Napsauttamalla sitä näet, että olet suojattu."
+  },
+  "welcomeWarningPreviewAlt": {
+    "message": "Esimerkki varoitussivusta"
+  },
+  "welcomeDoneButton": {
+    "message": "Selvä"
+  },
+  "welcomeLearnMore": {
+    "message": "Lue lisää verkkosivustoltamme"
   }
 }

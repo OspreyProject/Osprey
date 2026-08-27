@@ -59,6 +59,9 @@
   "openProviderWebsite": {
     "message": "Klikk for å åpne denne leverandørens nettsted"
   },
+  "commercialDisabledTooltip": {
+    "message": "Denne beskyttelsesleverandøren er deaktivert for kommersielle brukere."
+  },
   "knownSafe": {
     "message": "Kjent som trygt"
   },
@@ -322,5 +325,50 @@
   },
   "toastAllProvidersEnabled": {
     "message": "Alle beskyttelsesleverandører aktivert."
+  },
+  "welcomeTitle": {
+    "message": "Velkommen til Osprey"
+  },
+  "welcomeIntro": {
+    "message": "Beskyttelsen fra Osprey er aktivert. Du trenger ikke å gjøre noe mer."
+  },
+  "welcomeWhyHeading": {
+    "message": "Hvorfor trenger jeg dette?"
+  },
+  "welcomeWhyBody": {
+    "message": "Noen nettsteder er falske. De later som om de er banken din, et leveringsfirma eller en nettplattform som Instagram for å stjele passordene, bankopplysningene eller personopplysningene dine. Disse falske nettstedene kan se svært ekte ut. Osprey blokkerer opptil 99 % av dem før de åpnes, slik at du surfer trygt."
+  },
+  "welcomeHowHeading": {
+    "message": "Hvordan fungerer det?"
+  },
+  "welcomeHowStep1": {
+    "message": "Bruk internett akkurat som du alltid gjør."
+  },
+  "welcomeHowStep2": {
+    "message": "Hvis du prøver å åpne et farlig nettsted, blokkerer Osprey det og viser en advarselsside i stedet."
+  },
+  "welcomeHowStep3": {
+    "message": "Trykk på knappen 'Tilbake til trygghet' for å lukke det farlige nettstedet."
+  },
+  "welcomeSafeHeading": {
+    "message": "Trygge nettsteder påvirkes ikke"
+  },
+  "welcomeSafeBody": {
+    "message": "Osprey griper bare inn når et nettsted er kjent som farlig. Alt annet fungerer som normalt."
+  },
+  "welcomeIconHeading": {
+    "message": "Hvor er Osprey?"
+  },
+  "welcomeIconBody": {
+    "message": "Osprey jobber stille i bakgrunnen. Ikonet ligger i det øverste hjørnet av nettleseren (klikk på puslespillbrikke-ikonet hvis du ikke ser det). Du kan klikke på det for å se at du er beskyttet."
+  },
+  "welcomeWarningPreviewAlt": {
+    "message": "Eksempel på advarselssiden"
+  },
+  "welcomeDoneButton": {
+    "message": "Forstått"
+  },
+  "welcomeLearnMore": {
+    "message": "Les mer på nettstedet vårt"
   }
 }

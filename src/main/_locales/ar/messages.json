@@ -59,6 +59,9 @@
   "openProviderWebsite": {
     "message": "انقر لفتح موقع هذا المزوّد"
   },
+  "commercialDisabledTooltip": {
+    "message": "مزوّد الحماية هذا معطّل للمستخدمين التجاريين."
+  },
   "knownSafe": {
     "message": "معروف كآمن"
   },
@@ -322,5 +325,50 @@
   },
   "toastAllProvidersEnabled": {
     "message": "تم تفعيل جميع مزوّدي الحماية."
+  },
+  "welcomeTitle": {
+    "message": "مرحبًا بك في Osprey"
+  },
+  "welcomeIntro": {
+    "message": "حماية Osprey مفعّلة الآن. لا تحتاج إلى فعل أي شيء آخر."
+  },
+  "welcomeWhyHeading": {
+    "message": "لماذا أحتاج إلى هذا؟"
+  },
+  "welcomeWhyBody": {
+    "message": "بعض المواقع مزيفة. تتظاهر بأنها بنكك أو شركة توصيل أو منصة إلكترونية مثل Instagram حتى تسرق كلمات مرورك أو بياناتك المصرفية أو معلوماتك الشخصية. قد تبدو هذه المواقع المزيفة حقيقية للغاية. يحظر Osprey ما يصل إلى 99% منها قبل أن تفتح للحفاظ على أمان تصفحك."
+  },
+  "welcomeHowHeading": {
+    "message": "كيف يعمل؟"
+  },
+  "welcomeHowStep1": {
+    "message": "استخدم الإنترنت تمامًا كما تفعل دائمًا."
+  },
+  "welcomeHowStep2": {
+    "message": "إذا حاولت فتح موقع خطير، يحظره Osprey ويعرض صفحة تحذير بدلًا منه."
+  },
+  "welcomeHowStep3": {
+    "message": "اضغط على زر 'العودة إلى الأمان' لإغلاق الموقع الخطير."
+  },
+  "welcomeSafeHeading": {
+    "message": "المواقع الآمنة لا تتأثر"
+  },
+  "welcomeSafeBody": {
+    "message": "Osprey يتدخل فقط عندما يكون الموقع معروفًا بأنه خطير. كل شيء آخر يعمل كالمعتاد."
+  },
+  "welcomeIconHeading": {
+    "message": "أين Osprey؟"
+  },
+  "welcomeIconBody": {
+    "message": "Osprey يعمل بهدوء في الخلفية. الأيقونة في الزاوية العلوية من متصفحك (انقر على أيقونة قطعة الأحجية إذا لم ترها). يمكنك النقر عليها لترى أنك محمي."
+  },
+  "welcomeWarningPreviewAlt": {
+    "message": "مثال على صفحة التحذير"
+  },
+  "welcomeDoneButton": {
+    "message": "فهمت"
+  },
+  "welcomeLearnMore": {
+    "message": "اعرف المزيد على موقعنا"
   }
 }

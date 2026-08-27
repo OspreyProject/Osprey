@@ -59,6 +59,9 @@
   "openProviderWebsite": {
     "message": "Klik om de website van deze provider te openen"
   },
+  "commercialDisabledTooltip": {
+    "message": "Deze beschermingsprovider is uitgeschakeld voor commerciële gebruikers."
+  },
   "knownSafe": {
     "message": "Bekend als veilig"
   },
@@ -322,5 +325,50 @@
   },
   "toastAllProvidersEnabled": {
     "message": "Alle beveiligingsproviders ingeschakeld."
+  },
+  "welcomeTitle": {
+    "message": "Welkom bij Osprey"
+  },
+  "welcomeIntro": {
+    "message": "De bescherming van Osprey is ingeschakeld. U hoeft verder niets te doen."
+  },
+  "welcomeWhyHeading": {
+    "message": "Waarom heb ik dit nodig?"
+  },
+  "welcomeWhyBody": {
+    "message": "Sommige websites zijn nep. Ze doen zich voor als uw bank, een bezorgdienst of een online platform zoals Instagram om uw wachtwoorden, uw bankgegevens of uw persoonlijke gegevens te stelen. Deze nepwebsites kunnen er heel echt uitzien. Osprey blokkeert tot 99% ervan voordat ze openen, zodat u veilig blijft browsen."
+  },
+  "welcomeHowHeading": {
+    "message": "Hoe werkt het?"
+  },
+  "welcomeHowStep1": {
+    "message": "Gebruik internet precies zoals u altijd doet."
+  },
+  "welcomeHowStep2": {
+    "message": "Als u een gevaarlijke website probeert te openen, blokkeert Osprey die en toont in plaats daarvan een waarschuwingspagina."
+  },
+  "welcomeHowStep3": {
+    "message": "Druk op de knop 'Terug naar veiligheid' om de gevaarlijke website te sluiten."
+  },
+  "welcomeSafeHeading": {
+    "message": "Veilige websites worden niet beïnvloed"
+  },
+  "welcomeSafeBody": {
+    "message": "Osprey grijpt alleen in als een website bekend staat als gevaarlijk. Al het andere werkt zoals normaal."
+  },
+  "welcomeIconHeading": {
+    "message": "Waar is Osprey?"
+  },
+  "welcomeIconBody": {
+    "message": "Osprey werkt stil op de achtergrond. Het pictogram staat in de bovenhoek van uw browser (klik op het puzzelstukje als u het niet ziet). U kunt erop klikken om te zien dat u beschermd bent."
+  },
+  "welcomeWarningPreviewAlt": {
+    "message": "Voorbeeld van de waarschuwingspagina"
+  },
+  "welcomeDoneButton": {
+    "message": "Begrepen"
+  },
+  "welcomeLearnMore": {
+    "message": "Meer informatie op onze website"
   }
 }

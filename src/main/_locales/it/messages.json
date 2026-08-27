@@ -59,6 +59,9 @@
   "openProviderWebsite": {
     "message": "Fai clic per aprire il sito web di questo fornitore"
   },
+  "commercialDisabledTooltip": {
+    "message": "Questo fornitore di protezione è disattivato per gli utenti commerciali."
+  },
   "knownSafe": {
     "message": "Noto come sicuro"
   },
@@ -322,5 +325,50 @@
   },
   "toastAllProvidersEnabled": {
     "message": "Tutti i fornitori di protezione attivati."
+  },
+  "welcomeTitle": {
+    "message": "Benvenuto in Osprey"
+  },
+  "welcomeIntro": {
+    "message": "La protezione di Osprey è attiva. Non devi fare altro."
+  },
+  "welcomeWhyHeading": {
+    "message": "Perché mi serve?"
+  },
+  "welcomeWhyBody": {
+    "message": "Alcuni siti web sono falsi. Fingono di essere la tua banca, un corriere o una piattaforma online come Instagram per rubare le tue password, i tuoi dati bancari o le tue informazioni personali. Questi siti falsi possono sembrare estremamente veri. Osprey ne blocca fino al 99% prima che si aprano per mantenere sicura la tua navigazione."
+  },
+  "welcomeHowHeading": {
+    "message": "Come funziona?"
+  },
+  "welcomeHowStep1": {
+    "message": "Usa internet esattamente come hai sempre fatto."
+  },
+  "welcomeHowStep2": {
+    "message": "Se provi ad aprire un sito pericoloso, Osprey lo blocca e mostra al suo posto una pagina di avviso."
+  },
+  "welcomeHowStep3": {
+    "message": "Premi il pulsante 'Torna al sicuro' per chiudere il sito pericoloso."
+  },
+  "welcomeSafeHeading": {
+    "message": "I siti sicuri non vengono toccati"
+  },
+  "welcomeSafeBody": {
+    "message": "Osprey interviene solo quando un sito è noto per essere pericoloso. Tutto il resto funziona normalmente."
+  },
+  "welcomeIconHeading": {
+    "message": "Dov'è Osprey?"
+  },
+  "welcomeIconBody": {
+    "message": "Osprey lavora in silenzio in sottofondo. L'icona si trova nell'angolo in alto del browser (clicca sull'icona del pezzo di puzzle se non la vedi). Puoi cliccarla per vedere che sei protetto."
+  },
+  "welcomeWarningPreviewAlt": {
+    "message": "Esempio della pagina di avviso"
+  },
+  "welcomeDoneButton": {
+    "message": "Ho capito"
+  },
+  "welcomeLearnMore": {
+    "message": "Scopri di più sul nostro sito web"
   }
 }

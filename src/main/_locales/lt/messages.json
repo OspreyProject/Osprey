@@ -59,6 +59,9 @@
   "openProviderWebsite": {
     "message": "Spustelėkite, kad atidarytumėte šio tiekėjo svetainę"
   },
+  "commercialDisabledTooltip": {
+    "message": "Šis apsaugos teikėjas komerciniams naudotojams išjungtas."
+  },
   "knownSafe": {
     "message": "Žinoma kaip saugi"
   },
@@ -322,5 +325,50 @@
   },
   "toastAllProvidersEnabled": {
     "message": "Visi apsaugos tiekėjai įjungti."
+  },
+  "welcomeTitle": {
+    "message": "Sveiki atvykę į Osprey"
+  },
+  "welcomeIntro": {
+    "message": "Osprey apsauga įjungta. Daugiau nieko daryti nereikia."
+  },
+  "welcomeWhyHeading": {
+    "message": "Kam man to reikia?"
+  },
+  "welcomeWhyBody": {
+    "message": "Kai kurios svetainės yra netikros. Jos apsimeta jūsų banku, pristatymo įmone ar internetine platforma, pavyzdžiui, Instagram, kad pavogtų jūsų slaptažodžius, banko duomenis ar asmeninę informaciją. Šios netikros svetainės gali atrodyti labai tikros. Osprey blokuoja iki 99 % jų prieš atsidarant, kad naršytumėte saugiai."
+  },
+  "welcomeHowHeading": {
+    "message": "Kaip tai veikia?"
+  },
+  "welcomeHowStep1": {
+    "message": "Naudokitės internetu lygiai taip, kaip visada."
+  },
+  "welcomeHowStep2": {
+    "message": "Jei bandysite atidaryti pavojingą svetainę, Osprey ją užblokuos ir vietoj jos parodys įspėjimo puslapį."
+  },
+  "welcomeHowStep3": {
+    "message": "Paspauskite mygtuką „Grįžti į saugią vietą“, kad uždarytumėte pavojingą svetainę."
+  },
+  "welcomeSafeHeading": {
+    "message": "Saugios svetainės nepaveikiamos"
+  },
+  "welcomeSafeBody": {
+    "message": "Osprey įsikiša tik tada, kai svetainė žinoma kaip pavojinga. Visa kita veikia įprastai."
+  },
+  "welcomeIconHeading": {
+    "message": "Kur yra Osprey?"
+  },
+  "welcomeIconBody": {
+    "message": "Osprey tyliai veikia fone. Piktograma yra viršutiniame naršyklės kampe (jei jos nematote, spustelėkite dėlionės detalės piktogramą). Spustelėję ją pamatysite, kad esate apsaugoti."
+  },
+  "welcomeWarningPreviewAlt": {
+    "message": "Įspėjimo puslapio pavyzdys"
+  },
+  "welcomeDoneButton": {
+    "message": "Supratau"
+  },
+  "welcomeLearnMore": {
+    "message": "Sužinokite daugiau mūsų svetainėje"
   }
 }

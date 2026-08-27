@@ -325,5 +325,50 @@
   },
   "toastAllProvidersEnabled": {
     "message": "All protection providers enabled."
+  },
+  "welcomeTitle": {
+    "message": "Welcome to Osprey"
+  },
+  "welcomeIntro": {
+    "message": "Osprey's protection is activated. You don't need to do anything else."
+  },
+  "welcomeWhyHeading": {
+    "message": "Why do I need this?"
+  },
+  "welcomeWhyBody": {
+    "message": "Some websites are fake. They pretend to be your bank, a delivery company, or an online platform like Instagram so they can steal your passwords, your banking details, or your personal information. These fake websites can look extremely real. Osprey blocks up to 99% of them before they open to keep your browsing safe."
+  },
+  "welcomeHowHeading": {
+    "message": "How does it work?"
+  },
+  "welcomeHowStep1": {
+    "message": "Use the internet exactly like you always do."
+  },
+  "welcomeHowStep2": {
+    "message": "If you try to open a dangerous website, Osprey blocks it and shows a warning page instead."
+  },
+  "welcomeHowStep3": {
+    "message": "Press the 'Back to safety' button to close the dangerous website."
+  },
+  "welcomeSafeHeading": {
+    "message": "Safe websites are not affected"
+  },
+  "welcomeSafeBody": {
+    "message": "Osprey only steps in when a website is known to be dangerous. Everything else works as normal."
+  },
+  "welcomeIconHeading": {
+    "message": "Where is Osprey?"
+  },
+  "welcomeIconBody": {
+    "message": "Osprey works quietly in the background. The icon is in the top corner of your browser (click the puzzle piece icon if you don't see it). You can click it to see that you are protected."
+  },
+  "welcomeWarningPreviewAlt": {
+    "message": "Example of the warning page"
+  },
+  "welcomeDoneButton": {
+    "message": "Got it"
+  },
+  "welcomeLearnMore": {
+    "message": "Learn more on our website"
   }
 }

@@ -59,6 +59,9 @@
   "openProviderWebsite": {
     "message": "Cliquez pour ouvrir le site web de ce fournisseur"
   },
+  "commercialDisabledTooltip": {
+    "message": "Ce fournisseur de protection est désactivé pour les utilisateurs commerciaux."
+  },
   "knownSafe": {
     "message": "Connu comme sûr"
   },
@@ -322,5 +325,50 @@
   },
   "toastAllProvidersEnabled": {
     "message": "Tous les fournisseurs de protection activés."
+  },
+  "welcomeTitle": {
+    "message": "Bienvenue sur Osprey"
+  },
+  "welcomeIntro": {
+    "message": "La protection d'Osprey est activée. Vous n'avez rien d'autre à faire."
+  },
+  "welcomeWhyHeading": {
+    "message": "Pourquoi en ai-je besoin ?"
+  },
+  "welcomeWhyBody": {
+    "message": "Certains sites web sont faux. Ils se font passer pour votre banque, un livreur ou une plateforme en ligne comme Instagram afin de voler vos mots de passe, vos coordonnées bancaires ou vos informations personnelles. Ces faux sites peuvent avoir l'air très vrais. Osprey en bloque jusqu'à 99 % avant qu'ils ne s'ouvrent pour que vous naviguiez en sécurité."
+  },
+  "welcomeHowHeading": {
+    "message": "Comment ça marche ?"
+  },
+  "welcomeHowStep1": {
+    "message": "Utilisez Internet exactement comme d'habitude."
+  },
+  "welcomeHowStep2": {
+    "message": "Si vous essayez d'ouvrir un site dangereux, Osprey le bloque et affiche une page d'avertissement à la place."
+  },
+  "welcomeHowStep3": {
+    "message": "Appuyez sur le bouton « Retour en sécurité » pour fermer le site dangereux."
+  },
+  "welcomeSafeHeading": {
+    "message": "Les sites sûrs ne sont pas concernés"
+  },
+  "welcomeSafeBody": {
+    "message": "Osprey n'intervient que lorsqu'un site est connu pour être dangereux. Tout le reste fonctionne normalement."
+  },
+  "welcomeIconHeading": {
+    "message": "Où est Osprey ?"
+  },
+  "welcomeIconBody": {
+    "message": "Osprey travaille discrètement en arrière-plan. L'icône se trouve dans le coin supérieur de votre navigateur (cliquez sur l'icône en forme de pièce de puzzle si vous ne la voyez pas). Vous pouvez cliquer dessus pour voir que vous êtes protégé."
+  },
+  "welcomeWarningPreviewAlt": {
+    "message": "Exemple de la page d'avertissement"
+  },
+  "welcomeDoneButton": {
+    "message": "Compris"
+  },
+  "welcomeLearnMore": {
+    "message": "En savoir plus sur notre site web"
   }
 }

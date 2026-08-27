@@ -59,6 +59,9 @@
   "openProviderWebsite": {
     "message": "點按以開啟此提供者的網站"
   },
+  "commercialDisabledTooltip": {
+    "message": "此保護提供者已對商業使用者停用。"
+  },
   "knownSafe": {
     "message": "已知安全"
   },
@@ -322,5 +325,50 @@
   },
   "toastAllProvidersEnabled": {
     "message": "已啟用所有保護提供者。"
+  },
+  "welcomeTitle": {
+    "message": "歡迎使用 Osprey"
+  },
+  "welcomeIntro": {
+    "message": "Osprey 的保護已啟用。您不需要再做任何事。"
+  },
+  "welcomeWhyHeading": {
+    "message": "為什麼需要它？"
+  },
+  "welcomeWhyBody": {
+    "message": "有些網站是假的。它們冒充您的銀行、快遞公司或 Instagram 等網路平台，藉此竊取您的密碼、銀行資料或個人資料。這些假網站可能看起來非常真實。Osprey 會在它們開啟前攔截其中高達 99% 的網站，保護您的瀏覽安全。"
+  },
+  "welcomeHowHeading": {
+    "message": "它是如何運作的？"
+  },
+  "welcomeHowStep1": {
+    "message": "像平常一樣使用網際網路。"
+  },
+  "welcomeHowStep2": {
+    "message": "如果您嘗試開啟危險的網站，Osprey 會攔截它，並改為顯示警告頁面。"
+  },
+  "welcomeHowStep3": {
+    "message": "按下「返回安全頁面」按鈕即可關閉危險網站。"
+  },
+  "welcomeSafeHeading": {
+    "message": "安全的網站不受影響"
+  },
+  "welcomeSafeBody": {
+    "message": "Osprey 只會在網站已知危險時介入。其他一切照常運作。"
+  },
+  "welcomeIconHeading": {
+    "message": "Osprey 在哪裡？"
+  },
+  "welcomeIconBody": {
+    "message": "Osprey 在背景安靜運作。圖示位於瀏覽器的上方角落（如果沒看到，請點一下拼圖圖示）。您可以點一下它來確認自己受到保護。"
+  },
+  "welcomeWarningPreviewAlt": {
+    "message": "警告頁面範例"
+  },
+  "welcomeDoneButton": {
+    "message": "知道了"
+  },
+  "welcomeLearnMore": {
+    "message": "在我們的網站上進一步了解"
   }
 }

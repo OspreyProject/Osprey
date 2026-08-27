@@ -49,6 +49,7 @@ The document is a JSON object. The canonical form has two sections:
     "SupportEmail": "help@msp.example",
     "DisableUserAllowlist": true,
     "DisableUninstallSurvey": true,
+    "DisableWelcomePage": true,
     "ManagedProviderSettings": {
       "phishunt-io": {
         "enabled": true,
@@ -68,6 +69,10 @@ The `policies` object accepts the same keys as managed storage, with two excepti
 Set `DisableUninstallSurvey` to `true` to stop the extension from opening its uninstall feedback page when a user
 removes the extension. It defaults to `false`, so a consumer install still shows the survey; a managed MSP deployment
 normally sets it to `true`.
+
+Set `DisableWelcomePage` to `true` to stop the extension from opening its welcome page in a new tab the first time it
+is installed. It defaults to `false`, so a consumer install sees the page; a managed MSP deployment normally sets it to
+`true`. The policy is read when the install event fires, so it must already be present in managed storage at install time.
 
 `UserEmail` holds the signed-in user's email address and is intended to be set per user through Group Policy, Intune, or
 a plist rather than through this shared document, since the document is the same for every user of a client. When set,

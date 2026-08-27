@@ -333,6 +333,37 @@ if (typeof importScripts === 'function') {
     };
 
     const uninstallSurveyUrl = 'https://osprey.ac/uninstall';
+    const welcomePagePath = 'pages/welcome/welcome-page.html';
+
+    const openWelcomePage = async () => {
+        let disabled = false;
+
+        try {
+            disabled = await policyService.isWelcomePageDisabled();
+        } catch (error) {
+            console.error('Failed to resolve the welcome page policy', error);
+        }
+
+        if (disabled) {
+            return;
+        }
+
+        try {
+            await browserAPI.tabsCreate({url: browserAPI.safeRuntimeURL(welcomePagePath), active: true});
+        } catch (error) {
+            console.error('Failed to open the welcome page', error);
+        }
+    };
+
+    const handleInstalled = details => {
+        if (details?.reason !== 'install') {
+            return;
+        }
+
+        openWelcomePage().catch(error => {
+            console.error('Welcome page handling failed', error);
+        });
+    };
 
     const applyUninstallSurvey = async api => {
         if (typeof api?.runtime?.setUninstallURL !== 'function') {
@@ -449,6 +480,7 @@ if (typeof importScripts === 'function') {
         }
 
         api.runtime.onMessage?.addListener(handleMessage);
+        api.runtime.onInstalled?.addListener(handleInstalled);
 
         api.runtime.onConnect?.addListener(port => {
             if (port?.name === ports.BLOCKED_COUNTER) {

@@ -59,6 +59,9 @@
   "openProviderWebsite": {
     "message": "Kliknij, aby otworzyć stronę tego dostawcy"
   },
+  "commercialDisabledTooltip": {
+    "message": "Ten dostawca ochrony jest wyłączony dla użytkowników komercyjnych."
+  },
   "knownSafe": {
     "message": "Znana jako bezpieczna"
   },
@@ -322,5 +325,50 @@
   },
   "toastAllProvidersEnabled": {
     "message": "Wszyscy dostawcy ochrony włączeni."
+  },
+  "welcomeTitle": {
+    "message": "Witamy w Osprey"
+  },
+  "welcomeIntro": {
+    "message": "Ochrona Osprey jest włączona. Nie musisz robić nic więcej."
+  },
+  "welcomeWhyHeading": {
+    "message": "Dlaczego tego potrzebuję?"
+  },
+  "welcomeWhyBody": {
+    "message": "Niektóre strony internetowe są fałszywe. Udają Twój bank, firmę kurierską lub platformę internetową, taką jak Instagram, aby ukraść Twoje hasła, dane bankowe lub dane osobowe. Te fałszywe strony mogą wyglądać bardzo prawdziwie. Osprey blokuje do 99% z nich, zanim się otworzą, aby Twoje przeglądanie było bezpieczne."
+  },
+  "welcomeHowHeading": {
+    "message": "Jak to działa?"
+  },
+  "welcomeHowStep1": {
+    "message": "Korzystaj z internetu dokładnie tak jak zawsze."
+  },
+  "welcomeHowStep2": {
+    "message": "Jeśli spróbujesz otworzyć niebezpieczną stronę, Osprey ją zablokuje i zamiast niej pokaże stronę z ostrzeżeniem."
+  },
+  "welcomeHowStep3": {
+    "message": "Naciśnij przycisk 'Wróć do bezpieczeństwa', aby zamknąć niebezpieczną stronę."
+  },
+  "welcomeSafeHeading": {
+    "message": "Bezpieczne strony nie są objęte"
+  },
+  "welcomeSafeBody": {
+    "message": "Osprey wkracza tylko wtedy, gdy strona jest znana jako niebezpieczna. Wszystko inne działa normalnie."
+  },
+  "welcomeIconHeading": {
+    "message": "Gdzie jest Osprey?"
+  },
+  "welcomeIconBody": {
+    "message": "Osprey działa cicho w tle. Ikona znajduje się w górnym rogu przeglądarki (kliknij ikonę puzzla, jeśli jej nie widzisz). Możesz ją kliknąć, aby zobaczyć, że jesteś chroniony."
+  },
+  "welcomeWarningPreviewAlt": {
+    "message": "Przykład strony z ostrzeżeniem"
+  },
+  "welcomeDoneButton": {
+    "message": "Rozumiem"
+  },
+  "welcomeLearnMore": {
+    "message": "Dowiedz się więcej na naszej stronie"
   }
 }

@@ -59,6 +59,9 @@
   "openProviderWebsite": {
     "message": "Haz clic para abrir el sitio web de este proveedor"
   },
+  "commercialDisabledTooltip": {
+    "message": "Este proveedor de protección está desactivado para usuarios comerciales."
+  },
   "knownSafe": {
     "message": "Conocido como seguro"
   },
@@ -322,5 +325,50 @@
   },
   "toastAllProvidersEnabled": {
     "message": "Todos los proveedores de protección activados."
+  },
+  "welcomeTitle": {
+    "message": "Bienvenido a Osprey"
+  },
+  "welcomeIntro": {
+    "message": "La protección de Osprey está activada. No necesita hacer nada más."
+  },
+  "welcomeWhyHeading": {
+    "message": "¿Por qué necesito esto?"
+  },
+  "welcomeWhyBody": {
+    "message": "Algunos sitios web son falsos. Se hacen pasar por su banco, una empresa de reparto o una plataforma en línea como Instagram para robarle sus contraseñas, sus datos bancarios o su información personal. Estos sitios falsos pueden parecer muy reales. Osprey bloquea hasta el 99% de ellos antes de que se abran para que navegue con seguridad."
+  },
+  "welcomeHowHeading": {
+    "message": "¿Cómo funciona?"
+  },
+  "welcomeHowStep1": {
+    "message": "Use internet exactamente como siempre."
+  },
+  "welcomeHowStep2": {
+    "message": "Si intenta abrir un sitio web peligroso, Osprey lo bloquea y muestra una página de aviso en su lugar."
+  },
+  "welcomeHowStep3": {
+    "message": "Pulse el botón 'Volver a un lugar seguro' para cerrar el sitio web peligroso."
+  },
+  "welcomeSafeHeading": {
+    "message": "Los sitios web seguros no se ven afectados"
+  },
+  "welcomeSafeBody": {
+    "message": "Osprey solo interviene cuando se sabe que un sitio web es peligroso. Todo lo demás funciona con normalidad."
+  },
+  "welcomeIconHeading": {
+    "message": "¿Dónde está Osprey?"
+  },
+  "welcomeIconBody": {
+    "message": "Osprey trabaja en silencio en segundo plano. El icono está en la esquina superior de su navegador (haga clic en el icono de la pieza de puzle si no lo ve). Puede hacer clic en él para ver que está protegido."
+  },
+  "welcomeWarningPreviewAlt": {
+    "message": "Ejemplo de la página de aviso"
+  },
+  "welcomeDoneButton": {
+    "message": "Entendido"
+  },
+  "welcomeLearnMore": {
+    "message": "Más información en nuestro sitio web"
   }
 }

@@ -59,6 +59,9 @@
   "openProviderWebsite": {
     "message": "Fes clic per obrir el lloc web d'aquest proveïdor"
   },
+  "commercialDisabledTooltip": {
+    "message": "Aquest proveïdor de protecció està desactivat per als usuaris comercials."
+  },
   "knownSafe": {
     "message": "Conegut com a segur"
   },
@@ -322,5 +325,50 @@
   },
   "toastAllProvidersEnabled": {
     "message": "Tots els proveïdors de protecció activats."
+  },
+  "welcomeTitle": {
+    "message": "Benvingut a Osprey"
+  },
+  "welcomeIntro": {
+    "message": "La protecció d'Osprey està activada. No cal que feu res més."
+  },
+  "welcomeWhyHeading": {
+    "message": "Per què ho necessito?"
+  },
+  "welcomeWhyBody": {
+    "message": "Alguns llocs web són falsos. Es fan passar pel vostre banc, una empresa de repartiment o una plataforma en línia com Instagram per robar-vos les contrasenyes, les dades bancàries o la informació personal. Aquests llocs falsos poden semblar molt reals. Osprey en bloqueja fins a un 99% abans que s'obrin per mantenir la vostra navegació segura."
+  },
+  "welcomeHowHeading": {
+    "message": "Com funciona?"
+  },
+  "welcomeHowStep1": {
+    "message": "Utilitzeu Internet exactament com sempre."
+  },
+  "welcomeHowStep2": {
+    "message": "Si intenteu obrir un lloc web perillós, Osprey el bloqueja i mostra una pàgina d'avís en el seu lloc."
+  },
+  "welcomeHowStep3": {
+    "message": "Premeu el botó 'Tornar a un lloc segur' per tancar el lloc web perillós."
+  },
+  "welcomeSafeHeading": {
+    "message": "Els llocs web segurs no es veuen afectats"
+  },
+  "welcomeSafeBody": {
+    "message": "Osprey només intervé quan se sap que un lloc web és perillós. Tota la resta funciona amb normalitat."
+  },
+  "welcomeIconHeading": {
+    "message": "On és Osprey?"
+  },
+  "welcomeIconBody": {
+    "message": "Osprey treballa en silenci en segon pla. La icona és a la cantonada superior del navegador (feu clic a la icona de la peça de trencaclosques si no la veieu). Podeu fer-hi clic per veure que esteu protegit."
+  },
+  "welcomeWarningPreviewAlt": {
+    "message": "Exemple de la pàgina d'avís"
+  },
+  "welcomeDoneButton": {
+    "message": "Entesos"
+  },
+  "welcomeLearnMore": {
+    "message": "Més informació al nostre lloc web"
   }
 }

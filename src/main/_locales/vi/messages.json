@@ -59,6 +59,9 @@
   "openProviderWebsite": {
     "message": "Nhấp để mở trang web của nhà cung cấp này"
   },
+  "commercialDisabledTooltip": {
+    "message": "Nhà cung cấp bảo vệ này bị tắt đối với người dùng thương mại."
+  },
   "knownSafe": {
     "message": "Được biết là an toàn"
   },
@@ -322,5 +325,50 @@
   },
   "toastAllProvidersEnabled": {
     "message": "Đã bật tất cả nhà cung cấp bảo vệ."
+  },
+  "welcomeTitle": {
+    "message": "Chào mừng đến với Osprey"
+  },
+  "welcomeIntro": {
+    "message": "Tính năng bảo vệ của Osprey đã được bật. Bạn không cần làm gì thêm."
+  },
+  "welcomeWhyHeading": {
+    "message": "Tại sao tôi cần nó?"
+  },
+  "welcomeWhyBody": {
+    "message": "Một số trang web là giả mạo. Chúng giả làm ngân hàng của bạn, công ty giao hàng hoặc một nền tảng trực tuyến như Instagram để đánh cắp mật khẩu, thông tin ngân hàng hoặc thông tin cá nhân của bạn. Những trang giả này có thể trông cực kỳ giống thật. Osprey chặn tới 99% số đó trước khi chúng mở ra để bạn duyệt web an toàn."
+  },
+  "welcomeHowHeading": {
+    "message": "Nó hoạt động như thế nào?"
+  },
+  "welcomeHowStep1": {
+    "message": "Sử dụng Internet đúng như bạn vẫn thường làm."
+  },
+  "welcomeHowStep2": {
+    "message": "Nếu bạn cố mở một trang web nguy hiểm, Osprey sẽ chặn nó và hiển thị một trang cảnh báo thay thế."
+  },
+  "welcomeHowStep3": {
+    "message": "Nhấn nút 'Quay lại nơi an toàn' để đóng trang web nguy hiểm."
+  },
+  "welcomeSafeHeading": {
+    "message": "Các trang web an toàn không bị ảnh hưởng"
+  },
+  "welcomeSafeBody": {
+    "message": "Osprey chỉ can thiệp khi một trang web được biết là nguy hiểm. Mọi thứ khác hoạt động bình thường."
+  },
+  "welcomeIconHeading": {
+    "message": "Osprey ở đâu?"
+  },
+  "welcomeIconBody": {
+    "message": "Osprey hoạt động âm thầm trong nền. Biểu tượng nằm ở góc trên của trình duyệt (nhấp vào biểu tượng mảnh ghép nếu bạn không thấy). Bạn có thể nhấp vào đó để thấy mình đang được bảo vệ."
+  },
+  "welcomeWarningPreviewAlt": {
+    "message": "Ví dụ về trang cảnh báo"
+  },
+  "welcomeDoneButton": {
+    "message": "Đã hiểu"
+  },
+  "welcomeLearnMore": {
+    "message": "Tìm hiểu thêm trên trang web của chúng tôi"
   }
 }

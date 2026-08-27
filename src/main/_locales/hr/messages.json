@@ -59,6 +59,9 @@
   "openProviderWebsite": {
     "message": "Kliknite za otvaranje web-stranice ovog pružatelja"
   },
+  "commercialDisabledTooltip": {
+    "message": "Ovaj pružatelj zaštite onemogućen je za komercijalne korisnike."
+  },
   "knownSafe": {
     "message": "Poznato kao sigurno"
   },
@@ -322,5 +325,50 @@
   },
   "toastAllProvidersEnabled": {
     "message": "Svi pružatelji zaštite omogućeni."
+  },
+  "welcomeTitle": {
+    "message": "Dobro došli u Osprey"
+  },
+  "welcomeIntro": {
+    "message": "Zaštita Ospreya je aktivirana. Ne trebate ništa više učiniti."
+  },
+  "welcomeWhyHeading": {
+    "message": "Zašto mi ovo treba?"
+  },
+  "welcomeWhyBody": {
+    "message": "Neke web stranice su lažne. Pretvaraju se da su vaša banka, dostavna tvrtka ili online platforma poput Instagrama kako bi ukrale vaše lozinke, bankovne podatke ili osobne podatke. Te lažne stranice mogu izgledati vrlo stvarno. Osprey blokira do 99 % njih prije nego što se otvore kako bi vaše pregledavanje bilo sigurno."
+  },
+  "welcomeHowHeading": {
+    "message": "Kako radi?"
+  },
+  "welcomeHowStep1": {
+    "message": "Koristite internet točno kao i uvijek."
+  },
+  "welcomeHowStep2": {
+    "message": "Ako pokušate otvoriti opasnu stranicu, Osprey je blokira i umjesto nje prikazuje stranicu upozorenja."
+  },
+  "welcomeHowStep3": {
+    "message": "Pritisnite gumb 'Natrag na sigurno' da biste zatvorili opasnu stranicu."
+  },
+  "welcomeSafeHeading": {
+    "message": "Sigurne stranice nisu pogođene"
+  },
+  "welcomeSafeBody": {
+    "message": "Osprey se uključuje samo kada je stranica poznata kao opasna. Sve ostalo radi normalno."
+  },
+  "welcomeIconHeading": {
+    "message": "Gdje je Osprey?"
+  },
+  "welcomeIconBody": {
+    "message": "Osprey tiho radi u pozadini. Ikona je u gornjem kutu preglednika (kliknite ikonu dijela slagalice ako je ne vidite). Možete je kliknuti da vidite da ste zaštićeni."
+  },
+  "welcomeWarningPreviewAlt": {
+    "message": "Primjer stranice upozorenja"
+  },
+  "welcomeDoneButton": {
+    "message": "Razumijem"
+  },
+  "welcomeLearnMore": {
+    "message": "Saznajte više na našoj web stranici"
   }
 }

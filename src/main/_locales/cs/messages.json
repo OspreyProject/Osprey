@@ -59,6 +59,9 @@
   "openProviderWebsite": {
     "message": "Kliknutím otevřete web tohoto poskytovatele"
   },
+  "commercialDisabledTooltip": {
+    "message": "Tento poskytovatel ochrany je pro komerční uživatele vypnutý."
+  },
   "knownSafe": {
     "message": "Známý jako bezpečný"
   },
@@ -322,5 +325,50 @@
   },
   "toastAllProvidersEnabled": {
     "message": "Všichni poskytovatelé ochrany povoleni."
+  },
+  "welcomeTitle": {
+    "message": "Vítejte v Osprey"
+  },
+  "welcomeIntro": {
+    "message": "Ochrana Osprey je aktivována. Nemusíte dělat nic dalšího."
+  },
+  "welcomeWhyHeading": {
+    "message": "Proč to potřebuji?"
+  },
+  "welcomeWhyBody": {
+    "message": "Některé webové stránky jsou falešné. Vydávají se za vaši banku, doručovací službu nebo online platformu jako Instagram, aby vám ukradly hesla, bankovní údaje nebo osobní informace. Tyto falešné stránky mohou vypadat velmi věrohodně. Osprey jich až 99 % zablokuje dříve, než se otevřou, aby bylo vaše prohlížení bezpečné."
+  },
+  "welcomeHowHeading": {
+    "message": "Jak to funguje?"
+  },
+  "welcomeHowStep1": {
+    "message": "Používejte internet přesně tak, jak jste zvyklí."
+  },
+  "welcomeHowStep2": {
+    "message": "Pokud se pokusíte otevřít nebezpečnou stránku, Osprey ji zablokuje a místo ní zobrazí varovnou stránku."
+  },
+  "welcomeHowStep3": {
+    "message": "Stiskněte tlačítko 'Zpět do bezpečí' a nebezpečná stránka se zavře."
+  },
+  "welcomeSafeHeading": {
+    "message": "Bezpečné stránky nejsou ovlivněny"
+  },
+  "welcomeSafeBody": {
+    "message": "Osprey zasáhne pouze tehdy, když je stránka známá jako nebezpečná. Vše ostatní funguje jako obvykle."
+  },
+  "welcomeIconHeading": {
+    "message": "Kde je Osprey?"
+  },
+  "welcomeIconBody": {
+    "message": "Osprey pracuje tiše na pozadí. Ikona je v horním rohu prohlížeče (pokud ji nevidíte, klikněte na ikonu dílku puzzle). Kliknutím na ni uvidíte, že jste chráněni."
+  },
+  "welcomeWarningPreviewAlt": {
+    "message": "Ukázka varovné stránky"
+  },
+  "welcomeDoneButton": {
+    "message": "Rozumím"
+  },
+  "welcomeLearnMore": {
+    "message": "Více informací na našem webu"
   }
 }

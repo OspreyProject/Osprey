@@ -59,6 +59,9 @@
   "openProviderWebsite": {
     "message": "Bu sağlayıcının web sitesini açmak için tıklayın"
   },
+  "commercialDisabledTooltip": {
+    "message": "Bu koruma sağlayıcısı ticari kullanıcılar için devre dışıdır."
+  },
   "knownSafe": {
     "message": "Güvenli olarak biliniyor"
   },
@@ -322,5 +325,50 @@
   },
   "toastAllProvidersEnabled": {
     "message": "Tüm koruma sağlayıcıları etkinleştirildi."
+  },
+  "welcomeTitle": {
+    "message": "Osprey'e hoş geldiniz"
+  },
+  "welcomeIntro": {
+    "message": "Osprey koruması etkinleştirildi. Başka bir şey yapmanıza gerek yok."
+  },
+  "welcomeWhyHeading": {
+    "message": "Buna neden ihtiyacım var?"
+  },
+  "welcomeWhyBody": {
+    "message": "Bazı web siteleri sahtedir. Şifrelerinizi, banka bilgilerinizi veya kişisel bilgilerinizi çalmak için bankanız, bir kargo şirketi ya da Instagram gibi bir çevrimiçi platform gibi davranırlar. Bu sahte siteler son derece gerçek görünebilir. Osprey, güvenli gezinmeniz için bunların %99'una kadarını açılmadan önce engeller."
+  },
+  "welcomeHowHeading": {
+    "message": "Nasıl çalışır?"
+  },
+  "welcomeHowStep1": {
+    "message": "İnterneti her zamanki gibi kullanın."
+  },
+  "welcomeHowStep2": {
+    "message": "Tehlikeli bir web sitesini açmaya çalışırsanız Osprey onu engeller ve bunun yerine bir uyarı sayfası gösterir."
+  },
+  "welcomeHowStep3": {
+    "message": "Tehlikeli web sitesini kapatmak için 'Güvenli yere dön' düğmesine basın."
+  },
+  "welcomeSafeHeading": {
+    "message": "Güvenli web siteleri etkilenmez"
+  },
+  "welcomeSafeBody": {
+    "message": "Osprey yalnızca bir sitenin tehlikeli olduğu bilindiğinde devreye girer. Diğer her şey normal şekilde çalışır."
+  },
+  "welcomeIconHeading": {
+    "message": "Osprey nerede?"
+  },
+  "welcomeIconBody": {
+    "message": "Osprey arka planda sessizce çalışır. Simge tarayıcınızın üst köşesindedir (görmüyorsanız yapboz parçası simgesine tıklayın). Korunduğunuzu görmek için tıklayabilirsiniz."
+  },
+  "welcomeWarningPreviewAlt": {
+    "message": "Uyarı sayfası örneği"
+  },
+  "welcomeDoneButton": {
+    "message": "Anladım"
+  },
+  "welcomeLearnMore": {
+    "message": "Web sitemizden daha fazla bilgi edinin"
   }
 }
