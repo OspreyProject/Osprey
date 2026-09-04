@@ -5,8 +5,6 @@
 [![Edge Users](https://img.shields.io/badge/dynamic/json?label=Edge%20Users&color=00CC00&query=%24.activeInstallCount&url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%2Fnopglhplnghfhpniofkcopmhbjdonlgn)](https://osprey.ac/edge)
 [![Firefox Users](https://img.shields.io/amo/users/osprey-browser-protection?label=Firefox%20Users&color=00CC00)](https://osprey.ac/firefox)
 
-## We're aware that Osprey has been taken down from the Chrome Web Store. It should be back up within 24-48 hours. For now, use the Edge version. Sorry for the inconvenience!
-
 **Osprey** is a free, open-source browser security extension that protects you from phishing, malware, scams, and other
 malicious websites. As you browse, Osprey checks every site you visit against more than **20 threat-intelligence
 providers**, then blocks or warns you the moment one of them flags a site as dangerous.
