@@ -139,9 +139,8 @@ The heartbeat fields are:
 
 ## Testing your endpoint
 
-The fastest way to confirm a reporting configuration is the hosted checker at https://osprey.ac/reporting-check. It
-generates a temporary receiver URL you set as `ReportingEndpoint` on a pilot endpoint, then shows every event batch and
-heartbeat as it arrives and validates that `DeviceTag`, `SiteId`, and the `Authorization` header are present. The test
-session lives only in memory, holds the last 30 payloads, and expires 30 minutes after the last activity, so it is a
-configuration checker rather than a place to point a production fleet. Self-hosters get the same receiver on their own
-proxy at `/reporting/test/{token}`, controlled by the `osprey.reporting-test.enabled` property.
+With the [Osprey Management Console](https://console.osprey.ac), there is nothing to test: the enroll scripts set
+`ReportingEndpoint` for you, and an enrolled device simply appears in the console with its heartbeats and events. To
+verify a self-managed receiver, point `ReportingEndpoint` at it on one pilot device and confirm your receiver logs a
+heartbeat within a minute of browser startup, with the `DeviceTag`, `SiteId`, and `Authorization` values you configured
+present in the request, using the shapes documented above.
