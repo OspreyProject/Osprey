@@ -1,8 +1,13 @@
 # Remote configuration
 
-The `ManagedConfigUrl` managed policy points the extension at a JSON document that it hosts and controls. The extension
-fetches this document on startup and on a recurring schedule, then applies it. An MSP edits one hosted file per client
-and every enrolled endpoint picks up the change on its next refresh, with no Group Policy or Intune re-push.
+> Managing a fleet? The [Osprey Management Console](https://console.osprey.ac) builds and hosts this configuration
+> per client and updates every enrolled device automatically. Plans are on the
+> [pricing page](https://osprey.ac/pricing/). The rest of this document describes the underlying extension behavior
+> for administrators who host their own configuration.
+
+The `ManagedConfigUrl` managed policy points the extension at a JSON document that the administrator hosts and controls.
+The extension fetches this document on startup and on a recurring schedule, then applies it, so enrolled endpoints pick
+up changes on their next refresh without a Group Policy or Intune re-push.
 
 ## How values are applied
 
@@ -70,9 +75,10 @@ Set `DisableUninstallSurvey` to `true` to stop the extension from opening its un
 removes the extension. It defaults to `false`, so a consumer install still shows the survey; a managed MSP deployment
 normally sets it to `true`.
 
-Set `DisableWelcomePage` to `true` to stop the extension from opening its welcome page in a new tab the first time it
-is installed. It defaults to `false`, so a consumer install sees the page; a managed MSP deployment normally sets it to
-`true`. The policy is read when the install event fires, so it must already be present in managed storage at install time.
+Set `DisableWelcomePage` to `true` to stop the extension from opening its welcome page in a new tab the first time it is
+installed. It defaults to `false`, so a consumer install sees the page; a managed MSP deployment normally sets it to
+`true`. The policy is read when the install event fires, so it must already be present in managed storage at install
+time.
 
 `UserEmail` holds the signed-in user's email address and is intended to be set per user through Group Policy, Intune, or
 a plist rather than through this shared document, since the document is the same for every user of a client. When set,

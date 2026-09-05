@@ -1,5 +1,9 @@
 # Outbound events and heartbeats
 
+> Managing a fleet? The [Osprey Management Console](https://console.osprey.ac) receives these events for you and
+> turns them into dashboards, alerts, and reports per client. The rest of this document describes the
+> underlying extension behavior for administrators who run their own receiver.
+
 The `ReportingEndpoint` managed policy points the extension at an HTTP endpoint that receives two kinds of message: a
 batch of detection and override events, and a periodic health heartbeat. Detections and overrides arrive as they happen,
 and the heartbeat proves each endpoint is still installed, enabled, current, and able to reach its backend. The usual
