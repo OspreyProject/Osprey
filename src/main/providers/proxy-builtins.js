@@ -188,6 +188,19 @@
                 }),
 
                 hostnameBuiltin({
+                    id: 'acomics',
+                    website: 'https://acomics.ru/?utm_source=osprey',
+                    aliases: ['acomics'],
+                    displayName: 'Acomics Anti-Spam',
+                    group: providerGroups.feeds.id,
+                    icon: 'assets/providers/acomics.avif',
+                    enabledByDefault: true,
+                    bypassBlockingThreshold: false, // keep this 'false'
+                    endpoint: 'acomics',
+                    report: mailtoReport('support@osprey.ac', 'Acomics Anti-Spam'),
+                }),
+
+                hostnameBuiltin({
                     id: 'cloudflare',
                     website: 'https://one.one.one.one/?utm_source=osprey',
                     aliases: ['cloudflare'],
