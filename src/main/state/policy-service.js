@@ -62,7 +62,21 @@ globalThis.OspreyPolicyService = (() => {
         return out;
     };
 
+    const enumMap = allowed => value => allowed.includes(value) ? value : undefined;
+
     const appPolicyMappings = [
+        {
+            policyKey: 'ManagedSafeSearch',
+            type: 'string',
+            stateKey: 'safeSearch',
+            mapValue: enumMap(['', 'strict']),
+        },
+        {
+            policyKey: 'ManagedYouTubeRestrict',
+            type: 'string',
+            stateKey: 'youtubeRestrict',
+            mapValue: enumMap(['', 'moderate', 'strict']),
+        },
         {
             policyKey: 'HideWarningProceedButton',
             type: 'boolean',
@@ -351,7 +365,21 @@ globalThis.OspreyPolicyService = (() => {
                     }
                 }
 
+                let categoriesChanged = false;
+
+                for (const key of Object.keys(nextCategories)) {
+                    if (!existing || existing[key] !== nextCategories[key]) {
+                        categoriesChanged = true;
+                        break;
+                    }
+                }
+
                 providerState.blockCategories = nextCategories;
+
+                if (categoriesChanged) {
+                    globalThis.OspreyCacheService?.clearProviderCache?.(definition.id).catch(() => {
+                    });
+                }
                 managed = true;
             }
 

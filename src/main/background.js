@@ -31,6 +31,7 @@ const bootstrapScripts = [
     'providers/provider-catalog.js',
     'state/provider-state-store.js',
     'state/policy-service.js',
+    'state/dnr-service.js',
     'platform/request-builder.js',
     'platform/response-rule-engine.js',
     'state/cache-service.js',
@@ -396,6 +397,10 @@ if (typeof importScripts === 'function') {
             console.error('Failed to load persisted remote config', error);
         }
 
+        globalThis.OspreyDnrService?.sync?.().catch?.(error => {
+            console.warn('Startup DNR sync failed', error);
+        });
+
         const alarms = api.alarms;
 
         if (alarms?.create) {
@@ -411,6 +416,7 @@ if (typeof importScripts === 'function') {
                 if (alarm?.name === policyService.remoteConfigAlarmName) {
                     policyService.refreshRemoteConfig()
                         .then(() => applyUninstallSurvey(api))
+                        .then(() => globalThis.OspreyDnrService?.sync?.())
                         .catch(error => {
                             console.error('Scheduled remote config refresh failed', error);
                         });
@@ -420,6 +426,7 @@ if (typeof importScripts === 'function') {
 
         policyService.refreshRemoteConfig()
             .then(() => applyUninstallSurvey(api))
+            .then(() => globalThis.OspreyDnrService?.sync?.())
             .catch(error => {
                 console.error('Startup remote config refresh failed', error);
             });

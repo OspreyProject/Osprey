@@ -28,15 +28,21 @@
     "tabs",
     "storage",
     "webNavigation",
-    "alarms"
+    "alarms",
+    "declarativeNetRequestWithHostAccess"
   ],
   "host_permissions": [
     "https://api.osprey.ac/*",
     "https://api.metadefender.com/*"
   ],
   "optional_host_permissions": [
-    "http://*/*",
-    "https://*/*"
+    "https://www.google.com/*",
+    "https://www.bing.com/*",
+    "https://duckduckgo.com/*",
+    "https://www.youtube.com/*",
+    "https://m.youtube.com/*",
+    "https://youtubei.googleapis.com/*",
+    "https://www.youtube-nocookie.com/*"
   ],
   "incognito": "split",
   "storage": {
