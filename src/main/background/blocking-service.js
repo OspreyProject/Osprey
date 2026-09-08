@@ -431,6 +431,30 @@ globalThis.OspreyBlockingService = (() => {
 
             badgeService.clear(details.tabId);
 
+            const intelMode = runtime.effectiveState.app.domainIntelMode;
+
+            if ((intelMode === 'warn' || intelMode === 'block') && globalThis.OspreyDomainIntel) {
+                const finding = globalThis.OspreyDomainIntel.analyze(
+                    parsed.hostname, runtime.effectiveState.app.protectedDomains
+                );
+
+                if (finding) {
+                    globalThis.OspreyEventLogService?.record?.('domain_intel', {
+                        url: normalizedUrl, kind: finding.kind, target: finding.target, detail: finding.detail,
+                    });
+
+                    if (intelMode === 'block' && finding.kind === 'protected_lookalike') {
+                        await handleProtectionResult(details.tabId, normalizedUrl, runtime,
+                            globalThis.OspreyProtectionResult.create({
+                                url: normalizedUrl,
+                                result: 'lookalike',
+                                origin: 'osprey',
+                            }));
+                        return;
+                    }
+                }
+            }
+
             await providerEngine.scanUrl({
                 tabId: details.tabId,
                 url: normalizedUrl,

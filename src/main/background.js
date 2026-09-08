@@ -26,6 +26,7 @@ const bootstrapScripts = [
     'providers/direct-integrations.js',
     'catalog/catalog-validator.js',
     'platform/protection-result.js',
+    'platform/domain-intel.js',
     'platform/url-service.js',
     'platform/report-link-builder.js',
     'providers/provider-catalog.js',

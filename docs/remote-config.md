@@ -92,6 +92,12 @@ a plist rather than through this shared document, since the document is the same
 the warning page's contact link carries the user's email and the blocked URL as query parameters, so a console-hosted
 unblock request page opens with both fields already filled in.
 
+`ManagedDomainIntelMode` (`""`, `"warn"`, or `"block"`) turns on fully local lookalike and domain-shape analysis:
+homograph and typo lookalikes of the domains listed in `ManagedProtectedDomains` (an array of the client's own real
+domains), mixed-script labels, and DGA-shaped hostnames. Everything computes on the device; nothing new leaves the
+browser. In `warn` mode findings are recorded to the local event log only. In `block` mode a lookalike of a protected
+domain blocks with a Lookalike Domain warning; the other signals stay log-only. Both keys default off.
+
 `ManagedSafeSearch` (`""` or `"strict"`) forces SafeSearch on Google, Bing, and DuckDuckGo through request rules on the
 device, and `ManagedYouTubeRestrict` (`""`, `"moderate"`, or `"strict"`) forces YouTube Restricted Mode through the
 `YouTube-Restrict` request header. Both default off. They require host access to the search and YouTube domains, which

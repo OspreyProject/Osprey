@@ -66,6 +66,12 @@ globalThis.OspreyPolicyService = (() => {
 
     const appPolicyMappings = [
         {
+            policyKey: 'ManagedDomainIntelMode',
+            type: 'string',
+            stateKey: 'domainIntelMode',
+            mapValue: enumMap(['', 'warn', 'block']),
+        },
+        {
             policyKey: 'ManagedSafeSearch',
             type: 'string',
             stateKey: 'safeSearch',
@@ -245,6 +251,16 @@ globalThis.OspreyPolicyService = (() => {
                 if (appManagedKeys !== undefined) {
                     appManagedKeys.add(mapping.stateKey);
                 }
+            }
+        }
+
+        const managedProtected = normalizeStringList(policies.ManagedProtectedDomains);
+
+        if (managedProtected !== undefined) {
+            app.protectedDomains = managedProtected;
+
+            if (appManagedKeys !== undefined) {
+                appManagedKeys.add('protectedDomains');
             }
         }
 
