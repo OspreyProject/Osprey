@@ -66,6 +66,12 @@ globalThis.OspreyPolicyService = (() => {
 
     const appPolicyMappings = [
         {
+            policyKey: 'ManagedNotificationProtection',
+            type: 'string',
+            stateKey: 'notificationProtection',
+            mapValue: enumMap(['', 'on']),
+        },
+        {
             policyKey: 'ManagedDomainIntelMode',
             type: 'string',
             stateKey: 'domainIntelMode',

@@ -29,7 +29,8 @@
     "storage",
     "webNavigation",
     "alarms",
-    "declarativeNetRequestWithHostAccess"
+    "declarativeNetRequestWithHostAccess",
+    "contentSettings"
   ],
   "host_permissions": [
     "https://api.osprey.ac/*",

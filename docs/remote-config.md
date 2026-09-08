@@ -92,6 +92,12 @@ a plist rather than through this shared document, since the document is the same
 the warning page's contact link carries the user's email and the blocked URL as query parameters, so a console-hosted
 unblock request page opens with both fields already filled in.
 
+`ManagedNotificationProtection` (`""` or `"on"`) blocks the browser notification permission for any origin Osprey flags,
+so a scam page the user proceeds past can never weaponize the notification prompt. Osprey records every origin it sets
+and only ever reverts its own entries (on allowlist addition); the user's notification choices on other sites are never
+touched. Chrome and Edge only: Firefox has no contentSettings API, and the device records the degraded state in its
+local event log once. Defaults off; the managed baseline in the console enables it.
+
 `ManagedDomainIntelMode` (`""`, `"warn"`, or `"block"`) turns on fully local lookalike and domain-shape analysis:
 homograph and typo lookalikes of the domains listed in `ManagedProtectedDomains` (an array of the client's own real
 domains), mixed-script labels, and DGA-shaped hostnames. Everything computes on the device; nothing new leaves the

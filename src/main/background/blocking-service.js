@@ -362,6 +362,13 @@ globalThis.OspreyBlockingService = (() => {
         }
 
         resultAggregationService.recordBlockingResult(tabId, navigationUrl, protectionResult.origin, protectionResult.result);
+
+        if (runtime.effectiveState.app.notificationProtection === 'on') {
+            globalThis.OspreyNotificationService?.blockForUrl?.(navigationUrl).catch(() => {
+                // ignored
+            });
+        }
+
         await resultAggregationService.persist();
 
         const blockedContext = resultAggregationService.getBlockedContext(tabId);

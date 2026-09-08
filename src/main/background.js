@@ -36,6 +36,7 @@ const bootstrapScripts = [
     'platform/request-builder.js',
     'platform/response-rule-engine.js',
     'state/cache-service.js',
+    'state/notification-service.js',
     'state/event-log-service.js',
     'platform/message-bus.js',
     'providers/provider-runtime-factory.js',

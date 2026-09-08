@@ -867,6 +867,10 @@ globalThis.OspreyCacheService = (() => {
         markMetaDirty();
         scheduleFlush();
 
+        globalThis.OspreyNotificationService?.resetForHost?.(host).catch(() => {
+            // ignored
+        });
+
         return {
             ok: true,
             added: true,
@@ -903,6 +907,22 @@ globalThis.OspreyCacheService = (() => {
         return {
             ok: true
         };
+    };
+
+    /**
+     * Drops every cached entry for one provider, so a block-category change takes effect
+     * immediately instead of waiting out the TTL on verdicts cached under the old policy.
+     */
+    const clearProviderCache = async providerId => {
+        const snapshot = await getSnapshot();
+
+        if (snapshot.providers.has(providerId)) {
+            snapshot.providers.delete(providerId);
+            markMetaDirty();
+            markProviderDirty(providerId);
+            scheduleFlush(0);
+        }
+        return {ok: true};
     };
 
     const clearAll = async () => {
@@ -1079,6 +1099,7 @@ globalThis.OspreyCacheService = (() => {
         addGlobalHost,
         removeGlobalPattern,
         removeProviderAllowed,
+        clearProviderCache,
         clearAll,
         clearBlockedForLookup,
         clearBlockedForProviderLookup,
