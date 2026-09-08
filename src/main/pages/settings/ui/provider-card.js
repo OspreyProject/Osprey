@@ -487,7 +487,8 @@ globalThis.OspreyProviderCard = (() => {
     }
 
     function createBlockCategoriesControl(definition, providerState, disabled) {
-        const categories = Array.isArray(definition.blockCategories) ? definition.blockCategories : null;
+        const declaredCategories = Array.isArray(definition.blockCategories) ? definition.blockCategories : null;
+        const categories = declaredCategories ? declaredCategories.filter(entry => !entry.managedOnly) : null;
 
         if (!categories || categories.length === 0) {
             return null;

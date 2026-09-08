@@ -374,209 +374,71 @@
   "parked": {
     "message": "Parked Domain"
   },
-  "blockParked": {
-    "message": "Block parked domain"
-  },
-  "blockParkedTooltip": {
-    "message": "When enabled, this provider blocks websites categorized as parked domains with no meaningful content. This is an organization policy category, not a security verdict."
-  },
   "adultContent": {
     "message": "Adult Content"
-  },
-  "blockAdultContent": {
-    "message": "Block adult content"
-  },
-  "blockAdultContentTooltip": {
-    "message": "When enabled, this provider blocks websites categorized as adult content, including pornography and nudity. This is an organization policy category, not a security verdict."
   },
   "sexEducation": {
     "message": "Sex Education"
   },
-  "blockSexEducation": {
-    "message": "Block sex education"
-  },
-  "blockSexEducationTooltip": {
-    "message": "When enabled, this provider blocks websites categorized as sex education material. This is an organization policy category, not a security verdict."
-  },
   "dating": {
     "message": "Dating"
-  },
-  "blockDating": {
-    "message": "Block dating"
-  },
-  "blockDatingTooltip": {
-    "message": "When enabled, this provider blocks websites categorized as dating and matchmaking services. This is an organization policy category, not a security verdict."
   },
   "gambling": {
     "message": "Gambling"
   },
-  "blockGambling": {
-    "message": "Block gambling"
-  },
-  "blockGamblingTooltip": {
-    "message": "When enabled, this provider blocks websites categorized as gambling services and information. This is an organization policy category, not a security verdict."
-  },
   "drugs": {
     "message": "Drugs"
-  },
-  "blockDrugs": {
-    "message": "Block drugs"
-  },
-  "blockDrugsTooltip": {
-    "message": "When enabled, this provider blocks websites categorized as illegal drugs, controlled substances, and marijuana. This is an organization policy category, not a security verdict."
   },
   "alcoholTobacco": {
     "message": "Alcohol and Tobacco"
   },
-  "blockAlcoholTobacco": {
-    "message": "Block alcohol and tobacco"
-  },
-  "blockAlcoholTobaccoTooltip": {
-    "message": "When enabled, this provider blocks websites categorized as sites promoting alcohol or tobacco. This is an organization policy category, not a security verdict."
-  },
   "weapons": {
     "message": "Weapons"
-  },
-  "blockWeapons": {
-    "message": "Block weapons"
-  },
-  "blockWeaponsTooltip": {
-    "message": "When enabled, this provider blocks websites categorized as weapon sales, reviews, and modifications. This is an organization policy category, not a security verdict."
   },
   "hateDiscrimination": {
     "message": "Hate and Discrimination"
   },
-  "blockHateDiscrimination": {
-    "message": "Block hate and discrimination"
-  },
-  "blockHateDiscriminationTooltip": {
-    "message": "When enabled, this provider blocks websites categorized as content promoting hostility toward groups of people. This is an organization policy category, not a security verdict."
-  },
   "violenceGore": {
     "message": "Violence and Gore"
-  },
-  "blockViolenceGore": {
-    "message": "Block violence and gore"
-  },
-  "blockViolenceGoreTooltip": {
-    "message": "When enabled, this provider blocks websites categorized as graphic violence, gore, and gruesome content. This is an organization policy category, not a security verdict."
   },
   "piracy": {
     "message": "Piracy"
   },
-  "blockPiracy": {
-    "message": "Block piracy"
-  },
-  "blockPiracyTooltip": {
-    "message": "When enabled, this provider blocks websites categorized as illegal sharing of copyrighted media and school cheating material. This is an organization policy category, not a security verdict."
-  },
   "hacking": {
     "message": "Hacking"
-  },
-  "blockHacking": {
-    "message": "Block hacking"
-  },
-  "blockHackingTooltip": {
-    "message": "When enabled, this provider blocks websites categorized as information and tools for unauthorized system access. This is an organization policy category, not a security verdict."
   },
   "socialMedia": {
     "message": "Social Media"
   },
-  "blockSocialMedia": {
-    "message": "Block social media"
-  },
-  "blockSocialMediaTooltip": {
-    "message": "When enabled, this provider blocks websites categorized as social networking communities. This is an organization policy category, not a security verdict."
-  },
   "streamingMedia": {
     "message": "Streaming and Media"
-  },
-  "blockStreamingMedia": {
-    "message": "Block streaming and media"
-  },
-  "blockStreamingMediaTooltip": {
-    "message": "When enabled, this provider blocks websites categorized as audio and video streaming and media sharing. This is an organization policy category, not a security verdict."
   },
   "games": {
     "message": "Games"
   },
-  "blockGames": {
-    "message": "Block games"
-  },
-  "blockGamesTooltip": {
-    "message": "When enabled, this provider blocks websites categorized as game playing, downloads, and discussion. This is an organization policy category, not a security verdict."
-  },
   "chatMessaging": {
     "message": "Chat and Messaging"
-  },
-  "blockChatMessaging": {
-    "message": "Block chat and messaging"
-  },
-  "blockChatMessagingTooltip": {
-    "message": "When enabled, this provider blocks websites categorized as chat, instant messaging, and SMS services. This is an organization policy category, not a security verdict."
   },
   "fileSharing": {
     "message": "File Sharing"
   },
-  "blockFileSharing": {
-    "message": "Block file sharing"
-  },
-  "blockFileSharingTooltip": {
-    "message": "When enabled, this provider blocks websites categorized as file storage, sharing, and peer-to-peer networks. This is an organization policy category, not a security verdict."
-  },
   "shoppingAuctions": {
     "message": "Shopping and Auctions"
-  },
-  "blockShoppingAuctions": {
-    "message": "Block shopping and auctions"
-  },
-  "blockShoppingAuctionsTooltip": {
-    "message": "When enabled, this provider blocks websites categorized as online stores, auctions, and classifieds. This is an organization policy category, not a security verdict."
   },
   "jobSearch": {
     "message": "Job Search"
   },
-  "blockJobSearch": {
-    "message": "Block job search"
-  },
-  "blockJobSearchTooltip": {
-    "message": "When enabled, this provider blocks websites categorized as job search and employment services. This is an organization policy category, not a security verdict."
-  },
   "webmail": {
     "message": "Webmail"
-  },
-  "blockWebmail": {
-    "message": "Block webmail"
-  },
-  "blockWebmailTooltip": {
-    "message": "When enabled, this provider blocks websites categorized as personal email and webmail portals. This is an organization policy category, not a security verdict."
   },
   "remoteAccess": {
     "message": "Remote Access"
   },
-  "blockRemoteAccess": {
-    "message": "Block remote access"
-  },
-  "blockRemoteAccessTooltip": {
-    "message": "When enabled, this provider blocks websites categorized as remote access to other computers. This is an organization policy category, not a security verdict."
-  },
   "aiApplications": {
     "message": "AI Applications"
   },
-  "blockAiApplications": {
-    "message": "Block AI applications"
-  },
-  "blockAiApplicationsTooltip": {
-    "message": "When enabled, this provider blocks websites categorized as generative AI applications that take user input. This is an organization policy category, not a security verdict."
-  },
   "cryptocurrency": {
     "message": "Cryptocurrency"
-  },
-  "blockCryptocurrency": {
-    "message": "Block cryptocurrency"
-  },
-  "blockCryptocurrencyTooltip": {
-    "message": "When enabled, this provider blocks websites categorized as cryptocurrency and other digital currency services. This is an organization policy category, not a security verdict."
   },
   "policyWarningTitle": {
     "message": "This site is blocked by your organization's policy"

@@ -115,14 +115,15 @@ emergency settings migration can clear every rule Osprey installed.
 
 `blockCategories` inside a `ManagedProviderSettings` entry force-sets that provider's block-category toggles. For
 AlphaMountain this covers the security-adjacent toggles (`suspicious`, `newly_registered`, `dynamic_dns`) and the
-content policy categories: `parked`, `adult_content`, `sex_education`, `dating`, `gambling`, `drugs`,
-`alcohol_tobacco`, `weapons`, `hate_discrimination`, `violence_gore`, `piracy`, `hacking`, `social_media`,
-`streaming_media`, `games`, `chat_messaging`, `file_sharing`, `shopping_auctions`, `job_search`, `webmail`,
-`remote_access`, `ai_applications`, `cryptocurrency`. Content categories are acceptable-use policy blocks rather than
-security verdicts: the warning page presents them as blocked by the organization's policy, and severe security verdicts
-always take precedence in what the user sees. Keys unknown to an older extension version are ignored, so a document may
-safely enable categories before every device has updated. Enabling a category implies the AlphaMountain lookup runs; a
-document that enables categories while disabling the provider is contradictory and the provider setting wins.
+content policy categories, which have no settings-page toggles and are set exclusively through the management console:
+`parked`, `adult_content`, `sex_education`, `dating`, `gambling`, `drugs`,`alcohol_tobacco`, `weapons`,
+`hate_discrimination`, `violence_gore`, `piracy`, `hacking`, `social_media`, `streaming_media`, `games`,
+`chat_messaging`, `file_sharing`, `shopping_auctions`, `job_search`, `webmail`, `remote_access`, `ai_applications`,
+`cryptocurrency`. Content categories are acceptable-use policy blocks rather than security verdicts: the warning page
+presents them as blocked by the organization's policy, and severe security verdicts always take precedence in what the
+user sees. Keys unknown to an older extension version are ignored, so a document may safely enable categories before
+every device has updated. Enabling a category implies the AlphaMountain lookup runs; a document that enables categories
+while disabling the provider is contradictory and the provider setting wins.
 
 `CommercialDisabledProviders` is an array of provider ids that are force-disabled on the endpoint. It is honored only
 when it arrives through this remote document; the same key in managed storage (Group Policy, Intune, or a plist) is

@@ -29,6 +29,16 @@
             const providerGroups = globalThis.OspreyProviderGroups;
             const emptyBlockCategories = Object.freeze([]);
 
+            // managedOnly entries never render on the settings page: they exist for the
+            // policy plumbing and are set exclusively from the management console.
+            const managedCategory = key => Object.freeze({
+                key,
+                label: '',
+                tooltip: '',
+                defaultEnabled: false,
+                managedOnly: true,
+            });
+
             const blockCategory = (key, label, tooltip, defaultEnabled) => Object.freeze({
                 key,
                 label,
@@ -40,6 +50,29 @@
                 blockCategory('suspicious', 'blockSuspicious', 'blockSuspiciousTooltip', false),
                 blockCategory('newly_registered', 'blockNewlyRegistered', 'blockNewlyRegisteredTooltip', false),
                 blockCategory('dynamic_dns', 'blockDynamicDns', 'blockDynamicDnsTooltip', false),
+                managedCategory('parked'),
+                managedCategory('adult_content'),
+                managedCategory('sex_education'),
+                managedCategory('dating'),
+                managedCategory('gambling'),
+                managedCategory('drugs'),
+                managedCategory('alcohol_tobacco'),
+                managedCategory('weapons'),
+                managedCategory('hate_discrimination'),
+                managedCategory('violence_gore'),
+                managedCategory('piracy'),
+                managedCategory('hacking'),
+                managedCategory('social_media'),
+                managedCategory('streaming_media'),
+                managedCategory('games'),
+                managedCategory('chat_messaging'),
+                managedCategory('file_sharing'),
+                managedCategory('shopping_auctions'),
+                managedCategory('job_search'),
+                managedCategory('webmail'),
+                managedCategory('remote_access'),
+                managedCategory('ai_applications'),
+                managedCategory('cryptocurrency'),
             ]);
 
             const buildMonomorphicShape = def => Object.freeze({
