@@ -142,7 +142,12 @@ globalThis.OspreyProviderEngine = (() => {
         if (normalized === 'allowed') {
             return protectionResult.resultTypes.ALLOWED;
         }
-        return protectionResult.fromProviderString(normalized);
+
+        const ruleResult = protectionResult.fromProviderString(normalized);
+
+        return protectionResult.isContentCategory(ruleResult)
+            ? protectionResult.resultTypes.ALLOWED
+            : ruleResult;
     };
 
     const emitResult = (provider, targetUrl, result, onResult) => onResult(protectionResult.create({
@@ -158,18 +163,28 @@ globalThis.OspreyProviderEngine = (() => {
 
     const resolveProxyBuiltinOutcome = (provider, data) => {
         const categories = provider.blockCategoryState;
-
-        let hasCategories = false;
-
-        if (categories) {
-            for (const _key in categories) {
-                hasCategories = true;
-                break;
-            }
-        }
+        const hasCategories = Boolean(categories) && Object.keys(categories).length > 0;
 
         if (!hasCategories) {
-            return protectionResult.fromProviderString(data?.result);
+            const scalar = protectionResult.fromProviderString(data?.result);
+
+            if (!protectionResult.isContentCategory(scalar)) {
+                return scalar;
+            }
+
+            const candidates = [];
+
+            if (Array.isArray(data?.results)) {
+                for (const raw of data.results) {
+                    const value = typeof raw === 'string' ? raw.trim().toLowerCase() : '';
+
+                    if (value && !protectionResult.isContentCategory(value)
+                        && protectionResult.blockingResults.has(value)) {
+                        candidates.push(value);
+                    }
+                }
+            }
+            return protectionResult.mostSevere(candidates) || allowedResult;
         }
 
         const list = Array.isArray(data?.results) && data.results.length > 0 ?
@@ -202,7 +217,9 @@ globalThis.OspreyProviderEngine = (() => {
             }
 
             if (protectionResult.blockingResults.has(value)) {
-                blockingCandidates.push(value);
+                if (!protectionResult.isContentCategory(value)) {
+                    blockingCandidates.push(value);
+                }
                 continue;
             }
 
