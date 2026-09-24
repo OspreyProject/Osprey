@@ -101,9 +101,6 @@
   "providersSection": {
     "message": "Поставщики защиты"
   },
-  "thirdPartySection": {
-    "message": "Сторонние интеграции"
-  },
   "resetDefaultProviders": {
     "message": "Сбросить поставщиков защиты"
   },

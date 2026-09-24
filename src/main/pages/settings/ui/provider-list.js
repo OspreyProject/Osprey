@@ -208,15 +208,12 @@ globalThis.OspreyProviderList = (() => {
         const providersState = state.providers;
 
         const builtIns = [];
-        const thirdParty = [];
 
         for (let i = 0, len = definitions.length; i < len; i++) {
             const def = definitions[i];
 
-            if (def.kind === 'proxy_builtin') {
+            if (def.kind === 'proxy_builtin' || def.kind === 'direct_static') {
                 builtIns.push(def);
-            } else if (def.kind === 'direct_static') {
-                thirdParty.push(def);
             }
         }
 
@@ -245,28 +242,6 @@ globalThis.OspreyProviderList = (() => {
 
         fragment.appendChild(builtInSection.section);
 
-        const thirdPartyLength = thirdParty.length;
-        const thirdPartyItems = Array.from({length: thirdPartyLength});
-
-        if (thirdPartyLength > 0) {
-            for (let i = 0; i < thirdPartyLength; i++) {
-                const def = thirdParty[i];
-                const pState = providersState?.[def.id] || defaultProviderState;
-                thirdPartyItems[i] = providerCard.buildProviderCard(def, pState, runtime);
-            }
-        }
-
-        const thirdPartySection = createSection(
-            LangUtil.THIRD_PARTY_SECTION,
-            thirdPartyItems,
-        );
-
-        if (masterDisabled) {
-            thirdPartySection.inner.classList.add('providers-locked');
-        }
-
-        thirdPartySection.section.classList.add('integrations-section');
-        fragment.appendChild(thirdPartySection.section);
         fragment.appendChild(createResetFooter(runtime));
 
         container.replaceChildren(fragment);

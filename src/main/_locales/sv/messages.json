@@ -101,9 +101,6 @@
   "providersSection": {
     "message": "Skyddsleverantörer"
   },
-  "thirdPartySection": {
-    "message": "Tredjepartsintegrationer"
-  },
   "resetDefaultProviders": {
     "message": "Återställ skyddsleverantörer"
   },
@@ -168,7 +165,7 @@
     "message": "Alla inställningar återställda."
   },
   "toastSaveApiKeyFirst": {
-    "message": "Spara en giltig API-nyckel innan du aktiverar denna integration."
+    "message": "Spara en giltig API-nyckel innan du aktiverar den här leverantören."
   },
   "toastFailedToUpdateState": {
     "message": "Det gick inte att uppdatera leverantörens status."

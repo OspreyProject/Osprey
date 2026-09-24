@@ -33,8 +33,7 @@
     "contentSettings"
   ],
   "host_permissions": [
-    "https://api.osprey.ac/*",
-    "https://api.metadefender.com/*"
+    "https://api.osprey.ac/*"
   ],
   "optional_host_permissions": [
     "https://www.google.com/*",

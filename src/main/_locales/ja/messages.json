@@ -101,9 +101,6 @@
   "providersSection": {
     "message": "保護プロバイダー"
   },
-  "thirdPartySection": {
-    "message": "サードパーティ連携"
-  },
   "resetDefaultProviders": {
     "message": "保護プロバイダーをリセット"
   },

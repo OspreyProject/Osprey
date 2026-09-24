@@ -101,9 +101,6 @@
   "providersSection": {
     "message": "Poskytovatelé ochrany"
   },
-  "thirdPartySection": {
-    "message": "Integrace třetích stran"
-  },
   "resetDefaultProviders": {
     "message": "Obnovit poskytovatele ochrany"
   },

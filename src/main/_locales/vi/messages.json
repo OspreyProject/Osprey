@@ -101,9 +101,6 @@
   "providersSection": {
     "message": "Nhà cung cấp bảo vệ"
   },
-  "thirdPartySection": {
-    "message": "Tích hợp của bên thứ ba"
-  },
   "resetDefaultProviders": {
     "message": "Đặt lại nhà cung cấp bảo vệ"
   },

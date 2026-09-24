@@ -19,21 +19,16 @@
 
 globalThis.OspreyProviderCatalog = (() => {
     const catalogValidator = globalThis.OspreyCatalogValidator;
-    const directIntegrations = globalThis.OspreyDirectIntegrations || [];
     const protectionResult = globalThis.OspreyProtectionResult;
     const proxyBuiltins = globalThis.OspreyProxyBuiltins || [];
 
     const apiKeyPattern = /\{api_?key}/;
 
     const builtinsLen = proxyBuiltins.length;
-    const directLen = directIntegrations.length;
-
-    const emptyArray = Object.freeze([]);
-    const allDefinitions = Array.from({length: builtinsLen + directLen});
+    const allDefinitions = Array.from({length: builtinsLen});
 
     const byId = new Map();
     const staticAliasMap = new Map();
-    const sharedApiKeyGroupMembers = new Map();
 
     // Runtime custom providers supplied by a remote configuration document
     // (see policy-service). Kept separate from the static catalog above so the
@@ -70,29 +65,6 @@ globalThis.OspreyProviderCatalog = (() => {
 
     for (let i = 0; i < builtinsLen; i++) {
         processDefinition(proxyBuiltins[i]);
-    }
-
-    for (let i = 0; i < directLen; i++) {
-        const definition = directIntegrations[i];
-        processDefinition(definition);
-
-        if (!definition) {
-            continue;
-        }
-
-        const groupId = definition.sharedApiKeyGroup;
-
-        if (groupId) {
-            const strGroupId = String(groupId);
-            let members = sharedApiKeyGroupMembers.get(strGroupId);
-
-            if (!members) {
-                members = [];
-                sharedApiKeyGroupMembers.set(strGroupId, members);
-            }
-
-            members.push(definition.id);
-        }
     }
 
     allDefinitions.length = defIdx;
@@ -282,21 +254,8 @@ globalThis.OspreyProviderCatalog = (() => {
     };
 
     const getBuiltins = () => proxyBuiltins.slice();
-    const getDirectIntegrations = () => directIntegrations.slice();
-
-    const getSharedGroupMembersById = providerId => {
-        const definition = getDefinition(providerId);
-
-        if (!definition?.sharedApiKeyGroup) {
-            return emptyArray;
-        }
-        return sharedApiKeyGroupMembers.get(String(definition.sharedApiKeyGroup)) || emptyArray;
-    };
-
     return Object.freeze({
         getBuiltins,
-        getDirectIntegrations,
-        getSharedGroupMembersById,
         getAllDefinitions,
         getCustomDefinitions,
         setCustomDefinitions,

@@ -101,9 +101,6 @@
   "providersSection": {
     "message": "مزوّدو الحماية"
   },
-  "thirdPartySection": {
-    "message": "تكاملات الطرف الثالث"
-  },
   "resetDefaultProviders": {
     "message": "إعادة تعيين مزوّدي الحماية"
   },

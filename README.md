@@ -48,12 +48,6 @@ The settings page allows you to configure which protection providers Osprey uses
 
 ###
 
-You can even add your own API keys for third-party integrations that support it:
-
-[![Third-Party Integrations](https://i.imgur.com/xzYLywa.png)](https://i.imgur.com/xzYLywa.png)
-
-###
-
 When Osprey blocks a website, you'll see a warning page like this:
 
 [![Warning Page](https://i.imgur.com/TGvQLk4.png)](https://i.imgur.com/TGvQLk4.png)

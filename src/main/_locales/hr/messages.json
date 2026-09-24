@@ -101,9 +101,6 @@
   "providersSection": {
     "message": "Pružatelji zaštite"
   },
-  "thirdPartySection": {
-    "message": "Integracije trećih strana"
-  },
   "resetDefaultProviders": {
     "message": "Vrati pružatelje zaštite na zadano"
   },

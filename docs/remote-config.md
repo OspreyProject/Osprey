@@ -153,7 +153,7 @@ Rules enforced during validation:
 
 - `id` must match `^[a-z0-9-]+$` and must not collide with a built-in provider id or alias.
 - `group` must be one of `official_partners`, `security_filters`, `feeds`, or
-  `direct_integrations`.
+  `direct_integrations` (retained for existing custom-provider configurations).
 - `kind` must be `proxy_builtin` or `direct_static`.
 
 A custom `proxy_builtin` provider keeps its own `proxyBaseUrl` even when the global
@@ -188,7 +188,7 @@ Use this when the feed speaks the Osprey proxy protocol, for example a feed serv
 ### `direct_static` example
 
 Use this when the feed is a plain HTTP endpoint. The `request` templates and
-`responseRules` follow the same format as the built-in direct integrations.
+`responseRules` specify how the response is interpreted.
 
 ```json
 {

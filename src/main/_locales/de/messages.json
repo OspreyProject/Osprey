@@ -101,9 +101,6 @@
   "providersSection": {
     "message": "Schutzanbieter"
   },
-  "thirdPartySection": {
-    "message": "Drittanbieter-Integrationen"
-  },
   "resetDefaultProviders": {
     "message": "Schutzanbieter zurücksetzen"
   },
@@ -168,7 +165,7 @@
     "message": "Alle Einstellungen wiederhergestellt."
   },
   "toastSaveApiKeyFirst": {
-    "message": "Speichern Sie einen gültigen API-Schlüssel, bevor Sie diese Integration aktivieren."
+    "message": "Speichern Sie einen gültigen API-Schlüssel, bevor Sie diesen Anbieter aktivieren."
   },
   "toastFailedToUpdateState": {
     "message": "Anbieterstatus konnte nicht aktualisiert werden."

@@ -23,7 +23,6 @@ const bootstrapScripts = [
     'shared/timed-signal.js',
     'providers/provider-groups.js',
     'providers/proxy-builtins.js',
-    'providers/direct-integrations.js',
     'catalog/catalog-validator.js',
     'platform/protection-result.js',
     'platform/domain-intel.js',

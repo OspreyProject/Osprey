@@ -101,9 +101,6 @@
   "providersSection": {
     "message": "Koruma sağlayıcıları"
   },
-  "thirdPartySection": {
-    "message": "Üçüncü taraf entegrasyonları"
-  },
   "resetDefaultProviders": {
     "message": "Koruma sağlayıcılarını sıfırla"
   },

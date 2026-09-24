@@ -101,9 +101,6 @@
   "providersSection": {
     "message": "ارائه‌دهندگان محافظت"
   },
-  "thirdPartySection": {
-    "message": "یکپارچه‌سازی‌های شخص ثالث"
-  },
   "resetDefaultProviders": {
     "message": "بازنشانی ارائه‌دهندگان محافظت"
   },

@@ -101,9 +101,6 @@
   "providersSection": {
     "message": "Protection Providers"
   },
-  "thirdPartySection": {
-    "message": "Third-Party Integrations"
-  },
   "resetDefaultProviders": {
     "message": "Reset Protection Providers"
   },
@@ -168,7 +165,7 @@
     "message": "All settings restored."
   },
   "toastSaveApiKeyFirst": {
-    "message": "Save a valid API key before enabling this integration."
+    "message": "Save a valid API key before enabling this provider."
   },
   "toastFailedToUpdateState": {
     "message": "Failed to update provider state."

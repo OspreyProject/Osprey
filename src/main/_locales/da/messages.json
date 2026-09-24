@@ -101,9 +101,6 @@
   "providersSection": {
     "message": "Beskyttelsesudbydere"
   },
-  "thirdPartySection": {
-    "message": "Tredjepartsintegrationer"
-  },
   "resetDefaultProviders": {
     "message": "Nulstil beskyttelsesudbydere"
   },
@@ -168,7 +165,7 @@
     "message": "Alle indstillinger er gendannet."
   },
   "toastSaveApiKeyFirst": {
-    "message": "Gem en gyldig API-nøgle, før du aktiverer denne integration."
+    "message": "Gem en gyldig API-nøgle, før du aktiverer denne udbyder."
   },
   "toastFailedToUpdateState": {
     "message": "Kunne ikke opdatere udbyderens status."

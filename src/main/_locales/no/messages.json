@@ -101,9 +101,6 @@
   "providersSection": {
     "message": "Beskyttelsesleverandører"
   },
-  "thirdPartySection": {
-    "message": "Tredjepartsintegrasjoner"
-  },
   "resetDefaultProviders": {
     "message": "Tilbakestill beskyttelsesleverandører"
   },

@@ -663,18 +663,18 @@ html, body {
 }
 
 /* --------------------------------------------------
-    Third-party provider apply button
+    Direct provider apply button
 -------------------------------------------------- */
-.provider-item.third-party .third-party-apply-btn.is-changed {
+.provider-item.direct-provider .direct-provider-apply-btn.is-changed {
     cursor: pointer;
     opacity: 1;
 }
 
-.provider-item.third-party .third-party-apply-btn.is-changed:hover {
+.provider-item.direct-provider .direct-provider-apply-btn.is-changed:hover {
     background-color: var(--accent-hover);
 }
 
-.provider-item.third-party .third-party-apply-btn.is-changed:active {
+.provider-item.direct-provider .direct-provider-apply-btn.is-changed:active {
     background-color: var(--accent-active);
 }
 
@@ -751,10 +751,6 @@ html, body {
     display: flex;
     flex-direction: column;
     gap: 6px;
-}
-
-.integrations-section {
-    margin-top: 24px;
 }
 
 .master-disable-row {

@@ -101,9 +101,6 @@
   "providersSection": {
     "message": "Proveïdors de protecció"
   },
-  "thirdPartySection": {
-    "message": "Integracions de tercers"
-  },
   "resetDefaultProviders": {
     "message": "Restableix els proveïdors de protecció"
   },

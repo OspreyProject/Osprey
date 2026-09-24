@@ -102,7 +102,6 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
             policies,
             appManagedKeys,
             providerManagedIds,
-            providerManagedApiKeyIds,
             commercialDisabledIds,
         } = policyResult;
 
@@ -227,7 +226,6 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
             policies,
             appManagedKeys,
             providerManagedIds,
-            providerManagedApiKeyIds,
             commercialDisabledIds,
             providers,
             providersById,

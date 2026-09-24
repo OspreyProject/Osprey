@@ -26,108 +26,12 @@ globalThis.OspreyProviderEngine = (() => {
     const urlService = globalThis.OspreyUrlService;
 
     const abortControllers = new Map();
-    const providerNamesCache = new WeakMap();
-
-    const normalizeLookupName = value => typeof value === 'string' ? value.trim().toLowerCase() : String(value || '').trim().toLowerCase();
-
-    const getCachedProviderNames = provider => {
-        let names = providerNamesCache.get(provider);
-
-        if (!names) {
-            const raw = provider?.metaDefenderProviderNames;
-
-            if (Array.isArray(raw)) {
-                names = [];
-
-                for (const element of raw) {
-                    const val = element;
-
-                    if (val) {
-                        names.push(normalizeLookupName(val));
-                    }
-                }
-            } else {
-                names = [];
-            }
-
-            providerNamesCache.set(provider, names);
-        }
-        return names;
-    };
-
-    const createSharedResponseIndexes = responseBody => {
-        const sources = responseBody?.data?.[0]?.lookup_results?.sources;
-
-        if (!Array.isArray(sources) || sources.length === 0) {
-            return null;
-        }
-
-        const metaDefenderMap = new Map();
-
-        for (const element of sources) {
-            const source = element;
-
-            if (source?.provider) {
-                const key = normalizeLookupName(source.provider);
-
-                if (key) {
-                    metaDefenderMap.set(key, source);
-                }
-            }
-        }
-        return metaDefenderMap;
-    };
-
-    const getMetaDefenderProviderBlock = (provider, responseBody, metaDefenderMap = null) => {
-        const providerNames = getCachedProviderNames(provider);
-        const len = providerNames.length;
-
-        if (len === 0) {
-            return null;
-        }
-
-        if (metaDefenderMap instanceof Map) {
-            for (let i = 0; i < len; i++) {
-                const match = metaDefenderMap.get(providerNames[i]);
-
-                if (match) {
-                    return match;
-                }
-            }
-            return null;
-        }
-
-        const sources = responseBody?.data?.[0]?.lookup_results?.sources;
-
-        if (!Array.isArray(sources)) {
-            return null;
-        }
-
-        for (const element of sources) {
-            const source = element;
-
-            if (source?.provider && providerNames.includes(normalizeLookupName(source.provider))) {
-                return source;
-            }
-        }
-        return null;
-    };
-
-    const getRuleEvaluationBody = (provider, responseBody, metaDefenderMap = null) => {
-        if (provider?.responseRuleScope === 'metadefender_provider_block') {
-            return getMetaDefenderProviderBlock(provider, responseBody, metaDefenderMap);
-        }
-        return responseBody;
-    };
-
-    const evaluateDirectResponse = (provider, responseBody, metaDefenderMap = null) => {
-        const evaluationBody = getRuleEvaluationBody(provider, responseBody, metaDefenderMap);
-
-        if (evaluationBody == null) {
+    const evaluateDirectResponse = (provider, responseBody) => {
+        if (responseBody == null) {
             return protectionResult.resultTypes.ALLOWED;
         }
 
-        const matched = responseRuleEngine.evaluateRules(evaluationBody, provider.responseRules || []);
+        const matched = responseRuleEngine.evaluateRules(responseBody, provider.responseRules || []);
 
         if (!matched || matched === 'KNOWN_SAFE') {
             return protectionResult.resultTypes.KNOWN_SAFE;
@@ -383,8 +287,6 @@ globalThis.OspreyProviderEngine = (() => {
 
         try {
             const data = await fetchJsonResponse(activeProviders[0], targetUrl, parentSignal);
-            const metaDefenderMap = createSharedResponseIndexes(data);
-
             const computedOutcomes = [];
             const cacheStorePayload = [];
 
@@ -393,7 +295,7 @@ globalThis.OspreyProviderEngine = (() => {
                 const lookupKey = lookupKeys.get(provider.id);
 
                 try {
-                    const outcome = evaluateDirectResponse(provider, data, metaDefenderMap);
+                    const outcome = evaluateDirectResponse(provider, data);
                     computedOutcomes.push({provider, outcome});
                     cacheStorePayload.push({providerId: provider.id, lookupKey, outcome});
                 } catch (error) {

@@ -101,9 +101,6 @@
   "providersSection": {
     "message": "保护提供商"
   },
-  "thirdPartySection": {
-    "message": "第三方集成"
-  },
   "resetDefaultProviders": {
     "message": "重置保护提供商"
   },

@@ -101,9 +101,6 @@
   "providersSection": {
     "message": "Dostawcy ochrony"
   },
-  "thirdPartySection": {
-    "message": "Integracje zewnętrzne"
-  },
   "resetDefaultProviders": {
     "message": "Przywróć dostawców ochrony"
   },

@@ -33,12 +33,6 @@
       "type": "boolean",
       "default": false
     },
-    "DisableThirdPartyProviders": {
-      "title": "Disable Third-Party Providers",
-      "description": "If true, third-party providers are disabled and cannot be enabled from settings.",
-      "type": "boolean",
-      "default": false
-    },
     "CacheExpirationSeconds": {
       "title": "Cache Expiration Seconds",
       "description": "Cache entry lifetime in seconds.",
@@ -46,12 +40,6 @@
       "minimum": 60,
       "maximum": 2592000,
       "default": 604800
-    },
-    "MetaDefenderApiKey": {
-      "title": "MetaDefender API Key",
-      "description": "Managed API key for the MetaDefender integrations.",
-      "type": "string",
-      "default": ""
     },
     "HideProviderControls": {
       "title": "Hide Provider Controls",

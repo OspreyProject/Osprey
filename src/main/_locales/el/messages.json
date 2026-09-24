@@ -101,9 +101,6 @@
   "providersSection": {
     "message": "Πάροχοι προστασίας"
   },
-  "thirdPartySection": {
-    "message": "Ενσωματώσεις τρίτων"
-  },
   "resetDefaultProviders": {
     "message": "Επαναφορά παρόχων προστασίας"
   },

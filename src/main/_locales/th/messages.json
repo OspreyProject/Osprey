@@ -101,9 +101,6 @@
   "providersSection": {
     "message": "ผู้ให้บริการป้องกัน"
   },
-  "thirdPartySection": {
-    "message": "การผสานรวมจากบุคคลที่สาม"
-  },
   "resetDefaultProviders": {
     "message": "รีเซ็ตผู้ให้บริการป้องกัน"
   },

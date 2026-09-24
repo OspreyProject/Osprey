@@ -101,9 +101,6 @@
   "providersSection": {
     "message": "Fornitori di protezione"
   },
-  "thirdPartySection": {
-    "message": "Integrazioni di terze parti"
-  },
   "resetDefaultProviders": {
     "message": "Reimposta fornitori di protezione"
   },

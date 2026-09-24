@@ -101,9 +101,6 @@
   "providersSection": {
     "message": "Suojauksen tarjoajat"
   },
-  "thirdPartySection": {
-    "message": "Kolmannen osapuolen integraatiot"
-  },
   "resetDefaultProviders": {
     "message": "Palauta suojauksen tarjoajat"
   },

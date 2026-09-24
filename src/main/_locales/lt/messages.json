@@ -101,9 +101,6 @@
   "providersSection": {
     "message": "Apsaugos tiekėjai"
   },
-  "thirdPartySection": {
-    "message": "Trečiųjų šalių integracijos"
-  },
   "resetDefaultProviders": {
     "message": "Atkurti apsaugos tiekėjus"
   },

@@ -101,9 +101,6 @@
   "providersSection": {
     "message": "Beveiligingsproviders"
   },
-  "thirdPartySection": {
-    "message": "Integraties van derden"
-  },
   "resetDefaultProviders": {
     "message": "Beveiligingsproviders herstellen"
   },

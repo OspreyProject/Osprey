@@ -101,9 +101,6 @@
   "providersSection": {
     "message": "보호 공급자"
   },
-  "thirdPartySection": {
-    "message": "타사 통합"
-  },
   "resetDefaultProviders": {
     "message": "보호 공급자 재설정"
   },

@@ -324,7 +324,7 @@ globalThis.OspreyProviderCard = (() => {
     }
 
     function wireProviderInteractions(item, header, toggleSwitch, providerId, options = {}) {
-        const isThirdParty = options.isThirdParty === true;
+        const requiresApiKey = options.requiresApiKey === true;
         const getApiKey = options.getApiKey || null;
         const onStateChanged = options.onStateChanged || null;
         const disabled = options.disabled === true;
@@ -340,7 +340,7 @@ globalThis.OspreyProviderCard = (() => {
             const wasEnabled = toggleSwitch.classList.contains(onString);
             const nextState = !wasEnabled;
 
-            if (nextState && isThirdParty && getApiKey) {
+            if (nextState && requiresApiKey && getApiKey) {
                 const key = getApiKey();
 
                 if (!key?.trim()) {
@@ -579,12 +579,12 @@ globalThis.OspreyProviderCard = (() => {
         return item;
     }
 
-    function createThirdPartyCard(definition, providerState, iconUrl, runtime = null) {
+    function createDirectProviderCard(definition, providerState, iconUrl, runtime = null) {
         const isEnabled = Boolean(providerState?.enabled);
         const savedApiKey = String(providerState?.apiKey || '');
 
         const {item, header, toggleSwitch, body} = createCardShell(
-            'third-party',
+            'direct-provider',
             definition.id,
             definition,
             iconUrl,
@@ -597,20 +597,17 @@ globalThis.OspreyProviderCard = (() => {
         const fieldsLocked = Boolean(
             commercialDisabled ||
             runtime?.effectiveState?.app?.lockProviderSettings ||
-            runtime?.effectiveState?.app?.disableThirdPartyProviders ||
-            masterDisabled ||
-            runtime?.providerManagedApiKeyIds?.has(definition.id),
+            masterDisabled
         );
 
         const toggleLocked = Boolean(
             commercialDisabled ||
             runtime?.effectiveState?.app?.lockProviderSettings ||
-            runtime?.effectiveState?.app?.disableThirdPartyProviders ||
             masterDisabled ||
             runtime?.providerManagedIds?.has(definition.id),
         );
 
-        const thirdPartyProviderName = formHelpers.normalizeProviderName(definition.displayName) || definition.id;
+        const providerName = formHelpers.normalizeProviderName(definition.displayName) || definition.id;
 
         const passwordField = formHelpers.createPasswordField({
             value: formHelpers.sanitizeMultiline(savedApiKey, formHelpers.maxAPIKeyLength),
@@ -619,13 +616,13 @@ globalThis.OspreyProviderCard = (() => {
 
         const applyButton = formHelpers.createElement('button', {
             type: 'button',
-            className: 'action-btn apply-btn third-party-apply-btn',
+            className: 'action-btn apply-btn direct-provider-apply-btn',
             textContent: LangUtil.APPLY_BUTTON,
             disabled: true,
         });
 
         const apiKeyLink = createExternalLinkText(definition.apiKeyUrl, LangUtil.GET_API_KEY + ' ↗',
-            'api-key-link-text', definition.id, `${thirdPartyProviderName}, ${LangUtil.GET_API_KEY}`);
+            'api-key-link-text', definition.id, `${providerName}, ${LangUtil.GET_API_KEY}`);
 
         passwordField.input.disabled = fieldsLocked;
 
@@ -648,12 +645,7 @@ globalThis.OspreyProviderCard = (() => {
                     await providerStateStore.setProviderApiKey(definition.id, apiKey);
 
                     if (apiKey.length === 0) {
-                        const sharedMembers = providerCatalog.getSharedGroupMembersById(definition.id);
-                        const idsToDisable = sharedMembers.length > 0 ? sharedMembers : [definition.id];
-
-                        for (const memberId of idsToDisable) {
-                            await providerStateStore.setProviderEnabled(memberId, false);
-                        }
+                        await providerStateStore.setProviderEnabled(definition.id, false);
 
                         setToggleVisualState(toggleSwitch, false);
                     }
@@ -675,7 +667,7 @@ globalThis.OspreyProviderCard = (() => {
         );
 
         const websiteLink = createExternalLinkText(definition.website, LangUtil.WEBSITE_LINK + ' ↗',
-            'provider-website-link', definition.id, `${thirdPartyProviderName}, ${LangUtil.WEBSITE_LINK}`,
+            'provider-website-link', definition.id, `${providerName}, ${LangUtil.WEBSITE_LINK}`,
             LangUtil.OPEN_PROVIDER_WEBSITE);
 
         const bypassControl = createBypassThresholdControl(definition, providerState, toggleLocked);
@@ -690,7 +682,7 @@ globalThis.OspreyProviderCard = (() => {
         const getSavedKeyField = () => String(providerState?.apiKey || '');
 
         wireProviderInteractions(item, header, toggleSwitch, definition.id, {
-            isThirdParty: providerCatalog.requiresApiKey(definition),
+            requiresApiKey: providerCatalog.requiresApiKey(definition),
             getApiKey: getSavedKeyField,
             disabled: toggleLocked,
         });
@@ -722,7 +714,7 @@ globalThis.OspreyProviderCard = (() => {
         if (kind === 'proxy_builtin') {
             return createBuiltInCard(definition, providerState, iconUrl, runtime);
         } else if (kind === 'direct_static') {
-            return createThirdPartyCard(definition, providerState, iconUrl, runtime);
+            return createDirectProviderCard(definition, providerState, iconUrl, runtime);
         }
         return null;
     }

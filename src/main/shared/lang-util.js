@@ -106,7 +106,6 @@
         POLICY_WARNING_TITLE: 'policyWarningTitle',
         SETTINGS_TITLE: 'settingsTitle',
         PROVIDERS_SECTION: 'providersSection',
-        THIRD_PARTY_SECTION: 'thirdPartySection',
         MASTER_DISABLE_ALL: 'masterDisableAll',
         TOAST_ALL_PROVIDERS_DISABLED: 'toastAllProvidersDisabled',
         TOAST_ALL_PROVIDERS_ENABLED: 'toastAllProvidersEnabled',

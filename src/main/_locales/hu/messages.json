@@ -101,9 +101,6 @@
   "providersSection": {
     "message": "Védelmi szolgáltatók"
   },
-  "thirdPartySection": {
-    "message": "Külső integrációk"
-  },
   "resetDefaultProviders": {
     "message": "Védelmi szolgáltatók visszaállítása"
   },

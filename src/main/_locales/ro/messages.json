@@ -101,9 +101,6 @@
   "providersSection": {
     "message": "Furnizori de protecție"
   },
-  "thirdPartySection": {
-    "message": "Integrări terțe"
-  },
   "resetDefaultProviders": {
     "message": "Resetează furnizorii de protecție"
   },
