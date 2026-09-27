@@ -35,15 +35,6 @@
   "host_permissions": [
     "https://api.osprey.ac/*"
   ],
-  "optional_host_permissions": [
-    "https://www.google.com/*",
-    "https://www.bing.com/*",
-    "https://duckduckgo.com/*",
-    "https://www.youtube.com/*",
-    "https://m.youtube.com/*",
-    "https://youtubei.googleapis.com/*",
-    "https://www.youtube-nocookie.com/*"
-  ],
   "incognito": "split",
   "storage": {
     "managed_schema": "policies.json"

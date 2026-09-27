@@ -78,18 +78,6 @@ globalThis.OspreyPolicyService = (() => {
             mapValue: enumMap(['', 'warn', 'block']),
         },
         {
-            policyKey: 'ManagedSafeSearch',
-            type: 'string',
-            stateKey: 'safeSearch',
-            mapValue: enumMap(['', 'strict']),
-        },
-        {
-            policyKey: 'ManagedYouTubeRestrict',
-            type: 'string',
-            stateKey: 'youtubeRestrict',
-            mapValue: enumMap(['', 'moderate', 'strict']),
-        },
-        {
             policyKey: 'HideWarningProceedButton',
             type: 'boolean',
             stateKey: 'hideWarningProceedButton',

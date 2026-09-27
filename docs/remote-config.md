@@ -104,29 +104,8 @@ domains), mixed-script labels, and DGA-shaped hostnames. Everything computes on 
 browser. In `warn` mode findings are recorded to the local event log only. In `block` mode a lookalike of a protected
 domain blocks with a Lookalike Domain warning; the other signals stay log-only. Both keys default off.
 
-`ManagedSafeSearch` (`""` or `"strict"`) forces SafeSearch on Google, Bing, and DuckDuckGo through request rules on the
-device, and `ManagedYouTubeRestrict` (`""`, `"moderate"`, or `"strict"`) forces YouTube Restricted Mode through the
-`YouTube-Restrict` request header. Both default off. They require host access to the search and YouTube domains, which
-the extension declares as optional permissions; managed deployments grant them through the browser's
-`ExtensionSettings` policy (`runtime_allowed_hosts`) delivered by GPO, Intune, or the Google Admin console alongside the
-other policy keys. Without the grant the rules install but never match, and the device records the degraded state in its
-local event log. Search engines can change their URL parameters at any time, which is why both keys default off and an
-emergency settings migration can clear every rule Osprey installed.
-
 `blockCategories` inside a `ManagedProviderSettings` entry force-sets that provider's block-category toggles. For
-AlphaMountain this covers the security-adjacent toggles (`suspicious`, `newly_registered`, `dynamic_dns`) and the
-content policy categories, which have no settings-page toggles and are set exclusively through the management console.
-The attack-surface half (`parked`, `hacking`, `remote_access`, `file_sharing`, `piracy`, `cryptocurrency`,
-`ai_applications`, `webmail`) is available on every console plan because blocking it is a security decision; the
-acceptable-use half is a Professional plan feature there. The full key set: `parked`, `adult_content`, `sex_education`,
-`dating`, `gambling`, `drugs`, `alcohol_tobacco`, `weapons`, `hate_discrimination`, `violence_gore`, `piracy`,
-`hacking`, `social_media`, `streaming_media`, `games`, `chat_messaging`, `file_sharing`, `shopping_auctions`,
-`job_search`, `webmail`, `remote_access`, `ai_applications`, `cryptocurrency`. Content categories are acceptable-use
-policy blocks rather than security verdicts: the warning page presents them as blocked by the organization's policy, and
-severe security verdicts always take precedence in what the user sees. Keys unknown to an older extension version are
-ignored, so a document may safely enable categories before every device has updated. Enabling a category implies the
-AlphaMountain lookup runs; a document that enables categories while disabling the provider is contradictory and the
-provider setting wins.
+AlphaMountain this covers the security-adjacent toggles (`suspicious`, `newly_registered`, `dynamic_dns`).
 
 `CommercialDisabledProviders` is an array of provider ids that are force-disabled on the endpoint. It is honored only
 when it arrives through this remote document; the same key in managed storage (Group Policy, Intune, or a plist) is
