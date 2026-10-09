@@ -48,6 +48,7 @@ const createEngine = ({shared = false, proxy = false} = {}) => {
         OspreyUrlService: {
             parseHttpUrl: url => new URL(url),
             isAcceptableHost: () => true,
+            isNavigableHost: () => true,
             isInternalHostname: () => false,
             lookupValueForTarget: url => url,
         },

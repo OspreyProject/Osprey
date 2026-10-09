@@ -411,7 +411,7 @@ globalThis.OspreyProviderEngine = (() => {
             return;
         }
 
-        if (!urlService.isAcceptableHost(parsedUrl.hostname) || urlService.isInternalHostname(parsedUrl.hostname)) {
+        if (!urlService.isNavigableHost(parsedUrl.hostname) || urlService.isInternalHostname(parsedUrl.hostname)) {
             return;
         }
 

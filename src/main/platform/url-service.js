@@ -46,9 +46,12 @@ globalThis.OspreyUrlService = (() => {
     const regexIPvFour = /^\d+\.\d+\.\d+\.\d+$/;
     const regexIPvSix = /^\[|]$/g;
     const regexValidHostChars = /^[a-z0-9._-]+$/;
+    // RFC 3986 reg-name characters. Browsers navigate to hosts like `a$b.example`, so parsed URLs
+    // must accept them or those pages would skip every check. Bare host patterns keep the set above.
+    const regexNavigableHostChars = /^[a-z0-9._~!$&'()*+,;=-]+$/;
     const regexValidIPv6Literal = /^\[[0-9a-f:.]+]$/;
 
-    const isAcceptableHost = hostname => {
+    const hostMatches = (hostname, validChars) => {
         if (typeof hostname !== 'string' || hostname.length === 0) {
             return false;
         }
@@ -59,7 +62,7 @@ globalThis.OspreyUrlService = (() => {
             return regexValidIPv6Literal.test(lower);
         }
 
-        if (!regexValidHostChars.test(lower)) {
+        if (!validChars.test(lower)) {
             return false;
         }
 
@@ -80,6 +83,9 @@ globalThis.OspreyUrlService = (() => {
         }
         return true;
     };
+
+    const isAcceptableHost = hostname => hostMatches(hostname, regexValidHostChars);
+    const isNavigableHost = hostname => hostMatches(hostname, regexNavigableHostChars);
 
     let cachedBlockPageUrl = null;
 
@@ -120,7 +126,7 @@ globalThis.OspreyUrlService = (() => {
     const parseHttpUrl = value => {
         if (value instanceof URL) {
             const p = value.protocol;
-            return (p === 'http:' || p === 'https:') && isAcceptableHost(value.hostname) ? value : null;
+            return (p === 'http:' || p === 'https:') && isNavigableHost(value.hostname) ? value : null;
         }
 
         const strVal = String(value);
@@ -128,7 +134,7 @@ globalThis.OspreyUrlService = (() => {
         try {
             const url = new URL(strVal);
             const p = url.protocol;
-            return (p === 'http:' || p === 'https:') && isAcceptableHost(url.hostname) ? url : null;
+            return (p === 'http:' || p === 'https:') && isNavigableHost(url.hostname) ? url : null;
         } catch (error) {
             if (strVal.trim()) {
                 console.warn('OspreyUrlService failed to parse URL', error);
@@ -374,6 +380,7 @@ globalThis.OspreyUrlService = (() => {
         canonicalizeHostname,
         isInternalHostname,
         isAcceptableHost,
+        isNavigableHost,
         buildWarningPageUrl,
         haveSameOrigin,
         isWarningPageUrl,

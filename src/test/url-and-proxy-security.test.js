@@ -201,3 +201,18 @@ test('host permission stays limited to the public API so updates never re-prompt
     assert.deepEqual(manifest.host_permissions, ['https://api.osprey.ac/*']);
     assert.equal(manifest.optional_host_permissions, undefined);
 });
+
+test('URLs with RFC 3986 host characters are checked, while bare host patterns stay strict', () => {
+    const context = vm.createContext({
+        URL,
+        console: {warn() {}},
+        OspreyBrowserAPI: {safeRuntimeURL: path => `chrome-extension://test/${path}`},
+    });
+    load(context, 'platform/url-service.js');
+    const urlService = context.OspreyUrlService;
+    assert.equal(urlService.parseHttpUrl('https://login$secure.evil.com/').hostname, 'login$secure.evil.com');
+    assert.equal(urlService.normalizeUrl('https://login$secure.evil.com/a'), 'https://login$secure.evil.com/a');
+    assert.equal(urlService.isNavigableHost('login$secure.evil.com'), true);
+    assert.equal(urlService.isAcceptableHost('login$secure.evil.com'), false);
+    assert.equal(urlService.parseHttpUrl('https://a{b.evil.com/'), null);
+});
