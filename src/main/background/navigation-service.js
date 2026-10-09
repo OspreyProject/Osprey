@@ -34,7 +34,6 @@ globalThis.OspreyNavigationService = (() => {
         'onCompleted',
         'onHistoryStateUpdated',
         'onReferenceFragmentUpdated',
-        'onCreatedNavigationTarget',
     ];
 
     const setCache = (map, tabId, data) => {

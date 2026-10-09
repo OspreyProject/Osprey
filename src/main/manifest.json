@@ -29,7 +29,6 @@
     "storage",
     "webNavigation",
     "alarms",
-    "declarativeNetRequestWithHostAccess",
     "contentSettings"
   ],
   "host_permissions": [

@@ -31,7 +31,6 @@ const bootstrapScripts = [
     'providers/provider-catalog.js',
     'state/provider-state-store.js',
     'state/policy-service.js',
-    'state/dnr-service.js',
     'platform/request-builder.js',
     'platform/response-rule-engine.js',
     'state/cache-service.js',
@@ -129,11 +128,11 @@ if (typeof importScripts === 'function') {
     const migratableProviderSettings = Object.freeze({
         enabled: {
             read: providerState => providerState.enabled,
-            apply: (providerId, value) => providerStateStore.setProviderEnabled(providerId, value),
+            apply: (providerId, value) => providerStateStore.applyEmergencySetting(providerId, 'enabled', value),
         },
         bypassBlockingThreshold: {
             read: providerState => providerState.bypassBlockingThreshold,
-            apply: (providerId, value) => providerStateStore.setBypassBlockingThreshold(providerId, value),
+            apply: (providerId, value) => providerStateStore.applyEmergencySetting(providerId, 'bypassBlockingThreshold', value),
         },
     });
 
@@ -252,7 +251,7 @@ if (typeof importScripts === 'function') {
 
         [messages.CLEAR_ALLOWED_WEBSITES]: (_message, _tabId, sendResponse) => respondAsync(
             sendResponse,
-            cacheService.clearAll().then(() => ({ok: true})),
+            cacheService.clearAll(),
             'Failed CLEAR_ALLOWED_WEBSITES',
         ),
 
@@ -301,17 +300,6 @@ if (typeof importScripts === 'function') {
             );
         },
 
-        [messages.GET_EVENT_LOG]: (_message, _tabId, sendResponse) => respondAsync(
-            sendResponse,
-            eventLogService.getEvents().then(data => ({ok: true, data})),
-            'Failed GET_EVENT_LOG',
-        ),
-
-        [messages.CLEAR_EVENT_LOG]: (_message, _tabId, sendResponse) => respondAsync(
-            sendResponse,
-            eventLogService.clear().then(() => ({ok: true})),
-            'Failed CLEAR_EVENT_LOG',
-        ),
     };
 
     const handleMessage = (message, sender, sendResponse) => {
@@ -387,7 +375,47 @@ if (typeof importScripts === 'function') {
         }
     };
 
-    const setUpRemoteConfig = async api => {
+    const sessionMarkerKey = 'osprey_session_started';
+
+    // Session storage survives service-worker restarts but not browser restarts, so it separates the two.
+    const detectFreshSession = async () => {
+        try {
+            const stored = await browserAPI.storageGet('session', sessionMarkerKey);
+
+            if (stored?.[sessionMarkerKey]) {
+                return false;
+            }
+
+            await browserAPI.storageSet('session', {[sessionMarkerKey]: true});
+        } catch (error) {
+            console.warn('Failed to read the session marker; treating as a fresh session', error);
+        }
+
+        return true;
+    };
+
+    // Creates the alarm only when missing or changed so worker restarts don't postpone it; returns whether it was created.
+    const ensureAlarm = async (alarms, name, periodInMinutes) => {
+        if (!alarms?.create) {
+            return false;
+        }
+
+        try {
+            const existing = typeof alarms.get === 'function' ? await alarms.get(name) : null;
+
+            if (existing && existing.periodInMinutes === periodInMinutes) {
+                return false;
+            }
+
+            alarms.create(name, {periodInMinutes});
+            return true;
+        } catch (error) {
+            console.error(`Failed to schedule the ${name} alarm`, error);
+            return false;
+        }
+    };
+
+    const setUpRemoteConfig = async (api, freshSession) => {
         if (!policyService || typeof policyService.initRemoteConfig !== 'function') {
             return;
         }
@@ -398,26 +426,32 @@ if (typeof importScripts === 'function') {
             console.error('Failed to load persisted remote config', error);
         }
 
-        globalThis.OspreyDnrService?.sync?.().catch?.(error => {
-            console.warn('Startup DNR sync failed', error);
-        });
+        const created = await ensureAlarm(api.alarms, policyService.remoteConfigAlarmName, policyService.remoteConfigRefreshMinutes);
 
-        const alarms = api.alarms;
-
-        if (alarms?.create) {
-            try {
-                alarms.create(policyService.remoteConfigAlarmName, {
-                    periodInMinutes: policyService.remoteConfigRefreshMinutes,
+        // Idle wake-ups use the persisted config; the alarm refreshes it. Fetch now only for a new session or alarm.
+        if (await freshSession || created) {
+            policyService.refreshRemoteConfig()
+                .then(() => applyUninstallSurvey(api))
+                .catch(error => {
+                    console.error('Startup remote config refresh failed', error);
                 });
-            } catch (error) {
-                console.error('Failed to schedule the remote config refresh alarm', error);
-            }
+        }
+    };
 
-            alarms.onAlarm?.addListener(alarm => {
+    const runFlush = () => eventLogService.flushToReporting().catch(error => {
+        console.error('Event reporting flush failed', error);
+    });
+
+    const runHeartbeat = () => eventLogService.sendHeartbeat().catch(error => {
+        console.error('Reporting heartbeat failed', error);
+    });
+
+    const registerAlarmListeners = api => {
+        if (policyService && typeof policyService.initRemoteConfig === 'function') {
+            api.alarms?.onAlarm?.addListener(alarm => {
                 if (alarm?.name === policyService.remoteConfigAlarmName) {
                     policyService.refreshRemoteConfig()
                         .then(() => applyUninstallSurvey(api))
-                        .then(() => globalThis.OspreyDnrService?.sync?.())
                         .catch(error => {
                             console.error('Scheduled remote config refresh failed', error);
                         });
@@ -425,58 +459,41 @@ if (typeof importScripts === 'function') {
             });
         }
 
-        policyService.refreshRemoteConfig()
-            .then(() => applyUninstallSurvey(api))
-            .then(() => globalThis.OspreyDnrService?.sync?.())
-            .catch(error => {
-                console.error('Startup remote config refresh failed', error);
+        if (eventLogService && typeof eventLogService.flushToReporting === 'function') {
+            api.alarms?.onAlarm?.addListener(alarm => {
+                if (alarm?.name === eventLogService.reportFlushAlarmName) {
+                    runFlush().then(() => {
+                        // ignored
+                    });
+                } else if (alarm?.name === eventLogService.heartbeatAlarmName) {
+                    runHeartbeat().then(() => {
+                        // ignored
+                    });
+                }
             });
+        }
     };
 
-    const setUpReporting = async api => {
+    const setUpReporting = async (api, freshSession) => {
         if (!eventLogService || typeof eventLogService.flushToReporting !== 'function') {
             return;
         }
 
-        const runFlush = () => eventLogService.flushToReporting().catch(error => {
-            console.error('Event reporting flush failed', error);
-        });
+        const createdFlush = await ensureAlarm(api.alarms, eventLogService.reportFlushAlarmName, eventLogService.reportFlushIntervalMinutes);
+        const createdHeartbeat = await ensureAlarm(api.alarms, eventLogService.heartbeatAlarmName, eventLogService.heartbeatIntervalMinutes);
 
-        const runHeartbeat = () => eventLogService.sendHeartbeat().catch(error => {
-            console.error('Reporting heartbeat failed', error);
-        });
-
-        const alarms = api.alarms;
-
-        if (alarms?.create) {
-            try {
-                alarms.create(eventLogService.reportFlushAlarmName, {
-                    periodInMinutes: eventLogService.reportFlushIntervalMinutes,
-                });
-
-                alarms.create(eventLogService.heartbeatAlarmName, {
-                    periodInMinutes: eventLogService.heartbeatIntervalMinutes,
-                });
-            } catch (error) {
-                console.error('Failed to schedule reporting alarms', error);
-            }
-
-            alarms.onAlarm?.addListener(alarm => {
-                if (alarm?.name === eventLogService.reportFlushAlarmName) {
-                    runFlush();
-                } else if (alarm?.name === eventLogService.heartbeatAlarmName) {
-                    runHeartbeat();
-                }
+        // Idle wake-ups are covered by the alarms; only report immediately for a new browser session or a new alarm.
+        if (await freshSession || createdHeartbeat) {
+            runHeartbeat().then(() => {
+                // ignored
             });
         }
 
-        runHeartbeat().then(() => {
-            // ignored
-        });
-
-        runFlush().then(() => {
-            // ignored
-        });
+        if (await freshSession || createdFlush) {
+            runFlush().then(() => {
+                // ignored
+            });
+        }
     };
 
     const init = async () => {
@@ -504,11 +521,18 @@ if (typeof importScripts === 'function') {
             blockingService.clearTab(tabId);
         });
 
-        await runEmergencySettingsMigrations();
-        await setUpRemoteConfig(api);
-        await applyUninstallSurvey(api);
-        await setUpReporting(api);
+        registerAlarmListeners(api);
         navigationService.register();
+
+        const freshSession = detectFreshSession();
+
+        await runEmergencySettingsMigrations();
+        await setUpRemoteConfig(api, freshSession);
+        await applyUninstallSurvey(api);
+
+        setUpReporting(api, freshSession).catch(error => {
+            console.error('Failed to set up reporting', error);
+        });
     };
 
     init().catch(error => {

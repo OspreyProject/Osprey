@@ -57,17 +57,18 @@ globalThis.OspreyResultAggregationService = (() => {
     };
 
     let hydrationPromise = null;
+    let hydrated = false;
     let persistPromise = Promise.resolve();
     let persistScheduled = false;
 
     const markBlockedAuthoritative = tabId => {
-        if (typeof tabId === 'number') {
+        if (!hydrated && typeof tabId === 'number') {
             authoritativeBlocked.add(tabId);
         }
     };
 
     const markMetaAuthoritative = tabId => {
-        if (typeof tabId === 'number') {
+        if (!hydrated && typeof tabId === 'number') {
             authoritativeMeta.add(tabId);
         }
     };
@@ -232,13 +233,19 @@ globalThis.OspreyResultAggregationService = (() => {
 
     const ensureHydrated = () => {
         if (hydrationPromise === null) {
-            hydrationPromise = hydrate();
+            hydrationPromise = hydrate().then(() => {
+                hydrated = true;
+                authoritativeBlocked.clear();
+                authoritativeMeta.clear();
+            });
         }
         return hydrationPromise;
     };
 
     const persistNow = async () => {
         try {
+            // Merge the stored snapshot first so a cold-started worker doesn't overwrite it with empty state.
+            await ensureHydrated();
             await browserAPI.storageSet(sessionArea, {[storageKey]: serializeState()});
         } catch (error) {
             console.warn('Failed to persist blocked-context state to session storage', error);
