@@ -266,3 +266,17 @@ test('a failed managed policy read is retried instead of cached as empty policy'
     failManaged = false;
     assert.equal((await policy.getActionRestrictions()).disableUserAllowlist, true);
 });
+
+test('the user master switch does not disable a provider the admin forced on', async () => {
+    const {store, policy} = createFixture({ManagedProviderSettings: {'phishunt-io': {enabled: true}}});
+    const state = JSON.parse(JSON.stringify(store.getDefaultState()));
+    state.app.disableAllProviders = true;
+    const runtime = await policy.applyToState(state);
+    assert.equal(runtime.effectiveState.providers['phishunt-io'].enabled, true);
+
+    const unmanaged = createFixture();
+    const unmanagedState = JSON.parse(JSON.stringify(unmanaged.store.getDefaultState()));
+    unmanagedState.app.disableAllProviders = true;
+    const unmanagedRuntime = await unmanaged.policy.applyToState(unmanagedState);
+    assert.equal(unmanagedRuntime.effectiveState.providers['phishunt-io'].enabled, false);
+});

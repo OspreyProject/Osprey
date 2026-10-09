@@ -958,9 +958,13 @@ globalThis.OspreyPolicyService = (() => {
 
         if (effective.app.disableAllProviders) {
             const providerIds = Object.keys(effective.providers);
+            const managedSettings = isPlainObject(policies.ManagedProviderSettings) ? policies.ManagedProviderSettings : {};
 
             for (const providerId of providerIds) {
-                effective.providers[providerId].enabled = false;
+                // The user's master switch does not override a provider the admin forced on.
+                if (managedSettings[providerId]?.enabled !== true) {
+                    effective.providers[providerId].enabled = false;
+                }
             }
         }
 
