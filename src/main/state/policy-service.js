@@ -46,7 +46,13 @@ globalThis.OspreyPolicyService = (() => {
     let cachedManagedListConfig = null;
     let lastSeededCustomKey = null;
     let managedRevision = 0;
+    // Bumped whenever cachedEffectivePolicies is invalidated, so a build that raced the
+    // invalidation is not cached over it.
+    let effectiveRevision = 0;
     let lastGoodManagedPolicies = null;
+    // Fallback results returned after a failed managed read. Anything derived from them must not be
+    // cached, or the failure would outlive the retry the fallback promises.
+    const managedFallbacks = new WeakSet();
     const effectiveCategoriesStorageKey = 'osprey_effective_categories';
     let effectiveCategoriesBaseline = null;
 
@@ -359,7 +365,9 @@ globalThis.OspreyPolicyService = (() => {
                     // in this worker if there are any, without caching the fallback, so the next
                     // call retries the read.
                     console.warn('OspreyPolicyService failed to read managed policies; retrying on next use', error);
-                    return lastGoodManagedPolicies || Object.freeze({});
+                    const fallback = Object.freeze({...lastGoodManagedPolicies});
+                    managedFallbacks.add(fallback);
+                    return fallback;
                 }
             } finally {
                 cachedManagedPoliciesPromise = null;
@@ -516,11 +524,15 @@ globalThis.OspreyPolicyService = (() => {
                     return getRemoteConfig({fresh: true});
                 }
 
-                cachedRemoteConfig = Object.freeze({
+                const config = Object.freeze({
                     policies: Object.freeze({...stored.policies}),
                     customProviders: Object.freeze(stored.customProviders.slice()),
                 });
-                return cachedRemoteConfig;
+
+                if (!managedFallbacks.has(managed)) {
+                    cachedRemoteConfig = config;
+                }
+                return config;
             } finally {
                 if (cachedRemoteConfigPromise === promise) {
                     cachedRemoteConfigPromise = null;
@@ -610,6 +622,7 @@ globalThis.OspreyPolicyService = (() => {
         }
 
         const revision = managedRevision;
+        const startEffectiveRevision = effectiveRevision;
         const [managed, remote] = await Promise.all([
             getManagedPolicies({fresh}),
             getRemoteConfig({fresh}),
@@ -619,8 +632,16 @@ globalThis.OspreyPolicyService = (() => {
             return getPolicies({fresh: true});
         }
 
-        cachedEffectivePolicies = buildEffectivePolicies(managed, remote.policies);
-        return cachedEffectivePolicies;
+        if (startEffectiveRevision !== effectiveRevision) {
+            return getPolicies();
+        }
+
+        const effective = buildEffectivePolicies(managed, remote.policies);
+
+        if (!managedFallbacks.has(managed)) {
+            cachedEffectivePolicies = effective;
+        }
+        return effective;
     };
 
     const isAllowedTransport = parsed => parsed.protocol === 'https:';
@@ -816,6 +837,7 @@ globalThis.OspreyPolicyService = (() => {
 
         cachedEffectivePolicies = null;
         cachedManagedListConfig = null;
+        effectiveRevision++;
         lastSeededCustomKey = null;
 
         await seedCustomProviders();
@@ -987,6 +1009,7 @@ globalThis.OspreyPolicyService = (() => {
         cachedManagedPoliciesPromise = null;
         cachedEffectivePolicies = null;
         cachedManagedListConfig = null;
+        effectiveRevision++;
     };
 
     const invalidateRemote = () => {
@@ -994,6 +1017,7 @@ globalThis.OspreyPolicyService = (() => {
         cachedRemoteConfigPromise = null;
         cachedEffectivePolicies = null;
         cachedManagedListConfig = null;
+        effectiveRevision++;
     };
 
     const getManagedListConfig = async () => {

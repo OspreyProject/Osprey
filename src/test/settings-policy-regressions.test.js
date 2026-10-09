@@ -251,3 +251,18 @@ test('custom providers are registered before state normalization and survive set
     assert.equal(fixture.local.osprey_state.providers['custom-intel'].apiKey, 'saved');
     assert.equal(fixture.local.osprey_state.providers['custom-intel'].enabled, false);
 });
+
+test('a failed managed policy read is retried instead of cached as empty policy', async () => {
+    const {context, policy} = createFixture({DisableUserAllowlist: true});
+    const read = context.OspreyBrowserAPI.storageGet;
+    let failManaged = true;
+    context.OspreyBrowserAPI.storageGet = async (area, key) => {
+        if (area === 'managed' && failManaged) {
+            throw new Error('managed storage unavailable');
+        }
+        return read(area, key);
+    };
+    assert.equal((await policy.getActionRestrictions()).disableUserAllowlist, false);
+    failManaged = false;
+    assert.equal((await policy.getActionRestrictions()).disableUserAllowlist, true);
+});
