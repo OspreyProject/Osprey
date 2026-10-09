@@ -7,7 +7,7 @@ on:
     branches: [ 'main' ]
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -40,6 +40,11 @@ jobs:
       - name: 'Remove storage from manifest.json'
         run: |
           jq 'del(.storage)' src/main/manifest.json > src/main/manifest_temp.json
+          mv src/main/manifest_temp.json src/main/manifest.json
+
+      - name: 'Remove contentSettings permission'
+        run: |
+          jq '.permissions -= ["contentSettings"]' src/main/manifest.json > src/main/manifest_temp.json
           mv src/main/manifest_temp.json src/main/manifest.json
 
       - name: 'Add menus permission'
