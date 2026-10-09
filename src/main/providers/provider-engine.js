@@ -136,7 +136,8 @@ globalThis.OspreyProviderEngine = (() => {
 
             if (value === allowedResult || value === knownSafeResult || value === 'safe') {
                 sawAllowSignal = true;
-            } else if (value === failedResult) {
+            } else {
+                // An unrecognized verdict is not evidence of safety, matching fromProviderString.
                 sawFailed = true;
             }
         }

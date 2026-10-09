@@ -25,7 +25,7 @@ const deferred = () => {
 };
 const tick = () => new Promise(resolve => setImmediate(resolve));
 
-const createEngine = ({shared = false, proxy = false} = {}) => {
+const createEngine = ({shared = false, proxy = false, categories = null} = {}) => {
     const requests = [];
     const allowed = [];
     const blocked = [];
@@ -59,6 +59,7 @@ const createEngine = ({shared = false, proxy = false} = {}) => {
             },
             blockingResults: new Set(['malicious']),
             fromProviderString: result => result || 'failed',
+            mostSevere: list => list[0] || null,
             create: value => value,
         },
         OspreyResponseRuleEngine: {evaluateRules: body => body.result},
@@ -99,6 +100,7 @@ const createEngine = ({shared = false, proxy = false} = {}) => {
     const providers = (shared ? ['a', 'b'] : ['a']).map(id => ({
         id, displayName: id, kind: proxy ? 'proxy_builtin' : 'direct',
         state: {enabled: true}, ...(shared ? {sharedRequestGroup: 'group'} : {}),
+        ...(categories ? {blockCategoryState: categories} : {}),
     }));
     const scan = (tabId, url = 'https://evil.example/') => {
         const observed = [];
@@ -444,4 +446,14 @@ test('failed cache writes back off instead of retrying every flush interval', as
 
     const retries = delays.slice(-3);
     assert.ok(retries[0] < retries[1] && retries[1] < retries[2], `delays did not grow: ${delays}`);
+});
+
+test('unrecognized proxy verdicts with block categories fail instead of caching as allowed', async () => {
+    const engine = createEngine({proxy: true, categories: {suspicious: false}});
+    const scan = engine.scan(1);
+    await tick();
+    engine.requests[0].resolve({ok: true, json: async () => ({results: ['scam']})});
+    await scan;
+    assert.deepEqual(engine.results.get(1).map(result => result.result), ['failed']);
+    assert.equal(engine.allowed.length, 0);
 });
