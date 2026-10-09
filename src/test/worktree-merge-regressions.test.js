@@ -95,3 +95,25 @@ test('notification registry is never rewritten when it could not be read', async
     assert.equal((await service.blockForUrl('https://scam.example/')).ok, true);
     assert.equal(settings.length, 1);
 });
+
+test('custom providers with malformed block categories or report emails are rejected', () => {
+    const context = vm.createContext({URL, console: {warn() {}}, OspreyProviderGroups: {feeds: {}}});
+    load(context, 'catalog/catalog-validator.js');
+    const definition = overrides => ({
+        id: 'test-feed', kind: 'direct_static', group: 'feeds', displayName: 'Test Feed',
+        enabledByDefault: true, lookupTarget: 'url', icon: 'icon.svg', tags: [],
+        report: {type: 'none'}, request: {urlTemplate: 'https://feed.example/check', headers: []},
+        responseRules: [{path: 'value', operator: 'equals', value: 'bad', result: 'BLOCKED'}],
+        ...overrides,
+    });
+    const accepted = overrides => context.OspreyCatalogValidator.validateCustom([definition(overrides)], []).valid.length === 1;
+    const mailto = email => ({report: {type: 'mailto_false_positive', email, productName: 'Feed'}});
+
+    assert.equal(accepted({blockCategories: [{key: 'newly_registered', label: 'blockNewlyRegistered'}]}), true);
+    assert.equal(accepted({blockCategories: [null]}), false);
+    assert.equal(accepted({blockCategories: [{label: 'missing key'}]}), false);
+    assert.equal(accepted({blockCategories: {key: 'suspicious'}}), false);
+    assert.equal(accepted(mailto('reports@feed.example')), true);
+    assert.equal(accepted(mailto('a@b.example?cc=x@evil.example&')), false);
+    assert.equal(accepted(mailto('a@b.example#x')), false);
+});

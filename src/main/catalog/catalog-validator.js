@@ -32,6 +32,9 @@ globalThis.OspreyCatalogValidator = (() => {
     ]);
 
     const idPattern = /^[a-z0-9-]+$/;
+    const categoryKeyPattern = /^[a-z0-9_]+$/;
+    // The address is placed before the link's own query, so it must not carry one of its own.
+    const reportEmailPattern = /^[^\s@?&#/:%]+@[^\s@?&#/:%]+\.[^\s@?&#/:%]+$/;
     // Matches idPattern but collides with Object.prototype members used as keys on plain-object state.
     const reservedIds = new Set(['constructor', 'prototype']);
     const maxRegexPatternLength = 512;
@@ -172,7 +175,7 @@ globalThis.OspreyCatalogValidator = (() => {
 
         switch (report.type) {
             case 'mailto_false_positive':
-                if (typeof report.email !== 'string' || !report.email.includes('@')) {
+                if (typeof report.email !== 'string' || !reportEmailPattern.test(report.email)) {
                     fail(`Invalid report email for ${definition.id}`);
                 }
 
@@ -192,6 +195,28 @@ globalThis.OspreyCatalogValidator = (() => {
                 ensureUrl(`Template report URL for ${definition.id}`,
                     report.template.replaceAll('{url}', 'https%3A%2F%2Fexample.com').replaceAll('{hostname}', 'example.com'));
                 break;
+        }
+    };
+
+    const validateBlockCategories = definition => {
+        if (definition.blockCategories === undefined) {
+            return;
+        }
+
+        requireArray(definition.blockCategories, `Block categories must be an array for ${definition.id}`);
+        const keys = new Set();
+
+        for (const category of definition.blockCategories) {
+            requireObject(category, `Invalid block category for ${definition.id}`);
+            requirePattern(category.key, categoryKeyPattern, `Invalid block category key for ${definition.id}`);
+            addUnique(keys, category.key, `Duplicate block category for ${definition.id}: ${category.key}`);
+            requireString(category.label, `Missing block category label for ${definition.id}`);
+
+            for (const flag of ['defaultEnabled', 'managedOnly']) {
+                if (category[flag] !== undefined) {
+                    requireBoolean(category[flag], `Invalid block category ${flag} flag for ${definition.id}`);
+                }
+            }
         }
     };
 
@@ -333,6 +358,7 @@ globalThis.OspreyCatalogValidator = (() => {
         requireString(definition.icon, `Icon path must be a string for ${id}`);
         requireArray(definition.tags, `Tags must be an array for ${id}`);
         validateReport(definition, definition.report);
+        validateBlockCategories(definition);
 
         if (kind === 'proxy_builtin') {
             validateProxyBuiltin(definition, state.proxyEndpoints);
