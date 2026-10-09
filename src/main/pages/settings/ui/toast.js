@@ -37,7 +37,10 @@ globalThis.OspreyToast = (() => {
 
         container = formHelpers.createElement('div', {
             className: 'toast-container',
+            role: 'status',
         });
+
+        container.setAttribute('aria-live', 'polite');
 
         container.addEventListener('click', e => {
             const card = e.target.closest('.toast-notification');
@@ -134,6 +137,9 @@ globalThis.OspreyToast = (() => {
 
         timers[targetIndex] = globalThis.setTimeout(() => dismiss(targetIndex), durationMs);
     }
+
+    // Screen readers ignore live regions inserted together with their content, so create it up front.
+    getContainer();
 
     return Object.freeze({
         show,
