@@ -98,3 +98,4 @@ machinet.conf
 # Extensions
 *.crx
 *.pem
+static-analysis-findings.md
