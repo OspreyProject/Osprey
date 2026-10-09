@@ -194,7 +194,8 @@ globalThis.OspreyNotificationService = (() => {
         const patterns = Object.keys(registry).filter(pattern => {
             try {
                 const hostname = new URL(pattern.slice(0, -2)).hostname;
-                return hostname === target;
+                // Callers allowlist the host with its subdomains, so their blocks are reverted too.
+                return hostname === target || hostname.endsWith(`.${target}`);
             } catch {
                 return false;
             }

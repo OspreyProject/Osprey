@@ -349,7 +349,7 @@ test('notification service records unsupported browsers and resets only tracked 
     };
     await service.blockForUrl('https://www.example.com:8443/path');
     assert.equal(settings[0].primaryPattern, 'https://www.example.com:8443/*');
-    await service.resetForHost('example.com');
+    await service.resetForHost('ample.com');
     assert.equal(settings.length, 1);
     await service.resetForHost('www.example.com');
     assert.equal(settings[1].setting, 'ask');

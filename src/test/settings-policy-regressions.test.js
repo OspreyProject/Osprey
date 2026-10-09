@@ -295,3 +295,38 @@ test('the user master switch does not disable a provider the admin forced on', a
     const unmanagedRuntime = await unmanaged.policy.applyToState(unmanagedState);
     assert.equal(unmanagedRuntime.effectiveState.providers['phishunt-io'].enabled, false);
 });
+
+test('notification reset after allowlisting a host also reverts its subdomains', async () => {
+    const registry = {
+        'https://login.allowed.example/*': true,
+        'https://allowed.example/*': true,
+        'https://notallowed.example/*': true,
+    };
+    const reverted = [];
+    const context = vm.createContext({
+        URL,
+        chrome: {
+            runtime: {},
+            contentSettings: {
+                notifications: {
+                    set: (details, done) => {
+                        reverted.push(details.primaryPattern);
+                        done();
+                    },
+                },
+            },
+        },
+        OspreyBrowserAPI: {
+            storage: {
+                local: {
+                    get: (_, done) => done({osprey_notification_origins: {...registry}}),
+                    set: (_, done) => done(),
+                },
+            },
+        },
+    });
+    load(context, 'state/notification-service.js');
+    const result = await context.OspreyNotificationService.resetForHost('allowed.example');
+    assert.equal(result.ok, true);
+    assert.deepEqual(reverted.sort(), ['https://allowed.example/*', 'https://login.allowed.example/*']);
+});
