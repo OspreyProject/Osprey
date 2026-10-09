@@ -636,6 +636,14 @@ globalThis.OspreyCacheService = (() => {
             value = value.slice(2);
         }
 
+        // Matching uses only the path, so a query or fragment would make the entry never match.
+        const suffixIndex = value.search(/[?#]/);
+        const hadQueryOrFragment = suffixIndex !== -1;
+
+        if (hadQueryOrFragment) {
+            value = value.slice(0, suffixIndex);
+        }
+
         let host = value;
         let pathPrefix = '';
         const slashIndex = value.indexOf('/');
@@ -665,7 +673,7 @@ globalThis.OspreyCacheService = (() => {
             pathPrefix = pathPrefix.replace(/\/+$/, '');
         }
 
-        return {host, pathPrefix, includeSubdomains};
+        return {host, pathPrefix, includeSubdomains, hadQueryOrFragment};
     };
 
     const hostMatchesPattern = (urlHost, pattern) =>
@@ -703,7 +711,14 @@ globalThis.OspreyCacheService = (() => {
 
         const parsed = {
             source: config,
-            allow: config.allowlist.map(parseManagedPattern).filter(Boolean),
+            // Dropping the query would widen an allow entry, so such entries are ignored instead.
+            allow: config.allowlist.map(parseManagedPattern).filter(pattern => {
+                if (pattern?.hadQueryOrFragment) {
+                    console.warn('OspreyCacheService ignoring managed allowlist entry with a query or fragment');
+                    return false;
+                }
+                return Boolean(pattern);
+            }),
             // Blocklist entries always cover subdomains: matching more is the safe direction for a
             // block, and it keeps deployments written before exact-host matching fully covered.
             block: config.blocklist.map(parseManagedPattern).filter(Boolean)

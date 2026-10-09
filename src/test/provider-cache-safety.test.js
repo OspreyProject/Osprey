@@ -344,6 +344,50 @@ test('capacity eviction drops cached verdicts before user exclusions', async () 
     assert.equal(await cache.getAllowedEntry('a', 'clean-0'), null);
 });
 
+test('managed list entries with a query block by path, but allow entries with one are ignored', async () => {
+    const records = new Map();
+    const config = {
+        allowlist: ['https://ok.example/portal?x=1'],
+        blocklist: ['https://phish.example/login?x=1#top'],
+        disableUserAllowlist: false,
+    };
+    const db = {
+        transaction: () => {
+            const tx = {
+                objectStore: () => ({
+                    get: key => {
+                        const request = {result: records.get(key)};
+                        queueMicrotask(() => request.onsuccess?.());
+                        return request;
+                    },
+                }),
+            };
+            setImmediate(() => tx.oncomplete?.());
+            return tx;
+        },
+    };
+    const context = vm.createContext({
+        URL, console: {warn() {}, error() {}}, setTimeout, clearTimeout, setInterval: () => 0,
+        indexedDB: {
+            open: () => {
+                const request = {result: db};
+                queueMicrotask(() => request.onsuccess?.());
+                return request;
+            },
+        },
+        OspreyBrowserAPI: {storageGet: async () => ({})},
+        OspreyProtectionResult: {resultTypes: {}},
+        OspreyPolicyService: {getManagedListConfig: async () => config},
+    });
+    load(context, 'platform/url-service.js');
+    load(context, 'state/cache-service.js');
+    const cache = context.OspreyCacheService;
+    assert.equal((await cache.getManagedListDecision('https://phish.example/login')).blocked, true);
+    assert.equal((await cache.getManagedListDecision('https://phish.example/login?y=2')).blocked, true);
+    assert.equal((await cache.getManagedListDecision('https://phish.example/home')).blocked, false);
+    assert.equal((await cache.getManagedListDecision('https://ok.example/portal')).allowed, false);
+});
+
 test('failed cache writes back off instead of retrying every flush interval', async () => {
     const delays = [];
     const timers = [];
