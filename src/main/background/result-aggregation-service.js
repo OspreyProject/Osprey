@@ -480,6 +480,13 @@ globalThis.OspreyResultAggregationService = (() => {
     };
 
     const releaseTab = tabId => {
+        if (!hydrated) {
+            // A cold-started worker has not restored this tab's stored context yet. Release it after
+            // hydration so a warning page closed meanwhile still gets its orphan grace period.
+            ensureHydrated().then(() => releaseTab(tabId));
+            return;
+        }
+
         markBlockedAuthoritative(tabId);
         markMetaAuthoritative(tabId);
 

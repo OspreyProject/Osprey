@@ -124,6 +124,40 @@ test('hydration shields closed tabs, then releases all per-tab authority markers
     assert.equal(Object.keys(snapshots.at(-1).tabs).length, 0);
 });
 
+test('releasing a tab on a cold worker keeps its stored context adoptable', async () => {
+    const context = vm.createContext({
+        console,
+        OspreyBrowserAPI: {
+            storageGet: async () => ({
+                'osprey.blockedContexts': {
+                    tabs: {
+                        '1': {
+                            blocked: {
+                                url: 'https://blocked.example/',
+                                entries: [['provider', 'malicious']],
+                                total: 1
+                            },
+                            frameZeroUrl: 'https://blocked.example/',
+                            warningReady: true,
+                        }
+                    },
+                }
+            }),
+            storageSet: async () => {
+            },
+        },
+        OspreyProtectionResult: {severityRank: () => 1},
+        OspreyUrlService: {normalizeUrl: url => url},
+    });
+    load(context, 'background/result-aggregation-service.js');
+    const service = context.OspreyResultAggregationService;
+    service.releaseTab(1);
+    await service.ensureHydrated();
+    assert.equal(service.getBlockedContext(1), null);
+    assert.equal(service.adoptForUrl(2, 'https://blocked.example/'), true);
+    assert.equal(service.getBlockedContext(2)?.url, 'https://blocked.example/');
+});
+
 test('navigation service does not register an unhandled navigation-target event', () => {
     const registered = [];
     const webNavigation = Object.fromEntries(
