@@ -97,7 +97,7 @@ globalThis.OspreyExclusionsPage = (() => {
 
         if (!value) {
             resolveContainer()?.querySelector('.excl-add-input')?.focus();
-            return;
+            return Promise.resolve();
         }
 
         return runAction(async () => {
@@ -124,18 +124,26 @@ globalThis.OspreyExclusionsPage = (() => {
 
         if (response?.ok) {
             toast.show(LangUtil.TOAST_EXCLUSION_REMOVED);
+        } else {
+            toast.show(LangUtil.TOAST_FAILED_TO_SAVE, true);
         }
 
         await render();
     });
 
     const removeProviderEntries = entries => runAction(async () => {
-        await Promise.all(entries.map(entry => send(messages.REMOVE_PROVIDER_EXCLUSION, {
+        // Settled rather than all-or-nothing: entries that were removed must disappear from the list even if another failed.
+        const results = await Promise.allSettled(entries.map(entry => send(messages.REMOVE_PROVIDER_EXCLUSION, {
             providerId: entry.providerId,
             lookupKey: entry.lookupKey
         })));
 
-        toast.show(LangUtil.TOAST_EXCLUSION_REMOVED);
+        if (results.every(result => result.status === 'fulfilled' && result.value?.ok)) {
+            toast.show(LangUtil.TOAST_EXCLUSION_REMOVED);
+        } else {
+            toast.show(LangUtil.TOAST_FAILED_TO_SAVE, true);
+        }
+
         await render();
     });
 

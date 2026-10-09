@@ -173,8 +173,16 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         }
     }
 
+    // Trims trailing slashes from the path only. The query is part of the blocked URL, and a
+    // query ending in "/" (for example ?next=/) must survive intact or the URL stops matching the
+    // blocked context the background recorded.
     function stripTrailingSlash(parsed) {
-        return parsed.toString().replace(/\/+$/, '');
+        const copy = new URL(parsed.href);
+
+        if (copy.pathname.length > 1) {
+            copy.pathname = copy.pathname.replace(/\/+$/, '') || '/';
+        }
+        return copy.toString();
     }
 
     function buildContext(fields) {
@@ -602,7 +610,8 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
             !appState?.hideWarningReportButton && currentContext.cachedReportUrl !== null;
 
         setButtonState(domElements.reportWebsite, canReport, canReport);
-        setButtonState(domElements.allowWebsite, canAct, canAct);
+        const canAllow = canAct && !appState?.disableUserAllowlist && !appState?.lockUserAllowlist;
+        setButtonState(domElements.allowWebsite, canAllow, canAllow);
         setButtonState(domElements.continueButton, canContinue, canContinue);
         setButtonState(domElements.backButton, true, true);
         setElementVisibility(domElements.reportBreakpoint, canReport && canAct);
@@ -703,28 +712,18 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
                 });
 
                 if (response?.ok === true && response.allowed === true) {
-                    stopApprovalWatch();
-                    await sendNavigationMessage(buildActionMessage(messages.CONTINUE_TO_WEBSITE));
+                    const navigation = await sendNavigationMessage(buildActionMessage(messages.CONTINUE_TO_WEBSITE));
+
+                    if (navigation?.ok === true && navigation.navigated === true) {
+                        stopApprovalWatch();
+                    } else {
+                        console.warn('WarningPage approval watch could not resume the blocked URL', navigation);
+                    }
                 }
             } catch (error) {
                 console.warn('WarningPage approval watch check failed', error);
             }
         }, approvalWatchIntervalMS);
-    }
-
-    function buildRequestPageUrl(supportUrlParsed, app) {
-        const requestUrl = new URL(supportUrlParsed.href);
-        const blockedUrl = typeof currentContext?.blockedUrl === 'string' ? currentContext.blockedUrl : '';
-        const userEmail = typeof app?.userEmail === 'string' ? app.userEmail.trim() : '';
-
-        if (blockedUrl) {
-            requestUrl.searchParams.set('url', blockedUrl);
-        }
-
-        if (userEmail && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userEmail)) {
-            requestUrl.searchParams.set('email', userEmail);
-        }
-        return requestUrl.toString();
     }
 
     function applySupportContact(app) {
@@ -751,7 +750,7 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
         container.appendChild(document.createTextNode(' '));
 
         if (supportUrlParsed) {
-            const supportLink = buildSupportLink(LangUtil.SUPPORT_CONTACT_LINK, buildRequestPageUrl(supportUrlParsed, app));
+            const supportLink = buildSupportLink(LangUtil.SUPPORT_CONTACT_LINK, supportUrlParsed.toString());
             supportLink.addEventListener('click', startApprovalWatch);
             container.appendChild(supportLink);
         }
@@ -861,19 +860,26 @@ globalThis.WarningSingleton = globalThis.WarningSingleton || (() => {
             });
         }
 
-        currentContext = parsePageContext(document.URL);
-        currentOrigin = currentContext.origin;
-
         localizePage();
-        showContext(currentContext);
-        registerVisibilityListeners();
-        syncCounterForVisibility();
 
-        providerStateStore.getState()
+        policyService.ensureCustomProviders()
+            .then(() => {
+                currentContext = parsePageContext(document.URL);
+                currentOrigin = currentContext.origin;
+                showContext(currentContext);
+                registerVisibilityListeners();
+                syncCounterForVisibility();
+                return providerStateStore.getState();
+            })
             .then(state => policyService.applyToAppState(state))
             .then(result => wireActions({app: result.effectiveApp}))
             .catch(error => {
                 console.warn('WarningPage failed to resolve effective settings; applying fallback restrictions', error);
+                currentContext = parsePageContext(document.URL);
+                currentOrigin = currentContext.origin;
+                showContext(currentContext);
+                registerVisibilityListeners();
+                syncCounterForVisibility();
                 wireActions(fallbackState);
             }).finally(revealPage);
     }

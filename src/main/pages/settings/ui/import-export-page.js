@@ -30,7 +30,7 @@ globalThis.OspreyImportExportPage = (() => {
 
     const isLocked = () => {
         const app = currentRuntime?.effectiveState?.app;
-        return Boolean(app?.lockProviderSettings);
+        return Boolean(app?.lockProviderSettings || app?.disableSettingsReset);
     };
 
     const buildFileName = () => {
@@ -68,6 +68,15 @@ globalThis.OspreyImportExportPage = (() => {
 
         try {
             const state = await providerStateStore.getState();
+            const app = {...state.app};
+            delete app.lockProviderSettings;
+            delete app.disableSettingsReset;
+            delete app.lockUserAllowlist;
+            const providers = Object.fromEntries(Object.entries(state.providers).map(([id, provider]) => {
+                const settings = {...provider};
+                delete settings.apiKey;
+                return [id, settings];
+            }));
 
             const envelope = {
                 type: envelopeType,
@@ -76,8 +85,8 @@ globalThis.OspreyImportExportPage = (() => {
 
                 state: {
                     version: state.version,
-                    app: state.app,
-                    providers: state.providers,
+                    app,
+                    providers,
                 },
             };
 

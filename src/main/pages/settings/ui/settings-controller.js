@@ -165,9 +165,20 @@ globalThis.SettingsSingleton = globalThis.SettingsSingleton || (() => {
         console.error('SettingsPage: initialization failed', error);
     };
 
+    let refreshSequence = 0;
+
     const refresh = async () => {
+        const sequence = ++refreshSequence;
+
         try {
-            currentRuntime = await providerRuntimeFactory.createRuntime();
+            const runtime = await providerRuntimeFactory.createRuntime();
+
+            // A newer refresh has started, so this result may already be stale.
+            if (sequence !== refreshSequence) {
+                return;
+            }
+
+            currentRuntime = runtime;
             renderActivePage();
         } catch (error) {
             onRefreshError(error);
