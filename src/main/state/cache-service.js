@@ -279,12 +279,17 @@ globalThis.OspreyCacheService = (() => {
         if (overflow > 0) {
             let deleted = 0;
 
-            for (const key of entriesMap.keys()) {
-                entriesMap.delete(key);
-                deleted++;
+            // Evict cached verdicts before the user's own exclusions, oldest first in each pass.
+            for (const evictUserAllowed of [false, true]) {
+                for (const [key, entry] of entriesMap) {
+                    if (deleted >= overflow) {
+                        break;
+                    }
 
-                if (deleted >= overflow) {
-                    break;
+                    if (Boolean(entry?.userAllowed) === evictUserAllowed) {
+                        entriesMap.delete(key);
+                        deleted++;
+                    }
                 }
             }
 

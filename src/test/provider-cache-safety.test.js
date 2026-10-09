@@ -331,3 +331,15 @@ test('expired verdicts are ignored and disabled user allowlists hide stored excl
     assert.equal(await managed.getAllowedEntry('a', 'user'), null);
     assert.ok(await managed.getAllowedEntry('a', 'cached'));
 });
+
+test('capacity eviction drops cached verdicts before user exclusions', async () => {
+    const cache = createCacheService(new Map());
+    await cache.markAllowed('a', 'user', 600, true);
+
+    for (let i = 0; i < 600; i++) {
+        await cache.markAllowed('a', `clean-${i}`, 600);
+    }
+
+    assert.equal((await cache.getAllowedEntry('a', 'user')).userAllowed, true);
+    assert.equal(await cache.getAllowedEntry('a', 'clean-0'), null);
+});
