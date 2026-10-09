@@ -58,10 +58,24 @@ globalThis.OspreyReportLinkBuilder = (() => {
                     return '';
                 }
 
-                if (!tmpl.includes('{url}')) {
-                    return tmpl;
+                let reportUrl = tmpl;
+
+                if (reportUrl.includes('{hostname}')) {
+                    try {
+                        const parsed = new URL(context?.blockedUrl || '');
+
+                        if (!['http:', 'https:'].includes(parsed.protocol) || !parsed.hostname) {
+                            console.warn('OspreyReportLinkBuilder received a non-HTTP blocked URL for a hostname report');
+                            return null;
+                        }
+
+                        reportUrl = reportUrl.replaceAll('{hostname}', encodeURIComponent(parsed.hostname));
+                    } catch (error) {
+                        console.warn('OspreyReportLinkBuilder could not parse the blocked URL for a hostname report', error);
+                        return null;
+                    }
                 }
-                return tmpl.replaceAll('{url}', getEncodedUrl(context?.blockedUrl || ''));
+                return reportUrl.replaceAll('{url}', getEncodedUrl(context?.blockedUrl || ''));
 
             case 'mailto_false_positive':
                 const encodedUrl = getEncodedUrl(context?.blockedUrl || '');

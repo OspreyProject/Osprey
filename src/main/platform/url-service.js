@@ -45,7 +45,7 @@ globalThis.OspreyUrlService = (() => {
     const regexTrailingDots = /\.+$/;
     const regexIPvFour = /^\d+\.\d+\.\d+\.\d+$/;
     const regexIPvSix = /^\[|]$/g;
-    const regexValidHostChars = /^[a-z0-9.-]+$/;
+    const regexValidHostChars = /^[a-z0-9._-]+$/;
     const regexValidIPv6Literal = /^\[[0-9a-f:.]+]$/;
 
     const isAcceptableHost = hostname => {
@@ -74,9 +74,7 @@ globalThis.OspreyUrlService = (() => {
         for (let i = 0, len = labels.length; i < len; i++) {
             const label = labels[i];
 
-            if (label.length === 0 ||
-                label.codePointAt(0) === 45 ||
-                label.codePointAt(label.length - 1) === 45) {
+            if (label.length === 0) {
                 return false;
             }
         }
@@ -236,13 +234,23 @@ globalThis.OspreyUrlService = (() => {
             return null;
         }
 
-        normalized.search = retainedSearch(normalized.hostname, normalized.pathname, normalized.searchParams);
         normalized.hash = '';
-        normalized.port = '';
 
         const result = normalized.href;
         normalizeUrlCache.setToMap(cacheKey, result);
         return result;
+    };
+
+    const normalizeLookupUrl = value => {
+        const normalized = normalizeUrl(value);
+
+        if (!normalized) {
+            return null;
+        }
+
+        const url = new URL(normalized);
+        url.search = retainedSearch(url.hostname, url.pathname, url.searchParams);
+        return url.href;
     };
 
     const lookupValueForTarget = (url, target) => {
@@ -258,6 +266,10 @@ globalThis.OspreyUrlService = (() => {
         return normalizeUrl(parsed);
     };
 
+    const internalSuffixes = Object.freeze(['.local', '.localhost', '.internal', '.lan', '.localdomain', '.home.arpa']);
+    const regexMappedIPvSixHex = /^::ffff:([0-9a-f]{1,4}):([0-9a-f]{1,4})$/;
+    const regexMappedIPvSixDotted = /^::ffff:(\d+\.\d+\.\d+\.\d+)$/;
+
     const isInternalHostname = hostname => {
         if (typeof hostname !== 'string' || hostname.length === 0) {
             return true;
@@ -265,7 +277,7 @@ globalThis.OspreyUrlService = (() => {
 
         const lower = canonicalizeHostname(hostname);
 
-        if (lower === 'localhost' || lower.codePointAt(lower.length - 1) === 108 && lower.endsWith('.local')) {
+        if (lower === 'localhost' || internalSuffixes.some(suffix => lower.endsWith(suffix))) {
             return true;
         }
 
@@ -275,16 +287,38 @@ globalThis.OspreyUrlService = (() => {
             const second = Number(parts[1]);
 
             return first === 10 || first === 127 || first === 0 ||
+                first === 100 && second >= 64 && second <= 127 ||
                 first === 169 && second === 254 ||
                 first === 172 && second >= 16 && second <= 31 ||
-                first === 192 && second === 168;
+                first === 192 && second === 168 ||
+                first === 198 && (second === 18 || second === 19);
         }
 
         if (lower.includes(':')) {
             const compact = lower.replace(regexIPvSix, '');
-            return compact === '::1' || compact.startsWith('fc') || compact.startsWith('fd') || compact.startsWith('fe80');
+
+            // IPv4-mapped addresses take the verdict of the embedded IPv4 address.
+            const dotted = regexMappedIPvSixDotted.exec(compact);
+
+            if (dotted) {
+                return isInternalHostname(dotted[1]);
+            }
+
+            const hex = regexMappedIPvSixHex.exec(compact);
+
+            if (hex) {
+                const high = Number.parseInt(hex[1], 16);
+                const low = Number.parseInt(hex[2], 16);
+                return isInternalHostname(`${high >> 8}.${high & 255}.${low >> 8}.${low & 255}`);
+            }
+
+            // ::1, ::, unique-local fc00::/7, link-local fe80::/10 and deprecated site-local fec0::/10.
+            return compact === '::1' || compact === '::' || compact.startsWith('fc') || compact.startsWith('fd') ||
+                /^fe[89abcdef]/.test(compact);
         }
-        return false;
+
+        // A single-label name (such as "intranet") only resolves on a private network.
+        return !lower.includes('.');
     };
 
     const maxBlockedUrlParamLength = 8192;
@@ -335,6 +369,7 @@ globalThis.OspreyUrlService = (() => {
     return Object.freeze({
         parseHttpUrl,
         normalizeUrl,
+        normalizeLookupUrl,
         lookupValueForTarget,
         canonicalizeHostname,
         isInternalHostname,

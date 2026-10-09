@@ -32,7 +32,45 @@ globalThis.OspreyCatalogValidator = (() => {
     ]);
 
     const idPattern = /^[a-z0-9-]+$/;
+    // Matches idPattern but collides with Object.prototype members used as keys on plain-object state.
+    const reservedIds = new Set(['constructor', 'prototype']);
     const maxRegexPatternLength = 512;
+
+    const isSafeRegexPattern = pattern => {
+        if (typeof pattern !== 'string' || pattern.length > maxRegexPatternLength) {
+            return false;
+        }
+
+        let inClass = false;
+        let quantifiers = 0;
+
+        for (let i = 0; i < pattern.length; i++) {
+            const char = pattern[i];
+
+            if (char === '\\') {
+                if (++i >= pattern.length || /[1-9]/.test(pattern[i])) {
+                    return false;
+                }
+                continue;
+            }
+
+            if (char === '[' && !inClass) {
+                inClass = true;
+            } else if (char === ']' && inClass) {
+                inClass = false;
+            } else if (!inClass) {
+                if (char === '(' || char === ')' || char === '|' || char === '{' || char === '}') {
+                    return false;
+                }
+                if (char === '*' || char === '+' || char === '?') {
+                    if (++quantifiers > 1) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return !inClass;
+    };
 
     const isPrivateHost = hostname => {
         const host = String(hostname || '').toLowerCase();
@@ -146,11 +184,13 @@ globalThis.OspreyCatalogValidator = (() => {
                 break;
 
             case 'url_template':
-                if (typeof report.template !== 'string' || !report.template.includes('{url}')) {
-                    fail(`URL-template report for ${definition.id} must include {url}`);
+                if (typeof report.template !== 'string' ||
+                    (!report.template.includes('{url}') && !report.template.includes('{hostname}'))) {
+                    fail(`URL-template report for ${definition.id} must include {url} or {hostname}`);
                 }
 
-                ensureUrl(`Template report URL for ${definition.id}`, report.template.replaceAll('{url}', 'https%3A%2F%2Fexample.com'));
+                ensureUrl(`Template report URL for ${definition.id}`,
+                    report.template.replaceAll('{url}', 'https%3A%2F%2Fexample.com').replaceAll('{hostname}', 'example.com'));
                 break;
         }
     };
@@ -164,8 +204,8 @@ globalThis.OspreyCatalogValidator = (() => {
         if (String(rule.operator || '') === 'regex') {
             const pattern = String(rule.value == null ? '' : rule.value);
 
-            if (pattern.length > maxRegexPatternLength) {
-                fail(`Response rule regex exceeds ${maxRegexPatternLength} characters for ${definition.id}`);
+            if (!isSafeRegexPattern(pattern)) {
+                fail(`Unsafe response rule regex for ${definition.id}`);
             }
 
             try {
@@ -270,6 +310,10 @@ globalThis.OspreyCatalogValidator = (() => {
 
         requireOneOf(kind, validKinds, `Invalid provider kind for ${id}: ${kind}`);
         requirePattern(id, idPattern, `Invalid provider id: ${id}`);
+
+        if (reservedIds.has(id)) {
+            fail(`Reserved provider id: ${id}`);
+        }
 
         addUnique(state.ids, id, `Duplicate provider id: ${id}`);
         validateAliases(definition, state.aliases);
@@ -388,5 +432,6 @@ globalThis.OspreyCatalogValidator = (() => {
     return Object.freeze({
         validate,
         validateCustom,
+        isSafeRegexPattern,
     });
 })();

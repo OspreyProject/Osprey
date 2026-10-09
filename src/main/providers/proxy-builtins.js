@@ -71,7 +71,7 @@
 
             const cloudflareReport = Object.freeze({
                 type: 'url_template',
-                template: 'https://radar.cloudflare.com/domains/feedback/{url}',
+                template: 'https://radar.cloudflare.com/domains/feedback/{hostname}',
             });
 
             const spamhausReport = Object.freeze({

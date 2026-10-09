@@ -26,6 +26,38 @@ globalThis.OspreyProviderEngine = (() => {
     const urlService = globalThis.OspreyUrlService;
 
     const abortControllers = new Map();
+    const pendingResults = new Map();
+
+    const pendingFor = (providerId, lookupKey) => pendingResults.get(providerId)?.get(lookupKey);
+    const beginPending = (providerId, lookupKey) => {
+        let byKey = pendingResults.get(providerId);
+
+        if (!byKey) {
+            byKey = new Map();
+            pendingResults.set(providerId, byKey);
+        }
+
+        let resolve;
+        const promise = new Promise(done => {
+            resolve = done;
+        });
+
+        byKey.set(lookupKey, {promise, resolve});
+    };
+    const finishPending = (providerId, lookupKey, outcome) => {
+        const byKey = pendingResults.get(providerId);
+        const pending = byKey?.get(lookupKey);
+
+        if (pending) {
+            byKey.delete(lookupKey);
+
+            if (byKey.size === 0) {
+                pendingResults.delete(providerId);
+            }
+            pending.resolve(outcome);
+        }
+    };
+
     const evaluateDirectResponse = (provider, responseBody) => {
         if (responseBody == null) {
             return protectionResult.resultTypes.ALLOWED;
@@ -46,12 +78,7 @@ globalThis.OspreyProviderEngine = (() => {
         if (normalized === 'allowed') {
             return protectionResult.resultTypes.ALLOWED;
         }
-
-        const ruleResult = protectionResult.fromProviderString(normalized);
-
-        return protectionResult.isContentCategory(ruleResult)
-            ? protectionResult.resultTypes.ALLOWED
-            : ruleResult;
+        return protectionResult.fromProviderString(normalized);
     };
 
     const emitResult = (provider, targetUrl, result, onResult) => onResult(protectionResult.create({
@@ -70,30 +97,12 @@ globalThis.OspreyProviderEngine = (() => {
         const hasCategories = Boolean(categories) && Object.keys(categories).length > 0;
 
         if (!hasCategories) {
-            const scalar = protectionResult.fromProviderString(data?.result);
-
-            if (!protectionResult.isContentCategory(scalar)) {
-                return scalar;
-            }
-
-            const candidates = [];
-
-            if (Array.isArray(data?.results)) {
-                for (const raw of data.results) {
-                    const value = typeof raw === 'string' ? raw.trim().toLowerCase() : '';
-
-                    if (value && !protectionResult.isContentCategory(value)
-                        && protectionResult.blockingResults.has(value)) {
-                        candidates.push(value);
-                    }
-                }
-            }
-            return protectionResult.mostSevere(candidates) || allowedResult;
+            return protectionResult.fromProviderString(data?.result);
         }
 
-        const list = Array.isArray(data?.results) && data.results.length > 0 ?
-            data.results :
-            typeof data?.result === 'string' && data.result ? [data.result] : null;
+        const list = Array.isArray(data?.results) && data.results.length > 0
+            ? data.results
+            : typeof data?.result === 'string' && data.result ? [data.result] : null;
 
         if (!list) {
             return failedResult;
@@ -121,9 +130,7 @@ globalThis.OspreyProviderEngine = (() => {
             }
 
             if (protectionResult.blockingResults.has(value)) {
-                if (!protectionResult.isContentCategory(value)) {
-                    blockingCandidates.push(value);
-                }
+                blockingCandidates.push(value);
                 continue;
             }
 
@@ -167,7 +174,7 @@ globalThis.OspreyProviderEngine = (() => {
             cacheService.markBlocked(provider.id, lookupKey, outcome, expirationSeconds).catch(() => {
                 // ignored
             });
-        } else {
+        } else if (outcome !== failedResult) {
             cacheService.markAllowed(provider.id, lookupKey, expirationSeconds).catch(() => {
                 // ignored
             });
@@ -177,12 +184,10 @@ globalThis.OspreyProviderEngine = (() => {
         emitResult(provider, targetUrl, outcome, onResult);
     };
 
-    const checkProviderCache = async (provider, lookupKey, targetUrl, expirationSeconds, onResult, globalAllowMatched) => {
+    const checkProviderCache = async (
+        provider, lookupKey, targetUrl, onResult, globalAllowMatched, parentSignal, pendingReplays, retry
+    ) => {
         if (globalAllowMatched) {
-            cacheService.markAllowed(provider.id, lookupKey, expirationSeconds).catch(() => {
-                // ignored
-            });
-
             emitResult(provider, targetUrl, protectionResult.resultTypes.ALLOWED, onResult);
             return false;
         }
@@ -203,11 +208,32 @@ globalThis.OspreyProviderEngine = (() => {
             return false;
         }
 
-        if (cacheService.isProcessing(provider.id, lookupKey)) {
+        const pending = pendingFor(provider.id, lookupKey);
+
+        if (pending) {
             console.debug(`[${provider.displayName}] URL is already processing: ${targetUrl}`);
             emitResult(provider, targetUrl, protectionResult.resultTypes.WAITING, onResult);
-            return false;
+            if (pendingReplays) {
+                pendingReplays.push(pending.promise.then(outcome => {
+                    if (parentSignal.aborted) {
+                        return;
+                    }
+                    return outcome === null ? retry() : emitResult(provider, targetUrl, outcome, onResult);
+                }));
+                return false;
+            }
+            const outcome = await pending.promise;
+
+            if (parentSignal.aborted) {
+                return false;
+            }
+
+            if (outcome !== null) {
+                emitResult(provider, targetUrl, outcome, onResult);
+                return false;
+            }
         }
+        beginPending(provider.id, lookupKey);
         return true;
     };
 
@@ -223,11 +249,12 @@ globalThis.OspreyProviderEngine = (() => {
             return;
         }
 
-        if (!await checkProviderCache(provider, lookupKey, targetUrl, expirationSeconds, onResult, globalAllowMatched)) {
+        if (!await checkProviderCache(provider, lookupKey, targetUrl, onResult, globalAllowMatched, parentSignal)) {
             return;
         }
 
         cacheService.markProcessing(provider.id, lookupKey, tabId);
+        let finalOutcome = null;
 
         try {
             const data = await fetchJsonResponse(provider, targetUrl, parentSignal);
@@ -236,6 +263,7 @@ globalThis.OspreyProviderEngine = (() => {
                 resolveProxyBuiltinOutcome(provider, data) :
                 evaluateDirectResponse(provider, data);
 
+            finalOutcome = outcome;
             await finalizeProviderResult(provider, lookupKey, targetUrl, expirationSeconds, onResult, outcome);
         } catch (error) {
             if (isNavigationReplaced(error, parentSignal)) {
@@ -244,9 +272,11 @@ globalThis.OspreyProviderEngine = (() => {
                 console.warn(`[${provider.displayName}] Failed to check URL: ${error}`);
             }
 
-            emitResult(provider, targetUrl, protectionResult.resultTypes.FAILED, onResult);
+            finalOutcome = isNavigationReplaced(error, parentSignal) ? null : failedResult;
+            emitResult(provider, targetUrl, failedResult, onResult);
         } finally {
             cacheService.clearProcessing(provider.id, lookupKey);
+            finishPending(provider.id, lookupKey, finalOutcome);
         }
     };
 
@@ -259,29 +289,48 @@ globalThis.OspreyProviderEngine = (() => {
 
         const lookupKeys = new Map();
         const activeProviders = [];
+        const finalOutcomes = new Map();
+        const pendingReplays = [];
 
-        for (let i = 0; i < providersLen; i++) {
-            const provider = providers[i];
-            const lookupKey = urlService.lookupValueForTarget(targetUrl, provider.lookupTarget || 'url');
+        try {
+            for (let i = 0; i < providersLen; i++) {
+                const provider = providers[i];
+                const lookupKey = urlService.lookupValueForTarget(targetUrl, provider.lookupTarget || 'url');
 
-            if (!lookupKey) {
-                console.warn(`OspreyProviderEngine could not derive a lookup key for provider '${provider.id}' and URL '${targetUrl}'`);
-                continue;
+                if (!lookupKey) {
+                    console.warn(`OspreyProviderEngine could not derive a lookup key for provider '${provider.id}' and URL '${targetUrl}'`);
+                    continue;
+                }
+
+                lookupKeys.set(provider.id, lookupKey);
+
+                if (!await checkProviderCache(
+                    provider, lookupKey, targetUrl, onResult, globalAllowMatched, parentSignal,
+                    pendingReplays,
+                    () => fetchSharedProviderResults(
+                        [provider], targetUrl, parentSignal, expirationSeconds, onResult, tabId, globalAllowMatched
+                    ),
+                )) {
+                    continue;
+                }
+                cacheService.markProcessing(provider.id, lookupKey, tabId);
+                activeProviders.push(provider);
             }
-
-            lookupKeys.set(provider.id, lookupKey);
-
-            if (!await checkProviderCache(provider, lookupKey, targetUrl, expirationSeconds, onResult, globalAllowMatched)) {
-                continue;
+        } catch (error) {
+            // A cache read failed part-way through. Every lookup this call already claimed must be
+            // released, or later lookups for the same key would wait on it forever.
+            for (const provider of activeProviders) {
+                const lookupKey = lookupKeys.get(provider.id);
+                cacheService.clearProcessing(provider.id, lookupKey);
+                finishPending(provider.id, lookupKey, null);
             }
-
-            cacheService.markProcessing(provider.id, lookupKey, tabId);
-            activeProviders.push(provider);
+            throw error;
         }
 
         const activeLen = activeProviders.length;
 
         if (activeLen === 0) {
+            await Promise.all(pendingReplays);
             return;
         }
 
@@ -296,11 +345,13 @@ globalThis.OspreyProviderEngine = (() => {
 
                 try {
                     const outcome = evaluateDirectResponse(provider, data);
+                    finalOutcomes.set(provider.id, outcome);
                     computedOutcomes.push({provider, outcome});
                     cacheStorePayload.push({providerId: provider.id, lookupKey, outcome});
                 } catch (error) {
                     console.warn(`[${provider.displayName}] Failed to evaluate shared response: ${error}`);
-                    computedOutcomes.push({provider, outcome: protectionResult.resultTypes.FAILED});
+                    finalOutcomes.set(provider.id, failedResult);
+                    computedOutcomes.push({provider, outcome: failedResult});
                 }
             }
 
@@ -322,9 +373,10 @@ globalThis.OspreyProviderEngine = (() => {
                     console.info(`[${provider.displayName}] Failed to check URL: ${error}`);
                 } else {
                     console.warn(`[${provider.displayName}] Failed to check URL: ${error}`);
+                    finalOutcomes.set(provider.id, failedResult);
                 }
 
-                emitResult(provider, targetUrl, protectionResult.resultTypes.FAILED, onResult);
+                emitResult(provider, targetUrl, failedResult, onResult);
             }
         } finally {
             for (let i = 0; i < activeLen; i++) {
@@ -333,9 +385,11 @@ globalThis.OspreyProviderEngine = (() => {
 
                 if (lookupKey) {
                     cacheService.clearProcessing(id, lookupKey);
+                    finishPending(id, lookupKey, finalOutcomes.get(id) ?? null);
                 }
             }
         }
+        await Promise.all(pendingReplays);
     };
 
     const abortTab = async tabId => {

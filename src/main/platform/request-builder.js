@@ -91,7 +91,7 @@ globalThis.OspreyRequestBuilder = (() => {
                 method: 'POST',
                 headers,
                 body: JSON.stringify({
-                    url: urlService.normalizeUrl(url),
+                    url: urlService.normalizeLookupUrl(url),
                 }),
             },
             timeoutMs: providerState.requestTimeoutMs > 0 ? providerState.requestTimeoutMs : 7000,
@@ -108,9 +108,10 @@ globalThis.OspreyRequestBuilder = (() => {
         }
 
         const request = provider.request || {};
-        const normUrl = urlService.normalizeUrl(parsed);
+        const normUrl = urlService.normalizeLookupUrl(parsed);
         const hostname = parsed.hostname;
-        const lookupValue = urlService.lookupValueForTarget(parsed, provider.lookupTarget || 'url');
+        const lookupKey = urlService.lookupValueForTarget(parsed, provider.lookupTarget || 'url');
+        const lookupValue = provider.lookupTarget === 'hostname' ? lookupKey : normUrl;
 
         const reqHeaders = request.headers;
         const headers = {};
@@ -135,7 +136,7 @@ globalThis.OspreyRequestBuilder = (() => {
             }
         }
 
-        if (method === 'POST' && !headers['Content-Type']) {
+        if (method === 'POST' && !Object.keys(headers).some(name => name.toLowerCase() === 'content-type')) {
             headers['Content-Type'] = request.contentType || 'application/json';
         }
 
@@ -157,7 +158,7 @@ globalThis.OspreyRequestBuilder = (() => {
                 body: method === 'POST' ? replaceTemplate(request.bodyTemplate, normUrl, hostname, lookupValue, apiKey, false) : undefined,
             },
             timeoutMs,
-            lookupKey: lookupValue,
+            lookupKey,
         };
     };
 

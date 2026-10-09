@@ -20,6 +20,7 @@
 globalThis.OspreyResponseRuleEngine = (() => {
     const defaultResult = 'ALLOWED';
     const maxCacheSize = 5000;
+    const maxRegexInputLength = 1024;
 
     const operators = Object.freeze(Object.assign(Object.create(null), {
         greater_than: (actual, expected) => Number(actual) > Number(expected),
@@ -156,6 +157,12 @@ globalThis.OspreyResponseRuleEngine = (() => {
         }
 
         if (operator === 'regex') {
+            if (!globalThis.OspreyCatalogValidator?.isSafeRegexPattern(expected) ||
+                String(actual ?? '').length > maxRegexInputLength) {
+                console.warn('OspreyResponseRuleEngine rejected unsafe regex rule or oversized input');
+                return false;
+            }
+
             try {
                 let rx = lruGet(regexCache, expected);
 
