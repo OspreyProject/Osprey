@@ -35,7 +35,6 @@ globalThis.OspreyProviderCatalog = (() => {
     // built-in set is never mutated, and rebuilt wholesale by setCustomDefinitions.
     const customById = new Map();
     const customAliasMap = new Map();
-    let customDefinitions = [];
 
     let defIdx = 0;
 
@@ -76,6 +75,14 @@ globalThis.OspreyProviderCatalog = (() => {
 
     let combinedDefinitions = allDefinitions;
 
+    const customChangeListeners = [];
+
+    const onCustomDefinitionsChanged = listener => {
+        if (typeof listener === 'function') {
+            customChangeListeners.push(listener);
+        }
+    };
+
     const setCustomDefinitions = definitions => {
         customById.clear();
         customAliasMap.clear();
@@ -107,8 +114,15 @@ globalThis.OspreyProviderCatalog = (() => {
             accepted.push(definition);
         }
 
-        customDefinitions = accepted;
         combinedDefinitions = accepted.length > 0 ? Object.freeze(allDefinitions.concat(accepted)) : allDefinitions;
+
+        for (const listener of customChangeListeners) {
+            try {
+                listener();
+            } catch (error) {
+                console.error('OspreyProviderCatalog custom definitions listener failed', error);
+            }
+        }
         return accepted.length;
     };
 
@@ -120,7 +134,6 @@ globalThis.OspreyProviderCatalog = (() => {
     };
 
     const getAllDefinitions = () => combinedDefinitions;
-    const getCustomDefinitions = () => customDefinitions.slice();
 
     const getDefinition = idOrAlias => {
         if (!idOrAlias) {
@@ -197,25 +210,6 @@ globalThis.OspreyProviderCatalog = (() => {
         return false;
     };
 
-    const proxyEndpointUrl = definition => {
-        if (definition?.kind !== 'proxy_builtin') {
-            return '';
-        }
-
-        let base = definition.proxyBaseUrl || globalThis.OspreyDefaultProxyBaseUrl || 'https://api.osprey.ac';
-
-        if (base.endsWith('/')) {
-            base = base.replace(/\/+$/, '');
-        }
-
-        let endpoint = definition.endpoint || definition.id || '';
-
-        if (endpoint.startsWith('/')) {
-            endpoint = endpoint.replace(/^\/+/, '');
-        }
-        return `${base}/${endpoint}`;
-    };
-
     const supportsBlockingResult = (definition, result) => {
         if (!result) {
             return false;
@@ -257,12 +251,11 @@ globalThis.OspreyProviderCatalog = (() => {
     return Object.freeze({
         getBuiltins,
         getAllDefinitions,
-        getCustomDefinitions,
         setCustomDefinitions,
+        onCustomDefinitionsChanged,
         isCustomProvider,
         getDefinition,
         requiresApiKey,
-        proxyEndpointUrl,
         supportsBlockingResult,
         resolveIconUrl,
     });

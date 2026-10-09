@@ -52,7 +52,7 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
             return '';
         }
 
-        if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+        if (!policyService.isAllowedTransport(parsed)) {
             return '';
         }
         return parsed.origin;
@@ -88,6 +88,7 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
         return Object.freeze(out);
     };
 
+    let generation = 0;
     let cachedRuntime = null;
     let loadingRuntime = null;
     let cachedAppRuntime = null;
@@ -256,12 +257,18 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
             return loadingRuntime;
         }
 
+        const startedAt = generation;
         const loadPromise = buildRuntime();
         loadingRuntime = loadPromise;
 
         try {
-            cachedRuntime = await loadPromise;
-            return cachedRuntime;
+            const runtime = await loadPromise;
+
+            // An invalidation during the build means this runtime was derived from stale state.
+            if (startedAt === generation) {
+                cachedRuntime = runtime;
+            }
+            return runtime;
         } finally {
             if (loadingRuntime === loadPromise) {
                 loadingRuntime = null;
@@ -278,12 +285,17 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
             return loadingAppRuntime;
         }
 
+        const startedAt = generation;
         const loadPromise = buildAppRuntime();
         loadingAppRuntime = loadPromise;
 
         try {
-            cachedAppRuntime = await loadPromise;
-            return cachedAppRuntime;
+            const runtime = await loadPromise;
+
+            if (startedAt === generation) {
+                cachedAppRuntime = runtime;
+            }
+            return runtime;
         } finally {
             if (loadingAppRuntime === loadPromise) {
                 loadingAppRuntime = null;
@@ -292,11 +304,16 @@ globalThis.OspreyProviderRuntimeFactory = (() => {
     };
 
     const invalidate = () => {
+        generation++;
         cachedRuntime = null;
         cachedAppRuntime = null;
+        loadingRuntime = null;
+        loadingAppRuntime = null;
     };
 
     const remoteConfigStorageKey = 'osprey_remote_config';
+
+    globalThis.OspreyProviderCatalog?.onCustomDefinitionsChanged?.(invalidate);
 
     globalThis.OspreyBrowserAPI.api?.storage?.onChanged?.addListener((changes, area) => {
         const localRelevant = area === 'local' && (changes?.[providerStateStore.stateKey] || changes?.[remoteConfigStorageKey]);

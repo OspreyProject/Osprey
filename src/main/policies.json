@@ -23,7 +23,7 @@
     },
     "LockProviderSettings": {
       "title": "Lock Provider Settings",
-      "description": "If true, provider toggles and provider settings are locked in the options page.",
+      "description": "If true, effective provider settings use catalog defaults and managed overrides instead of user-writable local settings, including the disable-all switch. Locally entered provider API keys are credentials, not settings, and keep working.",
       "type": "boolean",
       "default": false
     },
@@ -41,6 +41,36 @@
       "maximum": 2592000,
       "default": 604800
     },
+    "ManagedNotificationProtection": {
+      "title": "Managed Notification Protection",
+      "description": "Set to on to block notification permissions for detected sites; an empty value disables this protection.",
+      "type": "string",
+      "enum": [
+        "",
+        "on"
+      ],
+      "default": ""
+    },
+    "ManagedDomainIntelMode": {
+      "title": "Managed Domain Intel Mode",
+      "description": "Set to warn or block to enable lookalike-domain detection; an empty value disables it.",
+      "type": "string",
+      "enum": [
+        "",
+        "warn",
+        "block"
+      ],
+      "default": ""
+    },
+    "ManagedProtectedDomains": {
+      "title": "Managed Protected Domains",
+      "description": "Domains to protect against lookalike names when domain intel is enabled.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
     "HideProviderControls": {
       "title": "Hide Provider Controls",
       "description": "If true, provider controls are hidden from the popup and options page.",
@@ -49,7 +79,7 @@
     },
     "ManagedAllowlist": {
       "title": "Managed Allowlist",
-      "description": "Host or URL patterns that are always treated as safe. The end user cannot remove these. Examples: \"intranet.example.com\", \"*.corp.example.com\", \"https://apps.example.com/portal\".",
+      "description": "Host or URL patterns that are always treated as safe. The end user cannot remove these. A plain host matches that exact host only; prefix it with *. to include subdomains. Examples: \"intranet.example.com\", \"*.corp.example.com\", \"https://apps.example.com/portal\".",
       "type": "array",
       "items": {
         "type": "string"
@@ -58,7 +88,7 @@
     },
     "ManagedBlocklist": {
       "title": "Managed Blocklist",
-      "description": "Host or URL patterns that are always blocked, evaluated before the threat providers run. Examples: \"bad.example.com\", \"*.malware.example\", \"https://phish.example/login\".",
+      "description": "Host or URL patterns that are always blocked, evaluated before the threat providers run. A host entry always covers its subdomains as well, so blocking a domain can never miss a subdomain. Examples: \"bad.example.com\", \"*.malware.example\", \"https://phish.example/login\".",
       "type": "array",
       "items": {
         "type": "string"
@@ -67,7 +97,7 @@
     },
     "ProxyBaseUrl": {
       "title": "Proxy Base URL",
-      "description": "Overrides the backend origin the extension sends lookups to. Must be an http(s) origin, for example \"https://osprey.msp.example\". When empty, the default public backend is used.",
+      "description": "Overrides the backend origin the extension sends lookups to. Must be an HTTPS origin, for example \"https://osprey.msp.example\". When empty, the default public backend is used.",
       "type": "string",
       "default": ""
     },
@@ -159,12 +189,6 @@
       "type": "string",
       "default": ""
     },
-    "UserEmail": {
-      "title": "User Email",
-      "description": "The signed-in user's email address, set per user rather than per machine. Prefills the email field when the warning page's contact link opens a console-hosted unblock request page.",
-      "type": "string",
-      "default": ""
-    },
     "CustomWarningMessage": {
       "title": "Custom Warning Message",
       "description": "Optional override for the lead sentence on the warning page. When empty, the default warning message is shown.",
@@ -173,13 +197,19 @@
     },
     "ManagedConfigUrl": {
       "title": "Managed Config URL",
-      "description": "An http(s) URL to a JSON configuration document the extension fetches on startup and on a schedule. Values from the document are merged UNDER managed storage: anything an admin sets locally here always wins, and the document fills in the rest. On a fetch failure the last successfully fetched document is kept, so a network outage never drops settings. The document may also define custom threat providers. When empty, no remote configuration is fetched. This key can only be set through managed storage; a fetched document cannot change it.",
+      "description": "An HTTPS URL to a signed JSON configuration document the extension fetches on startup and on a schedule. Requires ManagedConfigPublicKey. Values from the document are merged under managed storage. When empty, remote configuration is removed.",
+      "type": "string",
+      "default": ""
+    },
+    "ManagedConfigPublicKey": {
+      "title": "Managed Config Public Key",
+      "description": "JSON-encoded P-256 public JWK used to verify the ECDSA SHA-256 signature on the managed configuration document. Set through managed storage alongside ManagedConfigUrl; never include the private key.",
       "type": "string",
       "default": ""
     },
     "ReportingEndpoint": {
       "title": "Reporting Endpoint",
-      "description": "An http(s) URL the extension POSTs detection and override events and periodic health heartbeats to. When empty, no events or heartbeats are sent. Example: \"https://reporting.msp.example/osprey\".",
+      "description": "An HTTPS URL the extension POSTs detection and override events and periodic health heartbeats to. When empty, no events or heartbeats are sent. Example: \"https://reporting.msp.example/osprey\".",
       "type": "string",
       "default": ""
     },

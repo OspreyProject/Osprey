@@ -26,6 +26,9 @@ globalThis.OspreyProviderStateStore = (() => {
 
     let cachedState = null;
     let loadingPromise = null;
+
+    // Bumped on invalidation so a read already in flight does not re-cache pre-change state.
+    let stateGeneration = 0;
     let writeLock = Promise.resolve();
 
     const unsafeProviderKeys = new Set(['__proto__', 'prototype', 'constructor']);
@@ -118,7 +121,8 @@ globalThis.OspreyProviderStateStore = (() => {
 
                 blockCategories: normalizeBlockCategories(element, src),
 
-                requestTimeoutMs: src && Number.isFinite(Number(src.requestTimeoutMs)) && Number(src.requestTimeoutMs) > 0 ?
+                // Same 1000..60000 window the managed policy enforces; anything else falls back to the default (0).
+                requestTimeoutMs: src && Number(src.requestTimeoutMs) >= 1000 && Number(src.requestTimeoutMs) <= 60000 ?
                     Number(src.requestTimeoutMs) :
                     0,
             };
@@ -130,6 +134,8 @@ globalThis.OspreyProviderStateStore = (() => {
         Object.freeze(base.providers);
         return Object.freeze(base);
     };
+
+    const getDefaultState = () => normalizeState({});
 
     const migrateLegacyState = legacySettings => {
         const source = legacySettings && typeof legacySettings === 'object' ? legacySettings : {};
@@ -163,14 +169,17 @@ globalThis.OspreyProviderStateStore = (() => {
     };
 
     const readStoredState = async () => {
+        await globalThis.OspreyPolicyService?.ensureCustomProviders?.();
+
         try {
             const stored = await browserAPI.storageGet('local', stateKey);
 
             if (stored?.[stateKey]) {
                 return normalizeState(stored[stateKey]);
             }
-        } catch {
-            // ignored
+        } catch (error) {
+            console.error('OspreyProviderStateStore failed to load stored state', error);
+            throw error;
         }
 
         try {
@@ -183,11 +192,17 @@ globalThis.OspreyProviderStateStore = (() => {
             return migrated;
         } catch (error) {
             console.error('OspreyProviderStateStore failed to load legacy state', error);
-            return normalizeState({});
+            throw error;
         }
     };
 
-    const getState = ({fresh = false} = {}) => {
+    /**
+     * Returns the stored state. A failed read never caches anything. By default it then falls
+     * back to catalog defaults so URL checking keeps running on a transient storage error; writes
+     * pass strict, which rethrows instead, so a failed read can never be persisted over the
+     * user's real settings.
+     */
+    const getState = ({fresh = false, strict = false} = {}) => {
         if (!fresh) {
             if (cachedState) {
                 return Promise.resolve(cachedState);
@@ -198,13 +213,17 @@ globalThis.OspreyProviderStateStore = (() => {
             }
         }
 
+        const startGeneration = stateGeneration;
+
         const promise = readStoredState().then(state => {
-            cachedState = state;
+            if (startGeneration === stateGeneration) {
+                cachedState = state;
+            }
 
             if (loadingPromise === promise) {
                 loadingPromise = null;
             }
-            return cachedState;
+            return state;
         }).catch(error => {
             if (loadingPromise === promise) {
                 loadingPromise = null;
@@ -213,7 +232,15 @@ globalThis.OspreyProviderStateStore = (() => {
         });
 
         loadingPromise = promise;
-        return promise;
+
+        if (strict) {
+            return promise;
+        }
+
+        return promise.catch(error => {
+            console.warn('OspreyProviderStateStore is using default settings until stored state can be read', error);
+            return normalizeState({});
+        });
     };
 
     const enqueueWrite = taskFn => {
@@ -226,15 +253,15 @@ globalThis.OspreyProviderStateStore = (() => {
     };
 
     const updateState = updater => enqueueWrite(async () => {
-        const current = await getState();
+        const current = await getState({strict: true});
         const draft = cloneState(current);
         const result = typeof updater === 'function' ? await updater(draft) : undefined;
         const modifiedDraft = result || draft;
 
         const normalized = normalizeState(modifiedDraft);
-        cachedState = normalized;
 
         await browserAPI.storageSet('local', {[stateKey]: normalized});
+        cachedState = normalized;
         return normalized;
     });
 
@@ -274,7 +301,12 @@ globalThis.OspreyProviderStateStore = (() => {
         }
 
         const normalizedApiKey = String(apiKey ?? '');
-        const sharedMembers = providerCatalog.getSharedGroupMembersById(providerId);
+        const definition = providerCatalog.getDefinition(providerId);
+        const sharedMembers = definition?.sharedRequestGroup
+            ? providerCatalog.getAllDefinitions()
+                .filter(member => member.sharedRequestGroup === definition.sharedRequestGroup)
+                .map(member => member.id)
+            : null;
 
         if (sharedMembers && sharedMembers.length > 0) {
             for (const element of sharedMembers) {
@@ -350,8 +382,9 @@ globalThis.OspreyProviderStateStore = (() => {
     const resetDefaultProviders = () => updateState(async state => {
         const locks = await getPolicyLocks();
 
-        if (state.app.disableSettingsReset || locks.disableSettingsReset) {
-            return;
+        if (state.app.disableSettingsReset || locks.disableSettingsReset ||
+            state.app.lockProviderSettings || locks.lockProviderSettings) {
+            throw new Error('Provider reset is locked by settings policy');
         }
 
         const defs = providerCatalog.getAllDefinitions();
@@ -373,8 +406,9 @@ globalThis.OspreyProviderStateStore = (() => {
     const resetAll = () => updateState(async state => {
         const locks = await getPolicyLocks();
 
-        if (state.app.disableSettingsReset || locks.disableSettingsReset) {
-            return;
+        if (state.app.disableSettingsReset || locks.disableSettingsReset ||
+            state.app.lockProviderSettings || locks.lockProviderSettings) {
+            throw new Error('Settings reset is locked by settings policy');
         }
         return {};
     });
@@ -382,10 +416,66 @@ globalThis.OspreyProviderStateStore = (() => {
     const importState = rawState => updateState(async state => {
         const locks = await getPolicyLocks();
 
-        if (state.app.lockProviderSettings || locks.lockProviderSettings) {
-            return;
+        if (state.app.lockProviderSettings || locks.lockProviderSettings ||
+            state.app.disableSettingsReset || locks.disableSettingsReset) {
+            throw new Error('Settings import is locked by settings policy');
         }
-        return rawState && typeof rawState === 'object' ? rawState : {};
+        if (!rawState || typeof rawState !== 'object' || !rawState.app ||
+            typeof rawState.app !== 'object' || !rawState.providers ||
+            typeof rawState.providers !== 'object') {
+            throw new TypeError('Invalid settings import');
+        }
+
+        const importedApp = {...rawState.app};
+        delete importedApp.lockProviderSettings;
+        delete importedApp.disableSettingsReset;
+        delete importedApp.lockUserAllowlist;
+        const providers = Object.create(null);
+
+        for (const [id, imported] of Object.entries(rawState.providers)) {
+            if (isUnsafeProviderId(id) || !imported || typeof imported !== 'object') {
+                continue;
+            }
+            providers[id] = {
+                ...imported,
+                apiKey: typeof imported.apiKey === 'string' ? imported.apiKey : state.providers[id]?.apiKey ?? '',
+            };
+        }
+
+        return {
+            ...rawState,
+            app: {
+                ...importedApp,
+                lockProviderSettings: state.app.lockProviderSettings,
+                disableSettingsReset: state.app.disableSettingsReset,
+                lockUserAllowlist: state.app.lockUserAllowlist,
+            },
+            providers,
+        };
+    });
+
+    const emergencySettings = Object.freeze({
+        enabled: value => typeof value === 'boolean',
+        bypassBlockingThreshold: value => typeof value === 'boolean',
+    });
+
+    /**
+     * Applies one emergency settings migration shipped with the extension. It deliberately
+     * ignores user and policy locks, since it exists to correct a harmful shipped default on every
+     * endpoint, and only accepts the settings listed in emergencySettings.
+     */
+    const applyEmergencySetting = (providerId, setting, value) => updateState(state => {
+        const validate = emergencySettings[setting];
+
+        if (isUnsafeProviderId(providerId) || !validate?.(value)) {
+            throw new TypeError(`Unsupported emergency setting ${setting} for ${providerId}`);
+        }
+
+        const provider = state.providers[providerId];
+
+        if (provider) {
+            provider[setting] = value;
+        }
     });
 
     const countEnabledProviders = state => {
@@ -407,6 +497,7 @@ globalThis.OspreyProviderStateStore = (() => {
     const countTotalProviders = () => providerCatalog.getAllDefinitions().length;
 
     const invalidateCache = () => {
+        stateGeneration++;
         cachedState = null;
         loadingPromise = null;
     };
@@ -424,6 +515,7 @@ globalThis.OspreyProviderStateStore = (() => {
     return Object.freeze({
         stateKey,
         getState,
+        getDefaultState,
         setProviderEnabled,
         setDisableAllProviders,
         setProviderApiKey,
@@ -432,6 +524,7 @@ globalThis.OspreyProviderStateStore = (() => {
         resetDefaultProviders,
         resetAll,
         importState,
+        applyEmergencySetting,
         countEnabledProviders,
         countTotalProviders,
     });
