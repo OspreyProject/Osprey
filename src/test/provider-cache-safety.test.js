@@ -262,3 +262,72 @@ test('legacy allowed verdicts are invalidated and failed shared outcomes do not 
     assert.equal(records.get('osprey_cache').version, 3);
     assert.equal(records.get('osprey_cache::p::a').allowed.legacy, undefined);
 });
+
+const createCacheService = (records, managedListConfig = null) => {
+    const db = {
+        transaction: () => {
+            const tx = {
+                objectStore: () => ({
+                    get: key => {
+                        const request = {result: records.get(key)};
+                        queueMicrotask(() => request.onsuccess?.());
+                        return request;
+                    },
+                    put: (value, key) => {
+                        records.set(key, value);
+                    },
+                    delete: key => {
+                        records.delete(key);
+                    },
+                }),
+            };
+            setImmediate(() => tx.oncomplete?.());
+            return tx;
+        },
+    };
+    const context = vm.createContext({
+        console, Date, Map, Set, setTimeout, clearTimeout,
+        setInterval: () => 0,
+        indexedDB: {
+            open: () => {
+                const request = {result: db};
+                queueMicrotask(() => request.onsuccess?.());
+                return request;
+            },
+        },
+        OspreyBrowserAPI: {storageGet: async () => ({})},
+        OspreyUrlService: {},
+        OspreyProtectionResult: {resultTypes: {FAILED: 'failed'}, blockingResults: new Set(['malicious'])},
+        OspreyPolicyService: {
+            getManagedListConfig: async () => managedListConfig,
+            getActionRestrictions: async () => ({disableUserAllowlist: false, lockUserAllowlist: false}),
+        },
+    });
+    load(context, 'state/cache-service.js');
+    return context.OspreyCacheService;
+};
+
+test('expired verdicts are ignored and disabled user allowlists hide stored exclusions', async () => {
+    const future = Date.now() + 600000;
+    const past = Date.now() - 1000;
+    const records = () => new Map([
+        ['osprey_cache', {version: 3, providerIds: ['a'], globalAllowPatterns: []}],
+        ['osprey_cache::p::a', {
+            allowed: {
+                stale: {exp: past},
+                cached: {exp: future},
+                user: {exp: future, userAllowed: true},
+            },
+            blocked: {staleBlock: {exp: past, result: 'malicious'}},
+        }],
+    ]);
+    const cache = createCacheService(records());
+    assert.equal(await cache.getAllowedEntry('a', 'stale'), null);
+    assert.equal(await cache.getBlockedEntry('a', 'staleBlock'), null);
+    assert.equal((await cache.getAllowedEntry('a', 'user')).userAllowed, true);
+
+    const policy = {allowlist: [], blocklist: [], disableUserAllowlist: true};
+    const managed = createCacheService(records(), policy);
+    assert.equal(await managed.getAllowedEntry('a', 'user'), null);
+    assert.ok(await managed.getAllowedEntry('a', 'cached'));
+});

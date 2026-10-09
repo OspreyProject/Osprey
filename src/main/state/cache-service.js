@@ -224,8 +224,9 @@ globalThis.OspreyCacheService = (() => {
     };
 
     const getRecord = (snapshot, providerId, type, lookupKey) => {
-        const provider = snapshot.providers.get(providerId);
-        return provider ? provider[type].get(lookupKey) || null : null;
+        const record = snapshot.providers.get(providerId)?.[type].get(lookupKey);
+        // Expired records stay in the map until the next prune, but must not keep their verdict.
+        return record && record.exp >= Date.now() ? record : null;
     };
 
     const setRecord = async (providerId, type, lookupKey, record) => {
@@ -759,7 +760,16 @@ globalThis.OspreyCacheService = (() => {
         return false;
     };
 
-    const getAllowedEntry = createEntryGetter('allowed');
+    const getCachedAllowedEntry = createEntryGetter('allowed');
+
+    const getAllowedEntry = async (providerId, lookupKey) => {
+        const entry = await getCachedAllowedEntry(providerId, lookupKey);
+
+        if (entry?.userAllowed && (await getParsedManaged()).disableUserAllowlist) {
+            return null;
+        }
+        return entry;
+    };
     const getBlockedEntry = createEntryGetter('blocked');
 
     const baseMarkAllowed = createEntryMarker('allowed', (expirationSeconds, userAllowed = false) => {
