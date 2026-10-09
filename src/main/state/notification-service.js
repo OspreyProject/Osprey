@@ -32,6 +32,17 @@ globalThis.OspreyNotificationService = (() => {
     const storage = () => browserAPI?.storage?.local || globalThis.chrome?.storage?.local;
 
     let unavailableLogged = false;
+    let queue = Promise.resolve();
+
+    // Registry updates are read-modify-write, so they run one at a time or concurrent updates drop each other's entries.
+    const serialize = task => {
+        const run = queue.then(task);
+
+        queue = run.catch(() => {
+            // ignored
+        });
+        return run;
+    };
 
     const originPattern = url => {
         try {
@@ -42,24 +53,31 @@ globalThis.OspreyNotificationService = (() => {
         }
     };
 
+    // Resolves null when the registry cannot be read, so callers never write back a registry that looks empty.
     const readRegistry = async () => {
         const store = storage();
 
         if (!store?.get) {
-            return {};
+            return null;
         }
 
         const data = await new Promise(resolve => {
             try {
-                const result = store.get(storageKey, value => resolve(value || {}));
+                const result = store.get(storageKey, value => {
+                    resolve(globalThis.chrome?.runtime?.lastError ? null : value || {});
+                });
 
                 if (result?.then) {
-                    result.then(value => resolve(value || {}), () => resolve({}));
+                    result.then(value => resolve(value || {}), () => resolve(null));
                 }
             } catch {
-                resolve({});
+                resolve(null);
             }
         });
+
+        if (data === null) {
+            return null;
+        }
 
         const entry = data[storageKey];
         return entry && typeof entry === 'object' ? entry : {};
@@ -68,19 +86,21 @@ globalThis.OspreyNotificationService = (() => {
     const writeRegistry = async registry => {
         const store = storage();
 
-        if (store?.set) {
-            await new Promise(resolve => {
-                try {
-                    const result = store.set({[storageKey]: registry}, () => resolve());
-
-                    if (result?.then) {
-                        result.then(() => resolve(), () => resolve());
-                    }
-                } catch {
-                    resolve();
-                }
-            });
+        if (!store?.set) {
+            return false;
         }
+
+        return new Promise(resolve => {
+            try {
+                const result = store.set({[storageKey]: registry}, () => resolve(!globalThis.chrome?.runtime?.lastError));
+
+                if (result?.then) {
+                    result.then(() => resolve(true), () => resolve(false));
+                }
+            } catch {
+                resolve(false);
+            }
+        });
     };
 
     const setNotificationSetting = (pattern, setting) => new Promise(resolve => {
@@ -115,7 +135,7 @@ globalThis.OspreyNotificationService = (() => {
         if (!contentSettings()) {
             if (!unavailableLogged) {
                 unavailableLogged = true;
-                globalThis.OspreyEventLogService?.record?.('notification_protection_unavailable', {});
+                await globalThis.OspreyEventLogService?.recordLocal?.('notification_protection_unavailable');
             }
             return {ok: false, reason: 'unsupported'};
         }
@@ -126,45 +146,74 @@ globalThis.OspreyNotificationService = (() => {
             return {ok: false, reason: 'unsupported_scheme'};
         }
 
-        const registry = await readRegistry();
+        return serialize(async () => {
+            const registry = await readRegistry();
 
-        if (registry[pattern]) {
-            return {ok: true, already: true};
-        }
+            if (registry === null) {
+                return {ok: false, reason: 'registry_unavailable'};
+            }
 
-        const applied = await setNotificationSetting(pattern, 'block');
+            if (registry[pattern]) {
+                return {ok: true, already: true};
+            }
 
-        if (applied) {
+            const applied = await setNotificationSetting(pattern, 'block');
+
+            if (!applied) {
+                return {ok: false};
+            }
+
             registry[pattern] = Date.now();
-            await writeRegistry(registry);
-        }
-        return {ok: applied};
+
+            if (!await writeRegistry(registry)) {
+                // An unrecorded block could never be reverted, so undo it.
+                await setNotificationSetting(pattern, null);
+                return {ok: false, reason: 'registry_unavailable'};
+            }
+            return {ok: true};
+        });
     };
 
     /**
      * Reverts the block for a host Osprey previously set (allowlist addition or a later
      * clean verdict). Origins outside the registry are never touched.
      */
-    const resetForHost = async host => {
+    const resetForHost = host => serialize(async () => {
+        const target = String(host || '').toLowerCase();
+
+        if (!target) {
+            return {ok: true, cleared: 0};
+        }
+
         const registry = await readRegistry();
+
+        if (registry === null) {
+            return {ok: false, reason: 'registry_unavailable'};
+        }
+
         const patterns = Object.keys(registry).filter(pattern => {
             try {
-                return new URL(pattern.slice(0, -2)).hostname === String(host || '').toLowerCase();
+                const hostname = new URL(pattern.slice(0, -2)).hostname;
+                return hostname === target;
             } catch {
                 return false;
             }
         });
 
+        let cleared = 0;
+
         for (const pattern of patterns) {
-            await setNotificationSetting(pattern, null);
-            delete registry[pattern];
+            if (await setNotificationSetting(pattern, null)) {
+                delete registry[pattern];
+                cleared++;
+            }
         }
 
-        if (patterns.length) {
+        if (cleared > 0) {
             await writeRegistry(registry);
         }
-        return {ok: true, cleared: patterns.length};
-    };
+        return {ok: cleared === patterns.length, cleared};
+    });
 
     return Object.freeze({
         blockForUrl,

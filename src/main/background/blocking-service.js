@@ -25,6 +25,7 @@ globalThis.OspreyBlockingService = (() => {
     const messages = globalThis.OspreyMessageBus.Messages;
     const providerEngine = globalThis.OspreyProviderEngine;
     const providerRuntimeFactory = globalThis.OspreyProviderRuntimeFactory;
+    const policyService = globalThis.OspreyPolicyService;
     const resultAggregationService = globalThis.OspreyResultAggregationService;
     const urlService = globalThis.OspreyUrlService;
 
@@ -38,12 +39,28 @@ globalThis.OspreyBlockingService = (() => {
 
     const buildNavigationKey = (tabId, normalizedUrl) => `${tabId}::${normalizedUrl}`;
 
+    // Synthetic origin for verdicts produced by local domain intelligence rather than a provider.
+    const domainIntelOrigin = 'osprey';
+
+    // A lookalike the user already allowed (whole host, or by continuing past the warning) is not blocked again.
+    const isUserAllowedLookalike = async (normalizedUrl, parsed) => {
+        if (await cacheService.matchesGlobalPattern(normalizedUrl)) {
+            return true;
+        }
+
+        const entry = await cacheService.getAllowedEntry(domainIntelOrigin, urlService.canonicalizeHostname(parsed.hostname));
+        return Boolean(entry);
+    };
+
     const getBlockingThreshold = enabledCount => enabledCount >= 4 ? 2 : 1;
 
     const getPayloadSignature = p => `${p.known}|${p.count}|${p.remaining}|${p.total}|${p.primaryOrigin}|${p.primaryResult}|${p.systems.join(',')}`;
 
     const getBlockingAnalysis = (runtime, blockedContext, result) => {
         const blockedOrigins = blockedContext?.origins;
+        if (result === 'lookalike' && blockedOrigins?.includes(domainIntelOrigin)) {
+            return {blockedCount: 1, thresholdBypassed: true, requiredBlockedCount: 1};
+        }
         const supportedOrigins = runtime?.blockingProviderIdsByResult?.[result];
 
         if (!supportedOrigins?.size || !blockedOrigins?.length) {
@@ -344,7 +361,7 @@ globalThis.OspreyBlockingService = (() => {
         }
     };
 
-    const handleProtectionResult = async (tabId, navigationUrl, runtime, protectionResult) => {
+    const handleProtectionResult = async (tabId, navigationUrl, runtime, protectionResult, originalUrl = navigationUrl) => {
         if (!protectionResult?.isBlocking) {
             return;
         }
@@ -364,8 +381,8 @@ globalThis.OspreyBlockingService = (() => {
         resultAggregationService.recordBlockingResult(tabId, navigationUrl, protectionResult.origin, protectionResult.result);
 
         if (runtime.effectiveState.app.notificationProtection === 'on') {
-            globalThis.OspreyNotificationService?.blockForUrl?.(navigationUrl).catch(() => {
-                // ignored
+            globalThis.OspreyNotificationService?.blockForUrl?.(originalUrl).catch(error => {
+                console.warn('OspreyBlockingService failed to block notifications', error);
             });
         }
 
@@ -427,10 +444,6 @@ globalThis.OspreyBlockingService = (() => {
                 return;
             }
 
-            if (runtime.effectiveState.app.hideProviderControls && details.url.includes('/pages/popup/popup-page.html')) {
-                return;
-            }
-
             await resultAggregationService.ensureHydrated();
             resultAggregationService.beginNavigation(details.tabId);
             resultAggregationService.setFrameZeroUrl(details.tabId, normalizedUrl);
@@ -441,22 +454,40 @@ globalThis.OspreyBlockingService = (() => {
             const intelMode = runtime.effectiveState.app.domainIntelMode;
 
             if ((intelMode === 'warn' || intelMode === 'block') && globalThis.OspreyDomainIntel) {
-                const finding = globalThis.OspreyDomainIntel.analyze(
-                    parsed.hostname, runtime.effectiveState.app.protectedDomains
-                );
+                let finding;
+                let shortEditDistance = false;
+
+                try {
+                    finding = globalThis.OspreyDomainIntel.analyze(
+                        parsed.hostname, runtime.effectiveState.app.protectedDomains
+                    );
+
+                    if (finding?.detail === 'edit_distance') {
+                        shortEditDistance =
+                            globalThis.OspreyDomainIntel.registrable(finding.target).split('.')[0].length <= 5;
+                    }
+                } catch (error) {
+                    console.warn('OspreyBlockingService domain intelligence analysis failed', error);
+                    finding = null;
+                }
 
                 if (finding) {
-                    globalThis.OspreyEventLogService?.record?.('domain_intel', {
+                    eventLogService.recordLocal('domain_intel', {
                         url: normalizedUrl, kind: finding.kind, target: finding.target, detail: finding.detail,
                     });
 
-                    if (intelMode === 'block' && finding.kind === 'protected_lookalike') {
+                    const managedDecision = intelMode === 'block' && finding.kind === 'protected_lookalike'
+                        ? await cacheService.getManagedListDecision(normalizedUrl) : null;
+
+                    if (intelMode === 'block' && finding.kind === 'protected_lookalike' &&
+                        !shortEditDistance && !(managedDecision.allowed && !managedDecision.blocked) &&
+                        !(managedDecision.blocked !== true && await isUserAllowedLookalike(normalizedUrl, parsed))) {
                         await handleProtectionResult(details.tabId, normalizedUrl, runtime,
                             globalThis.OspreyProtectionResult.create({
                                 url: normalizedUrl,
                                 result: 'lookalike',
-                                origin: 'osprey',
-                            }));
+                                origin: domainIntelOrigin,
+                            }), details.url);
                         return;
                     }
                 }
@@ -467,7 +498,7 @@ globalThis.OspreyBlockingService = (() => {
                 url: normalizedUrl,
                 providers: runtime.providers,
                 expirationSeconds: runtime.effectiveState.app.cacheExpirationSeconds,
-                onResult: res => handleProtectionResult(details.tabId, normalizedUrl, runtime, res).then(() => {
+                onResult: res => handleProtectionResult(details.tabId, normalizedUrl, runtime, res, details.url).then(() => {
                     // ignored
                 }),
             });
@@ -479,6 +510,14 @@ globalThis.OspreyBlockingService = (() => {
     };
 
     const allowWebsite = async (tabId, blockedUrl) => {
+        const restrictions = await policyService.getActionRestrictions();
+
+        if (restrictions.hideWarningProceedButton || restrictions.lockUserAllowlist ||
+            restrictions.disableUserAllowlist) {
+            console.warn('OspreyBlockingService refused ALLOW_WEBSITE under managed policy');
+            return {ok: false, navigated: false};
+        }
+
         const parsed = urlService.parseHttpUrl(blockedUrl);
 
         if (!parsed) {
@@ -501,12 +540,27 @@ globalThis.OspreyBlockingService = (() => {
         const pattern = '*.' + urlService.canonicalizeHostname(parsed.hostname);
 
         const providers = runtime.providers;
+        const allowResult = await cacheService.allowPattern(pattern);
+
+        if (allowResult?.ok === false) {
+            return {ok: false, navigated: false};
+        }
+
+        // The allowlist entry is already saved, so a failed notification reset must not turn the
+        // action into an error the user sees while the site is in fact allowed. It is best-effort.
+        if (globalThis.OspreyNotificationService) {
+            try {
+                const reset = await globalThis.OspreyNotificationService.resetForHost(parsed.hostname);
+
+                if (!reset?.ok) {
+                    console.warn('OspreyBlockingService could not fully reset notification protection for an allowed website');
+                }
+            } catch (error) {
+                console.warn('OspreyBlockingService failed to reset notification protection for an allowed website', error);
+            }
+        }
 
         const pendingWrites = [
-            cacheService.allowPattern(pattern).then(() => {
-                // ignored
-            }),
-
             cacheService.clearBlockedForLookup(normalizedUrl).then(() => {
                 // ignored
             })
@@ -521,6 +575,14 @@ globalThis.OspreyBlockingService = (() => {
         }
 
         await Promise.allSettled(pendingWrites);
+
+        const latestRestrictions = await policyService.getActionRestrictions();
+
+        if (latestRestrictions.hideWarningProceedButton || latestRestrictions.lockUserAllowlist ||
+            latestRestrictions.disableUserAllowlist) {
+            console.warn('OspreyBlockingService refused ALLOW_WEBSITE after a managed policy change');
+            return {ok: false, navigated: false};
+        }
 
         rememberSuppressedNavigation(tabId, normalizedUrl);
         const success = await navigateWithSafetyFallback(tabId, blockedUrl);
@@ -544,8 +606,11 @@ globalThis.OspreyBlockingService = (() => {
 
         await resultAggregationService.ensureHydrated();
 
-        if (!resultAggregationService.getBlockedContext(tabId)) {
-            console.warn(`OspreyBlockingService refused CONTINUE_TO_WEBSITE for tab ${tabId} because no blocked context is recorded`);
+        const bypassContext = resultAggregationService.getBlockedContext(tabId);
+        const normalizedUrl = urlService.normalizeUrl(parsed);
+
+        if (!bypassContext || bypassContext.url !== normalizedUrl || !bypassContext.origins.includes(origin)) {
+            console.warn(`OspreyBlockingService refused CONTINUE_TO_WEBSITE for tab ${tabId} because the blocked context does not match`);
 
             return {
                 ok: false,
@@ -555,34 +620,66 @@ globalThis.OspreyBlockingService = (() => {
             };
         }
 
-        const runtime = await providerRuntimeFactory.createRuntime();
-        const provider = runtime.providers.find(p => p.id === origin);
+        const managedDecision = await cacheService.getManagedListDecision(normalizedUrl);
+        const approved = managedDecision.allowed === true && managedDecision.blocked !== true;
 
-        if (!provider) {
+        if (managedDecision.blocked) {
+            console.warn('OspreyBlockingService refused CONTINUE_TO_WEBSITE for a managed block');
+            return {ok: false, navigated: false};
+        }
+
+        if (!approved && (await policyService.getActionRestrictions()).hideWarningProceedButton) {
+            console.warn('OspreyBlockingService refused CONTINUE_TO_WEBSITE under managed policy');
+            return {ok: false, navigated: false};
+        }
+
+        const runtime = approved ? null : await providerRuntimeFactory.createRuntime();
+        const provider = runtime?.providers.find(p => p.id === origin);
+
+        if (!approved && !provider && origin !== domainIntelOrigin) {
             return failClosed(tabId);
         }
 
-        const lookupKey = urlService.lookupValueForTarget(parsed, provider.lookupTarget || 'url');
+        const lookupKey = provider && !approved
+            ? urlService.lookupValueForTarget(parsed, provider.lookupTarget || 'url') : null;
 
-        if (!lookupKey) {
+        if (provider && !approved && !lookupKey) {
             return failClosed(tabId);
         }
 
-        const bypassContext = resultAggregationService.getBlockedContext(tabId);
+        if (approved) {
+            eventLogService?.recordLocal('admin_approval', {url: normalizedUrl});
+        } else {
+            eventLogService?.recordOverride({
+                action: 'continueToWebsite',
+                url: normalizedUrl,
+                providerId: origin,
+                verdict: bypassContext?.primaryResult ?? null,
+            });
+        }
 
-        eventLogService?.recordOverride({
-            action: 'continueToWebsite',
-            url: urlService.normalizeUrl(parsed),
-            providerId: origin,
-            verdict: bypassContext?.primaryResult ?? null,
-        });
+        if (provider && !approved) {
+            await Promise.allSettled([
+                cacheService.markAllowed(provider.id, lookupKey, runtime.effectiveState.app.cacheExpirationSeconds, true),
+                cacheService.clearBlockedForProviderLookup(provider.id, lookupKey),
+            ]);
+        } else if (!provider && !approved && origin === domainIntelOrigin) {
+            // Domain-intel blocks have no provider; remember the host so the same lookalike isn't blocked again.
+            const hostKey = urlService.canonicalizeHostname(parsed.hostname);
+            const expirationSeconds = (await providerRuntimeFactory.createRuntime()).effectiveState.app.cacheExpirationSeconds;
 
-        await Promise.allSettled([
-            cacheService.markAllowed(provider.id, lookupKey, runtime.effectiveState.app.cacheExpirationSeconds, true),
-            cacheService.clearBlockedForProviderLookup(provider.id, lookupKey),
-        ]);
+            await Promise.allSettled([
+                cacheService.markAllowed(domainIntelOrigin, hostKey, expirationSeconds, true),
+                cacheService.clearBlockedForProviderLookup(domainIntelOrigin, hostKey),
+            ]);
+        }
 
-        const nextContext = resultAggregationService.removeOrigin(tabId, origin);
+        if (!approved && (await policyService.getActionRestrictions()).hideWarningProceedButton) {
+            console.warn('OspreyBlockingService refused CONTINUE_TO_WEBSITE after a managed policy change');
+            return {ok: false, navigated: false};
+        }
+
+        const nextContext = approved ? null : resultAggregationService.removeOrigin(tabId, origin);
         await resultAggregationService.persist();
 
         if (nextContext) {
@@ -600,8 +697,7 @@ globalThis.OspreyBlockingService = (() => {
             };
         }
 
-        const resumeUrl = urlService.normalizeUrl(parsed);
-        rememberSuppressedNavigation(tabId, resumeUrl);
+        rememberSuppressedNavigation(tabId, normalizedUrl);
 
         const success = await navigateWithSafetyFallback(tabId, blockedUrl);
 
