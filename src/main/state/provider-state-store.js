@@ -202,6 +202,11 @@ globalThis.OspreyProviderStateStore = (() => {
      * pass strict, which rethrows instead, so a failed read can never be persisted over the
      * user's real settings.
      */
+    const withDefaultsOnError = promise => promise.catch(error => {
+        console.warn('OspreyProviderStateStore is using default settings until stored state can be read', error);
+        return normalizeState({});
+    });
+
     const getState = ({fresh = false, strict = false} = {}) => {
         if (!fresh) {
             if (cachedState) {
@@ -209,7 +214,8 @@ globalThis.OspreyProviderStateStore = (() => {
             }
 
             if (loadingPromise) {
-                return loadingPromise;
+                // The in-flight read may belong to a strict caller, so apply this caller's fallback.
+                return strict ? loadingPromise : withDefaultsOnError(loadingPromise);
             }
         }
 
@@ -233,14 +239,7 @@ globalThis.OspreyProviderStateStore = (() => {
 
         loadingPromise = promise;
 
-        if (strict) {
-            return promise;
-        }
-
-        return promise.catch(error => {
-            console.warn('OspreyProviderStateStore is using default settings until stored state can be read', error);
-            return normalizeState({});
-        });
+        return strict ? promise : withDefaultsOnError(promise);
     };
 
     const enqueueWrite = taskFn => {

@@ -252,6 +252,21 @@ test('custom providers are registered before state normalization and survive set
     assert.equal(fixture.local.osprey_state.providers['custom-intel'].enabled, false);
 });
 
+test('non-strict state reads fall back to defaults while a strict read is failing', async () => {
+    const {context, store} = createFixture();
+    const read = context.OspreyBrowserAPI.storageGet;
+    context.OspreyBrowserAPI.storageGet = async (area, key) => {
+        if (area === 'local') {
+            throw new Error('storage unavailable');
+        }
+        return read(area, key);
+    };
+    const strict = store.getState({strict: true});
+    const lenient = store.getState();
+    await assert.rejects(strict, /storage unavailable/);
+    assert.ok((await lenient).providers);
+});
+
 test('a failed managed policy read is retried instead of cached as empty policy', async () => {
     const {context, policy} = createFixture({DisableUserAllowlist: true});
     const read = context.OspreyBrowserAPI.storageGet;
