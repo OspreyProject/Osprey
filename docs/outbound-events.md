@@ -4,14 +4,15 @@
 > turns them into dashboards, alerts, and reports per client. The rest of this document describes the
 > underlying extension behavior for administrators who run their own receiver.
 
-The `ReportingEndpoint` managed policy points the extension at an HTTP endpoint that receives two kinds of message: a
+The `ReportingEndpoint` managed policy points the extension at an HTTPS endpoint that receives two kinds of message: a
 batch of detection and override events, and a periodic health heartbeat. Detections and overrides arrive as they happen,
-and the heartbeat proves each endpoint is still installed, enabled, current, and able to reach its backend. The usual
-receiver is the Osprey Management Console, whose per-client ingest URL goes straight into this policy; the same payloads
-work with any receiver, so an MSP can also point this at its own webhook or SIEM and watch a fleet without the console.
+and the heartbeat reports whether each endpoint is running, protection is enabled, and its backend is reachable. The
+usual receiver is the Osprey Management Console, whose per-client ingest URL goes straight into this policy; the same
+payloads work with any receiver, so an MSP can also point this at its own webhook or SIEM and watch a fleet without the
+console.
 
-When `ReportingEndpoint` is empty, nothing is sent. The endpoint must be an `https` URL, or an `http` URL on a loopback
-or private-network host. A malformed value or a public plain-`http` value is treated as empty.
+When `ReportingEndpoint` is empty, nothing is sent. The endpoint must use `https`, including on private networks. A
+malformed or plain-`http` value is treated as empty.
 
 ## Authentication
 
@@ -47,15 +48,19 @@ are still held on the endpoint.
 
 The local event log is a capped ring buffer of the most recent 1000 events. If reporting is unreachable long enough for
 more than 1000 new events to accumulate, the oldest unreported events are evicted before they can be sent. Keeping the
-reporting endpoint reachable avoids this.
+reporting endpoint reachable avoids this. The local log is stored in user-writable extension storage and is not
+tamper-proof against a user with access to the browser profile or extension DevTools. The server should treat missing
+heartbeats as a potential tampering signal; unreported local events cannot be guaranteed after user storage has been
+modified.
+
+Domain-intelligence findings (`domain_intel`, with `kind`, `target`, and `detail`) and
+`notification_protection_unavailable` are recorded locally only. They are not sent to `ReportingEndpoint`.
 
 ## Host permission
 
-The reporting origin must be reachable by the extension. In a managed deployment, grant the origin through the browser's
-extension policy the same way you grant the proxy origin for `ProxyBaseUrl` and the config origin for
-`ManagedConfigUrl`. The extension declares broad optional host access for this purpose. If you do not grant the origin
-through policy, the endpoint must instead return permissive CORS headers, including a response to the preflight, because
-a POST with a JSON body and an `Authorization` header is not a simple request.
+The extension does not hold host permission for the reporting origin, so the receiver must support CORS: answer the
+`OPTIONS` preflight for `POST` with `Content-Type` and `Authorization` allowed, and return
+`Access-Control-Allow-Origin` (the extension origin or `*`) on the response. The Osprey console does this.
 
 ## Events payload
 
@@ -100,7 +105,9 @@ Each event carries:
 - `ts` is the epoch time in milliseconds when the event occurred.
 - `type` is `block` for a detection or `bypass` for a user override.
 - `action` names the override for a bypass, either `continueToWebsite` or `allowWebsite`, and is `null` for a detection.
-- `url` is the canonical URL that was flagged.
+- `url` is the canonical URL that was flagged, with its query string and fragment removed (apart from a few
+  parameters that identify a resource, such as a Google Drive file id). Query strings routinely carry session
+  tokens and email addresses, so they never leave the device.
 - `providerId` is the id of the provider that flagged the URL, or `null` when none applies.
 - `verdict` is the provider verdict, such as `PHISHING` or `MALICIOUS`, or `null` when none applies.
 - `deviceTag`, `siteId`, and `version` repeat the endpoint identity captured when the event was recorded.
@@ -127,8 +134,9 @@ The heartbeat fields are:
 - `kind` is always `heartbeat` for this message.
 - `schemaVersion` matches the event schema version.
 - `sentAt` is the epoch time in milliseconds when the heartbeat was sent.
-- `installed` and `enabled` are always `true` in a heartbeat, because only a running extension can send one. Their
-  absence, meaning a missing heartbeat, is the real signal that an endpoint is gone.
+- `installed` is `true` when the extension sends a heartbeat. `enabled` is `true` only when protection is not disabled
+  globally and at least one effective provider is enabled (including managed providers). A missing heartbeat indicates
+  the extension may be gone or unable to report.
 - `version` is the extension version, so an MSP can see which build each endpoint runs.
 - `deviceTag` and `siteId` identify the endpoint and the client organization.
 - `proxyOrigin` is the backend origin the extension would send lookups to, which is the `ProxyBaseUrl` policy value when

@@ -116,8 +116,17 @@ globalThis.OspreyEventLogService = (() => {
 
     let events = null;
     let loadingPromise = null;
+    let persistFailures = 0;
+    const maxPersistRetries = 5;
+    const persistRetryDelayMs = 5000;
+
+    // Events recorded while the stored log could not be read; merged in once it can, so the stored log is
+    // never overwritten by a partial in-memory one.
+    let pendingEvents = [];
     let flushTimer = null;
     let cachedVersion = null;
+    let reportingPromise = null;
+    let heartbeatPromise = null;
 
     const getExtensionVersion = () => {
         if (cachedVersion !== null) {
@@ -143,11 +152,16 @@ globalThis.OspreyEventLogService = (() => {
         return {
             id: typeof raw.id === 'string' ? raw.id : '',
             ts: Number.isFinite(ts) ? ts : 0,
-            type: raw.type === 'bypass' ? 'bypass' : 'block',
+            type: raw.localOnly === true && typeof raw.type === 'string' ? raw.type :
+                raw.type === 'bypass' ? 'bypass' : 'block',
             action: typeof raw.action === 'string' ? raw.action : null,
             url: typeof raw.url === 'string' ? raw.url : '',
             providerId: typeof raw.providerId === 'string' ? raw.providerId : null,
             verdict: typeof raw.verdict === 'string' ? raw.verdict : null,
+            kind: typeof raw.kind === 'string' ? raw.kind : null,
+            target: typeof raw.target === 'string' ? raw.target : null,
+            detail: typeof raw.detail === 'string' ? raw.detail : null,
+            localOnly: raw.localOnly === true,
             deviceTag: typeof raw.deviceTag === 'string' ? raw.deviceTag : '',
             siteId: typeof raw.siteId === 'string' ? raw.siteId : '',
             version: typeof raw.version === 'string' ? raw.version : '',
@@ -168,33 +182,30 @@ globalThis.OspreyEventLogService = (() => {
         return removed;
     };
 
+    // Rejects when the stored log cannot be read: an empty list there would later overwrite the real log.
     const loadEvents = async () => {
-        try {
-            const stored = await idb.get(logKey);
+        const stored = await idb.get(logKey);
 
-            if (stored && typeof stored === 'object' && Array.isArray(stored.events)) {
-                const restored = [];
+        if (stored && typeof stored === 'object' && Array.isArray(stored.events)) {
+            const restored = [];
 
-                for (const entry of stored.events) {
-                    const normalized = normalizeEvent(entry);
+            for (const entry of stored.events) {
+                const normalized = normalizeEvent(entry);
 
-                    if (normalized) {
-                        restored.push(normalized);
-                    }
+                if (normalized) {
+                    restored.push(normalized);
                 }
-
-                const cutoff = Date.now() - maxEventAgeMs;
-                const fresh = [];
-
-                for (const entry of restored) {
-                    if (entry.ts >= cutoff) {
-                        fresh.push(entry);
-                    }
-                }
-                return fresh.slice(-maxEvents);
             }
-        } catch (error) {
-            console.warn('OspreyEventLogService failed to load event log', error);
+
+            const cutoff = Date.now() - maxEventAgeMs;
+            const fresh = [];
+
+            for (const entry of restored) {
+                if (entry.ts >= cutoff) {
+                    fresh.push(entry);
+                }
+            }
+            return fresh.slice(-maxEvents);
         }
         return [];
     };
@@ -208,15 +219,21 @@ globalThis.OspreyEventLogService = (() => {
             loadingPromise = loadEvents().then(loaded => {
                 if (events === null) {
                     events = loaded;
+
+                    if (pendingEvents.length > 0) {
+                        events.push(...pendingEvents);
+                        events.splice(0, Math.max(0, events.length - maxEvents));
+                        pendingEvents = [];
+                        scheduleFlush();
+                    }
                 }
 
                 loadingPromise = null;
                 return events;
             }).catch(error => {
                 loadingPromise = null;
-                events = events || [];
-                console.warn('OspreyEventLogService failed to initialize event log', error);
-                return events;
+                console.warn('OspreyEventLogService failed to load event log; will retry', error);
+                throw error;
             });
         }
         return loadingPromise;
@@ -228,12 +245,23 @@ globalThis.OspreyEventLogService = (() => {
             flushTimer = null;
         }
 
-        const snapshot = events === null ? [] : events.slice();
+        if (events === null) {
+            return;
+        }
+
+        const snapshot = events.slice();
 
         try {
             await idb.set(logKey, {version: schemaVersion, events: snapshot});
+            persistFailures = 0;
         } catch (error) {
             console.warn('OspreyEventLogService failed to persist event log', error);
+
+            // Unpersisted changes (new events, reported flags) are retried soon, a few times, before waiting for the
+            // next change.
+            if (++persistFailures <= maxPersistRetries) {
+                scheduleFlush(persistRetryDelayMs * persistFailures);
+            }
         }
     };
 
@@ -276,27 +304,66 @@ globalThis.OspreyEventLogService = (() => {
         }
     };
 
+    /**
+     * Strips the query string (apart from the few resource-identifying parameters the lookup
+     * normalizer retains) and fragment before a URL is logged or reported. Queries routinely carry
+     * session tokens, reset codes, and email addresses that must not leave the device.
+     */
+    const reportableUrl = url => {
+        if (typeof url !== 'string' || url.length === 0) {
+            return '';
+        }
+
+        const normalized = globalThis.OspreyUrlService?.normalizeLookupUrl?.(url);
+
+        if (typeof normalized === 'string' && normalized) {
+            return normalized;
+        }
+
+        try {
+            const parsed = new URL(url);
+            parsed.search = '';
+            parsed.hash = '';
+            parsed.username = '';
+            parsed.password = '';
+            return parsed.href;
+        } catch {
+            return '';
+        }
+    };
+
     const append = async partial => {
-        const list = await ensureLoaded();
-
-        pruneExpired(list);
-
         const identity = await policyService.getEndpointIdentity();
 
         const event = {
             id: newId(),
             ts: Date.now(),
-            type: partial.type === 'bypass' ? 'bypass' : 'block',
+            type: partial.localOnly === true ? partial.type : partial.type === 'bypass' ? 'bypass' : 'block',
             action: typeof partial.action === 'string' ? partial.action : null,
-            url: typeof partial.url === 'string' ? partial.url : '',
+            url: reportableUrl(partial.url),
             providerId: typeof partial.providerId === 'string' ? partial.providerId : null,
             verdict: typeof partial.verdict === 'string' ? partial.verdict : null,
+            kind: typeof partial.kind === 'string' ? partial.kind : null,
+            target: typeof partial.target === 'string' ? partial.target : null,
+            detail: typeof partial.detail === 'string' ? partial.detail : null,
+            localOnly: partial.localOnly === true,
             deviceTag: identity.deviceTag,
             siteId: identity.siteId,
             version: getExtensionVersion(),
             reported: false,
         };
 
+        let list;
+
+        try {
+            list = await ensureLoaded();
+        } catch {
+            pendingEvents.push(event);
+            pendingEvents.splice(0, Math.max(0, pendingEvents.length - maxEvents));
+            return event;
+        }
+
+        pruneExpired(list);
         list.push(event);
 
         if (list.length > maxEvents) {
@@ -329,6 +396,11 @@ globalThis.OspreyEventLogService = (() => {
             console.warn('OspreyEventLogService failed to record override event', error);
         });
 
+    const recordLocal = (type, {url, kind, target, detail} = {}) =>
+        append({type, url, kind, target, detail, localOnly: true}).catch(error => {
+            console.warn('OspreyEventLogService failed to record local event', error);
+        });
+
     const toPublicEvent = event => ({
         id: event.id,
         ts: event.ts,
@@ -340,6 +412,11 @@ globalThis.OspreyEventLogService = (() => {
         deviceTag: event.deviceTag,
         siteId: event.siteId,
         version: event.version,
+        ...(event.localOnly ? {
+            kind: event.kind,
+            target: event.target,
+            detail: event.detail,
+        } : {}),
     });
 
     const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -389,7 +466,7 @@ globalThis.OspreyEventLogService = (() => {
         return false;
     };
 
-    const flushToReporting = async () => {
+    const reportPending = async () => {
         const config = await policyService.getReportingConfig();
 
         if (!config.endpoint) {
@@ -408,7 +485,7 @@ globalThis.OspreyEventLogService = (() => {
         const pending = [];
 
         for (const entry of list) {
-            if (entry.reported !== true) {
+            if (entry.reported !== true && entry.localOnly !== true) {
                 pending.push(entry);
             }
         }
@@ -456,6 +533,9 @@ globalThis.OspreyEventLogService = (() => {
             }
 
             sent += batch.length;
+
+            // Persist each batch's flags right away, so a killed worker can only resend the batch in flight.
+            await flushNow();
         }
 
         await flushNow();
@@ -464,6 +544,15 @@ globalThis.OspreyEventLogService = (() => {
             ok: true,
             sent
         };
+    };
+
+    const flushToReporting = () => {
+        if (!reportingPromise) {
+            reportingPromise = reportPending().finally(() => {
+                reportingPromise = null;
+            });
+        }
+        return reportingPromise;
     };
 
     const probeProxyReachable = async origin => {
@@ -475,8 +564,11 @@ globalThis.OspreyEventLogService = (() => {
         const timer = setTimeout(() => controller.abort(), heartbeatProbeTimeoutMs);
 
         try {
+            // no-cors: the extension holds no host permission for self-hosted proxies, and the probe
+            // only needs to know the origin answered, not to read the response.
             await fetch(origin, {
                 method: 'GET',
+                mode: 'no-cors',
                 credentials: 'omit',
                 cache: 'no-store',
                 redirect: 'follow',
@@ -490,7 +582,7 @@ globalThis.OspreyEventLogService = (() => {
         }
     };
 
-    const sendHeartbeat = async () => {
+    const postHeartbeat = async () => {
         const config = await policyService.getReportingConfig();
 
         if (!config.endpoint) {
@@ -507,13 +599,16 @@ globalThis.OspreyEventLogService = (() => {
             : '';
 
         const proxyReachable = await probeProxyReachable(proxyOrigin);
+        const runtime = await globalThis.OspreyProviderRuntimeFactory.createRuntime({fresh: true});
+        const enabled = runtime.effectiveState.app.disableAllProviders !== true &&
+            runtime.providers.some(provider => provider.state.enabled);
 
         const body = {
             kind: 'heartbeat',
             schemaVersion,
             sentAt: Date.now(),
             installed: true,
-            enabled: true,
+            enabled,
             version: getExtensionVersion(),
             deviceTag: identity.deviceTag,
             siteId: identity.siteId,
@@ -531,26 +626,35 @@ globalThis.OspreyEventLogService = (() => {
         };
     };
 
-    const getEvents = async () => {
-        const list = await ensureLoaded();
+    const sendHeartbeat = () => {
+        if (!heartbeatPromise) {
+            heartbeatPromise = postHeartbeat().finally(() => {
+                heartbeatPromise = null;
+            });
+        }
+        return heartbeatPromise;
+    };
 
+    const getEvents = async () => {
+        let list;
+
+        try {
+            list = await ensureLoaded();
+        } catch {
+            // The stored log is unreadable right now; show what has been recorded since.
+            return pendingEvents.map(toPublicEvent);
+        }
         if (pruneExpired(list) > 0) {
             scheduleFlush();
         }
         return list.map(toPublicEvent);
     };
 
-    const clear = async () => {
-        await ensureLoaded();
-        events = [];
-        await flushNow();
-    };
-
     return Object.freeze({
         recordDetection,
         recordOverride,
+        recordLocal,
         getEvents,
-        clear,
         flushToReporting,
         sendHeartbeat,
         reportFlushAlarmName,
