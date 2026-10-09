@@ -343,3 +343,60 @@ test('capacity eviction drops cached verdicts before user exclusions', async () 
     assert.equal((await cache.getAllowedEntry('a', 'user')).userAllowed, true);
     assert.equal(await cache.getAllowedEntry('a', 'clean-0'), null);
 });
+
+test('failed cache writes back off instead of retrying every flush interval', async () => {
+    const delays = [];
+    const timers = [];
+    const db = {
+        transaction: (_, mode) => {
+            if (mode === 'readwrite') {
+                throw new Error('quota exceeded');
+            }
+            const tx = {
+                objectStore: () => ({
+                    get: () => {
+                        const request = {result: undefined};
+                        queueMicrotask(() => request.onsuccess?.());
+                        return request;
+                    },
+                }),
+            };
+            setImmediate(() => tx.oncomplete?.());
+            return tx;
+        },
+    };
+    const context = vm.createContext({
+        console: {warn() {}, error() {}}, Date, Map, Set,
+        setTimeout: (fn, delay) => {
+            delays.push(delay);
+            timers.push(fn);
+            return timers.length;
+        },
+        clearTimeout: () => {},
+        setInterval: () => 0,
+        indexedDB: {
+            open: () => {
+                const request = {result: db};
+                queueMicrotask(() => request.onsuccess?.());
+                return request;
+            },
+        },
+        OspreyBrowserAPI: {storageGet: async () => ({})},
+        OspreyUrlService: {},
+        OspreyProtectionResult: {resultTypes: {}},
+        OspreyPolicyService: {getManagedListConfig: async () => null},
+    });
+    load(context, 'state/cache-service.js');
+    const cache = context.OspreyCacheService;
+    await cache.markAllowed('a', 'key', 600).catch(() => {});
+
+    for (let i = 0; i < 4; i++) {
+        const before = delays.length;
+        timers.at(-1)();
+        await new Promise(resolve => setTimeout(resolve, 20));
+        assert.ok(delays.length > before);
+    }
+
+    const retries = delays.slice(-3);
+    assert.ok(retries[0] < retries[1] && retries[1] < retries[2], `delays did not grow: ${delays}`);
+});

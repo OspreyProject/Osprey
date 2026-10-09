@@ -29,6 +29,8 @@ globalThis.OspreyCacheService = (() => {
     const shardKey = providerId => `${shardPrefix}${providerId}`;
 
     const flushDelay = 500;
+    const maxFlushRetryDelay = 5 * 60 * 1000;
+    let flushFailures = 0;
 
     const maxEntriesPerMap = 500;
     const pruneThreshold = Math.floor(maxEntriesPerMap * 0.9);
@@ -361,7 +363,10 @@ globalThis.OspreyCacheService = (() => {
             if (removeKeys.length > 0) {
                 await idb.removeMany(removeKeys);
             }
+
+            flushFailures = 0;
         } catch (error) {
+            flushFailures++;
             ok = false;
             console.error('OspreyCacheService failed to persist cache snapshot', error);
 
@@ -406,7 +411,8 @@ globalThis.OspreyCacheService = (() => {
         }
     };
 
-    const scheduleFlush = (delayMs = flushDelay) => {
+    // After failed writes, back off exponentially so a broken database is not retried in a tight loop.
+    const scheduleFlush = (delayMs = Math.min(flushDelay * 2 ** flushFailures, maxFlushRetryDelay)) => {
         if (flushTimer) {
             clearTimeout(flushTimer);
         }
